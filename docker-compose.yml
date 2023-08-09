@@ -1,0 +1,12 @@
+version: '3'
+services:
+  rtl-frontend:
+    container_name: RateTheLandlord-FE
+    build:
+      context: .
+      dockerfile: ./docker/${ENVIRONMENT}/Dockerfile
+    restart: unless-stopped
+    ports:
+      - ${FEPORT}:${FEPORT}
+    env_file:
+      - .env
