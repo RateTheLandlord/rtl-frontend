@@ -4,32 +4,21 @@ A simple website for Renter's to rate their Landlord
 
 ## Getting Started
 
-Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) Installed
-
 Copy the `.env.example` in a new `.env` file.
+
+If you are working with the backend, make sure you have that forked and setup first so you can pass the url to the `.env` file.
 
 Set the environment to `development`
 
 Then run the following commands:
 
 - Install Packages
-  `cd frontend && npm i && cd ../backend && npm i`
+  `npm install`
 
-- Start
-  `docker-compose -f docker-compose.dev.yml up -d --build`
+- Start Dev Mode
+  `npm run dev`
 
-The project should not be running at `http://localhost` and pick up changes you make in you IDE
-
-## Load the Database with Dummy Reviews
-
-Make sure your docker environment is running.
-
-- Get the `CONTAINER ID` of the postgres container with the command `docker ps`
-- Make sure the permissions are set correctly with `sudo chmod +x load-database.sh`
-- Run the script with command `./load-database.sh`
-- You will be prompted for the `CONTAINER ID`, postgres username (this is set in your `.env` file, and the number of rows you wish to populate)
-
-Your database should now be loaded. Run this command as much as your wish.
+The project should not be running at `http://localhost:3000` and pick up changes you make in you IDE
 
 ## Troubleshooting
 
