@@ -1,4 +1,4 @@
-import {resource_links} from './links'
+import { resource_links } from './links'
 
 const links = resource_links
 
@@ -13,16 +13,16 @@ const countries = [
 const ResourceTenantLinks = () => {
 	return (
 		<div
-			data-testid="about-ResourceTenantLinks-1"
-			className="flex w-full flex-col gap-4 bg-white"
+			data-testid='about-ResourceTenantLinks-1'
+			className='flex w-full flex-col gap-4 bg-white'
 		>
 			{countries.map((country) => {
 				return (
 					<div
 						key={country}
-						className="my-4 mx-auto flex max-w-7xl flex-row flex-wrap justify-center gap-4 px-6 text-lg lg:px-8"
+						className='mx-auto my-4 flex max-w-7xl flex-row flex-wrap justify-center gap-4 px-6 text-lg lg:px-8'
 					>
-						<h3 className="mt-2 block w-full text-center text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
+						<h3 className='mt-2 block w-full text-center text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl'>
 							{country}
 						</h3>
 						{links.map((link) => {
@@ -31,17 +31,17 @@ const ResourceTenantLinks = () => {
 									data-umami-event={link.umami}
 									href={link.link}
 									key={link.name}
-									className="w-full cursor-pointer rounded-lg bg-white px-4 py-5 text-center text-black shadow shadow-slate-400 hover:bg-teal-600 hover:text-white sm:p-6 lg:w-auto lg:text-left"
+									className='w-full cursor-pointer rounded-lg bg-white px-4 py-5 text-center text-black shadow shadow-slate-400 hover:bg-teal-600 hover:text-white sm:p-6 lg:w-auto lg:text-left'
 								>
-									<p className="mt-1 text-xl font-semibold tracking-tight">
+									<p className='mt-1 text-xl font-semibold tracking-tight'>
 										{link.name}
 									</p>
 									{link.country === link.city ? (
-										<p className="truncate text-center text-sm font-medium">
+										<p className='truncate text-center text-sm font-medium'>
 											{link.country}
 										</p>
 									) : (
-										<p className="truncate text-center text-sm font-medium">
+										<p className='truncate text-center text-sm font-medium'>
 											{link.city}, {link.country}
 										</p>
 									)}

@@ -1,4 +1,4 @@
-import {NextApiRequest, NextApiResponse} from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 interface IBody {
 	email: string
@@ -9,7 +9,7 @@ const SubmitReview = (req: NextApiRequest, res: NextApiResponse) => {
 	const url = process.env.API_URL as string
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const {body}: {body: IBody} = req
+	const { body }: { body: IBody } = req
 
 	fetch(`${url}/auth/login`, {
 		method: 'POST',
@@ -30,7 +30,7 @@ const SubmitReview = (req: NextApiRequest, res: NextApiResponse) => {
 		.catch((error: Response) => {
 			res
 				.status(error.status)
-				.json({error: 'Failed to Login', response: error.statusText})
+				.json({ error: 'Failed to Login', response: error.statusText })
 		})
 }
 

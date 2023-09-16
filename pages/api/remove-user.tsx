@@ -1,4 +1,4 @@
-import {NextApiRequest, NextApiResponse} from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 type IBody = number
 
@@ -9,7 +9,7 @@ const getReviews = (req: NextApiRequest, res: NextApiResponse) => {
 	const jwt: string = cookies.ratethelandlord || ''
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const {body}: {body: IBody} = req
+	const { body }: { body: IBody } = req
 
 	fetch(`${url}/user/${body}`, {
 		method: 'DELETE',
@@ -31,7 +31,7 @@ const getReviews = (req: NextApiRequest, res: NextApiResponse) => {
 			console.log(err)
 			res
 				.status(err.status)
-				.json({error: 'Failed to delete User', response: err.statusText})
+				.json({ error: 'Failed to delete User', response: err.statusText })
 		})
 }
 

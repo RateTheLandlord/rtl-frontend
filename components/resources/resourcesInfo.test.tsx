@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import {render, screen} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import ResourcesInfo from './resourcesInfo'
 
 jest.mock('react-i18next', () => ({

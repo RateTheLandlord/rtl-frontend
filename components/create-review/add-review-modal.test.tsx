@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import {render, screen, fireEvent} from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import AddReviewModal from './add-review-modal'
 
 jest.mock('react-i18next', () => ({

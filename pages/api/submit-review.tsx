@@ -1,4 +1,4 @@
-import {NextApiRequest, NextApiResponse} from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 interface IBody {
 	captchaToken: string
@@ -31,7 +31,7 @@ const SubmitReview = (req: NextApiRequest, res: NextApiResponse) => {
 	const url = process.env.API_URL as string
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const {body}: {body: IBody} = req
+	const { body }: { body: IBody } = req
 
 	fetch(`${url}/review`, {
 		method: 'POST',
@@ -62,7 +62,7 @@ const SubmitReview = (req: NextApiRequest, res: NextApiResponse) => {
 
 			res
 				.status(error.statusCode || 500)
-				.json({error: errorMessage, response: error.error})
+				.json({ error: errorMessage, response: error.error })
 		})
 }
 

@@ -1,4 +1,4 @@
-import {NextApiRequest, NextApiResponse} from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 const getStats = (req: NextApiRequest, res: NextApiResponse) => {
 	const url = process.env.API_URL as string
@@ -25,7 +25,7 @@ const getStats = (req: NextApiRequest, res: NextApiResponse) => {
 			console.log(err)
 			res
 				.status(err.status)
-				.json({error: 'Failed to get Stats', response: err.statusText})
+				.json({ error: 'Failed to get Stats', response: err.statusText })
 		})
 }
 

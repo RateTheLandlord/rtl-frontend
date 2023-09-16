@@ -2,10 +2,10 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import {render} from '@testing-library/react'
-import {Disclosure} from '@headlessui/react'
+import { render } from '@testing-library/react'
+import { Disclosure } from '@headlessui/react'
 import MobileNav from './MobileNav'
-import {INav} from '@/util/interfaces/interfaces'
+import { INav } from '@/util/interfaces/interfaces'
 
 describe('MobileNav', () => {
 	const navigation: Array<INav> = [
@@ -32,7 +32,7 @@ describe('MobileNav', () => {
 	it('renders MobileNav component correctly', () => {
 		render(
 			<Disclosure>
-				<MobileNav navigation={navigation} activeTab="/" />
+				<MobileNav navigation={navigation} activeTab='/' />
 			</Disclosure>,
 		)
 	})

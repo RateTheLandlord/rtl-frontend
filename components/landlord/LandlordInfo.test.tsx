@@ -1,9 +1,9 @@
 /**
  * @jest-environment jsdom
  */
-import {render, screen} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import LandlordInfo from './LandlordInfo'
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 
 jest.mock('next/router', () => ({
 	useRouter: jest.fn(),
@@ -13,7 +13,7 @@ describe('LandlordInfo', () => {
 	const pushMock = jest.fn()
 
 	beforeEach(() => {
-		(useRouter as jest.Mock).mockImplementation(() => ({
+		;(useRouter as jest.Mock).mockImplementation(() => ({
 			push: pushMock,
 		}))
 	})

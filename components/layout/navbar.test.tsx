@@ -2,10 +2,10 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import {render, screen} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import Navbar from './navbar'
-import {Provider} from 'react-redux'
-import {store} from '@/redux/store'
+import { Provider } from 'react-redux'
+import { store } from '@/redux/store'
 
 jest.mock('next/router', () => ({
 	useRouter: () => ({

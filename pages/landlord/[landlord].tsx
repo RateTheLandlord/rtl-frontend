@@ -1,14 +1,14 @@
 import LandlordPage from '@/components/landlord/LandlordPage'
-import {Review} from '@/util/interfaces/interfaces'
-import {NextSeo} from 'next-seo'
-import {useRouter} from 'next/router'
+import { Review } from '@/util/interfaces/interfaces'
+import { NextSeo } from 'next-seo'
+import { useRouter } from 'next/router'
 
 interface IProps {
 	landlord: string
 	reviews: Review[]
 }
 
-const Landlord = ({landlord, reviews}: IProps) => {
+const Landlord = ({ landlord, reviews }: IProps) => {
 	const title = `${landlord} Reviews | Rate The Landlord`
 	const desc = `Reviews for ${landlord}. Read ${reviews?.length} reviews for ${landlord}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
 	const siteURL = 'https://ratethelandlord.org'
@@ -20,10 +20,10 @@ const Landlord = ({landlord, reviews}: IProps) => {
 	if (!reviews)
 		return (
 			<div
-				className="text-primary inline-block h-8 w-8 animate-[spinner-grow_0.75s_linear_infinite] rounded-full bg-current align-[-0.125em] opacity-0 motion-reduce:animate-[spinner-grow_1.5s_linear_infinite]"
-				role="status"
+				className='text-primary inline-block h-8 w-8 animate-[spinner-grow_0.75s_linear_infinite] rounded-full bg-current align-[-0.125em] opacity-0 motion-reduce:animate-[spinner-grow_1.5s_linear_infinite]'
+				role='status'
 			>
-				<span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+				<span className='!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]'>
 					Loading...
 				</span>
 			</div>
@@ -77,7 +77,7 @@ export async function getStaticPaths() {
 		const data: string[] = await req.json()
 
 		const paths = data.map((landlord) => ({
-			params: {landlord: encodeURIComponent(landlord)},
+			params: { landlord: encodeURIComponent(landlord) },
 		}))
 
 		return {
@@ -92,14 +92,18 @@ export async function getStaticPaths() {
 	}
 }
 
-export async function getStaticProps({params}: {params: {landlord: string}}) {
+export async function getStaticProps({
+	params,
+}: {
+	params: { landlord: string }
+}) {
 	try {
 		const req = await fetch(`http://backend:8080/review/landlords/landlord`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({landlord: params.landlord}),
+			body: JSON.stringify({ landlord: params.landlord }),
 		})
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const data: Review[] = await req.json()

@@ -6,14 +6,14 @@ interface IProps {
 	href: string
 	umami: string
 }
-export default function LinkButtonLightLG({children, href, umami}: IProps) {
+export default function LinkButtonLightLG({ children, href, umami }: IProps) {
 	return (
 		<div
-			className="cursor-pointer rounded-md border border-teal-600 bg-white"
-			data-testid="home-hero-read-btn-1"
+			className='cursor-pointer rounded-md border border-teal-600 bg-white'
+			data-testid='home-hero-read-btn-1'
 		>
 			<Link href={href} data-umami-event={umami}>
-				<p className="w-full px-8 py-3 text-center text-base font-medium text-teal-600 md:px-10 md:py-4 md:text-lg">
+				<p className='w-full px-8 py-3 text-center text-base font-medium text-teal-600 md:px-10 md:py-4 md:text-lg'>
 					{children}
 				</p>
 			</Link>

@@ -1,4 +1,4 @@
-import {NextApiRequest, NextApiResponse} from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 interface IBody {
 	name: string
@@ -15,7 +15,7 @@ const AddUser = (req: NextApiRequest, res: NextApiResponse) => {
 	const jwt: string = cookies.ratethelandlord || ''
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const {body}: {body: IBody} = req
+	const { body }: { body: IBody } = req
 
 	fetch(`${url}/user`, {
 		method: 'POST',
@@ -35,7 +35,7 @@ const AddUser = (req: NextApiRequest, res: NextApiResponse) => {
 			console.log('error: ', error)
 			res
 				.status(error.status)
-				.json({error: 'Failed to Add User', response: error.statusText})
+				.json({ error: 'Failed to Add User', response: error.statusText })
 		})
 }
 

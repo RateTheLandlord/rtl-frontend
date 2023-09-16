@@ -2,9 +2,9 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import {render, screen, fireEvent, waitFor} from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import CityComboBox from './CityComboBox'
-import {ILocationHookResponse} from '@/util/interfaces/interfaces'
+import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 
 interface RenderComponentProps {
 	state: string | undefined
@@ -17,9 +17,9 @@ interface RenderComponentProps {
 
 describe('CityComboBox', () => {
 	const options = [
-		{id: 1, city: 'New York', state: 'New York'},
-		{id: 2, city: 'Los Angeles', state: 'LA'},
-		{id: 3, city: 'Chicago', state: 'Illinois'},
+		{ id: 1, city: 'New York', state: 'New York' },
+		{ id: 2, city: 'Los Angeles', state: 'LA' },
+		{ id: 3, city: 'Chicago', state: 'Illinois' },
 	]
 
 	const handleChange = jest.fn()
@@ -30,11 +30,11 @@ describe('CityComboBox', () => {
 		options,
 		searching,
 		error,
-		errorText
+		errorText,
 	}: RenderComponentProps) => {
 		return render(
 			<CityComboBox
-				name="City"
+				name='City'
 				state={state}
 				setState={setState}
 				options={options}
@@ -52,7 +52,7 @@ describe('CityComboBox', () => {
 			options: options,
 			searching: false,
 			error: false,
-			errorText: ''
+			errorText: '',
 		})
 
 		const labelElement = screen.getByText('City')
@@ -69,11 +69,11 @@ describe('CityComboBox', () => {
 			options: options,
 			searching: false,
 			error: false,
-			errorText: ''
+			errorText: '',
 		})
 
 		const inputElement = screen.getByPlaceholderText('City')
-		fireEvent.change(inputElement, {target: {value: 'New'}})
+		fireEvent.change(inputElement, { target: { value: 'New' } })
 
 		await waitFor(() => {
 			expect(screen.getByText('New York')).toBeInTheDocument()
@@ -81,7 +81,7 @@ describe('CityComboBox', () => {
 			expect(screen.getByText('Chicago')).toBeInTheDocument()
 		})
 
-		fireEvent.keyDown(inputElement, {key: 'Enter', code: 'Enter'})
+		fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' })
 		expect(handleChange).toHaveBeenCalledWith('New York')
 	})
 
@@ -92,16 +92,16 @@ describe('CityComboBox', () => {
 			options: options,
 			searching: false,
 			error: false,
-			errorText: ''
+			errorText: '',
 		})
 
 		const inputElement = screen.getByPlaceholderText('City')
-		fireEvent.change(inputElement, {target: {value: 'New'}})
+		fireEvent.change(inputElement, { target: { value: 'New' } })
 
 		const option = await waitFor(() => screen.getByText('New York'))
 		expect(option).toBeInTheDocument()
 
-		fireEvent.keyDown(option, {key: 'ArrowDown', code: 'ArrowDown'})
+		fireEvent.keyDown(option, { key: 'ArrowDown', code: 'ArrowDown' })
 
 		await waitFor(() => {
 			expect(option).toHaveClass('bg-teal-200')
@@ -111,8 +111,8 @@ describe('CityComboBox', () => {
 	test("shows 'Loading...' message when searching prop is true", async () => {
 		render(
 			<CityComboBox
-				name="City"
-				state="some state"
+				name='City'
+				state='some state'
 				setState={handleChange}
 				options={[]}
 				searching={true}
@@ -122,7 +122,7 @@ describe('CityComboBox', () => {
 		)
 
 		const inputElement = screen.getByPlaceholderText('City')
-		fireEvent.change(inputElement, {target: {value: 'N'}})
+		fireEvent.change(inputElement, { target: { value: 'N' } })
 
 		await waitFor(() => {
 			expect(screen.getByText('Loading...')).toBeInTheDocument()

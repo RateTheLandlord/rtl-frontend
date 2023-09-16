@@ -1,4 +1,4 @@
-import {NextApiRequest, NextApiResponse} from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 interface IBody {
 	id: number
@@ -12,7 +12,7 @@ const updatePassword = (req: NextApiRequest, res: NextApiResponse) => {
 	const jwt: string = cookies.ratethelandlord || ''
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const {body}: {body: IBody} = req
+	const { body }: { body: IBody } = req
 
 	const id = body.id
 	const password = body.password
@@ -23,7 +23,7 @@ const updatePassword = (req: NextApiRequest, res: NextApiResponse) => {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${jwt}`,
 		},
-		body: JSON.stringify({password: password}),
+		body: JSON.stringify({ password: password }),
 	})
 		.then((result: Response) => {
 			if (!result.ok) {
@@ -37,7 +37,7 @@ const updatePassword = (req: NextApiRequest, res: NextApiResponse) => {
 		.catch((err: Response) => {
 			return res
 				.status(err.status)
-				.json({error: 'Failed to edit password', response: err.statusText})
+				.json({ error: 'Failed to edit password', response: err.statusText })
 		})
 }
 

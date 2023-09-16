@@ -1,12 +1,12 @@
-import {Dispatch, SetStateAction} from 'react'
-import {Switch} from '@headlessui/react'
+import { Dispatch, SetStateAction } from 'react'
+import { Switch } from '@headlessui/react'
 
 interface IProps {
 	enabled: boolean
 	setEnabled: Dispatch<SetStateAction<boolean>>
 }
 
-function ToggleSwitch({enabled, setEnabled}: IProps) {
+function ToggleSwitch({ enabled, setEnabled }: IProps) {
 	return (
 		<Switch
 			checked={enabled}
@@ -15,7 +15,7 @@ function ToggleSwitch({enabled, setEnabled}: IProps) {
 				enabled ? 'bg-blue-600' : 'bg-gray-200'
 			} relative inline-flex h-6 w-11 items-center rounded-full`}
 		>
-			<span className="sr-only" data-testid="toggle-switch-1">
+			<span className='sr-only' data-testid='toggle-switch-1'>
 				Enable
 			</span>
 			<span

@@ -1,4 +1,4 @@
-import {NextApiRequest, NextApiResponse} from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 interface IBody {
 	id: number
@@ -11,7 +11,7 @@ const EditReview = (req: NextApiRequest, res: NextApiResponse) => {
 	const jwt: string = cookies.ratethelandlord || ''
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const {body}: {body: IBody} = req
+	const { body }: { body: IBody } = req
 
 	const id = body.id
 
@@ -36,7 +36,7 @@ const EditReview = (req: NextApiRequest, res: NextApiResponse) => {
 			console.log(err)
 			res
 				.status(err.status)
-				.json({error: 'Failed to edit Review', response: err.statusText})
+				.json({ error: 'Failed to edit Review', response: err.statusText })
 		})
 }
 

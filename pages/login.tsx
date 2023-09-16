@@ -1,5 +1,5 @@
 import LoginForm from '@/components/login/login-form'
-import {NextSeo} from 'next-seo'
+import { NextSeo } from 'next-seo'
 import Head from 'next/head'
 import React from 'react'
 
