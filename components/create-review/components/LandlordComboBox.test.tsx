@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import {render, screen, fireEvent, waitFor} from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import LandlordComboBox from './LandlordComboBox'
 
 interface RenderComponentProps {
@@ -25,11 +25,11 @@ describe('LandlordComboBox', () => {
 		suggestions,
 		isSearching,
 		error,
-		errorText
+		errorText,
 	}: RenderComponentProps) => {
 		return render(
 			<LandlordComboBox
-				name="Landlord Name (or Property Management Company) - No Addresses"
+				name='Landlord Name (or Property Management Company) - No Addresses'
 				state={state}
 				setState={setState}
 				suggestions={suggestions}
@@ -46,12 +46,16 @@ describe('LandlordComboBox', () => {
 			setState: handleChange,
 			suggestions: suggestions,
 			isSearching: false,
-			error:false,
-			errorText: ''
+			error: false,
+			errorText: '',
 		})
 
-		const labelElement = screen.getByText('Landlord Name (or Property Management Company) - No Addresses')
-		const inputElement = screen.getByPlaceholderText('Landlord Name (or Property Management Company) - No Addresses')
+		const labelElement = screen.getByText(
+			'Landlord Name (or Property Management Company) - No Addresses',
+		)
+		const inputElement = screen.getByPlaceholderText(
+			'Landlord Name (or Property Management Company) - No Addresses',
+		)
 
 		expect(labelElement).toBeInTheDocument()
 		expect(inputElement).toBeInTheDocument()
@@ -64,11 +68,13 @@ describe('LandlordComboBox', () => {
 			suggestions: suggestions,
 			isSearching: false,
 			error: false,
-			errorText: ''
+			errorText: '',
 		})
 
-		const inputElement = screen.getByPlaceholderText('Landlord Name (or Property Management Company) - No Addresses')
-		fireEvent.change(inputElement, {target: {value: 'Da'}})
+		const inputElement = screen.getByPlaceholderText(
+			'Landlord Name (or Property Management Company) - No Addresses',
+		)
+		fireEvent.change(inputElement, { target: { value: 'Da' } })
 
 		await waitFor(() => {
 			expect(screen.getByText('Daniel White')).toBeInTheDocument()
@@ -76,7 +82,7 @@ describe('LandlordComboBox', () => {
 			expect(screen.getByText('Michael Davis')).toBeInTheDocument()
 		})
 
-		fireEvent.keyDown(inputElement, {key: 'Enter', code: 'Enter'})
+		fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' })
 		expect(handleChange).toHaveBeenCalledWith('Daniel White')
 	})
 
@@ -84,19 +90,21 @@ describe('LandlordComboBox', () => {
 		renderComponent({
 			state: '',
 			setState: handleChange,
-            suggestions: suggestions,
+			suggestions: suggestions,
 			isSearching: false,
 			error: false,
-			errorText: ''
+			errorText: '',
 		})
 
-		const inputElement = screen.getByPlaceholderText('Landlord Name (or Property Management Company) - No Addresses')
-		fireEvent.change(inputElement, {target: {value: 'Da'}})
+		const inputElement = screen.getByPlaceholderText(
+			'Landlord Name (or Property Management Company) - No Addresses',
+		)
+		fireEvent.change(inputElement, { target: { value: 'Da' } })
 
 		const option = await waitFor(() => screen.getByText('Daniel White'))
 		expect(option).toBeInTheDocument()
 
-		fireEvent.keyDown(option, {key: 'ArrowDown', code: 'ArrowDown'})
+		fireEvent.keyDown(option, { key: 'ArrowDown', code: 'ArrowDown' })
 
 		await waitFor(() => {
 			expect(option).toHaveClass('bg-teal-200')
@@ -106,8 +114,8 @@ describe('LandlordComboBox', () => {
 	test("shows 'Loading...' message when searching prop is true", async () => {
 		render(
 			<LandlordComboBox
-				name="Landlord Name (or Property Management Company) - No Addresses"
-				state="some state"
+				name='Landlord Name (or Property Management Company) - No Addresses'
+				state='some state'
 				setState={handleChange}
 				suggestions={[]}
 				isSearching={true}
@@ -116,8 +124,10 @@ describe('LandlordComboBox', () => {
 			/>,
 		)
 
-		const inputElement = screen.getByPlaceholderText('Landlord Name (or Property Management Company) - No Addresses')
-		fireEvent.change(inputElement, {target: {value: 'O'}})
+		const inputElement = screen.getByPlaceholderText(
+			'Landlord Name (or Property Management Company) - No Addresses',
+		)
+		fireEvent.change(inputElement, { target: { value: 'O' } })
 
 		await waitFor(() => {
 			expect(screen.getByText('Loading...')).toBeInTheDocument()

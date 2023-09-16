@@ -9,10 +9,12 @@
 		"postbuild": "node ./scripts/generate-sitemap.mjs",
 		"start": "next start",
 		"start:debug": "NODE_OPTIONS='--inspect=0.0.0.0:9998' next dev",
-		"lint": "next lint",
+		"format": "prettier --write ./pages/**/*.{js,ts,tsx,jsx,html} ./components/**/*.{js,ts,tsx,jsx,html}",
+		"lint": "next lint --fix",
 		"tsc": "tsc",
 		"test": "jest --watch",
-		"test-merge": "jest"
+		"test:merge": "jest",
+		"prepare": "husky install"
 	},
 	"dependencies": {
 		"@hcaptcha/react-hcaptcha": "^1.4.3",
@@ -70,6 +72,7 @@
 		"redux-mock-store": "^1.5.4",
 		"tailwindcss": "^3.3.3",
 		"ts-jest": "^29.0.5",
-		"typescript": "^4.7.4"
+		"typescript": "^4.7.4",
+		"husky": "^8.0.0"
 	}
 }

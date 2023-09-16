@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import {render, screen, fireEvent} from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import AddUserModal from './AddUserModal'
 
 describe('AddUserModal', () => {
@@ -18,7 +18,7 @@ describe('AddUserModal', () => {
 		)
 
 		const nameInput = screen.getByLabelText('Name')
-		fireEvent.change(nameInput, {target: {value: 'John Doe'}})
+		fireEvent.change(nameInput, { target: { value: 'John Doe' } })
 
 		expect(setName).toHaveBeenCalledWith('John Doe')
 	})
@@ -36,7 +36,7 @@ describe('AddUserModal', () => {
 		)
 
 		const emailInput = screen.getByLabelText('Email address')
-		fireEvent.change(emailInput, {target: {value: 'john.doe@example.com'}})
+		fireEvent.change(emailInput, { target: { value: 'john.doe@example.com' } })
 
 		expect(setEmail).toHaveBeenCalledWith('john.doe@example.com')
 	})
@@ -54,7 +54,7 @@ describe('AddUserModal', () => {
 		)
 
 		const passwordInput = screen.getByLabelText('Temporary Password')
-		fireEvent.change(passwordInput, {target: {value: 'tempPassword'}})
+		fireEvent.change(passwordInput, { target: { value: 'tempPassword' } })
 
 		expect(setPassword).toHaveBeenCalledWith('tempPassword')
 	})

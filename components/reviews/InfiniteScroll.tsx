@@ -1,6 +1,6 @@
-import React, {useState, useEffect, Dispatch, SetStateAction} from 'react'
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import ReviewTable from './review-table'
-import {Review} from '@/util/interfaces/interfaces'
+import { Review } from '@/util/interfaces/interfaces'
 
 interface IProps {
 	data: Review[]
@@ -23,7 +23,7 @@ function InfiniteScroll({
 	setPage,
 	hasMore,
 	isLoading,
-	setIsLoading
+	setIsLoading,
 }: IProps) {
 	const [content, setContent] = useState<Review[]>([]) // Store loaded content
 	// Add a scroll event listener
@@ -63,8 +63,8 @@ function InfiniteScroll({
 				setEditReviewOpen={setEditReviewOpen}
 			/>
 			{isLoading && (
-				<div className="flex w-full items-center justify-center">
-					<div className="h-16 w-16 animate-spin rounded-full border-t-4 border-b-4 border-teal-400"></div>
+				<div className='flex w-full items-center justify-center'>
+					<div className='h-16 w-16 animate-spin rounded-full border-b-4 border-t-4 border-teal-400'></div>
 				</div>
 			)}
 		</div>

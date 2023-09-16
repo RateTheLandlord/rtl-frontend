@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import {render, fireEvent} from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import RatingsRadio from './ratings-radio'
 
 describe('RatingsRadio component', () => {
@@ -12,7 +12,7 @@ describe('RatingsRadio component', () => {
 		const rating = 3
 		const tooltip = 'Tooltip text'
 
-		const {getByText} = render(
+		const { getByText } = render(
 			<RatingsRadio
 				title={title}
 				rating={rating}

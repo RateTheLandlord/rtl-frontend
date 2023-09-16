@@ -1,6 +1,8 @@
-import {NextApiRequest, NextApiResponse} from 'next'
+import { runMiddleware } from '@/util/cors'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-const getLandlords = (req: NextApiRequest, res: NextApiResponse) => {
+const getLandlords = async (req: NextApiRequest, res: NextApiResponse) => {
+	await runMiddleware(req, res)
 	const url = process.env.API_URL as string
 
 	fetch(`${url}/review/landlords`, {
@@ -21,7 +23,7 @@ const getLandlords = (req: NextApiRequest, res: NextApiResponse) => {
 			console.log(err)
 			res
 				.status(err.status)
-				.json({error: 'Failed to get Landlords', response: err.statusText})
+				.json({ error: 'Failed to get Landlords', response: err.statusText })
 		})
 }
 

@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 
 import AddReviewModal from './add-review-modal'
 import Alert from '../alerts/Alert'
@@ -10,27 +10,27 @@ import MaliciousStringAlert from '../alerts/MaliciousStringAlert'
 import RatingsRadio from './ratings-radio'
 import SuccessModal from './success-modal'
 import countries from '@/util/countries/countries.json'
-import {postcodeValidator} from 'postcode-validator'
+import { postcodeValidator } from 'postcode-validator'
 import provinces from '@/util/countries/canada/provinces.json'
 import regions from '@/util/countries/unitedKingdom/regions.json'
 import states from '@/util/countries/unitedStates/states.json'
 import territories from '@/util/countries/australia/territories.json'
 import nz_provinces from '@/util/countries/newZealand/nz-provinces.json'
-import {useTranslation} from 'react-i18next'
-import {country_codes} from '@/util/helpers/getCountryCodes'
+import { useTranslation } from 'react-i18next'
+import { country_codes } from '@/util/helpers/getCountryCodes'
 import SpamReviewModal from '@/components/create-review/SpamReviewModal'
 import SheldonModal from '@/components/create-review/SheldonModal'
-import {sheldonReview} from '@/components/create-review/helper'
-import {useLocation} from '@/util/hooks/useLocation'
-import {useLandlordSuggestions} from '@/util/hooks/useLandlordSuggestions'
+import { sheldonReview } from '@/components/create-review/helper'
+import { useLocation } from '@/util/hooks/useLocation'
+import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
 import CityComboBox from '@/components/create-review/components/CityComboBox'
 import LandlordComboBox from '@/components/create-review/components/LandlordComboBox'
-import {ILocationHookResponse} from '@/util/interfaces/interfaces'
+import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 
 const siteKey = process.env.NEXT_PUBLIC_HCPATCHA_SITE_KEY as string
 
 function ReviewForm(): JSX.Element {
-	const {t} = useTranslation('create')
+	const { t } = useTranslation('create')
 
 	const [success, setSuccess] = useState(false)
 	const [alertOpen, setAlertOpen] = useState(false)
@@ -49,12 +49,12 @@ function ReviewForm(): JSX.Element {
 	const {
 		searching,
 		locations,
-	}: {searching: boolean; locations: Array<ILocationHookResponse>} =
+	}: { searching: boolean; locations: Array<ILocationHookResponse> } =
 		useLocation(city, country)
 	const {
 		isSearching,
 		landlordSuggestions,
-	}: {isSearching: boolean; landlordSuggestions: Array<string>} =
+	}: { isSearching: boolean; landlordSuggestions: Array<string> } =
 		useLandlordSuggestions(landlord)
 
 	const [repair, setRepair] = useState<number>(3)
@@ -198,7 +198,7 @@ function ReviewForm(): JSX.Element {
 		} else {
 			if (postcodeValidator(postal, country)) {
 				setLoading(true)
-				fetch(`/api/submit-review`, {
+				fetch(`/api/review/submit-review`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
@@ -272,20 +272,20 @@ function ReviewForm(): JSX.Element {
 		}
 	}, [country])
 
-	const setLandlordName = (landlordName:string) => {
+	const setLandlordName = (landlordName: string) => {
 		setLandlordValidationError(false)
 		setLandlord(landlordName)
 	}
 
-	const setCityName = (cityName:string) => {
+	const setCityName = (cityName: string) => {
 		setCityValidationError(false)
 		setCity(cityName)
 	}
 
 	return (
 		<div
-			className="container flex w-full flex-col items-center px-4 sm:px-0"
-			data-testid="create-review-form-1"
+			className='container flex w-full flex-col items-center px-4 sm:px-0'
+			data-testid='create-review-form-1'
 		>
 			{alertOpen ? (
 				<Alert success={success} setAlertOpen={setAlertOpen} />
@@ -303,27 +303,27 @@ function ReviewForm(): JSX.Element {
 				isOpen={sheldonReviewOpen}
 				setIsOpen={setSheldonReviewOpen}
 			/>
-			<div className="my-3 w-full">
-				<h1 className="border-b-2 border-b-teal-600 text-4xl font-extrabold">
+			<div className='my-3 w-full'>
+				<h1 className='border-b-2 border-b-teal-600 text-4xl font-extrabold'>
 					{t('create-review.review-form.header')}
 				</h1>
 			</div>
 			<form
 				onSubmit={handleSubmit}
-				className="w-full space-y-8 divide-y divide-gray-200"
+				className='w-full space-y-8 divide-y divide-gray-200'
 			>
-				<div className="space-y-8 divide-y divide-gray-200">
-					<div className="pt-8">
+				<div className='space-y-8 divide-y divide-gray-200'>
+					<div className='pt-8'>
 						<div>
-							<h3 className="text-lg font-medium leading-6 text-gray-900">
+							<h3 className='text-lg font-medium leading-6 text-gray-900'>
 								{t('create-review.review-form.title')}
 							</h3>
-							<p className="mt-1 text-sm text-gray-500">
+							<p className='mt-1 text-sm text-gray-500'>
 								{t('create-review.review-form.sub')}
 							</p>
 						</div>
-						<div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-							<div className="sm:col-span-3">
+						<div className='mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-6'>
+							<div className='sm:col-span-3'>
 								<LandlordComboBox
 									name={t('create-review.review-form.landlord')}
 									state={landlord}
@@ -335,20 +335,20 @@ function ReviewForm(): JSX.Element {
 								/>
 							</div>
 
-							<div className="sm:col-span-3">
+							<div className='sm:col-span-3'>
 								<label
-									htmlFor="country"
-									className="block text-sm font-medium text-gray-700"
+									htmlFor='country'
+									className='block text-sm font-medium text-gray-700'
 								>
 									{t('create-review.review-form.country')}
 								</label>
-								<div className="mt-1">
+								<div className='mt-1'>
 									<select
-										id="country"
-										name="country"
+										id='country'
+										name='country'
 										required
 										onChange={(e) => setCountry(e.target.value)}
-										className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+										className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 									>
 										{country_codes.map((country) => {
 											if (country === 'CA') {
@@ -369,7 +369,7 @@ function ReviewForm(): JSX.Element {
 								</div>
 							</div>
 
-							<div className="sm:col-span-2">
+							<div className='sm:col-span-2'>
 								<CityComboBox
 									name={t('create-review.review-form.city')}
 									state={city}
@@ -381,22 +381,22 @@ function ReviewForm(): JSX.Element {
 								/>
 							</div>
 
-							<div className="sm:col-span-2">
+							<div className='sm:col-span-2'>
 								<label
-									htmlFor="region"
-									className="block text-sm font-medium text-gray-700"
+									htmlFor='region'
+									className='block text-sm font-medium text-gray-700'
 								>
 									{country === 'GB'
 										? t('create-review.review-form.region')
 										: t('create-review.review-form.state')}
 								</label>
-								<div className="mt-1">
+								<div className='mt-1'>
 									<select
-										id="region"
-										name="region"
+										id='region'
+										name='region'
 										required
 										onChange={(e) => setProvince(e.target.value)}
-										className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+										className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 									>
 										{country === 'CA'
 											? provinces.map((province) => {
@@ -444,37 +444,37 @@ function ReviewForm(): JSX.Element {
 								</div>
 							</div>
 
-							<div className="sm:col-span-2">
+							<div className='sm:col-span-2'>
 								<label
-									htmlFor="postal-code"
-									className="block text-sm font-medium text-gray-700"
+									htmlFor='postal-code'
+									className='block text-sm font-medium text-gray-700'
 								>
 									{t('create-review.review-form.zip')}
 								</label>
-								<div className="mt-1">
+								<div className='mt-1'>
 									<input
-										type="text"
-										name="postal-code"
-										id="postal-code"
+										type='text'
+										name='postal-code'
+										id='postal-code'
 										placeholder={t('create-review.review-form.zip')}
 										required
 										onChange={(e) => handleTextChange(e, 'postal')}
 										className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
 											postalError ? 'border-red-400' : ''
 										}`}
-										data-testid="create-review-form-postal-code-1"
+										data-testid='create-review-form-postal-code-1'
 									/>
 								</div>
 								{postalError ? (
-									<p className="text-xs text-red-400">
+									<p className='text-xs text-red-400'>
 										{t('create-review.review-form.postal-error')}
 									</p>
 								) : null}
 							</div>
 						</div>
 					</div>
-					<div className="flex flex-col gap-2">
-						<h3 className="mt-2 text-lg font-medium leading-6 text-gray-900">
+					<div className='flex flex-col gap-2'>
+						<h3 className='mt-2 text-lg font-medium leading-6 text-gray-900'>
 							{t('create-review.review-form.rate-title')}
 						</h3>
 						<RatingsRadio
@@ -515,114 +515,118 @@ function ReviewForm(): JSX.Element {
 				</div>
 				<div>
 					<label
-						htmlFor="comment"
-						className="mt-2 block text-sm font-medium text-gray-700"
+						htmlFor='comment'
+						className='mt-2 block text-sm font-medium text-gray-700'
 					>
 						{t('create-review.review-form.review')}
 					</label>
-					<div className="mt-1">
+					<div className='mt-1'>
 						<textarea
 							rows={4}
-							name="comment"
-							id="comment"
+							name='comment'
+							id='comment'
 							onChange={(e) => handleTextChange(e, 'review')}
-							className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+							className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 							defaultValue={''}
-							data-testid="create-review-form-text-1"
+							data-testid='create-review-form-text-1'
 						/>
-						<div className="flex w-full justify-end">
+						<div className='flex w-full justify-end'>
 							<p
 								className={`text-xs ${
 									review.length > 2000 ? 'text-red-400' : 'text-black'
 								}`}
 							>
-								{t('create-review.review-form.limit', {length: review.length})}
+								{t('create-review.review-form.limit', {
+									length: review.length,
+								})}
 							</p>
 						</div>
 					</div>
 					<div>
-						<p className="text-sm font-extrabold text-gray-500">
+						<p className='text-sm font-extrabold text-gray-500'>
 							{t('create-review.review-form.civil')}
 						</p>
 					</div>
 				</div>
 
-				<div className="w-full py-5">
-					<div className="mb-2 flex w-full justify-start space-x-2">
-						<div className="flex h-5 items-center">
+				<div className='w-full py-5'>
+					<div className='mb-2 flex w-full justify-start space-x-2'>
+						<div className='flex h-5 items-center'>
 							<input
-								id="terms"
-								name="terms"
-								type="checkbox"
+								id='terms'
+								name='terms'
+								type='checkbox'
 								checked={disclaimerOne}
 								onChange={() => setDisclaimerOne((p) => !p)}
-								className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
-						<label htmlFor="terms" className="text-sm text-gray-500">
+						<label htmlFor='terms' className='text-sm text-gray-500'>
 							{t('create-review.review-form.disclaimer-1')}
 						</label>
 					</div>
-					<div className="mb-2 flex w-full justify-start space-x-2">
-						<div className="flex h-5 items-center">
+					<div className='mb-2 flex w-full justify-start space-x-2'>
+						<div className='flex h-5 items-center'>
 							<input
-								id="terms"
-								name="terms"
-								type="checkbox"
+								id='terms'
+								name='terms'
+								type='checkbox'
 								checked={disclaimerTwo}
 								onChange={() => setDisclaimerTwo((p) => !p)}
-								className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
-						<label htmlFor="terms" className="text-sm text-gray-500">
+						<label htmlFor='terms' className='text-sm text-gray-500'>
 							{t('create-review.review-form.disclaimer-2')}
 						</label>
 					</div>
-					<div className="mb-2 flex w-full justify-start space-x-2">
-						<div className="flex h-5 items-center">
+					<div className='mb-2 flex w-full justify-start space-x-2'>
+						<div className='flex h-5 items-center'>
 							<input
-								id="terms"
-								name="terms"
-								type="checkbox"
+								id='terms'
+								name='terms'
+								type='checkbox'
 								checked={disclaimerThree}
 								onChange={() => setDisclaimerThree((p) => !p)}
-								className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
-						<label htmlFor="terms" className="text-sm text-gray-500">
+						<label htmlFor='terms' className='text-sm text-gray-500'>
 							{t('create-review.review-form.disclaimer-3')}
 						</label>
 					</div>
 
 					<div
-						data-testid="create-review-form-captcha-1"
-						className="my-2 flex justify-center"
+						data-testid='create-review-form-captcha-1'
+						className='my-2 flex justify-center'
 					>
 						<HCaptcha sitekey={siteKey} onVerify={onVerifyCaptcha} />
 					</div>
 
 					<div
-						className="flex justify-center sm:justify-end"
-						data-testid="create-review-form-submit-button-1"
+						className='flex justify-center sm:justify-end'
+						data-testid='create-review-form-submit-button-1'
 					>
-						<ButtonLight umami="Create Review / Reset Button">{t('create-review.review-form.reset')}</ButtonLight>
+						<ButtonLight umami='Create Review / Reset Button'>
+							{t('create-review.review-form.reset')}
+						</ButtonLight>
 						{loading ? (
 							<div
-								className={`hover:bg-teal-700' } ml-3 inline-flex justify-center rounded-md border border-transparent bg-teal-200 bg-teal-600 py-2 px-4 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500
+								className={`hover:bg-teal-700' } ml-3 inline-flex justify-center rounded-md border border-transparent bg-teal-200 bg-teal-600 px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500
 							focus:ring-offset-2`}
 							>
 								<div
-									className="text-primary inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-									role="status"
+									className='text-primary inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]'
+									role='status'
 								>
-									<span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+									<span className='!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]'>
 										Loading...
 									</span>
 								</div>
 							</div>
 						) : (
 							<Button
-								umami="Create Review / Submit Button"
+								umami='Create Review / Submit Button'
 								disabled={
 									!token ||
 									!disclaimerOne ||

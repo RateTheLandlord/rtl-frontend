@@ -1,18 +1,20 @@
-import {NextApiRequest, NextApiResponse} from 'next'
+import { runMiddleware } from '@/util/cors'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 interface IBody {
 	id: number
 	password: string
 }
 
-const updatePassword = (req: NextApiRequest, res: NextApiResponse) => {
+const updatePassword = async (req: NextApiRequest, res: NextApiResponse) => {
+	await runMiddleware(req, res)
 	const url = process.env.API_URL as string
 
 	const cookies = req.cookies
 	const jwt: string = cookies.ratethelandlord || ''
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const {body}: {body: IBody} = req
+	const { body }: { body: IBody } = req
 
 	const id = body.id
 	const password = body.password
@@ -23,7 +25,7 @@ const updatePassword = (req: NextApiRequest, res: NextApiResponse) => {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${jwt}`,
 		},
-		body: JSON.stringify({password: password}),
+		body: JSON.stringify({ password: password }),
 	})
 		.then((result: Response) => {
 			if (!result.ok) {
@@ -37,7 +39,7 @@ const updatePassword = (req: NextApiRequest, res: NextApiResponse) => {
 		.catch((err: Response) => {
 			return res
 				.status(err.status)
-				.json({error: 'Failed to edit password', response: err.statusText})
+				.json({ error: 'Failed to edit password', response: err.statusText })
 		})
 }
 
