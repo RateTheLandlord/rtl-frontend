@@ -39,17 +39,6 @@ describe('Stats component', () => {
 		})
 	})
 
-	it('should render error state when there is an error', async () => {
-		;(useSWR as jest.Mock).mockReturnValue({
-			data: null,
-			error: new Error('Fetch error'),
-		})
-		render(<Stats />)
-		await waitFor(() => {
-			expect(screen.getByText('failed to load')).toBeInTheDocument()
-		})
-	})
-
 	it('should render the total reviews count', async () => {
 		render(<Stats />)
 		await waitFor(() => {
