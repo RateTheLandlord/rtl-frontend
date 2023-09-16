@@ -26,7 +26,7 @@ const RemoveReviewModal = ({
 }: IProps) => {
 	const onSubmitRemoveReview = () => {
 		if (selectedReview) {
-			fetch('/api/delete-review', {
+			fetch('/api/review/delete-review', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

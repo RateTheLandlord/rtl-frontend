@@ -53,7 +53,7 @@ const EditReviewModal = ({
 			admin_approved: true,
 			flagged: false,
 		}
-		fetch('/api/edit-review', {
+		fetch('/api/review/edit-review', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

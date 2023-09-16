@@ -36,7 +36,7 @@ export default function LoginForm(): JSX.Element {
 			return
 		}
 
-		fetch('/api/submit-login', {
+		fetch('/api/admin/submit-login', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

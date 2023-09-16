@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-escape */
+import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export const removeSpecialChars = (input: string) => {
@@ -6,7 +7,11 @@ export const removeSpecialChars = (input: string) => {
 	return input.replace(specialCharsRegex, '')
 }
 
-const getLandlordSuggestions = (req: NextApiRequest, res: NextApiResponse) => {
+const getLandlordSuggestions = async (
+	req: NextApiRequest,
+	res: NextApiResponse,
+) => {
+	await runMiddleware(req, res)
 	const url = process.env.API_URL as string
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: { input: string } } = req

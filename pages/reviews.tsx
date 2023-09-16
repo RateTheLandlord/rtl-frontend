@@ -75,7 +75,7 @@ export async function getStaticProps() {
 		return {
 			props: {
 				fallback: {
-					'/api/get-reviews': data ?? fallback,
+					'/api/review/get-reviews': data ?? fallback,
 				},
 			},
 			revalidate: 100,
@@ -84,7 +84,7 @@ export async function getStaticProps() {
 		return {
 			props: {
 				fallback: {
-					'/api/get-reviews': fallback,
+					'/api/review/get-reviews': fallback,
 				},
 			},
 			revalidate: 100,

@@ -1,21 +1,14 @@
+import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-interface IBody {
-	id: number
-}
-
-const GetUser = (req: NextApiRequest, res: NextApiResponse) => {
+const getStats = async (req: NextApiRequest, res: NextApiResponse) => {
+	await runMiddleware(req, res)
 	const url = process.env.API_URL as string
 
 	const cookies = req.cookies
 	const jwt: string = cookies.ratethelandlord || ''
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const { body }: { body: IBody } = req
-
-	const id = body.id
-
-	fetch(`${url}/user/${id}`, {
+	fetch(`${url}/review/stats`, {
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${jwt}`,
@@ -34,8 +27,8 @@ const GetUser = (req: NextApiRequest, res: NextApiResponse) => {
 			console.log(err)
 			res
 				.status(err.status)
-				.json({ error: 'Failed to get User', response: err.statusText })
+				.json({ error: 'Failed to get Stats', response: err.statusText })
 		})
 }
 
-export default GetUser
+export default getStats

@@ -1,18 +1,14 @@
+import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-type IBody = number
-
-const getReviews = (req: NextApiRequest, res: NextApiResponse) => {
+const getReviews = async (req: NextApiRequest, res: NextApiResponse) => {
+	await runMiddleware(req, res)
 	const url = process.env.API_URL as string
 
 	const cookies = req.cookies
 	const jwt: string = cookies.ratethelandlord || ''
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const { body }: { body: IBody } = req
-
-	fetch(`${url}/user/${body}`, {
-		method: 'DELETE',
+	fetch(`${url}/review/flagged`, {
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${jwt}`,
@@ -31,7 +27,7 @@ const getReviews = (req: NextApiRequest, res: NextApiResponse) => {
 			console.log(err)
 			res
 				.status(err.status)
-				.json({ error: 'Failed to delete User', response: err.statusText })
+				.json({ error: 'Failed to get Reviews', response: err.statusText })
 		})
 }
 

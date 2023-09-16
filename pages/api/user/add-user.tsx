@@ -1,10 +1,16 @@
+import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 interface IBody {
-	id: number
+	name: string
+	email: string
+	password: string
+	role: string
+	blocked: boolean
 }
 
-const EditReview = (req: NextApiRequest, res: NextApiResponse) => {
+const AddUser = async (req: NextApiRequest, res: NextApiResponse) => {
+	await runMiddleware(req, res)
 	const url = process.env.API_URL as string
 
 	const cookies = req.cookies
@@ -13,10 +19,8 @@ const EditReview = (req: NextApiRequest, res: NextApiResponse) => {
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req
 
-	const id = body.id
-
-	fetch(`${url}/review/${id}`, {
-		method: 'PUT',
+	fetch(`${url}/user`, {
+		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${jwt}`,
@@ -27,17 +31,14 @@ const EditReview = (req: NextApiRequest, res: NextApiResponse) => {
 			if (!result.ok) {
 				throw result
 			}
-			return result.json()
+			res.status(200).json(result)
 		})
-		.then((data) => {
-			res.status(200).json(data)
-		})
-		.catch((err: Response) => {
-			console.log(err)
+		.catch((error: Response) => {
+			console.log('error: ', error)
 			res
-				.status(err.status)
-				.json({ error: 'Failed to edit Review', response: err.statusText })
+				.status(error.status)
+				.json({ error: 'Failed to Add User', response: error.statusText })
 		})
 }
 
-export default EditReview
+export default AddUser

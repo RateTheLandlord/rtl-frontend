@@ -1,14 +1,10 @@
+import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-interface IBody {
-	name: string
-	email: string
-	password: string
-	role: string
-	blocked: boolean
-}
+type IBody = number
 
-const AddUser = (req: NextApiRequest, res: NextApiResponse) => {
+const getReviews = async (req: NextApiRequest, res: NextApiResponse) => {
+	await runMiddleware(req, res)
 	const url = process.env.API_URL as string
 
 	const cookies = req.cookies
@@ -17,26 +13,28 @@ const AddUser = (req: NextApiRequest, res: NextApiResponse) => {
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req
 
-	fetch(`${url}/user`, {
-		method: 'POST',
+	fetch(`${url}/user/${body}`, {
+		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${jwt}`,
 		},
-		body: JSON.stringify(body),
 	})
 		.then((result: Response) => {
 			if (!result.ok) {
 				throw result
 			}
-			res.status(200).json(result)
+			return result.json()
 		})
-		.catch((error: Response) => {
-			console.log('error: ', error)
+		.then((data) => {
+			res.status(200).json(data)
+		})
+		.catch((err: Response) => {
+			console.log(err)
 			res
-				.status(error.status)
-				.json({ error: 'Failed to Add User', response: error.statusText })
+				.status(err.status)
+				.json({ error: 'Failed to delete User', response: err.statusText })
 		})
 }
 
-export default AddUser
+export default getReviews

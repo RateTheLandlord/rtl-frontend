@@ -72,7 +72,7 @@ const Review = () => {
 	])
 
 	const { data } = useSWR<ReviewsResponse>(
-		`/api/get-reviews?page=${page}&${queryParams.toString()}`,
+		`/api/review/get-reviews?page=${page}&${queryParams.toString()}`,
 		fetcher,
 	)
 
@@ -143,7 +143,7 @@ const Review = () => {
 				<>
 					<EditReviewModal
 						selectedReview={selectedReview}
-						mutateString={`/api/get-reviews?${queryParams.toString()}`}
+						mutateString={`/api/review/get-reviews?${queryParams.toString()}`}
 						setEditReviewOpen={setEditReviewOpen}
 						setSuccess={setSuccess}
 						setRemoveAlertOpen={setRemoveAlertOpen}
@@ -152,7 +152,7 @@ const Review = () => {
 					/>
 					<RemoveReviewModal
 						selectedReview={selectedReview}
-						mutateString={`/api/get-reviews?${queryParams.toString()}`}
+						mutateString={`/api/review/get-reviews?${queryParams.toString()}`}
 						setRemoveReviewOpen={setRemoveReviewOpen}
 						setSuccess={setSuccess}
 						setRemoveAlertOpen={setRemoveAlertOpen}

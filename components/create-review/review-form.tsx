@@ -198,7 +198,7 @@ function ReviewForm(): JSX.Element {
 		} else {
 			if (postcodeValidator(postal, country)) {
 				setLoading(true)
-				fetch(`/api/submit-review`, {
+				fetch(`/api/review/submit-review`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',

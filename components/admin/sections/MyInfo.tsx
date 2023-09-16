@@ -37,7 +37,7 @@ const MyInfo = () => {
 			name: name,
 			email: email,
 		}
-		fetch('/api/update-user', {
+		fetch('/api/user/update-user', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ const MyInfo = () => {
 				id: user.result.id,
 			}
 
-			fetch('/api/update-password', {
+			fetch('/api/user/update-password', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

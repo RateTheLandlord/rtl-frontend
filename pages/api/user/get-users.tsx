@@ -1,11 +1,17 @@
+import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-const getLandlords = (req: NextApiRequest, res: NextApiResponse) => {
+const getUsers = async (req: NextApiRequest, res: NextApiResponse) => {
+	await runMiddleware(req, res)
 	const url = process.env.API_URL as string
 
-	fetch(`${url}/review/landlords`, {
+	const cookies = req.cookies
+	const jwt: string = cookies.ratethelandlord || ''
+
+	fetch(`${url}/user`, {
 		headers: {
 			'Content-Type': 'application/json',
+			Authorization: `Bearer ${jwt}`,
 		},
 	})
 		.then((result: Response) => {
@@ -21,8 +27,8 @@ const getLandlords = (req: NextApiRequest, res: NextApiResponse) => {
 			console.log(err)
 			res
 				.status(err.status)
-				.json({ error: 'Failed to get Landlords', response: err.statusText })
+				.json({ error: 'Failed to get users', response: err.statusText })
 		})
 }
 
-export default getLandlords
+export default getUsers

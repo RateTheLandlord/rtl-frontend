@@ -44,7 +44,10 @@ export interface IStats {
 
 const Stats = () => {
 	const [country, setCountry] = useState<string | null>(null)
-	const { data, error } = useSWR<IStats, boolean>('/api/get-stats', fetcher)
+	const { data, error } = useSWR<IStats, boolean>(
+		'/api/admin/get-stats',
+		fetcher,
+	)
 
 	if (error) return <div>failed to load</div>
 	if (!data) return <div>loading...</div>

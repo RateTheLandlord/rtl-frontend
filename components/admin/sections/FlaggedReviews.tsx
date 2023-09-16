@@ -19,7 +19,7 @@ const FlaggedReviews = () => {
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { data: reviews, error } = useSWR<Array<Review>>(
-		'/api/get-flagged',
+		'/api/admin/get-flagged',
 		fetcher,
 	)
 
@@ -40,7 +40,7 @@ const FlaggedReviews = () => {
 			admin_approved: true,
 			flagged: false,
 		}
-		fetch('/api/edit-review', {
+		fetch('/api/review/edit-review', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ const FlaggedReviews = () => {
 				}
 			})
 			.then(() => {
-				mutate('/api/get-flagged').catch((err) => console.log(err))
+				mutate('/api/admin/get-flagged').catch((err) => console.log(err))
 				setSuccess(true)
 				setRemoveAlertOpen(true)
 			})
@@ -75,7 +75,7 @@ const FlaggedReviews = () => {
 				<>
 					<EditReviewModal
 						selectedReview={selectedReview}
-						mutateString='/api/get-flagged'
+						mutateString='/api/admin/get-flagged'
 						setEditReviewOpen={setEditReviewOpen}
 						setSuccess={setSuccess}
 						setRemoveAlertOpen={setRemoveAlertOpen}
@@ -84,7 +84,7 @@ const FlaggedReviews = () => {
 					/>
 					<RemoveReviewModal
 						selectedReview={selectedReview}
-						mutateString={'/api/get-flagged'}
+						mutateString={'/api/admin/get-flagged'}
 						setRemoveReviewOpen={setRemoveReviewOpen}
 						setSuccess={setSuccess}
 						setRemoveAlertOpen={setRemoveAlertOpen}

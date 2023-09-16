@@ -1,3 +1,4 @@
+import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 interface IBody {
@@ -27,7 +28,8 @@ interface IErrorDetails {
 	error?: string
 }
 
-const SubmitReview = (req: NextApiRequest, res: NextApiResponse) => {
+const SubmitReview = async (req: NextApiRequest, res: NextApiResponse) => {
+	await runMiddleware(req, res)
 	const url = process.env.API_URL as string
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

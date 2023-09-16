@@ -49,7 +49,7 @@ export default function Navbar(): JSX.Element {
 	useEffect(() => {
 		const userID = localStorage.getItem('rtlUserId')
 		if (cookies.ratethelandlord && userID) {
-			fetch('/api/get-user', {
+			fetch('/api/user/get-user', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

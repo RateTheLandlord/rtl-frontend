@@ -33,7 +33,7 @@ const TeamMembers = () => {
 	const [removeAlertOpen, setRemoveAlertOpen] = useState(false)
 
 	const { data: allUsers, error } = useSWR<Array<IUsers>>(
-		'/api/get-users',
+		'/api/user/get-users',
 		fetcher,
 	)
 
@@ -57,7 +57,7 @@ const TeamMembers = () => {
 			blocked: false,
 		}
 
-		fetch('/api/add-user', {
+		fetch('/api/user/add-user', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ const TeamMembers = () => {
 				}
 			})
 			.then(() => {
-				mutate('/api/get-users').catch((err) => console.log(err))
+				mutate('/api/user/get-users').catch((err) => console.log(err))
 				setAddUserOpen(false)
 				setSuccess(true)
 				setRemoveAlertOpen(true)
@@ -83,7 +83,7 @@ const TeamMembers = () => {
 	}
 
 	const onSubmitDeleteUser = (num: number) => {
-		fetch('/api/remove-user', {
+		fetch('/api/user/remove-user', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ const TeamMembers = () => {
 				}
 			})
 			.then(() => {
-				mutate('/api/get-users').catch((err) => console.log(err))
+				mutate('/api/user/get-users').catch((err) => console.log(err))
 				setRemoveUserOpen(false)
 				setSuccess(true)
 				setRemoveAlertOpen(true)

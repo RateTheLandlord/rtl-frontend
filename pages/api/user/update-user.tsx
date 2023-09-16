@@ -1,16 +1,29 @@
+import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-const getStats = (req: NextApiRequest, res: NextApiResponse) => {
+interface IBody {
+	id: number
+}
+
+const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
+	await runMiddleware(req, res)
 	const url = process.env.API_URL as string
 
 	const cookies = req.cookies
 	const jwt: string = cookies.ratethelandlord || ''
 
-	fetch(`${url}/review/stats`, {
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	const { body }: { body: IBody } = req
+
+	const id = body.id
+
+	fetch(`${url}/user/${id}`, {
+		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${jwt}`,
 		},
+		body: JSON.stringify(body),
 	})
 		.then((result: Response) => {
 			if (!result.ok) {
@@ -22,11 +35,10 @@ const getStats = (req: NextApiRequest, res: NextApiResponse) => {
 			res.status(200).json(data)
 		})
 		.catch((err: Response) => {
-			console.log(err)
 			res
 				.status(err.status)
-				.json({ error: 'Failed to get Stats', response: err.statusText })
+				.json({ error: 'Failed to edit User', response: err.statusText })
 		})
 }
 
-export default getStats
+export default updateUser

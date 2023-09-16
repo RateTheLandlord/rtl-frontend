@@ -61,7 +61,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 
 	const handleSubmit = () => {
 		if (selectedReview) {
-			fetch(`/api/flag-review`, {
+			fetch(`/api/review/flag-review`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

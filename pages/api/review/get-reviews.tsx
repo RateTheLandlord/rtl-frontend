@@ -1,6 +1,8 @@
+import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-const getReviews = (req: NextApiRequest, res: NextApiResponse) => {
+const getReviews = async (req: NextApiRequest, res: NextApiResponse) => {
+	await runMiddleware(req, res)
 	const url = process.env.API_URL as string
 	const queryParams = Object.entries(req.query)
 		.map(
