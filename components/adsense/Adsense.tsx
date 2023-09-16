@@ -1,6 +1,6 @@
 import AdSense from 'react-adsense'
 
-const isProd = process.env.NODE_ENV === 'production'
+const isProd = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production'
 
 interface IProps {
 	slot: string
