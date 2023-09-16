@@ -12,14 +12,14 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 # Copy package.json and package-lock.json
 # to the /app working directory
-COPY ./frontend/package*.json  /app/
-COPY ./.env /app/
+COPY package*.json  /app/
+COPY .env /app/
 
 # Install dependencies in /app
 RUN npm ci
 
 # Copy the rest of our Next.js folder into /app
-COPY ./frontend /app
+COPY . /app
 
 ENV NODE_ENV=production
 
