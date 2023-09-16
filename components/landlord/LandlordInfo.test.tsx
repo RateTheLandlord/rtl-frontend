@@ -13,7 +13,7 @@ describe('LandlordInfo', () => {
 	const pushMock = jest.fn()
 
 	beforeEach(() => {
-		;(useRouter as jest.Mock).mockImplementation(() => ({
+		return (useRouter as jest.Mock).mockImplementation(() => ({
 			push: pushMock,
 		}))
 	})
