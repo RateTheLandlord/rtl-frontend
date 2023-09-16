@@ -20,6 +20,9 @@ Then run the following commands:
 The project should not be running at `http://localhost:3000` and pick up changes
 you make in you IDE
 
+Make sure to be running the Backend if you want database information loaded into
+the UI
+
 ## Troubleshooting
 
 #### Captcha Not Working
