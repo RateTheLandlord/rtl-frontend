@@ -5,7 +5,6 @@ on:
     branches: ['production']
 
 jobs:
-
   lint-fe:
     runs-on: ubuntu-latest
 
@@ -59,7 +58,7 @@ jobs:
           touch .env
           echo ENVIRONMENT=${{secrets.ENVIRONMENT}} >> .env
           echo API_URL=${{secrets.API_URL}} >> .env
-          echo NEXT_PUBLIC_HCPATCHA_SITE_KEY=${{secrets.NEXT_PUBLIC_HCPATCHA_SITE_KEY}} >> .env
+          echo NEXT_PUBLIC_HCAPTCHA_SITE_KEY=${{secrets.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}} >> .env
           cat .env
       - name: Pull Docker
         run: docker-compose pull

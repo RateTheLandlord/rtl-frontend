@@ -27,7 +27,7 @@ import CityComboBox from '@/components/create-review/components/CityComboBox'
 import LandlordComboBox from '@/components/create-review/components/LandlordComboBox'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 
-const siteKey = process.env.NEXT_PUBLIC_HCPATCHA_SITE_KEY as string
+const siteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY as string
 
 function ReviewForm(): JSX.Element {
 	const { t } = useTranslation('create')
