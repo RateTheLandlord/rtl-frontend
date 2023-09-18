@@ -2,6 +2,8 @@ FROM node:alpine
 
 ENV PORT 3000
 
+ENV NEXT_PUBLIC_CAPTCHA_SITE_KEY NEXT_PUBLIC_CAPTCHA_SITE_KEY
+
 # where our Next.js app will live
 RUN mkdir -p /app
 
