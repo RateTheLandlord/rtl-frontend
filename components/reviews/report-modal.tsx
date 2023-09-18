@@ -18,7 +18,7 @@ interface IReportReason {
 	reason: string
 }
 
-const siteKey = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string
+const siteKey = '6LcRITMoAAAAAATL4j2kghgihjbGbBK3kT8sLne9'
 
 const reportReasons: Array<IReportReason> = [
 	{

@@ -26,7 +26,7 @@ import LandlordComboBox from '@/components/create-review/components/LandlordComb
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import ReCAPTCHA from 'react-google-recaptcha'
 
-const siteKey = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string
+const siteKey = '6LcRITMoAAAAAATL4j2kghgihjbGbBK3kT8sLne9'
 
 function ReviewForm(): JSX.Element {
 	console.log('Site Key: ', siteKey)
