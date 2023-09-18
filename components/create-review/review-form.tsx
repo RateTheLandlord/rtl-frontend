@@ -1,11 +1,9 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useEffect, useState } from 'react'
-
 import AddReviewModal from './add-review-modal'
 import Alert from '../alerts/Alert'
 import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
-import HCaptcha from '@hcaptcha/react-hcaptcha'
 import MaliciousStringAlert from '../alerts/MaliciousStringAlert'
 import RatingsRadio from './ratings-radio'
 import SuccessModal from './success-modal'
@@ -26,8 +24,9 @@ import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
 import CityComboBox from '@/components/create-review/components/CityComboBox'
 import LandlordComboBox from '@/components/create-review/components/LandlordComboBox'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
+import ReCAPTCHA from 'react-google-recaptcha'
 
-const siteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY as string
+const siteKey = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string
 
 function ReviewForm(): JSX.Element {
 	const { t } = useTranslation('create')
@@ -600,7 +599,7 @@ function ReviewForm(): JSX.Element {
 						data-testid='create-review-form-captcha-1'
 						className='my-2 flex justify-center'
 					>
-						<HCaptcha sitekey={siteKey} onVerify={onVerifyCaptcha} />
+						<ReCAPTCHA sitekey={siteKey} onVerify={onVerifyCaptcha} />
 					</div>
 
 					<div

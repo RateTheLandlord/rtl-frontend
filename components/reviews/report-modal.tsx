@@ -4,7 +4,7 @@ import ButtonLight from '../ui/button-light'
 import Button from '../ui/button'
 import { Review } from '@/util/interfaces/interfaces'
 import { useTranslation } from 'react-i18next'
-import HCaptcha from '@hcaptcha/react-hcaptcha'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 interface IProps {
 	isOpen: boolean
@@ -18,7 +18,7 @@ interface IReportReason {
 	reason: string
 }
 
-const siteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY as string
+const siteKey = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string
 
 const reportReasons: Array<IReportReason> = [
 	{
@@ -218,7 +218,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 							) : null}
 
 							<div className='mb-2 flex justify-center'>
-								<HCaptcha sitekey={siteKey} onVerify={onVerifyCaptcha} />
+								<ReCAPTCHA sitekey={siteKey} onVerify={onVerifyCaptcha} />
 							</div>
 
 							<div className='flex flex-row justify-end'>
