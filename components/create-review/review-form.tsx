@@ -29,6 +29,7 @@ import ReCAPTCHA from 'react-google-recaptcha'
 const siteKey = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string
 
 function ReviewForm(): JSX.Element {
+	console.log('Site Key: ', siteKey)
 	const { t } = useTranslation('create')
 
 	const [success, setSuccess] = useState(false)
