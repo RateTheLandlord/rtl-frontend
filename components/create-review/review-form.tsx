@@ -256,6 +256,8 @@ function ReviewForm(): JSX.Element {
 		setToken(token)
 	}
 
+	console.log(token)
+
 	useEffect(() => {
 		if (country === 'GB') {
 			setProvince('England')
