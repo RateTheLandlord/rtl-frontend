@@ -5,6 +5,7 @@ import Button from '../ui/button'
 import { Review } from '@/util/interfaces/interfaces'
 import { useTranslation } from 'react-i18next'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { CAPTCHA_SITE_KEY } from '@/util/consts'
 
 interface IProps {
 	isOpen: boolean
@@ -17,8 +18,6 @@ interface IReportReason {
 	key: string
 	reason: string
 }
-
-const siteKey = '6LcRITMoAAAAAATL4j2kghgihjbGbBK3kT8sLne9'
 
 const reportReasons: Array<IReportReason> = [
 	{
@@ -218,7 +217,10 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 							) : null}
 
 							<div className='mb-2 flex justify-center'>
-								<ReCAPTCHA sitekey={siteKey} onVerify={onVerifyCaptcha} />
+								<ReCAPTCHA
+									sitekey={CAPTCHA_SITE_KEY}
+									onVerify={onVerifyCaptcha}
+								/>
 							</div>
 
 							<div className='flex flex-row justify-end'>

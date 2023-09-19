@@ -25,11 +25,9 @@ import CityComboBox from '@/components/create-review/components/CityComboBox'
 import LandlordComboBox from '@/components/create-review/components/LandlordComboBox'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import ReCAPTCHA from 'react-google-recaptcha'
-
-const siteKey = '6LcRITMoAAAAAATL4j2kghgihjbGbBK3kT8sLne9'
+import { CAPTCHA_SITE_KEY } from '@/util/consts'
 
 function ReviewForm(): JSX.Element {
-	console.log('Site Key: ', siteKey)
 	const { t } = useTranslation('create')
 
 	const [success, setSuccess] = useState(false)
@@ -600,7 +598,7 @@ function ReviewForm(): JSX.Element {
 						data-testid='create-review-form-captcha-1'
 						className='my-2 flex justify-center'
 					>
-						<ReCAPTCHA sitekey={siteKey} onVerify={onVerifyCaptcha} />
+						<ReCAPTCHA sitekey={CAPTCHA_SITE_KEY} onVerify={onVerifyCaptcha} />
 					</div>
 
 					<div
