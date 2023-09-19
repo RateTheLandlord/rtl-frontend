@@ -4,8 +4,7 @@ import ButtonLight from '../ui/button-light'
 import Button from '../ui/button'
 import { Review } from '@/util/interfaces/interfaces'
 import { useTranslation } from 'react-i18next'
-import ReCAPTCHA from 'react-google-recaptcha'
-import { CAPTCHA_SITE_KEY } from '@/util/consts'
+import { ReCaptcha } from 'next-recaptcha-v3'
 
 interface IProps {
 	isOpen: boolean
@@ -85,10 +84,6 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 					setSubmitError(false)
 				})
 		}
-	}
-
-	const onVerifyCaptcha = (token: string) => {
-		setToken(token)
 	}
 
 	return (
@@ -217,10 +212,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 							) : null}
 
 							<div className='mb-2 flex justify-center'>
-								<ReCAPTCHA
-									sitekey={CAPTCHA_SITE_KEY}
-									onVerify={onVerifyCaptcha}
-								/>
+								<ReCaptcha onValidate={setToken} action='report' />
 							</div>
 
 							<div className='flex flex-row justify-end'>

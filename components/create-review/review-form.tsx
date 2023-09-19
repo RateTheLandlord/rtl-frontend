@@ -24,8 +24,7 @@ import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
 import CityComboBox from '@/components/create-review/components/CityComboBox'
 import LandlordComboBox from '@/components/create-review/components/LandlordComboBox'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
-import ReCAPTCHA from 'react-google-recaptcha'
-import { CAPTCHA_SITE_KEY } from '@/util/consts'
+import { ReCaptcha } from 'next-recaptcha-v3'
 
 function ReviewForm(): JSX.Element {
 	const { t } = useTranslation('create')
@@ -251,12 +250,6 @@ function ReviewForm(): JSX.Element {
 			}
 		}
 	}
-
-	const onVerifyCaptcha = (token: string) => {
-		setToken(token)
-	}
-
-	console.log(token)
 
 	useEffect(() => {
 		if (country === 'GB') {
@@ -600,7 +593,7 @@ function ReviewForm(): JSX.Element {
 						data-testid='create-review-form-captcha-1'
 						className='my-2 flex justify-center'
 					>
-						<ReCAPTCHA sitekey={CAPTCHA_SITE_KEY} onVerify={onVerifyCaptcha} />
+						<ReCaptcha onValidate={setToken} action='review_submit' />
 					</div>
 
 					<div
