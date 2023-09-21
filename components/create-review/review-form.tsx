@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddReviewModal from './add-review-modal'
 import Alert from '../alerts/Alert'
 import Button from '../ui/button'
@@ -172,96 +172,93 @@ function ReviewForm(): JSX.Element {
 		}
 	}, [postal, country, touchedPostal])
 
-	const handleSubmit = useCallback(
-		async (e: React.FormEvent) => {
-			e.preventDefault()
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault()
 
-			if (landlord.trim().length < 1) {
-				setLandlordValidationError(true)
-				setLandlordValidationText('Landlord Name cannot be empty')
-				return
-			}
-			if (checkLandlord(landlord.toLocaleUpperCase())) {
-				setSpamReviewModalOpen(true)
-				return
-			}
-			if (city.trim().length < 1) {
-				setCityValidationError(true)
-				setCityValidationErrorText('City cannot be empty')
-				return
-			}
-			if (checkSheldon()) {
-				setSheldonReviewOpen(true)
-				return
-			}
-			if (review.trim().length < 1) {
-				setReviewModalOpen(true)
-			} else {
-				if (postcodeValidator(postal, country)) {
-					setLoading(true)
-					const token = await executeRecaptcha('review_form')
-					if (token) {
-						fetch(`/api/review/submit-review`, {
-							method: 'POST',
-							headers: {
-								'Content-Type': 'application/json',
+		if (landlord.trim().length < 1) {
+			setLandlordValidationError(true)
+			setLandlordValidationText('Landlord Name cannot be empty')
+			return
+		}
+		if (checkLandlord(landlord.toLocaleUpperCase())) {
+			setSpamReviewModalOpen(true)
+			return
+		}
+		if (city.trim().length < 1) {
+			setCityValidationError(true)
+			setCityValidationErrorText('City cannot be empty')
+			return
+		}
+		if (checkSheldon()) {
+			setSheldonReviewOpen(true)
+			return
+		}
+		if (review.trim().length < 1) {
+			setReviewModalOpen(true)
+		} else {
+			if (postcodeValidator(postal, country)) {
+				setLoading(true)
+				const token = await executeRecaptcha('review_form')
+				if (token) {
+					fetch(`/api/review/submit-review`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							captchaToken: token,
+							review: {
+								landlord: landlord.trim(),
+								country_code: country,
+								city: city.trim(),
+								state: province,
+								zip: postal.trim(),
+								review: review.trim(),
+								repair: repair,
+								health: health,
+								stability: stability,
+								privacy: privacy,
+								respect: respect,
+								flagged: false,
+								flagged_reason: '',
+								admin_approved: false,
+								admin_edited: false,
 							},
-							body: JSON.stringify({
-								captchaToken: token,
-								review: {
-									landlord: landlord.trim(),
-									country_code: country,
-									city: city.trim(),
-									state: province,
-									zip: postal.trim(),
-									review: review.trim(),
-									repair: repair,
-									health: health,
-									stability: stability,
-									privacy: privacy,
-									respect: respect,
-									flagged: false,
-									flagged_reason: '',
-									admin_approved: false,
-									admin_edited: false,
-								},
-							}),
+						}),
+					})
+						.then((result: Response) => {
+							if (!result.ok) {
+								throw new Error()
+							} else {
+								return result.json()
+							}
 						})
-							.then((result: Response) => {
-								if (!result.ok) {
-									throw new Error()
-								} else {
-									return result.json()
-								}
-							})
-							.then(() => {
-								setSuccessModalOpen(true)
-								const storageItem = localStorage.getItem('rtl')
-								if (storageItem) {
-									const newItem = `${storageItem},${landlord.toLocaleUpperCase()}`
-									localStorage.setItem('rtl', newItem)
-								} else {
-									localStorage.setItem('rtl', `${landlord.toLocaleUpperCase()}`)
-								}
-							})
-							.catch(() => {
-								setSuccess(false)
-								setAlertOpen(true)
-							})
-							.finally(() => {
-								setLoading(false)
-							})
-					} else {
-						setSuccess(false)
-						setAlertOpen(true)
-					}
+						.then(() => {
+							setSuccessModalOpen(true)
+							const storageItem = localStorage.getItem('rtl')
+							if (storageItem) {
+								const newItem = `${storageItem},${landlord.toLocaleUpperCase()}`
+								localStorage.setItem('rtl', newItem)
+							} else {
+								localStorage.setItem('rtl', `${landlord.toLocaleUpperCase()}`)
+							}
+						})
+						.catch(() => {
+							setSuccess(false)
+							setAlertOpen(true)
+						})
+						.finally(() => {
+							setLoading(false)
+						})
 				} else {
-					setPostalError(true)
+					setSuccess(false)
+					setAlertOpen(true)
 				}
+			} else {
+				setPostalError(true)
 			}
-		},
-		[executeRecaptcha],
-	)
+		}
+	}
 
 	useEffect(() => {
 		if (country === 'GB') {
