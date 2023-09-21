@@ -598,13 +598,6 @@ function ReviewForm(): JSX.Element {
 						</label>
 					</div>
 
-					{/* <div
-						data-testid='create-review-form-captcha-1'
-						className='my-2 flex justify-center'
-					>
-						<ReCaptcha onValidate={setToken} action='review_submit' />
-					</div> */}
-
 					<div
 						className='flex justify-center sm:justify-end'
 						data-testid='create-review-form-submit-button-1'

@@ -4,7 +4,7 @@ import ButtonLight from '../ui/button-light'
 import Button from '../ui/button'
 import { Review } from '@/util/interfaces/interfaces'
 import { useTranslation } from 'react-i18next'
-import { ReCaptcha } from 'next-recaptcha-v3'
+import { useReCaptcha } from 'next-recaptcha-v3'
 
 interface IProps {
 	isOpen: boolean
@@ -55,34 +55,39 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 
 	const [submitSuccess, setSubmitSuccess] = useState(false)
 	const [submitError, setSubmitError] = useState(false)
-	const [token, setToken] = useState<string>('')
+	const { executeRecaptcha } = useReCaptcha()
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		if (selectedReview) {
-			fetch(`/api/review/flag-review`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					id: selectedReview.id,
-					captchaToken: token,
-					flagged_reason: reason,
-				}),
-			})
-				.then((result: Response) => {
-					if (!result.ok) {
-						throw new Error()
-					} else {
-						return result.json()
-					}
+			const token = await executeRecaptcha('report_modal')
+			if (token) {
+				fetch(`/api/review/flag-review`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						id: selectedReview.id,
+						captchaToken: token,
+						flagged_reason: reason,
+					}),
 				})
-				.then(() => {
-					setSubmitSuccess(true)
-				})
-				.catch(() => {
-					setSubmitError(false)
-				})
+					.then((result: Response) => {
+						if (!result.ok) {
+							throw new Error()
+						} else {
+							return result.json()
+						}
+					})
+					.then(() => {
+						setSubmitSuccess(true)
+					})
+					.catch(() => {
+						setSubmitError(false)
+					})
+			} else {
+				setSubmitError(true)
+			}
 		}
 	}
 
@@ -211,10 +216,6 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 								</div>
 							) : null}
 
-							<div className='mb-2 flex justify-center'>
-								<ReCaptcha onValidate={setToken} action='report' />
-							</div>
-
 							<div className='flex flex-row justify-end'>
 								<ButtonLight
 									umami='Report Review Modal / Cancel Button'
@@ -229,7 +230,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 								<Button
 									umami='Report Review Modal / Submit Button'
 									onClick={() => handleSubmit()}
-									disabled={!token || reason.length >= 255}
+									disabled={reason.length >= 255}
 								>
 									{t('reviews.report.submit')}
 								</Button>

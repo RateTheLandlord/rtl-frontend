@@ -3,8 +3,6 @@
  */
 import { render, screen } from '@testing-library/react'
 import LandlordPage from './LandlordPage'
-import { ReCaptchaProvider } from 'next-recaptcha-v3'
-import { CAPTCHA_SITE_KEY } from '@/util/consts'
 
 describe('LandlordPage', () => {
 	const landlord = 'John Doe'
@@ -33,11 +31,7 @@ describe('LandlordPage', () => {
 	]
 
 	beforeEach(() => {
-		render(
-			<ReCaptchaProvider reCaptchaKey={CAPTCHA_SITE_KEY} useEnterprise>
-				<LandlordPage landlord={landlord} reviews={reviews} />
-			</ReCaptchaProvider>,
-		)
+		render(<LandlordPage landlord={landlord} reviews={reviews} />)
 	})
 
 	it('renders the landlord information', () => {
