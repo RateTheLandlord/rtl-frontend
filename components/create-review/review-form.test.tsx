@@ -30,7 +30,6 @@ test('Review Form component renders all fields', () => {
 		result.getByTestId('create-review-form-postal-code-1'),
 	).toBeInTheDocument()
 	expect(result.getByTestId('create-review-form-text-1')).toBeInTheDocument()
-	expect(result.getByTestId('create-review-form-captcha-1')).toBeInTheDocument()
 	expect(
 		result.getByTestId('create-review-form-submit-button-1'),
 	).toBeInTheDocument()

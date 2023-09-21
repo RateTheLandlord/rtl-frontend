@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import AddReviewModal from './add-review-modal'
 import Alert from '../alerts/Alert'
 import Button from '../ui/button'
@@ -24,7 +24,7 @@ import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
 import CityComboBox from '@/components/create-review/components/CityComboBox'
 import LandlordComboBox from '@/components/create-review/components/LandlordComboBox'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
-import { ReCaptcha } from 'next-recaptcha-v3'
+import { useReCaptcha } from 'next-recaptcha-v3'
 
 function ReviewForm(): JSX.Element {
 	const { t } = useTranslation('create')
@@ -64,7 +64,7 @@ function ReviewForm(): JSX.Element {
 	const [disclaimerOne, setDisclaimerOne] = useState(false)
 	const [disclaimerTwo, setDisclaimerTwo] = useState(false)
 	const [disclaimerThree, setDisclaimerThree] = useState(false)
-	const [token, setToken] = useState<string>('')
+	// const [token, setToken] = useState<string>('')
 	const [loading, setLoading] = useState<boolean>(false)
 
 	const [postalError, setPostalError] = useState(false)
@@ -78,6 +78,8 @@ function ReviewForm(): JSX.Element {
 
 	// Additional state for disabling submit
 	const [maliciousStringDetected, setMaliciousStringDetected] = useState(false)
+
+	const { executeRecaptcha } = useReCaptcha()
 
 	// Check for already reviewed landlord from browser
 	const [localReviewedLandlords, setLocalReviewedLandlords] =
@@ -170,86 +172,96 @@ function ReviewForm(): JSX.Element {
 		}
 	}, [postal, country, touchedPostal])
 
-	const handleSubmit = (e: React.FormEvent): void => {
-		e.preventDefault()
-		if (landlord.trim().length < 1) {
-			setLandlordValidationError(true)
-			setLandlordValidationText('Landlord Name cannot be empty')
-			return
-		}
-		if (checkLandlord(landlord.toLocaleUpperCase())) {
-			setSpamReviewModalOpen(true)
-			return
-		}
-		if (city.trim().length < 1) {
-			setCityValidationError(true)
-			setCityValidationErrorText('City cannot be empty')
-			return
-		}
-		if (checkSheldon()) {
-			setSheldonReviewOpen(true)
-			return
-		}
-		if (review.trim().length < 1) {
-			setReviewModalOpen(true)
-		} else {
-			if (postcodeValidator(postal, country)) {
-				setLoading(true)
-				fetch(`/api/review/submit-review`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						captchaToken: token,
-						review: {
-							landlord: landlord.trim(),
-							country_code: country,
-							city: city.trim(),
-							state: province,
-							zip: postal.trim(),
-							review: review.trim(),
-							repair: repair,
-							health: health,
-							stability: stability,
-							privacy: privacy,
-							respect: respect,
-							flagged: false,
-							flagged_reason: '',
-							admin_approved: false,
-							admin_edited: false,
-						},
-					}),
-				})
-					.then((result: Response) => {
-						if (!result.ok) {
-							throw new Error()
-						} else {
-							return result.json()
-						}
-					})
-					.then(() => {
-						setSuccessModalOpen(true)
-						const storageItem = localStorage.getItem('rtl')
-						if (storageItem) {
-							const newItem = `${storageItem},${landlord.toLocaleUpperCase()}`
-							localStorage.setItem('rtl', newItem)
-						} else {
-							localStorage.setItem('rtl', `${landlord.toLocaleUpperCase()}`)
-						}
-					})
-					.catch(() => {
+	const handleSubmit = useCallback(
+		async (e: React.FormEvent) => {
+			e.preventDefault()
+
+			if (landlord.trim().length < 1) {
+				setLandlordValidationError(true)
+				setLandlordValidationText('Landlord Name cannot be empty')
+				return
+			}
+			if (checkLandlord(landlord.toLocaleUpperCase())) {
+				setSpamReviewModalOpen(true)
+				return
+			}
+			if (city.trim().length < 1) {
+				setCityValidationError(true)
+				setCityValidationErrorText('City cannot be empty')
+				return
+			}
+			if (checkSheldon()) {
+				setSheldonReviewOpen(true)
+				return
+			}
+			if (review.trim().length < 1) {
+				setReviewModalOpen(true)
+			} else {
+				if (postcodeValidator(postal, country)) {
+					setLoading(true)
+					const token = await executeRecaptcha('review_form')
+					if (token) {
+						fetch(`/api/review/submit-review`, {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify({
+								captchaToken: token,
+								review: {
+									landlord: landlord.trim(),
+									country_code: country,
+									city: city.trim(),
+									state: province,
+									zip: postal.trim(),
+									review: review.trim(),
+									repair: repair,
+									health: health,
+									stability: stability,
+									privacy: privacy,
+									respect: respect,
+									flagged: false,
+									flagged_reason: '',
+									admin_approved: false,
+									admin_edited: false,
+								},
+							}),
+						})
+							.then((result: Response) => {
+								if (!result.ok) {
+									throw new Error()
+								} else {
+									return result.json()
+								}
+							})
+							.then(() => {
+								setSuccessModalOpen(true)
+								const storageItem = localStorage.getItem('rtl')
+								if (storageItem) {
+									const newItem = `${storageItem},${landlord.toLocaleUpperCase()}`
+									localStorage.setItem('rtl', newItem)
+								} else {
+									localStorage.setItem('rtl', `${landlord.toLocaleUpperCase()}`)
+								}
+							})
+							.catch(() => {
+								setSuccess(false)
+								setAlertOpen(true)
+							})
+							.finally(() => {
+								setLoading(false)
+							})
+					} else {
 						setSuccess(false)
 						setAlertOpen(true)
-					})
-					.finally(() => {
-						setLoading(false)
-					})
-			} else {
-				setPostalError(true)
+					}
+				} else {
+					setPostalError(true)
+				}
 			}
-		}
-	}
+		},
+		[executeRecaptcha],
+	)
 
 	useEffect(() => {
 		if (country === 'GB') {
@@ -589,12 +601,12 @@ function ReviewForm(): JSX.Element {
 						</label>
 					</div>
 
-					<div
+					{/* <div
 						data-testid='create-review-form-captcha-1'
 						className='my-2 flex justify-center'
 					>
 						<ReCaptcha onValidate={setToken} action='review_submit' />
-					</div>
+					</div> */}
 
 					<div
 						className='flex justify-center sm:justify-end'
@@ -621,7 +633,6 @@ function ReviewForm(): JSX.Element {
 							<Button
 								umami='Create Review / Submit Button'
 								disabled={
-									!token ||
 									!disclaimerOne ||
 									!disclaimerTwo ||
 									!disclaimerThree ||

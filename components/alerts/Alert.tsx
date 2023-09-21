@@ -10,7 +10,10 @@ interface IProps {
 const Alert = ({ success, setAlertOpen }: IProps) => {
 	const { t } = useTranslation('alerts')
 	return (
-		<div className='rounded-md bg-green-50 p-4' data-testid='alert-1'>
+		<div
+			className='sticky top-0 rounded-md bg-green-50 p-4'
+			data-testid='alert-1'
+		>
 			<div className='flex'>
 				<div className='flex-shrink-0'>
 					{success ? (
