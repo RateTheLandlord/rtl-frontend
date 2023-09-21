@@ -80,6 +80,8 @@ export async function getStaticPaths() {
 			params: { landlord: encodeURIComponent(landlord) },
 		}))
 
+		console.log('PATHS FOUND: ', paths.length)
+
 		return {
 			paths: paths,
 			fallback: 'blocking',
@@ -110,6 +112,7 @@ export async function getStaticProps({
 		)
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const data: Review[] = await req.json()
+		console.log('PAGE BUILT FOR : ', params.landlord)
 		return {
 			props: {
 				landlord: params.landlord,
