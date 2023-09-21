@@ -112,7 +112,7 @@ export async function getStaticProps({
 		)
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const data: Review[] = await req.json()
-		console.log('PAGE BUILT FOR : ', params.landlord)
+		console.log('PAGE BUILT FOR : ', params.landlord, 'Reviews: ', data.length)
 		return {
 			props: {
 				landlord: params.landlord,
