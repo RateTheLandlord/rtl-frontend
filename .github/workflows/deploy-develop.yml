@@ -1,0 +1,17 @@
+name: Deploy to Develop
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  deploy-develop:
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Webhook
+        env:
+          WEBHOOK_URL: ${{secrets.DEVELOP_DEPLOY_HOOK}}
+        run: |
+          curl -X GET $WEBHOOK_URL
