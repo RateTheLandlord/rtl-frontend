@@ -64,7 +64,6 @@ function ReviewForm(): JSX.Element {
 	const [disclaimerOne, setDisclaimerOne] = useState(false)
 	const [disclaimerTwo, setDisclaimerTwo] = useState(false)
 	const [disclaimerThree, setDisclaimerThree] = useState(false)
-	// const [token, setToken] = useState<string>('')
 	const [loading, setLoading] = useState<boolean>(false)
 
 	const [postalError, setPostalError] = useState(false)
@@ -289,12 +288,10 @@ function ReviewForm(): JSX.Element {
 			className='container flex w-full flex-col items-center px-4 sm:px-0'
 			data-testid='create-review-form-1'
 		>
-			{alertOpen ? (
-				<Alert success={success} setAlertOpen={setAlertOpen} />
-			) : null}
-			{maliciousAlertOpen ? (
+			{alertOpen && <Alert success={success} setAlertOpen={setAlertOpen} />}
+			{maliciousAlertOpen && (
 				<MaliciousStringAlert setMaliciousAlertOpen={setMaliciousAlertOpen} />
-			) : null}
+			)}
 			<SuccessModal isOpen={successModalOpen} setIsOpen={setSuccessModalOpen} />
 			<AddReviewModal isOpen={reviewModalOpen} setIsOpen={setReviewModalOpen} />
 			<SpamReviewModal
@@ -555,45 +552,45 @@ function ReviewForm(): JSX.Element {
 					<div className='mb-2 flex w-full justify-start space-x-2'>
 						<div className='flex h-5 items-center'>
 							<input
-								id='terms'
-								name='terms'
+								id='terms-1'
+								name='terms-1'
 								type='checkbox'
 								checked={disclaimerOne}
 								onChange={() => setDisclaimerOne((p) => !p)}
 								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
-						<label htmlFor='terms' className='text-sm text-gray-500'>
+						<label htmlFor='terms-1' className='text-sm text-gray-500'>
 							{t('create-review.review-form.disclaimer-1')}
 						</label>
 					</div>
 					<div className='mb-2 flex w-full justify-start space-x-2'>
 						<div className='flex h-5 items-center'>
 							<input
-								id='terms'
-								name='terms'
+								id='terms-2'
+								name='terms-2'
 								type='checkbox'
 								checked={disclaimerTwo}
 								onChange={() => setDisclaimerTwo((p) => !p)}
 								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
-						<label htmlFor='terms' className='text-sm text-gray-500'>
+						<label htmlFor='terms-2' className='text-sm text-gray-500'>
 							{t('create-review.review-form.disclaimer-2')}
 						</label>
 					</div>
 					<div className='mb-2 flex w-full justify-start space-x-2'>
 						<div className='flex h-5 items-center'>
 							<input
-								id='terms'
-								name='terms'
+								id='terms-3'
+								name='terms-3'
 								type='checkbox'
 								checked={disclaimerThree}
 								onChange={() => setDisclaimerThree((p) => !p)}
 								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
-						<label htmlFor='terms' className='text-sm text-gray-500'>
+						<label htmlFor='terms-3' className='text-sm text-gray-500'>
 							{t('create-review.review-form.disclaimer-3')}
 						</label>
 					</div>
