@@ -1,6 +1,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import React, { Fragment, useRef, useState } from 'react'
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { SelectorIcon } from '@heroicons/react/solid'
 import { Combobox, Transition } from '@headlessui/react'
 import { Options } from '@/util/interfaces/interfaces'
 import { useVirtualizer } from '@tanstack/react-virtual'
@@ -104,7 +104,7 @@ function VirtualizedList({ items }: { items: Options[] }) {
 						}
 						value={items?.[virtualRow.index]}
 					>
-						{({ selected, active }) => (
+						{({ selected }) => (
 							<span
 								className={`block truncate ${
 									selected ? 'font-medium' : 'font-normal'

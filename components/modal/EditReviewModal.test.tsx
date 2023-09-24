@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import EditReviewModal from './EditReviewModal'
 
 describe('EditReviewModal', () => {
