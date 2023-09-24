@@ -22,5 +22,9 @@ describe('LoginForm', () => {
 		const emailInput = screen.getByTestId('login-form-email-1')
 		const passwordInput = screen.getByTestId('login-form-password-1')
 		const submitButton = screen.getByTestId('login-form-button-1')
+
+		expect(emailInput).toBeInTheDocument()
+		expect(passwordInput).toBeInTheDocument()
+		expect(submitButton).toBeInTheDocument()
 	})
 })

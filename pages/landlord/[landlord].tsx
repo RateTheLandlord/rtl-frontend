@@ -10,7 +10,7 @@ interface IProps {
 
 const Landlord = ({ landlord, reviews }: IProps) => {
 	const title = `${landlord} Reviews | Rate The Landlord`
-	const desc = `Reviews for ${landlord}. Read ${reviews?.length} reviews for ${landlord}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
+	const desc = `Reviews for ${landlord}. Read ${reviews?.length} reviews and rental experiences for ${landlord}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
@@ -39,7 +39,7 @@ const Landlord = ({ landlord, reviews }: IProps) => {
 				canonical={pageURL}
 				openGraph={{
 					type: 'website',
-					locale: 'en_CA', //  Default is en_US
+					locale: 'en_CA',
 					url: pageURL,
 					title,
 					description: desc,
@@ -64,70 +64,43 @@ const Landlord = ({ landlord, reviews }: IProps) => {
 					},
 				]}
 			/>
-
 			<LandlordPage landlord={landlord} reviews={reviews} />
 		</>
 	)
 }
 
 export async function getStaticPaths() {
-	try {
-		const req = await fetch(`${process.env.API_URL}/review/landlords`)
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		const data: string[] = await req.json()
+	const req = await fetch(`${process.env.API_URL}/review/landlords`)
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	const data: string[] = await req.json()
 
-		const paths = data.map((landlord) => ({
-			params: { landlord: encodeURIComponent(landlord) },
-		}))
-
-		console.log('PATHS FOUND: ', paths.length)
-
-		return {
-			paths: paths,
-			fallback: 'blocking',
-		}
-	} catch (error) {
-		return {
-			paths: [],
-			fallback: 'blocking',
-		}
+	const paths = data.map((landlord) => ({
+		params: { landlord: encodeURIComponent(landlord) },
+	}))
+	return {
+		paths: [...paths],
+		// Enable statically generating additional pages
+		fallback: true,
 	}
 }
 
-export async function getStaticProps({
-	params,
-}: {
-	params: { landlord: string }
-}) {
-	try {
-		const req = await fetch(
-			`${process.env.API_URL}/review/landlords/landlord`,
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ landlord: params.landlord }),
-			},
-		)
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		const data: Review[] = await req.json()
-		console.log('PAGE BUILT FOR : ', params.landlord, 'Reviews: ', data.length)
-		return {
-			props: {
-				landlord: params.landlord,
-				reviews: data,
-			},
-			revalidate: 100,
-		}
-	} catch (error) {
-		return {
-			props: {
-				landlord: '',
-				reviews: [],
-			},
-			revalidate: 100,
-		}
+export async function getStaticProps({ params }) {
+	const req = await fetch(`${process.env.API_URL}/review/landlords/landlord`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ landlord: params.landlord }),
+	})
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	const data: Review[] = await req.json()
+
+	// Pass post data to the page via props
+	return {
+		props: { landlord: params.landlord, reviews: data },
+		// Re-generate the page
+		// if a request comes in after 100 seconds
+		revalidate: 100,
 	}
 }
 
