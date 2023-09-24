@@ -11,7 +11,7 @@ interface IProps {
 export default function Reviews({ fallback }: IProps): JSX.Element {
 	const title = 'Reviews | Rate The Landlord'
 	const desc =
-		'View and Search for Landlord Reviews. We are a community platform that elevates tenant voices to promote landlord accountability.'
+		'View and Search for Landlord Reviews and learn about others Rental Experience. We are a community platform that elevates tenant voices to promote landlord accountability.'
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
@@ -67,15 +67,17 @@ export async function getStaticProps() {
 		limit: 25,
 	}
 
+	const API_STRING=`${process.env.API_URL}/review`
+
 	try {
-		const req = await fetch(`http://backend:8080/review`)
+		const req = await fetch(API_STRING)
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const data: ReviewsResponse = await req.json()
 
 		return {
 			props: {
 				fallback: {
-					'/api/review/get-reviews': data ?? fallback,
+					API_STRING: data ?? fallback,
 				},
 			},
 			revalidate: 100,
@@ -84,7 +86,7 @@ export async function getStaticProps() {
 		return {
 			props: {
 				fallback: {
-					'/api/review/get-reviews': fallback,
+					API_STRING: fallback,
 				},
 			},
 			revalidate: 100,
