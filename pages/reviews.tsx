@@ -67,7 +67,7 @@ export async function getStaticProps() {
 		limit: 25,
 	}
 
-	const API_STRING=`${process.env.API_URL}/review`
+	const API_STRING = `${process.env.API_URL}/review`
 
 	try {
 		const req = await fetch(API_STRING)
@@ -77,7 +77,7 @@ export async function getStaticProps() {
 		return {
 			props: {
 				fallback: {
-					API_STRING: data ?? fallback,
+					'/api/review/get-reviews': data ?? fallback,
 				},
 			},
 			revalidate: 100,
@@ -86,7 +86,7 @@ export async function getStaticProps() {
 		return {
 			props: {
 				fallback: {
-					API_STRING: fallback,
+					'/api/review/get-reviews': fallback,
 				},
 			},
 			revalidate: 100,
