@@ -10,18 +10,13 @@ export default class MyDocument extends Document {
 				<body>
 					<Main />
 					<NextScript />
-					{/* Cloudflare Web Analytics and Umami Analytics */}
+					{/* Umami Analytics & Google Ads */}
 					{isProd && (
 						<>
 							<script
-								defer
-								src='https://static.cloudflareinsights.com/beacon.min.js'
-								data-cf-beacon='{"token": "8cf4d134ee8a33518b72e78bc9e1eaa8", "spa": false}'
-							/>
-							<script
 								async
-								src='https://umami.ratethelandlord.org/script.js'
-								data-website-id='16199009-12ed-4ff2-818d-1109411869a3'
+								src='https://analytics.ratethelandlord.org/script.js'
+								data-website-id='bf03e7c0-804f-44e3-9812-cae8ed8bca34'
 							></script>
 							<script
 								async
