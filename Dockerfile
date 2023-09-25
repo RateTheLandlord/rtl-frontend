@@ -10,7 +10,11 @@ WORKDIR /app
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
+ENV NEXT_PUBLIC_ENVIRONMENT ${NEXT_PUBLIC_ENVIRONMENT}
+ENV API_URL ${API_URL}
+ENV ORIGIN_URL ${ORIGIN_URL}
 
+RUN echo NEXT_PUBLIC_ENVIRONMENT API_URL ORIGIN_URL
 # Copy package.json and package-lock.json
 # to the /app working directory
 COPY package*.json  /app/
