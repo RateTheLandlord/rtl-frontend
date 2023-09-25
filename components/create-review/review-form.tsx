@@ -596,7 +596,7 @@ function ReviewForm(): JSX.Element {
 					</div>
 
 					<div
-						className='flex justify-center sm:justify-end'
+						className='flex justify-center gap-5 pt-5 sm:gap-3'
 						data-testid='create-review-form-submit-button-1'
 					>
 						<ButtonLight umami='Create Review / Reset Button'>
