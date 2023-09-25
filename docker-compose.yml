@@ -8,5 +8,5 @@ services:
     restart: unless-stopped
     ports:
       - ${FEPORT}:${FEPORT}
-    env_file:
-      - .env
+    env:
+      - ${API_URL}
