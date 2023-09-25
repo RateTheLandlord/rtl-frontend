@@ -12,6 +12,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 ENV NEXT_PUBLIC_ENVIRONMENT=development
 ENV API_URL=https://devapi.ratethelandlord.org
+ENV NEXT_PUBLIC_API_URL=https://devapi.ratethelandlord.org
 ENV ORIGIN_URL=https://dev.ratethelandlord.org
 
 # Copy package.json and package-lock.json
