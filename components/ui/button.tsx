@@ -18,7 +18,7 @@ function Button({
 			data-umami-event={umami}
 			onClick={onClick}
 			type='submit'
-			className={`ml-3 inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${
+			className={`inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${
 				disabled ? 'bg-teal-200' : 'bg-teal-600 hover:bg-teal-700'
 			}`}
 			disabled={disabled}

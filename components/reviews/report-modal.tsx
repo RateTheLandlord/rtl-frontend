@@ -216,7 +216,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 								</div>
 							) : null}
 
-							<div className='flex flex-row justify-end'>
+							<div className='flex flex-row justify-center gap-5 sm:gap-3'>
 								<ButtonLight
 									umami='Report Review Modal / Cancel Button'
 									onClick={() => {
