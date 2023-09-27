@@ -1,6 +1,6 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 
-const isProd = process.env.NODE_ENV === 'production'
+const isProd = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production'
 
 export default class MyDocument extends Document {
 	render(): JSX.Element {
