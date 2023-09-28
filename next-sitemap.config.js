@@ -1,7 +1,8 @@
 const siteUrl = 'https://ratethelandlord.org/'
 module.exports = {
 	siteUrl,
-	exclude: ['/404'],
+	exclude: ['/404', '/admin/*', '/500'],
+	priority: 0.7,
 	generateRobotsTxt: true,
 	robotsTxtOptions: {
 		policies: [
@@ -16,4 +17,5 @@ module.exports = {
 			`${siteUrl}server-sitemap.xml`,
 		],
 	},
+	sitemapSize: 5000,
 }
