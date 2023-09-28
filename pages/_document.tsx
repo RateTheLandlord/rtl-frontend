@@ -16,7 +16,7 @@ export default class MyDocument extends Document {
 							<script
 								async
 								src='https://analytics.ratethelandlord.org/script.js'
-								data-website-id='bf03e7c0-804f-44e3-9812-cae8ed8bca34'
+								data-website-id='9c6eab7b-c7a8-450b-ae55-498172bb9454'
 							></script>
 							<script
 								async
