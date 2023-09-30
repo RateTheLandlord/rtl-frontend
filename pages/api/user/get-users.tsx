@@ -1,12 +1,14 @@
-import {NextApiRequest, NextApiResponse} from 'next'
+import { runMiddleware } from '@/util/cors'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-const getReviews = (req: NextApiRequest, res: NextApiResponse) => {
+const getUsers = async (req: NextApiRequest, res: NextApiResponse) => {
+	await runMiddleware(req, res)
 	const url = process.env.API_URL as string
 
 	const cookies = req.cookies
 	const jwt: string = cookies.ratethelandlord || ''
 
-	fetch(`${url}/review/flagged`, {
+	fetch(`${url}/user`, {
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${jwt}`,
@@ -25,8 +27,8 @@ const getReviews = (req: NextApiRequest, res: NextApiResponse) => {
 			console.log(err)
 			res
 				.status(err.status)
-				.json({error: 'Failed to get Reviews', response: err.statusText})
+				.json({ error: 'Failed to get users', response: err.statusText })
 		})
 }
 
-export default getReviews
+export default getUsers

@@ -2,14 +2,16 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import {fireEvent, render} from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import LinkButtonLightLG from './link-button-light-lg'
 
 describe('LinkButtonLightLG', () => {
 	it('renders button text correctly', () => {
 		const buttonText = 'Click me'
-		const {getByText} = render(
-			<LinkButtonLightLG umami = "test LinkButtonLightLG" href="/">{buttonText}</LinkButtonLightLG>,
+		const { getByText } = render(
+			<LinkButtonLightLG umami='test LinkButtonLightLG' href='/'>
+				{buttonText}
+			</LinkButtonLightLG>,
 		)
 		const buttonElement = getByText(buttonText)
 		expect(buttonElement).toBeInTheDocument()
@@ -17,8 +19,10 @@ describe('LinkButtonLightLG', () => {
 
 	it('navigates to the correct URL when clicked', () => {
 		const href = '/about'
-		const {getByTestId} = render(
-			<LinkButtonLightLG umami = "test LinkButtonLightLG" href={href}>Click Me</LinkButtonLightLG>,
+		const { getByTestId } = render(
+			<LinkButtonLightLG umami='test LinkButtonLightLG' href={href}>
+				Click Me
+			</LinkButtonLightLG>,
 		)
 		const buttonElement = getByTestId('home-hero-read-btn-1')
 		fireEvent.click(buttonElement)

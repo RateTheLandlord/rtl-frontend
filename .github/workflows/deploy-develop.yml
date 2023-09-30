@@ -1,0 +1,20 @@
+name: Trigger Dev FE Webhook
+
+on:
+  push:
+    branches: ['develop']
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Trigger Webhook
+        env:
+          WEBHOOK_URL: ${{ secrets.DEVELOP_DEPLOY_HOOK }}
+        run: |
+          curl -X POST -H "Content-Type: application/json" -d '{"event": "push"}' $WEBHOOK_URL

@@ -1,6 +1,6 @@
 import ReviewForm from '@/components/create-review/review-form'
-import {NextSeo} from 'next-seo'
-import {useRouter} from 'next/router'
+import { NextSeo } from 'next-seo'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 function CreateReview(): JSX.Element {
@@ -14,8 +14,8 @@ function CreateReview(): JSX.Element {
 	const siteName = 'RateTheLandlord.org'
 	return (
 		<div
-			className="flex w-full justify-center"
-			data-testid="create-review-form-1"
+			className='flex w-full justify-center'
+			data-testid='create-review-form-1'
 		>
 			<NextSeo
 				title={title}
@@ -48,7 +48,7 @@ function CreateReview(): JSX.Element {
 					},
 				]}
 			/>
-			<div className="flex flex-col">
+			<div className='flex flex-col'>
 				<ReviewForm />
 			</div>
 		</div>

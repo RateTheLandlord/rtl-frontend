@@ -1,4 +1,5 @@
-import {NextApiRequest, NextApiResponse} from 'next'
+import { runMiddleware } from '@/util/cors'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 interface IBody {
 	id: number
@@ -6,11 +7,12 @@ interface IBody {
 	captchaToken: string
 }
 
-const FlagReview = (req: NextApiRequest, res: NextApiResponse) => {
+const FlagReview = async (req: NextApiRequest, res: NextApiResponse) => {
+	await runMiddleware(req, res)
 	const url = process.env.API_URL as string
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const {body}: {body: IBody} = req
+	const { body }: { body: IBody } = req
 
 	fetch(`${url}/review/report/${body.id}`, {
 		method: 'PUT',
@@ -32,7 +34,7 @@ const FlagReview = (req: NextApiRequest, res: NextApiResponse) => {
 			console.log('error: ', error)
 			res
 				.status(error.status)
-				.json({error: 'Failed to Report Review', response: error.statusText})
+				.json({ error: 'Failed to Report Review', response: error.statusText })
 		})
 }
 

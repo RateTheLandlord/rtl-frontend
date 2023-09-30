@@ -1,17 +1,17 @@
 import ReviewFilters from '@/components/reviews/review-filters'
-import {sortOptions} from '@/util/helpers/filter-options'
-import {Options, Review} from '@/util/interfaces/interfaces'
+import { sortOptions } from '@/util/helpers/filter-options'
+import { Options, Review } from '@/util/interfaces/interfaces'
 import {
 	getCityOptions,
 	getStateOptions,
 	getZipOptions,
 	updateActiveFilters,
 } from '@/components/reviews/functions'
-import React, {useEffect, useMemo, useState} from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import ReportModal from '@/components/reviews/report-modal'
 import useSWR from 'swr'
 import Alert from '../alerts/Alert'
-import {fetcher} from '@/util/helpers/fetcher'
+import { fetcher } from '@/util/helpers/fetcher'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import InfiniteScroll from './InfiniteScroll'
@@ -71,8 +71,8 @@ const Review = () => {
 		searchState,
 	])
 
-	const {data} = useSWR<ReviewsResponse>(
-		`/api/get-reviews?page=${page}&${queryParams.toString()}`,
+	const { data } = useSWR<ReviewsResponse>(
+		`/api/review/get-reviews?page=${page}&${queryParams.toString()}`,
 		fetcher,
 	)
 
@@ -143,7 +143,7 @@ const Review = () => {
 				<>
 					<EditReviewModal
 						selectedReview={selectedReview}
-						mutateString={`/api/get-reviews?${queryParams.toString()}`}
+						mutateString={`/api/review/get-reviews?${queryParams.toString()}`}
 						setEditReviewOpen={setEditReviewOpen}
 						setSuccess={setSuccess}
 						setRemoveAlertOpen={setRemoveAlertOpen}
@@ -152,7 +152,7 @@ const Review = () => {
 					/>
 					<RemoveReviewModal
 						selectedReview={selectedReview}
-						mutateString={`/api/get-reviews?${queryParams.toString()}`}
+						mutateString={`/api/review/get-reviews?${queryParams.toString()}`}
 						setRemoveReviewOpen={setRemoveReviewOpen}
 						setSuccess={setSuccess}
 						setRemoveAlertOpen={setRemoveAlertOpen}
@@ -161,13 +161,13 @@ const Review = () => {
 					/>
 				</>
 			) : null}
-			<div className="w-full">
+			<div className='w-full'>
 				{removeAlertOpen ? (
-					<div className="w-full">
+					<div className='w-full'>
 						<Alert success={success} setAlertOpen={setRemoveAlertOpen} />
 					</div>
 				) : null}
-				<AdsComponent slot="2009320000" />
+				<AdsComponent slot='2009320000' />
 				<ReviewFilters
 					selectedSort={selectedSort}
 					setSelectedSort={setSelectedSort}

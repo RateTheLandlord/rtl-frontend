@@ -1,16 +1,16 @@
 import LandlordPage from '@/components/landlord/LandlordPage'
-import {Review} from '@/util/interfaces/interfaces'
-import {NextSeo} from 'next-seo'
-import {useRouter} from 'next/router'
+import { Review } from '@/util/interfaces/interfaces'
+import { NextSeo } from 'next-seo'
+import { useRouter } from 'next/router'
 
 interface IProps {
 	landlord: string
 	reviews: Review[]
 }
 
-const Landlord = ({landlord, reviews}: IProps) => {
+const Landlord = ({ landlord, reviews }: IProps) => {
 	const title = `${landlord} Reviews | Rate The Landlord`
-	const desc = `Reviews for ${landlord}. Read ${reviews?.length} reviews for ${landlord}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
+	const desc = `Reviews for ${landlord}. Read ${reviews?.length} reviews and rental experiences for ${landlord}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
@@ -20,10 +20,10 @@ const Landlord = ({landlord, reviews}: IProps) => {
 	if (!reviews)
 		return (
 			<div
-				className="text-primary inline-block h-8 w-8 animate-[spinner-grow_0.75s_linear_infinite] rounded-full bg-current align-[-0.125em] opacity-0 motion-reduce:animate-[spinner-grow_1.5s_linear_infinite]"
-				role="status"
+				className='text-primary inline-block h-8 w-8 animate-[spinner-grow_0.75s_linear_infinite] rounded-full bg-current align-[-0.125em] opacity-0 motion-reduce:animate-[spinner-grow_1.5s_linear_infinite]'
+				role='status'
 			>
-				<span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+				<span className='!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]'>
 					Loading...
 				</span>
 			</div>
@@ -39,7 +39,7 @@ const Landlord = ({landlord, reviews}: IProps) => {
 				canonical={pageURL}
 				openGraph={{
 					type: 'website',
-					locale: 'en_CA', //  Default is en_US
+					locale: 'en_CA',
 					url: pageURL,
 					title,
 					description: desc,
@@ -64,60 +64,46 @@ const Landlord = ({landlord, reviews}: IProps) => {
 					},
 				]}
 			/>
-
 			<LandlordPage landlord={landlord} reviews={reviews} />
 		</>
 	)
 }
 
 export async function getStaticPaths() {
-	try {
-		const req = await fetch(`http://backend:8080/review/landlords`)
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		const data: string[] = await req.json()
+	const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/review/landlords`)
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	const data: string[] = await req.json()
 
-		const paths = data.map((landlord) => ({
-			params: {landlord: encodeURIComponent(landlord)},
-		}))
-
-		return {
-			paths: paths,
-			fallback: 'blocking',
-		}
-	} catch (error) {
-		return {
-			paths: [],
-			fallback: 'blocking',
-		}
+	const paths = data.map((landlord) => ({
+		params: { landlord: encodeURIComponent(landlord) },
+	}))
+	return {
+		paths: [...paths],
+		// Enable statically generating additional pages
+		fallback: true,
 	}
 }
 
-export async function getStaticProps({params}: {params: {landlord: string}}) {
-	try {
-		const req = await fetch(`http://backend:8080/review/landlords/landlord`, {
+export async function getStaticProps({ params }) {
+	const req = await fetch(
+		`${process.env.NEXT_PUBLIC_API_URL}/review/landlords/landlord`,
+		{
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({landlord: params.landlord}),
-		})
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		const data: Review[] = await req.json()
-		return {
-			props: {
-				landlord: params.landlord,
-				reviews: data,
-			},
-			revalidate: 100,
-		}
-	} catch (error) {
-		return {
-			props: {
-				landlord: '',
-				reviews: [],
-			},
-			revalidate: 100,
-		}
+			body: JSON.stringify({ landlord: params.landlord }),
+		},
+	)
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	const data: Review[] = await req.json()
+
+	// Pass post data to the page via props
+	return {
+		props: { landlord: params.landlord, reviews: data },
+		// Re-generate the page
+		// if a request comes in after 100 seconds
+		revalidate: 100,
 	}
 }
 

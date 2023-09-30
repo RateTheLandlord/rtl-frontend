@@ -5,7 +5,6 @@ on:
     branches: ['develop']
 
 jobs:
-
   lint-fe:
     runs-on: ubuntu-latest
 
@@ -39,4 +38,4 @@ jobs:
       - name: Test frontend
         run: |
           npm install
-          npm run test-merge
+          npm run test:merge

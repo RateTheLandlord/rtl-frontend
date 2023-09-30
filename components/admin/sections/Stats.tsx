@@ -1,6 +1,6 @@
 import useSWR from 'swr'
-import {useState} from 'react'
-import {fetcher} from '@/util/helpers/fetcher'
+import { useState } from 'react'
+import { fetcher } from '@/util/helpers/fetcher'
 import StateStats from '../components/StateStats'
 
 export interface IStats {
@@ -44,7 +44,10 @@ export interface IStats {
 
 const Stats = () => {
 	const [country, setCountry] = useState<string | null>(null)
-	const {data, error} = useSWR<IStats, boolean>('/api/get-stats', fetcher)
+	const { data, error } = useSWR<IStats, boolean>(
+		'/api/admin/get-stats',
+		fetcher,
+	)
 
 	if (error) return <div>failed to load</div>
 	if (!data) return <div>loading...</div>
@@ -100,10 +103,10 @@ const Stats = () => {
 					stat.isActive ? 'bg-gray-200' : ''
 				}`}
 			>
-				<dt className="order-2 mt-2 text-lg font-medium leading-6 text-gray-500">
+				<dt className='order-2 mt-2 text-lg font-medium leading-6 text-gray-500'>
 					{stat.label}
 				</dt>
-				<dd className="order-1 text-5xl font-bold tracking-tight text-indigo-600">
+				<dd className='order-1 text-5xl font-bold tracking-tight text-indigo-600'>
 					{stat.data}
 				</dd>
 			</div>
@@ -128,13 +131,13 @@ const Stats = () => {
 	}
 
 	return (
-		<div className="container flex w-full flex-wrap justify-center px-4 sm:px-6 lg:px-8">
-			<div className="mt-3 flex w-full flex-row justify-center gap-3">
-				<div className="flex flex-col p-6 text-center">
-					<dt className="order-2 mt-2 text-lg font-medium leading-6 text-gray-500">
+		<div className='container flex w-full flex-wrap justify-center px-4 sm:px-6 lg:px-8'>
+			<div className='mt-3 flex w-full flex-row justify-center gap-3'>
+				<div className='flex flex-col p-6 text-center'>
+					<dt className='order-2 mt-2 text-lg font-medium leading-6 text-gray-500'>
 						Total Reviews
 					</dt>
-					<dd className="order-1 text-5xl font-bold tracking-tight text-indigo-600">
+					<dd className='order-1 text-5xl font-bold tracking-tight text-indigo-600'>
 						{data.total_reviews}
 					</dd>
 				</div>

@@ -4,8 +4,8 @@ import Contributing from '@/components/about/contributing'
 import Faq from '@/components/about/faq'
 import Moderation from '@/components/about/moderation'
 import Privacy from '@/components/about/privacy'
-import {NextSeo} from 'next-seo'
-import {useRouter} from 'next/router'
+import { NextSeo } from 'next-seo'
+import { useRouter } from 'next/router'
 import React from 'react'
 import Revenue from '@/components/about/revenue'
 
@@ -20,7 +20,7 @@ function About(): JSX.Element {
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
 	return (
-		<div className="flex w-full justify-center">
+		<div className='flex w-full justify-center'>
 			<NextSeo
 				title={title}
 				description={desc}
@@ -52,7 +52,7 @@ function About(): JSX.Element {
 					},
 				]}
 			/>
-			<div className="container mt-5 flex flex-col items-center gap-4 px-2">
+			<div className='container mt-5 flex flex-col items-center gap-4 px-2'>
 				<AboutUs />
 				<Faq />
 				<Privacy />

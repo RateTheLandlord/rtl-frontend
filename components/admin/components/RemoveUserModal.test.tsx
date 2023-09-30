@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import {render, screen} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import RemoveUserModal from './RemoveUserModal'
 
 describe('RemoveUserModal', () => {

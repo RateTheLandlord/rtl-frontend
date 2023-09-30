@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import {fireEvent, render} from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import ReviewForm from './review-form'
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -30,7 +30,6 @@ test('Review Form component renders all fields', () => {
 		result.getByTestId('create-review-form-postal-code-1'),
 	).toBeInTheDocument()
 	expect(result.getByTestId('create-review-form-text-1')).toBeInTheDocument()
-	expect(result.getByTestId('create-review-form-captcha-1')).toBeInTheDocument()
 	expect(
 		result.getByTestId('create-review-form-submit-button-1'),
 	).toBeInTheDocument()
@@ -42,12 +41,14 @@ test('Postal Code input shows/hides error message correctly', async () => {
 
 	// enter an invalid postal code
 	const postalCodeInput = result.getByTestId('create-review-form-postal-code-1')
-	fireEvent.change(postalCodeInput, {target: {value: 'invalid postal code'}})
+	fireEvent.change(postalCodeInput, {
+		target: { value: 'invalid postal code' },
+	})
 	const errorElement = await result.findByText(errorMessage)
 	expect(errorElement).toBeInTheDocument()
 
 	// enter a valid postal code
-	fireEvent.change(postalCodeInput, {target: {value: 'V2C 1S8'}})
+	fireEvent.change(postalCodeInput, { target: { value: 'V2C 1S8' } })
 	expect(result.container).not.toHaveTextContent(errorMessage)
 })
 
@@ -57,12 +58,12 @@ test('Review content exceeds 2000 should show warning', async () => {
 
 	// enter less than 2000 characters
 	const textAreaInput = result.getByTestId('create-review-form-text-1')
-	fireEvent.change(textAreaInput, {target: {value: 'review'}})
+	fireEvent.change(textAreaInput, { target: { value: 'review' } })
 	const charLimitText = await result.findByText('Character Limit: 6/2000')
 	expect(charLimitText).toBeInTheDocument()
 
 	// enter more than 2000 characters
-	fireEvent.change(textAreaInput, {target: {value: overflowReview}})
+	fireEvent.change(textAreaInput, { target: { value: overflowReview } })
 	const charWarningText = await result.findByText('Character Limit: 2449/2000')
 	expect(charWarningText).toBeInTheDocument()
 	expect(charWarningText).toHaveClass('text-red-400')
@@ -72,10 +73,10 @@ test('Reset button clears the form', () => {
 	const result = render(<ReviewForm />)
 
 	const zipInput = result.getByTestId('create-review-form-postal-code-1')
-	fireEvent.change(zipInput, {target: {value: 'V6C 1S9'}})
+	fireEvent.change(zipInput, { target: { value: 'V6C 1S9' } })
 
 	const reviewText = result.getByTestId('create-review-form-text-1')
-	fireEvent.change(reviewText, {target: {value: 'some review'}})
+	fireEvent.change(reviewText, { target: { value: 'some review' } })
 
 	const resetButton = result.getByTestId('light-button')
 	fireEvent.click(resetButton)

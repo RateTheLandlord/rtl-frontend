@@ -1,4 +1,5 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
+
 module.exports = {
 	preset: 'ts-jest',
 	testEnvironment: 'node',
@@ -19,4 +20,5 @@ module.exports = {
 		// "@/*": ["./*"]
 		'^@/(.*)$': ['<rootDir>/$1'],
 	},
+	transformIgnorePatterns: [`/node_modules/(?!next-recaptcha-v3)`],
 }

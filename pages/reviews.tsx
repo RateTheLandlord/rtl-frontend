@@ -1,24 +1,24 @@
-import Review, {ReviewsResponse} from '@/components/reviews/review'
-import {NextSeo} from 'next-seo'
+import Review, { ReviewsResponse } from '@/components/reviews/review'
+import { NextSeo } from 'next-seo'
 import React from 'react'
-import {SWRConfig} from 'swr'
-import {useRouter} from 'next/router'
+import { SWRConfig } from 'swr'
+import { useRouter } from 'next/router'
 
 interface IProps {
 	fallback: ReviewsResponse
 }
 
-export default function Reviews({fallback}: IProps): JSX.Element {
+export default function Reviews({ fallback }: IProps): JSX.Element {
 	const title = 'Reviews | Rate The Landlord'
 	const desc =
-		'View and Search for Landlord Reviews. We are a community platform that elevates tenant voices to promote landlord accountability.'
+		'View and Search for Landlord Reviews and learn about others Rental Experience. We are a community platform that elevates tenant voices to promote landlord accountability.'
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
 	return (
-		<SWRConfig value={{fallback}}>
+		<SWRConfig value={{ fallback }}>
 			<NextSeo
 				title={title}
 				description={desc}
@@ -67,15 +67,17 @@ export async function getStaticProps() {
 		limit: 25,
 	}
 
+	const API_STRING = `${process.env.API_URL}/review`
+
 	try {
-		const req = await fetch(`http://backend:8080/review`)
+		const req = await fetch(API_STRING)
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const data: ReviewsResponse = await req.json()
 
 		return {
 			props: {
 				fallback: {
-					'/api/get-reviews': data ?? fallback,
+					'/api/review/get-reviews': data ?? fallback,
 				},
 			},
 			revalidate: 100,
@@ -84,7 +86,7 @@ export async function getStaticProps() {
 		return {
 			props: {
 				fallback: {
-					'/api/get-reviews': fallback,
+					'/api/review/get-reviews': fallback,
 				},
 			},
 			revalidate: 100,

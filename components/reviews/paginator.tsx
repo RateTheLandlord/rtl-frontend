@@ -16,16 +16,16 @@ export default function Paginator({
 	limit,
 }: FiltersProps) {
 	const pageNumbers = Array.from(
-		{length: Math.ceil(totalPages / limit)},
+		{ length: Math.ceil(totalPages / limit) },
 		(_, i) => i + 1,
 	)
 
-	const {width} = useWindowSize()
+	const { width } = useWindowSize()
 
 	return (
 		<nav
-			className="mt-8 flex items-center justify-center"
-			aria-label="Pagination"
+			className='mt-8 flex items-center justify-center'
+			aria-label='Pagination'
 		>
 			<button
 				onClick={() => currentPage > 1 && onSelect(currentPage - 1)}
@@ -70,7 +70,7 @@ export default function Paginator({
 						</button>
 				  ))}
 			{pageNumbers.length > 10 ? (
-				<div className="mx-1 rounded-md border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+				<div className='mx-1 rounded-md border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50'>
 					...
 				</div>
 			) : null}

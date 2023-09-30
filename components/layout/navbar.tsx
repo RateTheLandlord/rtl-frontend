@@ -1,15 +1,15 @@
-import {Disclosure} from '@headlessui/react'
-import {MenuIcon, XIcon} from '@heroicons/react/outline'
+import { Disclosure } from '@headlessui/react'
+import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import Logo from '../svg/logo/logo'
 import Link from 'next/link'
-import {useTranslation} from 'react-i18next'
-import {useEffect, useState} from 'react'
-import {useRouter} from 'next/router'
-import {useAppDispatch, useAppSelector} from '@/redux/hooks'
-import {parseCookies} from 'nookies'
-import {updateUser} from '@/redux/user/userSlice'
+import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { parseCookies } from 'nookies'
+import { updateUser } from '@/redux/user/userSlice'
 import MobileNav from '@/components/layout/MobileNav'
-import {navigation, socialLinks} from '@/components/layout/links'
+import { navigation, socialLinks } from '@/components/layout/links'
 
 interface IResult {
 	id: number
@@ -21,7 +21,7 @@ interface IResult {
 
 export default function Navbar(): JSX.Element {
 	const cookies = parseCookies()
-	const {t} = useTranslation('layout')
+	const { t } = useTranslation('layout')
 
 	const [activeTab, setActiveTab] = useState<string>('/')
 	const router = useRouter()
@@ -49,12 +49,12 @@ export default function Navbar(): JSX.Element {
 	useEffect(() => {
 		const userID = localStorage.getItem('rtlUserId')
 		if (cookies.ratethelandlord && userID) {
-			fetch('/api/get-user', {
+			fetch('/api/user/get-user', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({id: userID}),
+				body: JSON.stringify({ id: userID }),
 			})
 				.then((result: Response) => {
 					if (!result.ok) {
@@ -80,25 +80,25 @@ export default function Navbar(): JSX.Element {
 	}, [cookies.ratethelandlord])
 
 	return (
-		<Disclosure as="nav" className="bg-white shadow">
-			{({open}) => (
+		<Disclosure as='nav' className='bg-white shadow'>
+			{({ open }) => (
 				<>
 					<div
-						className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8"
-						data-testid="navbar-1"
+						className='mx-auto max-w-7xl px-2 sm:px-4 lg:px-8'
+						data-testid='navbar-1'
 					>
-						<div className="flex h-16 justify-between">
-							<div className="flex px-2 lg:px-0">
-								<div className="flex flex-shrink-0 items-center gap-4">
-									<Logo styling="h-8 w-auto" />
+						<div className='flex h-16 justify-between'>
+							<div className='flex px-2 lg:px-0'>
+								<div className='flex flex-shrink-0 items-center gap-4'>
+									<Logo styling='h-8 w-auto' />
 									<Link
-										href="/"
-										data-umami-event="Navbar / Rate The Landlord Link"
+										href='/'
+										data-umami-event='Navbar / Rate The Landlord Link'
 									>
 										{t('layout.nav.title')}
 									</Link>
 								</div>
-								<div className="hidden lg:ml-6 lg:flex lg:space-x-8">
+								<div className='hidden lg:ml-6 lg:flex lg:space-x-8'>
 									{navigation.map((link) => (
 										<div
 											className={`${
@@ -126,42 +126,42 @@ export default function Navbar(): JSX.Element {
 									)}
 								</div>
 							</div>
-							<div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
-								<div className="hidden justify-center space-x-6 lg:flex">
+							<div className='flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end'>
+								<div className='hidden justify-center space-x-6 lg:flex'>
 									{socialLinks.map((item) => (
 										<a
 											data-umami-event={item.umami}
 											key={item.name}
 											href={item.href}
-											className="text-gray-400 hover:text-gray-500"
+											className='text-gray-400 hover:text-gray-500'
 										>
-											<span className="sr-only">{item.name}</span>
+											<span className='sr-only'>{item.name}</span>
 											{item.icon}
 										</a>
 									))}
 								</div>
-								<div className="hidden lg:ml-6 lg:flex lg:space-x-8">
-									<div className="inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 text-sm font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+								<div className='hidden lg:ml-6 lg:flex lg:space-x-8'>
+									<div className='inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 text-sm font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'>
 										<Link
-											href="/create-review"
-											data-umami-event="Navbar / Submit a Review Button"
+											href='/create-review'
+											data-umami-event='Navbar / Submit a Review Button'
 										>
-											<p className="px-4 py-2">{t('layout.nav.submit')}</p>
+											<p className='px-4 py-2'>{t('layout.nav.submit')}</p>
 										</Link>
 									</div>
 								</div>
 							</div>
-							<div className="flex items-center lg:hidden">
-								<Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500">
-									<span className="sr-only">{t('layout.nav.open')}</span>
+							<div className='flex items-center lg:hidden'>
+								<Disclosure.Button className='inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500'>
+									<span className='sr-only'>{t('layout.nav.open')}</span>
 									{open ? (
-										<XIcon className="block h-6 w-6" aria-hidden="true" />
+										<XIcon className='block h-6 w-6' aria-hidden='true' />
 									) : (
-										<MenuIcon className="block h-6 w-6" aria-hidden="true" />
+										<MenuIcon className='block h-6 w-6' aria-hidden='true' />
 									)}
 								</Disclosure.Button>
 							</div>
-							<div className="flex items-center lg:hidden"></div>
+							<div className='flex items-center lg:hidden'></div>
 						</div>
 					</div>
 

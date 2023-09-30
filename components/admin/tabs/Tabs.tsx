@@ -1,5 +1,5 @@
-import {Dispatch, SetStateAction} from 'react'
-import {ITabs} from '../types/types'
+import { Dispatch, SetStateAction } from 'react'
+import { ITabs } from '../types/types'
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
@@ -25,9 +25,9 @@ const Tabs = ({
 
 		const update = tabs.map((obj) => {
 			if (obj.name === tab.name) {
-				return {...obj, current: true}
+				return { ...obj, current: true }
 			} else {
-				return {...obj, current: false}
+				return { ...obj, current: false }
 			}
 		})
 
@@ -35,15 +35,15 @@ const Tabs = ({
 		setCurrentSection(tab.component)
 	}
 	return (
-		<div className="container">
-			<div className="sm:hidden">
-				<label htmlFor="tabs" className="sr-only">
+		<div className='container'>
+			<div className='sm:hidden'>
+				<label htmlFor='tabs' className='sr-only'>
 					Select a tab
 				</label>
 				<select
-					id="tabs"
-					name="tabs"
-					className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+					id='tabs'
+					name='tabs'
+					className='block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
 					defaultValue={currentTab.name}
 				>
 					{tabs.map((tab) => (
@@ -51,9 +51,9 @@ const Tabs = ({
 					))}
 				</select>
 			</div>
-			<div className="hidden sm:block">
-				<div className="border-b border-gray-200">
-					<nav className="-mb-px flex" aria-label="Tabs">
+			<div className='hidden sm:block'>
+				<div className='border-b border-gray-200'>
+					<nav className='-mb-px flex' aria-label='Tabs'>
 						{tabs.map((tab) => (
 							<button
 								key={tab.name}
@@ -62,7 +62,7 @@ const Tabs = ({
 									tab.current
 										? 'border-indigo-500 text-indigo-600'
 										: 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
-									'w-1/3 border-b-2 py-4 px-1 text-center text-sm font-medium',
+									'w-1/3 border-b-2 px-1 py-4 text-center text-sm font-medium',
 								)}
 							>
 								{tab.name}

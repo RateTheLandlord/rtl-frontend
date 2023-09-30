@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import {render, fireEvent, screen} from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
 import Alert from './Alert'
 
 describe('Alert Component', () => {
