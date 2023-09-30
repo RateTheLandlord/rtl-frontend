@@ -38,4 +38,4 @@ jobs:
       - name: Test frontend
         run: |
           npm install
-          npm run test-merge
+          npm run test:merge
