@@ -1,8 +1,8 @@
 import ResourcesInfo from '@/components/resources/resourcesInfo'
-import ResourceTenantLinks from '@/components/resources/resourcesLinks'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import AdsComponent from '@/components/adsense/Adsense'
+import ResourceList from '@/components/resources/ResourceList'
 
 function Resources(): JSX.Element {
 	const title = 'Resources | Rate The Landlord'
@@ -44,7 +44,7 @@ function Resources(): JSX.Element {
 			<div className='container mt-5 flex flex-col items-center gap-4 px-2'>
 				<AdsComponent slot='9611751505' />
 				<ResourcesInfo />
-				<ResourceTenantLinks />
+				<ResourceList />
 				<p className='mt-8 text-center text-xl leading-8 text-gray-500'>
 					If you have a helpful resource you think should be on our site, send
 					us an email at contact@ratethelandlord.org
