@@ -11,12 +11,14 @@ import Stats from '@/components/admin/sections/Stats'
 import { classNames } from '@/util/helpers/helper-functions'
 import { Dialog, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import TenantResources from '@/components/admin/sections/TenantResources'
 
 const tabs = [
 	{ name: 'Flagged Reviews', component: <FlaggedReviews /> },
 	{ name: 'Team Members', component: <TeamMembers /> },
 	{ name: 'My Info', component: <MyInfo /> },
 	{ name: 'Stats', component: <Stats /> },
+	{ name: 'Tenant Resources', component: <TenantResources /> },
 ]
 
 function Admin(): JSX.Element {
@@ -24,6 +26,7 @@ function Admin(): JSX.Element {
 	const [currentTab, setCurrentTab] = useState<ITabs>(tabs[0])
 
 	const [noCookie, setNoCookies] = useState(false)
+	const [sidebarOpen, setSidebarOpen] = useState(false)
 
 	useEffect(() => {
 		if (!cookies.ratethelandlord) {
@@ -44,7 +47,6 @@ function Admin(): JSX.Element {
 			</div>
 		)
 	}
-	const [sidebarOpen, setSidebarOpen] = useState(false)
 
 	return (
 		<div className='h-full w-screen'>
