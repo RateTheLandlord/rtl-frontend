@@ -25,6 +25,7 @@ import CityComboBox from '@/components/create-review/components/CityComboBox'
 import LandlordComboBox from '@/components/create-review/components/LandlordComboBox'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import { useReCaptcha } from 'next-recaptcha-v3'
+import Spinner from '../ui/Spinner'
 
 function ReviewForm(): JSX.Element {
 	const { t } = useTranslation('create')
@@ -603,19 +604,7 @@ function ReviewForm(): JSX.Element {
 							{t('create-review.review-form.reset')}
 						</ButtonLight>
 						{loading ? (
-							<div
-								className={`hover:bg-teal-700' } ml-3 inline-flex justify-center rounded-md border border-transparent bg-teal-200 bg-teal-600 px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500
-							focus:ring-offset-2`}
-							>
-								<div
-									className='text-primary inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]'
-									role='status'
-								>
-									<span className='!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]'>
-										Loading...
-									</span>
-								</div>
-							</div>
+							<Spinner />
 						) : (
 							<Button
 								umami='Create Review / Submit Button'

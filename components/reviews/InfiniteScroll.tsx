@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import ReviewTable from './review-table'
 import { Review } from '@/util/interfaces/interfaces'
+import Spinner from '../ui/Spinner'
 
 interface IProps {
 	data: Review[]
@@ -62,11 +63,7 @@ function InfiniteScroll({
 				setRemoveReviewOpen={setRemoveReviewOpen}
 				setEditReviewOpen={setEditReviewOpen}
 			/>
-			{isLoading && (
-				<div className='flex w-full items-center justify-center'>
-					<div className='h-16 w-16 animate-spin rounded-full border-b-4 border-t-4 border-teal-400'></div>
-				</div>
-			)}
+			{isLoading && <Spinner />}
 		</div>
 	)
 }

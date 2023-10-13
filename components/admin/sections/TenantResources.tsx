@@ -1,52 +1,141 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { classNames } from '@/util/helpers/helper-functions'
 import { MenuAlt3Icon } from '@heroicons/react/solid'
 import Button from '@/components/ui/button'
-
-const projects = [
-	{
-		id: 1,
-		name: 'Toronto Tenants Union',
-		country_code: 'CA',
-		city: 'Toronto',
-		state: 'Ontario',
-		address: '123 Fake St',
-		phone_number: '123 456 7890',
-		date_added: new Date(),
-		description: 'this is a description',
-		href: '#',
-	},
-]
+import useSWR, { mutate } from 'swr'
+import { fetcher } from '@/util/helpers/fetcher'
+import Spinner from '@/components/ui/Spinner'
+import { ResourceResponse } from '@/util/interfaces/interfaces'
+import AddResourceModal from '../components/AddResourceModal'
+import Modal from '@/components/modal/Modal'
+import Alert from '@/components/alerts/Alert'
 
 const TenantResources = () => {
+	const { data, error } = useSWR<ResourceResponse>(
+		'/api/tenant-resources/get-resources?limit=1000',
+		fetcher,
+	)
+
+	const [name, setName] = useState<string>('')
+	const [country, setCountry] = useState<string>('CA')
+	const [city, setCity] = useState<string>('')
+	const [state, setState] = useState<string>('Alberta')
+	const [address, setAddress] = useState('')
+	const [phone, setPhone] = useState('')
+	const [description, setDescription] = useState('')
+	const [href, setHref] = useState('')
+
+	const [success, setSuccess] = useState(false)
+	const [removeAlertOpen, setRemoveAlertOpen] = useState(false)
+
+	const [addResourceOpen, setAddResourceOpen] = useState(false)
+	if (error) return <div>failed to load...</div>
+	if (!data) return <Spinner />
+
+	const onSubmitNewResource = () => {
+		const newResource = {
+			name: name,
+			country_code: country,
+			city: city,
+			state: state,
+			address: address,
+			phone_number: phone,
+			description: description,
+			href: href,
+		}
+
+		fetch('/api/tenant-resources/add-resource', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(newResource),
+		})
+			.then((result) => {
+				if (!result.ok) {
+					throw new Error()
+				}
+			})
+			.then(() => {
+				mutate('/api/tenant-resources/get-resources').catch((err) =>
+					console.log(err),
+				)
+				setAddResourceOpen(false)
+				setSuccess(true)
+				setRemoveAlertOpen(true)
+			})
+			.catch((err) => {
+				console.log(err)
+				setSuccess(false)
+				setRemoveAlertOpen(true)
+			})
+	}
 	return (
 		<div className='container flex w-full flex-col justify-center'>
-			<Button onClick={() => console.log('click')} umami='add-resource'>
-				Add New Resource
-			</Button>
-			<ul role='list' className='divide-y divide-gray-100'>
-				{projects.map((project) => (
+			{removeAlertOpen ? (
+				<div className='w-full'>
+					<Alert success={success} setAlertOpen={setRemoveAlertOpen} />
+				</div>
+			) : null}
+			{addResourceOpen && (
+				<Modal
+					title='Add Tenant Resource'
+					open={addResourceOpen}
+					setOpen={setAddResourceOpen}
+					element={
+						<AddResourceModal
+							name={name}
+							setName={setName}
+							country={country}
+							setCountry={setCountry}
+							city={city}
+							setCity={setCity}
+							setState={setState}
+							address={address}
+							setAddress={setAddress}
+							phone={phone}
+							setPhone={setPhone}
+							setDescription={setDescription}
+							href={href}
+							setHref={setHref}
+						/>
+					}
+					onSubmit={onSubmitNewResource}
+					buttonColour='blue'
+					selectedId={1}
+				/>
+			)}
+			<div className='flex w-full justify-end'>
+				<Button onClick={() => setAddResourceOpen(true)} umami='add-resource'>
+					Add New Resource
+				</Button>
+			</div>
+			<ul
+				role='list'
+				className='mt-2 divide-y divide-gray-100 border-t border-gray-100'
+			>
+				{data.resources.map((resource) => (
 					<li
-						key={project.id}
-						className='flex items-center justify-between gap-x-6 py-5'
+						key={resource.id}
+						className='flex items-center justify-between gap-x-6 py-3'
 					>
 						<div className='min-w-0'>
 							<div className='flex items-center justify-start gap-x-3'>
 								<p className='text-sm font-semibold leading-6 text-gray-900'>
-									{project.name}
+									{resource.name}
 								</p>
 
-								<p className='text-xs'>{project.phone_number}</p>
+								<p className='text-xs'>{resource.phone_number}</p>
 							</div>
 							<div className='mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500'>
 								<p className='whitespace-nowrap'>
-									<p>{`${project.address}, ${project.city}, ${project.state}, ${project.country_code}`}</p>
+									<p>{`${resource.address}, ${resource.city}, ${resource.state}, ${resource.country_code}`}</p>
 								</p>
 								<svg viewBox='0 0 2 2' className='h-0.5 w-0.5 fill-current'>
 									<circle cx={1} cy={1} r={1} />
 								</svg>
-								<p className='truncate'>{project.description}</p>
+								<p className='truncate'>{resource.description}</p>
 							</div>
 						</div>
 						<div className='flex flex-none items-center gap-x-4'>
@@ -74,7 +163,7 @@ const TenantResources = () => {
 														'block px-3 py-1 text-sm leading-6 text-gray-900',
 													)}
 												>
-													Edit<span className='sr-only'>, {project.name}</span>
+													Edit<span className='sr-only'>, {resource.name}</span>
 												</a>
 											)}
 										</Menu.Item>
@@ -89,7 +178,7 @@ const TenantResources = () => {
 													)}
 												>
 													Delete
-													<span className='sr-only'>, {project.name}</span>
+													<span className='sr-only'>, {resource.name}</span>
 												</a>
 											)}
 										</Menu.Item>
