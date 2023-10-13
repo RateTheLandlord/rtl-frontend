@@ -30,12 +30,10 @@ const getTenantResources = async (
 		})
 		.catch((err: Response) => {
 			console.log(err)
-			res
-				.status(err.status)
-				.json({
-					error: 'Failed to get Tenant Resources',
-					response: err.statusText,
-				})
+			res.status(err.status).json({
+				error: 'Failed to get Tenant Resources',
+				response: err.statusText,
+			})
 		})
 }
 
