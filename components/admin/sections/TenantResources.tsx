@@ -6,10 +6,11 @@ import Button from '@/components/ui/button'
 import useSWR, { mutate } from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
 import Spinner from '@/components/ui/Spinner'
-import { ResourceResponse } from '@/util/interfaces/interfaces'
+import { Resource, ResourceResponse } from '@/util/interfaces/interfaces'
 import AddResourceModal from '../components/AddResourceModal'
 import Modal from '@/components/modal/Modal'
 import Alert from '@/components/alerts/Alert'
+import EditResourceModal from '@/components/modal/EditResourceModal'
 
 const TenantResources = () => {
 	const { data, error } = useSWR<ResourceResponse>(
@@ -25,15 +26,23 @@ const TenantResources = () => {
 	const [phone, setPhone] = useState('')
 	const [description, setDescription] = useState('')
 	const [href, setHref] = useState('')
+	const [loading, setLoading] = useState(false)
 
 	const [success, setSuccess] = useState(false)
 	const [removeAlertOpen, setRemoveAlertOpen] = useState(false)
 
+	const [selectedResource, setSelectedResource] = useState<
+		Resource | undefined
+	>()
+
 	const [addResourceOpen, setAddResourceOpen] = useState(false)
+	const [editResourceOpen, setEditResourceOpen] = useState(false)
+	const [deleteResourceOpen, setDeleteResourceOpen] = useState(false)
 	if (error) return <div>failed to load...</div>
 	if (!data) return <Spinner />
 
 	const onSubmitNewResource = () => {
+		setLoading(true)
 		const newResource = {
 			name: name,
 			country_code: country,
@@ -70,6 +79,7 @@ const TenantResources = () => {
 				setSuccess(false)
 				setRemoveAlertOpen(true)
 			})
+			.finally(() => setLoading(false))
 	}
 	return (
 		<div className='container flex w-full flex-col justify-center'>
@@ -78,8 +88,20 @@ const TenantResources = () => {
 					<Alert success={success} setAlertOpen={setRemoveAlertOpen} />
 				</div>
 			) : null}
+			{editResourceOpen && (
+				<EditResourceModal
+					selectedResource={selectedResource}
+					mutateString='/api/tenant-resources/add-resource'
+					setEditResourceOpen={setEditResourceOpen}
+					setSuccess={setSuccess}
+					setRemoveAlertOpen={setRemoveAlertOpen}
+					editResourceOpen={editResourceOpen}
+					setSelectedResource={setSelectedResource}
+				/>
+			)}
 			{addResourceOpen && (
 				<Modal
+					loading={loading}
 					title='Add Tenant Resource'
 					open={addResourceOpen}
 					setOpen={setAddResourceOpen}
@@ -156,15 +178,18 @@ const TenantResources = () => {
 									<Menu.Items className='absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none'>
 										<Menu.Item>
 											{({ active }) => (
-												<a
-													href='#'
+												<button
+													onClick={() => {
+														setEditResourceOpen(true)
+														setSelectedResource(resource)
+													}}
 													className={classNames(
 														active ? 'bg-gray-50' : '',
-														'block px-3 py-1 text-sm leading-6 text-gray-900',
+														'block w-full px-3 py-1 text-left text-sm leading-6 text-gray-900',
 													)}
 												>
 													Edit<span className='sr-only'>, {resource.name}</span>
-												</a>
+												</button>
 											)}
 										</Menu.Item>
 

@@ -7,7 +7,7 @@ import nz_provinces from '@/util/countries/newZealand/nz-provinces.json'
 import { Dispatch, SetStateAction } from 'react'
 
 interface IProps {
-	country: string
+	country: string | undefined
 	setValue: Dispatch<SetStateAction<string>>
 }
 

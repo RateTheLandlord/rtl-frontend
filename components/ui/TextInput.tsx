@@ -1,6 +1,6 @@
 interface IProps {
 	title: string
-	value: string
+	value: string | undefined
 	setValue: (str: string) => void
 	placeHolder?: string
 	id: string
