@@ -6,6 +6,7 @@ import useSWR, { useSWRConfig } from 'swr'
 import AddUserModal from '../components/AddUserModal'
 import RemoveUserModal from '../components/RemoveUserModal'
 import { fetcher } from '@/util/helpers/fetcher'
+import Spinner from '@/components/ui/Spinner'
 
 interface IUsers {
 	id: number
@@ -32,6 +33,8 @@ const TeamMembers = () => {
 	const [success, setSuccess] = useState(false)
 	const [removeAlertOpen, setRemoveAlertOpen] = useState(false)
 
+	const [loading, setLoading] = useState(false)
+
 	const { data: allUsers, error } = useSWR<Array<IUsers>>(
 		'/api/user/get-users',
 		fetcher,
@@ -46,9 +49,10 @@ const TeamMembers = () => {
 	}, [allUsers])
 
 	if (error) return <div>failed to load</div>
-	if (!allUsers) return <div>loading...</div>
+	if (!allUsers) return <Spinner />
 
 	const onSubmitNewUser = (num: number) => {
+		setLoading(true)
 		const newUser = {
 			name: newUserName,
 			email: newUserEmail,
@@ -80,9 +84,11 @@ const TeamMembers = () => {
 				setSuccess(false)
 				setRemoveAlertOpen(true)
 			})
+			.finally(() => setLoading(false))
 	}
 
 	const onSubmitDeleteUser = (num: number) => {
+		setLoading(true)
 		fetch('/api/user/remove-user', {
 			method: 'POST',
 			headers: {
@@ -107,6 +113,7 @@ const TeamMembers = () => {
 				setSuccess(false)
 				setRemoveAlertOpen(true)
 			})
+			.finally(() => setLoading(false))
 	}
 	return (
 		<div className='flex w-full flex-wrap justify-center px-4 sm:px-6 lg:px-8'>
@@ -115,7 +122,7 @@ const TeamMembers = () => {
 					<Alert success={success} setAlertOpen={setRemoveAlertOpen} />
 				</div>
 			) : null}
-			{selectedUser ? (
+			{selectedUser && (
 				<Modal
 					title='Remove User'
 					open={removeUserOpen}
@@ -124,8 +131,9 @@ const TeamMembers = () => {
 					onSubmit={onSubmitDeleteUser}
 					buttonColour='red'
 					selectedId={selectedUser.id}
+					loading={loading}
 				/>
-			) : null}
+			)}
 			<Modal
 				title='Add User'
 				open={addUserOpen}
@@ -142,6 +150,7 @@ const TeamMembers = () => {
 				onSubmit={onSubmitNewUser}
 				buttonColour='blue'
 				selectedId={1}
+				loading={loading}
 			/>
 
 			<div className='container mt-3 w-full sm:flex sm:items-center'>

@@ -5,6 +5,7 @@ import useSWR, { useSWRConfig } from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
 import EditReviewModal from '@/components/modal/EditReviewModal'
 import RemoveReviewModal from '@/components/modal/RemoveReviewModal'
+import Spinner from '@/components/ui/Spinner'
 
 const FlaggedReviews = () => {
 	const { mutate } = useSWRConfig()
@@ -32,7 +33,7 @@ const FlaggedReviews = () => {
 	}, [reviews])
 
 	if (error) return <div>failed to load</div>
-	if (!reviews) return <div>loading...</div>
+	if (!reviews) return <Spinner />
 
 	const onSubmitApproveReview = (review: Review) => {
 		const editedReview = {
@@ -65,7 +66,7 @@ const FlaggedReviews = () => {
 	}
 
 	return (
-		<div className='container flex w-full flex-wrap justify-center px-4 sm:px-6 lg:px-8'>
+		<div className='container flex w-full flex-wrap justify-center'>
 			{removeAlertOpen ? (
 				<div className='w-full'>
 					<Alert success={success} setAlertOpen={setRemoveAlertOpen} />

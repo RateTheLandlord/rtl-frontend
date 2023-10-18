@@ -93,9 +93,9 @@ const MyInfo = () => {
 	}
 
 	return (
-		<>
+		<div className='container flex w-full flex-col justify-center'>
 			<form
-				className='container w-full space-y-8 divide-y divide-gray-200'
+				className='container space-y-8 divide-y divide-gray-200'
 				onSubmit={(e) => onSubmit(e)}
 			>
 				{alertOpen ? (
@@ -230,7 +230,7 @@ const MyInfo = () => {
 					</div>
 				</div>
 			</form>
-		</>
+		</div>
 	)
 }
 

@@ -21,6 +21,7 @@ describe('Modal', () => {
 				onSubmit={mockOnSubmit}
 				buttonColour='blue'
 				selectedId={1}
+				loading={false}
 			/>,
 		)
 

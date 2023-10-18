@@ -5,7 +5,7 @@ interface IBody {
 	id: number
 }
 
-const deleteReview = async (req: NextApiRequest, res: NextApiResponse) => {
+const EditResource = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res)
 	const url = process.env.API_URL as string
 
@@ -17,16 +17,16 @@ const deleteReview = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	const id = body.id
 
-	fetch(`${url}/review/${id}`, {
-		method: 'DELETE',
+	fetch(`${url}/tenant-resource/${id}`, {
+		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${jwt}`,
 		},
+		body: JSON.stringify(body),
 	})
 		.then((result: Response) => {
 			if (!result.ok) {
-				console.log(result)
 				throw result
 			}
 			return result.json()
@@ -38,8 +38,8 @@ const deleteReview = async (req: NextApiRequest, res: NextApiResponse) => {
 			console.log(err)
 			res
 				.status(err.status)
-				.json({ error: 'Failed to delete Review', response: err.statusText })
+				.json({ error: 'Failed to edit Resource', response: err.statusText })
 		})
 }
 
-export default deleteReview
+export default EditResource
