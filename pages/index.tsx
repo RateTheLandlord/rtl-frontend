@@ -7,7 +7,7 @@ import React from 'react'
 export default function Home(): JSX.Element {
 	const title = 'Rate The Landlord'
 	const desc =
-		'Share information with tenants like you and rate your landlord. We are a community platform that elevates tenant voices to promote landlord accountability.'
+		'Share information with tenants like you and rate your landlord. We are a community platform that elevates tenant voices to promote landlord accountability. Find Landlord Reviews and Resources.'
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName

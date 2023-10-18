@@ -11,6 +11,7 @@ import AddResourceModal from '../components/AddResourceModal'
 import Modal from '@/components/modal/Modal'
 import Alert from '@/components/alerts/Alert'
 import EditResourceModal from '@/components/modal/EditResourceModal'
+import RemoveResourceModal from '@/components/modal/RemoveResourceModal'
 
 const TenantResources = () => {
 	const { data, error } = useSWR<ResourceResponse>(
@@ -96,6 +97,17 @@ const TenantResources = () => {
 					setSuccess={setSuccess}
 					setRemoveAlertOpen={setRemoveAlertOpen}
 					editResourceOpen={editResourceOpen}
+					setSelectedResource={setSelectedResource}
+				/>
+			)}
+			{deleteResourceOpen && (
+				<RemoveResourceModal
+					selectedResource={selectedResource}
+					mutateString='/api/tenant-resources/add-resource'
+					setRemoveResourceOpen={setDeleteResourceOpen}
+					setSuccess={setSuccess}
+					setRemoveAlertOpen={setRemoveAlertOpen}
+					removeResourceOpen={deleteResourceOpen}
 					setSelectedResource={setSelectedResource}
 				/>
 			)}
@@ -195,16 +207,19 @@ const TenantResources = () => {
 
 										<Menu.Item>
 											{({ active }) => (
-												<a
-													href='#'
+												<button
+													onClick={() => {
+														setDeleteResourceOpen(true)
+														setSelectedResource(resource)
+													}}
 													className={classNames(
 														active ? 'bg-gray-50' : '',
-														'block px-3 py-1 text-sm leading-6 text-gray-900',
+														'block w-full px-3 py-1 text-left text-sm leading-6 text-gray-900',
 													)}
 												>
 													Delete
 													<span className='sr-only'>, {resource.name}</span>
-												</a>
+												</button>
 											)}
 										</Menu.Item>
 									</Menu.Items>

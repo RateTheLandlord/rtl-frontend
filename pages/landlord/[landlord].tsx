@@ -1,4 +1,5 @@
 import LandlordPage from '@/components/landlord/LandlordPage'
+import Spinner from '@/components/ui/Spinner'
 import { Review } from '@/util/interfaces/interfaces'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
@@ -17,17 +18,7 @@ const Landlord = ({ landlord, reviews }: IProps) => {
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
 
-	if (!reviews)
-		return (
-			<div
-				className='text-primary inline-block h-8 w-8 animate-[spinner-grow_0.75s_linear_infinite] rounded-full bg-current align-[-0.125em] opacity-0 motion-reduce:animate-[spinner-grow_1.5s_linear_infinite]'
-				role='status'
-			>
-				<span className='!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]'>
-					Loading...
-				</span>
-			</div>
-		)
+	if (!reviews) return <Spinner />
 
 	if (reviews.length === 0) return <div>Error Loading Landlord</div>
 
