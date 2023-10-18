@@ -43,6 +43,7 @@ const LargeTextInput = ({
 				{limitText && value && length && (
 					<div className='flex w-full justify-end'>
 						<p
+							data-testid="error-text"
 							className={`text-xs ${
 								value.length > length ? 'text-red-400' : 'text-black'
 							}`}

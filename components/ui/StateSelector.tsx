@@ -14,7 +14,7 @@ interface IProps {
 const StateSelector = ({ country, setValue }: IProps) => {
 	const { t } = useTranslation('create')
 	return (
-		<div className='sm:col-span-2'>
+		<div data-testid="state-selector" className='sm:col-span-2'>
 			<label
 				htmlFor='region'
 				className='block text-sm font-medium text-gray-700'

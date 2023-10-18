@@ -19,6 +19,7 @@ const CountrySelector = ({ setValue }: IProps) => {
 			</label>
 			<div className='mt-1'>
 				<select
+				data-testid="country-selector"
 					id='country'
 					name='country'
 					required

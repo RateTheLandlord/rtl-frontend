@@ -6,6 +6,7 @@ interface IProps {
 	id: string
 	error?: boolean
 	errorText?: string
+	testid?: string
 }
 
 const TextInput = ({
@@ -16,9 +17,10 @@ const TextInput = ({
 	id,
 	error = false,
 	errorText,
+	testid,
 }: IProps) => {
 	return (
-		<div className='w-full sm:col-span-2'>
+		<div data-testid={testid || ''} className='w-full sm:col-span-2'>
 			<label
 				htmlFor={id}
 				className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'

@@ -353,6 +353,7 @@ function ReviewForm(): JSX.Element {
 								setValue={(str: string) => handleTextChange(str, 'postal')}
 								error={postalError}
 								errorText={t('create-review.review-form.postal-error')}
+								testid='create-review-form-postal-code-1'
 							/>
 						</div>
 					</div>
