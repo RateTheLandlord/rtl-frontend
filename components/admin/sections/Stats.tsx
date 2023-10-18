@@ -2,6 +2,7 @@ import useSWR from 'swr'
 import { useState } from 'react'
 import { fetcher } from '@/util/helpers/fetcher'
 import StateStats from '../components/StateStats'
+import Spinner from '@/components/ui/Spinner'
 
 export interface IStats {
 	total_reviews: number
@@ -50,7 +51,7 @@ const Stats = () => {
 	)
 
 	if (error) return <div>failed to load</div>
-	if (!data) return <div>loading...</div>
+	if (!data) return <Spinner />
 
 	const handleCountryClick = (country: string) => {
 		setCountry(country)

@@ -7,15 +7,8 @@ import ButtonLight from '../ui/button-light'
 import MaliciousStringAlert from '../alerts/MaliciousStringAlert'
 import RatingsRadio from './ratings-radio'
 import SuccessModal from './success-modal'
-import countries from '@/util/countries/countries.json'
 import { postcodeValidator } from 'postcode-validator'
-import provinces from '@/util/countries/canada/provinces.json'
-import regions from '@/util/countries/unitedKingdom/regions.json'
-import states from '@/util/countries/unitedStates/states.json'
-import territories from '@/util/countries/australia/territories.json'
-import nz_provinces from '@/util/countries/newZealand/nz-provinces.json'
 import { useTranslation } from 'react-i18next'
-import { country_codes } from '@/util/helpers/getCountryCodes'
 import SpamReviewModal from '@/components/create-review/SpamReviewModal'
 import SheldonModal from '@/components/create-review/SheldonModal'
 import { sheldonReview } from '@/components/create-review/helper'
@@ -25,6 +18,11 @@ import CityComboBox from '@/components/create-review/components/CityComboBox'
 import LandlordComboBox from '@/components/create-review/components/LandlordComboBox'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import { useReCaptcha } from 'next-recaptcha-v3'
+import Spinner from '../ui/Spinner'
+import CountrySelector from '../ui/CountrySelector'
+import StateSelector from '../ui/StateSelector'
+import TextInput from '../ui/TextInput'
+import LargeTextInput from '../ui/LargeTextInput'
 
 function ReviewForm(): JSX.Element {
 	const { t } = useTranslation('create')
@@ -113,11 +111,8 @@ function ReviewForm(): JSX.Element {
 	}
 
 	// Updated text change handler with malicious string check
-	const handleTextChange = (
-		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-		inputName: string,
-	) => {
-		const stringIsMalicious = detectMaliciousString(e.target.value)
+	const handleTextChange = (e: string, inputName: string) => {
+		const stringIsMalicious = detectMaliciousString(e)
 
 		switch (inputName) {
 			case 'landlord':
@@ -125,7 +120,7 @@ function ReviewForm(): JSX.Element {
 					setMaliciousStringDetected(true)
 					setMaliciousAlertOpen(true)
 				} else {
-					setLandlord(e.target.value)
+					setLandlord(e)
 					setMaliciousStringDetected(false)
 				}
 				break
@@ -134,7 +129,7 @@ function ReviewForm(): JSX.Element {
 					setMaliciousStringDetected(true)
 					setMaliciousAlertOpen(true)
 				} else {
-					setCity(e.target.value)
+					setCity(e)
 					setMaliciousStringDetected(false)
 				}
 				break
@@ -143,7 +138,7 @@ function ReviewForm(): JSX.Element {
 					setMaliciousStringDetected(true)
 					setMaliciousAlertOpen(true)
 				} else {
-					setPostal(e.target.value)
+					setPostal(e)
 					setMaliciousStringDetected(false)
 					setTouchedPostal(true)
 				}
@@ -153,7 +148,7 @@ function ReviewForm(): JSX.Element {
 					setMaliciousStringDetected(true)
 					setMaliciousAlertOpen(true)
 				} else {
-					setReview(e.target.value)
+					setReview(e)
 					setMaliciousStringDetected(false)
 				}
 				break
@@ -334,39 +329,7 @@ function ReviewForm(): JSX.Element {
 								/>
 							</div>
 
-							<div className='sm:col-span-3'>
-								<label
-									htmlFor='country'
-									className='block text-sm font-medium text-gray-700'
-								>
-									{t('create-review.review-form.country')}
-								</label>
-								<div className='mt-1'>
-									<select
-										id='country'
-										name='country'
-										required
-										onChange={(e) => setCountry(e.target.value)}
-										className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-									>
-										{country_codes.map((country) => {
-											if (country === 'CA') {
-												return (
-													<option key={country} value={country} selected>
-														{countries[country]}
-													</option>
-												)
-											} else {
-												return (
-													<option key={country} value={country}>
-														{countries[country]}
-													</option>
-												)
-											}
-										})}
-									</select>
-								</div>
-							</div>
+							<CountrySelector setValue={setCountry} />
 
 							<div className='sm:col-span-2'>
 								<CityComboBox
@@ -380,96 +343,18 @@ function ReviewForm(): JSX.Element {
 								/>
 							</div>
 
-							<div className='sm:col-span-2'>
-								<label
-									htmlFor='region'
-									className='block text-sm font-medium text-gray-700'
-								>
-									{country === 'GB'
-										? t('create-review.review-form.region')
-										: t('create-review.review-form.state')}
-								</label>
-								<div className='mt-1'>
-									<select
-										id='region'
-										name='region'
-										required
-										onChange={(e) => setProvince(e.target.value)}
-										className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-									>
-										{country === 'CA'
-											? provinces.map((province) => {
-													return (
-														<option key={province.short} value={province.name}>
-															{province.name}
-														</option>
-													)
-											  })
-											: country === 'GB'
-											? regions.map((region) => {
-													return (
-														<option key={region.short} value={region.name}>
-															{region.name}
-														</option>
-													)
-											  })
-											: country === 'AU'
-											? territories.map((territory) => {
-													return (
-														<option
-															key={territory.short}
-															value={territory.name}
-														>
-															{territory.name}
-														</option>
-													)
-											  })
-											: country === 'NZ'
-											? nz_provinces.map((prov) => {
-													return (
-														<option key={prov.short} value={prov.name}>
-															{prov.name}
-														</option>
-													)
-											  })
-											: states.map((state) => {
-													return (
-														<option key={state.short} value={state.name}>
-															{state.name}
-														</option>
-													)
-											  })}
-									</select>
-								</div>
-							</div>
+							<StateSelector country={country} setValue={setProvince} />
 
-							<div className='sm:col-span-2'>
-								<label
-									htmlFor='postal-code'
-									className='block text-sm font-medium text-gray-700'
-								>
-									{t('create-review.review-form.zip')}
-								</label>
-								<div className='mt-1'>
-									<input
-										type='text'
-										name='postal-code'
-										id='postal-code'
-										placeholder={t('create-review.review-form.zip')}
-										required
-										onChange={(e) => handleTextChange(e, 'postal')}
-										className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
-											postalError ? 'border-red-400' : ''
-										}`}
-										data-testid='create-review-form-postal-code-1'
-									/>
-								</div>
-								{postalError ? (
-									<p className='text-xs text-red-400'>
-										{t('create-review.review-form.postal-error')}
-									</p>
-								) : null}
-							</div>
+							<TextInput
+								id='postal-code'
+								title={t('create-review.review-form.zip')}
+								placeHolder={t('create-review.review-form.zip')}
+								value={postal}
+								setValue={(str: string) => handleTextChange(str, 'postal')}
+								error={postalError}
+								errorText={t('create-review.review-form.postal-error')}
+								testid='create-review-form-postal-code-1'
+							/>
 						</div>
 					</div>
 					<div className='flex flex-col gap-2'>
@@ -512,41 +397,19 @@ function ReviewForm(): JSX.Element {
 						/>
 					</div>
 				</div>
-				<div>
-					<label
-						htmlFor='comment'
-						className='mt-2 block text-sm font-medium text-gray-700'
-					>
-						{t('create-review.review-form.review')}
-					</label>
-					<div className='mt-1'>
-						<textarea
-							rows={4}
-							name='comment'
-							id='comment'
-							onChange={(e) => handleTextChange(e, 'review')}
-							className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-							defaultValue={''}
-							data-testid='create-review-form-text-1'
-						/>
-						<div className='flex w-full justify-end'>
-							<p
-								className={`text-xs ${
-									review.length > 2000 ? 'text-red-400' : 'text-black'
-								}`}
-							>
-								{t('create-review.review-form.limit', {
-									length: review.length,
-								})}
-							</p>
-						</div>
-					</div>
-					<div>
-						<p className='text-sm font-extrabold text-gray-500'>
-							{t('create-review.review-form.civil')}
-						</p>
-					</div>
-				</div>
+
+				<LargeTextInput
+					title={t('create-review.review-form.review')}
+					setValue={(str: string) => handleTextChange(str, 'review')}
+					id='review'
+					placeHolder=''
+					testid='create-review-form-text-1'
+					limitText={t('create-review.review-form.limit', {
+						length: review.length,
+					})}
+					length={2000}
+					value={review}
+				/>
 
 				<div className='w-full py-5'>
 					<div className='mb-2 flex w-full justify-start space-x-2'>
@@ -603,19 +466,7 @@ function ReviewForm(): JSX.Element {
 							{t('create-review.review-form.reset')}
 						</ButtonLight>
 						{loading ? (
-							<div
-								className={`hover:bg-teal-700' } ml-3 inline-flex justify-center rounded-md border border-transparent bg-teal-200 bg-teal-600 px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500
-							focus:ring-offset-2`}
-							>
-								<div
-									className='text-primary inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]'
-									role='status'
-								>
-									<span className='!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]'>
-										Loading...
-									</span>
-								</div>
-							</div>
+							<Spinner />
 						) : (
 							<Button
 								umami='Create Review / Submit Button'
