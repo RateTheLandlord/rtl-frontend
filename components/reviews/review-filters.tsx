@@ -12,6 +12,9 @@ import { countryOptions } from '@/util/helpers/getCountryCodes'
 //Review filters and Logic
 
 interface FiltersProps {
+	title?: string
+	description?: string
+	searchTitle?: string
 	selectedSort: Options
 	setSelectedSort: (selectedSort: Options) => void
 	sortOptions: Options[]
@@ -26,12 +29,15 @@ interface FiltersProps {
 	activeFilters: Options[] | null
 	cityOptions: Options[]
 	stateOptions: Options[]
-	zipOptions: Options[]
+	zipOptions?: Options[]
 	removeFilter: (index: number) => void
 	setSearchState: (str: string) => void
 }
 
 function ReviewFilters({
+	title,
+	description,
+	searchTitle,
 	selectedSort,
 	setSelectedSort,
 	sortOptions,
@@ -74,15 +80,15 @@ function ReviewFilters({
 				setSearchState={setSearchState}
 			/>
 
-			<main className='mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
+			<div className='mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
 				{/* TITLE AND DESCRIPTION */}
 				<div>
 					<div className='mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8'>
 						<h1 className='text-3xl font-extrabold tracking-tight text-gray-900'>
-							{t('reviews.title')}
+							{title ? title : t('reviews.title')}
 						</h1>
 						<p className='mt-4 max-w-xl text-sm text-gray-700'>
-							{t('reviews.body')}
+							{description ? description : t('reviews.body')}
 						</p>
 					</div>
 				</div>
@@ -113,7 +119,10 @@ function ReviewFilters({
 							<div className='hidden lg:block'>
 								<div className='flow-root'>
 									<div className='-mx-4 flex items-center divide-x divide-gray-200'>
-										<SearchBar setSearchState={setSearchState} />
+										<SearchBar
+											setSearchState={setSearchState}
+											searchTitle={searchTitle}
+										/>
 
 										<SelectList
 											state={countryFilter}
@@ -133,12 +142,14 @@ function ReviewFilters({
 											options={cityOptions}
 											name={t('reviews.city')}
 										/>
-										<ComboBox
-											state={zipFilter}
-											setState={setZipFilter}
-											options={zipOptions}
-											name={t('reviews.zip')}
-										/>
+										{zipOptions && (
+											<ComboBox
+												state={zipFilter}
+												setState={setZipFilter}
+												options={zipOptions}
+												name={t('reviews.zip')}
+											/>
+										)}
 									</div>
 								</div>
 							</div>
@@ -176,7 +187,7 @@ function ReviewFilters({
 						</div>
 					</div>
 				</section>
-			</main>
+			</div>
 		</div>
 	)
 }

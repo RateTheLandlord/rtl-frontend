@@ -55,7 +55,7 @@ function InfiniteScroll({
 	}, [data])
 
 	return (
-		<div>
+		<div className='w-full'>
 			<ReviewTable
 				data={content}
 				setReportOpen={setReportOpen}
@@ -63,7 +63,11 @@ function InfiniteScroll({
 				setRemoveReviewOpen={setRemoveReviewOpen}
 				setEditReviewOpen={setEditReviewOpen}
 			/>
-			{isLoading && <Spinner />}
+			{isLoading && (
+				<div className='flex w-full justify-center py-5'>
+					<Spinner />
+				</div>
+			)}
 		</div>
 	)
 }
