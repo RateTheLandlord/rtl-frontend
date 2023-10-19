@@ -21,7 +21,7 @@ interface FiltersProps {
 	setZipFilter: (option: Options) => void
 	cityOptions: Options[]
 	stateOptions: Options[]
-	zipOptions: Options[]
+	zipOptions?: Options[]
 	setSearchState: (str: string) => void
 }
 
@@ -116,12 +116,14 @@ export default function MobileReviewFilters({
 										options={cityOptions}
 										name={t('reviews.city')}
 									/>
-									<ComboBox
-										state={zipFilter}
-										setState={setZipFilter}
-										options={zipOptions}
-										name={t('reviews.zip')}
-									/>
+									{zipOptions && (
+										<ComboBox
+											state={zipFilter}
+											setState={setZipFilter}
+											options={zipOptions}
+											name={t('reviews.zip')}
+										/>
+									)}
 									<div className='mt-5 w-full'>
 										<button
 											onClick={() => setMobileFiltersOpen(false)}

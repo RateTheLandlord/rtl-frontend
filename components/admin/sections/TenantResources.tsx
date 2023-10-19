@@ -82,6 +82,7 @@ const TenantResources = () => {
 			})
 			.finally(() => setLoading(false))
 	}
+	if (!data.resources.length) return <div>No Resources to Display</div>
 	return (
 		<div className='container flex w-full flex-col justify-center'>
 			{removeAlertOpen ? (

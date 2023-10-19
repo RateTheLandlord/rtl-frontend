@@ -1,63 +1,146 @@
-const resources = [
-	{
-		id: 1,
-		name: 'Toronto Tenants Union',
-		country_code: 'CA',
-		city: 'Toronto',
-		state: 'On',
-		address: '123 Main St',
-		phone_number: '(123) 456-7890',
-		description: 'A sample place description.',
-		href: 'https://example.com/sample-place',
-	},
-]
+import { fetcher } from '@/util/helpers/fetcher'
+import { sortOptions } from '@/util/helpers/filter-options'
+import {
+	Options,
+	Resource,
+	ResourceResponse,
+} from '@/util/interfaces/interfaces'
+import { useEffect, useMemo, useState } from 'react'
+import useSWR from 'swr'
+import {
+	getCityOptions,
+	getStateOptions,
+	updateActiveFilters,
+} from '../reviews/functions'
+import ReviewFilters from '../reviews/review-filters'
+import InfiniteScroll from './InfiniteScrollResources'
 
 export default function ResourceList() {
+	const [selectedSort, setSelectedSort] = useState<Options>(sortOptions[2])
+
+	const [searchState, setSearchState] = useState<string>('')
+	const [page, setPage] = useState<number>(1)
+
+	const [countryFilter, setCountryFilter] = useState<Options | null>(null)
+	const [stateFilter, setStateFilter] = useState<Options | null>(null)
+	const [cityFilter, setCityFilter] = useState<Options | null>(null)
+	const [zipFilter, setZipFilter] = useState<Options | null>(null)
+	const [activeFilters, setActiveFilters] = useState<Options[] | null>(null)
+	const [hasMore, setHasMore] = useState(true) // Track if there is more content to load
+
+	const [previousQueryParams, setPreviousQueryParams] = useState('')
+	const [isLoading, setIsLoading] = useState(false)
+
+	const queryParams = useMemo(() => {
+		const params = new URLSearchParams({
+			sort: selectedSort.value,
+			state: stateFilter?.value || '',
+			country: countryFilter?.value || '',
+			city: cityFilter?.value || '',
+			zip: zipFilter?.value || '',
+			search: searchState || '',
+			limit: '25',
+		})
+		return params.toString()
+	}, [
+		selectedSort,
+		stateFilter,
+		countryFilter,
+		cityFilter,
+		zipFilter,
+		searchState,
+	])
+	const { data } = useSWR<ResourceResponse>(
+		`/api/tenant-resources/get-resources?page=${page}&${queryParams.toString()}`,
+		fetcher,
+	)
+
+	const [resources, setResources] = useState<Resource[]>(data?.resources || [])
+
+	useEffect(() => {
+		if (queryParams !== previousQueryParams) {
+			setResources(data?.resources || [])
+			setIsLoading(false)
+		} else if (data) {
+			setResources((prevReviews) => [...prevReviews, ...data.resources])
+			setIsLoading(false)
+		}
+		setPreviousQueryParams(queryParams)
+	}, [data, queryParams, previousQueryParams])
+
+	useEffect(() => {
+		if (data) {
+			if (resources.length >= Number(data?.total) || data.resources.length <= 0)
+				setHasMore(false)
+		}
+	}, [resources, data])
+
+	useEffect(() => {
+		setActiveFilters(
+			updateActiveFilters(countryFilter, stateFilter, cityFilter, zipFilter),
+		)
+		setPage(1)
+	}, [
+		cityFilter,
+		stateFilter,
+		countryFilter,
+		zipFilter,
+		searchState,
+		selectedSort,
+	])
+
+	const cityOptions = useMemo(
+		() => getCityOptions(data?.cities ?? []),
+		[data?.cities],
+	)
+	const stateOptions = useMemo(
+		() => getStateOptions(data?.states ?? []),
+		[data?.states],
+	)
+
+	const removeFilter = (index: number) => {
+		if (activeFilters?.length) {
+			if (cityFilter === activeFilters[index]) setCityFilter(null)
+			if (stateFilter === activeFilters[index]) setStateFilter(null)
+			if (countryFilter === activeFilters[index]) setCountryFilter(null)
+		}
+	}
 	return (
-		<ul
-			role='list'
-			className='grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8'
-		>
-			{resources.map((resource) => (
-				<li
-					key={resource.id}
-					className='overflow-hidden rounded-xl border border-gray-200 hover:border-teal-500'
-				>
-					<a href={resource.href}>
-						<div className='flex flex-col items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6'>
-							<div className='text-xl font-medium leading-6 text-gray-900'>
-								{resource.name}
-							</div>
-							<div className='text-xs font-medium leading-6 text-gray-900'>
-								{`${resource.city}, ${resource.state}, ${resource.country_code}`}
-							</div>
-						</div>
-						<dl className='-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6'>
-							<div className='flex justify-between gap-x-4 py-3'>
-								<dt className='text-gray-500'>Address</dt>
-								<dd className='text-gray-700'>
-									<div>{resource.address}</div>
-								</dd>
-							</div>
-							<div className='flex justify-between gap-x-4 py-3'>
-								<dt className='text-gray-500'>Phone Number</dt>
-								<dd className='flex items-start gap-x-2'>
-									<div className='font-medium text-gray-900'>
-										{resource.phone_number}
-									</div>
-								</dd>
-							</div>
-							<div className='flex justify-between gap-x-4 py-3'>
-								<dd className='flex items-start gap-x-2'>
-									<div className='font-medium text-gray-900'>
-										{resource.description}
-									</div>
-								</dd>
-							</div>
-						</dl>
-					</a>
-				</li>
-			))}
-		</ul>
+		<div className='w-full'>
+			<ReviewFilters
+				title='Find Resources'
+				description='Search our ever expanding database for Tenant Resources in your area!'
+				searchTitle='Search Resources'
+				selectedSort={selectedSort}
+				setSelectedSort={setSelectedSort}
+				sortOptions={sortOptions}
+				activeFilters={activeFilters}
+				countryFilter={countryFilter}
+				setCountryFilter={setCountryFilter}
+				stateFilter={stateFilter}
+				setStateFilter={setStateFilter}
+				cityFilter={cityFilter}
+				setCityFilter={setCityFilter}
+				zipFilter={zipFilter}
+				setZipFilter={setZipFilter}
+				cityOptions={cityOptions}
+				stateOptions={stateOptions}
+				removeFilter={removeFilter}
+				setSearchState={setSearchState}
+			/>
+			<div className='mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
+				{!resources.length ? (
+					<div>No Resources Found</div>
+				) : (
+					<InfiniteScroll
+						data={resources}
+						setPage={setPage}
+						hasMore={hasMore}
+						isLoading={isLoading}
+						setIsLoading={setIsLoading}
+					/>
+				)}
+			</div>
+		</div>
 	)
 }
