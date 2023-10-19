@@ -33,7 +33,6 @@ describe('EditResourceModal Component', () => {
 
 	test('renders EditResourceModal component', () => {
 		render(
-           
 			<EditResourceModal
 				selectedResource={mockProps.selectedResource}
 				mutateString={mockProps.mutateString}
@@ -42,7 +41,7 @@ describe('EditResourceModal Component', () => {
 				setRemoveAlertOpen={mockProps.setRemoveAlertOpen}
 				editResourceOpen={mockProps.editResourceOpen}
 				setSelectedResource={mockProps.setSelectedResource}
-			/>
+			/>,
 		)
 		// Ensure that the modal is rendered
 		expect(screen.getByText('Name')).toBeInTheDocument()
