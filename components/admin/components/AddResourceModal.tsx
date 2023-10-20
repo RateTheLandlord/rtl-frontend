@@ -19,6 +19,7 @@ interface IProps {
 	setAddress: Dispatch<SetStateAction<string>>
 	phone: string
 	setPhone: Dispatch<SetStateAction<string>>
+	description: string
 	setDescription: Dispatch<SetStateAction<string>>
 	href: string
 	setHref: Dispatch<SetStateAction<string>>
@@ -36,6 +37,7 @@ const AddResourceModal = ({
 	setAddress,
 	phone,
 	setPhone,
+	description,
 	setDescription,
 	href,
 	setHref,
@@ -117,6 +119,7 @@ const AddResourceModal = ({
 						<LargeTextInput
 							title='Description'
 							setValue={setDescription}
+							value={description}
 							id='description'
 						/>
 					</div>
