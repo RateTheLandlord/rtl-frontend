@@ -42,6 +42,17 @@ const TenantResources = () => {
 	if (error) return <div>failed to load...</div>
 	if (!data) return <Spinner />
 
+	const resetForm = () => {
+		setName('')
+		setCity('')
+		setCountry('CA')
+		setState('Alberta')
+		setAddress('')
+		setPhone('')
+		setDescription('')
+		setHref('')
+	}
+
 	const onSubmitNewResource = () => {
 		setLoading(true)
 		const newResource = {
@@ -74,6 +85,7 @@ const TenantResources = () => {
 				setAddResourceOpen(false)
 				setSuccess(true)
 				setRemoveAlertOpen(true)
+				resetForm()
 			})
 			.catch((err) => {
 				console.log(err)
