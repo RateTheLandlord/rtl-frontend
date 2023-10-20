@@ -69,22 +69,18 @@ function InfiniteScroll({
 								{resource.address && (
 									<div className='flex justify-between gap-x-4 py-3'>
 										<dt className='text-gray-500'>Address</dt>
-										<dd className='text-gray-700'>
-											<div>{resource.address}</div>
-										</dd>
+										<dd className='text-gray-700'>{resource.address}</dd>
+									</div>
+								)}
+								{resource.phone_number && (
+									<div className='flex justify-between gap-x-4 py-3'>
+										<dt className='text-gray-500'>Phone Number</dt>
+										<dd className='text-gray-700'>{resource.phone_number}</dd>
 									</div>
 								)}
 								<div className='flex justify-between gap-x-4 py-3'>
-									<dt className='text-gray-500'>Phone Number</dt>
 									<dd className='flex items-start gap-x-2'>
-										<div className='font-medium text-gray-900'>
-											{resource.phone_number}
-										</div>
-									</dd>
-								</div>
-								<div className='flex justify-between gap-x-4 py-3'>
-									<dd className='flex items-start gap-x-2'>
-										<div className='font-medium text-gray-900'>
+										<div className='font-medium text-gray-700'>
 											{resource.description}
 										</div>
 									</dd>
