@@ -9,15 +9,18 @@ import Spinner from '@/components/ui/Spinner'
 import { Resource, ResourceResponse } from '@/util/interfaces/interfaces'
 import AddResourceModal from '../components/AddResourceModal'
 import Modal from '@/components/modal/Modal'
-import Alert from '@/components/alerts/Alert'
 import EditResourceModal from '@/components/modal/EditResourceModal'
 import RemoveResourceModal from '@/components/modal/RemoveResourceModal'
+import { useAppDispatch } from '@/redux/hooks'
+import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 
 const TenantResources = () => {
 	const { data, error } = useSWR<ResourceResponse>(
 		'/api/tenant-resources/get-resources?limit=1000',
 		fetcher,
 	)
+
+	const dispatch = useAppDispatch()
 
 	const [name, setName] = useState<string>('')
 	const [country, setCountry] = useState<string>('CA')
@@ -28,9 +31,6 @@ const TenantResources = () => {
 	const [description, setDescription] = useState('')
 	const [href, setHref] = useState('')
 	const [loading, setLoading] = useState(false)
-
-	const [success, setSuccess] = useState(false)
-	const [removeAlertOpen, setRemoveAlertOpen] = useState(false)
 
 	const [selectedResource, setSelectedResource] = useState<
 		Resource | undefined
@@ -83,31 +83,24 @@ const TenantResources = () => {
 					console.log(err),
 				)
 				setAddResourceOpen(false)
-				setSuccess(true)
-				setRemoveAlertOpen(true)
+				dispatch(updateAlertSuccess(true))
+				dispatch(updateAlertOpen(true))
 				resetForm()
 			})
 			.catch((err) => {
 				console.log(err)
-				setSuccess(false)
-				setRemoveAlertOpen(true)
+				dispatch(updateAlertSuccess(false))
+				dispatch(updateAlertOpen(true))
 			})
 			.finally(() => setLoading(false))
 	}
 	return (
 		<div className='container flex w-full flex-col justify-center'>
-			{removeAlertOpen ? (
-				<div className='w-full'>
-					<Alert success={success} setAlertOpen={setRemoveAlertOpen} />
-				</div>
-			) : null}
 			{editResourceOpen && (
 				<EditResourceModal
 					selectedResource={selectedResource}
 					mutateString='/api/tenant-resources/add-resource'
 					setEditResourceOpen={setEditResourceOpen}
-					setSuccess={setSuccess}
-					setRemoveAlertOpen={setRemoveAlertOpen}
 					editResourceOpen={editResourceOpen}
 					setSelectedResource={setSelectedResource}
 				/>
@@ -117,8 +110,6 @@ const TenantResources = () => {
 					selectedResource={selectedResource}
 					mutateString='/api/tenant-resources/add-resource'
 					setRemoveResourceOpen={setDeleteResourceOpen}
-					setSuccess={setSuccess}
-					setRemoveAlertOpen={setRemoveAlertOpen}
 					removeResourceOpen={deleteResourceOpen}
 					setSelectedResource={setSelectedResource}
 				/>

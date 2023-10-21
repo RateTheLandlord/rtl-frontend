@@ -5,13 +5,13 @@ import { Dialog, Transition } from '@headlessui/react'
 import { mutate } from 'swr'
 import XIcon from '@heroicons/react/outline/XIcon'
 import Spinner from '../ui/Spinner'
+import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
+import { useAppDispatch } from '@/redux/hooks'
 
 interface IProps {
 	selectedResource: Resource | undefined
 	mutateString: string
 	setRemoveResourceOpen: Dispatch<SetStateAction<boolean>>
-	setSuccess: Dispatch<SetStateAction<boolean>>
-	setRemoveAlertOpen: Dispatch<SetStateAction<boolean>>
 	removeResourceOpen: boolean
 	setSelectedResource: Dispatch<SetStateAction<Resource | undefined>>
 }
@@ -20,11 +20,10 @@ const RemoveResourceModal = ({
 	selectedResource,
 	mutateString,
 	setRemoveResourceOpen,
-	setSuccess,
-	setRemoveAlertOpen,
 	removeResourceOpen,
 	setSelectedResource,
 }: IProps) => {
+	const dispatch = useAppDispatch()
 	const [loading, setLoading] = useState(false)
 	const onSubmitRemoveResource = () => {
 		if (selectedResource) {
@@ -44,15 +43,14 @@ const RemoveResourceModal = ({
 				.then(() => {
 					mutate(mutateString).catch((err) => console.log(err))
 					setRemoveResourceOpen(false)
-					setSuccess(true)
-					setRemoveAlertOpen(true)
+					dispatch(updateAlertSuccess(true))
+					dispatch(updateAlertOpen(true))
 					setSelectedResource(undefined)
 				})
 				.catch((err) => {
 					console.log(err)
-					setRemoveAlertOpen(false)
-					setSuccess(false)
-					setRemoveAlertOpen(true)
+					dispatch(updateAlertSuccess(false))
+					dispatch(updateAlertOpen(true))
 					setSelectedResource(undefined)
 				})
 				.finally(() => setLoading(false))

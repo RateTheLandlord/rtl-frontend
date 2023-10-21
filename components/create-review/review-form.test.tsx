@@ -4,6 +4,8 @@
 import React from 'react'
 import { fireEvent, render } from '@testing-library/react'
 import ReviewForm from './review-form'
+import { Provider } from 'react-redux'
+import { store } from '@/redux/store'
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
 jest.mock('next/router', () => require('next-router-mock'))
@@ -19,7 +21,11 @@ beforeEach(() => {
 })
 
 test('Review Form component renders all fields', () => {
-	const result = render(<ReviewForm />)
+	const result = render(
+		<Provider store={store}>
+			<ReviewForm />
+		</Provider>,
+	)
 
 	expect(result.getByTestId('create-review-form-1')).toBeInTheDocument()
 	expect(
@@ -36,7 +42,11 @@ test('Review Form component renders all fields', () => {
 })
 
 test('Reset button clears the form', () => {
-	const result = render(<ReviewForm />)
+	const result = render(
+		<Provider store={store}>
+			<ReviewForm />
+		</Provider>,
+	)
 
 	const reviewText = result.getByTestId('create-review-form-text-1')
 	fireEvent.change(reviewText, { target: { value: 'some review' } })

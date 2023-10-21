@@ -1,7 +1,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useEffect, useState } from 'react'
 import AddReviewModal from './add-review-modal'
-import Alert from '../alerts/Alert'
 import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import MaliciousStringAlert from '../alerts/MaliciousStringAlert'
@@ -23,12 +22,13 @@ import CountrySelector from '../ui/CountrySelector'
 import StateSelector from '../ui/StateSelector'
 import TextInput from '../ui/TextInput'
 import LargeTextInput from '../ui/LargeTextInput'
+import { useAppDispatch } from '@/redux/hooks'
+import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 
 function ReviewForm(): JSX.Element {
 	const { t } = useTranslation('create')
+	const dispatch = useAppDispatch()
 
-	const [success, setSuccess] = useState(false)
-	const [alertOpen, setAlertOpen] = useState(false)
 	const [maliciousAlertOpen, setMaliciousAlertOpen] = useState(false)
 	const [successModalOpen, setSuccessModalOpen] = useState(false)
 	const [reviewModalOpen, setReviewModalOpen] = useState(false)
@@ -238,15 +238,15 @@ function ReviewForm(): JSX.Element {
 							}
 						})
 						.catch(() => {
-							setSuccess(false)
-							setAlertOpen(true)
+							dispatch(updateAlertSuccess(false))
+							dispatch(updateAlertOpen(true))
 						})
 						.finally(() => {
 							setLoading(false)
 						})
 				} else {
-					setSuccess(false)
-					setAlertOpen(true)
+					dispatch(updateAlertSuccess(false))
+					dispatch(updateAlertOpen(true))
 				}
 			} else {
 				setPostalError(true)
@@ -283,7 +283,6 @@ function ReviewForm(): JSX.Element {
 			className='container flex w-full flex-col items-center px-4 sm:px-0'
 			data-testid='create-review-form-1'
 		>
-			{alertOpen && <Alert success={success} setAlertOpen={setAlertOpen} />}
 			{maliciousAlertOpen && (
 				<MaliciousStringAlert setMaliciousAlertOpen={setMaliciousAlertOpen} />
 			)}

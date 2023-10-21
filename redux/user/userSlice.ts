@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface IUsers {
 	jwt: {
@@ -37,5 +37,5 @@ const userSlice = createSlice({
 	},
 })
 
-export const {updateUser} = userSlice.actions
+export const { updateUser } = userSlice.actions
 export default userSlice.reducer

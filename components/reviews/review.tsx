@@ -10,7 +10,6 @@ import {
 import React, { useEffect, useMemo, useState } from 'react'
 import ReportModal from '@/components/reviews/report-modal'
 import useSWR from 'swr'
-import Alert from '../alerts/Alert'
 import { fetcher } from '@/util/helpers/fetcher'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
@@ -38,8 +37,6 @@ const Review = () => {
 	const [cityFilter, setCityFilter] = useState<Options | null>(null)
 	const [zipFilter, setZipFilter] = useState<Options | null>(null)
 	const [activeFilters, setActiveFilters] = useState<Options[] | null>(null)
-	const [success, setSuccess] = useState(false)
-	const [removeAlertOpen, setRemoveAlertOpen] = useState(false)
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
 	const [hasMore, setHasMore] = useState(true) // Track if there is more content to load
 
@@ -145,8 +142,6 @@ const Review = () => {
 						selectedReview={selectedReview}
 						mutateString={`/api/review/get-reviews?${queryParams.toString()}`}
 						setEditReviewOpen={setEditReviewOpen}
-						setSuccess={setSuccess}
-						setRemoveAlertOpen={setRemoveAlertOpen}
 						editReviewOpen={editReviewOpen}
 						setSelectedReview={setSelectedReview}
 					/>
@@ -154,19 +149,12 @@ const Review = () => {
 						selectedReview={selectedReview}
 						mutateString={`/api/review/get-reviews?${queryParams.toString()}`}
 						setRemoveReviewOpen={setRemoveReviewOpen}
-						setSuccess={setSuccess}
-						setRemoveAlertOpen={setRemoveAlertOpen}
 						removeReviewOpen={removeReviewOpen}
 						setSelectedReview={setSelectedReview}
 					/>
 				</>
 			) : null}
 			<div className='w-full'>
-				{removeAlertOpen ? (
-					<div className='w-full'>
-						<Alert success={success} setAlertOpen={setRemoveAlertOpen} />
-					</div>
-				) : null}
 				<AdsComponent slot='2009320000' />
 				<ReviewFilters
 					selectedSort={selectedSort}

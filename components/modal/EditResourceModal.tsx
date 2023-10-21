@@ -9,13 +9,13 @@ import CountrySelector from '../ui/CountrySelector'
 import LargeTextInput from '../ui/LargeTextInput'
 import { mutate } from 'swr'
 import Spinner from '../ui/Spinner'
+import { useAppDispatch } from '@/redux/hooks'
+import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 
 interface IProps {
 	selectedResource: Resource | undefined
 	mutateString: string
 	setEditResourceOpen: Dispatch<SetStateAction<boolean>>
-	setSuccess: Dispatch<SetStateAction<boolean>>
-	setRemoveAlertOpen: Dispatch<SetStateAction<boolean>>
 	editResourceOpen: boolean
 	setSelectedResource: Dispatch<SetStateAction<Resource | undefined>>
 }
@@ -24,11 +24,10 @@ const EditResourceModal = ({
 	selectedResource,
 	mutateString,
 	setEditResourceOpen,
-	setSuccess,
-	setRemoveAlertOpen,
 	editResourceOpen,
 	setSelectedResource,
 }: IProps) => {
+	const dispatch = useAppDispatch()
 	const [name, setName] = useState<string>(selectedResource?.name || '')
 	const [country, setCountry] = useState<string>(
 		selectedResource?.country_code || 'CA',
@@ -79,14 +78,14 @@ const EditResourceModal = ({
 			.then(() => {
 				mutate(mutateString).catch((err) => console.log(err))
 				setEditResourceOpen(false)
-				setSuccess(true)
-				setRemoveAlertOpen(true)
+				dispatch(updateAlertSuccess(true))
+				dispatch(updateAlertOpen(true))
 				setSelectedResource(undefined)
 			})
 			.catch((err) => {
 				console.log(err)
-				setSuccess(false)
-				setRemoveAlertOpen(true)
+				dispatch(updateAlertSuccess(false))
+				dispatch(updateAlertOpen(true))
 				setSelectedResource(undefined)
 			})
 			.finally(() => setLoading(false))

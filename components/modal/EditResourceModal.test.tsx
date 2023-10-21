@@ -3,9 +3,11 @@
  */
 
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import EditResourceModal from './EditResourceModal'
+import { Provider } from 'react-redux'
+import { store } from '@/redux/store'
 
 describe('EditResourceModal Component', () => {
 	const mockSelectedResource = {
@@ -33,15 +35,15 @@ describe('EditResourceModal Component', () => {
 
 	test('renders EditResourceModal component', () => {
 		render(
-			<EditResourceModal
-				selectedResource={mockProps.selectedResource}
-				mutateString={mockProps.mutateString}
-				setEditResourceOpen={mockProps.setEditResourceOpen}
-				setSuccess={mockProps.setSuccess}
-				setRemoveAlertOpen={mockProps.setRemoveAlertOpen}
-				editResourceOpen={mockProps.editResourceOpen}
-				setSelectedResource={mockProps.setSelectedResource}
-			/>,
+			<Provider store={store}>
+				<EditResourceModal
+					selectedResource={mockProps.selectedResource}
+					mutateString={mockProps.mutateString}
+					setEditResourceOpen={mockProps.setEditResourceOpen}
+					editResourceOpen={mockProps.editResourceOpen}
+					setSelectedResource={mockProps.setSelectedResource}
+				/>
+			</Provider>,
 		)
 		// Ensure that the modal is rendered
 		expect(screen.getByText('Name')).toBeInTheDocument()
