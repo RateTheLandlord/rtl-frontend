@@ -4,6 +4,8 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import RemoveReviewModal from './RemoveReviewModal'
+import { Provider } from 'react-redux'
+import { store } from '@/redux/store'
 
 describe('RemoveReviewModal', () => {
 	const mockSelectedReview = {
@@ -28,15 +30,15 @@ describe('RemoveReviewModal', () => {
 
 	test('renders the remove review modal', () => {
 		render(
-			<RemoveReviewModal
-				selectedReview={mockSelectedReview}
-				mutateString=''
-				setRemoveReviewOpen={jest.fn()}
-				setSuccess={jest.fn()}
-				setRemoveAlertOpen={jest.fn()}
-				removeReviewOpen={true}
-				setSelectedReview={jest.fn()}
-			/>,
+			<Provider store={store}>
+				<RemoveReviewModal
+					selectedReview={mockSelectedReview}
+					mutateString=''
+					setRemoveReviewOpen={jest.fn()}
+					removeReviewOpen={true}
+					setSelectedReview={jest.fn()}
+				/>
+			</Provider>,
 		)
 
 		// Verify that the modal title is rendered

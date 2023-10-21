@@ -4,13 +4,13 @@ import { Dispatch, Fragment, SetStateAction } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { mutate } from 'swr'
 import XIcon from '@heroicons/react/outline/XIcon'
+import { useAppDispatch } from '@/redux/hooks'
+import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 
 interface IProps {
 	selectedReview: Review | undefined
 	mutateString: string
 	setRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
-	setSuccess: Dispatch<SetStateAction<boolean>>
-	setRemoveAlertOpen: Dispatch<SetStateAction<boolean>>
 	removeReviewOpen: boolean
 	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
 }
@@ -19,11 +19,10 @@ const RemoveReviewModal = ({
 	selectedReview,
 	mutateString,
 	setRemoveReviewOpen,
-	setSuccess,
-	setRemoveAlertOpen,
 	removeReviewOpen,
 	setSelectedReview,
 }: IProps) => {
+	const dispatch = useAppDispatch()
 	const onSubmitRemoveReview = () => {
 		if (selectedReview) {
 			fetch('/api/review/delete-review', {
@@ -41,15 +40,14 @@ const RemoveReviewModal = ({
 				.then(() => {
 					mutate(mutateString).catch((err) => console.log(err))
 					setRemoveReviewOpen(false)
-					setSuccess(true)
-					setRemoveAlertOpen(true)
+					dispatch(updateAlertSuccess(true))
+					dispatch(updateAlertOpen(true))
 					setSelectedReview(undefined)
 				})
 				.catch((err) => {
 					console.log(err)
-					setRemoveAlertOpen(false)
-					setSuccess(false)
-					setRemoveAlertOpen(true)
+					dispatch(updateAlertSuccess(false))
+					dispatch(updateAlertOpen(true))
 					setSelectedReview(undefined)
 				})
 		}

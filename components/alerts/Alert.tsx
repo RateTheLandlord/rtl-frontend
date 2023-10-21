@@ -1,10 +1,9 @@
 import { CheckCircleIcon, XCircleIcon, XIcon } from '@heroicons/react/solid'
-import { Dispatch, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 
 interface IProps {
 	success: boolean
-	setAlertOpen: Dispatch<SetStateAction<boolean>>
+	setAlertOpen: (bool: boolean) => void
 }
 
 const Alert = ({ success, setAlertOpen }: IProps) => {
@@ -40,7 +39,7 @@ const Alert = ({ success, setAlertOpen }: IProps) => {
 					<div className='-mx-1.5 -my-1.5'>
 						<button
 							type='button'
-							onClick={() => setAlertOpen((p) => !p)}
+							onClick={() => setAlertOpen(false)}
 							className='inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50'
 						>
 							<span className='sr-only'>{t('alerts.dismiss')}</span>
