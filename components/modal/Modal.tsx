@@ -77,7 +77,7 @@ const Modal = ({
 									</div>
 								</div>
 								<div>{element}</div>
-								<div className='mt-5 sm:mt-4 sm:flex sm:flex-row-reverse'>
+								<div className='mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse'>
 									{loading ? (
 										<Spinner />
 									) : (
