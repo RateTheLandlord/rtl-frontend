@@ -15,6 +15,7 @@ import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import InfiniteScroll from './InfiniteScroll'
 import AdsComponent from '@/components/adsense/Adsense'
+import { useDebounce } from '@/util/hooks/useDebounce'
 
 export type ReviewsResponse = {
 	reviews: Review[]
@@ -48,6 +49,8 @@ const Review = () => {
 	const [previousQueryParams, setPreviousQueryParams] = useState('')
 	const [isLoading, setIsLoading] = useState(false)
 
+	const debouncedSearchState = useDebounce(searchState, 500)
+
 	const queryParams = useMemo(() => {
 		const params = new URLSearchParams({
 			sort: selectedSort.value,
@@ -55,7 +58,7 @@ const Review = () => {
 			country: countryFilter?.value || '',
 			city: cityFilter?.value || '',
 			zip: zipFilter?.value || '',
-			search: searchState || '',
+			search: debouncedSearchState || '',
 			limit: '25',
 		})
 		return params.toString()
@@ -65,7 +68,7 @@ const Review = () => {
 		countryFilter,
 		cityFilter,
 		zipFilter,
-		searchState,
+		debouncedSearchState,
 	])
 
 	const { data } = useSWR<ReviewsResponse>(
@@ -103,7 +106,7 @@ const Review = () => {
 		stateFilter,
 		countryFilter,
 		zipFilter,
-		searchState,
+		debouncedSearchState,
 		selectedSort,
 	])
 

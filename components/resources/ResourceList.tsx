@@ -14,6 +14,7 @@ import {
 } from '../reviews/functions'
 import ReviewFilters from '../reviews/review-filters'
 import InfiniteScroll from './InfiniteScrollResources'
+import { useDebounce } from '@/util/hooks/useDebounce'
 
 export default function ResourceList() {
 	const [selectedSort, setSelectedSort] = useState<Options>(sortOptions[2])
@@ -31,6 +32,8 @@ export default function ResourceList() {
 	const [previousQueryParams, setPreviousQueryParams] = useState('')
 	const [isLoading, setIsLoading] = useState(false)
 
+	const debouncedSearch = useDebounce(searchState, 500)
+
 	const queryParams = useMemo(() => {
 		const params = new URLSearchParams({
 			sort: selectedSort.value,
@@ -38,7 +41,7 @@ export default function ResourceList() {
 			country: countryFilter?.value || '',
 			city: cityFilter?.value || '',
 			zip: zipFilter?.value || '',
-			search: searchState || '',
+			search: debouncedSearch || '',
 			limit: '25',
 		})
 		return params.toString()
@@ -48,7 +51,7 @@ export default function ResourceList() {
 		countryFilter,
 		cityFilter,
 		zipFilter,
-		searchState,
+		debouncedSearch,
 	])
 	const { data } = useSWR<ResourceResponse>(
 		`/api/tenant-resources/get-resources?page=${page}&${queryParams.toString()}`,
@@ -85,7 +88,7 @@ export default function ResourceList() {
 		stateFilter,
 		countryFilter,
 		zipFilter,
-		searchState,
+		debouncedSearch,
 		selectedSort,
 	])
 
