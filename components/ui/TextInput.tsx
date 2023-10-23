@@ -23,12 +23,12 @@ const TextInput = ({
 		<div data-testid={testid || ''} className='w-full sm:col-span-2'>
 			<label
 				htmlFor={id}
-				className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
+				className='block text-sm font-medium text-gray-700 sm:mt-px'
 			>
 				{title}
 			</label>
-			<div className='mt-1'>
-				<div className='mt-1 sm:col-span-2 sm:mt-0'>
+			<div className='pt-0.5'>
+				<div className='sm:col-span-2 sm:mt-0'>
 					<input
 						onChange={(e) => setValue(e.target.value)}
 						type='text'
