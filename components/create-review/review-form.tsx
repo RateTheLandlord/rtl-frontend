@@ -330,19 +330,21 @@ function ReviewForm(): JSX.Element {
 
 							<CountrySelector setValue={setCountry} />
 
-							<div className='sm:col-span-2'>
-								<CityComboBox
-									name={t('create-review.review-form.city')}
-									state={city}
-									setState={setCityName}
-									options={locations}
-									searching={searching}
-									error={cityValidationError}
-									errorText={cityValidationErrorText}
-								/>
-							</div>
+							<CityComboBox
+								name={t('create-review.review-form.city')}
+								state={city}
+								setState={setCityName}
+								options={locations}
+								searching={searching}
+								error={cityValidationError}
+								errorText={cityValidationErrorText}
+							/>
 
-							<StateSelector country={country} setValue={setProvince} />
+							<StateSelector
+								value={province}
+								country={country}
+								setValue={setProvince}
+							/>
 
 							<TextInput
 								id='postal-code'
