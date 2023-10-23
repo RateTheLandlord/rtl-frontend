@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import StateSelector from './StateSelector'
 
@@ -17,6 +17,7 @@ describe('StateSelector Component', () => {
 			<StateSelector
 				country={mockProps.country}
 				setValue={mockProps.setValue}
+				value=''
 			/>,
 		)
 		const selectElement = screen.getByTestId('state-selector')
