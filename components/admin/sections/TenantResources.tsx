@@ -128,6 +128,7 @@ const TenantResources = () => {
 							setCountry={setCountry}
 							city={city}
 							setCity={setCity}
+							state={state}
 							setState={setState}
 							address={address}
 							setAddress={setAddress}

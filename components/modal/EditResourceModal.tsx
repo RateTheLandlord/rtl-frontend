@@ -163,6 +163,7 @@ const EditResourceModal = ({
 									</div>
 
 									<StateSelector
+										value={state}
 										country={country ? country : selectedResource?.country_code}
 										setValue={setState}
 									/>
