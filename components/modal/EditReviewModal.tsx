@@ -9,13 +9,13 @@ import territories from '@/util/countries/australia/territories.json'
 import { country_codes } from '@/util/helpers/getCountryCodes'
 import { Dialog, Transition } from '@headlessui/react'
 import { mutate } from 'swr'
+import { useAppDispatch } from '@/redux/hooks'
+import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 
 interface IProps {
 	selectedReview: Review | undefined
 	mutateString: string
 	setEditReviewOpen: Dispatch<SetStateAction<boolean>>
-	setSuccess: Dispatch<SetStateAction<boolean>>
-	setRemoveAlertOpen: Dispatch<SetStateAction<boolean>>
 	editReviewOpen: boolean
 	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
 }
@@ -24,11 +24,10 @@ const EditReviewModal = ({
 	selectedReview,
 	mutateString,
 	setEditReviewOpen,
-	setSuccess,
-	setRemoveAlertOpen,
 	editReviewOpen,
 	setSelectedReview,
 }: IProps) => {
+	const dispatch = useAppDispatch()
 	const [landlord, setLandlord] = useState<string>(
 		selectedReview?.landlord || '',
 	)
@@ -68,14 +67,14 @@ const EditReviewModal = ({
 			.then(() => {
 				mutate(mutateString).catch((err) => console.log(err))
 				setEditReviewOpen(false)
-				setSuccess(true)
-				setRemoveAlertOpen(true)
+				dispatch(updateAlertSuccess(true))
+				dispatch(updateAlertOpen(true))
 				setSelectedReview(undefined)
 			})
 			.catch((err) => {
 				console.log(err)
-				setSuccess(false)
-				setRemoveAlertOpen(true)
+				dispatch(updateAlertSuccess(false))
+				dispatch(updateAlertOpen(true))
 				setSelectedReview(undefined)
 			})
 	}

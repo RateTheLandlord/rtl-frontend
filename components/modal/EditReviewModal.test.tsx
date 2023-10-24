@@ -3,6 +3,8 @@
  */
 import { render, screen } from '@testing-library/react'
 import EditReviewModal from './EditReviewModal'
+import { store } from '@/redux/store'
+import { Provider } from 'react-redux'
 
 describe('EditReviewModal', () => {
 	const mockSelectedReview = {
@@ -27,15 +29,15 @@ describe('EditReviewModal', () => {
 
 	test('renders EditReviewModal with selected review data', () => {
 		render(
-			<EditReviewModal
-				selectedReview={mockSelectedReview}
-				mutateString=''
-				setEditReviewOpen={jest.fn()}
-				setSuccess={jest.fn()}
-				setRemoveAlertOpen={jest.fn()}
-				editReviewOpen={true}
-				setSelectedReview={jest.fn()}
-			/>,
+			<Provider store={store}>
+				<EditReviewModal
+					selectedReview={mockSelectedReview}
+					mutateString=''
+					setEditReviewOpen={jest.fn()}
+					editReviewOpen={true}
+					setSelectedReview={jest.fn()}
+				/>
+			</Provider>,
 		)
 
 		expect(screen.getByLabelText('Landlord')).toHaveValue(

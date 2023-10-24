@@ -1,6 +1,7 @@
 import { Dispatch, Fragment, SetStateAction } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import XIcon from '@heroicons/react/outline/XIcon'
+import Spinner from '../ui/Spinner'
 
 interface IProps {
 	open: boolean
@@ -11,6 +12,7 @@ interface IProps {
 	onSubmit: (id: number) => void
 	buttonColour: 'blue' | 'red'
 	selectedId: number
+	loading: boolean
 }
 
 const Modal = ({
@@ -22,10 +24,11 @@ const Modal = ({
 	onSubmit,
 	buttonColour,
 	selectedId,
+	loading,
 }: IProps) => {
 	return (
 		<Transition.Root show={open} as={Fragment} data-testid='modal-1'>
-			<Dialog as='div' className='relative z-10' onClose={setOpen}>
+			<Dialog as='div' className='relative z-50' onClose={setOpen}>
 				<Transition.Child
 					as={Fragment}
 					enter='ease-out duration-300'
@@ -74,18 +77,23 @@ const Modal = ({
 									</div>
 								</div>
 								<div>{element}</div>
-								<div className='mt-5 sm:mt-4 sm:flex sm:flex-row-reverse'>
-									<button
-										type='button'
-										className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm ${
-											buttonColour === 'red'
-												? 'hover:bg-red:700 bg-red-500'
-												: 'bg-blue-500 hover:bg-blue-700'
-										}`}
-										onClick={() => onSubmit(selectedId)}
-									>
-										Submit
-									</button>
+								<div className='mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse'>
+									{loading ? (
+										<Spinner />
+									) : (
+										<button
+											type='button'
+											disabled={loading}
+											className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm ${
+												buttonColour === 'red'
+													? 'hover:bg-red:700 bg-red-500'
+													: 'bg-blue-500 hover:bg-blue-700'
+											}`}
+											onClick={() => onSubmit(selectedId)}
+										>
+											Submit
+										</button>
+									)}
 									<button
 										type='button'
 										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm'

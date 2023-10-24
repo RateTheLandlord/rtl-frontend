@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import Alert from '@/components/alerts/Alert'
 import Modal from '@/components/modal/Modal'
 import { useEffect, useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
 import AddUserModal from '../components/AddUserModal'
 import RemoveUserModal from '../components/RemoveUserModal'
 import { fetcher } from '@/util/helpers/fetcher'
+import Spinner from '@/components/ui/Spinner'
+import { useAppDispatch } from '@/redux/hooks'
+import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 
 interface IUsers {
 	id: number
@@ -16,6 +18,7 @@ interface IUsers {
 }
 
 const TeamMembers = () => {
+	const dispatch = useAppDispatch()
 	const { mutate } = useSWRConfig()
 	const [addUserOpen, setAddUserOpen] = useState(false)
 
@@ -29,8 +32,7 @@ const TeamMembers = () => {
 
 	const [users, setUsers] = useState<Array<IUsers>>([])
 
-	const [success, setSuccess] = useState(false)
-	const [removeAlertOpen, setRemoveAlertOpen] = useState(false)
+	const [loading, setLoading] = useState(false)
 
 	const { data: allUsers, error } = useSWR<Array<IUsers>>(
 		'/api/user/get-users',
@@ -46,9 +48,10 @@ const TeamMembers = () => {
 	}, [allUsers])
 
 	if (error) return <div>failed to load</div>
-	if (!allUsers) return <div>loading...</div>
+	if (!allUsers) return <Spinner />
 
 	const onSubmitNewUser = (num: number) => {
+		setLoading(true)
 		const newUser = {
 			name: newUserName,
 			email: newUserEmail,
@@ -72,17 +75,19 @@ const TeamMembers = () => {
 			.then(() => {
 				mutate('/api/user/get-users').catch((err) => console.log(err))
 				setAddUserOpen(false)
-				setSuccess(true)
-				setRemoveAlertOpen(true)
+				dispatch(updateAlertSuccess(true))
+				dispatch(updateAlertOpen(true))
 			})
 			.catch((err) => {
 				console.log(err)
-				setSuccess(false)
-				setRemoveAlertOpen(true)
+				dispatch(updateAlertSuccess(false))
+				dispatch(updateAlertOpen(true))
 			})
+			.finally(() => setLoading(false))
 	}
 
 	const onSubmitDeleteUser = (num: number) => {
+		setLoading(true)
 		fetch('/api/user/remove-user', {
 			method: 'POST',
 			headers: {
@@ -98,24 +103,20 @@ const TeamMembers = () => {
 			.then(() => {
 				mutate('/api/user/get-users').catch((err) => console.log(err))
 				setRemoveUserOpen(false)
-				setSuccess(true)
-				setRemoveAlertOpen(true)
+				dispatch(updateAlertSuccess(true))
+				dispatch(updateAlertOpen(true))
 			})
 			.catch((err) => {
 				console.log(err)
 				setRemoveUserOpen(false)
-				setSuccess(false)
-				setRemoveAlertOpen(true)
+				dispatch(updateAlertSuccess(false))
+				dispatch(updateAlertOpen(true))
 			})
+			.finally(() => setLoading(false))
 	}
 	return (
 		<div className='flex w-full flex-wrap justify-center px-4 sm:px-6 lg:px-8'>
-			{removeAlertOpen ? (
-				<div className='w-full'>
-					<Alert success={success} setAlertOpen={setRemoveAlertOpen} />
-				</div>
-			) : null}
-			{selectedUser ? (
+			{selectedUser && (
 				<Modal
 					title='Remove User'
 					open={removeUserOpen}
@@ -124,8 +125,9 @@ const TeamMembers = () => {
 					onSubmit={onSubmitDeleteUser}
 					buttonColour='red'
 					selectedId={selectedUser.id}
+					loading={loading}
 				/>
-			) : null}
+			)}
 			<Modal
 				title='Add User'
 				open={addUserOpen}
@@ -142,6 +144,7 @@ const TeamMembers = () => {
 				onSubmit={onSubmitNewUser}
 				buttonColour='blue'
 				selectedId={1}
+				loading={loading}
 			/>
 
 			<div className='container mt-3 w-full sm:flex sm:items-center'>

@@ -6,6 +6,7 @@ import { Review } from '@/util/interfaces/interfaces'
 import { StarIcon } from '@heroicons/react/solid'
 import { classNames } from '@/util/helpers/helper-functions'
 import ButtonLight from '../ui/button-light'
+import Spinner from '../ui/Spinner'
 
 const LandlordPage = ({
 	landlord,
@@ -19,7 +20,7 @@ const LandlordPage = ({
 
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
 
-	if (!reviews.length) return <div>Loading... </div>
+	if (!reviews.length) return <Spinner />
 
 	const totalStars = reviews.reduce(
 		(sum, review) =>

@@ -1,5 +1,5 @@
-import Alert from '@/components/alerts/Alert'
-import { useAppSelector } from '@/redux/hooks'
+import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { useEffect, useState } from 'react'
 
 const MyInfo = () => {
@@ -9,10 +9,8 @@ const MyInfo = () => {
 	const [confirmPass, setConfirmPassword] = useState<string | undefined>('')
 	const [passwordCheck, setPasswordCheck] = useState(false)
 
-	const [alertOpen, setAlertOpen] = useState(false)
-	const [success, setSuccess] = useState(false)
-
 	const user = useAppSelector((state) => state.user)
+	const dispatch = useAppDispatch()
 
 	useEffect(() => {
 		if (user) {
@@ -50,13 +48,13 @@ const MyInfo = () => {
 				}
 			})
 			.then(() => {
-				setSuccess(true)
-				setAlertOpen(true)
+				dispatch(updateAlertSuccess(true))
+				dispatch(updateAlertOpen(true))
 			})
 			.catch((err) => {
 				console.log(err)
-				setSuccess(false)
-				setAlertOpen(true)
+				dispatch(updateAlertSuccess(false))
+				dispatch(updateAlertOpen(true))
 			})
 	}
 
@@ -81,28 +79,23 @@ const MyInfo = () => {
 					}
 				})
 				.then(() => {
-					setSuccess(true)
-					setAlertOpen(true)
+					dispatch(updateAlertSuccess(true))
+					dispatch(updateAlertOpen(true))
 				})
 				.catch((err) => {
 					console.log(err)
-					setSuccess(false)
-					setAlertOpen(true)
+					dispatch(updateAlertSuccess(false))
+					dispatch(updateAlertOpen(true))
 				})
 		}
 	}
 
 	return (
-		<>
+		<div className='container flex w-full flex-col justify-center'>
 			<form
-				className='container w-full space-y-8 divide-y divide-gray-200'
+				className='container space-y-8 divide-y divide-gray-200'
 				onSubmit={(e) => onSubmit(e)}
 			>
-				{alertOpen ? (
-					<div className='w-full'>
-						<Alert success={success} setAlertOpen={setAlertOpen} />
-					</div>
-				) : null}
 				<div className='space-y-8 divide-y divide-gray-200 sm:space-y-5'>
 					<div className='space-y-6 pt-8 sm:space-y-5 sm:pt-10'>
 						<div>
@@ -230,7 +223,7 @@ const MyInfo = () => {
 					</div>
 				</div>
 			</form>
-		</>
+		</div>
 	)
 }
 

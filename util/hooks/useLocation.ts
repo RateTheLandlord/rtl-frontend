@@ -1,62 +1,65 @@
-import { useEffect, useState } from "react";
-import { ILocationHookResponse, ILocationResponse } from "@/util/interfaces/interfaces";
+import { useEffect, useState } from 'react'
+import {
+	ILocationHookResponse,
+	ILocationResponse,
+} from '@/util/interfaces/interfaces'
+import { useDebounce } from './useDebounce'
 
 export const useLocation = (input: string, country: string) => {
-  const [locations, setLocations] = useState<Array<ILocationHookResponse>>([]);
-  const [searching, setSearching] = useState(false);
+	const [locations, setLocations] = useState<Array<ILocationHookResponse>>([])
+	const [searching, setSearching] = useState(false)
 
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (input) {
-      setSearching(true);
-      timer = setTimeout(() => {
-        searchLocations();
-      }, 500);
-    }
+	const debouncedSearchString = useDebounce(input, 500)
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [input]);
+	useEffect(() => {
+		if (debouncedSearchString) {
+			searchLocations()
+		}
+	}, [debouncedSearchString])
 
-  const searchLocations = async () => {
-    try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${input}&format=json&limit=5&addressdetails=1&countrycodes=${country}`
-      );
+	const searchLocations = async () => {
+		setSearching(true)
+		fetch(
+			`https://nominatim.openstreetmap.org/search?q=${input}&format=json&limit=5&addressdetails=1&countrycodes=${country}`,
+		)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error()
+				}
+				return response.json()
+			})
+			.then((data) => {
+				const formattedData = formatData(data)
+				setLocations(formattedData)
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+			.finally(() => {
+				setSearching(false)
+			})
+	}
 
-      if (!response.ok) {
-        throw new Error();
-      }
+	return { searching, locations }
+}
 
-      const data: Array<ILocationResponse> = await response.json();
-      const formattedData = formatData(data);
-      setLocations(formattedData);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setSearching(false);
-    }
-  };
-
-  return { searching, locations };
-};
-
-const formatData = (data: Array<ILocationResponse>): Array<ILocationHookResponse> => {
-  const newData: Array<ILocationHookResponse> = [];
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].address.city) {
-      const existingCity = newData.some(
-        (item) => item.city === data[i].address.city
-      );
-      if (!existingCity) {
-        newData.push({
-          id: data[i].place_id,
-          city: data[i].address.city,
-          state: data[i].address.state,
-        });
-      }
-    }
-  }
-  return newData;
-};
+const formatData = (
+	data: Array<ILocationResponse>,
+): Array<ILocationHookResponse> => {
+	const newData: Array<ILocationHookResponse> = []
+	for (let i = 0; i < data.length; i++) {
+		if (data[i].address.city) {
+			const existingCity = newData.some(
+				(item) => item.city === data[i].address.city,
+			)
+			if (!existingCity) {
+				newData.push({
+					id: data[i].place_id,
+					city: data[i].address.city,
+					state: data[i].address.state,
+				})
+			}
+		}
+	}
+	return newData
+}

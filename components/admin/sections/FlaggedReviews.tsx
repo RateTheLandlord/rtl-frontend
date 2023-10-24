@@ -1,12 +1,15 @@
-import Alert from '@/components/alerts/Alert'
 import { Review } from '@/util/interfaces/interfaces'
 import { useEffect, useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
 import EditReviewModal from '@/components/modal/EditReviewModal'
 import RemoveReviewModal from '@/components/modal/RemoveReviewModal'
+import Spinner from '@/components/ui/Spinner'
+import { useAppDispatch } from '@/redux/hooks'
+import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 
 const FlaggedReviews = () => {
+	const dispatch = useAppDispatch()
 	const { mutate } = useSWRConfig()
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
@@ -14,8 +17,6 @@ const FlaggedReviews = () => {
 	const [flaggedReviews, setFlaggedReviews] = useState<Array<Review>>([])
 
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
-	const [success, setSuccess] = useState(false)
-	const [removeAlertOpen, setRemoveAlertOpen] = useState(false)
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { data: reviews, error } = useSWR<Array<Review>>(
@@ -32,7 +33,7 @@ const FlaggedReviews = () => {
 	}, [reviews])
 
 	if (error) return <div>failed to load</div>
-	if (!reviews) return <div>loading...</div>
+	if (!reviews) return <Spinner />
 
 	const onSubmitApproveReview = (review: Review) => {
 		const editedReview = {
@@ -54,31 +55,24 @@ const FlaggedReviews = () => {
 			})
 			.then(() => {
 				mutate('/api/admin/get-flagged').catch((err) => console.log(err))
-				setSuccess(true)
-				setRemoveAlertOpen(true)
+				dispatch(updateAlertSuccess(true))
+				dispatch(updateAlertOpen(true))
 			})
 			.catch((err) => {
 				console.log(err)
-				setSuccess(false)
-				setRemoveAlertOpen(true)
+				dispatch(updateAlertSuccess(false))
+				dispatch(updateAlertOpen(true))
 			})
 	}
 
 	return (
-		<div className='container flex w-full flex-wrap justify-center px-4 sm:px-6 lg:px-8'>
-			{removeAlertOpen ? (
-				<div className='w-full'>
-					<Alert success={success} setAlertOpen={setRemoveAlertOpen} />
-				</div>
-			) : null}
+		<div className='container flex w-full flex-wrap justify-center'>
 			{selectedReview ? (
 				<>
 					<EditReviewModal
 						selectedReview={selectedReview}
 						mutateString='/api/admin/get-flagged'
 						setEditReviewOpen={setEditReviewOpen}
-						setSuccess={setSuccess}
-						setRemoveAlertOpen={setRemoveAlertOpen}
 						editReviewOpen={editReviewOpen}
 						setSelectedReview={setSelectedReview}
 					/>
@@ -86,8 +80,6 @@ const FlaggedReviews = () => {
 						selectedReview={selectedReview}
 						mutateString={'/api/admin/get-flagged'}
 						setRemoveReviewOpen={setRemoveReviewOpen}
-						setSuccess={setSuccess}
-						setRemoveAlertOpen={setRemoveAlertOpen}
 						removeReviewOpen={removeReviewOpen}
 						setSelectedReview={setSelectedReview}
 					/>

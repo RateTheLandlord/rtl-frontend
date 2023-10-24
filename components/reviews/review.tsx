@@ -10,12 +10,12 @@ import {
 import React, { useEffect, useMemo, useState } from 'react'
 import ReportModal from '@/components/reviews/report-modal'
 import useSWR from 'swr'
-import Alert from '../alerts/Alert'
 import { fetcher } from '@/util/helpers/fetcher'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import InfiniteScroll from './InfiniteScroll'
 import AdsComponent from '@/components/adsense/Adsense'
+import { useDebounce } from '@/util/hooks/useDebounce'
 
 export type ReviewsResponse = {
 	reviews: Review[]
@@ -38,8 +38,6 @@ const Review = () => {
 	const [cityFilter, setCityFilter] = useState<Options | null>(null)
 	const [zipFilter, setZipFilter] = useState<Options | null>(null)
 	const [activeFilters, setActiveFilters] = useState<Options[] | null>(null)
-	const [success, setSuccess] = useState(false)
-	const [removeAlertOpen, setRemoveAlertOpen] = useState(false)
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
 	const [hasMore, setHasMore] = useState(true) // Track if there is more content to load
 
@@ -51,6 +49,8 @@ const Review = () => {
 	const [previousQueryParams, setPreviousQueryParams] = useState('')
 	const [isLoading, setIsLoading] = useState(false)
 
+	const debouncedSearchState = useDebounce(searchState, 500)
+
 	const queryParams = useMemo(() => {
 		const params = new URLSearchParams({
 			sort: selectedSort.value,
@@ -58,7 +58,7 @@ const Review = () => {
 			country: countryFilter?.value || '',
 			city: cityFilter?.value || '',
 			zip: zipFilter?.value || '',
-			search: searchState || '',
+			search: debouncedSearchState || '',
 			limit: '25',
 		})
 		return params.toString()
@@ -68,7 +68,7 @@ const Review = () => {
 		countryFilter,
 		cityFilter,
 		zipFilter,
-		searchState,
+		debouncedSearchState,
 	])
 
 	const { data } = useSWR<ReviewsResponse>(
@@ -106,7 +106,7 @@ const Review = () => {
 		stateFilter,
 		countryFilter,
 		zipFilter,
-		searchState,
+		debouncedSearchState,
 		selectedSort,
 	])
 
@@ -145,8 +145,6 @@ const Review = () => {
 						selectedReview={selectedReview}
 						mutateString={`/api/review/get-reviews?${queryParams.toString()}`}
 						setEditReviewOpen={setEditReviewOpen}
-						setSuccess={setSuccess}
-						setRemoveAlertOpen={setRemoveAlertOpen}
 						editReviewOpen={editReviewOpen}
 						setSelectedReview={setSelectedReview}
 					/>
@@ -154,19 +152,12 @@ const Review = () => {
 						selectedReview={selectedReview}
 						mutateString={`/api/review/get-reviews?${queryParams.toString()}`}
 						setRemoveReviewOpen={setRemoveReviewOpen}
-						setSuccess={setSuccess}
-						setRemoveAlertOpen={setRemoveAlertOpen}
 						removeReviewOpen={removeReviewOpen}
 						setSelectedReview={setSelectedReview}
 					/>
 				</>
 			) : null}
 			<div className='w-full'>
-				{removeAlertOpen ? (
-					<div className='w-full'>
-						<Alert success={success} setAlertOpen={setRemoveAlertOpen} />
-					</div>
-				) : null}
 				<AdsComponent slot='2009320000' />
 				<ReviewFilters
 					selectedSort={selectedSort}

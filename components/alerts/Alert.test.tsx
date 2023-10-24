@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, fireEvent, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import Alert from './Alert'
 
 describe('Alert Component', () => {
@@ -21,15 +21,5 @@ describe('Alert Component', () => {
 			screen.getByText('Failure: Something went wrong, please try again.'),
 		).toBeInTheDocument()
 		expect(screen.getByRole('button')).toBeInTheDocument()
-	})
-
-	test('calls setAlertOpen on dismiss button click', () => {
-		const mockSetAlertOpen = jest.fn()
-
-		render(<Alert success={true} setAlertOpen={mockSetAlertOpen} />)
-		fireEvent.click(screen.getByRole('button'))
-
-		expect(mockSetAlertOpen).toHaveBeenCalled()
-		expect(mockSetAlertOpen).toHaveBeenCalledWith(expect.any(Function))
 	})
 })

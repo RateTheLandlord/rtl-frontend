@@ -1,36 +1,39 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import { Review } from '@/util/interfaces/interfaces'
-import { Dispatch, Fragment, SetStateAction } from 'react'
+import { Resource } from '@/util/interfaces/interfaces'
+import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { mutate } from 'swr'
 import XIcon from '@heroicons/react/outline/XIcon'
-import { useAppDispatch } from '@/redux/hooks'
+import Spinner from '../ui/Spinner'
 import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
+import { useAppDispatch } from '@/redux/hooks'
 
 interface IProps {
-	selectedReview: Review | undefined
+	selectedResource: Resource | undefined
 	mutateString: string
-	setRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
-	removeReviewOpen: boolean
-	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
+	setRemoveResourceOpen: Dispatch<SetStateAction<boolean>>
+	removeResourceOpen: boolean
+	setSelectedResource: Dispatch<SetStateAction<Resource | undefined>>
 }
 
-const RemoveReviewModal = ({
-	selectedReview,
+const RemoveResourceModal = ({
+	selectedResource,
 	mutateString,
-	setRemoveReviewOpen,
-	removeReviewOpen,
-	setSelectedReview,
+	setRemoveResourceOpen,
+	removeResourceOpen,
+	setSelectedResource,
 }: IProps) => {
 	const dispatch = useAppDispatch()
-	const onSubmitRemoveReview = () => {
-		if (selectedReview) {
-			fetch('/api/review/delete-review', {
+	const [loading, setLoading] = useState(false)
+	const onSubmitRemoveResource = () => {
+		if (selectedResource) {
+			setLoading(true)
+			fetch('/api/tenant-resources/delete-resource', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ id: selectedReview.id }),
+				body: JSON.stringify({ id: selectedResource.id }),
 			})
 				.then((result) => {
 					if (!result.ok) {
@@ -39,23 +42,28 @@ const RemoveReviewModal = ({
 				})
 				.then(() => {
 					mutate(mutateString).catch((err) => console.log(err))
-					setRemoveReviewOpen(false)
+					setRemoveResourceOpen(false)
 					dispatch(updateAlertSuccess(true))
 					dispatch(updateAlertOpen(true))
-					setSelectedReview(undefined)
+					setSelectedResource(undefined)
 				})
 				.catch((err) => {
 					console.log(err)
 					dispatch(updateAlertSuccess(false))
 					dispatch(updateAlertOpen(true))
-					setSelectedReview(undefined)
+					setSelectedResource(undefined)
 				})
+				.finally(() => setLoading(false))
 		}
 	}
 
 	return (
-		<Transition.Root show={removeReviewOpen} as={Fragment}>
-			<Dialog as='div' className='relative z-10' onClose={setRemoveReviewOpen}>
+		<Transition.Root show={removeResourceOpen} as={Fragment}>
+			<Dialog
+				as='div'
+				className='relative z-50'
+				onClose={setRemoveResourceOpen}
+			>
 				<Transition.Child
 					as={Fragment}
 					enter='ease-out duration-300'
@@ -84,7 +92,7 @@ const RemoveReviewModal = ({
 									<button
 										type='button'
 										className='rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
-										onClick={() => setRemoveReviewOpen(false)}
+										onClick={() => setRemoveResourceOpen(false)}
 									>
 										<span className='sr-only'>Close</span>
 										<XIcon className='h-6 w-6' aria-hidden='true' />
@@ -96,14 +104,14 @@ const RemoveReviewModal = ({
 											as='h3'
 											className='text-lg font-medium leading-6 text-gray-900'
 										>
-											Remove Review
+											Remove Resource
 										</Dialog.Title>
 									</div>
 								</div>
 								<div>
 									<div className='ml-4' data-testid='remove-review-modal-1'>
 										<h2>
-											Are you sure you want to remove this review? This cannot
+											Are you sure you want to remove this resource? This cannot
 											be undone.
 										</h2>
 									</div>
@@ -111,17 +119,18 @@ const RemoveReviewModal = ({
 								<div className='mt-5 sm:mt-4 sm:flex sm:flex-row-reverse'>
 									<button
 										type='button'
+										disabled={loading}
 										className={`hover:bg-red:700 inline-flex w-full justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
-										onClick={() => onSubmitRemoveReview()}
+										onClick={() => onSubmitRemoveResource()}
 									>
-										Remove
+										{loading ? <Spinner /> : 'Remove'}
 									</button>
 									<button
 										type='button'
 										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm'
 										onClick={() => {
-											setSelectedReview(undefined)
-											setRemoveReviewOpen(false)
+											setSelectedResource(undefined)
+											setRemoveResourceOpen(false)
 										}}
 									>
 										Cancel
@@ -136,4 +145,4 @@ const RemoveReviewModal = ({
 	)
 }
 
-export default RemoveReviewModal
+export default RemoveResourceModal

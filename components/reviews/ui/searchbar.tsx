@@ -5,12 +5,14 @@ interface SearchProps {
 	setSearchState: (str: string) => void
 	onClick?: (bool: boolean) => void
 	mobile?: boolean
+	searchTitle?: string
 }
 
 export default function SearchBar({
 	setSearchState,
 	onClick,
 	mobile,
+	searchTitle,
 }: SearchProps) {
 	const { t } = useTranslation('reviews')
 	return (
@@ -24,7 +26,7 @@ export default function SearchBar({
 				id='search'
 				onChange={(e) => setSearchState(e.target.value)}
 				className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-				placeholder={t('reviews.search')}
+				placeholder={searchTitle ? searchTitle : t('reviews.search')}
 			/>
 			{mobile && onClick ? (
 				<button
