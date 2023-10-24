@@ -39,11 +39,15 @@ const StateSelector = ({ country, value, setValue }: IProps) => {
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<Listbox.Options className='absolute mt-1 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+					<Listbox.Options className='absolute mt-1 max-h-[250px] w-[250px] overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
 						{country === 'CA'
 							? provinces.map((province) => {
 									return (
-										<Listbox.Option key={province.short} value={province.name}>
+										<Listbox.Option
+											className='cursor-pointer p-2 hover:bg-teal-300'
+											key={province.short}
+											value={province.name}
+										>
 											{province.name}
 										</Listbox.Option>
 									)
@@ -51,7 +55,11 @@ const StateSelector = ({ country, value, setValue }: IProps) => {
 							: country === 'GB'
 							? regions.map((region) => {
 									return (
-										<Listbox.Option key={region.short} value={region.name}>
+										<Listbox.Option
+											className='cursor-pointer p-2 hover:bg-teal-300'
+											key={region.short}
+											value={region.name}
+										>
 											{region.name}
 										</Listbox.Option>
 									)
@@ -60,6 +68,7 @@ const StateSelector = ({ country, value, setValue }: IProps) => {
 							? territories.map((territory) => {
 									return (
 										<Listbox.Option
+											className='cursor-pointer p-2 hover:bg-teal-300'
 											key={territory.short}
 											value={territory.name}
 										>
@@ -70,14 +79,22 @@ const StateSelector = ({ country, value, setValue }: IProps) => {
 							: country === 'NZ'
 							? nz_provinces.map((prov) => {
 									return (
-										<Listbox.Option key={prov.short} value={prov.name}>
+										<Listbox.Option
+											className='cursor-pointer p-2 hover:bg-teal-300'
+											key={prov.short}
+											value={prov.name}
+										>
 											{prov.name}
 										</Listbox.Option>
 									)
 							  })
 							: states.map((state) => {
 									return (
-										<Listbox.Option key={state.short} value={state.name}>
+										<Listbox.Option
+											className='cursor-pointer p-2 hover:bg-teal-300'
+											key={state.short}
+											value={state.name}
+										>
 											{state.name}
 										</Listbox.Option>
 									)
