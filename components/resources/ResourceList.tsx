@@ -15,9 +15,12 @@ import {
 import ReviewFilters from '../reviews/review-filters'
 import InfiniteScroll from './InfiniteScrollResources'
 import { useDebounce } from '@/util/hooks/useDebounce'
+import { id } from '@/jest.config'
+
+const resourceSortOptions = sortOptions.filter(r => r.id < 5)
 
 export default function ResourceList() {
-	const [selectedSort, setSelectedSort] = useState<Options>(sortOptions[2])
+	const [selectedSort, setSelectedSort] = useState<Options>(resourceSortOptions[2])
 
 	const [searchState, setSearchState] = useState<string>('')
 	const [page, setPage] = useState<number>(1)
@@ -116,7 +119,7 @@ export default function ResourceList() {
 				searchTitle='Search Resources'
 				selectedSort={selectedSort}
 				setSelectedSort={setSelectedSort}
-				sortOptions={sortOptions}
+				sortOptions={resourceSortOptions}
 				activeFilters={activeFilters}
 				countryFilter={countryFilter}
 				setCountryFilter={setCountryFilter}
