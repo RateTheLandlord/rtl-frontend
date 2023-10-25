@@ -124,7 +124,7 @@ export default function MobileReviewFilters({
 											name={t('reviews.zip')}
 										/>
 									)}
-									<div className='mt-5 w-full'>
+									<div className='w-full pt-2'>
 										<button
 											onClick={() => setMobileFiltersOpen(false)}
 											className='w-full rounded-lg bg-teal-600 py-2 text-white'

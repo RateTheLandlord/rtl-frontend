@@ -100,7 +100,7 @@ function ReviewFilters({
 					</h2>
 
 					<div className='relative z-10 border-b border-gray-200 bg-white pb-4'>
-						<div className='mx-auto flex max-w-7xl justify-between px-4 lg:px-8'>
+						<div className='mx-auto flex max-w-7xl items-center justify-between gap-2 px-4'>
 							<SelectList
 								state={selectedSort}
 								setState={setSelectedSort}

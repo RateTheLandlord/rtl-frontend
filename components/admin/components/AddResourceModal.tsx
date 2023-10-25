@@ -14,6 +14,7 @@ interface IProps {
 	setCountry: Dispatch<SetStateAction<string>>
 	city: string
 	setCity: Dispatch<SetStateAction<string>>
+	state: string
 	setState: Dispatch<SetStateAction<string>>
 	address: string
 	setAddress: Dispatch<SetStateAction<string>>
@@ -32,6 +33,7 @@ const AddResourceModal = ({
 	setCountry,
 	city,
 	setCity,
+	state,
 	setState,
 	address,
 	setAddress,
@@ -112,7 +114,11 @@ const AddResourceModal = ({
 							/>
 						</div>
 
-						<StateSelector country={country} setValue={setState} />
+						<StateSelector
+							value={state}
+							country={country}
+							setValue={setState}
+						/>
 
 						<CountrySelector setValue={setCountry} />
 

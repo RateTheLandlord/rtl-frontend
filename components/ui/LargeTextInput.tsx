@@ -37,7 +37,6 @@ const LargeTextInput = ({
 					onChange={(e) => setValue(e.target.value)}
 					className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 					defaultValue={placeHolder}
-					value={value ? value : ''}
 					data-testid={testid}
 				/>
 				{limitText && value && length && (
