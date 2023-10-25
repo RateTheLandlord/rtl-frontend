@@ -15,7 +15,7 @@ import {
 import ReviewFilters from '../reviews/review-filters'
 import InfiniteScroll from './InfiniteScrollResources'
 import { useDebounce } from '@/util/hooks/useDebounce'
-import { id } from '@/jest.config'
+
 
 const resourceSortOptions = sortOptions.filter(r => r.id < 5)
 
