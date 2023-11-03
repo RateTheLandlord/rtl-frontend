@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface IProps {
-	children: string
+	children: string | JSX.Element
 	onClick?: () => void
 	umami: string
 }

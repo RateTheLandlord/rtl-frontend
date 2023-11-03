@@ -1,11 +1,10 @@
 import { classNames } from '@/util/helpers/helper-functions'
 import { Review } from '@/util/interfaces/interfaces'
-import { StarIcon } from '@heroicons/react/solid'
+import { FlagIcon, StarIcon } from '@heroicons/react/solid'
 import React, { Dispatch, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import ButtonLight from '../ui/button-light'
 import Link from 'next/link'
-import { OpenLinkIcon } from '../icons/OpenLinkIcon'
 import { useAppSelector } from '@/redux/hooks'
 import AdsComponent from '@/components/adsense/Adsense'
 
@@ -72,27 +71,18 @@ function ReviewTable({
 										)}
 										<div
 											key={review.id}
-											className='pt-10 lg:grid lg:grid-cols-12 lg:gap-x-8'
+											className='lg:grid lg:grid-cols-12 lg:gap-x-8 lg:pt-10'
 										>
 											<div className='mt-6 flex flex-wrap items-center text-sm lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:flex-col lg:items-start xl:col-span-3'>
 												<Link
 													href={`/landlord/${encodeURIComponent(
 														review.landlord,
 													)}`}
-													passHref
-													legacyBehavior
+													className='col mb-4 flex w-full cursor-pointer flex-col items-start break-words text-lg font-medium hover:underline lg:mb-2'
+													data-umami-event='Reviews / Landlord Link'
 												>
-													<a
-														target='_blank'
-														rel='noopener noreferrer'
-														className='mb-4 flex w-full cursor-pointer flex-row items-center break-words text-lg font-medium hover:underline lg:mb-0'
-														data-umami-event='Reviews / Landlord Link'
-													>
-														{review.landlord}
-														<span className='ml-2'>
-															<OpenLinkIcon className='h-4 w-4' />
-														</span>
-													</a>
+													<h6>{review.landlord}</h6>
+													<p className='text-sm'>Read all reviews</p>
 												</Link>
 												<div className='mb-4 flex w-full items-center lg:mb-0'>
 													{[0, 1, 2, 3, 4].map((star) => {
@@ -132,7 +122,7 @@ function ReviewTable({
 														onClick={() => handleReport(review)}
 														umami='Reviews / REPORT Button'
 													>
-														{t('reviews.report-review')}
+														<FlagIcon className='text-red-700' width={20} />
 													</ButtonLight>
 												</div>
 												{user.jwt.access_token ? (
