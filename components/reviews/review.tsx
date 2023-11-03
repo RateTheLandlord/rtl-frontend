@@ -5,7 +5,6 @@ import {
 	getCityOptions,
 	getStateOptions,
 	getZipOptions,
-	updateActiveFilters,
 } from '@/components/reviews/functions'
 import React, { useEffect, useMemo, useState } from 'react'
 import ReportModal from '@/components/reviews/report-modal'
@@ -16,6 +15,8 @@ import RemoveReviewModal from '../modal/RemoveReviewModal'
 import InfiniteScroll from './InfiniteScroll'
 import AdsComponent from '@/components/adsense/Adsense'
 import { useDebounce } from '@/util/hooks/useDebounce'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { updateQuery } from '@/redux/query/querySlice'
 
 export type ReviewsResponse = {
 	reviews: Review[]
@@ -28,16 +29,19 @@ export type ReviewsResponse = {
 }
 
 const Review = () => {
-	const [selectedSort, setSelectedSort] = useState<Options>(sortOptions[2])
-
-	const [searchState, setSearchState] = useState<string>('')
 	const [page, setPage] = useState<number>(1)
 
-	const [countryFilter, setCountryFilter] = useState<Options | null>(null)
-	const [stateFilter, setStateFilter] = useState<Options | null>(null)
-	const [cityFilter, setCityFilter] = useState<Options | null>(null)
-	const [zipFilter, setZipFilter] = useState<Options | null>(null)
-	const [activeFilters, setActiveFilters] = useState<Options[] | null>(null)
+	const [selectedSort, setSelectedSort] = useState<Options>(sortOptions[2])
+	const query = useAppSelector((state) => state.query)
+	const {
+		countryFilter,
+		stateFilter,
+		cityFilter,
+		zipFilter,
+		activeFilters,
+		searchFilter,
+	} = query
+	const dispatch = useAppDispatch()
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
 	const [hasMore, setHasMore] = useState(true) // Track if there is more content to load
 
@@ -49,7 +53,11 @@ const Review = () => {
 	const [previousQueryParams, setPreviousQueryParams] = useState('')
 	const [isLoading, setIsLoading] = useState(false)
 
-	const debouncedSearchState = useDebounce(searchState, 500)
+	const debouncedSearchState = useDebounce(searchFilter, 500)
+
+	useEffect(() => {
+		dispatch(updateQuery({ ...query, searchFilter: debouncedSearchState }))
+	}, [debouncedSearchState])
 
 	const queryParams = useMemo(() => {
 		const params = new URLSearchParams({
@@ -96,20 +104,6 @@ const Review = () => {
 		}
 	}, [reviews, data])
 
-	useEffect(() => {
-		setActiveFilters(
-			updateActiveFilters(countryFilter, stateFilter, cityFilter, zipFilter),
-		)
-		setPage(1)
-	}, [
-		cityFilter,
-		stateFilter,
-		countryFilter,
-		zipFilter,
-		debouncedSearchState,
-		selectedSort,
-	])
-
 	const cityOptions = useMemo(
 		() => getCityOptions(data?.cities ?? []),
 		[data?.cities],
@@ -125,10 +119,14 @@ const Review = () => {
 
 	const removeFilter = (index: number) => {
 		if (activeFilters?.length) {
-			if (cityFilter === activeFilters[index]) setCityFilter(null)
-			if (stateFilter === activeFilters[index]) setStateFilter(null)
-			if (countryFilter === activeFilters[index]) setCountryFilter(null)
-			if (zipFilter === activeFilters[index]) setZipFilter(null)
+			if (cityFilter === activeFilters[index])
+				dispatch(updateQuery({ ...query, cityFilter: null }))
+			if (stateFilter === activeFilters[index])
+				dispatch(updateQuery({ ...query, stateFilter: null }))
+			if (countryFilter === activeFilters[index])
+				dispatch(updateQuery({ ...query, countryFilter: null }))
+			if (zipFilter === activeFilters[index])
+				dispatch(updateQuery({ ...query, zipFilter: null }))
 		}
 	}
 
@@ -163,20 +161,14 @@ const Review = () => {
 					selectedSort={selectedSort}
 					setSelectedSort={setSelectedSort}
 					sortOptions={sortOptions}
-					activeFilters={activeFilters}
 					countryFilter={countryFilter}
-					setCountryFilter={setCountryFilter}
 					stateFilter={stateFilter}
-					setStateFilter={setStateFilter}
 					cityFilter={cityFilter}
-					setCityFilter={setCityFilter}
 					zipFilter={zipFilter}
-					setZipFilter={setZipFilter}
 					cityOptions={cityOptions}
 					stateOptions={stateOptions}
 					zipOptions={zipOptions}
 					removeFilter={removeFilter}
-					setSearchState={setSearchState}
 				/>
 				<InfiniteScroll
 					data={reviews}

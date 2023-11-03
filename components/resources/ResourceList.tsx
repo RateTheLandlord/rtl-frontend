@@ -7,35 +7,41 @@ import {
 } from '@/util/interfaces/interfaces'
 import { useEffect, useMemo, useState } from 'react'
 import useSWR from 'swr'
-import {
-	getCityOptions,
-	getStateOptions,
-	updateActiveFilters,
-} from '../reviews/functions'
+import { getCityOptions, getStateOptions } from '../reviews/functions'
 import ReviewFilters from '../reviews/review-filters'
 import InfiniteScroll from './InfiniteScrollResources'
 import { useDebounce } from '@/util/hooks/useDebounce'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { updateResourceQuery } from '@/redux/resourceQuery/resourceQuerySlice'
 
-
-const resourceSortOptions = sortOptions.filter(r => r.id < 5)
+const resourceSortOptions = sortOptions.filter((r) => r.id < 5)
 
 export default function ResourceList() {
-	const [selectedSort, setSelectedSort] = useState<Options>(resourceSortOptions[2])
+	const query = useAppSelector((state) => state.resourceQuery)
+	const {
+		countryFilter,
+		stateFilter,
+		cityFilter,
+		zipFilter,
+		activeFilters,
+		searchFilter,
+	} = query
+	const dispatch = useAppDispatch()
+	const [selectedSort, setSelectedSort] = useState<Options>(
+		resourceSortOptions[2],
+	)
 
-	const [searchState, setSearchState] = useState<string>('')
 	const [page, setPage] = useState<number>(1)
-
-	const [countryFilter, setCountryFilter] = useState<Options | null>(null)
-	const [stateFilter, setStateFilter] = useState<Options | null>(null)
-	const [cityFilter, setCityFilter] = useState<Options | null>(null)
-	const [zipFilter, setZipFilter] = useState<Options | null>(null)
-	const [activeFilters, setActiveFilters] = useState<Options[] | null>(null)
 	const [hasMore, setHasMore] = useState(true) // Track if there is more content to load
 
 	const [previousQueryParams, setPreviousQueryParams] = useState('')
 	const [isLoading, setIsLoading] = useState(false)
 
-	const debouncedSearch = useDebounce(searchState, 500)
+	const debouncedSearch = useDebounce(searchFilter, 500)
+
+	useEffect(() => {
+		dispatch(updateResourceQuery({ ...query, searchFilter: debouncedSearch }))
+	}, [debouncedSearch])
 
 	const queryParams = useMemo(() => {
 		const params = new URLSearchParams({
@@ -81,20 +87,6 @@ export default function ResourceList() {
 		}
 	}, [resources, data])
 
-	useEffect(() => {
-		setActiveFilters(
-			updateActiveFilters(countryFilter, stateFilter, cityFilter, zipFilter),
-		)
-		setPage(1)
-	}, [
-		cityFilter,
-		stateFilter,
-		countryFilter,
-		zipFilter,
-		debouncedSearch,
-		selectedSort,
-	])
-
 	const cityOptions = useMemo(
 		() => getCityOptions(data?.cities ?? []),
 		[data?.cities],
@@ -106,9 +98,14 @@ export default function ResourceList() {
 
 	const removeFilter = (index: number) => {
 		if (activeFilters?.length) {
-			if (cityFilter === activeFilters[index]) setCityFilter(null)
-			if (stateFilter === activeFilters[index]) setStateFilter(null)
-			if (countryFilter === activeFilters[index]) setCountryFilter(null)
+			if (cityFilter === activeFilters[index])
+				dispatch(updateResourceQuery({ ...query, cityFilter: null }))
+			if (stateFilter === activeFilters[index])
+				dispatch(updateResourceQuery({ ...query, stateFilter: null }))
+			if (countryFilter === activeFilters[index])
+				dispatch(updateResourceQuery({ ...query, countryFilter: null }))
+			if (zipFilter === activeFilters[index])
+				dispatch(updateResourceQuery({ ...query, zipFilter: null }))
 		}
 	}
 	return (
@@ -120,19 +117,14 @@ export default function ResourceList() {
 				selectedSort={selectedSort}
 				setSelectedSort={setSelectedSort}
 				sortOptions={resourceSortOptions}
-				activeFilters={activeFilters}
 				countryFilter={countryFilter}
-				setCountryFilter={setCountryFilter}
 				stateFilter={stateFilter}
-				setStateFilter={setStateFilter}
 				cityFilter={cityFilter}
-				setCityFilter={setCityFilter}
 				zipFilter={zipFilter}
-				setZipFilter={setZipFilter}
 				cityOptions={cityOptions}
 				stateOptions={stateOptions}
 				removeFilter={removeFilter}
-				setSearchState={setSearchState}
+				resource
 			/>
 			<div className='mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
 				{!resources.length ? (
