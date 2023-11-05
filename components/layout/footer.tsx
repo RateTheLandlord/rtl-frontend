@@ -1,37 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { socialLinks } from './links'
 import Github from '../svg/social/github'
-import Instagram from '../svg/social/instagram'
-import TikTok from '../svg/social/tiktok'
-import Twitter from '../svg/social/twitter'
-import { ILinks } from '@/util/interfaces/interfaces'
-
-const socialLinks: Array<ILinks> = [
-	{
-		name: 'Instagram',
-		href: 'https://www.instagram.com/ratethelandlord',
-		icon: <Instagram />,
-		umami: 'Footer / Instagram icon',
-	},
-	{
-		name: 'Twitter',
-		href: 'https://twitter.com/r8thelandlord',
-		icon: <Twitter />,
-		umami: 'Footer / Twitter Icon',
-	},
-	{
-		name: 'TikTok',
-		href: 'https://www.tiktok.com/@ratethelandlord',
-		icon: <TikTok />,
-		umami: 'Footer / TikTok Icon',
-	},
-	{
-		name: 'Github',
-		href: 'https://github.com/RateTheLandlord',
-		icon: <Github />,
-		umami: 'Footer / GitHub Icon',
-	},
-]
 
 function Footer(): JSX.Element {
 	const date = new Date()
@@ -52,6 +22,14 @@ function Footer(): JSX.Element {
 							{item.icon}
 						</a>
 					))}
+					<a
+						data-umami-event='Github Icon'
+						href='https://github.com/RateTheLandlord'
+						className='text-gray-400 hover:text-gray-500'
+					>
+						<span className='sr-only'>Github</span>
+						<Github />
+					</a>
 				</div>
 				<div className='mt-8 md:order-1 md:mt-0'>
 					<p className='text-center text-base text-gray-400'>
