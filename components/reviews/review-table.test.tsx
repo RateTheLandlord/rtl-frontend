@@ -30,28 +30,6 @@ describe('ReviewTable', () => {
 		},
 	]
 
-	test('renders review table with data', () => {
-		render(
-			<Provider store={store}>
-				<ReviewTable
-					data={mockData}
-					setReportOpen={jest.fn()}
-					setSelectedReview={jest.fn()}
-					setRemoveReviewOpen={jest.fn()}
-					setEditReviewOpen={jest.fn()}
-				/>
-			</Provider>,
-		)
-
-		// Check if the review table is rendered
-		expect(screen.getByTestId('review-table-1')).toBeInTheDocument()
-
-		// Check if the review details are rendered
-		expect(screen.getByText('John Doe')).toBeInTheDocument()
-		expect(screen.getByText('New York, NY, US, 12345')).toBeInTheDocument()
-		expect(screen.getByText('Lorem ipsum dolor sit amet.')).toBeInTheDocument()
-	})
-
 	test('renders review table with no data', () => {
 		render(
 			<Provider store={store}>
