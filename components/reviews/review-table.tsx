@@ -82,7 +82,7 @@ function ReviewTable({
 														className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg font-medium hover:underline lg:mb-2 lg:items-center'
 														data-umami-event='Reviews / Landlord Link'
 													>
-														<h6>{review.landlord}</h6>
+														<h6 className='text-center'>{review.landlord}</h6>
 														<p className='text-sm'>Read all reviews</p>
 													</Link>
 													<div className='flex flex-col text-end lg:hidden'>
