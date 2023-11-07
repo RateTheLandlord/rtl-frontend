@@ -62,8 +62,9 @@ function InfiniteScroll({
 									{resource.name}
 								</div>
 								<div className='text-xs font-medium leading-6 text-gray-900'>
-									{`${resource.city.length === 0 ? '' : `${resource.city}, `}
-									${resource.state ? `${resource.state}, ` : ''}, ${resource.country_code}`}
+									{`${resource.city.length > 0 ? `${resource.city}, ` : ''}${
+										resource.state ? `${resource.state}, ` : ''
+									}${resource.country_code}`}
 								</div>
 							</div>
 							<dl className='-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6'>
