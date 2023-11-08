@@ -6,6 +6,5 @@
 	{"short": "SA", "name": "South Australia", "country": "AU"},
 	{"short": "TAS", "name": "Tasmania", "country": "AU"},
 	{"short": "VIC", "name": "Victoria", "country": "AU"},
-	{"short": "WA", "name": "Western Australia", "country": "AU"},
-	{"short": "NULL", "name": "No State / Province", "country": "AU"}
+	{"short": "WA", "name": "Western Australia", "country": "AU"}
 ]
