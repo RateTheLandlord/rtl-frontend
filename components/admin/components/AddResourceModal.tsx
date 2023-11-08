@@ -51,17 +51,7 @@ const AddResourceModal = ({
 		useLocation(city, country)
 
 	useEffect(() => {
-		if (country === 'GB') {
-			setState('England')
-		} else if (country === 'AU') {
-			setState('Northern Territory')
-		} else if (country === 'US') {
-			setState('Alabama')
-		} else if (country === 'NZ') {
-			setState('Marlborough')
-		} else {
-			setState('Alberta')
-		}
+		setState('No State / Province')
 	}, [country])
 	return (
 		<form

@@ -63,7 +63,7 @@ function InfiniteScroll({
 								</div>
 								<div className='text-xs font-medium leading-6 text-gray-900'>
 									{`${resource.city.length > 0 ? `${resource.city}, ` : ''}${
-										resource.state ? `${resource.state}, ` : ''
+										resource.state === "NO STATE / PROVINCE" ? '' : `${resource.state}, `
 									}${resource.country_code}`}
 								</div>
 							</div>

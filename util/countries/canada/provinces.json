@@ -16,5 +16,6 @@
 	{"short": "PE", "name": "Prince Edward Island", "country": "CA"},
 	{"short": "QC", "name": "Quebec", "country": "CA"},
 	{"short": "SK", "name": "Saskatchewan", "country": "CA"},
-	{"short": "YT", "name": "Yukon", "country": "CA"}
+	{"short": "YT", "name": "Yukon", "country": "CA"},
+	{"short": "NULL", "name": "No State / Province", "country": "CA"}
 ]

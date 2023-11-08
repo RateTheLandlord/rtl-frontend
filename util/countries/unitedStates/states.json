@@ -64,5 +64,6 @@
 		"name": "United States Minor Outlying Islands",
 		"country": "US"
 	},
-	{"short": "VI", "name": "Virgin Islands", "country": "US"}
+	{"short": "VI", "name": "Virgin Islands", "country": "US"},
+	{"short": "NULL", "name": "No State / Province", "country": "US"}
 ]

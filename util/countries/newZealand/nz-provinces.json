@@ -8,5 +8,6 @@
 	{"short": "WL", "name": "Westland", "country": "NZ"},
 	{"short": "CA", "name": "Canterbury", "country": "NZ"},
 	{"short": "OT", "name": "Otago", "country": "NZ"},
-	{"short": "SL", "name": "Southland", "country": "NZ"}
+	{"short": "SL", "name": "Southland", "country": "NZ"},
+	{"short": "NULL", "name": "No State / Province", "country": "NZ"}
 ]
