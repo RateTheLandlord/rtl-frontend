@@ -8,6 +8,9 @@ import { useTranslation } from 'react-i18next'
 import ButtonLight from '../ui/button-light'
 import ComboBox from './ui/combobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { updateQuery } from '@/redux/query/querySlice'
+import { updateResourceQuery } from '@/redux/resourceQuery/resourceQuerySlice'
 
 //Review filters and Logic
 
@@ -19,19 +22,14 @@ interface FiltersProps {
 	setSelectedSort: (selectedSort: Options) => void
 	sortOptions: Options[]
 	countryFilter: Options | null
-	setCountryFilter: (option: Options) => void
 	stateFilter: Options | null
-	setStateFilter: (option: Options) => void
 	cityFilter: Options | null
-	setCityFilter: (option: Options) => void
 	zipFilter: Options | null
-	setZipFilter: (option: Options) => void
-	activeFilters: Options[] | null
 	cityOptions: Options[]
 	stateOptions: Options[]
 	zipOptions?: Options[]
 	removeFilter: (index: number) => void
-	setSearchState: (str: string) => void
+	resource?: boolean
 }
 
 function ReviewFilters({
@@ -42,21 +40,21 @@ function ReviewFilters({
 	setSelectedSort,
 	sortOptions,
 	countryFilter,
-	setCountryFilter,
 	stateFilter,
-	setStateFilter,
 	cityFilter,
-	setCityFilter,
 	zipFilter,
-	setZipFilter,
-	activeFilters,
 	cityOptions,
 	stateOptions,
 	zipOptions,
 	removeFilter,
-	setSearchState,
+	resource,
 }: FiltersProps): JSX.Element {
 	const { t } = useTranslation('reviews')
+
+	const dispatch = useAppDispatch()
+	const query = resource
+		? useAppSelector((state) => state.resourceQuery)
+		: useAppSelector((state) => state.query)
 
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
 
@@ -67,17 +65,13 @@ function ReviewFilters({
 				mobileFiltersOpen={mobileFiltersOpen}
 				setMobileFiltersOpen={setMobileFiltersOpen}
 				countryFilter={countryFilter}
-				setCountryFilter={setCountryFilter}
 				stateFilter={stateFilter}
-				setStateFilter={setStateFilter}
 				stateOptions={stateOptions}
 				cityFilter={cityFilter}
-				setCityFilter={setCityFilter}
 				cityOptions={cityOptions}
 				zipFilter={zipFilter}
-				setZipFilter={setZipFilter}
 				zipOptions={zipOptions}
-				setSearchState={setSearchState}
+				resource={resource}
 			/>
 
 			<div className='mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
@@ -100,7 +94,7 @@ function ReviewFilters({
 					</h2>
 
 					<div className='relative z-10 border-b border-gray-200 bg-white pb-4'>
-						<div className='mx-auto flex max-w-7xl items-center justify-between gap-2 px-4'>
+						<div className='mx-auto flex max-w-7xl items-center justify-between gap-2 lg:px-4'>
 							<SelectList
 								state={selectedSort}
 								setState={setSelectedSort}
@@ -120,32 +114,86 @@ function ReviewFilters({
 								<div className='flow-root'>
 									<div className='-mx-4 flex items-center divide-x divide-gray-200'>
 										<SearchBar
-											setSearchState={setSearchState}
+											setSearchState={(str: string) =>
+												resource
+													? dispatch(
+															updateResourceQuery({
+																...query,
+																searchFilter: str,
+															}),
+													  )
+													: dispatch(
+															updateQuery({ ...query, searchFilter: str }),
+													  )
+											}
+											value={query.searchFilter}
 											searchTitle={searchTitle}
 										/>
 
 										<SelectList
 											state={countryFilter}
-											setState={setCountryFilter}
+											setState={(opt: Options) =>
+												resource
+													? dispatch(
+															updateResourceQuery({
+																...query,
+																countryFilter: opt,
+															}),
+													  )
+													: dispatch(
+															updateQuery({ ...query, countryFilter: opt }),
+													  )
+											}
 											options={countryOptions}
 											name={t('reviews.country')}
 										/>
 										<ComboBox
 											state={stateFilter}
-											setState={setStateFilter}
+											setState={(opt: Options) =>
+												resource
+													? dispatch(
+															updateResourceQuery({
+																...query,
+																stateFilter: opt,
+															}),
+													  )
+													: dispatch(
+															updateQuery({ ...query, stateFilter: opt }),
+													  )
+											}
 											options={stateOptions}
 											name={t('reviews.state')}
 										/>
 										<ComboBox
 											state={cityFilter}
-											setState={setCityFilter}
+											setState={(opt: Options) =>
+												resource
+													? dispatch(
+															updateResourceQuery({
+																...query,
+																cityFilter: opt,
+															}),
+													  )
+													: dispatch(updateQuery({ ...query, cityFilter: opt }))
+											}
 											options={cityOptions}
 											name={t('reviews.city')}
 										/>
 										{zipOptions && (
 											<ComboBox
 												state={zipFilter}
-												setState={setZipFilter}
+												setState={(opt: Options) =>
+													resource
+														? dispatch(
+																updateResourceQuery({
+																	...query,
+																	zipFilter: opt,
+																}),
+														  )
+														: dispatch(
+																updateQuery({ ...query, zipFilter: opt }),
+														  )
+												}
 												options={zipOptions}
 												name={t('reviews.zip')}
 											/>
@@ -171,8 +219,8 @@ function ReviewFilters({
 
 							<div className='mt-2 sm:ml-4 sm:mt-0'>
 								<div className='-m-1 flex flex-wrap items-center'>
-									{activeFilters?.length
-										? activeFilters.map((activeFilter, index) => (
+									{query.activeFilters?.length
+										? query.activeFilters.map((activeFilter, index) => (
 												<ActiveFilters
 													key={activeFilter.value}
 													activeFilter={activeFilter}

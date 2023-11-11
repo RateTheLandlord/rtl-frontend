@@ -133,7 +133,7 @@ const Stats = () => {
 
 	return (
 		<div className='container flex w-full flex-wrap justify-center px-4 sm:px-6 lg:px-8'>
-			<div className='mt-3 flex w-full flex-row justify-center gap-3'>
+			<div className='mt-3 flex w-full flex-col justify-center gap-3 lg:flex-row'>
 				<div className='flex flex-col p-6 text-center'>
 					<dt className='order-2 mt-2 text-lg font-medium leading-6 text-gray-500'>
 						Total Reviews

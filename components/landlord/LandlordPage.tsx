@@ -1,12 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
 import LandlordInfo from './LandlordInfo'
 import { useTranslation } from 'react-i18next'
 import { Review } from '@/util/interfaces/interfaces'
-import { StarIcon } from '@heroicons/react/solid'
+import { FlagIcon, StarIcon } from '@heroicons/react/solid'
 import { classNames } from '@/util/helpers/helper-functions'
 import ButtonLight from '../ui/button-light'
 import Spinner from '../ui/Spinner'
+import SelectList from '../reviews/ui/select-list'
+import { sortOptions } from '@/util/helpers/filter-options'
+
+const filteredSortOptions = sortOptions.slice(2)
 
 const LandlordPage = ({
 	landlord,
@@ -17,6 +21,9 @@ const LandlordPage = ({
 }) => {
 	const { t } = useTranslation('reviews')
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
+	const [sortedReviews, setSortedReviews] = useState<Array<Review>>([])
+
+	const [sortState, setSortState] = useState(filteredSortOptions[0])
 
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
 
@@ -38,6 +45,42 @@ const LandlordPage = ({
 		setReportOpen(true)
 	}
 	const average = Math.round(totalStars / (reviews.length * 5))
+
+	useEffect(() => {
+		switch (sortState.value) {
+			case 'new':
+				const sortedOld = reviews.sort((a, b) => Number(b.id) - Number(a.id))
+				setSortedReviews([...sortedOld])
+				break
+			case 'old':
+				const sortedNew = reviews.sort((a, b) => Number(a.id) - Number(b.id))
+				setSortedReviews([...sortedNew])
+				break
+			case 'high':
+				const sortedHigh = reviews.sort((a, b) => {
+					const aTotal =
+						a.health + a.privacy + a.repair + a.respect + a.stability
+					const bTotal =
+						b.health + b.privacy + b.repair + b.respect + b.stability
+
+					return Number(bTotal) - Number(aTotal)
+				})
+				setSortedReviews([...sortedHigh])
+				break
+			case 'low':
+				const sortedLow = reviews.sort((a, b) => {
+					const aTotal =
+						a.health + a.privacy + a.repair + a.respect + a.stability
+					const bTotal =
+						b.health + b.privacy + b.repair + b.respect + b.stability
+
+					return Number(aTotal) - Number(bTotal)
+				})
+				setSortedReviews([...sortedLow])
+				break
+		}
+	}, [sortState, reviews])
+
 	return (
 		<>
 			<ReportModal
@@ -52,8 +95,16 @@ const LandlordPage = ({
 						total={reviews.length}
 						average={average}
 					/>
-					<div className='flex w-full flex-col gap-3 divide-y divide-gray-200'>
-						{reviews.map((review) => {
+					<div className='flex w-full justify-start py-2'>
+						<SelectList
+							state={sortState}
+							setState={setSortState}
+							options={filteredSortOptions}
+							name={t('reviews.sort')}
+						/>
+					</div>
+					<div className='flex w-full flex-col gap-3'>
+						{sortedReviews.map((review) => {
 							const ratings = [
 								{ title: t('reviews.health'), rating: review.health },
 								{ title: t('reviews.respect'), rating: review.respect },
@@ -65,10 +116,24 @@ const LandlordPage = ({
 							return (
 								<div
 									key={review.id}
-									className='pt-10 lg:grid lg:grid-cols-12 lg:gap-x-8'
+									className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-8'
 								>
-									<div className='mt-6 flex flex-wrap items-center text-sm lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:flex-col lg:items-start xl:col-span-3'>
-										<div className='mb-4 flex w-full items-center lg:mb-0'>
+									<div className='flex flex-row flex-wrap items-center justify-between bg-gray-50 p-2 lg:min-w-[250px] lg:max-w-[275px] lg:flex-col'>
+										<div className='flex flex-col gap-2 text-start lg:text-center'>
+											<div className='flex flex-col'>
+												<p className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>{`${
+													review.city
+												}, ${review.state}, ${
+													review.country_code === 'GB'
+														? 'UK'
+														: review.country_code
+												}, ${review.zip}`}</p>
+												<p className='text-gray-500 lg:mb-0 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>
+													{date}
+												</p>
+											</div>
+										</div>
+										<div className='flex items-center'>
 											{[0, 1, 2, 3, 4].map((star) => {
 												let totalReview = 0
 												for (let i = 0; i < ratings.length; i++) {
@@ -91,28 +156,21 @@ const LandlordPage = ({
 												)
 											})}
 										</div>
-										<p className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>{`${
-											review.city
-										}, ${review.state}, ${
-											review.country_code === 'GB' ? 'UK' : review.country_code
-										}, ${review.zip}`}</p>
-										<p className='mb-4 text-gray-500 lg:mb-0 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>
-											{date}
-										</p>
-										<div className='mt-4 w-full'>
+										<div className='flex flex-row items-center justify-start lg:mt-4'>
 											<ButtonLight
 												onClick={() => handleReport(review)}
 												umami='Landlord / REPORT button'
 											>
-												{t('reviews.report-review')}
+												<FlagIcon className='text-red-700' width={20} />
 											</ButtonLight>
 										</div>
 									</div>
-									<div className='lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8'>
+
+									<div className='p-4 lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8'>
 										<div className='flex flex-row flex-wrap items-center xl:col-span-1'>
 											{ratings.map((rating) => {
 												return (
-													<div key={rating.title} className='mx-2 my-1'>
+													<div key={rating.title}>
 														<p>{rating.title}</p>
 														<div className='flex items-center'>
 															{[0, 1, 2, 3, 4].map((star) => (

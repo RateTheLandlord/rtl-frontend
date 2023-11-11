@@ -2,28 +2,6 @@ import { capitalize, removeDuplicates } from '@/util/helpers/helper-functions'
 
 import { Options } from '@/util/interfaces/interfaces'
 
-export const updateActiveFilters = (
-	countryFilter: Options | null,
-	stateFilter: Options | null,
-	cityFilter: Options | null,
-	zipFilter: Options | null,
-) => {
-	const filters: Array<Options> = []
-	if (countryFilter) {
-		filters.push(countryFilter)
-	}
-	if (stateFilter) {
-		filters.push(stateFilter)
-	}
-	if (cityFilter) {
-		filters.push(cityFilter)
-	}
-	if (zipFilter) {
-		filters.push(zipFilter)
-	}
-	return filters
-}
-
 export const getStateOptions = (
 	states: string[] | undefined,
 ): Array<Options> => {

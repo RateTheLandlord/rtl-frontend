@@ -7,40 +7,39 @@ import { Options } from '@/util/interfaces/interfaces'
 import { useTranslation } from 'react-i18next'
 import ComboBox from './ui/combobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { updateQuery } from '@/redux/query/querySlice'
+import { updateResourceQuery } from '@/redux/resourceQuery/resourceQuerySlice'
 
 interface FiltersProps {
 	mobileFiltersOpen: boolean
 	setMobileFiltersOpen: (bool: boolean) => void
 	countryFilter: Options | null
-	setCountryFilter: (option: Options) => void
 	stateFilter: Options | null
-	setStateFilter: (option: Options) => void
 	cityFilter: Options | null
-	setCityFilter: (option: Options) => void
 	zipFilter: Options | null
-	setZipFilter: (option: Options) => void
 	cityOptions: Options[]
 	stateOptions: Options[]
 	zipOptions?: Options[]
-	setSearchState: (str: string) => void
+	resource?: boolean
 }
 
 export default function MobileReviewFilters({
 	mobileFiltersOpen,
 	setMobileFiltersOpen,
 	countryFilter,
-	setCountryFilter,
 	stateFilter,
-	setStateFilter,
 	cityFilter,
-	setCityFilter,
 	zipFilter,
-	setZipFilter,
 	cityOptions,
 	stateOptions,
 	zipOptions,
-	setSearchState,
+	resource,
 }: FiltersProps) {
+	const dispatch = useAppDispatch()
+	const query = resource
+		? useAppSelector((state) => state.resourceQuery)
+		: useAppSelector((state) => state.query)
 	const { t } = useTranslation('reviews')
 	return (
 		<Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -93,33 +92,81 @@ export default function MobileReviewFilters({
 							<div className='mt-4'>
 								<Popover.Group className='mx-2 flex flex-col items-center gap-2 divide-y'>
 									<SearchBar
-										setSearchState={setSearchState}
+										setSearchState={(str: string) =>
+											resource
+												? dispatch(
+														updateResourceQuery({
+															...query,
+															searchFilter: str,
+														}),
+												  )
+												: dispatch(updateQuery({ ...query, searchFilter: str }))
+										}
 										mobile
+										value={query.searchFilter}
 										onClick={(p) => setMobileFiltersOpen(p)}
 									/>
 
 									<MobileSelectList
 										state={countryFilter}
-										setState={setCountryFilter}
+										setState={(opt: Options) =>
+											resource
+												? dispatch(
+														updateResourceQuery({
+															...query,
+															countryFilter: opt,
+														}),
+												  )
+												: dispatch(
+														updateQuery({ ...query, countryFilter: opt }),
+												  )
+										}
 										options={countryOptions}
 										name={t('reviews.country')}
 									/>
 									<ComboBox
 										state={stateFilter}
-										setState={setStateFilter}
+										setState={(opt: Options) =>
+											resource
+												? dispatch(
+														updateResourceQuery({
+															...query,
+															stateFilter: opt,
+														}),
+												  )
+												: dispatch(updateQuery({ ...query, stateFilter: opt }))
+										}
 										options={stateOptions}
 										name={t('reviews.state')}
 									/>
 									<ComboBox
 										state={cityFilter}
-										setState={setCityFilter}
+										setState={(opt: Options) =>
+											resource
+												? dispatch(
+														updateResourceQuery({
+															...query,
+															cityFilter: opt,
+														}),
+												  )
+												: dispatch(updateQuery({ ...query, cityFilter: opt }))
+										}
 										options={cityOptions}
 										name={t('reviews.city')}
 									/>
 									{zipOptions && (
 										<ComboBox
 											state={zipFilter}
-											setState={setZipFilter}
+											setState={(opt: Options) =>
+												resource
+													? dispatch(
+															updateResourceQuery({
+																...query,
+																zipFilter: opt,
+															}),
+													  )
+													: dispatch(updateQuery({ ...query, zipFilter: opt }))
+											}
 											options={zipOptions}
 											name={t('reviews.zip')}
 										/>

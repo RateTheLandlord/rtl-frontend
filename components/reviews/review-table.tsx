@@ -1,11 +1,10 @@
 import { classNames } from '@/util/helpers/helper-functions'
 import { Review } from '@/util/interfaces/interfaces'
-import { StarIcon } from '@heroicons/react/solid'
+import { FlagIcon, StarIcon } from '@heroicons/react/solid'
 import React, { Dispatch, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import ButtonLight from '../ui/button-light'
 import Link from 'next/link'
-import { OpenLinkIcon } from '../icons/OpenLinkIcon'
 import { useAppSelector } from '@/redux/hooks'
 import AdsComponent from '@/components/adsense/Adsense'
 
@@ -51,7 +50,7 @@ function ReviewTable({
 			<>
 				<div data-testid='review-table-1'>
 					<div className='mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
-						<div className='mt-6 space-y-10 divide-y divide-gray-200 border-b border-t border-gray-200 pb-10'>
+						<div className='mt-6 space-y-5 pb-10'>
 							{data.map((review: Review, i: number) => {
 								const ratings = [
 									{ title: t('reviews.health'), rating: review.health },
@@ -72,29 +71,34 @@ function ReviewTable({
 										)}
 										<div
 											key={review.id}
-											className='pt-10 lg:grid lg:grid-cols-12 lg:gap-x-8'
+											className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-8'
 										>
-											<div className='mt-6 flex flex-wrap items-center text-sm lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:flex-col lg:items-start xl:col-span-3'>
-												<Link
-													href={`/landlord/${encodeURIComponent(
-														review.landlord,
-													)}`}
-													passHref
-													legacyBehavior
-												>
-													<a
-														target='_blank'
-														rel='noopener noreferrer'
-														className='mb-4 flex w-full cursor-pointer flex-row items-center break-words text-lg font-medium hover:underline lg:mb-0'
+											<div className='flex flex-row flex-wrap items-center justify-between bg-gray-50 p-2 lg:min-w-[250px] lg:max-w-[275px] lg:flex-col'>
+												<div className='flex w-full flex-row justify-between'>
+													<Link
+														href={`/landlord/${encodeURIComponent(
+															review.landlord,
+														)}`}
+														className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg font-medium hover:underline lg:mb-2 lg:items-center'
 														data-umami-event='Reviews / Landlord Link'
 													>
-														{review.landlord}
-														<span className='ml-2'>
-															<OpenLinkIcon className='h-4 w-4' />
-														</span>
-													</a>
-												</Link>
-												<div className='mb-4 flex w-full items-center lg:mb-0'>
+														<h6 className='text-center'>{review.landlord}</h6>
+														<p className='text-sm'>Read all reviews</p>
+													</Link>
+													<div className='flex flex-col text-end lg:hidden'>
+														<p className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>{`${
+															review.city
+														}, ${review.state}, ${
+															review.country_code === 'GB'
+																? 'UK'
+																: review.country_code
+														}, ${review.zip}`}</p>
+														<p className='mb-4 text-gray-500 lg:mb-0 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>
+															{date}
+														</p>
+													</div>
+												</div>
+												<div className='flex items-center'>
 													{[0, 1, 2, 3, 4].map((star) => {
 														let totalReview = 0
 														for (let i = 0; i < ratings.length; i++) {
@@ -117,22 +121,24 @@ function ReviewTable({
 														)
 													})}
 												</div>
-												<p className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>{`${
-													review.city
-												}, ${review.state}, ${
-													review.country_code === 'GB'
-														? 'UK'
-														: review.country_code
-												}, ${review.zip}`}</p>
-												<p className='mb-4 text-gray-500 lg:mb-0 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>
-													{date}
-												</p>
-												<div className='mt-4 w-full'>
+												<div className='hidden flex-col text-center lg:flex'>
+													<p className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>{`${
+														review.city
+													}, ${review.state}, ${
+														review.country_code === 'GB'
+															? 'UK'
+															: review.country_code
+													}, ${review.zip}`}</p>
+													<p className='mb-4 text-gray-500 lg:mb-0 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>
+														{date}
+													</p>
+												</div>
+												<div className='mt-4 flex flex-row justify-start'>
 													<ButtonLight
 														onClick={() => handleReport(review)}
 														umami='Reviews / REPORT Button'
 													>
-														{t('reviews.report-review')}
+														<FlagIcon className='text-red-700' width={20} />
 													</ButtonLight>
 												</div>
 												{user.jwt.access_token ? (
@@ -156,11 +162,11 @@ function ReviewTable({
 													</>
 												) : null}
 											</div>
-											<div className='lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8'>
-												<div className='flex flex-row flex-wrap items-center xl:col-span-1'>
+											<div className='p-4 lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8'>
+												<div className='flex flex-row flex-wrap items-center gap-3 xl:col-span-1'>
 													{ratings.map((rating) => {
 														return (
-															<div key={rating.title} className='mx-2 my-1'>
+															<div key={rating.title}>
 																<p>{rating.title}</p>
 																<div className='flex items-center'>
 																	{[0, 1, 2, 3, 4].map((star) => (

@@ -2,6 +2,7 @@ import { ILinks, INav } from '@/util/interfaces/interfaces'
 import Instagram from '@/components/svg/social/instagram'
 import Twitter from '@/components/svg/social/twitter'
 import TikTok from '@/components/svg/social/tiktok'
+import Facebook from '../svg/social/facebook'
 
 export const navigation: Array<INav> = [
 	{
@@ -29,18 +30,24 @@ export const socialLinks: Array<ILinks> = [
 		name: 'Instagram',
 		href: 'https://www.instagram.com/ratethelandlord',
 		icon: <Instagram />,
-		umami: 'Navbar / Instagram Icon',
+		umami: 'Instagram Icon',
 	},
 	{
 		name: 'Twitter',
 		href: 'https://twitter.com/r8thelandlord',
 		icon: <Twitter />,
-		umami: 'Navbar / Twitter Icon',
+		umami: 'Twitter Icon',
 	},
 	{
 		name: 'TikTok',
 		href: 'https://www.tiktok.com/@ratethelandlord',
 		icon: <TikTok />,
-		umami: 'Navbar / TikTok Icon',
+		umami: 'TikTok Icon',
+	},
+	{
+		name: 'Facebook',
+		href: 'https://www.facebook.com/profile.php?id=61552287725656',
+		icon: <Facebook />,
+		umami: 'Facebook Icon',
 	},
 ]

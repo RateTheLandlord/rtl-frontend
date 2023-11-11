@@ -12,9 +12,10 @@ interface IProps {
 	country: string | undefined
 	value: string
 	setValue: Dispatch<SetStateAction<string>>
+	noState?: boolean
 }
 
-const StateSelector = ({ country, value, setValue }: IProps) => {
+const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 	const { t } = useTranslation('create')
 	return (
 		<div data-testid='state-selector' className='sm:col-span-2'>
@@ -99,6 +100,14 @@ const StateSelector = ({ country, value, setValue }: IProps) => {
 										</Listbox.Option>
 									)
 							  })}
+							  {noState && 
+								<Listbox.Option
+       								className='cursor-pointer p-2 hover:bg-teal-300'
+									value="NO STATE / PROVINCE"
+								>
+								No State / Province
+								</Listbox.Option>
+								}
 					</Listbox.Options>
 				</Transition>
 			</Listbox>

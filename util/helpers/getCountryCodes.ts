@@ -10,3 +10,7 @@ export const countryOptions: Options[] = country_codes.map(
 		return {id: ind + 1, name: countries[item] as string, value: item}
 	},
 )
+
+export const countryName = (countryCode: string): string => countries[Object.keys(countries).filter(
+	(c) => c === countryCode
+	).toString()]
