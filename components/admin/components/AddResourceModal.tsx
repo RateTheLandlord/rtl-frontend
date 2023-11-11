@@ -118,6 +118,7 @@ const AddResourceModal = ({
 							value={state}
 							country={country}
 							setValue={setState}
+							noState={true}
 						/>
 
 						<CountrySelector setValue={setCountry} />
