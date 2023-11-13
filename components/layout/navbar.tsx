@@ -11,14 +11,6 @@ import { updateUser } from '@/redux/user/userSlice'
 import MobileNav from '@/components/layout/MobileNav'
 import { navigation, socialLinks } from '@/components/layout/links'
 
-interface IResult {
-	id: number
-	name: string
-	email: string
-	blocked: boolean
-	role: string
-}
-
 export default function Navbar(): JSX.Element {
 	const cookies = parseCookies()
 	const { t } = useTranslation('layout')
@@ -49,33 +41,15 @@ export default function Navbar(): JSX.Element {
 	useEffect(() => {
 		const userID = localStorage.getItem('rtlUserId')
 		if (cookies.ratethelandlord && userID) {
-			fetch('/api/user/get-user', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
+			const userInfo = {
+				jwt: {
+					access_token: cookies.ratethelandlord,
 				},
-				body: JSON.stringify({ id: userID }),
-			})
-				.then((result: Response) => {
-					if (!result.ok) {
-						throw new Error()
-					}
-					return result.json()
-				})
-				.then((data: IResult) => {
-					const userInfo = {
-						jwt: {
-							access_token: cookies.ratethelandlord,
-						},
-						result: {
-							...data,
-						},
-					}
-					dispatch(updateUser(userInfo))
-				})
-				.catch((error) => {
-					console.log(error)
-				})
+				result: {
+					name: userID,
+				},
+			}
+			dispatch(updateUser(userInfo))
 		}
 	}, [cookies.ratethelandlord])
 
@@ -121,7 +95,9 @@ export default function Navbar(): JSX.Element {
 													: ''
 											} inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900`}
 										>
-											<Link href={`/admin/${user.result.id || 0}`}>Admin</Link>
+											<Link href={`/admin/${user.result.name || 0}`}>
+												Admin
+											</Link>
 										</div>
 									)}
 								</div>

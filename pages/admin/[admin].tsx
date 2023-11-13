@@ -1,8 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { ITabs } from '@/components/admin/types/types'
 import FlaggedReviews from '@/components/admin/sections/FlaggedReviews'
-import TeamMembers from '@/components/admin/sections/TeamMembers'
-import MyInfo from '@/components/admin/sections/MyInfo'
 import { parseCookies } from 'nookies'
 import Link from 'next/link'
 import Stats from '@/components/admin/sections/Stats'
@@ -13,22 +11,20 @@ import TenantResources from '@/components/admin/sections/TenantResources'
 
 const tabs = [
 	{ name: 'Flagged Reviews', component: <FlaggedReviews /> },
-	{ name: 'Team Members', component: <TeamMembers /> },
-	{ name: 'My Info', component: <MyInfo /> },
-	{ name: 'Stats', component: <Stats /> },
 	{ name: 'Tenant Resources', component: <TenantResources /> },
+	{ name: 'Stats', component: <Stats /> },
 ]
 
 function Admin(): JSX.Element {
 	const cookies = parseCookies()
 	const [currentTab, setCurrentTab] = useState<ITabs>(tabs[0])
 
-	const [noCookie, setNoCookies] = useState(false)
+	const [noCookie, setNoCookies] = useState(true)
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 
 	useEffect(() => {
-		if (!cookies.ratethelandlord) {
-			setNoCookies(true)
+		if (cookies.ratethelandlord) {
+			setNoCookies(false)
 		}
 	}, [cookies.ratethelandlord])
 
