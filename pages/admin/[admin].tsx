@@ -8,11 +8,13 @@ import { classNames } from '@/util/helpers/helper-functions'
 import { Dialog, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import TenantResources from '@/components/admin/sections/TenantResources'
+import TeamMembers from '@/components/admin/sections/TeamMembers'
 
 const tabs = [
 	{ name: 'Flagged Reviews', component: <FlaggedReviews /> },
 	{ name: 'Tenant Resources', component: <TenantResources /> },
 	{ name: 'Stats', component: <Stats /> },
+	{ name: 'Team', component: <TeamMembers /> },
 ]
 
 function Admin(): JSX.Element {
