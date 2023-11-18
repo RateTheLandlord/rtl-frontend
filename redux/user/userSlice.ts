@@ -5,11 +5,7 @@ interface IUsers {
 		access_token: string | undefined
 	}
 	result: {
-		id: number | undefined
 		name: string | undefined
-		email: string | undefined
-		blocked: boolean | undefined
-		role: string | undefined
 	}
 }
 
@@ -18,11 +14,7 @@ const initialState: IUsers = {
 		access_token: undefined,
 	},
 	result: {
-		id: undefined,
 		name: undefined,
-		email: undefined,
-		blocked: undefined,
-		role: undefined,
 	},
 }
 

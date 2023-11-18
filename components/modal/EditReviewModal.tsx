@@ -93,7 +93,7 @@ const EditReviewModal = ({
 					<div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity' />
 				</Transition.Child>
 
-				<div className='fixed inset-0 z-10 overflow-y-auto'>
+				<div className='fixed inset-0 z-50 overflow-y-auto'>
 					<div className='flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
 						<Transition.Child
 							as={Fragment}

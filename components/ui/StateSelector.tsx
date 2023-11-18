@@ -100,14 +100,14 @@ const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 										</Listbox.Option>
 									)
 							  })}
-							  {noState && 
-								<Listbox.Option
-       								className='cursor-pointer p-2 hover:bg-teal-300'
-									value="NO STATE / PROVINCE"
-								>
+						{noState && (
+							<Listbox.Option
+								className='cursor-pointer p-2 hover:bg-teal-300'
+								value='NO STATE / PROVINCE'
+							>
 								No State / Province
-								</Listbox.Option>
-								}
+							</Listbox.Option>
+						)}
 					</Listbox.Options>
 				</Transition>
 			</Listbox>
