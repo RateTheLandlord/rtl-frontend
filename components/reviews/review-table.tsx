@@ -83,7 +83,9 @@ function ReviewTable({
 														data-umami-event='Reviews / Landlord Link'
 													>
 														<h6 className='text-center'>{review.landlord}</h6>
-														<p className='text-sm'>Read all reviews</p>
+														<p className='text-center text-sm'>
+															Read all reviews
+														</p>
 													</Link>
 													<div className='flex flex-col text-end lg:hidden'>
 														<p className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>{`${
