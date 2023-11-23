@@ -1,150 +1,135 @@
 import useSWR from 'swr'
 import { useState } from 'react'
 import { fetcher } from '@/util/helpers/fetcher'
-import StateStats from '../components/StateStats'
 import Spinner from '@/components/ui/Spinner'
+import BarGraph from '../components/BarGraph'
+import dayjs from 'dayjs'
+import GraphCard from '../components/GraphCard'
+import AreaGraph from '../components/AreaGraph'
+import PieGraph from '../components/PieGraph'
+import StatsDropdown from '../components/StatsDropdown'
+import { useStatsDates } from '@/util/hooks/useStatsDates'
+import TotalStats from '../components/TotalStats'
+import { IStats } from '../types/types'
 
-export interface IStats {
-	total_reviews: number
-	total_ca_reviews: {
-		total: string
-		states: Array<{
-			key: string
-			total: string
-		}>
-	}
-	total_us_reviews: {
-		total: string
-		states: Array<{
-			key: string
-			total: string
-		}>
-	}
-	total_au_reviews: {
-		total: string
-		states: Array<{
-			key: string
-			total: string
-		}>
-	}
-	total_uk_reviews: {
-		total: string
-		states: Array<{
-			key: string
-			total: string
-		}>
-	}
-	total_nz_reviews: {
-		total: string
-		states: Array<{
-			key: string
-			total: string
-		}>
-	}
-}
+const queryOptions = [
+	{
+		name: 'Last 7 Days',
+		value: 'last7',
+	},
+	{
+		name: 'Last 14 Days',
+		value: 'last14',
+	},
+	{
+		name: 'Last 30 Days',
+		value: 'last30',
+	},
+	{
+		name: 'This Month',
+		value: 'currMonth',
+	},
+	{
+		name: 'Last 3 Months',
+		value: 'last3m',
+	},
+	{
+		name: 'Last 6 Months',
+		value: 'last6m',
+	},
+	{
+		name: 'Last 1 Year',
+		value: 'last1y',
+	},
+	{
+		name: 'All Time',
+		value: 'allTime',
+	},
+]
 
 const Stats = () => {
-	const [country, setCountry] = useState<string | null>(null)
-	const { data, error } = useSWR<IStats, boolean>(
-		'/api/admin/get-stats',
+	const [query, setQuery] = useState(queryOptions[0])
+	const [startDate, groupBy] = useStatsDates(query.value)
+
+	const { data, error } = useSWR<IStats>(
+		`/api/admin/get-stats?startDate=${startDate}&groupBy=${groupBy}`,
 		fetcher,
 	)
 
 	if (error) return <div>failed to load</div>
 	if (!data) return <Spinner />
 
-	const handleCountryClick = (country: string) => {
-		setCountry(country)
-	}
-
-	const renderStats = () => {
-		const stats: Array<{
-			country: string
-			label: string
-			data: string
-			isActive: boolean
-		}> = [
-			{
-				country: 'CA',
-				label: 'Canadian Reviews',
-				data: data.total_ca_reviews.total,
-				isActive: country === 'CA',
-			},
-			{
-				country: 'US',
-				label: 'US Reviews',
-				data: data.total_us_reviews.total,
-				isActive: country === 'US',
-			},
-			{
-				country: 'UK',
-				label: 'UK Reviews',
-				data: data.total_uk_reviews.total,
-				isActive: country === 'UK',
-			},
-			{
-				country: 'AU',
-				label: 'Australia Reviews',
-				data: data.total_au_reviews.total,
-				isActive: country === 'AU',
-			},
-			{
-				country: 'NZ',
-				label: 'New Zealand Reviews',
-				data: data.total_nz_reviews.total,
-				isActive: country === 'NZ',
-			},
-		]
-
-		return stats.map((stat) => (
-			<div
-				key={stat.country}
-				onClick={() => handleCountryClick(stat.country)}
-				className={`flex cursor-pointer flex-col rounded-xl border p-6 text-center ${
-					stat.isActive ? 'bg-gray-200' : ''
-				}`}
-			>
-				<dt className='order-2 mt-2 text-lg font-medium leading-6 text-gray-500'>
-					{stat.label}
-				</dt>
-				<dd className='order-1 text-5xl font-bold tracking-tight text-indigo-600'>
-					{stat.data}
-				</dd>
-			</div>
-		))
-	}
-
-	const renderSelectedStateStats = () => {
-		switch (country) {
-			case 'CA':
-				return <StateStats states={data.total_ca_reviews.states} />
-			case 'US':
-				return <StateStats states={data.total_us_reviews.states} />
-			case 'UK':
-				return <StateStats states={data.total_uk_reviews.states} />
-			case 'AU':
-				return <StateStats states={data.total_au_reviews.states} />
-			case 'NZ':
-				return <StateStats states={data.total_nz_reviews.states} />
-			default:
-				return null
+	const getDetailedStats = (key) => {
+		if (key === 'total') {
+			const stat = data.detailed_stats.map((stat) => {
+				if (groupBy === 'month') {
+					return {
+						date: dayjs(stat.date).format('YYYY-MM'),
+						total: stat.total,
+					}
+				} else {
+					return {
+						date: dayjs(stat.date).format('YYYY-MM-DD'),
+						total: stat.total,
+					}
+				}
+			})
+			return stat
 		}
+		const stat = data.detailed_stats.map((stat) => {
+			if (groupBy === 'month') {
+				return { date: dayjs(stat.date).format('YYYY-MM'), ...stat[key] }
+			} else {
+				return { date: dayjs(stat.date).format('YYYY-MM-DD'), ...stat[key] }
+			}
+		})
+		return stat
+	}
+
+	const getCountryTotals = () => {
+		const countryData = [
+			{ name: 'US', value: Number(data.total_stats.countryStats.US.total) },
+			{ name: 'CA', value: Number(data.total_stats.countryStats.CA.total) },
+			{ name: 'NZ', value: Number(data.total_stats.countryStats.NZ.total) },
+			{ name: 'AU', value: Number(data.total_stats.countryStats.AU.total) },
+			{ name: 'UK', value: Number(data.total_stats.countryStats.GB.total) },
+		]
+		return countryData
 	}
 
 	return (
-		<div className='container flex w-full flex-wrap justify-center px-4 sm:px-6 lg:px-8'>
-			<div className='mt-3 flex w-full flex-col justify-center gap-3 lg:flex-row'>
-				<div className='flex flex-col p-6 text-center'>
-					<dt className='order-2 mt-2 text-lg font-medium leading-6 text-gray-500'>
-						Total Reviews
-					</dt>
-					<dd className='order-1 text-5xl font-bold tracking-tight text-indigo-600'>
-						{data.total_reviews}
-					</dd>
-				</div>
-				{renderStats()}
+		<div className='flex flex-row flex-wrap gap-2'>
+			<div className='w-full'>
+				<h5 className='text-lg font-bold'>
+					Total Reviews: {data.total_stats.total_reviews}
+				</h5>
 			</div>
-			{renderSelectedStateStats()}
+			<div className='flex w-full justify-end'>
+				<StatsDropdown
+					options={queryOptions}
+					setSelected={setQuery}
+					selected={query}
+				/>
+			</div>
+			<GraphCard title='All Reviews'>
+				<AreaGraph data={getDetailedStats('total')} />
+			</GraphCard>
+			<GraphCard title='Total By Country'>
+				<PieGraph data={getCountryTotals()} />
+			</GraphCard>
+			<GraphCard title='Countries'>
+				<BarGraph data={getDetailedStats('country_codes')} />
+			</GraphCard>
+			<GraphCard title='State'>
+				<BarGraph data={getDetailedStats('state')} />
+			</GraphCard>
+			<GraphCard title='Cities'>
+				<BarGraph data={getDetailedStats('cities')} />
+			</GraphCard>
+			<GraphCard title='Zip'>
+				<BarGraph data={getDetailedStats('zip')} />
+			</GraphCard>
+			<TotalStats data={data.total_stats} />
 		</div>
 	)
 }
