@@ -1,6 +1,5 @@
 import { getRandomColour } from '@/util/helpers/randomColour'
 import { Area, AreaChart, Tooltip, XAxis, YAxis } from 'recharts'
-import { IDetailedStats } from '../types/types'
 
 const AreaGraph = ({ data }) => {
 	return (
