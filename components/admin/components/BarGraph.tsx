@@ -1,3 +1,4 @@
+import { combineObjects } from '@/util/helpers/helper-functions'
 import { getRandomColour } from '@/util/helpers/randomColour'
 import {
 	Bar,
@@ -10,6 +11,7 @@ import {
 } from 'recharts'
 
 const BarGraph = ({ data }) => {
+	const combinedData = combineObjects(data)
 	return (
 		<BarChart
 			width={730}
@@ -22,7 +24,7 @@ const BarGraph = ({ data }) => {
 			<Legend />
 			<XAxis dataKey='date' />
 			<YAxis />
-			{Object.keys(data[0]).map((name, i) => {
+			{Object.keys(combinedData).map((name, i) => {
 				if (name !== 'date') {
 					return (
 						<Bar
