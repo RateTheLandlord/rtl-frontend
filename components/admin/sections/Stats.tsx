@@ -106,31 +106,35 @@ const Stats = () => {
 					Total Reviews: {data.total_stats.total_reviews}
 				</h5>
 			</div>
-			<div className='flex w-full justify-end'>
-				<StatsDropdown
-					options={queryOptions}
-					setSelected={setQuery}
-					selected={query}
-				/>
-			</div>
-			<GraphCard title='All Reviews'>
-				<AreaGraph data={getDetailedStats('total')} />
-			</GraphCard>
-			<GraphCard title='Total By Country'>
-				<PieGraph data={getCountryTotals()} />
-			</GraphCard>
-			<GraphCard title='Countries'>
-				<BarGraph data={getDetailedStats('country_codes')} />
-			</GraphCard>
-			<GraphCard title='State'>
-				<BarGraph data={getDetailedStats('state')} />
-			</GraphCard>
-			<GraphCard title='Cities'>
-				<BarGraph data={getDetailedStats('cities')} />
-			</GraphCard>
-			<GraphCard title='Zip'>
-				<BarGraph data={getDetailedStats('zip')} />
-			</GraphCard>
+			{data.detailed_stats.length && (
+				<>
+					<div className='flex w-full justify-end'>
+						<StatsDropdown
+							options={queryOptions}
+							setSelected={setQuery}
+							selected={query}
+						/>
+					</div>
+					<GraphCard title='All Reviews'>
+						<AreaGraph data={getDetailedStats('total')} />
+					</GraphCard>
+					<GraphCard title='Total By Country'>
+						<PieGraph data={getCountryTotals()} />
+					</GraphCard>
+					<GraphCard title='Countries'>
+						<BarGraph data={getDetailedStats('country_codes')} />
+					</GraphCard>
+					<GraphCard title='State'>
+						<BarGraph data={getDetailedStats('state')} />
+					</GraphCard>
+					<GraphCard title='Cities'>
+						<BarGraph data={getDetailedStats('cities')} />
+					</GraphCard>
+					<GraphCard title='Zip'>
+						<BarGraph data={getDetailedStats('zip')} />
+					</GraphCard>
+				</>
+			)}
 			<TotalStats data={data.total_stats} />
 		</div>
 	)
