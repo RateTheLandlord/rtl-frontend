@@ -9,6 +9,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import TenantResources from '@/components/admin/sections/TenantResources'
 import TeamMembers from '@/components/admin/sections/TeamMembers'
+import { useAppSelector } from '@/redux/hooks'
 
 const tabs = [
 	{ name: 'Flagged Reviews', component: <FlaggedReviews /> },
@@ -21,6 +22,8 @@ function Admin(): JSX.Element {
 	const cookies = parseCookies()
 	const [currentTab, setCurrentTab] = useState<ITabs>(tabs[0])
 
+	const { user } = useAppSelector((state) => state)
+
 	const [noCookie, setNoCookies] = useState(true)
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -30,7 +33,7 @@ function Admin(): JSX.Element {
 		}
 	}, [cookies.ratethelandlord])
 
-	if (noCookie) {
+	if (noCookie || user.jwt.access_token === undefined) {
 		return (
 			<div className='flex w-full flex-col items-center gap-4'>
 				<h1 className='text-center'>Not Logged In</h1>
