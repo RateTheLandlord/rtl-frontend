@@ -13,7 +13,6 @@ interface IUsers {
 	id: number
 	name: string
 	email: string
-	blocked: boolean
 	role: string
 }
 
@@ -204,6 +203,7 @@ const TeamMembers = () => {
 										</dd>
 									</dl>
 								</td>
+
 								<td className='hidden px-3 py-4 text-sm text-gray-500 lg:table-cell'>
 									{user.email}
 								</td>

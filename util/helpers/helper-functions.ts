@@ -1,4 +1,4 @@
-import {Options} from '../interfaces/interfaces'
+import { Options } from '../interfaces/interfaces'
 
 export function classNames(...classes: Array<string>) {
 	return classes.filter(Boolean).join(' ')
@@ -14,4 +14,17 @@ export const removeDuplicates = (arr: Options[], key: string): Options[] => {
 			!check.has(obj[key as keyof Options]) &&
 			check.add(obj[key as keyof Options]),
 	)
+}
+
+export function combineObjects(arr) {
+	return arr.reduce((result, obj) => {
+		Object.keys(obj).forEach((key) => {
+			if (result[key] === undefined) {
+				result[key] = obj[key]
+			} else {
+				result[key] += obj[key]
+			}
+		})
+		return result
+	}, {})
 }

@@ -6,18 +6,10 @@ import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { parseCookies } from 'nookies'
+import { destroyCookie, parseCookies } from 'nookies'
 import { updateUser } from '@/redux/user/userSlice'
 import MobileNav from '@/components/layout/MobileNav'
 import { navigation, socialLinks } from '@/components/layout/links'
-
-interface IResult {
-	id: number
-	name: string
-	email: string
-	blocked: boolean
-	role: string
-}
 
 export default function Navbar(): JSX.Element {
 	const cookies = parseCookies()
@@ -46,36 +38,29 @@ export default function Navbar(): JSX.Element {
 		}
 	}, [router])
 
+	const handleLogout = () => {
+		destroyCookie(undefined, 'ratethelandlord')
+		dispatch(
+			updateUser({
+				jwt: { access_token: undefined },
+				result: { name: undefined },
+			}),
+		)
+		localStorage.removeItem('rtlUserId')
+	}
+
 	useEffect(() => {
 		const userID = localStorage.getItem('rtlUserId')
 		if (cookies.ratethelandlord && userID) {
-			fetch('/api/user/get-user', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
+			const userInfo = {
+				jwt: {
+					access_token: cookies.ratethelandlord,
 				},
-				body: JSON.stringify({ id: userID }),
-			})
-				.then((result: Response) => {
-					if (!result.ok) {
-						throw new Error()
-					}
-					return result.json()
-				})
-				.then((data: IResult) => {
-					const userInfo = {
-						jwt: {
-							access_token: cookies.ratethelandlord,
-						},
-						result: {
-							...data,
-						},
-					}
-					dispatch(updateUser(userInfo))
-				})
-				.catch((error) => {
-					console.log(error)
-				})
+				result: {
+					name: userID,
+				},
+			}
+			dispatch(updateUser(userInfo))
 		}
 	}, [cookies.ratethelandlord])
 
@@ -121,7 +106,9 @@ export default function Navbar(): JSX.Element {
 													: ''
 											} inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900`}
 										>
-											<Link href={`/admin/${user.result.id || 0}`}>Admin</Link>
+											<Link href={`/admin/${user.result.name || 0}`}>
+												Admin
+											</Link>
 										</div>
 									)}
 								</div>
@@ -149,6 +136,16 @@ export default function Navbar(): JSX.Element {
 											<p className='px-4 py-2'>{t('layout.nav.submit')}</p>
 										</Link>
 									</div>
+								</div>
+								<div className='hidden lg:ml-6 lg:flex lg:space-x-8'>
+									{user?.jwt.access_token && (
+										<button
+											className='inline-flex cursor-pointer items-center rounded-md border border-transparent bg-blue-600 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+											onClick={() => handleLogout()}
+										>
+											<p className='px-4 py-2'>Logout</p>
+										</button>
+									)}
 								</div>
 							</div>
 							<div className='flex items-center lg:hidden'>

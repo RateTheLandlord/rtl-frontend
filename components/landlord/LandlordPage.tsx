@@ -167,10 +167,10 @@ const LandlordPage = ({
 									</div>
 
 									<div className='p-4 lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8'>
-										<div className='flex flex-row flex-wrap items-center xl:col-span-1'>
+										<div className='grid grid-cols-2 md:grid-cols-5 lg:grid-cols-2 xl:col-span-1'>
 											{ratings.map((rating) => {
 												return (
-													<div key={rating.title}>
+													<div key={rating.title} className='mx-1'>
 														<p>{rating.title}</p>
 														<div className='flex items-center'>
 															{[0, 1, 2, 3, 4].map((star) => (
