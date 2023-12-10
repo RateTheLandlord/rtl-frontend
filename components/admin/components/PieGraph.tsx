@@ -1,4 +1,4 @@
-import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts'
+import { Cell, Pie, PieChart, Tooltip } from 'recharts'
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
 
@@ -18,7 +18,6 @@ const PieGraph = ({ data }) => {
 				))}
 			</Pie>
 			<Tooltip />
-			<Legend />
 		</PieChart>
 	)
 }
