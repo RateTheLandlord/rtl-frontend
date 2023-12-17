@@ -16,6 +16,7 @@ export interface Review {
 	flagged_reason: string
 	admin_approved: boolean | null
 	admin_edited: boolean
+	rent?: number | null
 }
 
 export interface Options {

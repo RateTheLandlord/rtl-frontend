@@ -26,6 +26,8 @@
 			"reason": "Reason",
 			"cancel": "Cancel",
 			"submit": "Submit"
-		}
+		},
+		"rent": "Rent Amount: $",
+		"local": "In local currency"
 	}
 }

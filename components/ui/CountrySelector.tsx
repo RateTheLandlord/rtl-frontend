@@ -10,7 +10,7 @@ interface IProps {
 const CountrySelector = ({ setValue }: IProps) => {
 	const { t } = useTranslation('create')
 	return (
-		<div className='sm:col-span-3'>
+		<div className='sm:col-span-4'>
 			<label
 				htmlFor='country'
 				className='block text-sm font-medium text-gray-700'
