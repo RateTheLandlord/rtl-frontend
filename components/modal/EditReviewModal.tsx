@@ -38,6 +38,7 @@ const EditReviewModal = ({
 	const [province, setProvince] = useState<string>(selectedReview?.state || '')
 	const [postal, setPostal] = useState<string>(selectedReview?.zip || '')
 	const [review, setReview] = useState<string>(selectedReview?.review || '')
+	const [rent, setRent] = useState<number | null>(selectedReview?.rent || null)
 
 	const onSubmitEditReview = () => {
 		const editedReview = {
@@ -51,6 +52,7 @@ const EditReviewModal = ({
 			admin_edited: true,
 			admin_approved: true,
 			flagged: false,
+			rent: rent,
 		}
 		fetch('/api/review/edit-review', {
 			method: 'POST',
@@ -249,6 +251,27 @@ const EditReviewModal = ({
 												onChange={(e) => setPostal(e.target.value)}
 												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 												data-testid='create-review-form-postal-code-1'
+											/>
+										</div>
+									</div>
+									<div className='sm:col-span-2'>
+										<label
+											htmlFor='rent'
+											className='block text-sm font-medium text-gray-700'
+										>
+											Rent
+										</label>
+										<div className='mt-1'>
+											<input
+												type='number'
+												name='rent'
+												id='rent'
+												placeholder='Rent'
+												required
+												value={rent ? rent : selectedReview?.rent || ''}
+												onChange={(e) => setRent(Number(e.target.value))}
+												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+												data-testid='create-review-form-rent-1'
 											/>
 										</div>
 									</div>
