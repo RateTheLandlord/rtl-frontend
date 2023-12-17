@@ -165,28 +165,38 @@ function ReviewTable({
 												) : null}
 											</div>
 											<div className='p-4 lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8'>
-												<div className='flex flex-row flex-wrap items-center gap-3 xl:col-span-1'>
-													{ratings.map((rating) => {
-														return (
-															<div key={rating.title}>
-																<p>{rating.title}</p>
-																<div className='flex items-center'>
-																	{[0, 1, 2, 3, 4].map((star) => (
-																		<StarIcon
-																			key={star}
-																			className={classNames(
-																				parseInt(rating.rating) > star
-																					? 'text-yellow-400'
-																					: 'text-gray-200',
-																				'h-5 w-5 flex-shrink-0',
-																			)}
-																			aria-hidden='true'
-																		/>
-																	))}
+												<div className='flex h-full flex-col justify-between'>
+													<div className='flex flex-row flex-wrap items-center gap-3 xl:col-span-1'>
+														{ratings.map((rating) => {
+															return (
+																<div key={rating.title}>
+																	<p>{rating.title}</p>
+																	<div className='flex items-center'>
+																		{[0, 1, 2, 3, 4].map((star) => (
+																			<StarIcon
+																				key={star}
+																				className={classNames(
+																					parseInt(rating.rating) > star
+																						? 'text-yellow-400'
+																						: 'text-gray-200',
+																					'h-5 w-5 flex-shrink-0',
+																				)}
+																				aria-hidden='true'
+																			/>
+																		))}
+																	</div>
 																</div>
+															)
+														})}
+														{review.rent && (
+															<div className='flex w-full flex-col'>
+																<p className='w-full'>{`${t('reviews.rent')}${
+																	review.rent
+																}`}</p>
+																<p className='text-xs'>{t('reviews.local')}</p>
 															</div>
-														)
-													})}
+														)}
+													</div>
 												</div>
 
 												<div className='mt-4 lg:mt-6 xl:col-span-2 xl:mt-0'>

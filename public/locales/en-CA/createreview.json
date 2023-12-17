@@ -14,6 +14,7 @@
 			"state": "State / Province",
 			"region": "UK Country",
 			"zip": "ZIP / Postal Code",
+			"rent": "Rent Amount (Optional)",
 			"rate-title": "Please rate the following on a scale from 1 (worst) to 5 (best)",
 			"health": "Health and Safety",
 			"health_description": "Landlords must ensure that the rental property complies with local health and safety standards, such as maintaining smoke detectors, removing mold, and employing pest control when necessary.",
