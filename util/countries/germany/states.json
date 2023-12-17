@@ -1,0 +1,22 @@
+[
+	{ "short": "BW", "name": "Baden-Württemberg", "country": "DE" },
+	{ "short": "BA", "name": "Bavaria", "country": "DE" },
+	{ "short": "BE", "name": "Berlin", "country": "DE" },
+	{ "short": "BR", "name": "Brandenburg", "country": "DE" },
+	{
+		"short": "BRE",
+		"name": "Bremen",
+		"country": "DE"
+	},
+	{ "short": "HA", "name": "Hamburg", "country": "DE" },
+	{ "short": "HE", "name": "Hesse", "country": "DE" },
+	{ "short": "MV", "name": "Mecklenburg-Vorpommern", "country": "DE" },
+	{ "short": "LS", "name": "Lower Saxony", "country": "DE" },
+	{ "short": "NRW", "name": "North Rhine-Westphalia", "country": "DE" },
+	{ "short": "RP", "name": "Rhineland-Palatinate", "country": "DE" },
+	{ "short": "SA", "name": "Saarland", "country": "DE" },
+	{ "short": "SX", "name": "Saxony", "country": "DE" },
+	{ "short": "SXA", "name": "Saxony-Anhalt", "country": "DE" },
+	{ "short": "SH", "name": "Schleswig-Holstein", "country": "DE" },
+	{ "short": "TH", "name": "Thuringia", "country": "DE" }
+]

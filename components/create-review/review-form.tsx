@@ -263,6 +263,8 @@ function ReviewForm(): JSX.Element {
 			setProvince('Alabama')
 		} else if (country === 'NZ') {
 			setProvince('Marlborough')
+		} else if (country === 'DE') {
+			setProvince('Baden-Württemberg')
 		} else {
 			setProvince('Alberta')
 		}

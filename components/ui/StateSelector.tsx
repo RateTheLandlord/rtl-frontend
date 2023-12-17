@@ -4,6 +4,7 @@ import regions from '@/util/countries/unitedKingdom/regions.json'
 import states from '@/util/countries/unitedStates/states.json'
 import territories from '@/util/countries/australia/territories.json'
 import nz_provinces from '@/util/countries/newZealand/nz-provinces.json'
+import de_states from '@/util/countries/germany/states.json'
 import { Dispatch, Fragment, SetStateAction } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
@@ -86,6 +87,18 @@ const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 											value={prov.name}
 										>
 											{prov.name}
+										</Listbox.Option>
+									)
+							  })
+							: country === 'DE'
+							? de_states.map((state) => {
+									return (
+										<Listbox.Option
+											className='cursor-pointer p-2 hover:bg-teal-300'
+											key={state.short}
+											value={state.name}
+										>
+											{state.name}
 										</Listbox.Option>
 									)
 							  })
