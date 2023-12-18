@@ -1,37 +1,41 @@
 import { useTranslation } from 'react-i18next'
 import LinkButtonLG from '../ui/link-button-lg'
 import LinkButtonLightLG from '../ui/link-button-light-lg'
+import { HouseIcon } from '../icons/HouseIcon'
 
 function Hero(): JSX.Element {
 	const { t } = useTranslation('home')
 	return (
-		<div data-testid='home-hero-1' className='relative min-w-full'>
-			<div className='relative pt-6'>
-				<main className='mx-auto mt-16 max-w-7xl px-4 sm:mt-24'>
-					<div className='text-center'>
-						<h1 className='block text-4xl font-extrabold  tracking-tight text-teal-600 sm:text-5xl md:text-6xl'>
-							{t('home.hero.title')}
-						</h1>
-						<p className='mx-auto mt-3 max-w-md text-base  sm:text-lg md:mt-5 md:max-w-full md:text-xl'>
-							{t('home.hero.body')}
-						</p>
-
-						<div className='mx-auto mt-5 flex max-w-md flex-col gap-2 sm:flex-row sm:justify-center md:mt-8'>
-							<LinkButtonLG
-								href='/create-review'
-								umami='Homepage / Submit a Review Button'
-							>
-								{t('home.hero.submit')}
-							</LinkButtonLG>
-							<LinkButtonLightLG
-								href='/reviews'
-								umami='Homepage / Read Reviews Button'
-							>
-								{t('home.hero.read')}
-							</LinkButtonLightLG>
-						</div>
-					</div>
-				</main>
+		<div
+			data-testid='home-hero-1'
+			className='mx-auto flex max-w-7xl flex-col px-6 pb-24 pt-10 sm:pb-32 lg:flex-row lg:items-center lg:px-8'
+		>
+			<div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0'>
+				<h1 className='mt-10 text-center text-4xl font-bold tracking-tight text-teal-600 sm:text-6xl lg:text-left'>
+					{t('home.hero.title')}
+				</h1>
+				<p className='mt-6 text-center text-lg leading-8 text-gray-600 lg:text-left'>
+					{t('home.hero.body')}
+				</p>
+				<div className='mt-5 flex flex-col gap-3 text-center sm:w-full sm:flex-row sm:items-center sm:justify-center md:mt-8 lg:max-w-md lg:justify-start'>
+					<LinkButtonLG
+						href='/create-review'
+						umami='Homepage / Submit a Review Button'
+					>
+						{t('home.hero.submit')}
+					</LinkButtonLG>
+					<LinkButtonLightLG
+						href='/reviews'
+						umami='Homepage / Read Reviews Button'
+					>
+						{t('home.hero.read')}
+					</LinkButtonLightLG>
+				</div>
+			</div>
+			<div className='mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32'>
+				<div className='max-w-3xl flex-none sm:max-w-5xl lg:max-w-none'>
+					<HouseIcon className='h-80 w-80 md:h-[500px] md:w-[500px]' />
+				</div>
 			</div>
 		</div>
 	)
