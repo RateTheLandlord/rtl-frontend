@@ -41,6 +41,13 @@ export interface ICountryStats {
 				total: string
 			}>
 		}
+		DE: {
+			total: string
+			states: Array<{
+				key: string
+				total: string
+			}>
+		}
 	}
 }
 

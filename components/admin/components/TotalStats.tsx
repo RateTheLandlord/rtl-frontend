@@ -46,6 +46,12 @@ const TotalStats = ({ data }: { data: ICountryStats }) => {
 				data: data.countryStats.NZ.total,
 				isActive: country === 'NZ',
 			},
+			{
+				country: 'DE',
+				label: 'Germany Reviews',
+				data: data.countryStats.DE.total,
+				isActive: country === 'DE',
+			},
 		]
 
 		return stats.map((stat) => (
@@ -78,6 +84,8 @@ const TotalStats = ({ data }: { data: ICountryStats }) => {
 				return <StateStats states={data.countryStats.AU.states} />
 			case 'NZ':
 				return <StateStats states={data.countryStats.NZ.states} />
+			case 'DE':
+				return <StateStats states={data.countryStats.DE.states} />
 			default:
 				return null
 		}
