@@ -4,6 +4,25 @@ import ButtonLight from '../ui/button-light'
 import Button from '../ui/button'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
+import {
+	EmailShareButton,
+	FacebookShareButton,
+	PinterestShareButton,
+	RedditShareButton,
+	TumblrShareButton,
+	TwitterShareButton,
+} from 'react-share'
+
+import {
+	EmailIcon,
+	FacebookIcon,
+	PinterestIcon,
+	RedditIcon,
+	TumblrIcon,
+	TwitterIcon,
+} from 'react-share'
+import Patreon from '../svg/icons/patreon'
+import LinkButtonLightLG from '../ui/link-button-light-lg'
 
 interface IProps {
 	isOpen: boolean
@@ -56,10 +75,48 @@ function SuccessModal({ isOpen, setIsOpen }: IProps) {
 										>
 											{t('create-review.modal.success')}
 										</Dialog.Title>
+
 										<div className='mt-2'>
 											<p className='text-sm text-gray-500'>
-												{t('create-review.modal.description')}
+												{t('create-review.modal.support')}
 											</p>
+											<div className='mt-2 flex w-full flex-row justify-center gap-3'>
+												<EmailShareButton url='https://ratethelandlord.org'>
+													<EmailIcon round size='40' />
+												</EmailShareButton>
+												<FacebookShareButton url='https://ratethelandlord.org'>
+													<FacebookIcon round size='40' />
+												</FacebookShareButton>
+												<PinterestShareButton
+													media='https://ratethelandlord.org/friends.webp'
+													url='https://ratethelandlord.org'
+												>
+													<PinterestIcon round size='40' />
+												</PinterestShareButton>
+												<RedditShareButton url='https://ratethelandlord.org'>
+													<RedditIcon round size='40' />
+												</RedditShareButton>
+												<TumblrShareButton url='https://ratethelandlord.org'>
+													<TumblrIcon round size='40' />
+												</TumblrShareButton>
+												<TwitterShareButton url='https://ratethelandlord.org'>
+													<TwitterIcon round size='40' />
+												</TwitterShareButton>
+											</div>
+										</div>
+										<div className='mt-2 flex w-full flex-col items-center justify-center'>
+											<p className='mb-2 text-sm text-gray-500'>
+												{t('create-review.modal.patreon')}
+											</p>
+											<LinkButtonLightLG
+												umami='Patreon Link'
+												href='https://patreon.com/RateTheLandlord?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator&utm_content=join_link'
+											>
+												<div className='flex flex-row items-center gap-2'>
+													<Patreon styling='w-10 h-10' />
+													<p>Patreon</p>
+												</div>
+											</LinkButtonLightLG>
 										</div>
 									</div>
 								</div>

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 
 interface IProps {
-	children: string
+	children: string | JSX.Element
 	href: string
 	umami: string
 }
