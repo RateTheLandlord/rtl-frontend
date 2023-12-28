@@ -16,7 +16,7 @@ function Footer(): JSX.Element {
 							data-umami-event={item.umami}
 							key={item.name}
 							href={item.href}
-							className='text-gray-400 hover:text-gray-500'
+							className='flex items-center text-gray-400 hover:text-gray-500'
 						>
 							<span className='sr-only'>{item.name}</span>
 							{item.icon}
