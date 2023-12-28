@@ -24,6 +24,12 @@ export const navigation: Array<INav> = [
 		umami: 'Navbar / About Link',
 		mobileumami: 'Mobile Navbar / About Link',
 	},
+	{
+		href: '/support-us',
+		name: 'layout.nav.support-us',
+		umami: 'Navbar / Support Us Link',
+		mobileumami: 'Mobile Navbar / Support Us Link',
+	},
 ]
 
 export const socialLinks: Array<ILinks> = [
