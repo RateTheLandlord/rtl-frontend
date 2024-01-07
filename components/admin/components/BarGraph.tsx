@@ -1,14 +1,6 @@
 import { combineObjects } from '@/util/helpers/helper-functions'
 import { getRandomColour } from '@/util/helpers/randomColour'
-import {
-	Bar,
-	BarChart,
-	CartesianGrid,
-	Legend,
-	Tooltip,
-	XAxis,
-	YAxis,
-} from 'recharts'
+import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts'
 
 const BarGraph = ({ data }) => {
 	const combinedData = combineObjects(data)
@@ -21,7 +13,6 @@ const BarGraph = ({ data }) => {
 		>
 			<CartesianGrid strokeDasharray='3 3' />
 			<Tooltip />
-			<Legend />
 			<XAxis dataKey='date' />
 			<YAxis />
 			{Object.keys(combinedData).map((name, i) => {

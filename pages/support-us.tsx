@@ -1,12 +1,10 @@
-import Hero from '@/components/home/hero'
-import IconSection from '@/components/home/icon-section'
-import Testimonials from '@/components/home/testimonials'
+import Support from '@/components/supportus/SupportUs'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-export default function Home(): JSX.Element {
-	const title = 'Rate The Landlord'
+export default function SupportUs(): JSX.Element {
+	const title = 'Support Us | Rate The Landlord'
 	const desc =
 		'Share information with tenants like you and rate your landlord. We are a community platform that elevates tenant voices to promote landlord accountability. Find Landlord Reviews and Resources.'
 	const siteURL = 'https://ratethelandlord.org'
@@ -48,9 +46,7 @@ export default function Home(): JSX.Element {
 					},
 				]}
 			/>
-			<Hero />
-			<IconSection />
-			<Testimonials />
+			<Support />
 		</div>
 	)
 }

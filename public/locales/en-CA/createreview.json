@@ -14,6 +14,7 @@
 			"state": "State / Province",
 			"region": "UK Country",
 			"zip": "ZIP / Postal Code",
+			"rent": "Rent Amount (Optional)",
 			"rate-title": "Please rate the following on a scale from 1 (worst) to 5 (best)",
 			"health": "Health and Safety",
 			"health_description": "Landlords must ensure that the rental property complies with local health and safety standards, such as maintaining smoke detectors, removing mold, and employing pest control when necessary.",
@@ -42,7 +43,9 @@
 			"go-to": "Go To Reviews",
 			"add-review": "Please Add a Written Review",
 			"add-review-desc": "We love your enthusiasm to leave a rating for your Landlord! However, can you please leave a small review to give more context to your rating so that other tenants can be better informed!",
-			"close": "Close"
+			"close": "Close",
+			"support":"Want to help support the site? Share it on social media!",
+			"patreon":"You can also support us on Patreon!"
 		},
 		"spam-modal": {
 			"title": "It appears you have reviewed this Landlord before...",

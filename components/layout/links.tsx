@@ -3,6 +3,7 @@ import Instagram from '@/components/svg/social/instagram'
 import Twitter from '@/components/svg/social/twitter'
 import TikTok from '@/components/svg/social/tiktok'
 import Facebook from '../svg/social/facebook'
+import Patreon from '../svg/icons/patreon'
 
 export const navigation: Array<INav> = [
 	{
@@ -22,6 +23,12 @@ export const navigation: Array<INav> = [
 		name: 'layout.nav.about',
 		umami: 'Navbar / About Link',
 		mobileumami: 'Mobile Navbar / About Link',
+	},
+	{
+		href: '/support-us',
+		name: 'layout.nav.support-us',
+		umami: 'Navbar / Support Us Link',
+		mobileumami: 'Mobile Navbar / Support Us Link',
 	},
 ]
 
@@ -49,5 +56,11 @@ export const socialLinks: Array<ILinks> = [
 		href: 'https://www.facebook.com/profile.php?id=61552287725656',
 		icon: <Facebook />,
 		umami: 'Facebook Icon',
+	},
+	{
+		name: 'Patreon',
+		href: 'https://patreon.com/RateTheLandlord?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator&utm_content=join_link',
+		icon: <Patreon />,
+		umami: 'Patreon Icon',
 	},
 ]

@@ -40,6 +40,7 @@ function ReviewForm(): JSX.Element {
 	const [city, setCity] = useState<string>('')
 	const [province, setProvince] = useState<string>('Alberta')
 	const [postal, setPostal] = useState<string>('')
+	const [rent, setRent] = useState<number | null>(null)
 
 	const {
 		searching,
@@ -152,6 +153,15 @@ function ReviewForm(): JSX.Element {
 					setMaliciousStringDetected(false)
 				}
 				break
+			case 'rent':
+				if (stringIsMalicious) {
+					setMaliciousStringDetected(true)
+					setMaliciousAlertOpen(true)
+				} else {
+					setRent(Number(e))
+					setMaliciousStringDetected(false)
+				}
+				break
 		}
 	}
 
@@ -217,6 +227,7 @@ function ReviewForm(): JSX.Element {
 								flagged_reason: '',
 								admin_approved: false,
 								admin_edited: false,
+								rent: rent,
 							},
 						}),
 					})
@@ -263,6 +274,8 @@ function ReviewForm(): JSX.Element {
 			setProvince('Alabama')
 		} else if (country === 'NZ') {
 			setProvince('Marlborough')
+		} else if (country === 'DE') {
+			setProvince('Baden-Württemberg')
 		} else {
 			setProvince('Alberta')
 		}
@@ -315,8 +328,8 @@ function ReviewForm(): JSX.Element {
 								{t('create-review.review-form.sub')}
 							</p>
 						</div>
-						<div className='mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-6'>
-							<div className='sm:col-span-3'>
+						<div className='mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-8'>
+							<div className='sm:col-span-4'>
 								<LandlordComboBox
 									name={t('create-review.review-form.landlord')}
 									state={landlord}
@@ -355,6 +368,16 @@ function ReviewForm(): JSX.Element {
 								error={postalError}
 								errorText={t('create-review.review-form.postal-error')}
 								testid='create-review-form-postal-code-1'
+							/>
+
+							<TextInput
+								id='rent'
+								type='number'
+								title={t('create-review.review-form.rent')}
+								placeHolder={t('create-review.review-form.rent')}
+								value={rent}
+								setValue={(str: string) => handleTextChange(str, 'rent')}
+								testid='create-review-form-rent-1'
 							/>
 						</div>
 					</div>

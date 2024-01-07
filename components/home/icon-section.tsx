@@ -7,8 +7,8 @@ import Transparency from '../svg/icons/transparency'
 export default function IconSection() {
 	const { t } = useTranslation('home')
 	return (
-		<div className='min-w-full bg-white' data-testid='home-icon-section-1'>
-			<div className='mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8'>
+		<div className='min-w-full' data-testid='home-icon-section-1'>
+			<div className='mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8'>
 				<div className='rounded-3xl bg-gray-50 px-6 py-16 sm:p-16'>
 					<div className='mx-auto max-w-xl lg:max-w-none'>
 						<div className='text-center'>
