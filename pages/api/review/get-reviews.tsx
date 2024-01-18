@@ -1,36 +1,15 @@
+import { ReviewQuery, getReviews } from '@/lib/review/review'
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-const getReviews = async (req: NextApiRequest, res: NextApiResponse) => {
+const getReviewsAPI = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res)
-	const url = process.env.API_URL as string
-	const queryParams = Object.entries(req.query)
-		.map(
-			([key, value]) =>
-				`${encodeURIComponent(key)}=${encodeURIComponent(value as string)}`,
-		)
-		.join('&')
 
-	fetch(`${url}/review?${queryParams}`, {
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	})
-		.then((result: Response) => {
-			if (!result.ok) {
-				throw result
-			}
-			return result.json()
-		})
-		.then((data) => {
-			res.status(200).json(data)
-		})
-		.catch((err: Response) => {
-			console.log(err)
-			res
-				.status(err.status)
-				.json({ error: 'Failed to get Reviews', response: err.statusText })
-		})
+	const queryParams: ReviewQuery = req.body
+
+	const reviews = await getReviews(queryParams)
+
+	res.status(200).json(reviews)
 }
 
-export default getReviews
+export default getReviewsAPI

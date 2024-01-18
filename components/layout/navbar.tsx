@@ -5,21 +5,16 @@ import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { destroyCookie, parseCookies } from 'nookies'
-import { updateUser } from '@/redux/user/userSlice'
 import MobileNav from '@/components/layout/MobileNav'
 import { navigation, socialLinks } from '@/components/layout/links'
+import { useUser } from '@auth0/nextjs-auth0/client'
 
 export default function Navbar(): JSX.Element {
-	const cookies = parseCookies()
+	const { user } = useUser()
 	const { t } = useTranslation('layout')
 
 	const [activeTab, setActiveTab] = useState<string>('/')
 	const router = useRouter()
-
-	const user = useAppSelector((state) => state.user)
-	const dispatch = useAppDispatch()
 
 	useEffect(() => {
 		const urlString = router.pathname
@@ -39,30 +34,8 @@ export default function Navbar(): JSX.Element {
 	}, [router])
 
 	const handleLogout = () => {
-		destroyCookie(undefined, 'ratethelandlord')
-		dispatch(
-			updateUser({
-				jwt: { access_token: undefined },
-				result: { name: undefined },
-			}),
-		)
-		localStorage.removeItem('rtlUserId')
+		// TODO LOGOUT USER
 	}
-
-	useEffect(() => {
-		const userID = localStorage.getItem('rtlUserId')
-		if (cookies.ratethelandlord && userID) {
-			const userInfo = {
-				jwt: {
-					access_token: cookies.ratethelandlord,
-				},
-				result: {
-					name: userID,
-				},
-			}
-			dispatch(updateUser(userInfo))
-		}
-	}, [cookies.ratethelandlord])
 
 	return (
 		<Disclosure as='nav' className='bg-white shadow'>
@@ -98,7 +71,7 @@ export default function Navbar(): JSX.Element {
 											</Link>
 										</div>
 									))}
-									{user?.jwt.access_token && (
+									{user && user.role === 'ADMIN' && (
 										<div
 											className={`${
 												activeTab === '/admin'
@@ -106,9 +79,7 @@ export default function Navbar(): JSX.Element {
 													: ''
 											} inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900`}
 										>
-											<Link href={`/admin/${user.result.name || 0}`}>
-												Admin
-											</Link>
+											<Link href={`/admin/${user.nickname || 0}`}>Admin</Link>
 										</div>
 									)}
 								</div>
@@ -138,7 +109,7 @@ export default function Navbar(): JSX.Element {
 									</div>
 								</div>
 								<div className='hidden lg:ml-6 lg:flex lg:space-x-8'>
-									{user?.jwt.access_token && (
+									{user && user.role === 'ADMIN' && (
 										<button
 											className='inline-flex cursor-pointer items-center rounded-md border border-transparent bg-blue-600 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
 											onClick={() => handleLogout()}

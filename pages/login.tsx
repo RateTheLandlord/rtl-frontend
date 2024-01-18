@@ -5,10 +5,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { setCookie } from 'nookies'
 import React, { useEffect } from 'react'
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 
 const URL = process.env.NEXT_PUBLIC_API_URL as string
 
-function Login(): JSX.Element {
+function Login({ user, isLoading }: any): JSX.Element {
+	console.log(user)
+	console.log(isLoading)
 	const router = useRouter()
 	const { query } = router
 	useEffect(() => {
@@ -62,4 +65,4 @@ function Login(): JSX.Element {
 	)
 }
 
-export default Login
+export default withPageAuthRequired(Login)

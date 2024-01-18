@@ -9,7 +9,8 @@ import { Dialog, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import TenantResources from '@/components/admin/sections/TenantResources'
 import TeamMembers from '@/components/admin/sections/TeamMembers'
-import { useAppSelector } from '@/redux/hooks'
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
+import { useUser } from '@auth0/nextjs-auth0/client'
 
 const tabs = [
 	{ name: 'Flagged Reviews', component: <FlaggedReviews /> },
@@ -19,21 +20,13 @@ const tabs = [
 ]
 
 function Admin(): JSX.Element {
-	const cookies = parseCookies()
 	const [currentTab, setCurrentTab] = useState<ITabs>(tabs[0])
 
-	const { user } = useAppSelector((state) => state)
+	const { user } = useUser()
 
-	const [noCookie, setNoCookies] = useState(true)
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 
-	useEffect(() => {
-		if (cookies.ratethelandlord) {
-			setNoCookies(false)
-		}
-	}, [cookies.ratethelandlord])
-
-	if (noCookie || user.jwt.access_token === undefined) {
+	if (!user || user.role !== 'ADMIN') {
 		return (
 			<div className='flex w-full flex-col items-center gap-4'>
 				<h1 className='text-center'>Not Logged In</h1>
@@ -186,4 +179,4 @@ function Admin(): JSX.Element {
 	)
 }
 
-export default Admin
+export default withPageAuthRequired(Admin)

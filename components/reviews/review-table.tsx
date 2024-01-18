@@ -5,8 +5,8 @@ import React, { Dispatch, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import ButtonLight from '../ui/button-light'
 import Link from 'next/link'
-import { useAppSelector } from '@/redux/hooks'
 import AdsComponent from '@/components/adsense/Adsense'
+import { useUser } from '@auth0/nextjs-auth0/client'
 
 interface IProps {
 	data: Review[]
@@ -24,7 +24,7 @@ function ReviewTable({
 	setEditReviewOpen,
 }: IProps): JSX.Element {
 	const { t } = useTranslation('reviews')
-	const user = useAppSelector((state) => state.user)
+	const { user } = useUser()
 
 	const handleReport = (review: Review) => {
 		setSelectedReview(review)
@@ -143,7 +143,7 @@ function ReviewTable({
 														<FlagIcon className='text-red-700' width={20} />
 													</ButtonLight>
 												</div>
-												{user.jwt.access_token ? (
+												{user && user.role === 'ADMIN' ? (
 													<>
 														<div className='mt-4 w-full'>
 															<ButtonLight
@@ -201,11 +201,11 @@ function ReviewTable({
 
 												<div className='mt-4 lg:mt-6 xl:col-span-2 xl:mt-0'>
 													<p>{t('reviews.review')}</p>
-													{/* {review.admin_edited ? (
-													 <p className="text-xs text-red-400">
-													 {t('reviews.edited')}
-													 </p>
-													 ) : null} */}
+													{review.admin_edited ? (
+														<p className='text-xs text-red-400'>
+															{t('reviews.edited')}
+														</p>
+													) : null}
 
 													<div className='mt-3 space-y-6 text-sm text-gray-500'>
 														{review.review}

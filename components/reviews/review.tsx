@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useMemo, useState } from 'react'
 import ReportModal from '@/components/reviews/report-modal'
 import useSWR from 'swr'
-import { fetcher } from '@/util/helpers/fetcher'
+import { fetchWithBody } from '@/util/helpers/fetcher'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import InfiniteScroll from './InfiniteScroll'
@@ -69,7 +69,7 @@ const Review = () => {
 			search: debouncedSearchState || '',
 			limit: '25',
 		})
-		return params.toString()
+		return params
 	}, [
 		selectedSort,
 		stateFilter,
@@ -80,8 +80,8 @@ const Review = () => {
 	])
 
 	const { data } = useSWR<ReviewsResponse>(
-		`/api/review/get-reviews?page=${page}&${queryParams.toString()}`,
-		fetcher,
+		[`/api/review/get-reviews`, { page: page, queryParams }],
+		fetchWithBody,
 	)
 
 	const [reviews, setReviews] = useState<Review[]>(data?.reviews || [])
