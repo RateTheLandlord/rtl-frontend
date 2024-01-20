@@ -1,5 +1,7 @@
+import { create } from '@/lib/tenant-resource/resource'
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
 
 interface IBody {
 	name: string
@@ -14,34 +16,18 @@ interface IBody {
 
 const AddResource = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res)
-	const url = process.env.API_URL as string
-
-	const cookies = req.cookies
-	const jwt: string = cookies.ratethelandlord || ''
+	const session = await getSession(req, res)
+	const user = session?.user
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req
+	if (user && user.role === 'ADMIN') {
+		const resource = await create(body)
 
-	fetch(`${url}/tenant-resource`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${jwt}`,
-		},
-		body: JSON.stringify(body),
-	})
-		.then((result: Response) => {
-			if (!result.ok) {
-				throw result
-			}
-			res.status(200).json(result)
-		})
-		.catch((error: Response) => {
-			console.log('error: ', error)
-			res
-				.status(error.status)
-				.json({ error: 'Failed to Add Resource', response: error.statusText })
-		})
+		res.status(resource.status).json(resource.message)
+	} else {
+		res.status(401).json({ error: 'UNAUTHORIZED' })
+	}
 }
 
-export default AddResource
+export default withApiAuthRequired(AddResource)

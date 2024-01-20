@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-escape */
+import { getLandlordSuggestions } from '@/lib/review/review'
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -7,41 +8,18 @@ export const removeSpecialChars = (input: string) => {
 	return input.replace(specialCharsRegex, '')
 }
 
-const getLandlordSuggestions = async (
+const getLandlordSuggestionsAPI = async (
 	req: NextApiRequest,
 	res: NextApiResponse,
 ) => {
 	await runMiddleware(req, res)
-	const url = process.env.API_URL as string
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: { input: string } } = req
 	const sanitizedLandlord = removeSpecialChars(body.input)
 
-	fetch(
-		`${url}/review/landlord/suggestions?landlord=${encodeURIComponent(
-			sanitizedLandlord,
-		)}`,
-		{
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		},
-	)
-		.then((result: Response) => {
-			if (!result.ok) {
-				throw result
-			}
-			return result.json()
-		})
-		.then((data) => {
-			res.status(200).json(data)
-		})
-		.catch((error: Response) => {
-			console.log('error: ', error)
-			res
-				.status(error.status)
-				.json({ error: 'Failed to Report Review', response: error.statusText })
-		})
+	const landlords = await getLandlordSuggestions(sanitizedLandlord)
+
+	res.status(200).json(landlords)
 }
 
-export default getLandlordSuggestions
+export default getLandlordSuggestionsAPI

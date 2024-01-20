@@ -12,7 +12,14 @@ type ResourceQuery = {
 	city?: string
 }
 
-export async function get(params: ResourceQuery): Promise<ResourcesResponse> {
+export interface IResponse {
+	status: number
+	message: string
+}
+
+export async function getResources(
+	params: ResourceQuery,
+): Promise<ResourcesResponse> {
 	const {
 		page: pageParam,
 		limit: limitParam,
@@ -101,26 +108,39 @@ export async function get(params: ResourceQuery): Promise<ResourcesResponse> {
 	}
 }
 
-export async function create(inputResource: Resource): Promise<Resource> {
+export async function create(inputResource: Resource): Promise<IResponse> {
 	try {
-		return createResource(inputResource)
+		const resource = await createResource(inputResource)
+		if (resource) return { status: 200, message: 'Created Resource' }
+		throw new Error()
 	} catch (e) {
-		throw e
+		return { status: 500, message: 'Failed to create Resource' }
 	}
 }
 
 export async function update(
 	id: number,
 	resource: Resource,
-): Promise<Resource> {
-	return updateResource(id, resource)
+): Promise<IResponse> {
+	try {
+		const updated = await updateResource(id, resource)
+		if (updated) return { status: 200, message: 'Resource updated' }
+		throw new Error()
+	} catch (error) {
+		return { status: 500, message: 'Failed to Update Resource' }
+	}
 }
 
-export async function deleteResource(id: number): Promise<boolean> {
-	await sql`
+export async function deleteResource(id: number): Promise<IResponse> {
+	try {
+		const deleteResource = await sql`
 			DELETE
 			FROM tenant_resource
 			WHERE id = ${id};
 		`
-	return true
+		if (deleteResource) return { status: 200, message: 'Deleted Resource' }
+		throw new Error()
+	} catch (error) {
+		return { status: 500, message: 'Failed to Delete Resource' }
+	}
 }

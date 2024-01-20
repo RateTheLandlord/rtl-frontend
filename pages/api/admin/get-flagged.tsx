@@ -1,10 +1,11 @@
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { useUser } from '@auth0/nextjs-auth0/client'
+import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
 import { getFlagged } from '@/lib/review/review'
 
 const getReviews = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { user } = useUser()
+	const session = await getSession(req, res)
+	const user = session?.user
 	await runMiddleware(req, res)
 
 	if (user && user.role === 'ADMIN') {
@@ -15,4 +16,4 @@ const getReviews = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 }
 
-export default getReviews
+export default withApiAuthRequired(getReviews)

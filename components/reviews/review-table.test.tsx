@@ -6,6 +6,7 @@ import { render, screen } from '@testing-library/react'
 import ReviewTable from './review-table'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
+import { UserProvider } from '@auth0/nextjs-auth0/client'
 
 describe('ReviewTable', () => {
 	const mockData = [
@@ -33,13 +34,15 @@ describe('ReviewTable', () => {
 	test('renders review table with no data', () => {
 		render(
 			<Provider store={store}>
-				<ReviewTable
-					data={[]}
-					setReportOpen={jest.fn()}
-					setSelectedReview={jest.fn()}
-					setRemoveReviewOpen={jest.fn()}
-					setEditReviewOpen={jest.fn()}
-				/>
+				<UserProvider>
+					<ReviewTable
+						data={[]}
+						setReportOpen={jest.fn()}
+						setSelectedReview={jest.fn()}
+						setRemoveReviewOpen={jest.fn()}
+						setEditReviewOpen={jest.fn()}
+					/>
+				</UserProvider>
 			</Provider>,
 		)
 
