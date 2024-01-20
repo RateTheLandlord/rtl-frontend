@@ -33,10 +33,6 @@ export default function Navbar(): JSX.Element {
 		}
 	}, [router])
 
-	const handleLogout = () => {
-		// TODO LOGOUT USER
-	}
-
 	return (
 		<Disclosure as='nav' className='bg-white shadow'>
 			{({ open }) => (
@@ -110,12 +106,12 @@ export default function Navbar(): JSX.Element {
 								</div>
 								<div className='hidden lg:ml-6 lg:flex lg:space-x-8'>
 									{user && user.role === 'ADMIN' && (
-										<button
+										<Link
 											className='inline-flex cursor-pointer items-center rounded-md border border-transparent bg-blue-600 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
-											onClick={() => handleLogout()}
+											href='/api/auth/logout'
 										>
 											<p className='px-4 py-2'>Logout</p>
-										</button>
+										</Link>
 									)}
 								</div>
 							</div>

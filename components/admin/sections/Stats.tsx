@@ -90,12 +90,12 @@ const Stats = () => {
 
 	const getCountryTotals = () => {
 		const countryData = [
-			{ name: 'US', value: Number(data.total_stats.countryStats.US.total) },
-			{ name: 'CA', value: Number(data.total_stats.countryStats.CA.total) },
-			{ name: 'NZ', value: Number(data.total_stats.countryStats.NZ.total) },
-			{ name: 'AU', value: Number(data.total_stats.countryStats.AU.total) },
-			{ name: 'UK', value: Number(data.total_stats.countryStats.GB.total) },
-			{ name: 'DE', value: Number(data.total_stats.countryStats.DE.total) },
+			{ name: 'US', value: Number(data.total_stats.countryStats.US?.total) },
+			{ name: 'CA', value: Number(data.total_stats.countryStats.CA?.total) },
+			{ name: 'NZ', value: Number(data.total_stats.countryStats.NZ?.total) },
+			{ name: 'AU', value: Number(data.total_stats.countryStats.AU?.total) },
+			{ name: 'UK', value: Number(data.total_stats.countryStats.GB?.total) },
+			{ name: 'DE', value: Number(data.total_stats.countryStats.DE?.total) },
 		]
 		return countryData
 	}

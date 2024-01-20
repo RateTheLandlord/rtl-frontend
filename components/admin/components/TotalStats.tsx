@@ -13,43 +13,43 @@ const TotalStats = ({ data }: { data: ICountryStats }) => {
 		const stats: Array<{
 			country: string
 			label: string
-			data: string
+			data?: string
 			isActive: boolean
 		}> = [
 			{
 				country: 'CA',
 				label: 'Canadian Reviews',
-				data: data.countryStats.CA.total,
+				data: data.countryStats.CA?.total,
 				isActive: country === 'CA',
 			},
 			{
 				country: 'US',
 				label: 'US Reviews',
-				data: data.countryStats.US.total,
+				data: data.countryStats.US?.total,
 				isActive: country === 'US',
 			},
 			{
 				country: 'UK',
 				label: 'UK Reviews',
-				data: data.countryStats.GB.total,
+				data: data.countryStats.GB?.total,
 				isActive: country === 'UK',
 			},
 			{
 				country: 'AU',
 				label: 'Australia Reviews',
-				data: data.countryStats.AU.total,
+				data: data.countryStats.AU?.total,
 				isActive: country === 'AU',
 			},
 			{
 				country: 'NZ',
 				label: 'New Zealand Reviews',
-				data: data.countryStats.NZ.total,
+				data: data.countryStats.NZ?.total,
 				isActive: country === 'NZ',
 			},
 			{
 				country: 'DE',
 				label: 'Germany Reviews',
-				data: data.countryStats.DE.total,
+				data: data.countryStats.DE?.total,
 				isActive: country === 'DE',
 			},
 		]
@@ -75,17 +75,17 @@ const TotalStats = ({ data }: { data: ICountryStats }) => {
 	const renderSelectedStateStats = () => {
 		switch (country) {
 			case 'CA':
-				return <StateStats states={data.countryStats.CA.states} />
+				return <StateStats states={data.countryStats.CA?.states} />
 			case 'US':
-				return <StateStats states={data.countryStats.US.states} />
+				return <StateStats states={data.countryStats.US?.states} />
 			case 'UK':
-				return <StateStats states={data.countryStats.GB.states} />
+				return <StateStats states={data.countryStats.GB?.states} />
 			case 'AU':
-				return <StateStats states={data.countryStats.AU.states} />
+				return <StateStats states={data.countryStats.AU?.states} />
 			case 'NZ':
-				return <StateStats states={data.countryStats.NZ.states} />
+				return <StateStats states={data.countryStats.NZ?.states} />
 			case 'DE':
-				return <StateStats states={data.countryStats.DE.states} />
+				return <StateStats states={data.countryStats.DE?.states} />
 			default:
 				return null
 		}

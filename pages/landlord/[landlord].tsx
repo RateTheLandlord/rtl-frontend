@@ -61,7 +61,9 @@ const Landlord = ({ landlord, reviews }: IProps) => {
 }
 
 export async function getStaticPaths() {
-	const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/review/landlords`)
+	const req = await fetch(
+		`${process.env.NEXT_PUBLIC_ORIGIN_URL}/api/review/get-landlords`,
+	)
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const data: string[] = await req.json()
 
@@ -77,7 +79,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
 	const req = await fetch(
-		`${process.env.NEXT_PUBLIC_API_URL}/review/landlords/landlord`,
+		`${process.env.NEXT_PUBLIC_ORIGIN_URL}/api/review/get-landlord`,
 		{
 			method: 'POST',
 			headers: {

@@ -75,10 +75,10 @@ export async function getStaticProps() {
 		total: '0',
 	}
 
-	const API_STRING = `${process.env.API_URL}/tenant-resource`
-
 	try {
-		const req = await fetch(API_STRING)
+		const req = await fetch(
+			`${process.env.NEXT_PUBLIC_ORIGIN_URL}/api/tenant-resources/get-resources`,
+		)
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const data: ResourceResponse = await req.json()
 

@@ -1,14 +1,12 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { ITabs } from '@/components/admin/types/types'
 import FlaggedReviews from '@/components/admin/sections/FlaggedReviews'
-import { parseCookies } from 'nookies'
 import Link from 'next/link'
 import Stats from '@/components/admin/sections/Stats'
 import { classNames } from '@/util/helpers/helper-functions'
 import { Dialog, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import TenantResources from '@/components/admin/sections/TenantResources'
-import TeamMembers from '@/components/admin/sections/TeamMembers'
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import { useUser } from '@auth0/nextjs-auth0/client'
 
@@ -16,7 +14,6 @@ const tabs = [
 	{ name: 'Flagged Reviews', component: <FlaggedReviews /> },
 	{ name: 'Tenant Resources', component: <TenantResources /> },
 	{ name: 'Stats', component: <Stats /> },
-	{ name: 'Team', component: <TeamMembers /> },
 ]
 
 function Admin(): JSX.Element {
