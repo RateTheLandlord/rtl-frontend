@@ -28,6 +28,17 @@ export type ReviewsResponse = {
 	limit: number
 }
 
+export interface QueryParams {
+	page: number
+	sort: string
+	state: string
+	country: string
+	city: string
+	zip: string
+	search: string
+	limit: string
+}
+
 const Review = () => {
 	const [page, setPage] = useState<number>(1)
 
@@ -50,7 +61,9 @@ const Review = () => {
 
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
 
-	const [previousQueryParams, setPreviousQueryParams] = useState('')
+	const [previousQueryParams, setPreviousQueryParams] = useState<
+		QueryParams | undefined
+	>()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const debouncedSearchState = useDebounce(searchFilter, 500)
@@ -60,7 +73,8 @@ const Review = () => {
 	}, [debouncedSearchState])
 
 	const queryParams = useMemo(() => {
-		const params = new URLSearchParams({
+		const params = {
+			page: page,
 			sort: selectedSort.value,
 			state: stateFilter?.value || '',
 			country: countryFilter?.value || '',
@@ -68,9 +82,10 @@ const Review = () => {
 			zip: zipFilter?.value || '',
 			search: debouncedSearchState || '',
 			limit: '25',
-		})
+		}
 		return params
 	}, [
+		page,
 		selectedSort,
 		stateFilter,
 		countryFilter,
@@ -80,7 +95,7 @@ const Review = () => {
 	])
 
 	const { data } = useSWR<ReviewsResponse>(
-		[`/api/review/get-reviews`, { page: page, queryParams }],
+		[`/api/review/get-reviews`, { queryParams }],
 		fetchWithBody,
 	)
 

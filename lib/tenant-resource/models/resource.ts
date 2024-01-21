@@ -17,5 +17,5 @@ export type ResourcesResponse = {
 	countries: string[]
 	states: string[]
 	cities: string[]
-	limit: number
+	limit: string
 }

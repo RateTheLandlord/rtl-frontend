@@ -2,11 +2,11 @@ import { Resource, ResourcesResponse } from './models/resource'
 import { createResource, updateResource } from './models/resource-data-layer'
 import sql from '../db'
 
-type ResourceQuery = {
+export type ResourceQuery = {
 	page?: number
-	limit?: number
+	limit?: string
 	search?: string
-	sort?: 'az' | 'za' | 'new' | 'old'
+	sort?: 'az' | 'za' | 'new' | 'old' | 'high' | 'low' | undefined
 	country?: string
 	state?: string
 	city?: string
@@ -32,7 +32,7 @@ export async function getResources(
 	const page = pageParam ? pageParam : 1
 	const limit = limitParam ? limitParam : 25
 
-	const offset = (page - 1) * limit
+	const offset = (page - 1) * Number(limit)
 
 	let orderBy = sql`id`
 	if (sort === 'az' || sort === 'za') {
@@ -104,7 +104,7 @@ export async function getResources(
 		countries: countryList,
 		states: stateList,
 		cities: cityList,
-		limit: limit,
+		limit: limit.toString(),
 	}
 }
 
