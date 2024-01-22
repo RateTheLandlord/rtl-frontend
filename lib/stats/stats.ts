@@ -6,15 +6,13 @@ type StatsQuery = {
 	groupBy?: string
 }
 
-export async function get(params: StatsQuery): Promise<any> {
-	const { startDate, groupBy } = params
-
+export async function get({ startDate, groupBy }: StatsQuery): Promise<any> {
 	const DEFAULT_START = dayjs(new Date())
 		.subtract(7, 'days')
 		.format('YYYY-MM-DD')
 	const dateRange = startDate
-		? sql`${dayjs(startDate).format('YYYY-MM-DD')} AND NOW()`
-		: sql`${DEFAULT_START} AND NOW()`
+		? `'${dayjs(startDate).format('YYYY-MM-DD')}'`
+		: `'${DEFAULT_START}'`
 
 	const reviewsStatistics = await getReviewStatistics(dateRange)
 	const reviewByDate = await getReviewByDate(dateRange)
@@ -34,61 +32,59 @@ export async function get(params: StatsQuery): Promise<any> {
 			  )
 			: combineArrays(formattedReviews, reviewByDate)
 
-	const totalStats = await getTotalStats()
+	const total_stats = await getTotalStats()
 
-	return { detailed_stats, total_stats: totalStats }
+	return { detailed_stats, total_stats }
 }
 
-export async function getReviewStatistics(dateRange: any) {
-	return sql`
-    WITH ReviewStats AS (
-      SELECT
-        DATE_TRUNC('day', date_added) AS date,
-        country_code,
-        city,
-        state,
-        zip,
-        COUNT(*) AS review_count
-      FROM
-        review
-      WHERE
-        date_added BETWEEN ${dateRange}
-      GROUP BY
-        date,
-        country_code,
-        city,
-        state,
-        zip
-    )
-    
-    SELECT
-      date,
-      jsonb_object_agg(country_code, review_count) AS country_codes,
-      jsonb_object_agg(city, review_count) AS cities,
-      jsonb_object_agg(zip, review_count) AS zips,
-      jsonb_object_agg(state, review_count) AS states
-    FROM
-      ReviewStats
-    GROUP BY
-      date
-    ORDER BY
-      date;
-    `
+export async function getReviewStatistics(dateRange: string) {
+	return await sql`
+	WITH ReviewStats AS (
+	  SELECT
+		DATE_TRUNC('day', date_added) AS date,
+		country_code,
+		city,
+		state,
+		zip,
+		COUNT(*) AS review_count
+	  FROM
+		review
+	  WHERE
+		date_added BETWEEN ${dateRange} AND NOW() GROUP BY
+		date,
+		country_code,
+		city,
+		state,
+		zip
+	)
+	
+	SELECT
+	  date,
+	  jsonb_object_agg(country_code, review_count) AS country_codes,
+	  jsonb_object_agg(city, review_count) AS cities,
+	  jsonb_object_agg(zip, review_count) AS zips,
+	  jsonb_object_agg(state, review_count) AS states
+	FROM
+	  ReviewStats
+	GROUP BY
+	  date
+	ORDER BY
+	  date;
+  `
 }
 
-export async function getReviewByDate(dateRange: any) {
-	return sql`
+export async function getReviewByDate(dateRange: string) {
+	return await sql`
     SELECT
-    date_trunc('day', date_added) AS date,
-    COUNT(*) AS total
-  FROM
-    review
-  WHERE
-    date_added BETWEEN ${dateRange}
-  GROUP BY
-    date
-  ORDER BY
-    date;
+		date_trunc('day', date_added) AS date,
+		COUNT(*) AS total
+	FROM
+		review
+	WHERE
+		date_added BETWEEN ${dateRange} and NOW() GROUP BY
+		date
+	ORDER BY
+		date;
     `
 }
 

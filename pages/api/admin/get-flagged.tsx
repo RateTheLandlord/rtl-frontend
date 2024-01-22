@@ -9,7 +9,7 @@ const getReviews = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res)
 
 	if (user && user.role === 'ADMIN') {
-		const reviews = getFlagged()
+		const reviews = await getFlagged()
 		res.status(200).json(reviews)
 	} else {
 		res.status(401).json({ error: 'UNAUTHORIZED' })

@@ -8,7 +8,7 @@ const getTenantResources = async (
 ) => {
 	await runMiddleware(req, res)
 
-	const queryParams: ResourceQuery = req.body.queryParams
+	const queryParams: ResourceQuery = req.body
 
 	const resources = await getResources(queryParams)
 

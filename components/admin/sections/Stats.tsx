@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import { useState } from 'react'
-import { fetcher } from '@/util/helpers/fetcher'
+import { fetchWithBody } from '@/util/helpers/fetcher'
 import Spinner from '@/components/ui/Spinner'
 import BarGraph from '../components/BarGraph'
 import dayjs from 'dayjs'
@@ -52,8 +52,8 @@ const Stats = () => {
 	const [startDate, groupBy] = useStatsDates(query.value)
 
 	const { data, error } = useSWR<IStats>(
-		`/api/admin/get-stats?startDate=${startDate}&groupBy=${groupBy}`,
-		fetcher,
+		[`/api/admin/get-stats`, { startDate, groupBy }],
+		fetchWithBody,
 	)
 
 	console.log(data)

@@ -9,7 +9,7 @@ const getStats = async (req: NextApiRequest, res: NextApiResponse) => {
 	const user = session?.user
 
 	if (user && user.role === 'ADMIN') {
-		const stats = await get(req.query)
+		const stats = await get(req.body)
 		res.status(200).json(stats)
 	} else {
 		res.status(401).json({ error: 'UNAUTHORIZED' })

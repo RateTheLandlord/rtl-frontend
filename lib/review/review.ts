@@ -1,7 +1,6 @@
 import { Review, ReviewsResponse } from '@/lib/review/models/review'
 import { filterReviewWithAI, IResult } from './helpers'
 import { checkReviewsForSimilarity } from './review-text-match'
-
 import sql from '../db'
 import { getExistingReviewsForLandlord } from '@/lib/review/models/review-data-layer'
 import { createReview } from '@/lib/review/models/review-data-layer'
@@ -22,7 +21,7 @@ export async function getReviews(
 	params: ReviewQuery,
 ): Promise<ReviewsResponse> {
 	const {
-		page: pageParam,
+		page: pageNumber,
 		limit: limitParam,
 		search,
 		sort,
@@ -32,7 +31,7 @@ export async function getReviews(
 		zip,
 	} = params
 
-	const page = pageParam ? pageParam : 1
+	const page = pageNumber ? pageNumber : 1
 	const limit = limitParam ? limitParam : 25
 
 	const offset = (page - 1) * limit
@@ -164,11 +163,8 @@ export async function update(id: number, review: Review): Promise<Review> {
 
 export async function report(id: number, reason: string): Promise<number> {
 	reason.length > 250 ? (reason = `${reason.substring(0, 250)}...`) : reason
-	const report =
-		await sql`UPDATE review SET flagged = true, flagged_reason = ${reason}
-      WHERE id = ${id};`
-
-	console.log(report)
+	sql`UPDATE review SET flagged = true, flagged_reason = ${reason}
+      WHERE id = ${id} RETURNING id;`
 
 	return id
 }
@@ -182,7 +178,10 @@ export async function deleteReview(id: number): Promise<boolean> {
 }
 
 export async function getFlagged(): Promise<Review[]> {
-	return sql<Review[]>`SELECT * FROM review WHERE flagged = true;`
+	const reviews = await sql<
+		Review[]
+	>`SELECT * FROM review WHERE flagged = true;`
+	return reviews
 }
 
 export async function getLandlords(): Promise<string[]> {
