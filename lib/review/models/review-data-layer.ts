@@ -24,8 +24,7 @@ export async function createReview(
 		inputReview.flagged = filterResult.flagged
 		inputReview.flagged_reason = filterResult.flagged_reason
 
-		const id: number = (
-			await sql<{ id: number }[]>`
+		const id: number = await sql<{ id: number }[]>`
           INSERT INTO review
           (landlord, country_code, city, state, zip, review, repair, health, stability, privacy, respect, flagged,
           flagged_reason, admin_approved, admin_edited, rent)
@@ -36,9 +35,8 @@ export async function createReview(
           ${inputReview.flagged_reason}, ${inputReview.admin_approved}, ${inputReview.admin_edited}, ${inputReview.rent})
           RETURNING id;
         `
-		)[0].id
 
-		inputReview.id = id
+		inputReview.id = await id[0].id
 		return inputReview
 	} catch (e) {
 		throw e

@@ -7,7 +7,7 @@ import { createReview } from '@/lib/review/models/review-data-layer'
 import { updateReview } from '@/lib/review/models/review-data-layer'
 
 export type ReviewQuery = {
-	page?: number
+	page?: number | undefined
 	limit?: number
 	search?: string
 	sort?: 'az' | 'za' | 'new' | 'old' | 'high' | 'low'
@@ -163,7 +163,7 @@ export async function update(id: number, review: Review): Promise<Review> {
 
 export async function report(id: number, reason: string): Promise<number> {
 	reason.length > 250 ? (reason = `${reason.substring(0, 250)}...`) : reason
-	sql`UPDATE review SET flagged = true, flagged_reason = ${reason}
+	await sql`UPDATE review SET flagged = true, flagged_reason = ${reason}
       WHERE id = ${id} RETURNING id;`
 
 	return id

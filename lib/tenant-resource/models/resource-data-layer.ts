@@ -14,23 +14,23 @@ export async function createResource(
 			.toLocaleUpperCase()
 		inputResource.state = inputResource.state.toLocaleUpperCase()
 
-		const id: number = sql<{ id: number }[]>`
+		const id = await sql<{ id: number }[]>`
 					INSERT INTO tenant_resource
 					(name, country_code, city, state, address, phone_number, description, href)
 					VALUES
-					(${inputResource.name}, ${inputResource.country_code}, ${inputResource.city}, ${
-			inputResource.state
-		},
+					(${inputResource.name}, ${inputResource.country_code}, ${
+			inputResource.city || ''
+		}, ${inputResource.state || ''},
 					 ${inputResource.address || ''}, ${inputResource.phone_number || ''}, ${
 			inputResource.description
-		}, ${inputResource.href})
-					RETURNING id;
-				`[0].id
+		}, ${inputResource.href}) RETURNING id;
+				`
 
-		inputResource.id = id
+		inputResource.id = await id[0].id
 
 		return inputResource
 	} catch (e) {
+		console.log(e)
 		throw e
 	}
 }
