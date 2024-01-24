@@ -24,15 +24,23 @@ export async function createReview(
 		inputReview.flagged = filterResult.flagged
 		inputReview.flagged_reason = filterResult.flagged_reason
 
-		const id: number = await sql<{ id: number }[]>`
+		const id = await sql<{ id: number }[]>`
           INSERT INTO review
           (landlord, country_code, city, state, zip, review, repair, health, stability, privacy, respect, flagged,
           flagged_reason, admin_approved, admin_edited, rent)
           VALUES
-          (${inputReview.landlord}, ${inputReview.country_code}, ${inputReview.city}, ${inputReview.state},
-          ${inputReview.zip}, ${inputReview.review}, ${inputReview.repair}, ${inputReview.health},
-          ${inputReview.stability}, ${inputReview.privacy}, ${inputReview.respect}, ${inputReview.flagged},
-          ${inputReview.flagged_reason}, ${inputReview.admin_approved}, ${inputReview.admin_edited}, ${inputReview.rent})
+          (${inputReview.landlord}, ${inputReview.country_code}, ${
+			inputReview.city
+		}, ${inputReview.state},
+          ${inputReview.zip}, ${inputReview.review}, ${inputReview.repair}, ${
+			inputReview.health
+		},
+          ${inputReview.stability}, ${inputReview.privacy}, ${
+			inputReview.respect
+		}, ${inputReview.flagged},
+          ${inputReview.flagged_reason}, ${inputReview.admin_approved}, ${
+			inputReview.admin_edited
+		}, ${inputReview.rent || null})
           RETURNING id;
         `
 
@@ -78,7 +86,7 @@ export async function updateReview(
                flagged_reason = ${review.flagged_reason},
                admin_approved = ${review.admin_approved},
                admin_edited   = ${review.admin_edited},
-			   rent = ${review.rent}
+			   rent = ${review.rent || null}
            WHERE id = ${id};`
 
 	return review
