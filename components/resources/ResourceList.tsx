@@ -1,4 +1,4 @@
-import { fetcher } from '@/util/helpers/fetcher'
+import { fetchWithBody } from '@/util/helpers/fetcher'
 import { sortOptions } from '@/util/helpers/filter-options'
 import {
 	Options,
@@ -13,6 +13,7 @@ import InfiniteScroll from './InfiniteScrollResources'
 import { useDebounce } from '@/util/hooks/useDebounce'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { updateResourceQuery } from '@/redux/resourceQuery/resourceQuerySlice'
+import { ResourceQuery } from '@/lib/tenant-resource/resource'
 
 const resourceSortOptions = sortOptions.filter((r) => r.id < 5)
 
@@ -34,7 +35,9 @@ export default function ResourceList() {
 	const [page, setPage] = useState<number>(1)
 	const [hasMore, setHasMore] = useState(true) // Track if there is more content to load
 
-	const [previousQueryParams, setPreviousQueryParams] = useState('')
+	const [previousQueryParams, setPreviousQueryParams] = useState<
+		ResourceQuery | undefined
+	>()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const debouncedSearch = useDebounce(searchFilter, 500)
@@ -43,18 +46,19 @@ export default function ResourceList() {
 		dispatch(updateResourceQuery({ ...query, searchFilter: debouncedSearch }))
 	}, [debouncedSearch])
 
-	const queryParams = useMemo(() => {
-		const params = new URLSearchParams({
-			sort: selectedSort.value,
+	const queryParams: ResourceQuery = useMemo(() => {
+		const params: ResourceQuery = {
+			page: page,
+			sort: selectedSort.value as 'az' | 'za' | 'new' | 'old',
 			state: stateFilter?.value || '',
 			country: countryFilter?.value || '',
 			city: cityFilter?.value || '',
-			zip: zipFilter?.value || '',
 			search: debouncedSearch || '',
 			limit: '25',
-		})
-		return params.toString()
+		}
+		return params
 	}, [
+		page,
 		selectedSort,
 		stateFilter,
 		countryFilter,
@@ -63,8 +67,8 @@ export default function ResourceList() {
 		debouncedSearch,
 	])
 	const { data } = useSWR<ResourceResponse>(
-		`/api/tenant-resources/get-resources?page=${page}&${queryParams.toString()}`,
-		fetcher,
+		[`/api/tenant-resources/get-resources`, { queryParams }],
+		fetchWithBody,
 	)
 
 	const [resources, setResources] = useState<Resource[]>(data?.resources || [])

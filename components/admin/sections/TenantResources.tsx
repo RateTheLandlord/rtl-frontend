@@ -4,7 +4,7 @@ import { classNames } from '@/util/helpers/helper-functions'
 import { MenuAlt3Icon } from '@heroicons/react/solid'
 import Button from '@/components/ui/button'
 import useSWR, { mutate } from 'swr'
-import { fetcher } from '@/util/helpers/fetcher'
+import { fetchWithBody } from '@/util/helpers/fetcher'
 import Spinner from '@/components/ui/Spinner'
 import { Resource, ResourceResponse } from '@/util/interfaces/interfaces'
 import AddResourceModal from '../components/AddResourceModal'
@@ -16,8 +16,8 @@ import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 
 const TenantResources = () => {
 	const { data, error } = useSWR<ResourceResponse>(
-		'/api/tenant-resources/get-resources?limit=1000',
-		fetcher,
+		['/api/tenant-resources/get-resources', { limit: '1000' }],
+		fetchWithBody,
 	)
 
 	const dispatch = useAppDispatch()

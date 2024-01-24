@@ -1,15 +1,15 @@
 const StateStats = ({
 	states,
 }: {
-	states: Array<{
+	states?: Array<{
 		key: string
 		total: string
 	}>
 }) => {
-	const sortedStates = states.sort((a, b) => Number(b.total) - Number(a.total))
+	const sortedStates = states?.sort((a, b) => Number(b.total) - Number(a.total))
 	return (
 		<div className='flex w-full flex-row flex-wrap gap-2'>
-			{sortedStates.map((state) => {
+			{sortedStates?.map((state) => {
 				return (
 					<div
 						key={state.key + state.total}
