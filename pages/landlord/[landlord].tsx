@@ -79,7 +79,9 @@ export async function getStaticProps({ params }) {
 
 	// Pass post data to the page via props
 	return {
-		props: { landlord: params.landlord, reviews: data },
+		props: JSON.parse(
+			JSON.stringify({ landlord: params.landlord, reviews: data }),
+		),
 		// Re-generate the page
 		// if a request comes in after 100 seconds
 		revalidate: 100,
