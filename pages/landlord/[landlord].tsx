@@ -1,5 +1,6 @@
 import LandlordPage from '@/components/landlord/LandlordPage'
 import Spinner from '@/components/ui/Spinner'
+import { getLandlordReviews, getLandlords } from '@/lib/review/review'
 import { Review } from '@/util/interfaces/interfaces'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
@@ -61,11 +62,7 @@ const Landlord = ({ landlord, reviews }: IProps) => {
 }
 
 export async function getStaticPaths() {
-	const req = await fetch(
-		`${process.env.NEXT_PUBLIC_ORIGIN_URL}/api/review/get-landlords`,
-	)
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const data: string[] = await req.json()
+	const data = await getLandlords()
 
 	const paths = data.map((landlord) => ({
 		params: { landlord: encodeURIComponent(landlord) },
@@ -78,18 +75,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-	const req = await fetch(
-		`${process.env.NEXT_PUBLIC_ORIGIN_URL}/api/review/get-landlord`,
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ landlord: params.landlord }),
-		},
-	)
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const data: Review[] = await req.json()
+	const data = await getLandlordReviews(params.landlord)
 
 	// Pass post data to the page via props
 	return {
