@@ -137,7 +137,7 @@ const LandlordPage = ({
 											{[0, 1, 2, 3, 4].map((star) => {
 												let totalReview = 0
 												for (let i = 0; i < ratings.length; i++) {
-													totalReview += ratings[i].rating
+													totalReview += Number(ratings[i].rating)
 												}
 												const avgRating = Math.round(
 													totalReview / ratings.length,
