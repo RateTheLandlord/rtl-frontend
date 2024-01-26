@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const Landlord = ({ landlord, reviews }: IProps) => {
-	const title = `${landlord} Reviews | Rate The Landlord`
+	const title = `${decodeURIComponent(landlord)} Reviews | Rate The Landlord`
 	const desc = `Reviews for ${landlord}. Read ${reviews?.length} reviews and rental experiences for ${landlord}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
