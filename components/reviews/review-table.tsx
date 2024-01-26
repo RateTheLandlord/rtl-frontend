@@ -109,7 +109,6 @@ function ReviewTable({
 														const avgRating = Math.round(
 															totalReview / ratings.length,
 														)
-														console.log(totalReview)
 														return (
 															<StarIcon
 																key={star}
