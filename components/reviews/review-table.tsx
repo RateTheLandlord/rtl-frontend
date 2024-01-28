@@ -5,8 +5,8 @@ import React, { Dispatch, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import ButtonLight from '../ui/button-light'
 import Link from 'next/link'
-import { useAppSelector } from '@/redux/hooks'
 import AdsComponent from '@/components/adsense/Adsense'
+import { useUser } from '@auth0/nextjs-auth0/client'
 
 interface IProps {
 	data: Review[]
@@ -24,7 +24,7 @@ function ReviewTable({
 	setEditReviewOpen,
 }: IProps): JSX.Element {
 	const { t } = useTranslation('reviews')
-	const user = useAppSelector((state) => state.user)
+	const { user } = useUser()
 
 	const handleReport = (review: Review) => {
 		setSelectedReview(review)
@@ -61,7 +61,7 @@ function ReviewTable({
 								]
 								const date = new Date(review.date_added).toLocaleDateString()
 								return (
-									<>
+									<div key={review.id}>
 										{i % 20 === 0 && i !== 0 && (
 											<AdsComponent
 												slot='3829259014'
@@ -69,10 +69,7 @@ function ReviewTable({
 												layoutKey='-gw-3+1f-3d+2z'
 											/>
 										)}
-										<div
-											key={review.id}
-											className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-8'
-										>
+										<div className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-8'>
 											<div className='flex flex-row flex-wrap items-center justify-between bg-gray-50 p-2 lg:min-w-[250px] lg:max-w-[275px] lg:flex-col'>
 												<div className='flex w-full flex-row justify-between'>
 													<Link
@@ -104,7 +101,7 @@ function ReviewTable({
 													{[0, 1, 2, 3, 4].map((star) => {
 														let totalReview = 0
 														for (let i = 0; i < ratings.length; i++) {
-															totalReview += parseInt(ratings[i].rating)
+															totalReview += Number(ratings[i].rating)
 														}
 														const avgRating = Math.round(
 															totalReview / ratings.length,
@@ -143,7 +140,7 @@ function ReviewTable({
 														<FlagIcon className='text-red-700' width={20} />
 													</ButtonLight>
 												</div>
-												{user.jwt.access_token ? (
+												{user && user.role === 'ADMIN' ? (
 													<>
 														<div className='mt-4 w-full'>
 															<ButtonLight
@@ -176,7 +173,7 @@ function ReviewTable({
 																			<StarIcon
 																				key={star}
 																				className={classNames(
-																					parseInt(rating.rating) > star
+																					rating.rating > star
 																						? 'text-yellow-400'
 																						: 'text-gray-200',
 																					'h-5 w-5 flex-shrink-0',
@@ -201,11 +198,11 @@ function ReviewTable({
 
 												<div className='mt-4 lg:mt-6 xl:col-span-2 xl:mt-0'>
 													<p>{t('reviews.review')}</p>
-													{/* {review.admin_edited ? (
-													 <p className="text-xs text-red-400">
-													 {t('reviews.edited')}
-													 </p>
-													 ) : null} */}
+													{review.admin_edited ? (
+														<p className='text-xs text-red-400'>
+															{t('reviews.edited')}
+														</p>
+													) : null}
 
 													<div className='mt-3 space-y-6 text-sm text-gray-500'>
 														{review.review}
@@ -213,7 +210,7 @@ function ReviewTable({
 												</div>
 											</div>
 										</div>
-									</>
+									</div>
 								)
 							})}
 						</div>

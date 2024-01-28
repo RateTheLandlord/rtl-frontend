@@ -137,7 +137,7 @@ const LandlordPage = ({
 											{[0, 1, 2, 3, 4].map((star) => {
 												let totalReview = 0
 												for (let i = 0; i < ratings.length; i++) {
-													totalReview += parseInt(ratings[i].rating)
+													totalReview += Number(ratings[i].rating)
 												}
 												const avgRating = Math.round(
 													totalReview / ratings.length,
@@ -178,7 +178,7 @@ const LandlordPage = ({
 																	<StarIcon
 																		key={star}
 																		className={classNames(
-																			parseInt(rating.rating) > star
+																			rating.rating > star
 																				? 'text-yellow-400'
 																				: 'text-gray-200',
 																			'h-5 w-5 flex-shrink-0',

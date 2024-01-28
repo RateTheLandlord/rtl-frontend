@@ -1,5 +1,6 @@
 import LandlordPage from '@/components/landlord/LandlordPage'
 import Spinner from '@/components/ui/Spinner'
+import { getLandlordReviews, getLandlords } from '@/lib/review/review'
 import { Review } from '@/util/interfaces/interfaces'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
@@ -10,7 +11,7 @@ interface IProps {
 }
 
 const Landlord = ({ landlord, reviews }: IProps) => {
-	const title = `${landlord} Reviews | Rate The Landlord`
+	const title = `${decodeURIComponent(landlord)} Reviews | Rate The Landlord`
 	const desc = `Reviews for ${landlord}. Read ${reviews?.length} reviews and rental experiences for ${landlord}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
@@ -61,9 +62,7 @@ const Landlord = ({ landlord, reviews }: IProps) => {
 }
 
 export async function getStaticPaths() {
-	const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/review/landlords`)
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const data: string[] = await req.json()
+	const data = await getLandlords()
 
 	const paths = data.map((landlord) => ({
 		params: { landlord: encodeURIComponent(landlord) },
@@ -76,22 +75,13 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-	const req = await fetch(
-		`${process.env.NEXT_PUBLIC_API_URL}/review/landlords/landlord`,
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ landlord: params.landlord }),
-		},
-	)
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const data: Review[] = await req.json()
+	const data = await getLandlordReviews(params.landlord)
 
 	// Pass post data to the page via props
 	return {
-		props: { landlord: params.landlord, reviews: data },
+		props: JSON.parse(
+			JSON.stringify({ landlord: params.landlord, reviews: data }),
+		),
 		// Re-generate the page
 		// if a request comes in after 100 seconds
 		revalidate: 100,

@@ -1,34 +1,19 @@
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { getFlagged } from '@/lib/review/review'
 
 const getReviews = async (req: NextApiRequest, res: NextApiResponse) => {
+	const session = await getSession(req, res)
+	const user = session?.user
 	await runMiddleware(req, res)
-	const url = process.env.API_URL as string
 
-	const cookies = req.cookies
-	const jwt: string = cookies.ratethelandlord || ''
-
-	fetch(`${url}/review/flagged`, {
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${jwt}`,
-		},
-	})
-		.then((result: Response) => {
-			if (!result.ok) {
-				throw result
-			}
-			return result.json()
-		})
-		.then((data) => {
-			res.status(200).json(data)
-		})
-		.catch((err: Response) => {
-			console.log(err)
-			res
-				.status(err.status)
-				.json({ error: 'Failed to get Reviews', response: err.statusText })
-		})
+	if (user && user.role === 'ADMIN') {
+		const reviews = await getFlagged()
+		res.status(200).json(reviews)
+	} else {
+		res.status(401).json({ error: 'UNAUTHORIZED' })
+	}
 }
 
-export default getReviews
+export default withApiAuthRequired(getReviews)

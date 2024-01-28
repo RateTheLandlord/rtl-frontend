@@ -1,6 +1,6 @@
 import { Review } from '@/util/interfaces/interfaces'
 import { useEffect, useState } from 'react'
-import useSWR, { useSWRConfig } from 'swr'
+import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
 import EditReviewModal from '@/components/modal/EditReviewModal'
 import RemoveReviewModal from '@/components/modal/RemoveReviewModal'
@@ -10,7 +10,6 @@ import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 
 const FlaggedReviews = () => {
 	const dispatch = useAppDispatch()
-	const { mutate } = useSWRConfig()
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
 
@@ -19,10 +18,11 @@ const FlaggedReviews = () => {
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const { data: reviews, error } = useSWR<Array<Review>>(
-		'/api/admin/get-flagged',
-		fetcher,
-	)
+	const {
+		data: reviews,
+		error,
+		mutate,
+	} = useSWR<Array<Review>>('/api/admin/get-flagged', fetcher)
 
 	useEffect(() => {
 		if (reviews) {
@@ -54,7 +54,7 @@ const FlaggedReviews = () => {
 				}
 			})
 			.then(() => {
-				mutate('/api/admin/get-flagged').catch((err) => console.log(err))
+				mutate()
 				dispatch(updateAlertSuccess(true))
 				dispatch(updateAlertOpen(true))
 			})
@@ -65,20 +65,24 @@ const FlaggedReviews = () => {
 			})
 	}
 
+	const handleMutate = () => {
+		mutate()
+	}
+
 	return (
 		<div className='container flex w-full flex-wrap justify-center'>
 			{selectedReview ? (
 				<>
 					<EditReviewModal
 						selectedReview={selectedReview}
-						mutateString='/api/admin/get-flagged'
+						handleMutate={handleMutate}
 						setEditReviewOpen={setEditReviewOpen}
 						editReviewOpen={editReviewOpen}
 						setSelectedReview={setSelectedReview}
 					/>
 					<RemoveReviewModal
 						selectedReview={selectedReview}
-						mutateString={'/api/admin/get-flagged'}
+						handleMutate={handleMutate}
 						setRemoveReviewOpen={setRemoveReviewOpen}
 						removeReviewOpen={removeReviewOpen}
 						setSelectedReview={setSelectedReview}
@@ -121,7 +125,7 @@ const FlaggedReviews = () => {
 					<tbody className='divide-y divide-gray-200 bg-white'>
 						{flaggedReviews.map((review) => (
 							<tr
-								key={review.landlord}
+								key={review.id}
 								className={`${review.admin_approved ? 'bg-green-100' : ''}`}
 							>
 								<td className='w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6'>

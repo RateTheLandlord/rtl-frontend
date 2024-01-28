@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useMemo, useState } from 'react'
 import ReportModal from '@/components/reviews/report-modal'
 import useSWR from 'swr'
-import { fetcher } from '@/util/helpers/fetcher'
+import { fetchWithBody } from '@/util/helpers/fetcher'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import InfiniteScroll from './InfiniteScroll'
@@ -26,6 +26,17 @@ export type ReviewsResponse = {
 	cities: string[]
 	zips: string[]
 	limit: number
+}
+
+export interface QueryParams {
+	page: number
+	sort: string
+	state: string
+	country: string
+	city: string
+	zip: string
+	search: string
+	limit: string
 }
 
 const Review = () => {
@@ -50,7 +61,9 @@ const Review = () => {
 
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
 
-	const [previousQueryParams, setPreviousQueryParams] = useState('')
+	const [previousQueryParams, setPreviousQueryParams] = useState<
+		QueryParams | undefined
+	>()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const debouncedSearchState = useDebounce(searchFilter, 500)
@@ -60,7 +73,8 @@ const Review = () => {
 	}, [debouncedSearchState])
 
 	const queryParams = useMemo(() => {
-		const params = new URLSearchParams({
+		const params = {
+			page: page,
 			sort: selectedSort.value,
 			state: stateFilter?.value || '',
 			country: countryFilter?.value || '',
@@ -68,9 +82,10 @@ const Review = () => {
 			zip: zipFilter?.value || '',
 			search: debouncedSearchState || '',
 			limit: '25',
-		})
-		return params.toString()
+		}
+		return params
 	}, [
+		page,
 		selectedSort,
 		stateFilter,
 		countryFilter,
@@ -79,9 +94,9 @@ const Review = () => {
 		debouncedSearchState,
 	])
 
-	const { data } = useSWR<ReviewsResponse>(
-		`/api/review/get-reviews?page=${page}&${queryParams.toString()}`,
-		fetcher,
+	const { data, mutate } = useSWR<ReviewsResponse>(
+		[`/api/review/get-reviews`, { queryParams }],
+		fetchWithBody,
 	)
 
 	const [reviews, setReviews] = useState<Review[]>(data?.reviews || [])
@@ -130,6 +145,10 @@ const Review = () => {
 		}
 	}
 
+	const handleMutate = () => {
+		mutate()
+	}
+
 	return (
 		<>
 			<ReportModal
@@ -141,14 +160,14 @@ const Review = () => {
 				<>
 					<EditReviewModal
 						selectedReview={selectedReview}
-						mutateString={`/api/review/get-reviews?${queryParams.toString()}`}
+						handleMutate={handleMutate}
 						setEditReviewOpen={setEditReviewOpen}
 						editReviewOpen={editReviewOpen}
 						setSelectedReview={setSelectedReview}
 					/>
 					<RemoveReviewModal
 						selectedReview={selectedReview}
-						mutateString={`/api/review/get-reviews?${queryParams.toString()}`}
+						handleMutate={handleMutate}
 						setRemoveReviewOpen={setRemoveReviewOpen}
 						removeReviewOpen={removeReviewOpen}
 						setSelectedReview={setSelectedReview}

@@ -8,13 +8,12 @@ import states from '@/util/countries/unitedStates/states.json'
 import territories from '@/util/countries/australia/territories.json'
 import { country_codes } from '@/util/helpers/getCountryCodes'
 import { Dialog, Transition } from '@headlessui/react'
-import { mutate } from 'swr'
 import { useAppDispatch } from '@/redux/hooks'
 import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 
 interface IProps {
 	selectedReview: Review | undefined
-	mutateString: string
+	handleMutate: () => void
 	setEditReviewOpen: Dispatch<SetStateAction<boolean>>
 	editReviewOpen: boolean
 	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
@@ -22,7 +21,7 @@ interface IProps {
 
 const EditReviewModal = ({
 	selectedReview,
-	mutateString,
+	handleMutate,
 	setEditReviewOpen,
 	editReviewOpen,
 	setSelectedReview,
@@ -67,7 +66,7 @@ const EditReviewModal = ({
 				}
 			})
 			.then(() => {
-				mutate(mutateString).catch((err) => console.log(err))
+				handleMutate()
 				setEditReviewOpen(false)
 				dispatch(updateAlertSuccess(true))
 				dispatch(updateAlertOpen(true))

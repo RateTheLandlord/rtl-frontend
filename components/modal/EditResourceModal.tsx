@@ -7,14 +7,13 @@ import { useLocation } from '@/util/hooks/useLocation'
 import StateSelector from '../ui/StateSelector'
 import CountrySelector from '../ui/CountrySelector'
 import LargeTextInput from '../ui/LargeTextInput'
-import { mutate } from 'swr'
 import Spinner from '../ui/Spinner'
 import { useAppDispatch } from '@/redux/hooks'
 import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 
 interface IProps {
 	selectedResource: Resource | undefined
-	mutateString: string
+	handleMutate: () => void
 	setEditResourceOpen: Dispatch<SetStateAction<boolean>>
 	editResourceOpen: boolean
 	setSelectedResource: Dispatch<SetStateAction<Resource | undefined>>
@@ -22,7 +21,7 @@ interface IProps {
 
 const EditResourceModal = ({
 	selectedResource,
-	mutateString,
+	handleMutate,
 	setEditResourceOpen,
 	editResourceOpen,
 	setSelectedResource,
@@ -76,7 +75,7 @@ const EditResourceModal = ({
 				}
 			})
 			.then(() => {
-				mutate(mutateString).catch((err) => console.log(err))
+				handleMutate()
 				setEditResourceOpen(false)
 				dispatch(updateAlertSuccess(true))
 				dispatch(updateAlertOpen(true))

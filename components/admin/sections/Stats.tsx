@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import { useState } from 'react'
-import { fetcher } from '@/util/helpers/fetcher'
+import { fetchWithBody } from '@/util/helpers/fetcher'
 import Spinner from '@/components/ui/Spinner'
 import BarGraph from '../components/BarGraph'
 import dayjs from 'dayjs'
@@ -52,8 +52,8 @@ const Stats = () => {
 	const [startDate, groupBy] = useStatsDates(query.value)
 
 	const { data, error } = useSWR<IStats>(
-		`/api/admin/get-stats?startDate=${startDate}&groupBy=${groupBy}`,
-		fetcher,
+		[`/api/admin/get-stats`, { startDate, groupBy }],
+		fetchWithBody,
 	)
 
 	console.log(data)
@@ -90,12 +90,12 @@ const Stats = () => {
 
 	const getCountryTotals = () => {
 		const countryData = [
-			{ name: 'US', value: Number(data.total_stats.countryStats.US.total) },
-			{ name: 'CA', value: Number(data.total_stats.countryStats.CA.total) },
-			{ name: 'NZ', value: Number(data.total_stats.countryStats.NZ.total) },
-			{ name: 'AU', value: Number(data.total_stats.countryStats.AU.total) },
-			{ name: 'UK', value: Number(data.total_stats.countryStats.GB.total) },
-			{ name: 'DE', value: Number(data.total_stats.countryStats.DE.total) },
+			{ name: 'US', value: Number(data.total_stats.countryStats.US?.total) },
+			{ name: 'CA', value: Number(data.total_stats.countryStats.CA?.total) },
+			{ name: 'NZ', value: Number(data.total_stats.countryStats.NZ?.total) },
+			{ name: 'AU', value: Number(data.total_stats.countryStats.AU?.total) },
+			{ name: 'UK', value: Number(data.total_stats.countryStats.GB?.total) },
+			{ name: 'DE', value: Number(data.total_stats.countryStats.DE?.total) },
 		]
 		return countryData
 	}
@@ -119,7 +119,7 @@ const Stats = () => {
 					<GraphCard title='All Reviews'>
 						<AreaGraph data={getDetailedStats('total')} />
 					</GraphCard>
-					<GraphCard title='Total By Country'>
+					<GraphCard title='Total By Country (All Time)'>
 						<PieGraph data={getCountryTotals()} />
 					</GraphCard>
 					<GraphCard title='Countries'>

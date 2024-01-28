@@ -2,14 +2,13 @@
 import { Review } from '@/util/interfaces/interfaces'
 import { Dispatch, Fragment, SetStateAction } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { mutate } from 'swr'
 import XIcon from '@heroicons/react/outline/XIcon'
 import { useAppDispatch } from '@/redux/hooks'
 import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 
 interface IProps {
 	selectedReview: Review | undefined
-	mutateString: string
+	handleMutate: () => void
 	setRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
 	removeReviewOpen: boolean
 	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
@@ -17,7 +16,7 @@ interface IProps {
 
 const RemoveReviewModal = ({
 	selectedReview,
-	mutateString,
+	handleMutate,
 	setRemoveReviewOpen,
 	removeReviewOpen,
 	setSelectedReview,
@@ -38,7 +37,7 @@ const RemoveReviewModal = ({
 					}
 				})
 				.then(() => {
-					mutate(mutateString).catch((err) => console.log(err))
+					handleMutate()
 					setRemoveReviewOpen(false)
 					dispatch(updateAlertSuccess(true))
 					dispatch(updateAlertOpen(true))

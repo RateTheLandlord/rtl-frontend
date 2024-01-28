@@ -18,7 +18,7 @@ const LandlordInfo = ({ name, average, total }: IProps) => {
 	return (
 		<div className='w-full border-b border-b-gray-200'>
 			<h2 className='text-2xl font-bold tracking-tight text-gray-900'>
-				{name}
+				{decodeURIComponent(name)}
 			</h2>
 
 			<div className='mt-3 flex items-center gap-4'>

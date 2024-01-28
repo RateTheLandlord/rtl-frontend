@@ -15,8 +15,8 @@ export default class MyDocument extends Document {
 						<>
 							<script
 								async
-								src='https://analytics.ratethelandlord.org/script.js'
-								data-website-id='9c6eab7b-c7a8-450b-ae55-498172bb9454'
+								src='https://analytics-xi-brown.vercel.app/script.js'
+								data-website-id='a3aff0b8-ee4d-4268-b8a2-35d023e3cad5'
 							></script>
 							<script
 								async

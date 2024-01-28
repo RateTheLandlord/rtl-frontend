@@ -6,6 +6,7 @@ import { render, screen } from '@testing-library/react'
 import Navbar from './navbar'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
+import { UserProvider } from '@auth0/nextjs-auth0/client'
 
 jest.mock('next/router', () => ({
 	useRouter: () => ({
@@ -24,7 +25,9 @@ describe('Navbar', () => {
 
 		render(
 			<Provider store={store}>
-				<Navbar />
+				<UserProvider>
+					<Navbar />
+				</UserProvider>
 			</Provider>,
 		)
 

@@ -15,13 +15,13 @@ describe('RemoveReviewModal', () => {
 		state: 'NY',
 		zip: '12345',
 		review: 'Great experience',
-		health: '4',
-		repair: '4',
-		respect: '3',
-		privacy: '2',
+		health: 4,
+		repair: 4,
+		respect: 3,
+		privacy: 2,
 		id: 123,
-		stability: '1',
-		date_added: new Date().toLocaleDateString(),
+		stability: 1,
+		date_added: new Date(),
 		flagged: false,
 		flagged_reason: '',
 		admin_approved: null,
@@ -33,7 +33,7 @@ describe('RemoveReviewModal', () => {
 			<Provider store={store}>
 				<RemoveReviewModal
 					selectedReview={mockSelectedReview}
-					mutateString=''
+					handleMutate={jest.fn()}
 					setRemoveReviewOpen={jest.fn()}
 					removeReviewOpen={true}
 					setSelectedReview={jest.fn()}

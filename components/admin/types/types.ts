@@ -6,42 +6,42 @@ export interface ITabs {
 export interface ICountryStats {
 	total_reviews: number
 	countryStats: {
-		CA: {
+		CA?: {
 			total: string
 			states: Array<{
 				key: string
 				total: string
 			}>
 		}
-		US: {
+		US?: {
 			total: string
 			states: Array<{
 				key: string
 				total: string
 			}>
 		}
-		AU: {
+		AU?: {
 			total: string
 			states: Array<{
 				key: string
 				total: string
 			}>
 		}
-		GB: {
+		GB?: {
 			total: string
 			states: Array<{
 				key: string
 				total: string
 			}>
 		}
-		NZ: {
+		NZ?: {
 			total: string
 			states: Array<{
 				key: string
 				total: string
 			}>
 		}
-		DE: {
+		DE?: {
 			total: string
 			states: Array<{
 				key: string
