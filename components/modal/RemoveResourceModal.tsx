@@ -10,7 +10,7 @@ import { useAppDispatch } from '@/redux/hooks'
 
 interface IProps {
 	selectedResource: Resource | undefined
-	mutateString: string
+	handleMutate: () => void
 	setRemoveResourceOpen: Dispatch<SetStateAction<boolean>>
 	removeResourceOpen: boolean
 	setSelectedResource: Dispatch<SetStateAction<Resource | undefined>>
@@ -18,7 +18,7 @@ interface IProps {
 
 const RemoveResourceModal = ({
 	selectedResource,
-	mutateString,
+	handleMutate,
 	setRemoveResourceOpen,
 	removeResourceOpen,
 	setSelectedResource,
@@ -41,7 +41,7 @@ const RemoveResourceModal = ({
 					}
 				})
 				.then(() => {
-					mutate(mutateString).catch((err) => console.log(err))
+					handleMutate()
 					setRemoveResourceOpen(false)
 					dispatch(updateAlertSuccess(true))
 					dispatch(updateAlertOpen(true))

@@ -61,7 +61,7 @@ function ReviewTable({
 								]
 								const date = new Date(review.date_added).toLocaleDateString()
 								return (
-									<>
+									<div key={review.id}>
 										{i % 20 === 0 && i !== 0 && (
 											<AdsComponent
 												slot='3829259014'
@@ -69,10 +69,7 @@ function ReviewTable({
 												layoutKey='-gw-3+1f-3d+2z'
 											/>
 										)}
-										<div
-											key={review.id}
-											className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-8'
-										>
+										<div className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-8'>
 											<div className='flex flex-row flex-wrap items-center justify-between bg-gray-50 p-2 lg:min-w-[250px] lg:max-w-[275px] lg:flex-col'>
 												<div className='flex w-full flex-row justify-between'>
 													<Link
@@ -213,7 +210,7 @@ function ReviewTable({
 												</div>
 											</div>
 										</div>
-									</>
+									</div>
 								)
 							})}
 						</div>

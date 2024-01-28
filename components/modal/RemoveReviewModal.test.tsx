@@ -33,7 +33,7 @@ describe('RemoveReviewModal', () => {
 			<Provider store={store}>
 				<RemoveReviewModal
 					selectedReview={mockSelectedReview}
-					mutateString=''
+					handleMutate={jest.fn()}
 					setRemoveReviewOpen={jest.fn()}
 					removeReviewOpen={true}
 					setSelectedReview={jest.fn()}

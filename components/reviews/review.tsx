@@ -94,7 +94,7 @@ const Review = () => {
 		debouncedSearchState,
 	])
 
-	const { data } = useSWR<ReviewsResponse>(
+	const { data, mutate } = useSWR<ReviewsResponse>(
 		[`/api/review/get-reviews`, { queryParams }],
 		fetchWithBody,
 	)
@@ -145,6 +145,10 @@ const Review = () => {
 		}
 	}
 
+	const handleMutate = () => {
+		mutate()
+	}
+
 	return (
 		<>
 			<ReportModal
@@ -156,14 +160,14 @@ const Review = () => {
 				<>
 					<EditReviewModal
 						selectedReview={selectedReview}
-						mutateString={`/api/review/get-reviews?${queryParams.toString()}`}
+						handleMutate={handleMutate}
 						setEditReviewOpen={setEditReviewOpen}
 						editReviewOpen={editReviewOpen}
 						setSelectedReview={setSelectedReview}
 					/>
 					<RemoveReviewModal
 						selectedReview={selectedReview}
-						mutateString={`/api/review/get-reviews?${queryParams.toString()}`}
+						handleMutate={handleMutate}
 						setRemoveReviewOpen={setRemoveReviewOpen}
 						removeReviewOpen={removeReviewOpen}
 						setSelectedReview={setSelectedReview}

@@ -3,7 +3,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { classNames } from '@/util/helpers/helper-functions'
 import { MenuAlt3Icon } from '@heroicons/react/solid'
 import Button from '@/components/ui/button'
-import useSWR, { mutate } from 'swr'
+import useSWR from 'swr'
 import { fetchWithBody } from '@/util/helpers/fetcher'
 import Spinner from '@/components/ui/Spinner'
 import { Resource, ResourceResponse } from '@/util/interfaces/interfaces'
@@ -15,7 +15,7 @@ import { useAppDispatch } from '@/redux/hooks'
 import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 
 const TenantResources = () => {
-	const { data, error } = useSWR<ResourceResponse>(
+	const { data, error, mutate } = useSWR<ResourceResponse>(
 		['/api/tenant-resources/get-resources', { limit: '1000' }],
 		fetchWithBody,
 	)
@@ -79,9 +79,7 @@ const TenantResources = () => {
 				}
 			})
 			.then(() => {
-				mutate('/api/tenant-resources/get-resources').catch((err) =>
-					console.log(err),
-				)
+				mutate()
 				setAddResourceOpen(false)
 				dispatch(updateAlertSuccess(true))
 				dispatch(updateAlertOpen(true))
@@ -94,12 +92,16 @@ const TenantResources = () => {
 			})
 			.finally(() => setLoading(false))
 	}
+
+	const handleMutate = () => {
+		mutate()
+	}
 	return (
 		<div className='container flex w-full flex-col justify-center'>
 			{editResourceOpen && (
 				<EditResourceModal
 					selectedResource={selectedResource}
-					mutateString='/api/tenant-resources/add-resource'
+					handleMutate={handleMutate}
 					setEditResourceOpen={setEditResourceOpen}
 					editResourceOpen={editResourceOpen}
 					setSelectedResource={setSelectedResource}
@@ -108,7 +110,7 @@ const TenantResources = () => {
 			{deleteResourceOpen && (
 				<RemoveResourceModal
 					selectedResource={selectedResource}
-					mutateString='/api/tenant-resources/add-resource'
+					handleMutate={handleMutate}
 					setRemoveResourceOpen={setDeleteResourceOpen}
 					removeResourceOpen={deleteResourceOpen}
 					setSelectedResource={setSelectedResource}

@@ -7,7 +7,7 @@ import { createReview } from '@/lib/review/models/review-data-layer'
 import { updateReview } from '@/lib/review/models/review-data-layer'
 
 export type ReviewQuery = {
-	page?: number | undefined
+	page?: number
 	limit?: number
 	search?: string
 	sort?: 'az' | 'za' | 'new' | 'old' | 'high' | 'low'
@@ -21,8 +21,8 @@ export async function getReviews(
 	params: ReviewQuery,
 ): Promise<ReviewsResponse> {
 	const {
-		page: pageNumber,
-		limit: limitParam,
+		page: pageNumber = 1,
+		limit: limitParam = 25,
 		search,
 		sort,
 		state,
@@ -31,10 +31,7 @@ export async function getReviews(
 		zip,
 	} = params
 
-	const page = pageNumber ? pageNumber : 1
-	const limit = limitParam ? limitParam : 25
-
-	const offset = (page - 1) * limit
+	const offset = (pageNumber - 1) * limitParam
 
 	let orderBy = sql`id`
 	if (sort === 'az' || sort === 'za') {
@@ -78,7 +75,7 @@ export async function getReviews(
         FROM review
         WHERE 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 		AND (flagged = false OR (flagged = true AND admin_approved = true))
-        ORDER BY ${orderBy} ${sortOrder} LIMIT ${limit}
+        ORDER BY ${orderBy} ${sortOrder} LIMIT ${limitParam}
         OFFSET ${offset}
     `) as any
 
@@ -129,7 +126,7 @@ export async function getReviews(
 		states: stateList,
 		cities: cityList,
 		zips: zipList,
-		limit: limit,
+		limit: limitParam,
 	}
 }
 

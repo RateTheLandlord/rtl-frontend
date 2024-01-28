@@ -32,7 +32,7 @@ describe('EditReviewModal', () => {
 			<Provider store={store}>
 				<EditReviewModal
 					selectedReview={mockSelectedReview}
-					mutateString=''
+					handleMutate={jest.fn()}
 					setEditReviewOpen={jest.fn()}
 					editReviewOpen={true}
 					setSelectedReview={jest.fn()}

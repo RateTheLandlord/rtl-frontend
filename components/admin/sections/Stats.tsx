@@ -119,7 +119,7 @@ const Stats = () => {
 					<GraphCard title='All Reviews'>
 						<AreaGraph data={getDetailedStats('total')} />
 					</GraphCard>
-					<GraphCard title='Total By Country'>
+					<GraphCard title='Total By Country (All Time)'>
 						<PieGraph data={getCountryTotals()} />
 					</GraphCard>
 					<GraphCard title='Countries'>
