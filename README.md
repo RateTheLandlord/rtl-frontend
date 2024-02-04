@@ -20,10 +20,84 @@ Then run the following commands:
 The project should not be running at `http://localhost:3000` and pick up changes
 you make in you IDE
 
-Make sure to be running the Backend if you want database information loaded into
-the UI
+## Creating a Database
+
+Download pgAdmin4 - https://www.postgresql.org/download/
+
+Install and complete the setup process.
+
+REMEMBER THE PASSWORD YOU SET DURING THE INSTALL PROCESS!
+
+### Step 1: Create a New Database
+
+Open PgAdmin 4 in your web browser.
+
+In the left sidebar, navigate to "Servers" and expand your PostgreSQL server.
+
+Right-click on "Databases" and choose "Create > Database."
+
+In the "Database" tab, provide a name for your new database. You can also
+configure other settings such as the owner, encoding, and template if needed.
+
+Click the "Save" button to create the new database.
+
+### Step 2: Connect to the New Database
+
+In the left sidebar, under "Servers," find and expand your PostgreSQL server.
+
+Right-click on "Databases" and choose "Refresh" to make sure the new database
+appears.
+
+Right-click on the newly created database and choose "Connect."
+
+### Step 3: Find Connection String
+
+After connecting to the database, you can find the connection string details in
+PgAdmin 4.
+
+Right-click on the database in the left sidebar, select "Properties," and go to
+the "Connection" tab.
+
+On the "Connection" tab, you'll see various details, including the connection
+string. The connection string typically looks like:
+
+```
+Copy code
+postgresql://username:password@host:port/database_name
+Replace username with your PostgreSQL username.
+Replace password with your PostgreSQL password.
+Replace host with the address where PostgreSQL is running.
+Replace port with the port number (default is 5432).
+Replace database_name with the name of your newly created database.
+Step 4: Use Connection String
+```
+
+You can use the obtained connection string in your applications, scripts, or
+tools that require a PostgreSQL connection. Replace the placeholders with your
+actual credentials and connection details.
+
+For example:
+
+```
+plaintext
+Copy code
+postgresql://myuser:mypassword@localhost:5432/mydatabase
+Make sure to secure your credentials and use appropriate connection methods based on the security requirements of your application.
+```
+
+Remember to adjust the connection details based on your specific setup and
+configuration. If you encounter any issues, double-check your PostgreSQL server
+settings, firewall rules, and authentication configurations.
+
+You can also create a database with a service like Supabase and use the
+connection string from there. The service is free.
 
 ## Troubleshooting
+
+#### Auth0
+
+Create an account with Auth0 and follow their setup process. It's free and will
+allow you to test admin functionality.
 
 #### Captcha Not Working
 
