@@ -2,6 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { socialLinks } from './links'
 import Github from '../svg/social/github'
+import Link from 'next/link'
 
 function Footer(): JSX.Element {
 	const date = new Date()
@@ -11,6 +12,8 @@ function Footer(): JSX.Element {
 		<footer className='bg-white' data-testid='footer-1'>
 			<div className='mx-auto max-w-7xl px-4 py-12 sm:px-6 md:flex md:items-center md:justify-between lg:px-8'>
 				<div className='flex justify-center space-x-6 md:order-2'>
+					<Link href='/terms-and-conditions'>Terms and Conditions</Link>
+					<Link href='/privacy-policy'>Privacy Policy</Link>
 					{socialLinks.map((item) => (
 						<a
 							data-umami-event={item.umami}
