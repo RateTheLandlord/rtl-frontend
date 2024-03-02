@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-escape */
 import { getLandlordSuggestions } from '@/lib/review/review'
 import { runMiddleware } from '@/util/cors'
+import applyRateLimit from '@/util/rateLimit'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export const removeSpecialChars = (input: string) => {
@@ -13,6 +14,11 @@ const getLandlordSuggestionsAPI = async (
 	res: NextApiResponse,
 ) => {
 	await runMiddleware(req, res)
+	try {
+		await applyRateLimit(req, res)
+	} catch {
+		return res.status(429).send('Too many requests')
+	}
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: { input: string } } = req
 	const sanitizedLandlord = removeSpecialChars(body.input)
