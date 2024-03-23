@@ -1,22 +1,14 @@
 import React, { Fragment } from 'react'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
-import MobileSelectList from './ui/mobile-select-list'
-import SearchBar from './ui/searchbar'
+import MobileSelectList from '@/components/reviews/ui/mobile-select-list'
+import SearchBar from '@/components/reviews/ui/searchbar'
 import { Options } from '@/util/interfaces/interfaces'
 import { useTranslation } from 'react-i18next'
-import ComboBox from './ui/combobox'
+import ComboBox from '@/components/reviews/ui/combobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import {
-	clearFilters,
-	updateCity,
-	updateCountry,
-	updateSearch,
-	updateState,
-	updateZip,
-} from '@/redux/query/querySlice'
-import ButtonLight from '../ui/button-light'
+import { updateResourceQuery } from '@/redux/resourceQuery/resourceQuerySlice'
 
 interface FiltersProps {
 	mobileFiltersOpen: boolean
@@ -29,10 +21,9 @@ interface FiltersProps {
 	stateOptions: Options[]
 	zipOptions?: Options[]
 	resource?: boolean
-	updateParams: () => void
 }
 
-export default function MobileReviewFilters({
+export default function ResourceMobileFilters({
 	mobileFiltersOpen,
 	setMobileFiltersOpen,
 	countryFilter,
@@ -43,7 +34,6 @@ export default function MobileReviewFilters({
 	stateOptions,
 	zipOptions,
 	resource,
-	updateParams,
 }: FiltersProps) {
 	const dispatch = useAppDispatch()
 	const query = resource
@@ -102,59 +92,79 @@ export default function MobileReviewFilters({
 								<Popover.Group className='mx-2 flex flex-col items-center gap-2 divide-y'>
 									<SearchBar
 										setSearchState={(str: string) =>
-											dispatch(updateSearch(str))
+											dispatch(
+												updateResourceQuery({
+													...query,
+													searchFilter: str,
+												}),
+											)
 										}
+										mobile
 										value={query.searchFilter}
+										onClick={(p) => setMobileFiltersOpen(p)}
 									/>
 
 									<MobileSelectList
 										state={countryFilter}
-										setState={(opt: Options) => dispatch(updateCountry(opt))}
+										setState={(opt: Options) =>
+											dispatch(
+												updateResourceQuery({
+													...query,
+													countryFilter: opt,
+												}),
+											)
+										}
 										options={countryOptions}
 										name={t('reviews.country')}
 									/>
 									<ComboBox
 										state={stateFilter}
-										setState={(opt: Options) => dispatch(updateState(opt))}
+										setState={(opt: Options) =>
+											dispatch(
+												updateResourceQuery({
+													...query,
+													stateFilter: opt,
+												}),
+											)
+										}
 										options={stateOptions}
 										name={t('reviews.state')}
 									/>
 									<ComboBox
 										state={cityFilter}
-										setState={(opt: Options) => dispatch(updateCity(opt))}
+										setState={(opt: Options) =>
+											dispatch(
+												updateResourceQuery({
+													...query,
+													cityFilter: opt,
+												}),
+											)
+										}
 										options={cityOptions}
 										name={t('reviews.city')}
 									/>
 									{zipOptions && (
 										<ComboBox
 											state={zipFilter}
-											setState={(opt: Options) => dispatch(updateZip(opt))}
+											setState={(opt: Options) =>
+												dispatch(
+													updateResourceQuery({
+														...query,
+														zipFilter: opt,
+													}),
+												)
+											}
 											options={zipOptions}
 											name={t('reviews.zip')}
 										/>
 									)}
 									<div className='w-full pt-2'>
 										<button
-											onClick={() => {
-												updateParams()
-												setMobileFiltersOpen(false)
-											}}
+											onClick={() => setMobileFiltersOpen(false)}
 											className='w-full rounded-lg bg-teal-600 py-2 text-white'
 										>
 											Apply Filters
 										</button>
-									</div>
-									<div className='flex w-full justify-end pt-2'>
-										<ButtonLight
-											umami='Mobile / Reset Filters'
-											onClick={() => {
-												dispatch(clearFilters())
-												setMobileFiltersOpen(false)
-												updateParams()
-											}}
-										>
-											Clear Filters
-										</ButtonLight>
 									</div>
 								</Popover.Group>
 							</div>

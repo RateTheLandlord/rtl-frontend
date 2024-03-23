@@ -70,7 +70,7 @@ function ReviewTable({
 											/>
 										)}
 										<div className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-8'>
-											<div className='flex flex-row flex-wrap items-center justify-between bg-gray-50 p-2 lg:min-w-[250px] lg:max-w-[275px] lg:flex-col'>
+											<div className='flex flex-col items-center bg-gray-50 p-2 lg:min-w-[250px] lg:max-w-[275px] lg:flex-col'>
 												<div className='flex w-full flex-row justify-between'>
 													<Link
 														href={`/landlord/${encodeURIComponent(

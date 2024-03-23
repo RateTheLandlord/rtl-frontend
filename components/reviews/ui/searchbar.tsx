@@ -4,22 +4,18 @@ import { useTranslation } from 'react-i18next'
 
 interface SearchProps {
 	setSearchState: (str: string) => void
-	onClick?: (bool: boolean) => void
-	mobile?: boolean
 	searchTitle?: string
 	value?: string
 }
 
 export default function SearchBar({
 	setSearchState,
-	onClick,
-	mobile,
 	searchTitle,
 	value,
 }: SearchProps) {
 	const { t } = useTranslation('reviews')
 	return (
-		<div className='mt-1 flex w-full flex-col gap-2 px-2'>
+		<div className='mt-1 flex w-full flex-col gap-2'>
 			<label htmlFor='search' className='sr-only'>
 				Search
 			</label>
@@ -42,14 +38,6 @@ export default function SearchBar({
 					</button>
 				) : null}
 			</div>
-			{mobile && onClick ? (
-				<button
-					onClick={() => onClick(false)}
-					className='w-full rounded-lg bg-teal-600 py-2 text-white'
-				>
-					Search
-				</button>
-			) : null}
 		</div>
 	)
 }

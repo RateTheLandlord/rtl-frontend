@@ -1,14 +1,13 @@
 import Review, { ReviewsResponse } from '@/components/reviews/review'
 import { NextSeo } from 'next-seo'
 import React from 'react'
-import { SWRConfig } from 'swr'
 import { useRouter } from 'next/router'
 
 interface IProps {
-	fallback: ReviewsResponse
+	data: ReviewsResponse
 }
 
-export default function Reviews({ fallback }: IProps): JSX.Element {
+export default function Reviews({ data }: IProps): JSX.Element {
 	const title = 'Reviews | Rate The Landlord'
 	const desc =
 		'View and Search for Landlord Reviews and learn about others Rental Experience. We are a community platform that elevates tenant voices to promote landlord accountability.'
@@ -18,7 +17,7 @@ export default function Reviews({ fallback }: IProps): JSX.Element {
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
 	return (
-		<SWRConfig value={{ fallback }}>
+		<>
 			<NextSeo
 				title={title}
 				description={desc}
@@ -50,23 +49,13 @@ export default function Reviews({ fallback }: IProps): JSX.Element {
 					},
 				]}
 			/>
-			<Review />
-		</SWRConfig>
+			{data.reviews && <Review data={data} />}
+		</>
 	)
 }
 
 //Page is statically generated at build time and then revalidated at a minimum of every 100 seconds based on when the page is accessed
 export async function getStaticProps() {
-	const fallback: ReviewsResponse = {
-		reviews: [],
-		total: 0,
-		countries: [],
-		states: [],
-		cities: [],
-		zips: [],
-		limit: 25,
-	}
-
 	const API_STRING = `${process.env.NEXT_PUBLIC_ORIGIN_URL}/api/review/get-reviews`
 
 	try {
@@ -76,18 +65,14 @@ export async function getStaticProps() {
 
 		return {
 			props: {
-				fallback: {
-					API_STRING: data ?? fallback,
-				},
+				data: data,
 			},
 			revalidate: 100,
 		}
 	} catch (error) {
 		return {
 			props: {
-				fallback: {
-					API_STRING: fallback,
-				},
+				data: [],
 			},
 			revalidate: 100,
 		}

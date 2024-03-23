@@ -8,12 +8,12 @@ import {
 import { useEffect, useMemo, useState } from 'react'
 import useSWR from 'swr'
 import { getCityOptions, getStateOptions } from '../reviews/functions'
-import ReviewFilters from '../reviews/review-filters'
 import InfiniteScroll from './InfiniteScrollResources'
 import { useDebounce } from '@/util/hooks/useDebounce'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { updateResourceQuery } from '@/redux/resourceQuery/resourceQuerySlice'
 import { ResourceQuery } from '@/lib/tenant-resource/resource'
+import ResourceFilters from './resource-filters'
 
 const resourceSortOptions = sortOptions.filter((r) => r.id < 5)
 
@@ -114,7 +114,7 @@ export default function ResourceList() {
 	}
 	return (
 		<div className='w-full'>
-			<ReviewFilters
+			<ResourceFilters
 				title='Find Resources'
 				description='Search our ever expanding database for Tenant Resources in your area!'
 				searchTitle='Search Resources'

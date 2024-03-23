@@ -8,7 +8,7 @@ interface IQuery {
 	stateFilter: Options | null
 	cityFilter: Options | null
 	zipFilter: Options | null
-	activeFilters: Array<Options> | null
+	activeFilters: Array<Options | null> | null
 	searchFilter: string | undefined
 }
 

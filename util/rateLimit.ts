@@ -18,7 +18,7 @@ export const getRateLimitMiddlewares = ({
 	limit = 10,
 	windowMs = 60 * 1000,
 	delayAfter = Math.round(10 / 2),
-	delayMs = 500,
+	delayMs = () => 500,
 } = {}) => [
 	slowDown({ keyGenerator: getIP, windowMs, delayAfter, delayMs }),
 	rateLimit({ keyGenerator: getIP, windowMs, max: limit }),

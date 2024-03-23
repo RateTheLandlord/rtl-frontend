@@ -8,7 +8,7 @@ interface IQuery {
 	stateFilter: Options | null
 	cityFilter: Options | null
 	zipFilter: Options | null
-	activeFilters: Array<Options> | null
+	activeFilters: Array<Options | null> | null
 	searchFilter: string | undefined
 }
 
@@ -26,24 +26,41 @@ const querySlice = createSlice({
 	name: 'query',
 	initialState,
 	reducers: {
-		updateQuery(state, action: PayloadAction<IQuery>) {
-			const filters: Array<Options> = []
-			if (action.payload.countryFilter) {
-				filters.push(action.payload.countryFilter)
-			}
-			if (action.payload.stateFilter) {
-				filters.push(action.payload.stateFilter)
-			}
-			if (action.payload.cityFilter) {
-				filters.push(action.payload.cityFilter)
-			}
-			if (action.payload.zipFilter) {
-				filters.push(action.payload.zipFilter)
-			}
-			return { ...action.payload, activeFilters: filters }
+		updateSort(state, action: PayloadAction<Options>) {
+			state.selectedSort = action.payload
+		},
+		updateCountry(state, action: PayloadAction<Options | null>) {
+			state.countryFilter = action.payload
+		},
+		updateState(state, action: PayloadAction<Options | null>) {
+			state.stateFilter = action.payload
+		},
+		updateCity(state, action: PayloadAction<Options | null>) {
+			state.cityFilter = action.payload
+		},
+		updateZip(state, action: PayloadAction<Options | null>) {
+			state.zipFilter = action.payload
+		},
+		updateSearch(state, action: PayloadAction<string | undefined>) {
+			state.searchFilter = action.payload
+		},
+		updateActiveFilters(state, action: PayloadAction<Array<Options | null>>) {
+			return { ...state, activeFilters: action.payload }
+		},
+		clearFilters() {
+			return { ...initialState }
 		},
 	},
 })
 
-export const { updateQuery } = querySlice.actions
+export const {
+	updateCity,
+	updateCountry,
+	updateSearch,
+	updateSort,
+	updateState,
+	updateZip,
+	updateActiveFilters,
+	clearFilters,
+} = querySlice.actions
 export default querySlice.reducer
