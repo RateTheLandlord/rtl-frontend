@@ -1,6 +1,6 @@
 import ReviewFilters from '@/components/reviews/review-filters'
 import { sortOptions } from '@/util/helpers/filter-options'
-import { Options, Review } from '@/util/interfaces/interfaces'
+import { Review, SortOptions } from '@/util/interfaces/interfaces'
 import {
 	getCityOptions,
 	getStateOptions,
@@ -32,7 +32,7 @@ export type ReviewsResponse = {
 
 export interface QueryParams {
 	page: number
-	sort: string
+	sort: 'az' | 'za' | 'new' | 'old' | 'high' | 'low' | undefined
 	state: string
 	country: string
 	city: string
@@ -48,7 +48,7 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
 
-	const [selectedSort, setSelectedSort] = useState<Options>(sortOptions[2])
+	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
 	const query = useAppSelector((state) => state.query)
 	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
 		query
@@ -210,7 +210,6 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 							cityOptions={cityOptions}
 							zipFilter={zipFilter}
 							zipOptions={zipOptions}
-							resource={false}
 							updateParams={updateParams}
 						/>
 						<ReviewFilters

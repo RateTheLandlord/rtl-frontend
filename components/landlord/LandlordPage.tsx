@@ -7,8 +7,8 @@ import { FlagIcon, StarIcon } from '@heroicons/react/solid'
 import { classNames } from '@/util/helpers/helper-functions'
 import ButtonLight from '../ui/button-light'
 import Spinner from '../ui/Spinner'
-import SelectList from '../reviews/ui/select-list'
 import { sortOptions } from '@/util/helpers/filter-options'
+import SortList from '../reviews/ui/sort-list'
 
 const filteredSortOptions = sortOptions.slice(2)
 
@@ -96,7 +96,7 @@ const LandlordPage = ({
 						average={average}
 					/>
 					<div className='flex w-full justify-start py-2'>
-						<SelectList
+						<SortList
 							state={sortState}
 							setState={setSortState}
 							options={filteredSortOptions}

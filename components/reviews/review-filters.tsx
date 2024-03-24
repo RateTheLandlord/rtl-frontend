@@ -1,5 +1,5 @@
 import React from 'react'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options, SortOptions } from '@/util/interfaces/interfaces'
 import SelectList from './ui/select-list'
 import SearchBar from './ui/searchbar'
 import { useTranslation } from 'react-i18next'
@@ -16,6 +16,7 @@ import {
 } from '@/redux/query/querySlice'
 import ButtonLight from '../ui/button-light'
 import Spinner from '../ui/Spinner'
+import SortList from './ui/sort-list'
 
 //Review filters and Logic
 
@@ -23,9 +24,9 @@ interface FiltersProps {
 	title?: string
 	description?: string
 	searchTitle?: string
-	selectedSort: Options
-	setSelectedSort: (selectedSort: Options) => void
-	sortOptions: Options[]
+	selectedSort: SortOptions
+	setSelectedSort: (selectedSort: SortOptions) => void
+	sortOptions: SortOptions[]
 	countryFilter: Options | null
 	stateFilter: Options | null
 	cityFilter: Options | null
@@ -80,7 +81,7 @@ function ReviewFilters({
 										/>
 									</div>
 									<div className='py-2'>
-										<SelectList
+										<SortList
 											state={selectedSort}
 											setState={setSelectedSort}
 											options={sortOptions}

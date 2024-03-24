@@ -1,95 +1,112 @@
-import { fetchWithBody } from '@/util/helpers/fetcher'
 import { sortOptions } from '@/util/helpers/filter-options'
 import {
-	Options,
 	Resource,
 	ResourceResponse,
+	SortOptions,
 } from '@/util/interfaces/interfaces'
 import { useEffect, useMemo, useState } from 'react'
-import useSWR from 'swr'
 import { getCityOptions, getStateOptions } from '../reviews/functions'
 import InfiniteScroll from './InfiniteScrollResources'
 import { useDebounce } from '@/util/hooks/useDebounce'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { updateResourceQuery } from '@/redux/resourceQuery/resourceQuerySlice'
-import { ResourceQuery } from '@/lib/tenant-resource/resource'
 import ResourceFilters from './resource-filters'
+import {
+	updateResourceActiveFilters,
+	updateResourceSearch,
+} from '@/redux/resourceQuery/resourceQuerySlice'
+import { fetchResources } from '@/util/helpers/fetchReviews'
+import ResourceMobileFilters from './resource-mobile-filters'
+import ButtonLight from '../ui/button-light'
+import { useTranslation } from 'react-i18next'
 
-const resourceSortOptions = sortOptions.filter((r) => r.id < 5)
+const resourceSortOptions: Array<SortOptions> = sortOptions.filter(
+	(r) => r.id < 5,
+)
 
-export default function ResourceList() {
+export default function ResourceList({ data }: { data: ResourceResponse }) {
 	const query = useAppSelector((state) => state.resourceQuery)
-	const {
-		countryFilter,
-		stateFilter,
-		cityFilter,
-		zipFilter,
-		activeFilters,
-		searchFilter,
-	} = query
+	const { countryFilter, stateFilter, cityFilter, searchFilter } = query
 	const dispatch = useAppDispatch()
-	const [selectedSort, setSelectedSort] = useState<Options>(
+	const [selectedSort, setSelectedSort] = useState<SortOptions>(
 		resourceSortOptions[2],
 	)
 
 	const [page, setPage] = useState<number>(1)
 	const [hasMore, setHasMore] = useState(true) // Track if there is more content to load
 
-	const [previousQueryParams, setPreviousQueryParams] = useState<
-		ResourceQuery | undefined
-	>()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const debouncedSearch = useDebounce(searchFilter, 500)
 
 	useEffect(() => {
-		dispatch(updateResourceQuery({ ...query, searchFilter: debouncedSearch }))
+		dispatch(updateResourceSearch(debouncedSearch))
 	}, [debouncedSearch])
 
-	const queryParams: ResourceQuery = useMemo(() => {
-		const params: ResourceQuery = {
-			page: page,
-			sort: selectedSort.value as 'az' | 'za' | 'new' | 'old',
+	const [queryParams, setQueryParams] = useState({
+		sort: selectedSort.value,
+		state: '',
+		country: '',
+		city: '',
+		search: '',
+		limit: '25',
+	})
+
+	const [resources, setResources] = useState<Resource[]>(data?.resources || [])
+
+	const updateParams = () => {
+		setPage(1)
+		const params = {
+			sort: selectedSort.value,
 			state: stateFilter?.value || '',
 			country: countryFilter?.value || '',
 			city: cityFilter?.value || '',
 			search: debouncedSearch || '',
 			limit: '25',
 		}
-		return params
-	}, [
-		page,
-		selectedSort,
-		stateFilter,
-		countryFilter,
-		cityFilter,
-		zipFilter,
-		debouncedSearch,
-	])
-	const { data } = useSWR<ResourceResponse>(
-		[`/api/tenant-resources/get-resources`, { queryParams }],
-		fetchWithBody,
-	)
+		setQueryParams(params)
+		dispatch(
+			updateResourceActiveFilters([stateFilter, countryFilter, cityFilter]),
+		)
+	}
 
-	const [resources, setResources] = useState<Resource[]>(data?.resources || [])
+	const fetchData = async () => {
+		setIsLoading(true)
+		try {
+			const moreData = await fetchResources({ page, ...queryParams })
 
-	useEffect(() => {
-		if (queryParams !== previousQueryParams) {
-			setResources(data?.resources || [])
-			setIsLoading(false)
-		} else if (data) {
-			setResources((prevReviews) => [...prevReviews, ...data.resources])
-			setIsLoading(false)
-		}
-		setPreviousQueryParams(queryParams)
-	}, [data, queryParams, previousQueryParams])
+			setResources((prevReviews) => {
+				if (page === 1) {
+					// Initial fetch
+					return [...moreData.resources]
+				} else {
+					// If page changed or neither page nor other query parameters changed, append new reviews
+					return [...prevReviews, ...moreData.resources]
+				}
+			})
 
-	useEffect(() => {
-		if (data) {
-			if (resources.length >= Number(data?.total) || data.resources.length <= 0)
+			if (
+				moreData.resources.length <= 0 ||
+				resources.length >= Number(moreData.total)
+			) {
 				setHasMore(false)
+			} else {
+				setHasMore(true)
+			}
+		} catch (error) {
+			console.error('Error fetching reviews:', error)
+		} finally {
+			setIsLoading(false)
 		}
-	}, [resources, data])
+	}
+
+	useEffect(() => {
+		fetchData()
+	}, [queryParams, page])
+
+	// Reset hasMore when queryParams change
+	useEffect(() => {
+		setHasMore(true)
+	}, [queryParams])
 
 	const cityOptions = useMemo(
 		() => getCityOptions(data?.cities ?? []),
@@ -99,49 +116,61 @@ export default function ResourceList() {
 		() => getStateOptions(data?.states ?? []),
 		[data?.states],
 	)
+	const { t } = useTranslation('reviews')
 
-	const removeFilter = (index: number) => {
-		if (activeFilters?.length) {
-			if (cityFilter === activeFilters[index])
-				dispatch(updateResourceQuery({ ...query, cityFilter: null }))
-			if (stateFilter === activeFilters[index])
-				dispatch(updateResourceQuery({ ...query, stateFilter: null }))
-			if (countryFilter === activeFilters[index])
-				dispatch(updateResourceQuery({ ...query, countryFilter: null }))
-			if (zipFilter === activeFilters[index])
-				dispatch(updateResourceQuery({ ...query, zipFilter: null }))
-		}
-	}
+	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
+
 	return (
 		<div className='w-full'>
-			<ResourceFilters
-				title='Find Resources'
-				description='Search our ever expanding database for Tenant Resources in your area!'
-				searchTitle='Search Resources'
-				selectedSort={selectedSort}
-				setSelectedSort={setSelectedSort}
-				sortOptions={resourceSortOptions}
-				countryFilter={countryFilter}
-				stateFilter={stateFilter}
-				cityFilter={cityFilter}
-				zipFilter={zipFilter}
-				cityOptions={cityOptions}
-				stateOptions={stateOptions}
-				removeFilter={removeFilter}
-				resource
-			/>
-			<div className='mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
-				{!resources.length ? (
-					<div>No Resources Found</div>
-				) : (
-					<InfiniteScroll
-						data={resources}
-						setPage={setPage}
-						hasMore={hasMore}
-						isLoading={isLoading}
-						setIsLoading={setIsLoading}
-					/>
-				)}
+			<div className='mx-auto max-w-2xl sm:px-6 lg:max-w-7xl lg:px-8'>
+				<div className='flex w-full justify-end px-4 lg:hidden'>
+					<ButtonLight
+						onClick={() => setMobileFiltersOpen(true)}
+						umami='Reviews / Review Filters'
+					>
+						{t('reviews.filters')}
+					</ButtonLight>
+				</div>
+				<div className='mx-auto max-w-2xl lg:max-w-7xl'>
+					<div className='flex lg:flex-row lg:gap-2 lg:divide-x lg:divide-gray-200'>
+						<ResourceMobileFilters
+							mobileFiltersOpen={mobileFiltersOpen}
+							setMobileFiltersOpen={setMobileFiltersOpen}
+							countryFilter={countryFilter}
+							stateFilter={stateFilter}
+							stateOptions={stateOptions}
+							cityFilter={cityFilter}
+							cityOptions={cityOptions}
+							updateParams={updateParams}
+						/>
+						<ResourceFilters
+							searchTitle='Search Resources'
+							selectedSort={selectedSort}
+							setSelectedSort={setSelectedSort}
+							sortOptions={resourceSortOptions}
+							countryFilter={countryFilter}
+							stateFilter={stateFilter}
+							cityFilter={cityFilter}
+							cityOptions={cityOptions}
+							stateOptions={stateOptions}
+							resource
+							loading={isLoading}
+							updateParams={updateParams}
+						/>
+
+						{!resources.length ? (
+							<div>No Resources Found</div>
+						) : (
+							<InfiniteScroll
+								data={resources}
+								setPage={setPage}
+								hasMore={hasMore}
+								isLoading={isLoading}
+								setIsLoading={setIsLoading}
+							/>
+						)}
+					</div>
+				</div>
 			</div>
 		</div>
 	)

@@ -47,7 +47,7 @@ function InfiniteScroll({
 	}, [data])
 
 	return (
-		<div className='w-full'>
+		<div className='w-full px-4'>
 			<ul
 				role='list'
 				className='mt-4 grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8'
@@ -59,7 +59,7 @@ function InfiniteScroll({
 					>
 						<a href={resource.href}>
 							<div className='flex flex-col items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6'>
-								<div className='text-xl font-medium leading-6 text-gray-900'>
+								<div className='text-center text-xl font-medium leading-6 text-gray-900'>
 									{resource.name}
 								</div>
 								<div className='text-xs font-medium leading-6 text-gray-900'>

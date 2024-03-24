@@ -1,9 +1,9 @@
 import { sortOptions } from '@/util/helpers/filter-options'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options, SortOptions } from '@/util/interfaces/interfaces'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface IQuery {
-	selectedSort: Options
+	selectedSort: SortOptions
 	countryFilter: Options | null
 	stateFilter: Options | null
 	cityFilter: Options | null
@@ -26,7 +26,7 @@ const querySlice = createSlice({
 	name: 'query',
 	initialState,
 	reducers: {
-		updateSort(state, action: PayloadAction<Options>) {
+		updateSort(state, action: PayloadAction<SortOptions>) {
 			state.selectedSort = action.payload
 		},
 		updateCountry(state, action: PayloadAction<Options | null>) {

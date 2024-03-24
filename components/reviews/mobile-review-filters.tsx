@@ -28,7 +28,6 @@ interface FiltersProps {
 	cityOptions: Options[]
 	stateOptions: Options[]
 	zipOptions?: Options[]
-	resource?: boolean
 	updateParams: () => void
 }
 
@@ -42,13 +41,10 @@ export default function MobileReviewFilters({
 	cityOptions,
 	stateOptions,
 	zipOptions,
-	resource,
 	updateParams,
 }: FiltersProps) {
 	const dispatch = useAppDispatch()
-	const query = resource
-		? useAppSelector((state) => state.resourceQuery)
-		: useAppSelector((state) => state.query)
+	const query = useAppSelector((state) => state.query)
 	const { t } = useTranslation('reviews')
 	return (
 		<Transition.Root show={mobileFiltersOpen} as={Fragment}>
