@@ -46,7 +46,7 @@ export async function getResources(
 	const searchClause =
 		search && search?.length > 0
 			? sql`AND (name ILIKE
-              ${'%' + search + '%'}
+              ${'%' + search.toUpperCase() + '%'}
               )`
 			: sql``
 
@@ -54,23 +54,23 @@ export async function getResources(
 		? sql`AND state =
     ${state.toUpperCase()}`
 		: sql``
+
 	const countryClause = country
 		? sql`AND country_code =
             ${country.toUpperCase()}`
 		: sql``
+
 	const cityClause = city
 		? sql`AND city =
     ${city.toUpperCase()}`
 		: sql``
 
 	// Fetch Resources
-	const resources = (await sql`
-			SELECT * 
-			FROM tenant_resource
-			WHERE 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause}
-			ORDER BY ${orderBy} ${sortOrder} LIMIT ${limit} 
-			OFFSET ${offset}
-		`) as Array<Resource>
+	const resources = (await sql`SELECT *
+        FROM tenant_resource
+        WHERE 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause}
+        ORDER BY ${orderBy} ${sortOrder} LIMIT ${limitParam}
+        OFFSET ${offset}`) as Array<Resource>
 
 	// Fetch Total Number of Resources
 	const totalResult =

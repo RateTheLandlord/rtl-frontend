@@ -7,13 +7,9 @@ import {
 import { useEffect, useMemo, useState } from 'react'
 import { getCityOptions, getStateOptions } from '../reviews/functions'
 import InfiniteScroll from './InfiniteScrollResources'
-import { useDebounce } from '@/util/hooks/useDebounce'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import ResourceFilters from './resource-filters'
-import {
-	updateResourceActiveFilters,
-	updateResourceSearch,
-} from '@/redux/resourceQuery/resourceQuerySlice'
+import { updateResourceActiveFilters } from '@/redux/resourceQuery/resourceQuerySlice'
 import { fetchResources } from '@/util/helpers/fetchReviews'
 import ResourceMobileFilters from './resource-mobile-filters'
 import ButtonLight from '../ui/button-light'
@@ -36,12 +32,6 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 
 	const [isLoading, setIsLoading] = useState(false)
 
-	const debouncedSearch = useDebounce(searchFilter, 500)
-
-	useEffect(() => {
-		dispatch(updateResourceSearch(debouncedSearch))
-	}, [debouncedSearch])
-
 	const [queryParams, setQueryParams] = useState({
 		sort: selectedSort.value,
 		state: '',
@@ -60,7 +50,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 			state: stateFilter?.value || '',
 			country: countryFilter?.value || '',
 			city: cityFilter?.value || '',
-			search: debouncedSearch || '',
+			search: searchFilter || '',
 			limit: '25',
 		}
 		setQueryParams(params)
@@ -159,7 +149,14 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 						/>
 
 						{!resources.length ? (
-							<div>No Resources Found</div>
+							<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
+								<h1 className='mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
+									No results found
+								</h1>
+								<p className='mt-6 text-base leading-7 text-gray-600'>
+									Sorry, we couldn't find any results for those filters.
+								</p>
+							</div>
 						) : (
 							<InfiniteScroll
 								data={resources}

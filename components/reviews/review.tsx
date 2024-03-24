@@ -12,9 +12,8 @@ import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import InfiniteScroll from './InfiniteScroll'
 import AdsComponent from '@/components/adsense/Adsense'
-import { useDebounce } from '@/util/hooks/useDebounce'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { updateActiveFilters, updateSearch } from '@/redux/query/querySlice'
+import { updateActiveFilters } from '@/redux/query/querySlice'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import MobileReviewFilters from './mobile-review-filters'
 import { useTranslation } from 'react-i18next'
@@ -63,12 +62,6 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 
 	const [isLoading, setIsLoading] = useState(false)
 
-	const debouncedSearchState = useDebounce(searchFilter, 500)
-
-	useEffect(() => {
-		dispatch(updateSearch(debouncedSearchState))
-	}, [debouncedSearchState])
-
 	const [queryParams, setQueryParams] = useState({
 		sort: selectedSort.value,
 		state: '',
@@ -89,7 +82,7 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 			country: countryFilter?.value || '',
 			city: cityFilter?.value || '',
 			zip: zipFilter?.value || '',
-			search: debouncedSearchState || '',
+			search: searchFilter || '',
 			limit: '25',
 		}
 		setQueryParams(params)
@@ -226,17 +219,28 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 							updateParams={updateParams}
 							loading={isLoading}
 						/>
-						<InfiniteScroll
-							data={reviews}
-							setReportOpen={setReportOpen}
-							setSelectedReview={setSelectedReview}
-							setRemoveReviewOpen={setRemoveReviewOpen}
-							setEditReviewOpen={setEditReviewOpen}
-							setPage={setPage}
-							hasMore={hasMore}
-							isLoading={isLoading}
-							setIsLoading={setIsLoading}
-						/>
+						{!reviews.length ? (
+							<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
+								<h1 className='mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
+									No results found
+								</h1>
+								<p className='mt-6 text-base leading-7 text-gray-600'>
+									Sorry, we couldn't find any results for those filters.
+								</p>
+							</div>
+						) : (
+							<InfiniteScroll
+								data={reviews}
+								setReportOpen={setReportOpen}
+								setSelectedReview={setSelectedReview}
+								setRemoveReviewOpen={setRemoveReviewOpen}
+								setEditReviewOpen={setEditReviewOpen}
+								setPage={setPage}
+								hasMore={hasMore}
+								isLoading={isLoading}
+								setIsLoading={setIsLoading}
+							/>
+						)}
 					</div>
 				</div>
 			</div>
