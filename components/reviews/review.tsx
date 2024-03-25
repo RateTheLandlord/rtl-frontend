@@ -75,7 +75,6 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 
 	// Filtering and Infinite Loading
 	const updateParams = () => {
-		setPage(1)
 		const params = {
 			sort: selectedSort.value,
 			state: stateFilter?.value || '',
@@ -85,10 +84,11 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 			search: searchFilter || '',
 			limit: '25',
 		}
-		setQueryParams(params)
 		dispatch(
 			updateActiveFilters([stateFilter, countryFilter, cityFilter, zipFilter]),
 		)
+		setQueryParams(params)
+		setPage(1)
 	}
 
 	const fetchData = async () => {

@@ -50,7 +50,6 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 
 	// Filtering and Infinite Loading
 	const updateParams = () => {
-		setPage(1)
 		const params = {
 			sort: selectedSort.value,
 			state: stateFilter?.value || '',
@@ -59,10 +58,11 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 			search: searchFilter || '',
 			limit: '25',
 		}
-		setQueryParams(params)
 		dispatch(
 			updateResourceActiveFilters([stateFilter, countryFilter, cityFilter]),
 		)
+		setPage(1)
+		setQueryParams(params)
 	}
 
 	const fetchData = async () => {
