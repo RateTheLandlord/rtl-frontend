@@ -3,7 +3,7 @@ const Privacy = () => {
 		<div data-testid='about-terms-1' className='w-full bg-white'>
 			<div className='mx-auto flex max-w-7xl flex-col gap-2 px-6 text-lg lg:px-8'>
 				<h1>
-					<span className='mt-2 block text-center text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl'>
+					<span className='mt-2 block text-center text-3xl  leading-8  text-gray-900 sm:text-4xl'>
 						Privacy Policy
 					</span>
 				</h1>
@@ -12,36 +12,36 @@ const Privacy = () => {
 					maintaining the confidentiality of your information. This Privacy
 					Policy outlines how we handle data on our website:
 				</p>
-				<h2 className='font-extrabold'>1. Information Collection</h2>
+				<h2 className=''>1. Information Collection</h2>
 				<p>
 					We do not collect any personal information from visitors to our
 					website.
 				</p>
-				<h2 className='font-extrabold'>2. Cookies and Tracking Technologies</h2>
+				<h2 className=''>2. Cookies and Tracking Technologies</h2>
 				<p>
 					Our website does not use cookies or any other tracking technologies to
 					collect information about visitors other than those employed by our
 					Analytics Service, reCaptcha, and Google Advertisements (outlined
 					below).
 				</p>
-				<h2 className='font-extrabold'>3. Information Sharing</h2>
+				<h2 className=''>3. Information Sharing</h2>
 				<p>
 					We do not share any information with third parties, as we do not
 					collect any information in the first place.
 				</p>
-				<h2 className='font-extrabold'>4. Data Security</h2>
+				<h2 className=''>4. Data Security</h2>
 				<p>
 					While we do not collect any personal information, we still take
 					appropriate measures to ensure the security of our website and protect
 					against unauthorized access, alteration, disclosure, or destruction.
 				</p>
-				<h2 className='font-extrabold'>5. Children's Privacy</h2>
+				<h2 className=''>5. Children's Privacy</h2>
 				<p>
 					Our website is not directed at children under the age of 13, and we do
 					not knowingly collect any personal information from children.
 				</p>
 
-				<h2 className='font-extrabold'>6. Analytic Services</h2>
+				<h2 className=''>6. Analytic Services</h2>
 				<p>
 					We use a third-party analytics service, Umami analytics, to help us
 					understand how visitors interact with our website. This service
@@ -61,7 +61,7 @@ const Privacy = () => {
 					by Umami analytics in the manner and for the purposes set out above.
 				</p>
 
-				<h2 className='font-extrabold'>7. Bot Detection Services</h2>
+				<h2 className=''>7. Bot Detection Services</h2>
 				<p>
 					We use Google reCAPTCHA on our website to help protect against
 					automated abuse, such as spam and bot traffic. reCAPTCHA collects
@@ -79,7 +79,7 @@ const Privacy = () => {
 					data by Google in connection with reCAPTCHA.
 				</p>
 
-				<h2 className='font-extrabold'>8. Advertising Services</h2>
+				<h2 className=''>8. Advertising Services</h2>
 				<p>
 					We use Google Ads on our website to display advertisements to our
 					visitors. Google Ads may use cookies and other tracking technologies
@@ -97,14 +97,14 @@ const Privacy = () => {
 					Policy and Terms of Service, which govern the collection and use of
 					data by Google in connection with advertising services.
 				</p>
-				<h2 className='font-extrabold'>9. Changes to This Privacy Policy</h2>
+				<h2 className=''>9. Changes to This Privacy Policy</h2>
 				<p>
 					We reserve the right to update or change our Privacy Policy at any
 					time. Any changes will be effective immediately upon posting the
 					updated Privacy Policy on this page.
 				</p>
 
-				<h2 className='font-extrabold'>10. Contact Information</h2>
+				<h2 className=''>10. Contact Information</h2>
 				<p>
 					If you have any questions about Privacy Policy, please contact us at
 					contact@ratethelandlord.org.

@@ -77,9 +77,7 @@ export default function Testimonials() {
 								</blockquote>
 								<figcaption className='mt-6 flex items-center gap-x-4'>
 									<div>
-										<div className='font-semibold'>
-											{testimonial.author.name}
-										</div>
+										<h3>{testimonial.author.name}</h3>
 									</div>
 								</figcaption>
 							</figure>

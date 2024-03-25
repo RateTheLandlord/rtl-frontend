@@ -21,18 +21,18 @@ export async function getResources(
 	params: ResourceQuery,
 ): Promise<ResourcesResponse> {
 	const {
-		page: pageParam,
-		limit: limitParam,
+		page: pageNumber = 1,
+		limit: limitParam = 25,
 		search,
 		sort,
 		state,
 		country,
 		city,
 	} = params
-	const page = pageParam ? pageParam : 1
+
 	const limit = limitParam ? limitParam : 25
 
-	const offset = (page - 1) * Number(limit)
+	const offset = (pageNumber - 1) * Number(limit)
 
 	let orderBy = sql`id`
 	if (sort === 'az' || sort === 'za') {
@@ -46,7 +46,7 @@ export async function getResources(
 	const searchClause =
 		search && search?.length > 0
 			? sql`AND (name ILIKE
-              ${'%' + search + '%'}
+              ${'%' + search.toUpperCase() + '%'}
               )`
 			: sql``
 
@@ -54,23 +54,23 @@ export async function getResources(
 		? sql`AND state =
     ${state.toUpperCase()}`
 		: sql``
+
 	const countryClause = country
 		? sql`AND country_code =
             ${country.toUpperCase()}`
 		: sql``
+
 	const cityClause = city
 		? sql`AND city =
     ${city.toUpperCase()}`
 		: sql``
 
 	// Fetch Resources
-	const resources = (await sql`
-			SELECT * 
-			FROM tenant_resource
-			WHERE 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause}
-			ORDER BY ${orderBy} ${sortOrder} LIMIT ${limit} 
-			OFFSET ${offset}
-		`) as Array<Resource>
+	const resources = (await sql`SELECT *
+        FROM tenant_resource
+        WHERE 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause}
+        ORDER BY ${orderBy} ${sortOrder} LIMIT ${limitParam}
+        OFFSET ${offset}`) as Array<Resource>
 
 	// Fetch Total Number of Resources
 	const totalResult =

@@ -103,7 +103,7 @@ const Stats = () => {
 	return (
 		<div className='flex flex-row flex-wrap gap-2'>
 			<div className='w-full'>
-				<h5 className='text-lg font-bold'>
+				<h5 className='text-lg '>
 					Total Reviews: {data.total_stats.total_reviews}
 				</h5>
 			</div>

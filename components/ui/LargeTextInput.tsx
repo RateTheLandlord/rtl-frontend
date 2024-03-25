@@ -23,10 +23,7 @@ const LargeTextInput = ({
 }: IProps) => {
 	return (
 		<div>
-			<label
-				htmlFor={id}
-				className='mt-2 block text-sm font-medium text-gray-700'
-			>
+			<label htmlFor={id} className='mt-2 block text-sm  text-gray-700'>
 				{title}
 			</label>
 			<div className='mt-1'>

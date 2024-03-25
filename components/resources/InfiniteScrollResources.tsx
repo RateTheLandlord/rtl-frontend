@@ -47,7 +47,7 @@ function InfiniteScroll({
 	}, [data])
 
 	return (
-		<div className='w-full'>
+		<div className='w-full px-4'>
 			<ul
 				role='list'
 				className='mt-4 grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8'
@@ -59,17 +59,17 @@ function InfiniteScroll({
 					>
 						<a href={resource.href}>
 							<div className='flex flex-col items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6'>
-								<div className='text-xl font-medium leading-6 text-gray-900'>
+								<h4 className='text-center text-xl leading-6 text-gray-900'>
 									{resource.name}
-								</div>
-								<div className='text-xs font-medium leading-6 text-gray-900'>
+								</h4>
+								<h6 className='text-xs leading-6 text-gray-900'>
 									{`${resource.city.length > 0 ? `${resource.city}, ` : ''}${
 										resource.state === 'NO STATE / PROVINCE'
 											? `${countryName(resource.country_code)}`
 											: `${resource.state},
 										${resource.country_code} `
 									}`}
-								</div>
+								</h6>
 							</div>
 							<dl className='-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6'>
 								{resource.address && (
@@ -86,9 +86,7 @@ function InfiniteScroll({
 								)}
 								<div className='flex justify-between gap-x-4 py-3'>
 									<dd className='flex items-start gap-x-2'>
-										<div className='font-medium text-gray-700'>
-											{resource.description}
-										</div>
+										<div className=' text-gray-700'>{resource.description}</div>
 									</dd>
 								</div>
 							</dl>

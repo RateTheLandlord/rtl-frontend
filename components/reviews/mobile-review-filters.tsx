@@ -8,8 +8,15 @@ import { useTranslation } from 'react-i18next'
 import ComboBox from './ui/combobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { updateQuery } from '@/redux/query/querySlice'
-import { updateResourceQuery } from '@/redux/resourceQuery/resourceQuerySlice'
+import {
+	clearFilters,
+	updateCity,
+	updateCountry,
+	updateSearch,
+	updateState,
+	updateZip,
+} from '@/redux/query/querySlice'
+import ButtonLight from '../ui/button-light'
 
 interface FiltersProps {
 	mobileFiltersOpen: boolean
@@ -21,7 +28,7 @@ interface FiltersProps {
 	cityOptions: Options[]
 	stateOptions: Options[]
 	zipOptions?: Options[]
-	resource?: boolean
+	updateParams: () => void
 }
 
 export default function MobileReviewFilters({
@@ -34,12 +41,10 @@ export default function MobileReviewFilters({
 	cityOptions,
 	stateOptions,
 	zipOptions,
-	resource,
+	updateParams,
 }: FiltersProps) {
 	const dispatch = useAppDispatch()
-	const query = resource
-		? useAppSelector((state) => state.resourceQuery)
-		: useAppSelector((state) => state.query)
+	const query = useAppSelector((state) => state.query)
 	const { t } = useTranslation('reviews')
 	return (
 		<Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -75,7 +80,7 @@ export default function MobileReviewFilters({
 					>
 						<Dialog.Panel className='relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl'>
 							<div className='flex items-center justify-between px-4'>
-								<h2 className='text-lg font-medium text-gray-900'>
+								<h2 className='text-lg  text-gray-900'>
 									{t('reviews.filters')}
 								</h2>
 								<button
@@ -93,91 +98,59 @@ export default function MobileReviewFilters({
 								<Popover.Group className='mx-2 flex flex-col items-center gap-2 divide-y'>
 									<SearchBar
 										setSearchState={(str: string) =>
-											resource
-												? dispatch(
-														updateResourceQuery({
-															...query,
-															searchFilter: str,
-														}),
-												  )
-												: dispatch(updateQuery({ ...query, searchFilter: str }))
+											dispatch(updateSearch(str))
 										}
-										mobile
 										value={query.searchFilter}
-										onClick={(p) => setMobileFiltersOpen(p)}
 									/>
 
 									<MobileSelectList
 										state={countryFilter}
-										setState={(opt: Options) =>
-											resource
-												? dispatch(
-														updateResourceQuery({
-															...query,
-															countryFilter: opt,
-														}),
-												  )
-												: dispatch(
-														updateQuery({ ...query, countryFilter: opt }),
-												  )
-										}
+										setState={(opt: Options) => dispatch(updateCountry(opt))}
 										options={countryOptions}
 										name={t('reviews.country')}
 									/>
 									<ComboBox
 										state={stateFilter}
-										setState={(opt: Options) =>
-											resource
-												? dispatch(
-														updateResourceQuery({
-															...query,
-															stateFilter: opt,
-														}),
-												  )
-												: dispatch(updateQuery({ ...query, stateFilter: opt }))
-										}
+										setState={(opt: Options) => dispatch(updateState(opt))}
 										options={stateOptions}
 										name={t('reviews.state')}
 									/>
 									<ComboBox
 										state={cityFilter}
-										setState={(opt: Options) =>
-											resource
-												? dispatch(
-														updateResourceQuery({
-															...query,
-															cityFilter: opt,
-														}),
-												  )
-												: dispatch(updateQuery({ ...query, cityFilter: opt }))
-										}
+										setState={(opt: Options) => dispatch(updateCity(opt))}
 										options={cityOptions}
 										name={t('reviews.city')}
 									/>
 									{zipOptions && (
 										<ComboBox
 											state={zipFilter}
-											setState={(opt: Options) =>
-												resource
-													? dispatch(
-															updateResourceQuery({
-																...query,
-																zipFilter: opt,
-															}),
-													  )
-													: dispatch(updateQuery({ ...query, zipFilter: opt }))
-											}
+											setState={(opt: Options) => dispatch(updateZip(opt))}
 											options={zipOptions}
 											name={t('reviews.zip')}
 										/>
 									)}
 									<div className='w-full pt-2'>
 										<button
-											onClick={() => setMobileFiltersOpen(false)}
+											onClick={() => {
+												updateParams()
+												setMobileFiltersOpen(false)
+											}}
 											className='w-full rounded-lg bg-teal-600 py-2 text-white'
 										>
 											Apply Filters
 										</button>
+									</div>
+									<div className='flex w-full justify-end pt-2'>
+										<ButtonLight
+											umami='Mobile / Reset Filters'
+											onClick={() => {
+												dispatch(clearFilters())
+												setMobileFiltersOpen(false)
+												updateParams()
+											}}
+										>
+											Clear Filters
+										</ButtonLight>
 									</div>
 								</Popover.Group>
 							</div>

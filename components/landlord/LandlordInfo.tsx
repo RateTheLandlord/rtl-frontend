@@ -17,9 +17,7 @@ const LandlordInfo = ({ name, average, total }: IProps) => {
 	})
 	return (
 		<div className='w-full border-b border-b-gray-200'>
-			<h2 className='text-2xl font-bold tracking-tight text-gray-900'>
-				{decodeURIComponent(name)}
-			</h2>
+			<h2 className='text-2xl   text-gray-900'>{decodeURIComponent(name)}</h2>
 
 			<div className='mt-3 flex items-center gap-4'>
 				<div className='flex flex-col gap-4'>
@@ -45,16 +43,14 @@ const LandlordInfo = ({ name, average, total }: IProps) => {
 			</div>
 
 			<div className='flex flex-col gap-4'>
-				<h3 className='text-lg font-medium text-gray-900'>
-					{t('landlord.share')}
-				</h3>
+				<h3 className='text-lg  text-gray-900'>{t('landlord.share')}</h3>
 				<p className='mt-1 text-sm text-gray-600'>{t('landlord.share-sub')}</p>
 
 				<div>
 					<Link href='/create-review'>
 						<p
 							data-umami-event='Landlord / Submit a Review Button'
-							className='mt-2 inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'
+							className='mt-2 inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm  text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'
 						>
 							{t('landlord.submit')}
 						</p>
@@ -67,7 +63,7 @@ const LandlordInfo = ({ name, average, total }: IProps) => {
 						<>
 							<dt>
 								<Disclosure.Button className='flex w-full items-start justify-between text-left text-gray-900'>
-									<span className='text-base font-semibold leading-7'>
+									<span className='text-base  leading-7'>
 										{t('landlord.tenant')}
 									</span>
 									<span className='ml-6 flex h-7 items-center'>

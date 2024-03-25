@@ -78,7 +78,6 @@ export async function getStaticProps() {
 		})
 		.catch((err) => console.log('Error: ', err))
 
-	console.log(campaignId)
 	const members = await fetch(
 		`https://www.patreon.com/api/oauth2/v2/campaigns/${campaignId}/members?include=currently_entitled_tiers&fields%5Bmember%5D=full_name&fields%5Btier%5D=amount_cents,created_at,discord_role_ids,edited_at,patron_count,title,url`,
 		{

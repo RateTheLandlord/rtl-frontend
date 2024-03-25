@@ -17,7 +17,7 @@ function RatingsRadio({ title, rating, setRating, tooltip }: Props) {
 
 	return (
 		<div data-testid='ratings-radio-1'>
-			<h2 className='font-medium text-gray-900'>
+			<h2 className=' text-gray-900'>
 				{title} {t('create-review.review-radio.rating')}
 			</h2>
 			<p className='text-xs text-gray-500'>{tooltip}</p>
@@ -37,7 +37,7 @@ function RatingsRadio({ title, rating, setRating, tooltip }: Props) {
 									checked
 										? 'border-transparent bg-teal-600 text-white hover:bg-teal-700'
 										: 'border-gray-200 bg-white text-gray-900 hover:bg-gray-50',
-									'flex cursor-pointer items-center justify-center rounded-md border px-3 py-3 text-sm font-medium uppercase sm:flex-1',
+									'flex cursor-pointer items-center justify-center rounded-md border px-3 py-3 text-sm  uppercase sm:flex-1',
 								)
 							}
 						>

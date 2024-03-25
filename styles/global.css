@@ -1,3 +1,64 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@layer base {
+	@font-face {
+		font-family: 'Montserrat-Regular', sans-serif;
+		font-weight: 400;
+		src: url('/components/fonts/Montserrat-Regular.ttf') format('truetype');
+	}
+	@font-face {
+		font-family: 'Montserrat-Medium', sans-serif;
+		font-weight: 500;
+		src: url('/components/fonts/Montserrat-Medium.ttf') format('truetype');
+	}
+	@font-face {
+		font-family: 'Montserrat-Bold', sans-serif;
+		font-weight: 600;
+		src: url('/components/fonts/Montserrat-Bold.ttf') format('truetype');
+	}
+	@font-face {
+		font-family: 'Montserrat-Extra-Bold', sans-serif;
+		font-weight: 800;
+		src: url('/components/fonts/Montserrat-ExtraBold.ttf') format('truetype');
+	}
+	html {
+		font-family: 'Montserrat-Regular', sans-serif;
+		font-weight: 400;
+		src: url('/components/fonts/Montserrat-Regular.ttf') format('truetype');
+	}
+
+	p,
+	button,
+	a,
+	input,
+	dt,
+	dd,
+	dl {
+		font-family: 'Montserrat-Regular', sans-serif;
+		font-weight: 400;
+		src: url('/components/fonts/Montserrat-Regular.ttf') format('truetype');
+	}
+
+	h1 {
+		font-family: 'Montserrat-Extra-Bold', sans-serif;
+		font-weight: 800;
+		src: url('/components/fonts/Montserrat-ExtraBold.ttf') format('truetype');
+	}
+
+	h2,
+	h3 {
+		font-family: 'Montserrat-Bold', sans-serif;
+		font-weight: 600;
+		src: url('/components/fonts/Montserrat-Bold.ttf') format('truetype');
+	}
+
+	h4,
+	h5,
+	h6 {
+		font-family: 'Montserrat-Regular', sans-serif;
+		font-weight: 400;
+		src: url('/components/fonts/Montserrat-Regular.ttf') format('truetype');
+	}
+}

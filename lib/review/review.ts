@@ -77,7 +77,7 @@ export async function getReviews(
 		AND (flagged = false OR (flagged = true AND admin_approved = true))
         ORDER BY ${orderBy} ${sortOrder} LIMIT ${limitParam}
         OFFSET ${offset}
-    `) as any
+    `) as Array<Review>
 
 	// Fetch total number of reviews
 	const totalResult = await sql`

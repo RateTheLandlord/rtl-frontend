@@ -95,19 +95,19 @@ const FlaggedReviews = () => {
 						<tr>
 							<th
 								scope='col'
-								className='py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6'
+								className='py-3.5 pl-4 pr-3 text-left text-sm  text-gray-900 sm:pl-6'
 							>
 								Landlord
 							</th>
 							<th
 								scope='col'
-								className='hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell'
+								className='hidden px-3 py-3.5 text-left text-sm  text-gray-900 lg:table-cell'
 							>
 								Reason
 							</th>
 							<th
 								scope='col'
-								className='hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell'
+								className='hidden px-3 py-3.5 text-left text-sm  text-gray-900 sm:table-cell'
 							>
 								Review
 							</th>
@@ -128,9 +128,9 @@ const FlaggedReviews = () => {
 								key={review.id}
 								className={`${review.admin_approved ? 'bg-green-100' : ''}`}
 							>
-								<td className='w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6'>
+								<td className='w-full max-w-0 py-4 pl-4 pr-3 text-sm  text-gray-900 sm:w-auto sm:max-w-none sm:pl-6'>
 									{review.landlord}
-									<dl className='font-normal lg:hidden'>
+									<dl className='lg:hidden'>
 										<dt className='sr-only'>Reason</dt>
 										<dd className='mt-1 truncate text-gray-500'>
 											{review.flagged_reason}
@@ -147,7 +147,7 @@ const FlaggedReviews = () => {
 								<td className='hidden px-3 py-4 text-sm text-gray-500 sm:table-cell'>
 									{review.review}
 								</td>
-								<td className='py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6'>
+								<td className='py-4 pl-3 pr-4 text-center text-sm  sm:pr-6'>
 									<button
 										onClick={() => {
 											onSubmitApproveReview(review)
@@ -157,7 +157,7 @@ const FlaggedReviews = () => {
 										Approve
 									</button>
 								</td>
-								<td className='py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6'>
+								<td className='py-4 pl-3 pr-4 text-center text-sm  sm:pr-6'>
 									<button
 										onClick={() => {
 											setSelectedReview(review)
@@ -168,7 +168,7 @@ const FlaggedReviews = () => {
 										Edit
 									</button>
 								</td>
-								<td className='py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6'>
+								<td className='py-4 pl-3 pr-4 text-center text-sm  sm:pr-6'>
 									<button
 										onClick={() => {
 											setSelectedReview(review)

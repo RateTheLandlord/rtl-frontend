@@ -52,8 +52,8 @@ export default function MobileSelectList({
 										<span
 											className={`block truncate ${
 												option.name === state?.name
-													? 'font-medium'
-													: 'font-normal'
+													? 'font-montserrat-medium'
+													: 'font-montserrat-regular'
 											}`}
 										>
 											{option.name}

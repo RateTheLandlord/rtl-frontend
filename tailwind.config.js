@@ -9,7 +9,14 @@ module.exports = {
 		'./src/**/*.{js,ts,jsx,tsx,mdx}',
 	],
 	theme: {
-		extend: {},
+		extend: {
+			fontFamily: {
+				'montserrat-regular': ['Montserrat-Regular', 'sans-serif'],
+				'montserrat-medium': ['Montserrat-Medium', 'sans-serif'],
+				'montserrat-bold': ['Montserrat-Bold', 'sans-serif'],
+				'montserrat-extra-bold': ['Montserrat-Extra-Bold', 'sans-serif'],
+			},
+		},
 	},
 	plugins: [
 		require('@tailwindcss/typography'),
