@@ -12,7 +12,7 @@ export default function IconSection() {
 				<div className='rounded-3xl bg-gray-50 px-6 py-16 sm:p-16'>
 					<div className='mx-auto max-w-xl lg:max-w-none'>
 						<div className='text-center'>
-							<h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>
+							<h2 className='text-2xl   text-gray-900'>
 								{t('home.icon.title')}
 							</h2>
 						</div>
@@ -24,7 +24,7 @@ export default function IconSection() {
 									</div>
 								</div>
 								<div className='mt-3 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-6'>
-									<h3 className='text-2xl font-extrabold text-gray-900'>
+									<h3 className='text-2xl  text-gray-900'>
 										{t('home.icon.anonymity')}
 									</h3>
 									<p className='mt-2 text-sm text-gray-900'>
@@ -39,7 +39,7 @@ export default function IconSection() {
 									</div>
 								</div>
 								<div className='mt-3 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-6'>
-									<h3 className='text-2xl font-extrabold text-gray-900'>
+									<h3 className='text-2xl  text-gray-900'>
 										{t('home.icon.solidarity')}
 									</h3>
 									<p className='mt-2 text-sm text-gray-900'>
@@ -54,7 +54,7 @@ export default function IconSection() {
 									</div>
 								</div>
 								<div className='mt-3 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-6'>
-									<h3 className='text-2xl font-extrabold text-gray-900'>
+									<h3 className='text-2xl  text-gray-900'>
 										{t('home.icon.transparency')}
 									</h3>
 									<p className='mt-2 text-sm text-gray-900'>

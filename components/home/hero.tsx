@@ -11,7 +11,7 @@ function Hero(): JSX.Element {
 			className='mx-auto flex max-w-7xl flex-col px-6 pb-24 pt-10 sm:pb-32 lg:flex-row lg:items-center lg:px-8'
 		>
 			<div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0'>
-				<h1 className='mt-10 text-center text-4xl font-bold tracking-tight text-teal-600 sm:text-6xl lg:text-left'>
+				<h1 className='mt-10 text-center text-4xl  text-teal-600 sm:text-6xl lg:text-left'>
 					{t('home.hero.title')}
 				</h1>
 				<p className='mt-6 text-center text-lg leading-8 text-gray-600 lg:text-left'>

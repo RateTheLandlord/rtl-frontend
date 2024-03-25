@@ -26,7 +26,7 @@ const Faq = () => {
 		<div className='w-full bg-white' data-testid='about-faq-1'>
 			<div className='mx-auto max-w-7xl px-6 py-8 lg:px-8'>
 				<div className='mx-auto max-w-4xl divide-y divide-gray-900/10'>
-					<h2 className='mt-2 block text-center text-xl font-bold leading-8 tracking-tight text-gray-900 sm:text-2xl'>
+					<h2 className='mt-2 block text-center text-xl  leading-8  text-gray-900 sm:text-2xl'>
 						{t('about.faq.faq')}
 					</h2>
 					<dl className='mt-10 space-y-6 divide-y divide-gray-900/10'>
@@ -36,7 +36,7 @@ const Faq = () => {
 									<>
 										<dt>
 											<Disclosure.Button className='flex w-full items-start justify-between text-left text-gray-900'>
-												<span className='text-base font-semibold leading-7'>
+												<span className='text-base  leading-7'>
 													{faq.question}
 												</span>
 												<span className='ml-6 flex h-7 items-center'>

@@ -209,9 +209,9 @@ const LandlordPage = ({
 												</p>
 											) : null} */}
 
-											<div className='mt-3 space-y-6 text-sm text-gray-500'>
+											<p className='mt-3 space-y-6 text-sm text-gray-500'>
 												{review.review}
-											</div>
+											</p>
 										</div>
 									</div>
 								</div>

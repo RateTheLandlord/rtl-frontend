@@ -49,7 +49,7 @@ export default function Reviews({ data }: IProps): JSX.Element {
 					},
 				]}
 			/>
-			{data.reviews && <Review data={data} />}
+			<Review data={data} />
 		</>
 	)
 }

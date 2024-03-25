@@ -15,7 +15,7 @@ export default function ActiveFilters({
 	return (
 		<span
 			key={activeFilter?.name}
-			className='m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-sm font-medium text-gray-900'
+			className='m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-sm  text-gray-900'
 		>
 			<span>{activeFilter?.name}</span>
 			<button

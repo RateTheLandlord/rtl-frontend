@@ -41,27 +41,28 @@ export interface QueryParams {
 }
 
 const Review = ({ data }: { data: ReviewsResponse }) => {
+	// Localization
 	const { t } = useTranslation('reviews')
 
-	const [page, setPage] = useState<number>(1)
-
-	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
-
-	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
+	// Redux
 	const query = useAppSelector((state) => state.query)
 	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
 		query
+
 	const dispatch = useAppDispatch()
+	// State
+	const [reviews, setReviews] = useState<Review[]>(data?.reviews || [])
+	const [page, setPage] = useState<number>(1)
+	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
+	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
 	const [hasMore, setHasMore] = useState(true) // Track if there is more content to load
-
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
-
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
-
 	const [isLoading, setIsLoading] = useState(false)
 
+	// Query
 	const [queryParams, setQueryParams] = useState({
 		sort: selectedSort.value,
 		state: '',
@@ -72,8 +73,7 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 		limit: '25',
 	})
 
-	const [reviews, setReviews] = useState<Review[]>(data?.reviews || [])
-
+	// Filtering and Infinite Loading
 	const updateParams = () => {
 		setPage(1)
 		const params = {
@@ -127,6 +127,7 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 		setHasMore(true)
 	}, [queryParams])
 
+	// Filtering Options
 	const cityOptions = useMemo(
 		() => getCityOptions(data?.cities ?? []),
 		[data?.cities],
@@ -174,9 +175,7 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 				<div>
 					<div className='mx-auto max-w-7xl border-b-gray-200 px-4 py-16 sm:px-6 lg:border-b lg:px-8'>
 						<div>
-							<h1 className='text-3xl font-extrabold tracking-tight text-gray-900'>
-								{t('reviews.title')}
-							</h1>
+							<h1 className='text-3xl   text-gray-900'>{t('reviews.title')}</h1>
 							<p className='mt-4 max-w-xl text-sm text-gray-700'>
 								{t('reviews.body')}
 							</p>
@@ -221,7 +220,7 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 						/>
 						{!reviews.length ? (
 							<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
-								<h1 className='mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
+								<h1 className='mt-4 text-3xl   text-gray-900 sm:text-5xl'>
 									No results found
 								</h1>
 								<p className='mt-6 text-base leading-7 text-gray-600'>

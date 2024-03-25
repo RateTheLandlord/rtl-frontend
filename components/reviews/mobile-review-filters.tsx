@@ -80,7 +80,7 @@ export default function MobileReviewFilters({
 					>
 						<Dialog.Panel className='relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl'>
 							<div className='flex items-center justify-between px-4'>
-								<h2 className='text-lg font-medium text-gray-900'>
+								<h2 className='text-lg  text-gray-900'>
 									{t('reviews.filters')}
 								</h2>
 								<button

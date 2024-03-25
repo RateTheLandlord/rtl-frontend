@@ -62,12 +62,10 @@ const TotalStats = ({ data }: { data: ICountryStats }) => {
 					stat.isActive ? 'bg-gray-200' : ''
 				}`}
 			>
-				<dt className='order-2 mt-2 text-lg font-medium leading-6 text-gray-500'>
+				<dt className='order-2 mt-2 text-lg  leading-6 text-gray-500'>
 					{stat.label}
 				</dt>
-				<dd className='order-1 text-5xl font-bold tracking-tight text-indigo-600'>
-					{stat.data}
-				</dd>
+				<dd className='order-1 text-5xl   text-indigo-600'>{stat.data}</dd>
 			</div>
 		))
 	}
@@ -95,10 +93,10 @@ const TotalStats = ({ data }: { data: ICountryStats }) => {
 		<div className='container flex w-full flex-wrap justify-center px-4 sm:px-6 lg:px-8'>
 			<div className='mt-3 flex w-full flex-col justify-center gap-3 lg:flex-row'>
 				<div className='flex flex-col p-6 text-center'>
-					<dt className='order-2 mt-2 text-lg font-medium leading-6 text-gray-500'>
+					<dt className='order-2 mt-2 text-lg  leading-6 text-gray-500'>
 						Total Reviews
 					</dt>
-					<dd className='order-1 text-5xl font-bold tracking-tight text-indigo-600'>
+					<dd className='order-1 text-5xl   text-indigo-600'>
 						{data.total_reviews}
 					</dd>
 				</div>

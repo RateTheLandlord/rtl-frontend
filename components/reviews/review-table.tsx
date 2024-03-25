@@ -76,7 +76,7 @@ function ReviewTable({
 														href={`/landlord/${encodeURIComponent(
 															review.landlord,
 														)}`}
-														className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg font-medium hover:underline lg:mb-2 lg:items-center'
+														className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg  hover:underline lg:mb-2 lg:items-center'
 														data-umami-event='Reviews / Landlord Link'
 													>
 														<h6 className='text-center'>{review.landlord}</h6>
@@ -204,9 +204,9 @@ function ReviewTable({
 														</p>
 													) : null}
 
-													<div className='mt-3 space-y-6 text-sm text-gray-500'>
+													<p className='mt-3 space-y-6 text-sm text-gray-500'>
 														{review.review}
-													</div>
+													</p>
 												</div>
 											</div>
 										</div>

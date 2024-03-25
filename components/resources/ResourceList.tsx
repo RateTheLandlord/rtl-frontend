@@ -20,6 +20,10 @@ const resourceSortOptions: Array<SortOptions> = sortOptions.filter(
 )
 
 export default function ResourceList({ data }: { data: ResourceResponse }) {
+	// Localization
+	const { t } = useTranslation('reviews')
+
+	// Redux
 	const query = useAppSelector((state) => state.resourceQuery)
 	const { countryFilter, stateFilter, cityFilter, searchFilter } = query
 	const dispatch = useAppDispatch()
@@ -27,11 +31,14 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 		resourceSortOptions[2],
 	)
 
+	// State
 	const [page, setPage] = useState<number>(1)
 	const [hasMore, setHasMore] = useState(true) // Track if there is more content to load
-
 	const [isLoading, setIsLoading] = useState(false)
+	const [resources, setResources] = useState<Resource[]>(data?.resources || [])
+	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
 
+	// Query
 	const [queryParams, setQueryParams] = useState({
 		sort: selectedSort.value,
 		state: '',
@@ -41,8 +48,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 		limit: '25',
 	})
 
-	const [resources, setResources] = useState<Resource[]>(data?.resources || [])
-
+	// Filtering and Infinite Loading
 	const updateParams = () => {
 		setPage(1)
 		const params = {
@@ -98,6 +104,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 		setHasMore(true)
 	}, [queryParams])
 
+	// Filtering Options
 	const cityOptions = useMemo(
 		() => getCityOptions(data?.cities ?? []),
 		[data?.cities],
@@ -106,9 +113,6 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 		() => getStateOptions(data?.states ?? []),
 		[data?.states],
 	)
-	const { t } = useTranslation('reviews')
-
-	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
 
 	return (
 		<div className='w-full'>
@@ -150,7 +154,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 
 						{!resources.length ? (
 							<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
-								<h1 className='mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
+								<h1 className='mt-4 text-3xl   text-gray-900 sm:text-5xl'>
 									No results found
 								</h1>
 								<p className='mt-6 text-base leading-7 text-gray-600'>

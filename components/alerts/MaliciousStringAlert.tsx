@@ -15,7 +15,7 @@ const MaliciousStringAlert = ({ setMaliciousAlertOpen }: IProps) => {
 					<XCircleIcon className='h-5 w-5 text-red-600' aria-hidden='true' />
 				</div>
 				<div className='ml-3'>
-					<p className='text-sm font-medium text-orange-700'>
+					<p className='text-sm  text-orange-700'>
 						{t('alerts.maliciousString')}
 					</p>
 				</div>

@@ -47,7 +47,9 @@ export default function SelectList({
 							>
 								<span
 									className={`block truncate ${
-										option.name === state?.name ? 'font-medium' : 'font-normal'
+										option.name === state?.name
+											? 'font-montserrat-medium'
+											: 'font-montserrat-regular'
 									}`}
 								>
 									{option.name}
