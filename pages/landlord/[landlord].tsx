@@ -77,13 +77,13 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
 	const data = await getLandlordReviews(params.landlord)
 
-	if(data.length === 0){
+	if (data.length === 0) {
 		return {
-            redirect: {
-                permanent: false,
-                destination: '/404',
-            },
-        };
+			redirect: {
+				permanent: false,
+				destination: '/404',
+			},
+		}
 	}
 
 	// Pass post data to the page via props

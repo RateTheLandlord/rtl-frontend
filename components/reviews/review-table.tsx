@@ -70,13 +70,13 @@ function ReviewTable({
 											/>
 										)}
 										<div className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-8'>
-											<div className='flex flex-row flex-wrap items-center justify-between bg-gray-50 p-2 lg:min-w-[250px] lg:max-w-[275px] lg:flex-col'>
+											<div className='flex flex-col items-center bg-gray-50 p-2 lg:min-w-[250px] lg:max-w-[275px] lg:flex-col'>
 												<div className='flex w-full flex-row justify-between'>
 													<Link
 														href={`/landlord/${encodeURIComponent(
 															review.landlord,
 														)}`}
-														className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg font-medium hover:underline lg:mb-2 lg:items-center'
+														className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg  hover:underline lg:mb-2 lg:items-center'
 														data-umami-event='Reviews / Landlord Link'
 													>
 														<h6 className='text-center'>{review.landlord}</h6>
@@ -204,9 +204,9 @@ function ReviewTable({
 														</p>
 													) : null}
 
-													<div className='mt-3 space-y-6 text-sm text-gray-500'>
+													<p className='mt-3 space-y-6 text-sm text-gray-500'>
 														{review.review}
-													</div>
+													</p>
 												</div>
 											</div>
 										</div>

@@ -310,7 +310,7 @@ function ReviewForm(): JSX.Element {
 				setIsOpen={setSheldonReviewOpen}
 			/>
 			<div className='my-3 w-full'>
-				<h1 className='border-b-2 border-b-teal-600 text-4xl font-extrabold'>
+				<h1 className='border-b-2 border-b-teal-600 text-4xl '>
 					{t('create-review.review-form.header')}
 				</h1>
 			</div>
@@ -321,7 +321,7 @@ function ReviewForm(): JSX.Element {
 				<div className='space-y-8 divide-y divide-gray-200'>
 					<div className='pt-8'>
 						<div>
-							<h3 className='text-lg font-medium leading-6 text-gray-900'>
+							<h3 className='text-lg  leading-6 text-gray-900'>
 								{t('create-review.review-form.title')}
 							</h3>
 							<p className='mt-1 text-sm text-gray-500'>
@@ -382,7 +382,7 @@ function ReviewForm(): JSX.Element {
 						</div>
 					</div>
 					<div className='flex flex-col gap-2'>
-						<h3 className='mt-2 text-lg font-medium leading-6 text-gray-900'>
+						<h3 className='mt-2 text-lg  leading-6 text-gray-900'>
 							{t('create-review.review-form.rate-title')}
 						</h3>
 						<RatingsRadio

@@ -8,7 +8,8 @@ const getReviewsAPI = async (req: NextApiRequest, res: NextApiResponse) => {
 	} catch {
 		return res.status(429).send('Too many requests')
 	}
-	const queryParams: ReviewQuery = req.body.queryParams
+
+	const queryParams: ReviewQuery = req.body.queryParams || {}
 
 	const reviews = await getReviews(queryParams)
 

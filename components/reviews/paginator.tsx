@@ -33,7 +33,7 @@ export default function Paginator({
 					currentPage === 1
 						? 'cursor-not-allowed opacity-50'
 						: 'hover:bg-gray-50'
-				} mx-1 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700`}
+				} mx-1 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm  text-gray-700`}
 				disabled={currentPage === 1}
 			>
 				Previous
@@ -49,7 +49,7 @@ export default function Paginator({
 									number === currentPage
 										? 'border-teal-600 bg-teal-600 text-white hover:bg-teal-700'
 										: 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
-								} mx-1 cursor-pointer rounded-md px-4 py-2 text-sm font-medium`}
+								} mx-1 cursor-pointer rounded-md px-4 py-2 text-sm `}
 							>
 								{number}
 							</button>
@@ -64,13 +64,13 @@ export default function Paginator({
 								number === currentPage
 									? 'border-teal-600 bg-teal-600 text-white hover:bg-teal-700'
 									: 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
-							} mx-1 cursor-pointer rounded-md px-4 py-2 text-sm font-medium`}
+							} mx-1 cursor-pointer rounded-md px-4 py-2 text-sm `}
 						>
 							{number}
 						</button>
 				  ))}
 			{pageNumbers.length > 10 ? (
-				<div className='mx-1 rounded-md border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50'>
+				<div className='mx-1 rounded-md border-gray-300 bg-white px-4 py-2 text-sm  text-gray-700 hover:bg-gray-50'>
 					...
 				</div>
 			) : null}
@@ -81,7 +81,7 @@ export default function Paginator({
 					currentPage === totalPages
 						? 'cursor-not-allowed opacity-50'
 						: 'hover:bg-gray-50'
-				} mx-1 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700`}
+				} mx-1 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm  text-gray-700`}
 				disabled={currentPage === totalPages}
 			>
 				Next

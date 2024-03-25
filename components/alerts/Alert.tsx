@@ -26,13 +26,9 @@ const Alert = ({ success, setAlertOpen }: IProps) => {
 				</div>
 				<div className='ml-3'>
 					{success ? (
-						<p className='text-sm font-medium text-green-800'>
-							{t('alerts.success')}
-						</p>
+						<p className='text-sm  text-green-800'>{t('alerts.success')}</p>
 					) : (
-						<p className='text-sm font-medium text-red-800'>
-							{t('alerts.fail')}
-						</p>
+						<p className='text-sm  text-red-800'>{t('alerts.fail')}</p>
 					)}
 				</div>
 				<div className='ml-auto pl-3'>

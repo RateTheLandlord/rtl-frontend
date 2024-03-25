@@ -159,7 +159,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 							<div className='mb-3'>
 								<label
 									htmlFor='reason'
-									className='block text-sm font-medium leading-6 text-gray-900'
+									className='block text-sm  leading-6 text-gray-900'
 								>
 									Select a reason
 								</label>
@@ -190,7 +190,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 								<div className='mb-3'>
 									<label
 										htmlFor='report'
-										className='block text-sm font-medium text-gray-700'
+										className='block text-sm  text-gray-700'
 									>
 										{t('reviews.report.reason')}
 									</label>

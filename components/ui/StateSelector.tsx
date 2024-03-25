@@ -22,10 +22,7 @@ const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 		<div data-testid='state-selector' className='sm:col-span-2'>
 			<Listbox value={value} onChange={setValue}>
 				<div className='relative mt-1'>
-					<label
-						htmlFor='city'
-						className='block text-sm font-medium text-gray-700'
-					>
+					<label htmlFor='city' className='block text-sm  text-gray-700'>
 						{country === 'GB'
 							? t('create-review.review-form.region')
 							: t('create-review.review-form.state')}

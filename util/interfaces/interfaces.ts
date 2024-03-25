@@ -25,6 +25,12 @@ export interface Options {
 	value: string
 }
 
+export interface SortOptions {
+	id: number
+	name: string
+	value: 'az' | 'za' | 'new' | 'old' | 'high' | 'low' | undefined
+}
+
 export interface NewFilter {
 	key: string
 	value: string

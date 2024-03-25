@@ -24,7 +24,7 @@ function Login(): JSX.Element {
 					<div className='mx-auto max-w-2xl text-center'>
 						<div className='flex flex-row flex-wrap justify-center'>
 							<Logo styling='w-24 h-24' />
-							<h2 className='mt-6 w-full text-center text-3xl font-extrabold text-gray-900'>
+							<h2 className='mt-6 w-full text-center text-3xl  text-gray-900'>
 								Sign in to your account
 							</h2>
 						</div>
@@ -35,14 +35,11 @@ function Login(): JSX.Element {
 						<div className='mt-10 flex items-center justify-center gap-x-6'>
 							<a
 								href={`/login`}
-								className='rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+								className='rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm  text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
 							>
 								Login
 							</a>
-							<Link
-								href='/'
-								className='text-sm font-semibold leading-6 text-gray-900'
-							>
+							<Link href='/' className='text-sm  leading-6 text-gray-900'>
 								Home <span aria-hidden='true'>→</span>
 							</Link>
 						</div>

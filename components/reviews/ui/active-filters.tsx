@@ -2,7 +2,7 @@ import { Options } from '@/util/interfaces/interfaces'
 import React from 'react'
 
 interface Props {
-	activeFilter: Options
+	activeFilter: Options | null
 	removeFilter: (index: number) => void
 	index: number
 }
@@ -14,16 +14,16 @@ export default function ActiveFilters({
 }: Props): JSX.Element {
 	return (
 		<span
-			key={activeFilter.name}
-			className='m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-sm font-medium text-gray-900'
+			key={activeFilter?.name}
+			className='m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-sm  text-gray-900'
 		>
-			<span>{activeFilter.name}</span>
+			<span>{activeFilter?.name}</span>
 			<button
 				onClick={() => removeFilter(index)}
 				type='button'
 				className='ml-1 inline-flex h-4 w-4 flex-shrink-0 rounded-full p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-500'
 			>
-				<span className='sr-only'>Remove filter for {activeFilter.name}</span>
+				<span className='sr-only'>Remove filter for {activeFilter?.name}</span>
 				<svg
 					className='h-2 w-2'
 					stroke='currentColor'

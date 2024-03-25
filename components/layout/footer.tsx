@@ -14,25 +14,27 @@ function Footer(): JSX.Element {
 				<div className='flex justify-center space-x-6 md:order-2'>
 					<Link href='/terms-and-conditions'>Terms and Conditions</Link>
 					<Link href='/privacy-policy'>Privacy Policy</Link>
-					{socialLinks.map((item) => (
+					<div className='flex flex-wrap gap-2'>
+						{socialLinks.map((item) => (
+							<a
+								data-umami-event={item.umami}
+								key={item.name}
+								href={item.href}
+								className='flex items-center text-gray-400 hover:text-gray-500'
+							>
+								<span className='sr-only'>{item.name}</span>
+								{item.icon}
+							</a>
+						))}
 						<a
-							data-umami-event={item.umami}
-							key={item.name}
-							href={item.href}
-							className='flex items-center text-gray-400 hover:text-gray-500'
+							data-umami-event='Github Icon'
+							href='https://github.com/RateTheLandlord'
+							className='text-gray-400 hover:text-gray-500'
 						>
-							<span className='sr-only'>{item.name}</span>
-							{item.icon}
+							<span className='sr-only'>Github</span>
+							<Github />
 						</a>
-					))}
-					<a
-						data-umami-event='Github Icon'
-						href='https://github.com/RateTheLandlord'
-						className='text-gray-400 hover:text-gray-500'
-					>
-						<span className='sr-only'>Github</span>
-						<Github />
-					</a>
+					</div>
 				</div>
 				<div className='mt-8 md:order-1 md:mt-0'>
 					<p className='text-center text-base text-gray-400'>

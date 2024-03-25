@@ -12,7 +12,7 @@ const getTenantResources = async (
 		return res.status(429).send('Too many requests')
 	}
 
-	const queryParams: ResourceQuery = req.body
+	const queryParams: ResourceQuery = req.body.queryParams || {}
 
 	const resources = await getResources(queryParams)
 

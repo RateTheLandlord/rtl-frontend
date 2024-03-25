@@ -37,7 +37,9 @@ export default function StatsDropdown({ options, selected, setSelected }) {
 										<>
 											<span
 												className={`block truncate ${
-													selected ? 'font-medium' : 'font-normal'
+													selected
+														? 'font-montserrat-medium'
+														: 'font-montserrat-regular'
 												}`}
 											>
 												{option.name}
