@@ -32,11 +32,11 @@ export default function CatAverages({ averages, average, total }: IProps) {
 						<RatingStars value={averages.avg_stability} />
 					</div>
 
-					<div className='flex flex-col items-center justify-center gap-2 bg-teal-600/5 p-8 sm:p-10'>
+					<div className='flex flex-col items-center justify-center gap-2 rounded-r-lg bg-teal-600/5 p-8 sm:p-10 md:rounded-r-none'>
 						<p>Respect</p>
 						<RatingStars value={averages.avg_respect} />
 					</div>
-					<div className='flex flex-col items-center justify-center gap-2 bg-teal-600/5 p-8 sm:p-10'>
+					<div className='flex flex-col items-center justify-center gap-2 rounded-l-lg bg-teal-600/5 p-8 sm:p-10 md:rounded-l-none'>
 						<p>Health</p>
 						<RatingStars value={averages.avg_health} />
 					</div>
