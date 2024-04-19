@@ -243,7 +243,6 @@ export async function getCityReviews(params: {
 	offset?: string
 	sort?: 'az' | 'za' | 'new' | 'old' | 'high' | 'low'
 }): Promise<ICityReviews> {
-	console.log('PARAMS: ', params)
 	const city = decodeURIComponent(params.city)
 	const state = decodeURIComponent(params.state)
 	const country_code = decodeURIComponent(params.country_code)
