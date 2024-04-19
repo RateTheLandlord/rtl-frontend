@@ -1,18 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
 import { useTranslation } from 'react-i18next'
-import { Review } from '@/util/interfaces/interfaces'
-import { FlagIcon, StarIcon } from '@heroicons/react/solid'
-import { classNames } from '@/util/helpers/helper-functions'
+import { Review, SortOptions } from '@/util/interfaces/interfaces'
 import ButtonLight from '../ui/button-light'
-import Spinner from '../ui/Spinner'
 import { sortOptions } from '@/util/helpers/filter-options'
-import SortList from '../reviews/ui/sort-list'
-import CityInfo from './CityInfo'
 import { ICityReviews } from '@/lib/review/review'
-import Link from 'next/link'
-
-const filteredSortOptions = sortOptions.slice(2)
+import EditReviewModal from '../modal/EditReviewModal'
+import RemoveReviewModal from '../modal/RemoveReviewModal'
+import AdsComponent from '../adsense/Adsense'
+import InfiniteScroll from '../reviews/InfiniteScroll'
+import CityFilters from './CityFilters'
+import CityMobileFilters from './CityMobileFilters'
+import { getZipOptions } from '../reviews/functions'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { updateActiveFilters } from '@/redux/query/querySlice'
+import { fetchReviews } from '@/util/helpers/fetchReviews'
+import CityInfo from './CityInfo'
 
 interface IProps {
 	city: string
@@ -22,59 +25,96 @@ interface IProps {
 }
 
 const CityPage = ({ city, state, country, data }: IProps) => {
-	const { t } = useTranslation('reviews')
+	// Localization
+	const { t } = useTranslation('landlord')
+
+	// Redux
+	const query = useAppSelector((state) => state.query)
+	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
+		query
+
+	const dispatch = useAppDispatch()
+	// State
+	const [reviews, setReviews] = useState<Review[]>(data?.reviews || [])
+	const [page, setPage] = useState<number>(1)
+	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
+	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
+	const [editReviewOpen, setEditReviewOpen] = useState(false)
+	const [hasMore, setHasMore] = useState(true) // Track if there is more content to load
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
-	const [sortedReviews, setSortedReviews] = useState<Array<Review>>([])
-
-	const [sortState, setSortState] = useState(filteredSortOptions[0])
-
+	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
+	const [isLoading, setIsLoading] = useState(false)
 
-	if (!data.reviews.length) return <Spinner />
+	// Query
+	const [queryParams, setQueryParams] = useState({
+		sort: selectedSort.value,
+		state: state,
+		country: country,
+		city: city,
+		zip: '',
+		search: '',
+		limit: '25',
+	})
 
-	const handleReport = (review: Review) => {
-		setSelectedReview(review)
-		setReportOpen(true)
+	// Filtering and Infinite Loading
+	const updateParams = () => {
+		const params = {
+			sort: selectedSort.value,
+			state: state,
+			country: country,
+			city: city,
+			zip: zipFilter?.value || '',
+			search: searchFilter || '',
+			limit: '25',
+		}
+		dispatch(
+			updateActiveFilters([stateFilter, countryFilter, cityFilter, zipFilter]),
+		)
+		setQueryParams(params)
+		setPage(1)
+	}
+
+	const fetchData = async () => {
+		setIsLoading(true)
+		try {
+			const moreData = await fetchReviews({ page, ...queryParams })
+
+			setReviews((prevReviews) => {
+				if (page === 1) {
+					// Initial fetch
+					return [...moreData.reviews]
+				} else {
+					// If page changed or neither page nor other query parameters changed, append new reviews
+					return [...prevReviews, ...moreData.reviews]
+				}
+			})
+
+			if (moreData.reviews.length <= 0 || reviews.length >= moreData.total) {
+				setHasMore(false)
+			} else {
+				setHasMore(true)
+			}
+		} catch (error) {
+			console.error('Error fetching reviews:', error)
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	useEffect(() => {
-		switch (sortState.value) {
-			case 'new':
-				const sortedOld = data.reviews.sort(
-					(a, b) => Number(b.id) - Number(a.id),
-				)
-				setSortedReviews([...sortedOld])
-				break
-			case 'old':
-				const sortedNew = data.reviews.sort(
-					(a, b) => Number(a.id) - Number(b.id),
-				)
-				setSortedReviews([...sortedNew])
-				break
-			case 'high':
-				const sortedHigh = data.reviews.sort((a, b) => {
-					const aTotal =
-						a.health + a.privacy + a.repair + a.respect + a.stability
-					const bTotal =
-						b.health + b.privacy + b.repair + b.respect + b.stability
+		fetchData()
+	}, [queryParams, page])
 
-					return Number(bTotal) - Number(aTotal)
-				})
-				setSortedReviews([...sortedHigh])
-				break
-			case 'low':
-				const sortedLow = data.reviews.sort((a, b) => {
-					const aTotal =
-						a.health + a.privacy + a.repair + a.respect + a.stability
-					const bTotal =
-						b.health + b.privacy + b.repair + b.respect + b.stability
+	// Reset hasMore when queryParams change
+	useEffect(() => {
+		setHasMore(true)
+	}, [queryParams])
 
-					return Number(aTotal) - Number(bTotal)
-				})
-				setSortedReviews([...sortedLow])
-				break
-		}
-	}, [sortState, data.reviews])
+	const zipOptions = useMemo(
+		() => getZipOptions(data?.zips ?? []),
+		[data?.zips],
+	)
 
 	return (
 		<>
@@ -83,147 +123,88 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 				setIsOpen={setReportOpen}
 				selectedReview={selectedReview}
 			/>
-			<div className='mt-10 flex w-full justify-center'>
-				<div className='mx-auto flex max-w-2xl flex-col gap-3 px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
+			{selectedReview ? (
+				<>
+					<EditReviewModal
+						selectedReview={selectedReview}
+						handleMutate={() => {
+							console.log('')
+						}}
+						setEditReviewOpen={setEditReviewOpen}
+						editReviewOpen={editReviewOpen}
+						setSelectedReview={setSelectedReview}
+					/>
+					<RemoveReviewModal
+						selectedReview={selectedReview}
+						handleMutate={() => {
+							console.log('')
+						}}
+						setRemoveReviewOpen={setRemoveReviewOpen}
+						removeReviewOpen={removeReviewOpen}
+						setSelectedReview={setSelectedReview}
+					/>
+				</>
+			) : null}
+			<div className='w-full px-2 md:px-0'>
+				<AdsComponent slot='2009320000' />
+				<div className='mx-auto mt-5 flex max-w-2xl flex-col gap-3 lg:max-w-7xl'>
 					<CityInfo
 						city={city}
 						state={state}
 						country={country}
-						total={data.total}
 						average={data.average}
+						total={data.total}
+						averages={data.catAverages}
 					/>
-					<div className='flex w-full justify-start py-2'>
-						<SortList
-							state={sortState}
-							setState={setSortState}
-							options={filteredSortOptions}
-							name={t('reviews.sort')}
+				</div>
+				<div className='flex w-full justify-end px-4 lg:hidden'>
+					<ButtonLight
+						onClick={() => setMobileFiltersOpen(true)}
+						umami='Reviews / Review Filters'
+					>
+						{t('reviews.filters')}
+					</ButtonLight>
+				</div>
+				<div className='mx-auto max-w-2xl lg:max-w-7xl'>
+					<div className='flex lg:flex-row lg:gap-2 lg:divide-x lg:divide-gray-200'>
+						<CityMobileFilters
+							mobileFiltersOpen={mobileFiltersOpen}
+							setMobileFiltersOpen={setMobileFiltersOpen}
+							zipFilter={zipFilter}
+							zipOptions={zipOptions}
+							updateParams={updateParams}
 						/>
-					</div>
-					<div className='flex w-full flex-col gap-3'>
-						{sortedReviews.map((review) => {
-							const ratings = [
-								{ title: t('reviews.health'), rating: review.health },
-								{ title: t('reviews.respect'), rating: review.respect },
-								{ title: t('reviews.privacy'), rating: review.privacy },
-								{ title: t('reviews.repair'), rating: review.repair },
-								{ title: t('reviews.stability'), rating: review.stability },
-							]
-							const date = new Date(review.date_added).toLocaleDateString()
-							return (
-								<div
-									key={review.id}
-									className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-8'
-								>
-									<div className='flex flex-row flex-wrap items-center justify-between bg-gray-50 p-2 lg:min-w-[250px] lg:max-w-[275px] lg:flex-col'>
-										<div className='flex flex-col gap-2 text-start lg:text-center'>
-											<Link
-												href={`/landlord/${encodeURIComponent(
-													review.landlord,
-												)}`}
-												className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg  hover:underline lg:mb-2 lg:items-center'
-												data-umami-event='Reviews / Landlord Link'
-											>
-												<h6 className='text-center'>{review.landlord}</h6>
-												<p className='text-center text-sm'>Read all reviews</p>
-											</Link>
-											<div className='flex flex-col'>
-												<p className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>{`${
-													review.city
-												}, ${review.state}, ${
-													review.country_code === 'GB'
-														? 'UK'
-														: review.country_code
-												}, ${review.zip}`}</p>
-												<p className='text-gray-500 lg:mb-0 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>
-													{date}
-												</p>
-											</div>
-										</div>
-										<div className='flex items-center'>
-											{[0, 1, 2, 3, 4].map((star) => {
-												let totalReview = 0
-												for (let i = 0; i < ratings.length; i++) {
-													totalReview += Number(ratings[i].rating)
-												}
-												const avgRating = Math.round(
-													totalReview / ratings.length,
-												)
-												return (
-													<StarIcon
-														key={star}
-														className={classNames(
-															avgRating > star
-																? 'text-yellow-400'
-																: 'text-gray-200',
-															'h-5 w-5 flex-shrink-0',
-														)}
-														aria-hidden='true'
-													/>
-												)
-											})}
-										</div>
-										<div className='flex flex-row items-center justify-start lg:mt-4'>
-											<ButtonLight
-												onClick={() => handleReport(review)}
-												umami='Landlord / REPORT button'
-											>
-												<FlagIcon className='text-red-700' width={20} />
-											</ButtonLight>
-										</div>
-									</div>
-
-									<div className='p-4 lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8'>
-										<div className='flex h-full flex-col justify-between'>
-											<div className='flex flex-row flex-wrap items-center gap-3 xl:col-span-1'>
-												{ratings.map((rating) => {
-													return (
-														<div key={rating.title}>
-															<p>{rating.title}</p>
-															<div className='flex items-center'>
-																{[0, 1, 2, 3, 4].map((star) => (
-																	<StarIcon
-																		key={star}
-																		className={classNames(
-																			rating.rating > star
-																				? 'text-yellow-400'
-																				: 'text-gray-200',
-																			'h-5 w-5 flex-shrink-0',
-																		)}
-																		aria-hidden='true'
-																	/>
-																))}
-															</div>
-														</div>
-													)
-												})}
-												{review.rent && (
-													<div className='flex w-full flex-col'>
-														<p className='w-full'>{`${t('reviews.rent')}${
-															review.rent
-														}`}</p>
-														<p className='text-xs'>{t('reviews.local')}</p>
-													</div>
-												)}
-											</div>
-										</div>
-
-										<div className='mt-4 lg:mt-6 xl:col-span-2 xl:mt-0'>
-											<p>{t('reviews.review')}</p>
-											{/* {review.admin_edited ? (
-												<p className="text-xs text-red-400">
-													{t('reviews.edited')}
-												</p>
-											) : null} */}
-
-											<p className='mt-3 space-y-6 text-sm text-gray-500'>
-												{review.review}
-											</p>
-										</div>
-									</div>
-								</div>
-							)
-						})}
+						<CityFilters
+							selectedSort={selectedSort}
+							setSelectedSort={setSelectedSort}
+							sortOptions={sortOptions}
+							zipFilter={zipFilter}
+							zipOptions={zipOptions}
+							updateParams={updateParams}
+							loading={isLoading}
+						/>
+						{!reviews.length ? (
+							<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
+								<h1 className='mt-4 text-3xl   text-gray-900 sm:text-5xl'>
+									No results found
+								</h1>
+								<p className='mt-6 text-base leading-7 text-gray-600'>
+									Sorry, we couldn't find any results for those filters.
+								</p>
+							</div>
+						) : (
+							<InfiniteScroll
+								data={reviews}
+								setReportOpen={setReportOpen}
+								setSelectedReview={setSelectedReview}
+								setRemoveReviewOpen={setRemoveReviewOpen}
+								setEditReviewOpen={setEditReviewOpen}
+								setPage={setPage}
+								hasMore={hasMore}
+								isLoading={isLoading}
+								setIsLoading={setIsLoading}
+							/>
+						)}
 					</div>
 				</div>
 			</div>

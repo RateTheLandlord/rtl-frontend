@@ -233,6 +233,7 @@ export interface ICityReviews {
 		avg_privacy: number
 		avg_respect: number
 	}
+	zips: string[]
 }
 
 export async function getCityReviews(params: {
@@ -295,6 +296,13 @@ export async function getCityReviews(params: {
         WHERE city = ${city.toLocaleUpperCase()} AND state = ${state.toLocaleUpperCase()} AND country_code = ${country_code.toLocaleUpperCase()}
     `
 
+	const zips = await sql`
+        SELECT DISTINCT zip
+        FROM review
+		WHERE city = ${city.toLocaleUpperCase()} AND state = ${state.toLocaleUpperCase()} AND country_code = ${country_code.toLocaleUpperCase()}
+    `
+	const zipList = zips.map(({ zip }) => zip)
+
 	const combinedAvg = Math.round(combinedAvgResult[0].combined_avg)
 
 	const catAverages = {
@@ -310,5 +318,6 @@ export async function getCityReviews(params: {
 		average: combinedAvg,
 		total: total,
 		catAverages: catAverages,
+		zips: zipList,
 	}
 }

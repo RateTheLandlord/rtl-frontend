@@ -1,8 +1,8 @@
-import { classNames } from '@/util/helpers/helper-functions'
-import { MinusSmIcon, PlusSmIcon, StarIcon } from '@heroicons/react/solid'
+import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import { Disclosure } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
+import RatingStars from '../ui/RatingStars'
 
 interface IProps {
 	name: string
@@ -17,22 +17,12 @@ const LandlordInfo = ({ name, average, total }: IProps) => {
 	})
 	return (
 		<div className='w-full border-b border-b-gray-200'>
-			<h2 className='text-2xl   text-gray-900'>{decodeURIComponent(name)}</h2>
+			<h2 className='text-2xl text-gray-900'>{decodeURIComponent(name)}</h2>
 
 			<div className='mt-3 flex items-center gap-4'>
 				<div className='flex flex-col gap-4'>
-					<div className='flex items-center'>
-						{[0, 1, 2, 3, 4].map((rating) => (
-							<StarIcon
-								key={rating}
-								className={classNames(
-									average > rating ? 'text-yellow-400' : 'text-gray-300',
-									'h-5 w-5 flex-shrink-0',
-								)}
-								aria-hidden='true'
-							/>
-						))}
-					</div>
+					<RatingStars value={average} />
+
 					<p className='sr-only'>
 						{t('landlord.average', { average: average })}
 					</p>

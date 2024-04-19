@@ -1,8 +1,8 @@
-import { classNames } from '@/util/helpers/helper-functions'
-import { MinusSmIcon, PlusSmIcon, StarIcon } from '@heroicons/react/solid'
+import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import { Disclosure } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
+import CatAverages from './CatAverages'
 
 interface IProps {
 	city: string
@@ -10,47 +10,43 @@ interface IProps {
 	country: string
 	average: number
 	total: number
+	averages: {
+		avg_repair: number
+		avg_health: number
+		avg_stability: number
+		avg_privacy: number
+		avg_respect: number
+	}
 }
 
-const CityInfo = ({ city, state, country, average, total }: IProps) => {
+const CityInfo = ({
+	city,
+	state,
+	country,
+	average,
+	total,
+	averages,
+}: IProps) => {
 	const { t } = useTranslation('landlord')
 	const tenantList: Array<string> = t('landlord.tenant-list', {
 		returnObjects: true,
 	})
 	return (
 		<div className='w-full border-b border-b-gray-200'>
-			<h2 className='text-2xl text-gray-900'>{`${decodeURIComponent(
+			<h2 className='text-2xl text-gray-900 md:text-4xl'>{`${decodeURIComponent(
 				city.toLocaleUpperCase(),
 			)}, ${decodeURIComponent(
 				state.toLocaleUpperCase(),
 			)}, ${decodeURIComponent(country.toLocaleUpperCase())}`}</h2>
 
-			<div className='mt-3 flex items-center gap-4'>
-				<div className='flex flex-col gap-4'>
-					<div className='flex items-center'>
-						{[0, 1, 2, 3, 4].map((rating) => (
-							<StarIcon
-								key={rating}
-								className={classNames(
-									average > rating ? 'text-yellow-400' : 'text-gray-300',
-									'h-5 w-5 flex-shrink-0',
-								)}
-								aria-hidden='true'
-							/>
-						))}
-					</div>
-					<p className='sr-only'>
-						{t('landlord.average', { average: average })}
-					</p>
-				</div>
-				<p className='ml-2 text-sm text-gray-900'>
-					{t('landlord.total', { total: total })}
-				</p>
-			</div>
+			<CatAverages averages={averages} average={average} total={total} />
 
 			<div className='flex flex-col gap-4'>
-				<h3 className='text-lg  text-gray-900'>{t('landlord.share')}</h3>
-				<p className='mt-1 text-sm text-gray-600'>{t('landlord.share-sub')}</p>
+				<h3 className='mt-4 text-lg text-gray-900'>{t('landlord.share')}</h3>
+				<p className='mt-1 text-sm text-gray-600'>
+					If you've rented in this city, share your experience with other
+					tenants.
+				</p>
 
 				<div>
 					<Link href='/create-review'>

@@ -1,6 +1,7 @@
 import CityPage from '@/components/city/CityPage'
 import Spinner from '@/components/ui/Spinner'
 import { ICityReviews, getCities, getCityReviews } from '@/lib/review/review'
+import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 
@@ -12,13 +13,15 @@ interface IProps {
 }
 
 const City = ({ city, state, country, data }: IProps) => {
-	const title = `${decodeURIComponent(city)}, ${decodeURIComponent(
-		state,
-	)}, ${decodeURIComponent(country)} Reviews | Rate The Landlord`
-	const desc = `Looking to rent in ${decodeURIComponent(city)}? Read ${
+	const title = `${toTitleCase(decodeURIComponent(city))}, ${toTitleCase(
+		decodeURIComponent(state),
+	)}, ${toTitleCase(decodeURIComponent(country))} Reviews | Rate The Landlord`
+	const desc = `Looking to rent in ${toTitleCase(
+		decodeURIComponent(city),
+	)}? Read ${
 		data?.total
-	} landlord reviews and rental experiences for ${decodeURIComponent(
-		city,
+	} landlord reviews and rental experiences for ${toTitleCase(
+		decodeURIComponent(city),
 	)}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
