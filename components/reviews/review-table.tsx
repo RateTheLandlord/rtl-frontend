@@ -84,25 +84,23 @@ function ReviewTable({
 															Read all reviews
 														</p>
 													</Link>
-													<Link
-														href={`/city/${encodeURIComponent(
-															review.country_code,
-														)}/${encodeURIComponent(
-															review.state,
-														)}/${encodeURIComponent(review.city)}`}
-														className='flex flex-col text-end lg:hidden'
-													>
-														<p className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>{`${
-															review.city
-														}, ${review.state}, ${
+													<div className='flex flex-col text-end lg:hidden'>
+														<Link
+															href={`/cities/${encodeURIComponent(
+																review.country_code,
+															)}/${encodeURIComponent(
+																review.state,
+															)}/${encodeURIComponent(review.city)}`}
+															className='w-full text-gray-500 hover:underline lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'
+														>{`${review.city}, ${review.state}, ${
 															review.country_code === 'GB'
 																? 'UK'
 																: review.country_code
-														}, ${review.zip}`}</p>
+														}, ${review.zip}`}</Link>
 														<p className='mb-4 text-gray-500 lg:mb-0 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>
 															{date}
 														</p>
-													</Link>
+													</div>
 												</div>
 												<div className='flex items-center'>
 													{[0, 1, 2, 3, 4].map((star) => {
@@ -127,25 +125,23 @@ function ReviewTable({
 														)
 													})}
 												</div>
-												<Link
-													href={`/cities/${encodeURIComponent(
-														review.country_code.toLowerCase(),
-													)}/${encodeURIComponent(
-														review.state.toLowerCase(),
-													)}/${encodeURIComponent(review.city.toLowerCase())}`}
-													className='hidden flex-col text-center hover:underline lg:flex'
-												>
-													<p className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>{`${
-														review.city
-													}, ${review.state}, ${
+												<div className='hidden flex-col text-center lg:flex'>
+													<Link
+														href={`/cities/${encodeURIComponent(
+															review.country_code,
+														)}/${encodeURIComponent(
+															review.state,
+														)}/${encodeURIComponent(review.city)}`}
+														className='w-full text-gray-500 hover:underline lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'
+													>{`${review.city}, ${review.state}, ${
 														review.country_code === 'GB'
 															? 'UK'
 															: review.country_code
-													}, ${review.zip}`}</p>
+													}, ${review.zip}`}</Link>
 													<p className='mb-4 text-gray-500 lg:mb-0 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>
 														{date}
 													</p>
-												</Link>
+												</div>
 												<div className='mt-4 flex flex-row justify-start'>
 													<ButtonLight
 														onClick={() => handleReport(review)}
