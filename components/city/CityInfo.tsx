@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Disclosure } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
 import CatAverages from './CatAverages'
+import { toTitleCase } from '@/util/helpers/toTitleCase'
 
 interface IProps {
 	city: string
@@ -33,30 +34,39 @@ const CityInfo = ({
 	})
 	return (
 		<div className='w-full border-b border-b-gray-200'>
-			<h2 className='text-2xl text-gray-900 md:text-4xl'>{`${decodeURIComponent(
-				city.toLocaleUpperCase(),
-			)}, ${decodeURIComponent(
-				state.toLocaleUpperCase(),
-			)}, ${decodeURIComponent(country.toLocaleUpperCase())}`}</h2>
+			<div className='rounded-xl bg-gray-50 p-4'>
+				<div className='py-8 text-center sm:py-12'>
+					<h2 className='text-3xl font-bold tracking-tight sm:text-4xl'>
+						{`${toTitleCase(decodeURIComponent(city))}, ${toTitleCase(
+							decodeURIComponent(state),
+						)}, ${decodeURIComponent(country.toLocaleUpperCase())}`}
+					</h2>
+					<p className='mt-2 text-gray-700'>{`Read ${total} reviews and rental experiences for ${toTitleCase(
+						decodeURIComponent(city),
+					)}, ${toTitleCase(decodeURIComponent(state))}, ${decodeURIComponent(
+						country.toLocaleUpperCase(),
+					)}`}</p>
+				</div>
 
-			<CatAverages averages={averages} average={average} total={total} />
+				<CatAverages averages={averages} average={average} total={total} />
 
-			<div className='flex flex-col gap-4'>
-				<h3 className='mt-4 text-lg text-gray-900'>{t('landlord.share')}</h3>
-				<p className='mt-1 text-sm text-gray-600'>
-					If you've rented in this city, share your experience with other
-					tenants.
-				</p>
+				<div className='flex flex-col gap-4'>
+					<h3 className='mt-4 text-lg text-gray-900'>{t('landlord.share')}</h3>
+					<p className='mt-1 text-sm text-gray-600'>
+						If you've rented in this city, share your experience with other
+						tenants.
+					</p>
 
-				<div>
-					<Link href='/create-review'>
-						<p
-							data-umami-event='Landlord / Submit a Review Button'
-							className='mt-2 inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm  text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'
-						>
-							{t('landlord.submit')}
-						</p>
-					</Link>
+					<div>
+						<Link href='/create-review'>
+							<p
+								data-umami-event='Landlord / Submit a Review Button'
+								className='mt-2 inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm  text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'
+							>
+								{t('landlord.submit')}
+							</p>
+						</Link>
+					</div>
 				</div>
 			</div>
 			<div className='mt-4 divide-gray-900/10 border-t'>

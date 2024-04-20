@@ -2,42 +2,46 @@ import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import { Disclosure } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
-import RatingStars from '../ui/RatingStars'
+import { toTitleCase } from '@/util/helpers/toTitleCase'
+import { ILandlordReviews } from '@/lib/review/review'
+import CatAverages from '../city/CatAverages'
 
 interface IProps {
 	name: string
-	average: number
-	total: number
+	data: ILandlordReviews
 }
 
-const LandlordInfo = ({ name, average, total }: IProps) => {
+const LandlordInfo = ({ name, data }: IProps) => {
 	const { t } = useTranslation('landlord')
 	const tenantList: Array<string> = t('landlord.tenant-list', {
 		returnObjects: true,
 	})
 	return (
 		<div className='w-full border-b border-b-gray-200'>
-			<h2 className='text-2xl text-gray-900'>{decodeURIComponent(name)}</h2>
-
-			<div className='mt-3 flex items-center gap-4'>
-				<div className='flex flex-col gap-4'>
-					<RatingStars value={average} />
-
-					<p className='sr-only'>
-						{t('landlord.average', { average: average })}
-					</p>
+			<div className='rounded-xl bg-gray-50 p-4'>
+				<div className='py-8 text-center sm:py-12'>
+					<h2 className='text-3xl font-bold tracking-tight sm:text-4xl'>
+						{`${toTitleCase(decodeURIComponent(name))}`}
+					</h2>
+					<p className='mt-2 text-gray-700'>{`Read ${
+						data.total
+					} reviews and rental experiences for ${toTitleCase(name)}`}</p>
 				</div>
-				<p className='ml-2 text-sm text-gray-900'>
-					{t('landlord.total', { total: total })}
-				</p>
-			</div>
 
-			<div className='flex flex-col gap-4'>
-				<h3 className='text-lg  text-gray-900'>{t('landlord.share')}</h3>
-				<p className='mt-1 text-sm text-gray-600'>{t('landlord.share-sub')}</p>
+				<CatAverages
+					averages={data.catAverages}
+					average={data.average}
+					total={data.total}
+				/>
 
-				<div>
-					<Link href='/create-review'>
+				<div className='flex flex-col'>
+					<h3 className='mt-4 text-lg text-gray-900'>{t('landlord.share')}</h3>
+					<p className='mt-1 text-sm text-gray-600'>
+						If you've rented from this Landlord, share your experience with
+						other tenants.
+					</p>
+
+					<Link className='mt-1' href='/create-review'>
 						<p
 							data-umami-event='Landlord / Submit a Review Button'
 							className='mt-2 inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm  text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'

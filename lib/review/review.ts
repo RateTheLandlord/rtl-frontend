@@ -187,12 +187,69 @@ export async function getLandlords(): Promise<string[]> {
 	return landlords.map(({ landlord }) => landlord)
 }
 
-export async function getLandlordReviews(landlord: string): Promise<Review[]> {
+export interface ILandlordReviews {
+	reviews: Review[]
+	average: number
+	total: number
+	catAverages: {
+		avg_repair: number
+		avg_health: number
+		avg_stability: number
+		avg_privacy: number
+		avg_respect: number
+	}
+}
+
+export async function getLandlordReviews(
+	landlord: string,
+): Promise<ILandlordReviews> {
 	landlord = decodeURIComponent(landlord)
 
-	return sql<Review[]>`Select *
+	const reviews = await sql<Review[]>`Select *
       FROM review
       WHERE landlord IN (${landlord}) ORDER BY date_added DESC`
+
+	const averageByCat = await sql`
+	  SELECT 
+		  AVG(repair) AS avg_repair,
+		  AVG(health) AS avg_health,
+		  AVG(stability) AS avg_stability,
+		  AVG(privacy) AS avg_privacy,
+		  AVG(respect) AS avg_respect
+	  FROM review
+	  WHERE landlord = ${landlord.toLocaleUpperCase()};
+  `
+
+	const combinedAvgResult = await sql`
+        SELECT 
+            (AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS combined_avg
+        FROM review
+        WHERE landlord = ${landlord.toLocaleUpperCase()};
+    `
+
+	const totalResult = await sql`
+        SELECT COUNT(*) as count
+        FROM review
+        WHERE landlord = ${landlord.toLocaleUpperCase()};
+    `
+	const total = totalResult[0].count
+
+	const combinedAvg = Math.round(combinedAvgResult[0].combined_avg)
+
+	const catAverages = {
+		avg_repair: Math.round(averageByCat[0].avg_repair),
+		avg_health: Math.round(averageByCat[0].avg_health),
+		avg_stability: Math.round(averageByCat[0].avg_stability),
+		avg_respect: Math.round(averageByCat[0].avg_respect),
+		avg_privacy: Math.round(averageByCat[0].avg_privacy),
+	}
+
+	return {
+		reviews: reviews,
+		average: combinedAvg,
+		total: total,
+		catAverages: catAverages,
+	}
 }
 
 export async function getLandlordSuggestions(
