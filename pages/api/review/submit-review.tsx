@@ -22,6 +22,7 @@ interface IBody {
 		admin_approved: boolean
 		admin_edited: boolean
 		rent: number | null
+		date_added: Date
 	}
 }
 

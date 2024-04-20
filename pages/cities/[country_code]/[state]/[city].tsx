@@ -1,30 +1,37 @@
-import LandlordPage from '@/components/landlord/LandlordPage'
+import CityPage from '@/components/city/CityPage'
 import Spinner from '@/components/ui/Spinner'
-import {
-	ILandlordReviews,
-	getLandlordReviews,
-	getLandlords,
-} from '@/lib/review/review'
+import { ICityReviews, getCities, getCityReviews } from '@/lib/review/review'
+import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 
 interface IProps {
-	landlord: string
-	data: ILandlordReviews
+	city: string
+	state: string
+	country: string
+	data: ICityReviews
 }
 
-const Landlord = ({ landlord, data }: IProps) => {
-	const title = `${decodeURIComponent(landlord)} Reviews | Rate The Landlord`
-	const desc = `Reviews for ${landlord}. Read ${data.total} reviews and rental experiences for ${landlord}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
+const City = ({ city, state, country, data }: IProps) => {
+	const title = `${toTitleCase(decodeURIComponent(city))}, ${toTitleCase(
+		decodeURIComponent(state),
+	)}, ${toTitleCase(decodeURIComponent(country))} Reviews | Rate The Landlord`
+	const desc = `Looking to rent in ${toTitleCase(
+		decodeURIComponent(city),
+	)}? Read ${
+		data?.total
+	} landlord reviews and rental experiences for ${toTitleCase(
+		decodeURIComponent(city),
+	)}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
 
-	if (!data.reviews) return <Spinner />
+	if (!data?.reviews) return <Spinner />
 
-	if (data.total === 0) return <div>Error Loading Landlord</div>
+	if (data?.reviews.length === 0) return <div>Error Loading Landlord</div>
 
 	return (
 		<>
@@ -59,16 +66,20 @@ const Landlord = ({ landlord, data }: IProps) => {
 					},
 				]}
 			/>
-			<LandlordPage landlord={landlord} data={data} />
+			<CityPage city={city} state={state} country={country} data={data} />
 		</>
 	)
 }
 
 export async function getStaticPaths() {
-	const data = await getLandlords()
+	const data = await getCities()
 
-	const paths = data.map((landlord) => ({
-		params: { landlord: encodeURIComponent(landlord) },
+	const paths = data.map((city) => ({
+		params: {
+			city: encodeURIComponent(city.city),
+			state: encodeURIComponent(city.state),
+			country_code: encodeURIComponent(city.country_code),
+		},
 	}))
 	return {
 		paths: [...paths],
@@ -78,7 +89,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-	const data = await getLandlordReviews(params.landlord)
+	const data = await getCityReviews(params)
 
 	if (data.reviews.length === 0) {
 		return {
@@ -92,7 +103,12 @@ export async function getStaticProps({ params }) {
 	// Pass post data to the page via props
 	return {
 		props: JSON.parse(
-			JSON.stringify({ landlord: params.landlord, data: data }),
+			JSON.stringify({
+				city: params.city,
+				state: params.state,
+				country: params.country_code,
+				data: data,
+			}),
 		),
 		// Re-generate the page
 		// if a request comes in after 100 seconds
@@ -100,4 +116,4 @@ export async function getStaticProps({ params }) {
 	}
 }
 
-export default Landlord
+export default City
