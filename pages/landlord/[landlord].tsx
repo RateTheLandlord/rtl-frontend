@@ -82,7 +82,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
 	const data = await getLandlordReviews(params.landlord)
 
-	if (data.reviews.length === 0) {
+	if (!data || data.reviews.length === 0) {
 		return {
 			redirect: {
 				permanent: false,
