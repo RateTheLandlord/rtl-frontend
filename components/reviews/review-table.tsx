@@ -85,13 +85,18 @@ function ReviewTable({
 														</p>
 													</Link>
 													<div className='flex flex-col text-end lg:hidden'>
-														<p className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>{`${
-															review.city
-														}, ${review.state}, ${
+														<Link
+															href={`/cities/${encodeURIComponent(
+																review.country_code,
+															)}/${encodeURIComponent(
+																review.state,
+															)}/${encodeURIComponent(review.city)}`}
+															className='w-full text-gray-500 hover:underline lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'
+														>{`${review.city}, ${review.state}, ${
 															review.country_code === 'GB'
 																? 'UK'
 																: review.country_code
-														}, ${review.zip}`}</p>
+														}, ${review.zip}`}</Link>
 														<p className='mb-4 text-gray-500 lg:mb-0 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>
 															{date}
 														</p>
@@ -121,13 +126,18 @@ function ReviewTable({
 													})}
 												</div>
 												<div className='hidden flex-col text-center lg:flex'>
-													<p className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>{`${
-														review.city
-													}, ${review.state}, ${
+													<Link
+														href={`/cities/${encodeURIComponent(
+															review.country_code,
+														)}/${encodeURIComponent(
+															review.state,
+														)}/${encodeURIComponent(review.city)}`}
+														className='w-full text-gray-500 hover:underline lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'
+													>{`${review.city}, ${review.state}, ${
 														review.country_code === 'GB'
 															? 'UK'
 															: review.country_code
-													}, ${review.zip}`}</p>
+													}, ${review.zip}`}</Link>
 													<p className='mb-4 text-gray-500 lg:mb-0 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>
 														{date}
 													</p>
