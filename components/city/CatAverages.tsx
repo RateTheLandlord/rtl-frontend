@@ -49,7 +49,7 @@ export default function CatAverages({ averages, average, total }: IProps) {
 						<RatingStars value={averages.avg_repair} />
 					</div>
 				</div>
-				<p className='ml-2 text-sm text-gray-900'>
+				<p className='ml-2 text-right text-sm text-gray-900'>
 					{t('landlord.total', { total: total })}
 				</p>
 			</div>

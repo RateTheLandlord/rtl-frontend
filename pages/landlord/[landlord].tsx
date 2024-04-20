@@ -1,27 +1,30 @@
 import LandlordPage from '@/components/landlord/LandlordPage'
 import Spinner from '@/components/ui/Spinner'
-import { getLandlordReviews, getLandlords } from '@/lib/review/review'
-import { Review } from '@/util/interfaces/interfaces'
+import {
+	ILandlordReviews,
+	getLandlordReviews,
+	getLandlords,
+} from '@/lib/review/review'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 
 interface IProps {
 	landlord: string
-	reviews: Review[]
+	data: ILandlordReviews
 }
 
-const Landlord = ({ landlord, reviews }: IProps) => {
+const Landlord = ({ landlord, data }: IProps) => {
 	const title = `${decodeURIComponent(landlord)} Reviews | Rate The Landlord`
-	const desc = `Reviews for ${landlord}. Read ${reviews?.length} reviews and rental experiences for ${landlord}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
+	const desc = `Reviews for ${landlord}. Read ${data.total} reviews and rental experiences for ${landlord}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
 
-	if (!reviews) return <Spinner />
+	if (!data.reviews) return <Spinner />
 
-	if (reviews.length === 0) return <div>Error Loading Landlord</div>
+	if (data.total === 0) return <div>Error Loading Landlord</div>
 
 	return (
 		<>
@@ -56,7 +59,7 @@ const Landlord = ({ landlord, reviews }: IProps) => {
 					},
 				]}
 			/>
-			<LandlordPage landlord={landlord} reviews={reviews} />
+			<LandlordPage landlord={landlord} data={data} />
 		</>
 	)
 }
@@ -77,7 +80,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
 	const data = await getLandlordReviews(params.landlord)
 
-	if (data.length === 0) {
+	if (data.reviews.length === 0) {
 		return {
 			redirect: {
 				permanent: false,
@@ -89,7 +92,7 @@ export async function getStaticProps({ params }) {
 	// Pass post data to the page via props
 	return {
 		props: JSON.parse(
-			JSON.stringify({ landlord: params.landlord, reviews: data }),
+			JSON.stringify({ landlord: params.landlord, data: data }),
 		),
 		// Re-generate the page
 		// if a request comes in after 100 seconds

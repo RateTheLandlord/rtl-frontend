@@ -9,16 +9,17 @@ import ButtonLight from '../ui/button-light'
 import Spinner from '../ui/Spinner'
 import { sortOptions } from '@/util/helpers/filter-options'
 import SortList from '../reviews/ui/sort-list'
+import { ILandlordReviews } from '@/lib/review/review'
+import Link from 'next/link'
 
 const filteredSortOptions = sortOptions.slice(2)
 
-const LandlordPage = ({
-	landlord,
-	reviews,
-}: {
+interface IProps {
 	landlord: string
-	reviews: Review[]
-}) => {
+	data: ILandlordReviews
+}
+
+const LandlordPage = ({ landlord, data }: IProps) => {
 	const { t } = useTranslation('reviews')
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
 	const [sortedReviews, setSortedReviews] = useState<Array<Review>>([])
@@ -27,37 +28,29 @@ const LandlordPage = ({
 
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
 
-	if (!reviews.length) return <Spinner />
-
-	const totalStars = reviews.reduce(
-		(sum, review) =>
-			sum +
-			(Number(review.stability) +
-				Number(review.health) +
-				Number(review.privacy) +
-				Number(review.respect) +
-				Number(review.repair)),
-		0,
-	)
+	if (!data.reviews.length) return <Spinner />
 
 	const handleReport = (review: Review) => {
 		setSelectedReview(review)
 		setReportOpen(true)
 	}
-	const average = Math.round(totalStars / (reviews.length * 5))
 
 	useEffect(() => {
 		switch (sortState.value) {
 			case 'new':
-				const sortedOld = reviews.sort((a, b) => Number(b.id) - Number(a.id))
+				const sortedOld = data.reviews.sort(
+					(a, b) => Number(b.id) - Number(a.id),
+				)
 				setSortedReviews([...sortedOld])
 				break
 			case 'old':
-				const sortedNew = reviews.sort((a, b) => Number(a.id) - Number(b.id))
+				const sortedNew = data.reviews.sort(
+					(a, b) => Number(a.id) - Number(b.id),
+				)
 				setSortedReviews([...sortedNew])
 				break
 			case 'high':
-				const sortedHigh = reviews.sort((a, b) => {
+				const sortedHigh = data.reviews.sort((a, b) => {
 					const aTotal =
 						a.health + a.privacy + a.repair + a.respect + a.stability
 					const bTotal =
@@ -68,7 +61,7 @@ const LandlordPage = ({
 				setSortedReviews([...sortedHigh])
 				break
 			case 'low':
-				const sortedLow = reviews.sort((a, b) => {
+				const sortedLow = data.reviews.sort((a, b) => {
 					const aTotal =
 						a.health + a.privacy + a.repair + a.respect + a.stability
 					const bTotal =
@@ -79,7 +72,7 @@ const LandlordPage = ({
 				setSortedReviews([...sortedLow])
 				break
 		}
-	}, [sortState, reviews])
+	}, [sortState, data.reviews])
 
 	return (
 		<>
@@ -90,11 +83,7 @@ const LandlordPage = ({
 			/>
 			<div className='mt-10 flex w-full justify-center'>
 				<div className='mx-auto flex max-w-2xl flex-col gap-3 px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
-					<LandlordInfo
-						name={landlord}
-						total={reviews.length}
-						average={average}
-					/>
+					<LandlordInfo name={landlord} data={data} />
 					<div className='flex w-full justify-start py-2'>
 						<SortList
 							state={sortState}
@@ -121,13 +110,18 @@ const LandlordPage = ({
 									<div className='flex flex-row flex-wrap items-center justify-between bg-gray-50 p-2 lg:min-w-[250px] lg:max-w-[275px] lg:flex-col'>
 										<div className='flex flex-col gap-2 text-start lg:text-center'>
 											<div className='flex flex-col'>
-												<p className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>{`${
-													review.city
-												}, ${review.state}, ${
+												<Link
+													href={`/cities/${encodeURIComponent(
+														review.country_code,
+													)}/${encodeURIComponent(
+														review.state,
+													)}/${encodeURIComponent(review.city)}`}
+													className='w-full text-gray-500 hover:underline lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'
+												>{`${review.city}, ${review.state}, ${
 													review.country_code === 'GB'
 														? 'UK'
 														: review.country_code
-												}, ${review.zip}`}</p>
+												}, ${review.zip}`}</Link>
 												<p className='text-gray-500 lg:mb-0 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>
 													{date}
 												</p>
