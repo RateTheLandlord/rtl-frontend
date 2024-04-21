@@ -16,16 +16,18 @@ const LandlordInfo = ({ name, data }: IProps) => {
 	const tenantList: Array<string> = t('landlord.tenant-list', {
 		returnObjects: true,
 	})
+
+	const landlord = decodeURIComponent(name)
 	return (
 		<div className='w-full border-b border-b-gray-200'>
 			<div className='rounded-xl bg-gray-50 p-4'>
 				<div className='py-8 text-center sm:py-12'>
 					<h2 className='text-3xl font-bold tracking-tight sm:text-4xl'>
-						{`${toTitleCase(decodeURIComponent(name))}`}
+						{`${toTitleCase(landlord)}`}
 					</h2>
 					<p className='mt-2 text-gray-700'>{`Read ${
 						data.total
-					} reviews and rental experiences for ${toTitleCase(name)}`}</p>
+					} reviews and rental experiences for ${toTitleCase(landlord)}`}</p>
 				</div>
 
 				<CatAverages

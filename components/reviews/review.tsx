@@ -1,6 +1,6 @@
 import ReviewFilters from '@/components/reviews/review-filters'
 import { sortOptions } from '@/util/helpers/filter-options'
-import { Review, SortOptions } from '@/util/interfaces/interfaces'
+import { Review as IReview, SortOptions } from '@/util/interfaces/interfaces'
 import {
 	getCityOptions,
 	getStateOptions,
@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next'
 import ButtonLight from '../ui/button-light'
 
 export type ReviewsResponse = {
-	reviews: Review[]
+	reviews: IReview[]
 	total: number
 	countries: string[]
 	states: string[]
@@ -51,7 +51,7 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 
 	const dispatch = useAppDispatch()
 	// State
-	const [reviews, setReviews] = useState<Review[]>(data?.reviews || [])
+	const [reviews, setReviews] = useState<IReview[]>(data?.reviews || [])
 	const [page, setPage] = useState<number>(1)
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
 	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
@@ -59,7 +59,7 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 	const [hasMore, setHasMore] = useState(true) // Track if there is more content to load
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
-	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
+	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
 	const [isLoading, setIsLoading] = useState(false)
 
 	// Query
