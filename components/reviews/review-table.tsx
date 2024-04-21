@@ -171,7 +171,7 @@ function ReviewTable({
 													</>
 												) : null}
 											</div>
-											<div className='p-4 lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8'>
+											<div className='flex flex-col p-4 lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8'>
 												<div className='flex h-full flex-col justify-between'>
 													<div className='flex flex-row flex-wrap items-center gap-3 xl:col-span-1'>
 														{ratings.map((rating) => {
