@@ -1,6 +1,6 @@
 import { verifyToken } from '@/lib/captcha/verifyToken'
 import { create } from '@/lib/review/review'
-import applyRateLimit from '@/util/rateLimit'
+import rateLimitMiddleware from '@/util/reviewRateLimit'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 interface IBody {
@@ -27,12 +27,6 @@ interface IBody {
 }
 
 const SubmitReview = async (req: NextApiRequest, res: NextApiResponse) => {
-	try {
-		await applyRateLimit(req, res)
-	} catch {
-		return res.status(429).send('Too many requests')
-	}
-
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req
 
@@ -46,4 +40,4 @@ const SubmitReview = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 }
 
-export default SubmitReview
+export default rateLimitMiddleware(SubmitReview)
