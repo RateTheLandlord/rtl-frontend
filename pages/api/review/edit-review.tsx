@@ -2,7 +2,7 @@ import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
 import { update } from '@/lib/review/review'
-import applyRateLimit from '@/util/rateLimit'
+import rateLimitMiddleware from '@/util/rateLimit'
 
 interface IBody {
 	id: number
@@ -29,11 +29,6 @@ const EditReview = async (req: NextApiRequest, res: NextApiResponse) => {
 	const session = await getSession(req, res)
 	const user = session?.user
 	await runMiddleware(req, res)
-	try {
-		await applyRateLimit(req, res)
-	} catch {
-		return res.status(429).send('Too many requests')
-	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req
@@ -48,4 +43,4 @@ const EditReview = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 }
 
-export default withApiAuthRequired(EditReview)
+export default rateLimitMiddleware(withApiAuthRequired(EditReview))
