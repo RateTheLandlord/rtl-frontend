@@ -2,7 +2,7 @@ import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { report } from '@/lib/review/review'
 import { verifyToken } from '@/lib/captcha/verifyToken'
-import applyRateLimit from '@/util/rateLimit'
+import rateLimitMiddleware from '@/util/rateLimit'
 
 interface IBody {
 	id: number
@@ -12,11 +12,6 @@ interface IBody {
 
 const FlagReview = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res)
-	try {
-		await applyRateLimit(req, res)
-	} catch {
-		return res.status(429).send('Too many requests')
-	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req
@@ -31,4 +26,4 @@ const FlagReview = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 }
 
-export default FlagReview
+export default rateLimitMiddleware(FlagReview)

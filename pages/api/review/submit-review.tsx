@@ -1,6 +1,6 @@
 import { verifyToken } from '@/lib/captcha/verifyToken'
 import { create } from '@/lib/review/review'
-import rateLimitMiddleware from '@/util/reviewRateLimit'
+import ReviewRateLimitMiddleware from '@/util/reviewRateLimit'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 interface IBody {
@@ -40,4 +40,4 @@ const SubmitReview = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 }
 
-export default rateLimitMiddleware(SubmitReview)
+export default ReviewRateLimitMiddleware(SubmitReview)
