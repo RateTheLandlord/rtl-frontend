@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Options, SortOptions } from '@/util/interfaces/interfaces'
 import SelectList from './ui/select-list'
 import SearchBar from './ui/searchbar'
@@ -57,6 +57,20 @@ function ReviewFilters({
 
 	const dispatch = useAppDispatch()
 	const query = useAppSelector((state) => state.query)
+
+	useEffect(() => {
+		const handleEnter = (e: KeyboardEvent) => {
+			console.log('test')
+			if (e.code === 'Enter') {
+				if (query?.searchFilter && query.searchFilter.length > 0) {
+					updateParams()
+				}
+			}
+		}
+		document.addEventListener('keydown', handleEnter)
+
+		return () => document.removeEventListener('keydown', handleEnter)
+	}, [])
 
 	return (
 		<div data-testid='review-filters-1' className='mt-6 hidden lg:block'>
