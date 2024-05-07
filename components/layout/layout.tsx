@@ -4,6 +4,7 @@ import Navbar from './navbar'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import Alert from '../alerts/Alert'
 import { updateAlertOpen } from '@/redux/alert/alertSlice'
+import Banner from '../PostHog/CookieBanner'
 
 function Layout({ children }: { children: JSX.Element }): JSX.Element {
 	const alert = useAppSelector((state) => state.alert)
@@ -20,6 +21,7 @@ function Layout({ children }: { children: JSX.Element }): JSX.Element {
 			<div className='flex min-h-screen justify-center' data-testid='layout-1'>
 				{children}
 			</div>
+			<Banner />
 			<Footer />
 		</>
 	)

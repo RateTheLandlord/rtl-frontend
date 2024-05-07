@@ -2,7 +2,6 @@
 import { Resource } from '@/util/interfaces/interfaces'
 import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { mutate } from 'swr'
 import XIcon from '@heroicons/react/outline/XIcon'
 import Spinner from '../ui/Spinner'
 import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
