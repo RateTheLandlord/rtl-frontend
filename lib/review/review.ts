@@ -139,8 +139,6 @@ export async function findOne(id: number): Promise<Review[]> {
 
 export async function create(inputReview: Review): Promise<Review> {
 	try {
-		const filterResult: IResult = await filterReviewWithAI(inputReview)
-
 		const existingReviewsForLandlord: Review[] =
 			await getExistingReviewsForLandlord(inputReview)
 		const reviewSpamDetected: boolean = await checkReviewsForSimilarity(
@@ -149,6 +147,10 @@ export async function create(inputReview: Review): Promise<Review> {
 		)
 		if (reviewSpamDetected) return inputReview // Don't post the review to the DB if we detect spam
 
+		if(process.env.NEXT_PUBLIC_ENVIRONMENT=="development")
+			return createReview(inputReview, { flagged: false, flagged_reason: 'DEV REVIEW' }) // Hit data layer to create review
+
+		const filterResult: IResult = await filterReviewWithAI(inputReview)
 		return createReview(inputReview, filterResult) // Hit data layer to create review
 	} catch (e) {
 		throw e

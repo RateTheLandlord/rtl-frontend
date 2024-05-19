@@ -26,7 +26,7 @@ const CountrySelector = ({ setValue }: IProps) => {
 					{country_codes.map((country) => {
 						if (country === 'CA') {
 							return (
-								<option key={country} value={country} selected>
+								<option key={country} value={country}>
 									{countries[country]}
 								</option>
 							)
