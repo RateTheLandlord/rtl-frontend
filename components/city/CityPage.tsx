@@ -146,7 +146,7 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 				</>
 			) : null}
 			<div className='w-full px-2 md:px-0'>
-				<AdsComponent slot='2009320000' />
+				<AdsComponent slot='1526837416' />
 				<div className='mx-auto mt-5 flex max-w-2xl flex-col gap-3 lg:max-w-7xl'>
 					<CityInfo
 						city={city}
