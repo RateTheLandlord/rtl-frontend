@@ -22,5 +22,5 @@
 		"incremental": true
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js"],
-	"exclude": ["node_modules", ".next", ".vercel", "out"]
+	"exclude": ["node_modules", ".next", ".vercel", "out", "migrations"]
 }
