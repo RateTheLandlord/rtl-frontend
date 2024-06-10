@@ -193,6 +193,7 @@ export interface ILandlordReviews {
 	reviews: Review[]
 	average: number
 	total: number
+	otherLandlords: Array<string>
 	catAverages: {
 		avg_repair: number
 		avg_health: number
@@ -246,10 +247,31 @@ export async function getLandlordReviews(
 		avg_privacy: Math.round(averageByCat[0].avg_privacy),
 	}
 
+	const topCity = await sql`
+		SELECT
+		city,
+		COUNT(*) as count,
+		MAX(date_added)
+		FROM review 
+		WHERE landlord = ${landlord.toLocaleUpperCase()}
+		GROUP BY city
+		ORDER BY COUNT(*) DESC, MAX(date_added) DESC
+		LIMIT 1;
+		`
+
+	const otherLandlords = await sql`
+		SELECT DISTINCT
+		landlord, 
+		(SELECT city FROM review sq WHERE mq.landlord = sq.landlord GROUP BY city ORDER BY COUNT(*) DESC, MAX(date_added) DESC LIMIT 1) as topcity
+		FROM review mq
+		WHERE (SELECT city FROM review sq WHERE mq.landlord = sq.landlord GROUP BY city ORDER BY COUNT(*) DESC, MAX(date_added) DESC LIMIT 1) = ${topCity[0].string};
+		`
+
 	return {
 		reviews: reviews,
 		average: combinedAvg,
 		total: total,
+		otherLandlords: otherLandlords[0][0],
 		catAverages: catAverages,
 	}
 }
