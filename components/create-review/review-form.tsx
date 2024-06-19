@@ -486,14 +486,11 @@ function ReviewForm(): JSX.Element {
 						className='flex justify-center gap-5 pt-5 sm:gap-3'
 						data-testid='create-review-form-submit-button-1'
 					>
-						<ButtonLight umami='Create Review / Reset Button'>
-							{t('create-review.review-form.reset')}
-						</ButtonLight>
+						<ButtonLight>{t('create-review.review-form.reset')}</ButtonLight>
 						{loading ? (
 							<Spinner />
 						) : (
 							<Button
-								umami='Create Review / Submit Button'
 								disabled={
 									!disclaimerOne ||
 									!disclaimerTwo ||

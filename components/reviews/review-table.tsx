@@ -77,7 +77,6 @@ function ReviewTable({
 															review.landlord,
 														)}`}
 														className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg  hover:underline lg:mb-2 lg:items-center'
-														data-umami-event='Reviews / Landlord Link'
 													>
 														<h6 className='text-center'>{review.landlord}</h6>
 														<p className='text-center text-sm'>
@@ -143,28 +142,19 @@ function ReviewTable({
 													</p>
 												</div>
 												<div className='mt-4 flex flex-row justify-start'>
-													<ButtonLight
-														onClick={() => handleReport(review)}
-														umami='Reviews / REPORT Button'
-													>
+													<ButtonLight onClick={() => handleReport(review)}>
 														<FlagIcon className='text-red-700' width={20} />
 													</ButtonLight>
 												</div>
 												{user && user.role === 'ADMIN' ? (
 													<>
 														<div className='mt-4 w-full'>
-															<ButtonLight
-																onClick={() => handleDelete(review)}
-																umami='Reviews / Remove Review Button'
-															>
+															<ButtonLight onClick={() => handleDelete(review)}>
 																Remove Review
 															</ButtonLight>
 														</div>
 														<div className='mt-4 w-full'>
-															<ButtonLight
-																onClick={() => handleEdit(review)}
-																umami='Reviews / Edit Review Button'
-															>
+															<ButtonLight onClick={() => handleEdit(review)}>
 																Edit Review
 															</ButtonLight>
 														</div>

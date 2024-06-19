@@ -118,10 +118,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 		<div className='w-full'>
 			<div className='mx-auto max-w-2xl sm:px-6 lg:max-w-7xl lg:px-8'>
 				<div className='flex w-full justify-end px-4 lg:hidden'>
-					<ButtonLight
-						onClick={() => setMobileFiltersOpen(true)}
-						umami='Reviews / Review Filters'
-					>
+					<ButtonLight onClick={() => setMobileFiltersOpen(true)}>
 						{t('reviews.filters')}
 					</ButtonLight>
 				</div>

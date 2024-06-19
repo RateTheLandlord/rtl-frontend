@@ -151,10 +151,7 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 											})}
 										</div>
 										<div className='flex flex-row items-center justify-start lg:mt-4'>
-											<ButtonLight
-												onClick={() => handleReport(review)}
-												umami='Landlord / REPORT button'
-											>
+											<ButtonLight onClick={() => handleReport(review)}>
 												<FlagIcon className='text-red-700' width={20} />
 											</ButtonLight>
 										</div>

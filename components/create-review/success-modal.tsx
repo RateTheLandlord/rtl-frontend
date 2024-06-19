@@ -108,10 +108,7 @@ function SuccessModal({ isOpen, setIsOpen }: IProps) {
 											<p className='mb-2 text-sm text-gray-500'>
 												{t('create-review.modal.patreon')}
 											</p>
-											<LinkButtonLightLG
-												umami='Patreon Link'
-												href='https://patreon.com/RateTheLandlord?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator&utm_content=join_link'
-											>
+											<LinkButtonLightLG href='https://patreon.com/RateTheLandlord?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator&utm_content=join_link'>
 												<div className='flex flex-row items-center gap-2'>
 													<Patreon styling='w-10 h-10' />
 													<p>Patreon</p>
@@ -122,7 +119,6 @@ function SuccessModal({ isOpen, setIsOpen }: IProps) {
 								</div>
 								<div className='mt-5 grid gap-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3'>
 									<ButtonLight
-										umami='Success Modal / Submit Another Button'
 										onClick={() => {
 											setIsOpen(false)
 											router.reload()
@@ -131,7 +127,6 @@ function SuccessModal({ isOpen, setIsOpen }: IProps) {
 										{t('create-review.modal.submit-another')}
 									</ButtonLight>
 									<Button
-										umami='Success Modal / Go to Reviews Button'
 										onClick={() => {
 											setIsOpen(false)
 											router.push('/reviews').catch((err) => console.log(err))

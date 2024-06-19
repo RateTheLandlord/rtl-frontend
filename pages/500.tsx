@@ -14,13 +14,8 @@ export default function Custom500() {
 					this page, please contact us.
 				</p>
 				<div className='mt-10 flex items-center justify-center gap-x-6'>
-					<LinkButtonLG umami='500 / Return Home' href='/'>
-						Go back home
-					</LinkButtonLG>
-					<LinkButtonLightLG
-						umami='500 / Email'
-						href='mailto:r8thelandlord@gmail.com'
-					>
+					<LinkButtonLG href='/'>Go back home</LinkButtonLG>
+					<LinkButtonLightLG href='mailto:r8thelandlord@gmail.com'>
 						Contact Us
 					</LinkButtonLightLG>
 				</div>

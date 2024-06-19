@@ -10,14 +10,9 @@ export default class MyDocument extends Document {
 				<body>
 					<Main />
 					<NextScript />
-					{/* Umami Analytics & Google Ads */}
+					{/* Google Ads */}
 					{isProd && (
 						<>
-							<script
-								async
-								src='https://analytics-xi-brown.vercel.app/script.js'
-								data-website-id='a3aff0b8-ee4d-4268-b8a2-35d023e3cad5'
-							></script>
 							<script
 								async
 								src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1233437669445756'
