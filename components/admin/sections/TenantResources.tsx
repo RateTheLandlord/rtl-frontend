@@ -148,7 +148,7 @@ const TenantResources = () => {
 				/>
 			)}
 			<div className='flex w-full justify-end'>
-				<Button onClick={() => setAddResourceOpen(true)} umami='add-resource'>
+				<Button onClick={() => setAddResourceOpen(true)}>
 					Add New Resource
 				</Button>
 			</div>

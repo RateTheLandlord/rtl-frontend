@@ -54,7 +54,6 @@ function AddReviewModal({ isOpen, setIsOpen }: IProps) {
 								</div>
 								<div className='mt-5 flex w-full justify-center sm:mt-6'>
 									<Button
-										umami='Add Review Modal / Close Button'
 										onClick={() => {
 											setIsOpen(false)
 										}}

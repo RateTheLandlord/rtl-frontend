@@ -45,12 +45,7 @@ export default function Navbar(): JSX.Element {
 							<div className='flex px-2 lg:px-0'>
 								<div className='flex flex-shrink-0 items-center gap-4'>
 									<Logo styling='h-8 w-auto' />
-									<Link
-										href='/'
-										data-umami-event='Navbar / Rate The Landlord Link'
-									>
-										{t('layout.nav.title')}
-									</Link>
+									<Link href='/'>{t('layout.nav.title')}</Link>
 								</div>
 								<div className='hidden lg:ml-6 lg:flex lg:space-x-8'>
 									{navigation.map((link) => (
@@ -62,9 +57,7 @@ export default function Navbar(): JSX.Element {
 											} inline-flex items-center px-1 pt-1 text-sm  text-gray-900`}
 											key={link.href}
 										>
-											<Link href={link.href} data-umami-event={link.umami}>
-												{t(link.name)}
-											</Link>
+											<Link href={link.href}>{t(link.name)}</Link>
 										</div>
 									))}
 									{user && user.role === 'ADMIN' && (
@@ -84,7 +77,6 @@ export default function Navbar(): JSX.Element {
 								<div className='hidden justify-center space-x-6 lg:flex'>
 									{socialLinks.map((item) => (
 										<a
-											data-umami-event={item.umami}
 											key={item.name}
 											href={item.href}
 											className='flex items-center text-gray-400 hover:text-gray-500'
@@ -96,10 +88,7 @@ export default function Navbar(): JSX.Element {
 								</div>
 								<div className='hidden lg:ml-6 lg:flex lg:space-x-8'>
 									<div className='inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 text-sm  text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'>
-										<Link
-											href='/create-review'
-											data-umami-event='Navbar / Submit a Review Button'
-										>
+										<Link href='/create-review'>
 											<p className='px-4 py-2'>{t('layout.nav.submit')}</p>
 										</Link>
 									</div>

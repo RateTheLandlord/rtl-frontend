@@ -142,7 +142,6 @@ export default function MobileReviewFilters({
 									</div>
 									<div className='flex w-full justify-end pt-2'>
 										<ButtonLight
-											umami='Mobile / Reset Filters'
 											onClick={() => {
 												dispatch(clearFilters())
 												setMobileFiltersOpen(false)
