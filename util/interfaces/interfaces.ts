@@ -19,6 +19,11 @@ export interface Review {
 	rent?: number | null
 }
 
+export interface OtherLandlord {
+	name: string
+	avgrating: number
+}
+
 export interface Options {
 	id: number
 	name: string

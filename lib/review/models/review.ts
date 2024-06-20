@@ -19,6 +19,11 @@ export interface Review {
 	rent?: number | null
 }
 
+export interface OtherLandlord {
+	name: string
+	avgrating: number
+}
+
 export type ReviewsResponse = {
 	reviews: Review[]
 	total: number
