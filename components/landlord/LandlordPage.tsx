@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
 import LandlordInfo from './LandlordInfo'
+import OtherLandlordInfo from './OtherLandlord'
 import { useTranslation } from 'react-i18next'
 import { Review, OtherLandlord } from '@/util/interfaces/interfaces'
 import { FlagIcon, StarIcon } from '@heroicons/react/solid'
@@ -11,7 +12,6 @@ import { sortOptions } from '@/util/helpers/filter-options'
 import SortList from '../reviews/ui/sort-list'
 import { ILandlordReviews} from '@/lib/review/review'
 import Link from 'next/link'
-import { stringify } from 'querystring'
 
 const filteredSortOptions = sortOptions.slice(2)
 
@@ -216,34 +216,7 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 							)
 						})}
 					</div>
-					Landlords:
-					<div className='flex w-full flex-col gap-3'>
-						{otherLandlords.map((otherLandlord, index) => {
-							return (
-								<div key = {index} className='flex flex-row flex-wrap items-center justify-between bg-gray-50 p-2 lg:min-w-[250px] lg:max-w-[275px] lg:flex-col'>
-									<div className='flex flex-col'>
-										<p className='text-gray-500 lg:mb-0 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>
-											{otherLandlord.name}
-										</p>
-										<div className='flex items-center'>
-											{[0, 1, 2, 3, 4].map((star) => (
-												<StarIcon
-													key={star}
-													className={classNames(
-														Math.floor(otherLandlord.avgrating) > star
-															? 'text-yellow-400'
-															: 'text-gray-200',
-														'h-5 w-5 flex-shrink-0',
-													)}
-													aria-hidden='true'
-												/>
-											))}
-										</div>
-									</div>
-								</div>
-							)
-						})}
-					</div>
+					{otherLandlords.length > 0 && <OtherLandlordInfo data={data}/>}
 				</div>
 			</div>
 		</>

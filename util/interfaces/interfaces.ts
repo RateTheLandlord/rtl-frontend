@@ -22,6 +22,7 @@ export interface Review {
 export interface OtherLandlord {
 	name: string
 	avgrating: number
+	topcity: string
 }
 
 export interface Options {
