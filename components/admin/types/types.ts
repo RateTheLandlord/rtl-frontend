@@ -48,6 +48,13 @@ export interface ICountryStats {
 				total: string
 			}>
 		}
+		IE?: {
+			total: string
+			states: Array<{
+				key: string
+				total: string
+			}>
+		}
 	}
 }
 

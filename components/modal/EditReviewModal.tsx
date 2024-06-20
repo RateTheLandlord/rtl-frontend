@@ -6,6 +6,7 @@ import provinces from '@/util/countries/canada/provinces.json'
 import regions from '@/util/countries/unitedKingdom/regions.json'
 import states from '@/util/countries/unitedStates/states.json'
 import territories from '@/util/countries/australia/territories.json'
+import counties from '@/util/countries/ireland/counties.json'
 import { country_codes } from '@/util/helpers/getCountryCodes'
 import { Dialog, Transition } from '@headlessui/react'
 import { useAppDispatch } from '@/redux/hooks'
@@ -219,6 +220,14 @@ const EditReviewModal = ({
 																	value={territory.name}
 																>
 																	{territory.name}
+																</option>
+															)
+													  })
+													: country === 'IE'
+													? counties.map((county) => {
+															return (
+																<option key={county.short} value={county.name}>
+																	{county.name}
 																</option>
 															)
 													  })
