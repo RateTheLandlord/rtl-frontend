@@ -92,6 +92,10 @@ settings, firewall rules, and authentication configurations.
 You can also create a database with a service like Supabase and use the
 connection string from there. The service is free.
 
+### Step 5: Run migrations
+
+Run "npm run migrate:up" in order to create the necessary tables in your postgres instance.
+
 ## Troubleshooting
 
 #### Auth0
@@ -101,7 +105,10 @@ allow you to test admin functionality.
 
 #### Captcha Not Working
 
-If you are trying to submit a review locally, you need to edit your hosts file
+If you are trying to submit a review locally, you will need to set up [recaptcha on google](https://www.google.com/recaptcha/about/), and populate the
+.env file with the values.
+
+You will also need to edit your hosts file to get this to work.
 to allow Captcha to work. Follow These guides:
 
 - [Hcaptcha Local Development](https://docs.hcaptcha.com/#local-development)
