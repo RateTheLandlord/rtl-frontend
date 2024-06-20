@@ -1,6 +1,6 @@
 # Rate The Landlord
 
-A simple website for Renter's to rate their Landlord
+A simple website for Renters to rate their Landlord
 
 ## Getting Started
 
