@@ -22,7 +22,6 @@ const OtherLandlordInfo = ({ data }: IProps) => {
 		setOtherLandlords(data.otherLandlords)
 	}, [data.otherLandlords])
 
-    if(data.otherLandlords.length <= 0) return
 
 	return (
 		<>
