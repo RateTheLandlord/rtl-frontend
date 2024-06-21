@@ -121,8 +121,7 @@ You can read an [example here](https://auth0.com/docs/manage-users/access-contro
 If you are trying to submit a review locally, you will need to set up [recaptcha on google](https://www.google.com/recaptcha/about/), and populate the
 .env file with the values.
 
-You will also need to edit your hosts file to get this to work.
-to allow Captcha to work. Follow These guides:
+You will also need to edit your hosts file to allow Captcha to work. Follow These guides:
 
 - [Hcaptcha Local Development](https://docs.hcaptcha.com/#local-development)
 
