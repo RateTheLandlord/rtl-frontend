@@ -103,6 +103,19 @@ Run "npm run migrate:up" in order to create the necessary tables in your postgre
 Create an account with Auth0 and follow their setup process. It's free and will
 allow you to test admin functionality.
 
+You will need to create an ADMIN role (upper case important), and assign it to your user. You will then need to insert a custom action into the login flow to add this role claim. 
+
+```
+exports.onExecutePostLogin = async (event, api) => {
+  if (event.authorization) {
+    api.idToken.setCustomClaim(`role`, event.authorization.roles[0]);
+    api.accessToken.setCustomClaim(`role`, event.authorization.roles[0]);
+  }
+}
+```
+
+You can read an [example here](https://auth0.com/docs/manage-users/access-control/sample-use-cases-actions-with-authorization#add-user-roles-to-tokens)
+
 #### Captcha Not Working
 
 If you are trying to submit a review locally, you will need to set up [recaptcha on google](https://www.google.com/recaptcha/about/), and populate the
