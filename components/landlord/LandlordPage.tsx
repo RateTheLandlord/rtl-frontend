@@ -10,7 +10,7 @@ import ButtonLight from '../ui/button-light'
 import Spinner from '../ui/Spinner'
 import { sortOptions } from '@/util/helpers/filter-options'
 import SortList from '../reviews/ui/sort-list'
-import { ILandlordReviews} from '@/lib/review/review'
+import { ILandlordReviews } from '@/lib/review/review'
 import Link from 'next/link'
 
 const filteredSortOptions = sortOptions.slice(2)
@@ -37,7 +37,6 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 	}
 
 	useEffect(() => {
-
 		switch (sortState.value) {
 			case 'new':
 				const sortedOld = data.reviews.sort(
@@ -206,7 +205,7 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 											) : null} */}
 
 											<p className='mt-3 space-y-6 text-sm text-gray-500'>
-											{review.review}
+												{review.review}
 											</p>
 										</div>
 									</div>
@@ -214,7 +213,9 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 							)
 						})}
 					</div>
-					{data.otherLandlords.length > 0 && <OtherLandlordInfo data={data}/>}
+					{data.otherLandlords.length > 0 && (
+						<OtherLandlordInfo landlords={data.otherLandlords} />
+					)}
 				</div>
 			</div>
 		</>

@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev -H test.ratethelandlord",
+		"dev": "next dev",
 		"prebuild": "next telemetry disable",
 		"build": "next build",
 		"postbuild": "next-sitemap",
