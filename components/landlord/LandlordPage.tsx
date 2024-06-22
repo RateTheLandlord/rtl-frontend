@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
 import LandlordInfo from './LandlordInfo'
+import OtherLandlordInfo from './OtherLandlord'
 import { useTranslation } from 'react-i18next'
 import { Review } from '@/util/interfaces/interfaces'
 import { FlagIcon, StarIcon } from '@heroicons/react/solid'
@@ -209,6 +210,9 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 							)
 						})}
 					</div>
+					{data.otherLandlords.length > 0 && (
+						<OtherLandlordInfo landlords={data.otherLandlords} />
+					)}
 				</div>
 			</div>
 		</>

@@ -1,4 +1,4 @@
-import { Review, ReviewsResponse } from '@/lib/review/models/review'
+import { Review, ReviewsResponse, OtherLandlord } from '@/lib/review/models/review'
 import { filterReviewWithAI, IResult } from './helpers'
 import { checkReviewsForSimilarity } from './review-text-match'
 import sql from '../db'
@@ -189,10 +189,12 @@ export async function getLandlords(): Promise<string[]> {
 	return landlords.map(({ landlord }) => landlord)
 }
 
+	
 export interface ILandlordReviews {
 	reviews: Review[]
 	average: number
 	total: number
+	otherLandlords: OtherLandlord[]
 	catAverages: {
 		avg_repair: number
 		avg_health: number
@@ -246,10 +248,43 @@ export async function getLandlordReviews(
 		avg_privacy: Math.round(averageByCat[0].avg_privacy),
 	}
 
+	const topCity = await sql`
+		SELECT
+		city,
+		COUNT(*) as count,
+		MAX(date_added)
+		FROM review 
+		WHERE landlord = ${landlord.toLocaleUpperCase()}
+		GROUP BY city
+		ORDER BY COUNT(*) DESC, MAX(date_added) DESC
+		LIMIT 1;
+		`
+
+	const otherLandlords = (await sql<OtherLandlord[]>`
+		SELECT DISTINCT
+		re.landlord AS name,
+		(SELECT 
+			(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS combined_avg
+			FROM review
+			WHERE landlord = re.landlord) AS avgrating,
+		re.city AS topcity,
+		(SELECT
+			COUNT(*)
+			FROM review
+			WHERE landlord = re.landlord) AS ReviewCount,
+		RANDOM()
+		FROM review re
+		WHERE re.city = ${topCity[0].city}
+		AND re.landlord != ${landlord.toLocaleUpperCase()}
+		ORDER BY RANDOM()
+		LIMIT 10
+		`)
+
 	return {
 		reviews: reviews,
 		average: combinedAvg,
 		total: total,
+		otherLandlords: otherLandlords,
 		catAverages: catAverages,
 	}
 }
