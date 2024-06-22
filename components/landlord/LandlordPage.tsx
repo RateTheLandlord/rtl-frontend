@@ -3,7 +3,7 @@ import ReportModal from '../reviews/report-modal'
 import LandlordInfo from './LandlordInfo'
 import OtherLandlordInfo from './OtherLandlord'
 import { useTranslation } from 'react-i18next'
-import { Review, OtherLandlord } from '@/util/interfaces/interfaces'
+import { Review } from '@/util/interfaces/interfaces'
 import { FlagIcon, StarIcon } from '@heroicons/react/solid'
 import { classNames } from '@/util/helpers/helper-functions'
 import ButtonLight from '../ui/button-light'
@@ -24,7 +24,6 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 	const { t } = useTranslation('reviews')
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
 	const [sortedReviews, setSortedReviews] = useState<Array<Review>>([])
-	const [otherLandlords, setOtherLandlords] = useState<Array<OtherLandlord>>([])
 
 	const [sortState, setSortState] = useState(filteredSortOptions[0])
 
@@ -38,7 +37,7 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 	}
 
 	useEffect(() => {
-		console.log(data.otherLandlords)
+
 		switch (sortState.value) {
 			case 'new':
 				const sortedOld = data.reviews.sort(
@@ -75,8 +74,7 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 				setSortedReviews([...sortedLow])
 				break
 		}
-		setOtherLandlords(data.otherLandlords)
-	}, [sortState, data.reviews, data.otherLandlords])
+	}, [sortState, data.reviews])
 
 	return (
 		<>
@@ -216,7 +214,7 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 							)
 						})}
 					</div>
-					{otherLandlords.length > 0 && <OtherLandlordInfo data={data}/>}
+					{data.otherLandlords.length > 0 && <OtherLandlordInfo data={data}/>}
 				</div>
 			</div>
 		</>

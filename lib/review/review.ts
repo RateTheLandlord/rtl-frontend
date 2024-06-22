@@ -264,13 +264,20 @@ export async function getLandlordReviews(
 		SELECT DISTINCT
 		re.landlord AS name,
 		(SELECT 
-			(FLOOR(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5) AS combined_avg
+			(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS combined_avg
 			FROM review
 			WHERE landlord = re.landlord) AS avgrating,
-		re.city AS topcity
+		re.city AS topcity,
+		(SELECT
+			COUNT(*)
+			FROM review
+			WHERE landlord = re.landlord) AS ReviewCount,
+		RANDOM()
 		FROM review re
 		WHERE re.city = ${topCity[0].city}
-		AND re.landlord != ${landlord.toLocaleUpperCase()};
+		AND re.landlord != ${landlord.toLocaleUpperCase()}
+		ORDER BY RANDOM()
+		LIMIT 10
 		`)
 
 	return {

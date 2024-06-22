@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import {OtherLandlord } from '@/util/interfaces/interfaces'
-import { classNames } from '@/util/helpers/helper-functions'
 import Spinner from '../ui/Spinner'
 import { ILandlordReviews} from '@/lib/review/review'
 import Link from 'next/link'
-import { StarIcon } from '@heroicons/react/solid'
+import RatingStars from "@/components/ui/RatingStars"
 
 
 interface IProps {
@@ -16,13 +15,13 @@ const OtherLandlordInfo = ({ data }: IProps) => {
 
 	if (!data.otherLandlords.length) return <Spinner />
 
-    
 
-	useEffect(() => {
-		setOtherLandlords(data.otherLandlords)
+    useEffect(() => {
+        setOtherLandlords(data.otherLandlords)
+        
 	}, [data.otherLandlords])
 
-
+    
 	return (
 		<>
             <h3 className='mt-4 text-lg text-gray-900'>View Other Landlords in {otherLandlords.pop()?.topcity}:</h3>
@@ -30,7 +29,7 @@ const OtherLandlordInfo = ({ data }: IProps) => {
                 {otherLandlords.map((otherLandlord, index) => {
                     return (
                         <div key = {index} className='flex flex-row flex-wrap items-center justify-between bg-teal-600/5 p-2 lg:min-w-[220px] lg:max-w-[225px] lg:flex-col'>
-                            <div className='flex flex-col'>
+                            <div className='flex flex-col items-center'>
                             <Link
                                 href={`/landlord/${encodeURIComponent(
                                     otherLandlord.name,
@@ -40,23 +39,10 @@ const OtherLandlordInfo = ({ data }: IProps) => {
                             >
                                 <h6 className='text-center'>{otherLandlord.name}</h6>
                                 <p className='text-center text-sm'>
-                                    Read all reviews
+                                    Read {otherLandlord.reviewcount} review(s)
                                 </p>
                             </Link>
-                                <div className='flex items-center'>
-                                    {[0, 1, 2, 3, 4].map((star) => (
-                                        <StarIcon
-                                            key={star}
-                                            className={classNames(
-                                                Math.floor(otherLandlord.avgrating) > star
-                                                    ? 'text-yellow-400'
-                                                    : 'text-gray-200',
-                                                'h-5 w-5 flex-shrink-0',
-                                            )}
-                                            aria-hidden='true'
-                                        />
-                                    ))}
-                                </div>
+                                <RatingStars value={Math.floor(otherLandlord.avgrating)}/>
                             </div>
                         </div>
                     )
