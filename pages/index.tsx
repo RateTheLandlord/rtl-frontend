@@ -1,3 +1,4 @@
+import Search from '@/components/home/Search'
 import Hero from '@/components/home/hero'
 import IconSection from '@/components/home/icon-section'
 import Testimonials from '@/components/home/testimonials'
@@ -49,6 +50,7 @@ export default function Home(): JSX.Element {
 				]}
 			/>
 			<Hero />
+			<Search />
 			<IconSection />
 			<Testimonials />
 		</div>

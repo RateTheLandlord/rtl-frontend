@@ -65,11 +65,11 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 	// Query
 	const [queryParams, setQueryParams] = useState({
 		sort: selectedSort.value,
-		state: '',
-		country: '',
-		city: '',
-		zip: '',
-		search: '',
+		state: stateFilter?.value || '',
+		country: countryFilter?.value || '',
+		city: cityFilter?.value || '',
+		zip: zipFilter?.value || '',
+		search: searchFilter || '',
 		limit: '25',
 	})
 
