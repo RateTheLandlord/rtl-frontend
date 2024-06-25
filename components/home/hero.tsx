@@ -8,10 +8,10 @@ function Hero(): JSX.Element {
 	return (
 		<div
 			data-testid='home-hero-1'
-			className='mx-auto flex max-w-7xl flex-col px-6 pb-12 pt-10 sm:pb-16 lg:flex-row lg:items-center lg:px-8'
+			className='mx-auto flex max-w-7xl flex-col-reverse px-6 pb-4 sm:pb-8 lg:flex-row lg:items-center lg:px-8'
 		>
 			<div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0'>
-				<h1 className='mt-10 text-center text-4xl  text-teal-600 sm:text-6xl lg:text-left'>
+				<h1 className='mt-2 text-center text-4xl  text-teal-600 sm:text-6xl lg:text-left'>
 					{t('home.hero.title')}
 				</h1>
 				<p className='mt-6 text-center text-lg leading-8 text-gray-600 lg:text-left'>
@@ -26,7 +26,7 @@ function Hero(): JSX.Element {
 					</LinkButtonLightLG>
 				</div>
 			</div>
-			<div className='mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32'>
+			<div className='mx-auto flex max-w-2xl lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32'>
 				<div className='max-w-3xl flex-none sm:max-w-5xl lg:max-w-none'>
 					<HouseIcon className='h-80 w-80 md:h-[500px] md:w-[500px]' />
 				</div>

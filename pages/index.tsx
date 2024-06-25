@@ -49,8 +49,10 @@ export default function Home(): JSX.Element {
 					},
 				]}
 			/>
-			<Hero />
-			<Search />
+			<div className='mx-2 mt-4 rounded-3xl bg-gray-100 pb-4'>
+				<Hero />
+				<Search />
+			</div>
 			<IconSection />
 			<Testimonials />
 		</div>
