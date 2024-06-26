@@ -1,3 +1,4 @@
+import Search from '@/components/home/Search'
 import Hero from '@/components/home/hero'
 import IconSection from '@/components/home/icon-section'
 import Testimonials from '@/components/home/testimonials'
@@ -48,7 +49,10 @@ export default function Home(): JSX.Element {
 					},
 				]}
 			/>
-			<Hero />
+			<div className='mx-2 mt-4 rounded-3xl bg-gray-100 pb-4'>
+				<Hero />
+				<Search />
+			</div>
 			<IconSection />
 			<Testimonials />
 		</div>
