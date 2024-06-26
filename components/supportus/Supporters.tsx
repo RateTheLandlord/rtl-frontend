@@ -18,7 +18,7 @@ export default function Supporters({ members, tiers }: IProps) {
 					{members
 						.map((member) => {
 							const tierName = getTierName(member.id)
-							if (tierName === 'Free') {
+							if (tierName === 'Free' || tierName === undefined) {
 								return null
 							}
 							return (
