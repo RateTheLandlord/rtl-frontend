@@ -1,7 +1,6 @@
 /* eslint-disable no-useless-escape */
 import { getLandlordSuggestions } from '@/lib/review/review'
 import { runMiddleware } from '@/util/cors'
-import rateLimitMiddleware from '@/util/rateLimit'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export const removeSpecialChars = (input: string) => {
@@ -24,4 +23,4 @@ const getLandlordSuggestionsAPI = async (
 	res.status(200).json(landlords)
 }
 
-export default rateLimitMiddleware(getLandlordSuggestionsAPI)
+export default getLandlordSuggestionsAPI
