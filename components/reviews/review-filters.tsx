@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Options, SortOptions } from '@/util/interfaces/interfaces'
 import SelectList from './ui/select-list'
 import SearchBar from './ui/searchbar'
@@ -51,26 +51,11 @@ function ReviewFilters({
 	stateOptions,
 	zipOptions,
 	updateParams,
-	loading,
+	loading
 }: FiltersProps): JSX.Element {
 	const { t } = useTranslation('reviews')
-
 	const dispatch = useAppDispatch()
 	const query = useAppSelector((state) => state.query)
-
-	useEffect(() => {
-		const handleEnter = (e: KeyboardEvent) => {
-			console.log('test')
-			if (e.code === 'Enter') {
-				if (query?.searchFilter && query.searchFilter.length > 0) {
-					updateParams()
-				}
-			}
-		}
-		document.addEventListener('keydown', handleEnter)
-
-		return () => document.removeEventListener('keydown', handleEnter)
-	}, [])
 
 	return (
 		<div data-testid='review-filters-1' className='mt-6 hidden lg:block'>
@@ -85,7 +70,7 @@ function ReviewFilters({
 						<div className='hidden lg:block'>
 							<div className='flow-root'>
 								<div className='-mx-4 flex flex-col divide-y divide-gray-200'>
-									<div className='py-2'>
+									<div className='py-2' onKeyDown={(e) => e.key === "Enter" || e.key === "NumpadEnter"  ? updateParams() : {}}>
 										<SearchBar
 											setSearchState={(str: string) =>
 												dispatch(updateSearch(str))
@@ -94,7 +79,7 @@ function ReviewFilters({
 											searchTitle={searchTitle}
 										/>
 									</div>
-									<div className='py-2'>
+									<div className='py-2' onKeyDown={(e) => e.key === "Enter" || e.key === "NumpadEnter"  ? updateParams() : {}}>
 										<SortList
 											state={selectedSort}
 											setState={setSelectedSort}
@@ -103,7 +88,7 @@ function ReviewFilters({
 										/>
 									</div>
 
-									<div className='py-2'>
+									<div className='py-2' onKeyDown={(e) => e.key === "Enter" || e.key === "NumpadEnter"  ? updateParams() : {}}>
 										<SelectList
 											state={countryFilter}
 											setState={(opt: Options) => dispatch(updateCountry(opt))}
@@ -111,7 +96,7 @@ function ReviewFilters({
 											name={t('reviews.country')}
 										/>
 									</div>
-									<div className='py-2'>
+									<div className='py-2' onKeyDown={(e) => e.key === "Enter" || e.key === "NumpadEnter"  ? updateParams() : {}}>
 										<ComboBox
 											state={stateFilter}
 											setState={(opt: Options) => dispatch(updateState(opt))}
@@ -119,7 +104,7 @@ function ReviewFilters({
 											name={t('reviews.state')}
 										/>
 									</div>
-									<div className='py-2'>
+									<div className='py-2' onKeyDown={(e) => e.key === "Enter" || e.key === "NumpadEnter"  ? updateParams() : {}}>
 										<ComboBox
 											state={cityFilter}
 											setState={(opt: Options) => dispatch(updateCity(opt))}
@@ -127,7 +112,7 @@ function ReviewFilters({
 											name={t('reviews.city')}
 										/>
 									</div>
-									<div className='py-2'>
+									<div className='py-2' onKeyDown={(e) => e.key === "Enter" || e.key === "NumpadEnter"  ? updateParams() : {}}>
 										{zipOptions && (
 											<ComboBox
 												state={zipFilter}
