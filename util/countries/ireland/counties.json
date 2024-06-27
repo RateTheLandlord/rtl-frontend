@@ -1,15 +1,5 @@
 [
 	{
-		"short": "AN",
-		"name": "Antrim",
-		"country": "IE"
-	},
-	{
-		"short": "AR",
-		"name": "Armagh",
-		"country": "IE"
-	},
-	{
 		"short": "CAR",
 		"name": "Carlow",
 		"country": "IE"
@@ -30,28 +20,13 @@
 		"country": "IE"
 	},
 	{
-		"short": "DE",
-		"name": "Derry",
-		"country": "IE"
-	},
-	{
-		"short": "DON",
+		"short": "DO",
 		"name": "Donegal",
-		"country": "IE"
-	},
-	{
-		"short": "DOW",
-		"name": "Down",
 		"country": "IE"
 	},
 	{
 		"short": "DUB",
 		"name": "Dublin",
-		"country": "IE"
-	},
-	{
-		"short": "FE",
-		"name": "Fermanagh",
 		"country": "IE"
 	},
 	{
@@ -117,11 +92,6 @@
 	{
 		"short": "TI",
 		"name": "Tipperary",
-		"country": "IE"
-	},
-	{
-		"short": "TY",
-		"name": "Tyrone",
 		"country": "IE"
 	},
 	{
