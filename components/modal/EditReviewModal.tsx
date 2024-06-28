@@ -6,6 +6,7 @@ import provinces from '@/util/countries/canada/provinces.json'
 import regions from '@/util/countries/unitedKingdom/regions.json'
 import states from '@/util/countries/unitedStates/states.json'
 import territories from '@/util/countries/australia/territories.json'
+import counties from '@/util/countries/ireland/counties.json'
 import { country_codes } from '@/util/helpers/getCountryCodes'
 import { Dialog, Transition } from '@headlessui/react'
 import { useAppDispatch } from '@/redux/hooks'
@@ -38,6 +39,7 @@ const EditReviewModal = ({
 	const [postal, setPostal] = useState<string>(selectedReview?.zip || '')
 	const [review, setReview] = useState<string>(selectedReview?.review || '')
 	const [rent, setRent] = useState<number | null>(selectedReview?.rent || null)
+	const isIreland = country === 'IE'
 
 	const onSubmitEditReview = () => {
 		const editedReview = {
@@ -194,65 +196,75 @@ const EditReviewModal = ({
 												<option>{province}</option>
 												{country === 'CA'
 													? provinces.map((province) => {
-															return (
-																<option
-																	key={province.short}
-																	value={province.name}
-																>
-																	{province.name}
-																</option>
-															)
-													  })
+														return (
+															<option
+																key={province.short}
+																value={province.name}
+															>
+																{province.name}
+															</option>
+														)
+													})
 													: country === 'GB'
-													? regions.map((region) => {
+														? regions.map((region) => {
 															return (
 																<option key={region.short} value={region.name}>
 																	{region.name}
 																</option>
 															)
-													  })
-													: country === 'AU'
-													? territories.map((territory) => {
-															return (
-																<option
-																	key={territory.short}
-																	value={territory.name}
-																>
-																	{territory.name}
-																</option>
-															)
-													  })
-													: states.map((state) => {
-															return (
-																<option key={state.short} value={state.name}>
-																	{state.name}
-																</option>
-															)
-													  })}
+														})
+														: country === 'AU'
+															? territories.map((territory) => {
+																return (
+																	<option
+																		key={territory.short}
+																		value={territory.name}
+																	>
+																		{territory.name}
+																	</option>
+																)
+															})
+															: country === 'IE'
+																? counties.map((county) => {
+																	return (
+																		<option key={county.short} value={county.name}>
+																			{county.name}
+																		</option>
+																	)
+																})
+																: states.map((state) => {
+																	return (
+																		<option key={state.short} value={state.name}>
+																			{state.name}
+																		</option>
+																	)
+																})}
 											</select>
 										</div>
 									</div>
-									<div className='sm:col-span-2'>
-										<label
-											htmlFor='postal-code'
-											className='block text-sm  text-gray-700'
-										>
-											Postal Code / ZIP
-										</label>
-										<div className='mt-1'>
-											<input
-												type='text'
-												name='postal-code'
-												id='postal-code'
-												placeholder='Postal Code / ZIP'
-												required
-												value={postal ? postal : selectedReview?.zip}
-												onChange={(e) => setPostal(e.target.value)}
-												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-												data-testid='create-review-form-postal-code-1'
-											/>
+									{isIreland ? null : (
+										<div className='sm:col-span-2'>
+											<label
+												htmlFor='postal-code'
+												className='block text-sm  text-gray-700'
+											>
+												Postal Code / ZIP
+											</label>
+											<div className='mt-1'>
+												<input
+													type='text'
+													name='postal-code'
+													id='postal-code'
+													placeholder='Postal Code / ZIP'
+													required
+													value={postal ? postal : selectedReview?.zip}
+													onChange={(e) => setPostal(e.target.value)}
+													className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+													data-testid='create-review-form-postal-code-1'
+												/>
+											</div>
 										</div>
-									</div>
+									)}
 									<div className='sm:col-span-2'>
 										<label
 											htmlFor='rent'
