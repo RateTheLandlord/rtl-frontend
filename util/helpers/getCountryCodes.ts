@@ -8,6 +8,7 @@ export const country_codes: string[] = Object.keys(countries).filter(
 		c === 'GB' ||
 		c === 'AU' ||
 		c === 'NZ' ||
+		c === 'IE' ||
 		c === 'DE',
 )
 
@@ -19,7 +20,7 @@ export const countryOptions: Options[] = country_codes.map(
 
 export const countryName = (countryCode: string): string =>
 	countries[
-		Object.keys(countries)
-			.filter((c) => c === countryCode)
-			.toString()
+	Object.keys(countries)
+		.filter((c) => c === countryCode)
+		.toString()
 	]

@@ -1,0 +1,117 @@
+[
+	{
+		"short": "CAR",
+		"name": "Carlow",
+		"country": "IE"
+	},
+	{
+		"short": "CAV",
+		"name": "Cavan",
+		"country": "IE"
+	},
+	{
+		"short": "CL",
+		"name": "Clare",
+		"country": "IE"
+	},
+	{
+		"short": "CO",
+		"name": "Cork",
+		"country": "IE"
+	},
+	{
+		"short": "DO",
+		"name": "Donegal",
+		"country": "IE"
+	},
+	{
+		"short": "DUB",
+		"name": "Dublin",
+		"country": "IE"
+	},
+	{
+		"short": "GA",
+		"name": "Galway",
+		"country": "IE"
+	},
+	{
+		"short": "KE",
+		"name": "Kerry",
+		"country": "IE"
+	},
+	{
+		"short": "LA",
+		"name": "Laois",
+		"country": "IE"
+	},
+	{
+		"short": "LE",
+		"name": "Leitrim",
+		"country": "IE"
+	},
+	{
+		"short": "LI",
+		"name": "Limerick",
+		"country": "IE"
+	},
+	{
+		"short": "LON",
+		"name": "Longford",
+		"country": "IE"
+	},
+	{
+		"short": "LOU",
+		"name": "Louth",
+		"country": "IE"
+	},
+	{
+		"short": "MA",
+		"name": "Mayo",
+		"country": "IE"
+	},
+	{
+		"short": "ME",
+		"name": "Meath",
+		"country": "IE"
+	},
+	{
+		"short": "OF",
+		"name": "Offaly",
+		"country": "IE"
+	},
+	{
+		"short": "RO",
+		"name": "Roscommon",
+		"country": "IE"
+	},
+	{
+		"short": "SL",
+		"name": "Sligo",
+		"country": "IE"
+	},
+	{
+		"short": "TI",
+		"name": "Tipperary",
+		"country": "IE"
+	},
+	{
+		"short": "WA",
+		"name": "Waterford",
+		"country": "IE"
+	},
+	{
+		"short": "WES",
+		"name": "Westmeath",
+		"country": "IE"
+	},
+	{
+		"short": "WEX",
+		"name": "Wexford",
+		"country": "IE"
+	},
+	{
+		"short": "WI",
+		"name": "Wicklow",
+		"country": "IE"
+	}
+]
