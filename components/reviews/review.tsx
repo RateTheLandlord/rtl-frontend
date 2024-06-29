@@ -44,7 +44,7 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 	// Localization
 	const { t } = useTranslation('reviews')
 
-	console.log(data)
+	console.log('Data: ', data)
 
 	// Redux
 	const query = useAppSelector((state) => state.query)
