@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import AdsComponent from '@/components/adsense/Adsense'
 import ResourceList from '@/components/resources/ResourceList'
 import { ResourceResponse } from '@/util/interfaces/interfaces'
+import { getResources } from '@/lib/tenant-resource/resource'
 
 interface IProps {
 	data: ResourceResponse
@@ -63,20 +64,13 @@ export default Resources
 
 //Page is statically generated at build time and then revalidated at a minimum of every 30 minutes based on when the page is accessed
 export async function getStaticProps() {
-	const API_STRING = `${process.env.NEXT_PUBLIC_ORIGIN_URL}/api/tenant-resources/get-resources`
-
-	try {
-		const req = await fetch(API_STRING)
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		const data: ResourceResponse = await req.json()
-
+	const data = await getResources({})
+	if (data) {
 		return {
-			props: {
-				data: data,
-			},
+			props: JSON.parse(JSON.stringify({ data: data })),
 			revalidate: 100,
 		}
-	} catch (error) {
+	} else {
 		return {
 			props: {
 				data: [],
