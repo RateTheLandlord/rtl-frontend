@@ -2,6 +2,7 @@ import Review, { ReviewsResponse } from '@/components/reviews/review'
 import { NextSeo } from 'next-seo'
 import React from 'react'
 import { useRouter } from 'next/router'
+import { getReviews } from '@/lib/review/review'
 
 interface IProps {
 	data: ReviewsResponse
@@ -56,20 +57,14 @@ export default function Reviews({ data }: IProps): JSX.Element {
 
 //Page is statically generated at build time and then revalidated at a minimum of every 100 seconds based on when the page is accessed
 export async function getStaticProps() {
-	const API_STRING = `${process.env.NEXT_PUBLIC_ORIGIN_URL}/api/review/get-reviews`
+	const data = await getReviews({})
 
-	try {
-		const req = await fetch(API_STRING)
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		const data: ReviewsResponse = await req.json()
-
+	if (data) {
 		return {
-			props: {
-				data: data,
-			},
+			props: JSON.parse(JSON.stringify({ data: data })),
 			revalidate: 100,
 		}
-	} catch (error) {
+	} else {
 		return {
 			props: {
 				data: [],
