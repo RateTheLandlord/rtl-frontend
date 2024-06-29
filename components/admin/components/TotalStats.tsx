@@ -16,56 +16,57 @@ const TotalStats = ({ data }: { data: ICountryStats }) => {
 			data?: string
 			isActive: boolean
 		}> = [
-				{
-					country: 'CA',
-					label: 'Canadian Reviews',
-					data: data.countryStats.CA?.total,
-					isActive: country === 'CA',
-				},
-				{
-					country: 'US',
-					label: 'US Reviews',
-					data: data.countryStats.US?.total,
-					isActive: country === 'US',
-				},
-				{
-					country: 'UK',
-					label: 'UK Reviews',
-					data: data.countryStats.GB?.total,
-					isActive: country === 'UK',
-				},
-				{
-					country: 'AU',
-					label: 'Australia Reviews',
-					data: data.countryStats.AU?.total,
-					isActive: country === 'AU',
-				},
-				{
-					country: 'NZ',
-					label: 'New Zealand Reviews',
-					data: data.countryStats.NZ?.total,
-					isActive: country === 'NZ',
-				},
-				{
-					country: 'DE',
-					label: 'Germany Reviews',
-					data: data.countryStats.DE?.total,
-					isActive: country === 'DE',
-				},
-				{
-					country: 'IE',
-					label: 'Ireland Reviews',
-					data: data.countryStats.IE?.total,
-					isActive: country === 'IE',
-				},
-			]
+			{
+				country: 'CA',
+				label: 'Canadian Reviews',
+				data: data.countryStats.CA?.total,
+				isActive: country === 'CA',
+			},
+			{
+				country: 'US',
+				label: 'US Reviews',
+				data: data.countryStats.US?.total,
+				isActive: country === 'US',
+			},
+			{
+				country: 'UK',
+				label: 'UK Reviews',
+				data: data.countryStats.GB?.total,
+				isActive: country === 'UK',
+			},
+			{
+				country: 'AU',
+				label: 'Australia Reviews',
+				data: data.countryStats.AU?.total,
+				isActive: country === 'AU',
+			},
+			{
+				country: 'NZ',
+				label: 'New Zealand Reviews',
+				data: data.countryStats.NZ?.total,
+				isActive: country === 'NZ',
+			},
+			{
+				country: 'DE',
+				label: 'Germany Reviews',
+				data: data.countryStats.DE?.total,
+				isActive: country === 'DE',
+			},
+			{
+				country: 'IE',
+				label: 'Ireland Reviews',
+				data: data.countryStats.IE?.total,
+				isActive: country === 'IE',
+			},
+		]
 
 		return stats.map((stat) => (
 			<div
 				key={stat.country}
 				onClick={() => handleCountryClick(stat.country)}
-				className={`flex cursor-pointer flex-col rounded-xl border p-6 text-center ${stat.isActive ? 'bg-gray-200' : ''
-					}`}
+				className={`flex cursor-pointer flex-col rounded-xl border p-6 text-center ${
+					stat.isActive ? 'bg-gray-200' : ''
+				}`}
 			>
 				<dt className='order-2 mt-2 text-lg  leading-6 text-gray-500'>
 					{stat.label}

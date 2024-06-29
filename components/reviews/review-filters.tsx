@@ -51,12 +51,14 @@ function ReviewFilters({
 	stateOptions,
 	zipOptions,
 	updateParams,
-	loading
+	loading,
 }: FiltersProps): JSX.Element {
 	const { t } = useTranslation('reviews')
 	const dispatch = useAppDispatch()
 	const query = useAppSelector((state) => state.query)
-	const keyDownAction = (e) => {e.key === "Enter" || e.key === "NumpadEnter"  ? updateParams() : {}}
+	const keyDownAction = (e) => {
+		e.key === 'Enter' || e.key === 'NumpadEnter' ? updateParams() : {}
+	}
 
 	return (
 		<div data-testid='review-filters-1' className='mt-6 hidden lg:block'>
@@ -70,7 +72,10 @@ function ReviewFilters({
 					<div className='mx-auto flex max-w-7xl items-center justify-between gap-2 lg:px-4'>
 						<div className='hidden lg:block'>
 							<div className='flow-root'>
-								<div className='-mx-4 flex flex-col divide-y divide-gray-200' onKeyDown={keyDownAction}>
+								<div
+									className='-mx-4 flex flex-col divide-y divide-gray-200'
+									onKeyDown={keyDownAction}
+								>
 									<div className='py-2'>
 										<SearchBar
 											setSearchState={(str: string) =>

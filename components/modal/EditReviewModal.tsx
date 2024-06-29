@@ -196,49 +196,49 @@ const EditReviewModal = ({
 												<option>{province}</option>
 												{country === 'CA'
 													? provinces.map((province) => {
-														return (
-															<option
-																key={province.short}
-																value={province.name}
-															>
-																{province.name}
-															</option>
-														)
-													})
+															return (
+																<option
+																	key={province.short}
+																	value={province.name}
+																>
+																	{province.name}
+																</option>
+															)
+													  })
 													: country === 'GB'
-														? regions.map((region) => {
+													? regions.map((region) => {
 															return (
 																<option key={region.short} value={region.name}>
 																	{region.name}
 																</option>
 															)
-														})
-														: country === 'AU'
-															? territories.map((territory) => {
-																return (
-																	<option
-																		key={territory.short}
-																		value={territory.name}
-																	>
-																		{territory.name}
-																	</option>
-																)
-															})
-															: country === 'IE'
-																? counties.map((county) => {
-																	return (
-																		<option key={county.short} value={county.name}>
-																			{county.name}
-																		</option>
-																	)
-																})
-																: states.map((state) => {
-																	return (
-																		<option key={state.short} value={state.name}>
-																			{state.name}
-																		</option>
-																	)
-																})}
+													  })
+													: country === 'AU'
+													? territories.map((territory) => {
+															return (
+																<option
+																	key={territory.short}
+																	value={territory.name}
+																>
+																	{territory.name}
+																</option>
+															)
+													  })
+													: country === 'IE'
+													? counties.map((county) => {
+															return (
+																<option key={county.short} value={county.name}>
+																	{county.name}
+																</option>
+															)
+													  })
+													: states.map((state) => {
+															return (
+																<option key={state.short} value={state.name}>
+																	{state.name}
+																</option>
+															)
+													  })}
 											</select>
 										</div>
 									</div>
