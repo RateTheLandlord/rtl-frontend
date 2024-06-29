@@ -18,6 +18,7 @@ export default function ComboBox({
 	options,
 	name,
 }: ComponentProps) {
+	console.log(name + ':', options)
 	const [query, setQuery] = useState('')
 
 	const filterOptions =
