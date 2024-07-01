@@ -4,6 +4,7 @@
 import { render, screen } from '@testing-library/react'
 import LandlordPage from './LandlordPage'
 import { ILandlordReviews } from '@/lib/review/review'
+import { UserProvider } from '@auth0/nextjs-auth0/client'
 
 describe('LandlordPage', () => {
 	const landlord = 'John Doe'
@@ -44,7 +45,11 @@ describe('LandlordPage', () => {
 	}
 
 	beforeEach(() => {
-		render(<LandlordPage landlord={landlord} data={data} />)
+		render(
+			<UserProvider>
+				<LandlordPage landlord={landlord} data={data} />
+			</UserProvider>,
+		)
 	})
 
 	it('renders the landlord information', () => {
