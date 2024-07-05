@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev -H test.ratethelandlord",
+		"dev": "next dev",
 		"prebuild": "next telemetry disable",
 		"build": "next build",
 		"postbuild": "next-sitemap",
@@ -41,6 +41,7 @@
 		"next-seo": "^6.0.0",
 		"next-sitemap": "^4.2.3",
 		"nookies": "^2.5.2",
+		"nprogress": "^0.2.0",
 		"openai": "^4.24.7",
 		"pg-connection-string": "^2.6.2",
 		"postal-codes-js": "^2.5.2",

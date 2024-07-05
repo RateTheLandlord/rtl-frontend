@@ -158,10 +158,7 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 					/>
 				</div>
 				<div className='mt-2 flex w-full justify-end px-4 lg:hidden'>
-					<ButtonLight
-						onClick={() => setMobileFiltersOpen(true)}
-						umami='Reviews / Review Filters'
-					>
+					<ButtonLight onClick={() => setMobileFiltersOpen(true)}>
 						{t('reviews.filters')}
 					</ButtonLight>
 				</div>

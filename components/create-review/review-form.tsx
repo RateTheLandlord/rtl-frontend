@@ -200,7 +200,10 @@ function ReviewForm(): JSX.Element {
 		if (review.trim().length < 1) {
 			setReviewModalOpen(true)
 		} else {
-			if (postcodeValidator(postal, country)) {
+			if (
+				postcodeValidator(postal, country) ||
+				(postal.length === 0 && isIreland)
+			) {
 				setLoading(true)
 				const token = await executeRecaptcha('review_form')
 				if (token) {
@@ -276,6 +279,9 @@ function ReviewForm(): JSX.Element {
 			setProvince('Marlborough')
 		} else if (country === 'DE') {
 			setProvince('Baden-Württemberg')
+		} else if (country === 'IE') {
+			setProvince('Dublin')
+			setPostal('')
 		} else {
 			setProvince('Alberta')
 		}
@@ -290,6 +296,8 @@ function ReviewForm(): JSX.Element {
 		setCityValidationError(false)
 		setCity(cityName)
 	}
+
+	const isIreland = country === 'IE'
 
 	return (
 		<div
@@ -358,17 +366,18 @@ function ReviewForm(): JSX.Element {
 								country={country}
 								setValue={setProvince}
 							/>
-
-							<TextInput
-								id='postal-code'
-								title={t('create-review.review-form.zip')}
-								placeHolder={t('create-review.review-form.zip')}
-								value={postal}
-								setValue={(str: string) => handleTextChange(str, 'postal')}
-								error={postalError}
-								errorText={t('create-review.review-form.postal-error')}
-								testid='create-review-form-postal-code-1'
-							/>
+							{isIreland ? null : (
+								<TextInput
+									id='postal-code'
+									title={t('create-review.review-form.zip')}
+									placeHolder={t('create-review.review-form.zip')}
+									value={postal}
+									setValue={(str: string) => handleTextChange(str, 'postal')}
+									error={postalError}
+									errorText={t('create-review.review-form.postal-error')}
+									testid='create-review-form-postal-code-1'
+								/>
+							)}
 
 							<TextInput
 								id='rent'
@@ -486,14 +495,11 @@ function ReviewForm(): JSX.Element {
 						className='flex justify-center gap-5 pt-5 sm:gap-3'
 						data-testid='create-review-form-submit-button-1'
 					>
-						<ButtonLight umami='Create Review / Reset Button'>
-							{t('create-review.review-form.reset')}
-						</ButtonLight>
+						<ButtonLight>{t('create-review.review-form.reset')}</ButtonLight>
 						{loading ? (
 							<Spinner />
 						) : (
 							<Button
-								umami='Create Review / Submit Button'
 								disabled={
 									!disclaimerOne ||
 									!disclaimerTwo ||

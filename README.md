@@ -1,6 +1,6 @@
 # Rate The Landlord
 
-A simple website for Renter's to rate their Landlord
+A simple website for Renters to rate their Landlord
 
 ## Getting Started
 
@@ -92,6 +92,10 @@ settings, firewall rules, and authentication configurations.
 You can also create a database with a service like Supabase and use the
 connection string from there. The service is free.
 
+### Step 5: Run migrations
+
+Run "npm run migrate:up" in order to create the necessary tables in your postgres instance.
+
 ## Troubleshooting
 
 #### Auth0
@@ -99,10 +103,25 @@ connection string from there. The service is free.
 Create an account with Auth0 and follow their setup process. It's free and will
 allow you to test admin functionality.
 
+You will need to create an ADMIN role (upper case important), and assign it to your user. You will then need to insert a custom action into the login flow to add this role claim. 
+
+```
+exports.onExecutePostLogin = async (event, api) => {
+  if (event.authorization) {
+    api.idToken.setCustomClaim(`role`, event.authorization.roles[0]);
+    api.accessToken.setCustomClaim(`role`, event.authorization.roles[0]);
+  }
+}
+```
+
+You can read an [example here](https://auth0.com/docs/manage-users/access-control/sample-use-cases-actions-with-authorization#add-user-roles-to-tokens)
+
 #### Captcha Not Working
 
-If you are trying to submit a review locally, you need to edit your hosts file
-to allow Captcha to work. Follow These guides:
+If you are trying to submit a review locally, you will need to set up [recaptcha on google](https://www.google.com/recaptcha/about/), and populate the
+.env file with the values.
+
+You will also need to edit your hosts file to allow Captcha to work. Follow These guides:
 
 - [Hcaptcha Local Development](https://docs.hcaptcha.com/#local-development)
 

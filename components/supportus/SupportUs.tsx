@@ -81,10 +81,7 @@ export default function Support() {
 					</p>
 				</div>
 				<div className='mt-10 flex w-full justify-center'>
-					<LinkButtonLightLG
-						umami='Support Us - Patreon'
-						href='https://patreon.com/RateTheLandlord?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator&utm_content=join_link'
-					>
+					<LinkButtonLightLG href='https://patreon.com/RateTheLandlord?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator&utm_content=join_link'>
 						<div className='flex w-full items-center justify-center gap-2'>
 							<Patreon />
 							Patreon

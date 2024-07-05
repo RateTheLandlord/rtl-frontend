@@ -28,9 +28,11 @@ export const getMemberData = (data: PatreonData): Array<MemberData> => {
 	const members = data.data.map((item) => {
 		const memberData = {
 			name: item.attributes.full_name,
-			id: item.relationships.currently_entitled_tiers.data[
-				item.relationships.currently_entitled_tiers.data.length - 1
-			].id,
+			id:
+				item.relationships.currently_entitled_tiers.data.length &&
+				item.relationships.currently_entitled_tiers.data[
+					item.relationships.currently_entitled_tiers.data.length - 1
+				].id,
 		}
 		return memberData
 	})

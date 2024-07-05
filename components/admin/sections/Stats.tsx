@@ -56,8 +56,6 @@ const Stats = () => {
 		fetchWithBody,
 	)
 
-	console.log(data)
-
 	if (error) return <div>failed to load</div>
 	if (!data) return <Spinner />
 
@@ -96,6 +94,7 @@ const Stats = () => {
 			{ name: 'AU', value: Number(data.total_stats.countryStats.AU?.total) },
 			{ name: 'UK', value: Number(data.total_stats.countryStats.GB?.total) },
 			{ name: 'DE', value: Number(data.total_stats.countryStats.DE?.total) },
+			{ name: 'IE', value: Number(data.total_stats.countryStats.IE?.total) },
 		]
 		return countryData
 	}

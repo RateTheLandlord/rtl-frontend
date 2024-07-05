@@ -65,11 +65,11 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 	// Query
 	const [queryParams, setQueryParams] = useState({
 		sort: selectedSort.value,
-		state: '',
-		country: '',
-		city: '',
-		zip: '',
-		search: '',
+		state: stateFilter?.value || '',
+		country: countryFilter?.value || '',
+		city: cityFilter?.value || '',
+		zip: zipFilter?.value || '',
+		search: searchFilter || '',
 		limit: '25',
 	})
 
@@ -183,10 +183,7 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 					</div>
 				</div>
 				<div className='flex w-full justify-end px-4 lg:hidden'>
-					<ButtonLight
-						onClick={() => setMobileFiltersOpen(true)}
-						umami='Reviews / Review Filters'
-					>
+					<ButtonLight onClick={() => setMobileFiltersOpen(true)}>
 						{t('reviews.filters')}
 					</ButtonLight>
 				</div>

@@ -17,7 +17,6 @@ function Footer(): JSX.Element {
 					<div className='flex flex-wrap gap-2'>
 						{socialLinks.map((item) => (
 							<a
-								data-umami-event={item.umami}
 								key={item.name}
 								href={item.href}
 								className='flex items-center text-gray-400 hover:text-gray-500'
@@ -27,7 +26,6 @@ function Footer(): JSX.Element {
 							</a>
 						))}
 						<a
-							data-umami-event='Github Icon'
 							href='https://github.com/RateTheLandlord'
 							className='text-gray-400 hover:text-gray-500'
 						>
