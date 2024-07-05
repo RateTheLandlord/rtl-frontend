@@ -2,13 +2,22 @@ import { OtherLandlord } from '@/util/interfaces/interfaces'
 import Spinner from '../ui/Spinner'
 import Link from 'next/link'
 import RatingStars from '@/components/ui/RatingStars'
+import useSWR from 'swr'
+import { fetcher } from '@/util/helpers/fetcher'
 
 interface IProps {
-	landlords: Array<OtherLandlord>
+	landlord: string
 }
 
-const OtherLandlordInfo = ({ landlords }: IProps) => {
-	if (!landlords.length) return <Spinner />
+const OtherLandlordInfo = ({ landlord }: IProps) => {
+	const { data: landlords, error } = useSWR<Array<OtherLandlord>>(
+		`/api/review/get-other-landlords?landlord=${encodeURIComponent(landlord)}`,
+		fetcher,
+	)
+
+	if (!landlords) return <Spinner />
+
+	if (error || !landlords.length) return null
 
 	return (
 		<>

@@ -102,9 +102,8 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 							)
 						})}
 					</div>
-					{data.otherLandlords.length > 0 && (
-						<OtherLandlordInfo landlords={data.otherLandlords} />
-					)}
+
+					<OtherLandlordInfo landlord={landlord} />
 				</div>
 			</div>
 		</>
