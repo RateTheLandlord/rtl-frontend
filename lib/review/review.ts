@@ -202,7 +202,6 @@ export interface ILandlordReviews {
 	reviews: Review[]
 	average: number
 	total: number
-	otherLandlords: OtherLandlord[]
 	catAverages: {
 		avg_repair: number
 		avg_health: number
@@ -256,6 +255,17 @@ export async function getLandlordReviews(
 		avg_privacy: Math.round(averageByCat[0].avg_privacy),
 	}
 
+	return {
+		reviews: reviews,
+		average: combinedAvg,
+		total: total,
+		catAverages: catAverages,
+	}
+}
+
+export async function getOtherLandlords(
+	landlord: string,
+): Promise<OtherLandlord[]> {
 	const topCity = await sql`
 		SELECT
 		city,
@@ -287,14 +297,7 @@ export async function getLandlordReviews(
 		ORDER BY RANDOM()
 		LIMIT 10
 		`
-
-	return {
-		reviews: reviews,
-		average: combinedAvg,
-		total: total,
-		otherLandlords: otherLandlords,
-		catAverages: catAverages,
-	}
+	return otherLandlords
 }
 
 export async function getLandlordSuggestions(
