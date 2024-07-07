@@ -29,7 +29,6 @@ describe('LandlordInfo', () => {
 			reviews: [],
 			average: 5,
 			total: 5,
-			otherLandlords: [],
 			catAverages: {
 				avg_health: 5,
 				avg_privacy: 5,
