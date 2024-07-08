@@ -26,9 +26,9 @@ const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 					<label htmlFor='city' className='block text-sm  text-gray-700'>
 						{country === 'GB'
 							? t('create-review.review-form.region')
-							: country === 'IE'
-							? t('create-review.review-form.county')
-							: t('create-review.review-form.state')}
+							: // : country === 'IE'
+							  // ? t('create-review.review-form.county')
+							  t('create-review.review-form.state')}
 					</label>
 					<Listbox.Button className='relative flex w-full cursor-default items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-left shadow-sm focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
 						{value}
@@ -90,31 +90,31 @@ const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 										</Listbox.Option>
 									)
 							  })
-							: country === 'DE'
-							? de_states.map((state) => {
-									return (
-										<Listbox.Option
-											className='cursor-pointer p-2 hover:bg-teal-300'
-											key={state.short}
-											value={state.name}
-										>
-											{state.name}
-										</Listbox.Option>
-									)
-							  })
-							: country === 'IE'
-							? ie_counties.map((county) => {
-									return (
-										<Listbox.Option
-											className='cursor-pointer p-2 hover:bg-teal-300'
-											key={county.short}
-											value={county.name}
-										>
-											{county.name}
-										</Listbox.Option>
-									)
-							  })
-							: states.map((state) => {
+							: // : country === 'DE'
+							  // ? de_states.map((state) => {
+							  // 		return (
+							  // 			<Listbox.Option
+							  // 				className='cursor-pointer p-2 hover:bg-teal-300'
+							  // 				key={state.short}
+							  // 				value={state.name}
+							  // 			>
+							  // 				{state.name}
+							  // 			</Listbox.Option>
+							  // 		)
+							  //   })
+							  // : country === 'IE'
+							  // ? ie_counties.map((county) => {
+							  // 		return (
+							  // 			<Listbox.Option
+							  // 				className='cursor-pointer p-2 hover:bg-teal-300'
+							  // 				key={county.short}
+							  // 				value={county.name}
+							  // 			>
+							  // 				{county.name}
+							  // 			</Listbox.Option>
+							  // 		)
+							  //   })
+							  states.map((state) => {
 									return (
 										<Listbox.Option
 											className='cursor-pointer p-2 hover:bg-teal-300'
