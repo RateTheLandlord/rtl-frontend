@@ -277,11 +277,11 @@ function ReviewForm(): JSX.Element {
 			setProvince('Alabama')
 		} else if (country === 'NZ') {
 			setProvince('Marlborough')
-			// } else if (country === 'DE') {
-			// 	setProvince('Baden-Württemberg')
-			// } else if (country === 'IE') {
-			// 	setProvince('Dublin')
-			// 	setPostal('')
+		} else if (country === 'DE') {
+			setProvince('Baden-Württemberg')
+		} else if (country === 'IE') {
+			setProvince('Dublin')
+			setPostal('')
 		} else {
 			setProvince('Alberta')
 		}
@@ -297,7 +297,7 @@ function ReviewForm(): JSX.Element {
 		setCity(cityName)
 	}
 
-	// const isIreland = country === 'IE'
+	const isIreland = country === 'IE'
 
 	return (
 		<div
@@ -366,16 +366,18 @@ function ReviewForm(): JSX.Element {
 								country={country}
 								setValue={setProvince}
 							/>
-							<TextInput
-								id='postal-code'
-								title={t('create-review.review-form.zip')}
-								placeHolder={t('create-review.review-form.zip')}
-								value={postal}
-								setValue={(str: string) => handleTextChange(str, 'postal')}
-								error={postalError}
-								errorText={t('create-review.review-form.postal-error')}
-								testid='create-review-form-postal-code-1'
-							/>
+							{isIreland ? null : (
+								<TextInput
+									id='postal-code'
+									title={t('create-review.review-form.zip')}
+									placeHolder={t('create-review.review-form.zip')}
+									value={postal}
+									setValue={(str: string) => handleTextChange(str, 'postal')}
+									error={postalError}
+									errorText={t('create-review.review-form.postal-error')}
+									testid='create-review-form-postal-code-1'
+								/>
+							)}
 
 							<TextInput
 								id='rent'
