@@ -107,14 +107,25 @@ const Privacy = () => {
 					Policy and Terms of Service, which govern the collection and use of
 					data by Google in connection with advertising services.
 				</p>
-				<h2 className=''>9. Changes to This Privacy Policy</h2>
+				<h2 className=''>9. GDPR</h2>
+				<p>
+					This site does not collect, or process, personal information. If a
+					Landlord is using their personal name to conduct their commercial
+					business as a Landlord then this is considered commercial data.
+					Reviews are considered a legitimate expression of opinion or
+					contributes to public debate. If the review contains personal
+					information as defined the GDPR it may be edited or removed. If you
+					have any questions, please contact us at the email below or report the
+					Review for further assessment.
+				</p>
+				<h2 className=''>10. Changes to This Privacy Policy</h2>
 				<p>
 					We reserve the right to update or change our Privacy Policy at any
 					time. Any changes will be effective immediately upon posting the
 					updated Privacy Policy on this page.
 				</p>
 
-				<h2 className=''>10. Contact Information</h2>
+				<h2 className=''>11. Contact Information</h2>
 				<p>
 					If you have any questions about Privacy Policy, please contact us at
 					contact@ratethelandlord.org.
