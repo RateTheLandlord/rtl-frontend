@@ -20,7 +20,7 @@ export const countryOptions: Options[] = country_codes.map(
 
 export const countryName = (countryCode: string): string =>
 	countries[
-	Object.keys(countries)
-		.filter((c) => c === countryCode)
-		.toString()
+		Object.keys(countries)
+			.filter((c) => c === countryCode)
+			.toString()
 	]
