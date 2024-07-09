@@ -84,7 +84,7 @@ export async function getStaticPaths() {
 	return {
 		paths: [...paths],
 		// Enable statically generating additional pages
-		fallback: true,
+		fallback: 'blocking',
 	}
 }
 
