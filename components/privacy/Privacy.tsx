@@ -113,8 +113,8 @@ const Privacy = () => {
 					Landlord is using their personal name to conduct their commercial
 					business as a Landlord then this is considered commercial data.
 					Reviews are considered a legitimate expression of opinion or
-					contributes to public debate. If the review contains personal
-					information as defined the GDPR it may be edited or removed. If you
+					contributions to the public debate. If the review contains personal
+					information as defined by the GDPR it may be edited or removed. If you
 					have any questions, please contact us at the email below or report the
 					Review for further assessment.
 				</p>
