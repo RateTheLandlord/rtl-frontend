@@ -72,6 +72,13 @@ const City = ({ city, state, country, data }: IProps) => {
 }
 
 export async function getStaticPaths() {
+	// Too many pages, need to work this out. Test of fixing static generation.
+	if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'production') {
+		return {
+			paths: [],
+			fallback: 'blocking',
+		}
+	}
 	const data = await getCities()
 
 	const paths = data.map((city) => ({
@@ -89,13 +96,6 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-	// Too many pages, need to work this out. Test of fixing static generation.
-	if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'production') {
-		return {
-			paths: [],
-			fallback: 'blocking',
-		}
-	}
 	const data = await getCityReviews(params)
 
 	if (data.reviews.length === 0) {
