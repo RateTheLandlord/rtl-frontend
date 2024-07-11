@@ -89,6 +89,13 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
+	// Too many pages, need to work this out. Test of fixing static generation.
+	if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'production') {
+		return {
+			paths: [],
+			fallback: 'blocking',
+		}
+	}
 	const data = await getCityReviews(params)
 
 	if (data.reviews.length === 0) {
