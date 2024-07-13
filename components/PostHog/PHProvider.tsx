@@ -4,8 +4,9 @@ import { cookieConsentGiven } from './CookieBanner'
 
 export function PHProvider({ children }) {
 	if (typeof window !== 'undefined') {
-		posthog.init('phc_b2Mroy8yak3Wv6ZsUkaSj1SgR4VFNySx2aX1HLD3dGY', {
-			api_host: '"https://us.i.posthog.com"',
+		posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY as string, {
+			api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST as string,
+			person_profiles: 'always',
 			persistence:
 				cookieConsentGiven() === 'yes' ? 'localStorage+cookie' : 'memory',
 		})
