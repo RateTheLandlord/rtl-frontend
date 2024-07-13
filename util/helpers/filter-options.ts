@@ -8,3 +8,5 @@ export const sortOptions: Array<SortOptions> = [
 	{ id: 5, name: 'Highest', value: 'high' },
 	{ id: 6, name: 'Lowest', value: 'low' },
 ]
+
+
