@@ -1,8 +1,10 @@
-import { QueryParams } from '@/components/reviews/review'
 import { FilterOptions } from '../interfaces/interfaces'
 
 export async function fetchFilterOptions(
-	queryParams?: QueryParams,
+	country?: string,
+	state?: string,
+	city?: string,
+	zip?: string
 ): Promise<FilterOptions> {
 	const url = `/api/review/get-filter-options`
 
@@ -12,7 +14,7 @@ export async function fetchFilterOptions(
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ queryParams }),
+			body: JSON.stringify({ country, state, city, zip }),
 		})
 
 		if (!response.ok) {

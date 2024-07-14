@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Options, SortOptions } from '@/util/interfaces/interfaces'
 import SelectList from './ui/select-list'
 import SearchBar from './ui/searchbar'
@@ -17,6 +17,7 @@ import {
 import ButtonLight from '../ui/button-light'
 import Spinner from '../ui/Spinner'
 import SortList from './ui/sort-list'
+import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 
 //Review filters and Logic
 
@@ -56,9 +57,27 @@ function ReviewFilters({
 	const { t } = useTranslation('reviews')
 	const dispatch = useAppDispatch()
 	const query = useAppSelector((state) => state.query)
+	const [dynamicCityOptions, setDynamicCityOptions] = useState<Options[]>(cityOptions)
+	const [dynamicStateOptions, setDynamicStateOptions] = useState<Options[]>(stateOptions)
+	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>(zipOptions ?? [])
 	const keyDownAction = (e) => {
 		e.key === 'Enter' || e.key === 'NumpadEnter' ? updateParams() : {}
 	}
+
+	const fetchDynamicFilterOptions = async () => {
+		try {
+			const filterOptions = await fetchFilterOptions(countryFilter?.value, stateFilter?.value, cityFilter?.value, zipFilter?.value)
+			setDynamicCityOptions(filterOptions.cities)
+			setDynamicStateOptions(filterOptions.states)
+			setDynamicZipOptions(filterOptions.zips)
+		} catch (error) {
+			console.error('Error fetching filter options:', error)
+		} 
+	}
+
+	useEffect(() => {
+		fetchDynamicFilterOptions()
+	}, [countryFilter, stateFilter, cityFilter])
 
 	return (
 		<div data-testid='review-filters-1' className='mt-6 hidden lg:block'>
@@ -106,7 +125,7 @@ function ReviewFilters({
 										<ComboBox
 											state={stateFilter}
 											setState={(opt: Options) => dispatch(updateState(opt))}
-											options={stateOptions}
+											options={dynamicStateOptions}
 											name={t('reviews.state')}
 										/>
 									</div>
@@ -114,7 +133,7 @@ function ReviewFilters({
 										<ComboBox
 											state={cityFilter}
 											setState={(opt: Options) => dispatch(updateCity(opt))}
-											options={cityOptions}
+											options={dynamicCityOptions}
 											name={t('reviews.city')}
 										/>
 									</div>
@@ -123,7 +142,7 @@ function ReviewFilters({
 											<ComboBox
 												state={zipFilter}
 												setState={(opt: Options) => dispatch(updateZip(opt))}
-												options={zipOptions}
+												options={dynamicZipOptions}
 												name={t('reviews.zip')}
 											/>
 										)}
@@ -134,7 +153,9 @@ function ReviewFilters({
 					</div>
 					<div className='flex w-full flex-col gap-2 border-t border-t-gray-200 py-2 lg:px-2'>
 						<button
-							onClick={() => updateParams()}
+							onClick={() => {
+								updateParams()
+							}}
 							type='submit'
 							className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm  text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${'bg-teal-600 hover:bg-teal-700'}`}
 							data-testid='submit-button-1'

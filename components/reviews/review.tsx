@@ -145,7 +145,7 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 	const fetchDynamicFilterOptions = async () => {
 		setIsLoading(true)
 		try {
-			const filterOptions = await fetchFilterOptions({ page, ...queryParams })
+			const filterOptions = await fetchFilterOptions(queryParams?.country, queryParams?.state, queryParams?.city, queryParams?.zip)
 			setDynamicCityOptions(filterOptions.cities)
 			setDynamicStateOptions(filterOptions.states)
 			setDynamicZipOptions(filterOptions.zips)
