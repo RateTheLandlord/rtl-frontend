@@ -108,24 +108,74 @@ const Privacy = () => {
 					data by Google in connection with advertising services.
 				</p>
 				<h2 className=''>9. GDPR</h2>
+
+				<h5 className='underline'>Landlord Names</h5>
+
 				<p>
-					This site does not collect, or process, personal information. If a
-					Landlord is using their personal name to conduct their commercial
-					business as a Landlord then this is considered commercial data.
-					Reviews are considered a legitimate expression of opinion or
+					We allow users to submit content that use or reference the Landlords
+					name provided that content is allowed within our Moderation
+					Guidelines. Landlord names are allowed provided that they describe the
+					individuals behaviour or performance as a Landlord conducting their
+					commercial activity in that name. We believe this information is vital
+					so that future Tenants can be as informed as possible. We don&apos;t
+					allow reviews that includes negative comments about identifiable
+					individuals outside of this group. We may allow reviews that mentions
+					demographic attributes about an identifiable person if we believe the
+					review is used to describe a landlord and tenant relationship. General
+					discussions of landlord misconduct are allowed, including most
+					discussions of illegal activities, discrimination, and sexual
+					harassment. The naming of individuals in regards to a corporation
+					(such as a Property Management Company) are not allowed.
+					<br />
+					Rate The Landlord Inc. does not otherwise collect or process personal
+					information. Reviews are considered legitimate expression and
 					contributions to the public debate. If the review contains personal
 					information as defined by the GDPR it may be edited or removed. If you
 					have any questions, please contact us at the email below or report the
 					Review for further assessment.
 				</p>
-				<h2 className=''>10. Changes to This Privacy Policy</h2>
+
+				<h2 className=''>10. DSA</h2>
+
+				<p>
+					The landlord review section of this website provides a platform for
+					users to share their opinions and experiences related to landlords.
+					These reviews are submitted by individual users and do not necessarily
+					reflect the views of the website owners or administrators.
+					<br />
+					Accuracy of Information: We cannot guarantee the validity of all
+					information posted. Users are encouraged to conduct their own research
+					and verification before making any decisions based on the information
+					provided on this website.
+					<br />
+					Moderation: Reviews may be moderated to ensure they comply with our
+					moderation guidelines. We reserve the right to remove reviews that are
+					deemed inappropriate, inaccurate, or violate our terms of service.
+					<br />
+					Legal Disclaimer: The reviews and opinions expressed on this website
+					are solely those of the individual users and do not constitute legal
+					or professional advice. We do not endorse any specific landlord or
+					property management company mentioned in these reviews.
+					<br />
+					Liability: We are not liable for any damages or losses incurred as a
+					result of using the information provided on this website. Users rely
+					on the reviews at their own risk.
+					<br />
+					Updates: This disclaimer may be updated from time to time. Users are
+					advised to review it periodically for any changes.
+					<br />
+					By using this website, you agree to abide by the terms outlined in
+					this disclaimer.
+				</p>
+
+				<h2 className=''>11. Changes to This Privacy Policy</h2>
 				<p>
 					We reserve the right to update or change our Privacy Policy at any
 					time. Any changes will be effective immediately upon posting the
 					updated Privacy Policy on this page.
 				</p>
 
-				<h2 className=''>11. Contact Information</h2>
+				<h2 className=''>12. Contact Information</h2>
 				<p>
 					If you have any questions about Privacy Policy, please contact us at
 					contact@ratethelandlord.org.
