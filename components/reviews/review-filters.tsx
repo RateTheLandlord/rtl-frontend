@@ -77,7 +77,13 @@ function ReviewFilters({
 
 	useEffect(() => {
 		fetchDynamicFilterOptions()
-	}, [countryFilter, stateFilter, cityFilter])
+	}, [stateFilter, cityFilter])
+
+	useEffect(() => {
+		dispatch(clearFilters())
+		dispatch(updateCountry(countryFilter))
+		fetchDynamicFilterOptions()
+	}, [countryFilter])
 
 	return (
 		<div data-testid='review-filters-1' className='mt-6 hidden lg:block'>
