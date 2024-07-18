@@ -39,6 +39,9 @@ const EditReviewModal = ({
 	const [postal, setPostal] = useState<string>(selectedReview?.zip || '')
 	const [review, setReview] = useState<string>(selectedReview?.review || '')
 	const [rent, setRent] = useState<number | null>(selectedReview?.rent || null)
+	const [moderationReason, setModerationReason] = useState<string | null>(
+		selectedReview?.moderation_reason || null,
+	)
 	const isIreland = country === 'IE'
 
 	const onSubmitEditReview = () => {
@@ -54,6 +57,7 @@ const EditReviewModal = ({
 			admin_approved: true,
 			flagged: false,
 			rent: rent,
+			moderation_reason: moderationReason,
 		}
 		fetch('/api/review/edit-review', {
 			method: 'POST',
@@ -302,6 +306,27 @@ const EditReviewModal = ({
 											value={review ? review : selectedReview?.review}
 											data-testid='edit-review-modal-1'
 										/>
+									</div>
+									<div className='sm:col-span-2'>
+										<label
+											htmlFor='moderation-reason'
+											className='block text-sm  text-gray-700'
+										>
+											Moderation Reason
+										</label>
+										<div className='mt-1'>
+											<input
+												type='text'
+												name='moderation-reason'
+												id='moderation-reason'
+												placeholder='Moderation Reason'
+												required
+												value={moderationReason ? moderationReason : ''}
+												onChange={(e) => setModerationReason(e.target.value)}
+												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+												data-testid='create-review-form-moderation-reason-1'
+											/>
+										</div>
 									</div>
 								</div>
 								<div className='mt-5 sm:mt-4 sm:flex sm:flex-row-reverse'>

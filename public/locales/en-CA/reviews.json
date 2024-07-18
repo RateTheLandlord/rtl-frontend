@@ -17,7 +17,7 @@
 		"faq": "What do these ratings mean?",
 		"zip": "ZIP / Postal Code",
 		"report-review": "REPORT",
-		"edited": "*Edited by Admin after review",
+		"edited": "*Edited by Admin after review.",
 		"report": {
 			"error": "Error, please try again",
 			"success": "Report Received!",
