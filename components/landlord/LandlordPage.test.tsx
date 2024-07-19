@@ -29,6 +29,7 @@ describe('LandlordPage', () => {
 				admin_approved: null,
 				admin_edited: false,
 				date_added: new Date(),
+				moderation_reason: null,
 			},
 			// ... add more sample reviews if needed
 		],
