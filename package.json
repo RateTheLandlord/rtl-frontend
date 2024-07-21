@@ -9,7 +9,7 @@
 		"postbuild": "next-sitemap",
 		"start": "next start",
 		"start:debug": "NODE_OPTIONS='--inspect=0.0.0.0:9998' next dev",
-		"format": "prettier --write ./pages/**/*.{js,ts,tsx,jsx,html} ./components/**/*.{js,ts,tsx,jsx,html}",
+		"format": "prettier --write ./pages/**/*.{ts,tsx} ./components/**/*.{ts,tsx}",
 		"lint": "next lint --fix",
 		"tsc": "tsc",
 		"test": "jest --watch",

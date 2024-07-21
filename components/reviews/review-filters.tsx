@@ -57,22 +57,31 @@ function ReviewFilters({
 	const { t } = useTranslation('reviews')
 	const dispatch = useAppDispatch()
 	const query = useAppSelector((state) => state.query)
-	const [dynamicCityOptions, setDynamicCityOptions] = useState<Options[]>(cityOptions)
-	const [dynamicStateOptions, setDynamicStateOptions] = useState<Options[]>(stateOptions)
-	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>(zipOptions ?? [])
+	const [dynamicCityOptions, setDynamicCityOptions] =
+		useState<Options[]>(cityOptions)
+	const [dynamicStateOptions, setDynamicStateOptions] =
+		useState<Options[]>(stateOptions)
+	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>(
+		zipOptions ?? [],
+	)
 	const keyDownAction = (e) => {
 		e.key === 'Enter' || e.key === 'NumpadEnter' ? updateParams() : {}
 	}
 
 	const fetchDynamicFilterOptions = async () => {
 		try {
-			const filterOptions = await fetchFilterOptions(countryFilter?.value, stateFilter?.value, cityFilter?.value, zipFilter?.value)
+			const filterOptions = await fetchFilterOptions(
+				countryFilter?.value,
+				stateFilter?.value,
+				cityFilter?.value,
+				zipFilter?.value,
+			)
 			setDynamicCityOptions(filterOptions.cities)
 			setDynamicStateOptions(filterOptions.states)
 			setDynamicZipOptions(filterOptions.zips)
 		} catch (error) {
 			console.error('Error fetching filter options:', error)
-		} 
+		}
 	}
 
 	useEffect(() => {

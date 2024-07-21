@@ -1,6 +1,10 @@
 import ReviewFilters from '@/components/reviews/review-filters'
 import { sortOptions } from '@/util/helpers/filter-options'
-import { Review as IReview, SortOptions, Options } from '@/util/interfaces/interfaces'
+import {
+	Review as IReview,
+	SortOptions,
+	Options,
+} from '@/util/interfaces/interfaces'
 import {
 	getCityOptions,
 	getStateOptions,
@@ -62,7 +66,6 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
 	const [isLoading, setIsLoading] = useState(false)
-	
 
 	// Query
 	const [queryParams, setQueryParams] = useState({
@@ -130,22 +133,30 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 		() => getCityOptions(data?.cities ?? []),
 		[data?.cities],
 	)
-	const [dynamicCityOptions, setDynamicCityOptions] = useState<Options[]>(cityOptions)
+	const [dynamicCityOptions, setDynamicCityOptions] =
+		useState<Options[]>(cityOptions)
 	const stateOptions = useMemo(
 		() => getStateOptions(data?.states ?? []),
 		[data?.states],
 	)
-	const [dynamicStateOptions, setDynamicStateOptions] = useState<Options[]>(stateOptions)
+	const [dynamicStateOptions, setDynamicStateOptions] =
+		useState<Options[]>(stateOptions)
 	const zipOptions = useMemo(
 		() => getZipOptions(data?.zips ?? []),
 		[data?.zips],
 	)
-	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>(zipOptions)
+	const [dynamicZipOptions, setDynamicZipOptions] =
+		useState<Options[]>(zipOptions)
 
 	const fetchDynamicFilterOptions = async () => {
 		setIsLoading(true)
 		try {
-			const filterOptions = await fetchFilterOptions(queryParams?.country, queryParams?.state, queryParams?.city, queryParams?.zip)
+			const filterOptions = await fetchFilterOptions(
+				queryParams?.country,
+				queryParams?.state,
+				queryParams?.city,
+				queryParams?.zip,
+			)
 			setDynamicCityOptions(filterOptions.cities)
 			setDynamicStateOptions(filterOptions.states)
 			setDynamicZipOptions(filterOptions.zips)
