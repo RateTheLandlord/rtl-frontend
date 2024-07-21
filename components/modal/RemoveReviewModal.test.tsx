@@ -26,6 +26,7 @@ describe('RemoveReviewModal', () => {
 		flagged_reason: '',
 		admin_approved: null,
 		admin_edited: false,
+		moderation_reason: null,
 	}
 
 	test('renders the remove review modal', () => {

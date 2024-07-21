@@ -19,6 +19,7 @@ export interface Review {
 	admin_approved: boolean | null
 	admin_edited: boolean
 	rent?: number | null
+	moderation_reason: string | null
 }
 
 export interface OtherLandlord {

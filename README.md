@@ -11,11 +11,14 @@ first so you can pass the url to the `.env` file.
 
 Set the environment to `development`
 
+This project uses Bun for package management. To install Bun on your machine,
+please check [Here](https://bun.sh/docs/installation)
+
 Then run the following commands:
 
-- Install Packages `npm install`
+- Install Packages `bun install`
 
-- Start Dev Mode `npm run dev`
+- Start Dev Mode `bun dev`
 
 The project should not be running at `http://localhost:3000` and pick up changes
 you make in you IDE
@@ -94,7 +97,8 @@ connection string from there. The service is free.
 
 ### Step 5: Run migrations
 
-Run "npm run migrate:up" in order to create the necessary tables in your postgres instance.
+Run "npm run migrate:up" in order to create the necessary tables in your
+postgres instance.
 
 ## Troubleshooting
 
@@ -103,7 +107,9 @@ Run "npm run migrate:up" in order to create the necessary tables in your postgre
 Create an account with Auth0 and follow their setup process. It's free and will
 allow you to test admin functionality.
 
-You will need to create an ADMIN role (upper case important), and assign it to your user. You will then need to insert a custom action into the login flow to add this role claim. 
+You will need to create an ADMIN role (upper case important), and assign it to
+your user. You will then need to insert a custom action into the login flow to
+add this role claim.
 
 ```
 exports.onExecutePostLogin = async (event, api) => {
@@ -114,14 +120,17 @@ exports.onExecutePostLogin = async (event, api) => {
 }
 ```
 
-You can read an [example here](https://auth0.com/docs/manage-users/access-control/sample-use-cases-actions-with-authorization#add-user-roles-to-tokens)
+You can read an
+[example here](https://auth0.com/docs/manage-users/access-control/sample-use-cases-actions-with-authorization#add-user-roles-to-tokens)
 
 #### Captcha Not Working
 
-If you are trying to submit a review locally, you will need to set up [recaptcha on google](https://www.google.com/recaptcha/about/), and populate the
+If you are trying to submit a review locally, you will need to set up
+[recaptcha on google](https://www.google.com/recaptcha/about/), and populate the
 .env file with the values.
 
-You will also need to edit your hosts file to allow Captcha to work. Follow These guides:
+You will also need to edit your hosts file to allow Captcha to work. Follow
+These guides:
 
 - [Hcaptcha Local Development](https://docs.hcaptcha.com/#local-development)
 

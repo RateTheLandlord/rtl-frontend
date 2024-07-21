@@ -143,15 +143,21 @@ const ReviewComponent = ({
 						</div>
 					</div>
 
-					<div className='mt-4 lg:mt-6 xl:col-span-2 xl:mt-0'>
-						<p>{t('reviews.review')}</p>
-						{review.admin_edited ? (
-							<p className='text-xs text-red-400'>{t('reviews.edited')}</p>
-						) : null}
+					<div className='mt-4 flex h-full flex-col justify-between lg:mt-6 xl:col-span-2 xl:mt-0'>
+						<div>
+							<p>{t('reviews.review')}</p>
 
-						<p className='mt-3 space-y-6 text-sm text-gray-500'>
-							{review.review}
-						</p>
+							<p className='mt-3 space-y-6 text-sm text-gray-500'>
+								{review.review}
+							</p>
+						</div>
+						{review.admin_edited ? (
+							<p className='text-xs text-red-400'>{`${t('reviews.edited')} ${
+								review.moderation_reason
+									? `Reason: ${review.moderation_reason}`
+									: ''
+							}`}</p>
+						) : null}
 					</div>
 				</div>
 			</div>
