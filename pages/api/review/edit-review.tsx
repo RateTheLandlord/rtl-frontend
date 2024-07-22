@@ -22,6 +22,7 @@ interface IBody {
 	admin_approved: boolean | null
 	admin_edited: boolean
 	rent: number | null
+	moderation_reason: string | null
 }
 
 const EditReview = async (req: NextApiRequest, res: NextApiResponse) => {

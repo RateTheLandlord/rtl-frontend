@@ -1,3 +1,5 @@
+import { Options } from '@/util/interfaces/interfaces'
+
 export interface Review {
 	id?: number
 	landlord: string
@@ -35,4 +37,11 @@ export type ReviewsResponse = {
 	cities: string[]
 	zips: string[]
 	limit: number
+}
+
+export type FilterOptions = {
+	countries: Options[]
+	states: Options[]
+	cities: Options[]
+	zips: Options[]
 }

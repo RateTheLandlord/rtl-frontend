@@ -1,6 +1,10 @@
 import ReviewFilters from '@/components/reviews/review-filters'
 import { sortOptions } from '@/util/helpers/filter-options'
-import { Review as IReview, SortOptions } from '@/util/interfaces/interfaces'
+import {
+	Review as IReview,
+	SortOptions,
+	Options,
+} from '@/util/interfaces/interfaces'
 import {
 	getCityOptions,
 	getStateOptions,
@@ -15,6 +19,7 @@ import AdsComponent from '@/components/adsense/Adsense'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { updateActiveFilters } from '@/redux/query/querySlice'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
+import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import MobileReviewFilters from './mobile-review-filters'
 import { useTranslation } from 'react-i18next'
 import ButtonLight from '../ui/button-light'
@@ -118,10 +123,6 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 		}
 	}
 
-	useEffect(() => {
-		fetchData()
-	}, [queryParams, page])
-
 	// Reset hasMore when queryParams change
 	useEffect(() => {
 		setHasMore(true)
@@ -132,14 +133,44 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 		() => getCityOptions(data?.cities ?? []),
 		[data?.cities],
 	)
+	const [dynamicCityOptions, setDynamicCityOptions] =
+		useState<Options[]>(cityOptions)
 	const stateOptions = useMemo(
 		() => getStateOptions(data?.states ?? []),
 		[data?.states],
 	)
+	const [dynamicStateOptions, setDynamicStateOptions] =
+		useState<Options[]>(stateOptions)
 	const zipOptions = useMemo(
 		() => getZipOptions(data?.zips ?? []),
 		[data?.zips],
 	)
+	const [dynamicZipOptions, setDynamicZipOptions] =
+		useState<Options[]>(zipOptions)
+
+	const fetchDynamicFilterOptions = async () => {
+		setIsLoading(true)
+		try {
+			const filterOptions = await fetchFilterOptions(
+				queryParams?.country,
+				queryParams?.state,
+				queryParams?.city,
+				queryParams?.zip,
+			)
+			setDynamicCityOptions(filterOptions.cities)
+			setDynamicStateOptions(filterOptions.states)
+			setDynamicZipOptions(filterOptions.zips)
+		} catch (error) {
+			console.error('Error fetching filter options:', error)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	useEffect(() => {
+		fetchData()
+		fetchDynamicFilterOptions()
+	}, [queryParams, page])
 
 	return (
 		<>
@@ -194,11 +225,11 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 							setMobileFiltersOpen={setMobileFiltersOpen}
 							countryFilter={countryFilter}
 							stateFilter={stateFilter}
-							stateOptions={stateOptions}
+							stateOptions={dynamicStateOptions}
 							cityFilter={cityFilter}
-							cityOptions={cityOptions}
+							cityOptions={dynamicCityOptions}
 							zipFilter={zipFilter}
-							zipOptions={zipOptions}
+							zipOptions={dynamicZipOptions}
 							updateParams={updateParams}
 						/>
 						<ReviewFilters
@@ -209,9 +240,9 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 							stateFilter={stateFilter}
 							cityFilter={cityFilter}
 							zipFilter={zipFilter}
-							cityOptions={cityOptions}
-							stateOptions={stateOptions}
-							zipOptions={zipOptions}
+							cityOptions={dynamicCityOptions}
+							stateOptions={dynamicStateOptions}
+							zipOptions={dynamicZipOptions}
 							updateParams={updateParams}
 							loading={isLoading}
 						/>
