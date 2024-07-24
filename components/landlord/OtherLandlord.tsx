@@ -15,6 +15,14 @@ const OtherLandlordInfo = ({ landlord }: IProps) => {
 		fetcher,
 	)
 
+	const myComponent = {
+		width: '225px',
+		height: '225px',
+		overflow: 'scroll',
+		alignItems: 'center',
+		justifyContent: 'center'
+	};
+
 	if (!landlords) return <Spinner />
 
 	if (error || !landlords.length) return null
@@ -24,12 +32,13 @@ const OtherLandlordInfo = ({ landlord }: IProps) => {
 			<h3 className='mt-4 text-lg text-gray-900'>
 				View Other Landlords in {landlords[0]?.topcity}:
 			</h3>
-			<div className='flex flex-row flex-wrap items-center gap-3 xl:col-span-1 '>
+			<div className='flex flex-wrap items-center gap-3 xl:col-span-1'>
 				{landlords.map((otherLandlord, index) => {
 					return (
 						<div
 							key={index}
-							className='flex flex-row flex-wrap items-center justify-between bg-teal-600/5 p-2 lg:min-w-[220px] lg:max-w-[225px] lg:flex-col'
+							className='flex flex-row flex-wrap items-center justify-between rounded-md border bg-teal-600/5 p-2 lg:flex-col'
+							style={myComponent}
 						>
 							<div className='flex flex-col items-center'>
 								<Link
