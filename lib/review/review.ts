@@ -2,6 +2,7 @@ import {
 	Review,
 	ReviewsResponse,
 	OtherLandlord,
+	FilterOptions
 } from '@/lib/review/models/review'
 import { filterReviewWithAI, IResult } from './helpers'
 import { checkReviewsForSimilarity } from './review-text-match'
@@ -10,6 +11,8 @@ import { getExistingReviewsForLandlord } from '@/lib/review/models/review-data-l
 import { createReview } from '@/lib/review/models/review-data-layer'
 import { updateReview } from '@/lib/review/models/review-data-layer'
 import { Row, RowList } from 'postgres'
+import { capitalize } from '@/util/helpers/helper-functions'
+import { Options } from '@/util/interfaces/interfaces'
 
 export type ReviewQuery = {
 	page?: number
@@ -20,6 +23,109 @@ export type ReviewQuery = {
 	country?: string
 	city?: string
 	zip?: string
+}
+
+export async function filterOptions(
+	country?: string,
+	state?: string,
+	city?: string,
+): Promise<FilterOptions> {
+
+	const stateClause = state
+		? sql`AND state =
+    ${state.toUpperCase()}`
+		: sql``
+	const countryClause = country
+		? sql`AND country_code =
+            ${country.toUpperCase()}`
+		: sql``
+	const cityClause = city
+		? sql`AND city =
+    ${city.toUpperCase()}`
+		: sql``
+
+	// Fetch countries
+	const countries = await sql`
+        SELECT DISTINCT country_code
+        FROM review;
+    `
+	const countryList = countries.map(({ country_code }) => country_code)
+
+	// Fetch states
+	const states = await sql`
+        SELECT DISTINCT state
+        FROM review
+        WHERE 1 = 1 ${countryClause};
+    `
+	const stateList = states.map(({ state }) => state)
+
+	// Fetch cities
+	const cities = await sql`
+        SELECT DISTINCT city
+        FROM review
+        WHERE 1 = 1 ${countryClause} ${stateClause};
+    `
+	const cityList = cities.map(({ city }) => city)
+
+	// Fetch zips
+	const zips = await sql`
+        SELECT DISTINCT zip
+        FROM review
+        WHERE 1 = 1 ${countryClause} ${stateClause} ${cityClause};
+    `
+	const zipsExtracted = zips.map(({ zip }) => zip)
+
+	const zipList = zipsExtracted.filter((zip) => zip.length > 0)
+
+	const filteredCity = cityList.filter((n) => n)
+	const allCityOptions = filteredCity.map((c, id) => {
+		const city = c.toLowerCase().trim()
+		return {
+			id: id + 1,
+			name: city.split(' ').map(capitalize).join(' '),
+			value: c.toLowerCase().trim(),
+		}
+	})
+
+
+	allCityOptions.sort((a: Options, b: Options): number =>
+		a.name.localeCompare(b.name),
+	)
+
+	const allStateOptions = stateList.map((s, id) => {
+		const state = s.toLowerCase()
+		return {
+			id: id + 1,
+			name: state.split(' ').map(capitalize).join(' '),
+			value: s,
+		}
+	})
+
+	allStateOptions.sort((a: Options, b: Options): number =>
+		a.name.localeCompare(b.name),
+	)
+
+	const allZipOptions = zipList.map((z, id) => {
+		const zip = z.toUpperCase().replace(/\s+/g, '')
+		return {
+			id: id + 1,
+			name: zip.toUpperCase().replace(/\s+/g, ''),
+			value: z.toUpperCase().replace(/\s+/g, ''),
+		}
+	})
+
+
+	allZipOptions.sort((a: Options, b: Options): number =>
+		a.name.localeCompare(b.name),
+	)
+
+	return {
+		countries: countryList,
+		states: allStateOptions,
+		cities: allCityOptions,
+		zips: allZipOptions
+	}
+
 }
 
 export async function getReviews(

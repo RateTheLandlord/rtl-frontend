@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-npm run test:merge
-npm run lint
-npm run format
+bun run test:merge
+bun run lint
+bun run format

@@ -86,7 +86,8 @@ export async function updateReview(
                flagged_reason = ${review.flagged_reason},
                admin_approved = ${review.admin_approved},
                admin_edited   = ${review.admin_edited},
-			   rent = ${review.rent || null}
+			   rent = ${review.rent || null},
+			   moderation_reason = ${review.moderation_reason || null}
            WHERE id = ${id};`
 
 	return review

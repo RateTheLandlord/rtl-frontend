@@ -25,6 +25,7 @@ describe('EditReviewModal', () => {
 		flagged_reason: '',
 		admin_approved: null,
 		admin_edited: false,
+		moderation_reason: null,
 	}
 
 	test('renders EditReviewModal with selected review data', () => {

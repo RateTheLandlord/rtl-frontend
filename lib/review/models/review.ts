@@ -1,3 +1,5 @@
+import { Options } from '@/util/interfaces/interfaces'
+
 export interface Review {
 	id?: number
 	landlord: string
@@ -17,6 +19,7 @@ export interface Review {
 	admin_approved: boolean | null
 	admin_edited: boolean
 	rent?: number | null
+	moderation_reason: string | null
 }
 
 export interface OtherLandlord {
@@ -34,4 +37,11 @@ export type ReviewsResponse = {
 	cities: string[]
 	zips: string[]
 	limit: number
+}
+
+export type FilterOptions = {
+	countries: Options[]
+	states: Options[]
+	cities: Options[]
+	zips: Options[]
 }

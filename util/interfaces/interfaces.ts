@@ -17,6 +17,7 @@ export interface Review {
 	admin_approved: boolean | null
 	admin_edited: boolean
 	rent?: number | null
+	moderation_reason: string | null
 }
 
 export interface OtherLandlord {
@@ -105,4 +106,11 @@ export interface ResourceResponse {
 	states: Array<string>
 	cities: Array<string>
 	limit: number
+}
+
+export type FilterOptions = {
+	countries: Options[]
+	states: Options[]
+	cities: Options[]
+	zips: Options[]
 }
