@@ -28,8 +28,22 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 				<Provider store={store}>
 					<ReCaptchaProvider reCaptchaKey={CAPTCHA_SITE_KEY} useEnterprise>
 						<Layout>
-							<Component {...pageProps} />
-							<ToastContainer />
+							<>
+								<Component {...pageProps} />
+								<ToastContainer
+									position='bottom-center'
+									autoClose={5000}
+									limit={3}
+									hideProgressBar
+									newestOnTop={false}
+									closeOnClick
+									rtl={false}
+									pauseOnFocusLoss={false}
+									draggable
+									pauseOnHover={false}
+									theme='light'
+								/>
+							</>
 						</Layout>
 					</ReCaptchaProvider>
 				</Provider>

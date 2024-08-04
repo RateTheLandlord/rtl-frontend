@@ -1,5 +1,4 @@
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
-import { getUserLocation } from '@/util/helpers/geoLocation'
 import { Options } from '@/util/interfaces/interfaces'
 import { useEffect, useMemo, useState } from 'react'
 import { Map as MapView, Marker } from 'react-map-gl'
@@ -9,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import ComboBox from '../reviews/ui/combobox'
 import CustomMarker from './CustomMarker'
 import { provinceMaps, usLocationMap } from './locationMaps'
+import { getStartingLocation } from '@/util/helpers/getStartingLocation'
 
 const MapComponent = () => {
 	const { t } = useTranslation('reviews')
@@ -25,12 +25,11 @@ const MapComponent = () => {
 		zoom: 10,
 	})
 
-	// Get User Location (If they decline, fall back to default location)
-
-	// !TODO Update this to just get the location of the State / Province the user selected
 	useEffect(() => {
-		getUserLocation(setViewState)
-	}, [])
+		if (country && state) {
+			getStartingLocation(setViewState, country, state)
+		}
+	}, [country, state])
 
 	// Get's Zips once a User has selected a Country and a State
 	const fetchZips = async (country: Options, state: Options) => {
