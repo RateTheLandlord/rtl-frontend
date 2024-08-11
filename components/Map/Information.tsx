@@ -4,9 +4,7 @@ import { fetchWithBody } from '@/util/helpers/fetcher'
 import Spinner from '../ui/Spinner'
 import { ILocationType } from './Map'
 import { useAppDispatch } from '@/redux/hooks'
-import { updateActiveFilters } from '@/redux/query/querySlice'
 import { Options } from '@/util/interfaces/interfaces'
-import { QueryParams } from '../reviews/review'
 import Link from 'next/link'
 
 interface IProps {
@@ -14,8 +12,6 @@ interface IProps {
 	state: Options | null
 	selectedPoint: ILocationType
 	setSelectedIndex: (id: number) => void
-	queryParams: QueryParams
-	setQueryParams: (params: QueryParams) => void
 }
 
 const Information = ({
@@ -23,8 +19,6 @@ const Information = ({
 	country,
 	state,
 	setSelectedIndex,
-	queryParams,
-	setQueryParams,
 }: IProps) => {
 	const dispatch = useAppDispatch()
 	const { data: stats, error } = useSWR(

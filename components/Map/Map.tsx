@@ -22,15 +22,9 @@ export interface ILocationType {
 
 interface IProps {
 	setSelectedIndex: (id: number) => void
-	queryParams: QueryParams
-	setQueryParams: (params: QueryParams) => void
 }
 
-const MapComponent = ({
-	setSelectedIndex,
-	queryParams,
-	setQueryParams,
-}: IProps) => {
+const MapComponent = ({ setSelectedIndex }: IProps) => {
 	const { t } = useTranslation('reviews')
 	const [usZipCodes, setUSZipCodes] = useState<Options[]>([])
 	const [caPostalCodes, setCAPostalCodes] = useState<Options[]>([])
@@ -168,8 +162,6 @@ const MapComponent = ({
 						country={country}
 						state={state}
 						setSelectedIndex={setSelectedIndex}
-						queryParams={queryParams}
-						setQueryParams={setQueryParams}
 					/>
 				)}
 			</div>

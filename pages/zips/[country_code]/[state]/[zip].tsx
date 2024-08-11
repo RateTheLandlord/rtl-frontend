@@ -1,7 +1,6 @@
-import CityPage from '@/components/city/CityPage'
 import Spinner from '@/components/ui/Spinner'
 import ZipPage from '@/components/zip/ZipPage'
-import { IZipReviews, getCities, getZipReviews } from '@/lib/review/review'
+import { IZipReviews, getZipReviews } from '@/lib/review/review'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
