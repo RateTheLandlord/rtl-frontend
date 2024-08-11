@@ -10,7 +10,6 @@ import CustomMarker from './CustomMarker'
 import { provinceMaps, usLocationMap } from './locationMaps'
 import { getStartingLocation } from '@/util/helpers/getStartingLocation'
 import Information from './Information'
-import { QueryParams } from '../reviews/review'
 
 export interface ILocationType {
 	longitude: number
@@ -20,11 +19,7 @@ export interface ILocationType {
 	value: string
 }
 
-interface IProps {
-	setSelectedIndex: (id: number) => void
-}
-
-const MapComponent = ({ setSelectedIndex }: IProps) => {
+const MapComponent = () => {
 	const { t } = useTranslation('reviews')
 	const [usZipCodes, setUSZipCodes] = useState<Options[]>([])
 	const [caPostalCodes, setCAPostalCodes] = useState<Options[]>([])
@@ -161,7 +156,6 @@ const MapComponent = ({ setSelectedIndex }: IProps) => {
 						selectedPoint={selectedPoint}
 						country={country}
 						state={state}
-						setSelectedIndex={setSelectedIndex}
 					/>
 				)}
 			</div>

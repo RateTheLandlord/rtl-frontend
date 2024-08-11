@@ -21,15 +21,7 @@ interface IProps {
 	zip: string
 }
 
-const ZipInfo = ({
-	city,
-	state,
-	country,
-	average,
-	total,
-	averages,
-	zip,
-}: IProps) => {
+const ZipInfo = ({ state, country, average, total, averages, zip }: IProps) => {
 	const { t } = useTranslation('landlord')
 	const tenantList: Array<string> = t('landlord.tenant-list', {
 		returnObjects: true,

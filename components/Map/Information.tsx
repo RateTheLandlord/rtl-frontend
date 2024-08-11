@@ -3,7 +3,6 @@ import RatingStars from '../ui/RatingStars'
 import { fetchWithBody } from '@/util/helpers/fetcher'
 import Spinner from '../ui/Spinner'
 import { ILocationType } from './Map'
-import { useAppDispatch } from '@/redux/hooks'
 import { Options } from '@/util/interfaces/interfaces'
 import Link from 'next/link'
 
@@ -11,16 +10,9 @@ interface IProps {
 	country: Options | null
 	state: Options | null
 	selectedPoint: ILocationType
-	setSelectedIndex: (id: number) => void
 }
 
-const Information = ({
-	selectedPoint,
-	country,
-	state,
-	setSelectedIndex,
-}: IProps) => {
-	const dispatch = useAppDispatch()
+const Information = ({ selectedPoint, country, state }: IProps) => {
 	const { data: stats, error } = useSWR(
 		[
 			'/api/review/get-zip-stats',

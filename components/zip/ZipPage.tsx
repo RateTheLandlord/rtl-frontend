@@ -1,18 +1,14 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
-import { useTranslation } from 'react-i18next'
-import { Review, SortOptions } from '@/util/interfaces/interfaces'
-import ButtonLight from '../ui/button-light'
-import { sortOptions } from '@/util/helpers/filter-options'
+import { Review } from '@/util/interfaces/interfaces'
 import { IZipReviews } from '@/lib/review/review'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import AdsComponent from '../adsense/Adsense'
 import InfiniteScroll from '../reviews/InfiniteScroll'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { updateActiveFilters } from '@/redux/query/querySlice'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import ZipInfo from './ZipInfo'
+import { ISortOptions } from '../reviews/review'
 
 interface IProps {
 	city: string
@@ -23,20 +19,9 @@ interface IProps {
 }
 
 const ZipPage = ({ city, state, country, zip, data }: IProps) => {
-	// Localization
-	const { t } = useTranslation('landlord')
-
-	// Redux
-	const query = useAppSelector((state) => state.query)
-	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
-		query
-
-	const dispatch = useAppDispatch()
 	// State
 	const [reviews, setReviews] = useState<Review[]>(data?.reviews || [])
 	const [page, setPage] = useState<number>(1)
-	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
-	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
 	const [hasMore, setHasMore] = useState(true) // Track if there is more content to load
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
@@ -45,15 +30,15 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 	const [isLoading, setIsLoading] = useState(false)
 
 	// Query
-	const [queryParams, setQueryParams] = useState({
-		sort: selectedSort.value,
+	const queryParams = {
+		sort: 'new' as ISortOptions,
 		state: state,
 		country: country,
 		city: city,
 		zip: zip,
 		search: '',
 		limit: '25',
-	})
+	}
 
 	const fetchData = async () => {
 		setIsLoading(true)
@@ -133,11 +118,7 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 						zip={zip}
 					/>
 				</div>
-				<div className='mt-2 flex w-full justify-end px-4 lg:hidden'>
-					<ButtonLight onClick={() => setMobileFiltersOpen(true)}>
-						{t('reviews.filters')}
-					</ButtonLight>
-				</div>
+
 				<div className='mx-auto max-w-2xl lg:max-w-7xl'>
 					<div className='flex lg:flex-row lg:gap-2 lg:divide-x lg:divide-gray-200'>
 						{!reviews.length ? (

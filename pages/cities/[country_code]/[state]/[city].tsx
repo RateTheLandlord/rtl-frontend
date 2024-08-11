@@ -1,6 +1,6 @@
 import CityPage from '@/components/city/CityPage'
 import Spinner from '@/components/ui/Spinner'
-import { ICityReviews, getCities, getCityReviews } from '@/lib/review/review'
+import { ICityReviews, getCityReviews } from '@/lib/review/review'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'

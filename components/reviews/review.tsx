@@ -36,9 +36,18 @@ export type ReviewsResponse = {
 	limit: number
 }
 
+export type ISortOptions =
+	| 'az'
+	| 'za'
+	| 'new'
+	| 'old'
+	| 'high'
+	| 'low'
+	| undefined
+
 export interface QueryParams {
 	page: number
-	sort: 'az' | 'za' | 'new' | 'old' | 'high' | 'low' | undefined
+	sort: ISortOptions
 	state: string
 	country: string
 	city: string
@@ -297,7 +306,7 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 								</div>
 							</TabPanel>
 							<TabPanel>
-								<MapComponent setSelectedIndex={setSelectedIndex} />
+								<MapComponent />
 								<p className='mt-6 text-xs leading-7 text-gray-600'>
 									This map component is currently in Beta. It is provided “as
 									is” and may contain bugs, inaccuracies, or incomplete

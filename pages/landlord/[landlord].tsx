@@ -1,10 +1,6 @@
 import LandlordPage from '@/components/landlord/LandlordPage'
 import Spinner from '@/components/ui/Spinner'
-import {
-	ILandlordReviews,
-	getLandlordReviews,
-	getLandlords,
-} from '@/lib/review/review'
+import { ILandlordReviews, getLandlordReviews } from '@/lib/review/review'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 
