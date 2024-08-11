@@ -9,14 +9,35 @@ import ComboBox from '../reviews/ui/combobox'
 import CustomMarker from './CustomMarker'
 import { provinceMaps, usLocationMap } from './locationMaps'
 import { getStartingLocation } from '@/util/helpers/getStartingLocation'
+import Information from './Information'
+import { QueryParams } from '../reviews/review'
 
-const MapComponent = () => {
+export interface ILocationType {
+	longitude: number
+	latitude: number
+	id: number
+	name: string
+	value: string
+}
+
+interface IProps {
+	setSelectedIndex: (id: number) => void
+	queryParams: QueryParams
+	setQueryParams: (params: QueryParams) => void
+}
+
+const MapComponent = ({
+	setSelectedIndex,
+	queryParams,
+	setQueryParams,
+}: IProps) => {
 	const { t } = useTranslation('reviews')
 	const [usZipCodes, setUSZipCodes] = useState<Options[]>([])
 	const [caPostalCodes, setCAPostalCodes] = useState<Options[]>([])
 	const [country, setCountry] = useState<Options | null>(null)
 	const [state, setState] = useState<Options | null>(null)
 	const [dynamicStateOptions, setDynamicStateOptions] = useState<Options[]>([])
+	const [selectedPoint, setSelectedPoint] = useState<ILocationType | null>(null)
 
 	// Default location is Toronto, Ontario, Canada
 	const [viewState, setViewState] = useState({
@@ -33,20 +54,20 @@ const MapComponent = () => {
 
 	// Get's Zips once a User has selected a Country and a State
 	const fetchZips = async (country: Options, state: Options) => {
-		if (country?.value === 'CA') {
-			try {
-				const caOptions = await fetchFilterOptions('CA', state?.value, '', '')
-				setCAPostalCodes([...caOptions.zips])
-			} catch (error) {
-				console.error('Error fetching zip codes:', error)
+		try {
+			const options = await fetchFilterOptions(
+				country.value,
+				state.value,
+				'',
+				'',
+			)
+			if (country.value === 'CA') {
+				setCAPostalCodes(options.zips)
+			} else if (country.value === 'US') {
+				setUSZipCodes(options.zips)
 			}
-		} else if (country?.value === 'US') {
-			try {
-				const usOptions = await fetchFilterOptions('US', state?.value, '', '')
-				setUSZipCodes([...usOptions.zips])
-			} catch (error) {
-				console.error('Error fetching zip codes:', error)
-			}
+		} catch (error) {
+			console.error('Error fetching zip codes:', error)
 		}
 	}
 
@@ -56,6 +77,11 @@ const MapComponent = () => {
 			fetchZips(country, state)
 		}
 	}, [country, state])
+
+	// Reset state to null when country changes
+	useEffect(() => {
+		setState(null)
+	}, [country])
 
 	// Pair Zips in our reviews with the location coordinates found in the json Maps
 	const usLocations = useMemo(() => {
@@ -74,16 +100,13 @@ const MapComponent = () => {
 			.filter((location) => location !== null)
 	}, [usZipCodes])
 
-	// Pair Postal Codes in our reviews with the location coordinates found in the json Maps
 	const caLocations = useMemo(() => {
 		if (country?.value === 'CA' && state?.value) {
-			console.log(state.value)
 			const locationMap = provinceMaps[state.value]
 			if (locationMap) {
 				return caPostalCodes
 					.map((location) => {
 						const caLocation = locationMap.get(location.value)
-
 						if (caLocation) {
 							return {
 								...location,
@@ -91,7 +114,6 @@ const MapComponent = () => {
 								latitude: Number(caLocation['LATITUDE']),
 							}
 						}
-
 						return null
 					})
 					.filter((location) => location !== null)
@@ -122,12 +144,12 @@ const MapComponent = () => {
 
 	return (
 		<div className='divide mt-2 flex flex-col gap-2 divide-teal-600 lg:flex-row'>
-			{/* Filter Options  */}
+			{/* Filter Options */}
 			<div className='basis-1/5'>
 				<div className='py-2'>
 					<SelectList
 						state={country}
-						setState={(opt: Options) => setCountry(opt)}
+						setState={setCountry}
 						options={countryOptions}
 						name={t('reviews.country')}
 					/>
@@ -135,21 +157,57 @@ const MapComponent = () => {
 				<div className='py-2'>
 					<ComboBox
 						state={state}
-						setState={(opt: Options) => setState(opt)}
+						setState={setState}
 						options={dynamicStateOptions}
 						name={t('reviews.state')}
 					/>
 				</div>
+				{selectedPoint && (
+					<Information
+						selectedPoint={selectedPoint}
+						country={country}
+						state={state}
+						setSelectedIndex={setSelectedIndex}
+						queryParams={queryParams}
+						setQueryParams={setQueryParams}
+					/>
+				)}
 			</div>
-			{/* Fallback if Country Selected is not Canada or the USA - Needs Work */}
+
+			{/* Fallback if Country Selected is not Canada or the USA */}
 			{country &&
 				country.name !== 'Canada' &&
 				country.name !== 'United States' && (
-					<p>Not Available in your country yet</p>
+					<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
+						<h1 className='mt-4 text-2xl text-gray-900 sm:text-5xl'>
+							Not Available
+						</h1>
+						<p className='mt-6 text-base leading-7 text-gray-600'>
+							Sorry, this country is not available for maps yet. Check back
+							soon!
+						</p>
+					</div>
 				)}
-			{!state || !country ? (
-				<p>Please select a Country and State / Province</p>
-			) : null}
+
+			{/* Prompt to select a Country */}
+			{!state && !country && (
+				<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
+					<h1 className='mt-4 text-2xl text-gray-900 sm:text-5xl'>
+						Please select a Country
+					</h1>
+				</div>
+			)}
+
+			{/* Prompt to select a Province / State */}
+			{!state && country && (
+				<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
+					<h1 className='mt-4 text-2xl text-gray-900 sm:text-5xl'>
+						Please select a Province / State
+					</h1>
+				</div>
+			)}
+
+			{/* Map View */}
 			{state && country && (
 				<MapView
 					{...viewState}
@@ -160,36 +218,43 @@ const MapComponent = () => {
 					onMove={(evt) => setViewState(evt.viewState)}
 				>
 					{country.name === 'United States' &&
-						usLocations.map((location) => {
-							if (location?.latitude && location.longitude) {
-								return (
+						usLocations.map(
+							(location) =>
+								location?.latitude &&
+								location.longitude && (
 									<Marker
 										key={location.value}
-										longitude={location?.longitude}
-										latitude={location?.latitude}
-									/>
-								)
-							}
-						})}
-					{country.name === 'Canada' &&
-						caLocations.map((location) => {
-							if (location?.latitude && location.longitude) {
-								return (
-									<Marker
-										key={location.value}
-										longitude={location?.longitude}
-										latitude={location?.latitude}
+										longitude={location.longitude}
+										latitude={location.latitude}
 										anchor='bottom'
 									>
 										<CustomMarker
+											selectedPoint={selectedPoint}
+											setSelectedPoint={setSelectedPoint}
 											location={location}
-											country='CA'
-											state={state.value}
 										/>
 									</Marker>
-								)
-							}
-						})}
+								),
+						)}
+					{country.name === 'Canada' &&
+						caLocations.map(
+							(location) =>
+								location?.latitude &&
+								location.longitude && (
+									<Marker
+										key={location.value}
+										longitude={location.longitude}
+										latitude={location.latitude}
+										anchor='bottom'
+									>
+										<CustomMarker
+											selectedPoint={selectedPoint}
+											setSelectedPoint={setSelectedPoint}
+											location={location}
+										/>
+									</Marker>
+								),
+						)}
 				</MapView>
 			)}
 		</div>

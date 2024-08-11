@@ -68,6 +68,7 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
 	const [isLoading, setIsLoading] = useState(false)
+	const [selectedIndex, setSelectedIndex] = useState(0)
 
 	// Query
 	const [queryParams, setQueryParams] = useState({
@@ -221,7 +222,12 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 					</ButtonLight>
 				</div>
 				<div className='mx-auto max-w-2xl lg:max-w-7xl'>
-					<TabGroup as='div' className='w-full'>
+					<TabGroup
+						selectedIndex={selectedIndex}
+						onChange={setSelectedIndex}
+						as='div'
+						className='w-full'
+					>
 						<TabList className='flex w-full justify-center gap-4 border-b p-3'>
 							<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
 								Reviews
@@ -291,7 +297,21 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 								</div>
 							</TabPanel>
 							<TabPanel>
-								<MapComponent />
+								<MapComponent
+									setSelectedIndex={setSelectedIndex}
+									queryParams={queryParams}
+									setQueryParams={setQueryParams}
+								/>
+								<p className='mt-6 text-xs leading-7 text-gray-600'>
+									This map component is currently in Beta. It is provided “as
+									is” and may contain bugs, inaccuracies, or incomplete
+									features. We are actively working to improve the functionality
+									and accuracy of this component. <br />
+									Please note: The map data may not be fully accurate or
+									up-to-date. Some features may not work as expected.
+									Performance may vary depending on your device and network
+									conditions.
+								</p>
 							</TabPanel>
 						</TabPanels>
 					</TabGroup>
