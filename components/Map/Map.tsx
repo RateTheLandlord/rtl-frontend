@@ -213,7 +213,7 @@ const MapComponent = ({
 					{...viewState}
 					reuseMaps
 					mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN as string}
-					style={{ width: '100%', height: 800 }}
+					style={{ width: '100%', aspectRatio: '1 / 1' }}
 					mapStyle='mapbox://styles/mapbox/streets-v9'
 					onMove={(evt) => setViewState(evt.viewState)}
 				>
