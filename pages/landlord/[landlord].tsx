@@ -67,22 +67,9 @@ const Landlord = ({ landlord, data }: IProps) => {
 }
 
 export async function getStaticPaths() {
-	// Too many pages, need to work this out. Test of fixing static generation.
-	if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'production') {
-		return {
-			paths: [],
-			fallback: 'blocking',
-		}
-	}
-	const data = await getLandlords()
-
-	const paths = data.map((landlord) => ({
-		params: { landlord: encodeURIComponent(landlord) },
-	}))
 	return {
-		paths: [...paths],
-		// Enable statically generating additional pages
-		fallback: true,
+		paths: [],
+		fallback: 'blocking',
 	}
 }
 
