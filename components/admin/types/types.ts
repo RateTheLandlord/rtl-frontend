@@ -55,6 +55,13 @@ export interface ICountryStats {
 				total: string
 			}>
 		}
+		NO?: {
+			total: string
+			states: Array<{
+				key: string
+				total: string
+			}>
+		}
 	}
 }
 
