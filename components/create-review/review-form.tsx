@@ -201,8 +201,8 @@ function ReviewForm(): JSX.Element {
 			setReviewModalOpen(true)
 		} else {
 			if (
-				postcodeValidator(postal, country)
-				// (postal.length === 0 && isIreland)
+				postcodeValidator(postal, country) ||
+				(postal.length === 0 && isIreland)
 			) {
 				setLoading(true)
 				const token = await executeRecaptcha('review_form')
