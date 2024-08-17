@@ -23,6 +23,8 @@ import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import MobileReviewFilters from './mobile-review-filters'
 import { useTranslation } from 'react-i18next'
 import ButtonLight from '../ui/button-light'
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
+import MapComponent from '../Map/Map'
 
 export type ReviewsResponse = {
 	reviews: IReview[]
@@ -34,9 +36,18 @@ export type ReviewsResponse = {
 	limit: number
 }
 
+export type ISortOptions =
+	| 'az'
+	| 'za'
+	| 'new'
+	| 'old'
+	| 'high'
+	| 'low'
+	| undefined
+
 export interface QueryParams {
 	page: number
-	sort: 'az' | 'za' | 'new' | 'old' | 'high' | 'low' | undefined
+	sort: ISortOptions
 	state: string
 	country: string
 	city: string
@@ -66,6 +77,7 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
 	const [isLoading, setIsLoading] = useState(false)
+	const [selectedIndex, setSelectedIndex] = useState(0)
 
 	// Query
 	const [queryParams, setQueryParams] = useState({
@@ -219,56 +231,95 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 					</ButtonLight>
 				</div>
 				<div className='mx-auto max-w-2xl lg:max-w-7xl'>
-					<div className='flex lg:flex-row lg:gap-2 lg:divide-x lg:divide-gray-200'>
-						<MobileReviewFilters
-							mobileFiltersOpen={mobileFiltersOpen}
-							setMobileFiltersOpen={setMobileFiltersOpen}
-							countryFilter={countryFilter}
-							stateFilter={stateFilter}
-							stateOptions={dynamicStateOptions}
-							cityFilter={cityFilter}
-							cityOptions={dynamicCityOptions}
-							zipFilter={zipFilter}
-							zipOptions={dynamicZipOptions}
-							updateParams={updateParams}
-						/>
-						<ReviewFilters
-							selectedSort={selectedSort}
-							setSelectedSort={setSelectedSort}
-							sortOptions={sortOptions}
-							countryFilter={countryFilter}
-							stateFilter={stateFilter}
-							cityFilter={cityFilter}
-							zipFilter={zipFilter}
-							cityOptions={dynamicCityOptions}
-							stateOptions={dynamicStateOptions}
-							zipOptions={dynamicZipOptions}
-							updateParams={updateParams}
-							loading={isLoading}
-						/>
-						{!reviews.length ? (
-							<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
-								<h1 className='mt-4 text-3xl   text-gray-900 sm:text-5xl'>
-									No results found
-								</h1>
-								<p className='mt-6 text-base leading-7 text-gray-600'>
-									Sorry, we couldn't find any results for those filters.
+					<TabGroup
+						selectedIndex={selectedIndex}
+						onChange={setSelectedIndex}
+						as='div'
+						className='w-full'
+					>
+						<TabList className='flex w-full justify-center gap-4 border-b p-3'>
+							<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+								Reviews
+							</Tab>
+							<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+								<div className='flex flex-row gap-1'>
+									<p>Map</p>
+									<div className='flex h-full flex-col justify-start'>
+										<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-teal-500/10'>
+											Beta
+										</span>
+									</div>
+								</div>
+							</Tab>
+						</TabList>
+						<TabPanels>
+							<TabPanel>
+								<div className='flex lg:flex-row lg:gap-2 lg:divide-x lg:divide-gray-200'>
+									<MobileReviewFilters
+										mobileFiltersOpen={mobileFiltersOpen}
+										setMobileFiltersOpen={setMobileFiltersOpen}
+										countryFilter={countryFilter}
+										stateFilter={stateFilter}
+										stateOptions={dynamicStateOptions}
+										cityFilter={cityFilter}
+										cityOptions={dynamicCityOptions}
+										zipFilter={zipFilter}
+										zipOptions={dynamicZipOptions}
+										updateParams={updateParams}
+									/>
+									<ReviewFilters
+										selectedSort={selectedSort}
+										setSelectedSort={setSelectedSort}
+										sortOptions={sortOptions}
+										countryFilter={countryFilter}
+										stateFilter={stateFilter}
+										cityFilter={cityFilter}
+										zipFilter={zipFilter}
+										cityOptions={dynamicCityOptions}
+										stateOptions={dynamicStateOptions}
+										zipOptions={dynamicZipOptions}
+										updateParams={updateParams}
+										loading={isLoading}
+									/>
+									{!reviews.length ? (
+										<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
+											<h1 className='mt-4 text-3xl   text-gray-900 sm:text-5xl'>
+												No results found
+											</h1>
+											<p className='mt-6 text-base leading-7 text-gray-600'>
+												Sorry, we couldn't find any results for those filters.
+											</p>
+										</div>
+									) : (
+										<InfiniteScroll
+											data={reviews}
+											setReportOpen={setReportOpen}
+											setSelectedReview={setSelectedReview}
+											setRemoveReviewOpen={setRemoveReviewOpen}
+											setEditReviewOpen={setEditReviewOpen}
+											setPage={setPage}
+											hasMore={hasMore}
+											isLoading={isLoading}
+											setIsLoading={setIsLoading}
+										/>
+									)}
+								</div>
+							</TabPanel>
+							<TabPanel>
+								<MapComponent />
+								<p className='mt-6 text-xs leading-7 text-gray-600'>
+									This map component is currently in Beta. It is provided “as
+									is” and may contain bugs, inaccuracies, or incomplete
+									features. We are actively working to improve the functionality
+									and accuracy of this component. <br />
+									Please note: The map data may not be fully accurate or
+									up-to-date. Some features may not work as expected.
+									Performance may vary depending on your device and network
+									conditions.
 								</p>
-							</div>
-						) : (
-							<InfiniteScroll
-								data={reviews}
-								setReportOpen={setReportOpen}
-								setSelectedReview={setSelectedReview}
-								setRemoveReviewOpen={setRemoveReviewOpen}
-								setEditReviewOpen={setEditReviewOpen}
-								setPage={setPage}
-								hasMore={hasMore}
-								isLoading={isLoading}
-								setIsLoading={setIsLoading}
-							/>
-						)}
-					</div>
+							</TabPanel>
+						</TabPanels>
+					</TabGroup>
 				</div>
 			</div>
 		</>

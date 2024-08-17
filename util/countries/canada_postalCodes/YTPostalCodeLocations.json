@@ -1,0 +1,4987 @@
+[
+  {
+    "POSTAL_CODE": "Y1A 5T6",
+    "LATITUDE": "60.605219",
+    "LONGITUDE": "-134.975107"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5C2",
+    "LATITUDE": "60.7859",
+    "LONGITUDE": "-135.168321"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4X7",
+    "LATITUDE": "60.775318",
+    "LONGITUDE": "-135.124958"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0G3",
+    "LATITUDE": "60.734342",
+    "LONGITUDE": "-135.10138"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2E9",
+    "LATITUDE": "60.7201724",
+    "LONGITUDE": "-135.0594381"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0J7",
+    "LATITUDE": "60.6717376708984",
+    "LONGITUDE": "-135.060043334961"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5N6",
+    "LATITUDE": "60.725864",
+    "LONGITUDE": "-135.057156"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0J3",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6J9",
+    "LATITUDE": "60.701712",
+    "LONGITUDE": "-135.017502"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6B2",
+    "LATITUDE": "60.707709",
+    "LONGITUDE": "-135.110473"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6B7",
+    "LATITUDE": "60.709196",
+    "LONGITUDE": "-135.11393"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5S9",
+    "LATITUDE": "60.61365",
+    "LONGITUDE": "-134.980617"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2B8",
+    "LATITUDE": "60.717947",
+    "LONGITUDE": "-135.057692"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0C6",
+    "LATITUDE": "60.7068481",
+    "LONGITUDE": "-135.1000184"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4N7",
+    "LATITUDE": "60.719086",
+    "LONGITUDE": "-135.056354"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2W9",
+    "LATITUDE": "60.74213",
+    "LONGITUDE": "-135.079745"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5N5",
+    "LATITUDE": "60.747325",
+    "LONGITUDE": "-135.091852"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1X2",
+    "LATITUDE": "60.715612",
+    "LONGITUDE": "-135.051012"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1R3",
+    "LATITUDE": "60.722739",
+    "LONGITUDE": "-135.065688"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2N3",
+    "LATITUDE": "60.722847",
+    "LONGITUDE": "-135.063468"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4E8",
+    "LATITUDE": "60.765227",
+    "LONGITUDE": "-135.122652"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2V2",
+    "LATITUDE": "60.7380735",
+    "LONGITUDE": "-135.074639"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5N9",
+    "LATITUDE": "60.723361",
+    "LONGITUDE": "-135.055162"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6B3",
+    "LATITUDE": "60.703388",
+    "LONGITUDE": "-135.110412"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4M8",
+    "LATITUDE": "60.71298",
+    "LONGITUDE": "-135.092892"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3C8",
+    "LATITUDE": "60.736739",
+    "LONGITUDE": "-135.094512"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1C2",
+    "LATITUDE": "60.720746",
+    "LONGITUDE": "-135.052969"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6C2",
+    "LATITUDE": "60.717803",
+    "LONGITUDE": "-135.048778"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0H7",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1S6",
+    "LATITUDE": "60.721484",
+    "LONGITUDE": "-135.066998"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3L9",
+    "LATITUDE": "60.706077",
+    "LONGITUDE": "-135.026189"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0B1",
+    "LATITUDE": "60.702377",
+    "LONGITUDE": "-135.109526"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6L6",
+    "LATITUDE": "60.720599",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0L1",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2G8",
+    "LATITUDE": "60.722291",
+    "LONGITUDE": "-135.052655"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5K5",
+    "LATITUDE": "60.7636845",
+    "LONGITUDE": "-135.1215355"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5G9",
+    "LATITUDE": "60.755952",
+    "LONGITUDE": "-135.117621"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3W3",
+    "LATITUDE": "60.766177",
+    "LONGITUDE": "-135.146809"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0K7",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4R6",
+    "LATITUDE": "60.700012",
+    "LONGITUDE": "-135.025833"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6V9",
+    "LATITUDE": "60.718425",
+    "LONGITUDE": "-135.098483"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1M1",
+    "LATITUDE": "63.5705",
+    "LONGITUDE": "-136.2150642"
+  },
+  {
+    "POSTAL_CODE": "Y0B 0A7",
+    "LATITUDE": "62.2285419",
+    "LONGITUDE": "-133.3531599"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3S2",
+    "LATITUDE": "60.709796",
+    "LONGITUDE": "-135.025656"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2L8",
+    "LATITUDE": "60.722538",
+    "LONGITUDE": "-135.060374"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1H8",
+    "LATITUDE": "60.721227",
+    "LONGITUDE": "-135.057913"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4M6",
+    "LATITUDE": "60.702661",
+    "LONGITUDE": "-135.019769"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2B9",
+    "LATITUDE": "60.718356",
+    "LONGITUDE": "-135.0595"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1N9",
+    "LATITUDE": "60.724451",
+    "LONGITUDE": "-135.064966"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5S3",
+    "LATITUDE": "60.82494",
+    "LONGITUDE": "-135.2109"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3A9",
+    "LATITUDE": "60.742107",
+    "LONGITUDE": "-135.089741"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5J3",
+    "LATITUDE": "60.762432",
+    "LONGITUDE": "-135.120094"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4X6",
+    "LATITUDE": "60.7753285",
+    "LONGITUDE": "-135.124941"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0K6",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6A7",
+    "LATITUDE": "60.701886",
+    "LONGITUDE": "-135.104815"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4H4",
+    "LATITUDE": "60.762765",
+    "LONGITUDE": "-135.12406"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3N4",
+    "LATITUDE": "60.7070095",
+    "LONGITUDE": "-135.029926"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0S6",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3X1",
+    "LATITUDE": "60.768355",
+    "LONGITUDE": "-135.148864"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3R8",
+    "LATITUDE": "60.709266",
+    "LONGITUDE": "-135.025029"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Y6",
+    "LATITUDE": "60.716863",
+    "LONGITUDE": "-135.053278"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1E5",
+    "LATITUDE": "60.719131",
+    "LONGITUDE": "-135.05407"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2Z5",
+    "LATITUDE": "60.737072",
+    "LONGITUDE": "-135.075202"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2L4",
+    "LATITUDE": "60.723441",
+    "LONGITUDE": "-135.055512"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4T5",
+    "LATITUDE": "60.69987",
+    "LONGITUDE": "-135.036362"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5V4",
+    "LATITUDE": "60.68044",
+    "LONGITUDE": "-135.06037"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5R3",
+    "LATITUDE": "60.726961",
+    "LONGITUDE": "-135.06074"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0R6",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1V7",
+    "LATITUDE": "60.713984",
+    "LONGITUDE": "-135.050124"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5B3",
+    "LATITUDE": "60.717776",
+    "LONGITUDE": "-135.052638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1L9",
+    "LATITUDE": "60.721707",
+    "LONGITUDE": "-135.060614"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0K3",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4P8",
+    "LATITUDE": "60.778184",
+    "LONGITUDE": "-135.1436465"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2M9",
+    "LATITUDE": "60.723925",
+    "LONGITUDE": "-135.057524"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6T1",
+    "LATITUDE": "60.727016",
+    "LONGITUDE": "-135.101474"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0P4",
+    "LATITUDE": "60.725365",
+    "LONGITUDE": "-135.055051"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5V2",
+    "LATITUDE": "60.59713",
+    "LONGITUDE": "-134.85239"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4P4",
+    "LATITUDE": "60.775977",
+    "LONGITUDE": "-135.133172"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5S6",
+    "LATITUDE": "60.759029",
+    "LONGITUDE": "-135.140601"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4A3",
+    "LATITUDE": "60.774846",
+    "LONGITUDE": "-135.138765"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1L8",
+    "LATITUDE": "60.720857",
+    "LONGITUDE": "-135.060199"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0C1",
+    "LATITUDE": "60.7189459",
+    "LONGITUDE": "-135.0497554"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4N1",
+    "LATITUDE": "60.720582",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Z2",
+    "LATITUDE": "60.771283",
+    "LONGITUDE": "-135.16521"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4R2",
+    "LATITUDE": "60.700364",
+    "LONGITUDE": "-135.023025"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1C1",
+    "LATITUDE": "61.552557",
+    "LONGITUDE": "-135.676748"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4K8",
+    "LATITUDE": "60.716024",
+    "LONGITUDE": "-135.053975"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1R5",
+    "LATITUDE": "60.7247295",
+    "LONGITUDE": "-135.0674937"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6L8",
+    "LATITUDE": "60.720601",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2N5",
+    "LATITUDE": "60.72275",
+    "LONGITUDE": "-135.063981"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6M3",
+    "LATITUDE": "60.720605",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6S3",
+    "LATITUDE": "60.719986",
+    "LONGITUDE": "-135.053639"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2N1",
+    "LATITUDE": "60.723678",
+    "LONGITUDE": "-135.058881"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1X3",
+    "LATITUDE": "60.716569",
+    "LONGITUDE": "-135.050182"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6K9",
+    "LATITUDE": "60.766154",
+    "LONGITUDE": "-135.135803"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1P6",
+    "LATITUDE": "60.720777",
+    "LONGITUDE": "-135.06442"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3G5",
+    "LATITUDE": "60.713636",
+    "LONGITUDE": "-135.090087"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2V9",
+    "LATITUDE": "60.743152",
+    "LONGITUDE": "-135.067382"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3E6",
+    "LATITUDE": "60.710332",
+    "LONGITUDE": "-135.091319"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6A2",
+    "LATITUDE": "60.580108",
+    "LONGITUDE": "-134.910445"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1K5",
+    "LATITUDE": "60.728725",
+    "LONGITUDE": "-135.068699"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2B6",
+    "LATITUDE": "60.718898",
+    "LONGITUDE": "-135.056495"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4W3",
+    "LATITUDE": "60.768305",
+    "LONGITUDE": "-135.118445"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6M1",
+    "LATITUDE": "60.720603",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4G9",
+    "LATITUDE": "60.7699575",
+    "LONGITUDE": "-135.118898"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6H9",
+    "LATITUDE": "60.714545",
+    "LONGITUDE": "-135.102614"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3W1",
+    "LATITUDE": "60.703313",
+    "LONGITUDE": "-135.025642"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2E6",
+    "LATITUDE": "60.721035",
+    "LONGITUDE": "-135.055765"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1V9",
+    "LATITUDE": "60.71394",
+    "LONGITUDE": "-135.050373"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4K5",
+    "LATITUDE": "60.765942",
+    "LONGITUDE": "-135.129897"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1B8",
+    "LATITUDE": "60.71895",
+    "LONGITUDE": "-135.051719"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5R2",
+    "LATITUDE": "60.706111",
+    "LONGITUDE": "-135.105029"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3V1",
+    "LATITUDE": "60.742298",
+    "LONGITUDE": "-135.090405"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3P4",
+    "LATITUDE": "60.708026",
+    "LONGITUDE": "-135.029149"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2M3",
+    "LATITUDE": "60.721945",
+    "LONGITUDE": "-135.063679"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1A4",
+    "LATITUDE": "60.7212801",
+    "LONGITUDE": "-135.0512014"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1K6",
+    "LATITUDE": "60.71196",
+    "LONGITUDE": "-135.053152"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5M7",
+    "LATITUDE": "60.740198",
+    "LONGITUDE": "-135.069282"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4Y4",
+    "LATITUDE": "60.720587",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6B5",
+    "LATITUDE": "60.709004",
+    "LONGITUDE": "-135.108827"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1L1",
+    "LATITUDE": "60.9222",
+    "LONGITUDE": "-137.859335"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1W4",
+    "LATITUDE": "60.713052",
+    "LONGITUDE": "-135.055307"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2W6",
+    "LATITUDE": "60.740164",
+    "LONGITUDE": "-135.072546"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4H5",
+    "LATITUDE": "60.76149",
+    "LONGITUDE": "-135.135713"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3E7",
+    "LATITUDE": "60.710471",
+    "LONGITUDE": "-135.095183"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5S5",
+    "LATITUDE": "60.82494",
+    "LONGITUDE": "-135.2109"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1W6",
+    "LATITUDE": "60.7149689",
+    "LONGITUDE": "-135.0497803"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4J9",
+    "LATITUDE": "60.766179",
+    "LONGITUDE": "-135.122692"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5E8",
+    "LATITUDE": "60.760779",
+    "LONGITUDE": "-135.120061"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0K1",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3G2",
+    "LATITUDE": "60.709174",
+    "LONGITUDE": "-135.091903"
+  },
+  {
+    "POSTAL_CODE": "Y1A 7A4",
+    "LATITUDE": "60.7333019",
+    "LONGITUDE": "-135.0908492"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6H1",
+    "LATITUDE": "60.718187",
+    "LONGITUDE": "-135.102078"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2H3",
+    "LATITUDE": "60.721529",
+    "LONGITUDE": "-135.056304"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2A9",
+    "LATITUDE": "60.719975",
+    "LONGITUDE": "-135.053639"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5L3",
+    "LATITUDE": "60.700285",
+    "LONGITUDE": "-135.03263"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1T6",
+    "LATITUDE": "60.709714",
+    "LONGITUDE": "-135.05515"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2J9",
+    "LATITUDE": "60.7223444",
+    "LONGITUDE": "-135.0570336"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5H6",
+    "LATITUDE": "60.721654",
+    "LONGITUDE": "-135.053817"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5S7",
+    "LATITUDE": "60.650889",
+    "LONGITUDE": "-135.021332"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4K6",
+    "LATITUDE": "60.766928",
+    "LONGITUDE": "-135.125864"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6V8",
+    "LATITUDE": "60.709279",
+    "LONGITUDE": "-135.111403"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2X1",
+    "LATITUDE": "60.74382",
+    "LONGITUDE": "-135.073867"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0B2",
+    "LATITUDE": "60.723496",
+    "LONGITUDE": "-135.08456"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6N6",
+    "LATITUDE": "60.720616",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0R7",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3J8",
+    "LATITUDE": "60.709999",
+    "LONGITUDE": "-135.031042"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0T2",
+    "LATITUDE": "60.726294",
+    "LONGITUDE": "-135.063519"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6M5",
+    "LATITUDE": "60.720607",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0C9",
+    "LATITUDE": "60.702672",
+    "LONGITUDE": "-135.101093"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1R8",
+    "LATITUDE": "60.72546",
+    "LONGITUDE": "-135.067979"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0Z4",
+    "LATITUDE": "60.7717569",
+    "LONGITUDE": "-135.1475951"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3M7",
+    "LATITUDE": "60.708781",
+    "LONGITUDE": "-135.019674"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1N5",
+    "LATITUDE": "60.722153",
+    "LONGITUDE": "-135.063086"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6K8",
+    "LATITUDE": "60.715373",
+    "LONGITUDE": "-135.048436"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6N4",
+    "LATITUDE": "60.720614",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1K8",
+    "LATITUDE": "60.7133713",
+    "LONGITUDE": "-135.0542009"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1N3",
+    "LATITUDE": "60.72071",
+    "LONGITUDE": "-135.062077"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3P6",
+    "LATITUDE": "60.7074505",
+    "LONGITUDE": "-135.028374"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2A8",
+    "LATITUDE": "60.720073",
+    "LONGITUDE": "-135.050308"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0E9",
+    "LATITUDE": "60.734342",
+    "LONGITUDE": "-135.10138"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3L2",
+    "LATITUDE": "60.704946",
+    "LONGITUDE": "-135.01918"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4L4",
+    "LATITUDE": "60.763499",
+    "LONGITUDE": "-135.134688"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1T4",
+    "LATITUDE": "60.710498",
+    "LONGITUDE": "-135.054021"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5G8",
+    "LATITUDE": "60.790267",
+    "LONGITUDE": "-135.169609"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0R1",
+    "LATITUDE": "60.7734446",
+    "LONGITUDE": "-135.108642"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3J4",
+    "LATITUDE": "60.704441",
+    "LONGITUDE": "-135.02913"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4K2",
+    "LATITUDE": "60.767298",
+    "LONGITUDE": "-135.119058"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0K4",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0G8",
+    "LATITUDE": "60.7333019",
+    "LONGITUDE": "-135.0908492"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Y8",
+    "LATITUDE": "60.59713",
+    "LONGITUDE": "-134.85239"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4R9",
+    "LATITUDE": "60.701228",
+    "LONGITUDE": "-135.028184"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Z9",
+    "LATITUDE": "60.767435",
+    "LONGITUDE": "-135.139672"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1R9",
+    "LATITUDE": "60.718915",
+    "LONGITUDE": "-135.065078"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2Z8",
+    "LATITUDE": "60.735747",
+    "LONGITUDE": "-135.080866"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6R1",
+    "LATITUDE": "60.720629",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4R1",
+    "LATITUDE": "60.7804765",
+    "LONGITUDE": "-135.1500225"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2E1",
+    "LATITUDE": "60.719114",
+    "LONGITUDE": "-135.060404"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3K4",
+    "LATITUDE": "60.710564",
+    "LONGITUDE": "-135.028499"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5R5",
+    "LATITUDE": "60.711239",
+    "LONGITUDE": "-135.108005"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3E4",
+    "LATITUDE": "60.814366",
+    "LONGITUDE": "-135.275653"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2L1",
+    "LATITUDE": "60.720652",
+    "LONGITUDE": "-135.066328"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2J1",
+    "LATITUDE": "60.71995",
+    "LONGITUDE": "-135.065347"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4Z4",
+    "LATITUDE": "60.794543",
+    "LONGITUDE": "-135.205616"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6S7",
+    "LATITUDE": "60.719988",
+    "LONGITUDE": "-135.053639"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0P2",
+    "LATITUDE": "60.7059",
+    "LONGITUDE": "-135.070697"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3R4",
+    "LATITUDE": "60.70979",
+    "LONGITUDE": "-135.027833"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2S5",
+    "LATITUDE": "60.725549",
+    "LONGITUDE": "-135.062789"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3X5",
+    "LATITUDE": "60.785934",
+    "LONGITUDE": "-135.168013"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Y3",
+    "LATITUDE": "60.717234",
+    "LONGITUDE": "-135.050535"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4E5",
+    "LATITUDE": "60.764039",
+    "LONGITUDE": "-135.126376"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5P1",
+    "LATITUDE": "60.76555",
+    "LONGITUDE": "-135.138624"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4S6",
+    "LATITUDE": "60.704066",
+    "LONGITUDE": "-135.027971"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0G2",
+    "LATITUDE": "60.7152334",
+    "LONGITUDE": "-135.0516529"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3J2",
+    "LATITUDE": "60.707817",
+    "LONGITUDE": "-135.035039"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3W5",
+    "LATITUDE": "60.769653",
+    "LONGITUDE": "-135.15059"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4J7",
+    "LATITUDE": "60.765811",
+    "LONGITUDE": "-135.125161"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1B3",
+    "LATITUDE": "60.718311",
+    "LONGITUDE": "-135.051015"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4A7",
+    "LATITUDE": "60.778685",
+    "LONGITUDE": "-135.141708"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1K1",
+    "LATITUDE": "60.726755",
+    "LONGITUDE": "-135.064343"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5J1",
+    "LATITUDE": "60.780486",
+    "LONGITUDE": "-135.1699905"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6G6",
+    "LATITUDE": "60.698338",
+    "LONGITUDE": "-135.112309"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3P2",
+    "LATITUDE": "60.707861",
+    "LONGITUDE": "-135.029672"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6K4",
+    "LATITUDE": "60.708172",
+    "LONGITUDE": "-135.101537"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2R2",
+    "LATITUDE": "60.724576",
+    "LONGITUDE": "-135.063339"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0S8",
+    "LATITUDE": "60.777703",
+    "LONGITUDE": "-135.100229"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3N8",
+    "LATITUDE": "60.707648",
+    "LONGITUDE": "-135.031599"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3N6",
+    "LATITUDE": "60.707204",
+    "LONGITUDE": "-135.027699"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6B9",
+    "LATITUDE": "60.708336",
+    "LONGITUDE": "-135.114103"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1J1",
+    "LATITUDE": "60.721681",
+    "LONGITUDE": "-135.05832"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1L5",
+    "LATITUDE": "60.7194107",
+    "LONGITUDE": "-135.0588513"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3K8",
+    "LATITUDE": "60.704767",
+    "LONGITUDE": "-135.021484"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2T8",
+    "LATITUDE": "60.736555",
+    "LONGITUDE": "-135.075835"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4C6",
+    "LATITUDE": "60.766305",
+    "LONGITUDE": "-135.136108"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5V1",
+    "LATITUDE": "60.582458",
+    "LONGITUDE": "-134.924927"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2K4",
+    "LATITUDE": "60.721658",
+    "LONGITUDE": "-135.060859"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0A1",
+    "LATITUDE": "60.695942",
+    "LONGITUDE": "-135.102309"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4S9",
+    "LATITUDE": "60.700603",
+    "LONGITUDE": "-135.031093"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5T7",
+    "LATITUDE": "60.61044",
+    "LONGITUDE": "-134.955575"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6P1",
+    "LATITUDE": "60.72062",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4R3",
+    "LATITUDE": "60.701769",
+    "LONGITUDE": "-135.022935"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1H2",
+    "LATITUDE": "60.715021",
+    "LONGITUDE": "-135.053014"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2S2",
+    "LATITUDE": "60.723526",
+    "LONGITUDE": "-135.069172"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2B1",
+    "LATITUDE": "60.719791",
+    "LONGITUDE": "-135.05258"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4K9",
+    "LATITUDE": "60.59713",
+    "LONGITUDE": "-134.85239"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2K3",
+    "LATITUDE": "60.721772",
+    "LONGITUDE": "-135.060209"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0K5",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4B5",
+    "LATITUDE": "60.763428",
+    "LONGITUDE": "-135.137532"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0M2",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4P2",
+    "LATITUDE": "60.777474",
+    "LONGITUDE": "-135.12948"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1H5",
+    "LATITUDE": "60.718322",
+    "LONGITUDE": "-135.055716"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3R3",
+    "LATITUDE": "60.710333",
+    "LONGITUDE": "-135.028571"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2W2",
+    "LATITUDE": "60.741515",
+    "LONGITUDE": "-135.067123"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5N1",
+    "LATITUDE": "60.776179",
+    "LONGITUDE": "-135.141677"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3B5",
+    "LATITUDE": "60.7399",
+    "LONGITUDE": "-135.101087"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Z7",
+    "LATITUDE": "60.774908",
+    "LONGITUDE": "-135.150031"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1M2",
+    "LATITUDE": "60.724702",
+    "LONGITUDE": "-135.063892"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3G4",
+    "LATITUDE": "60.710421",
+    "LONGITUDE": "-135.091455"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4M7",
+    "LATITUDE": "60.712888",
+    "LONGITUDE": "-135.093959"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Y9",
+    "LATITUDE": "60.715986",
+    "LONGITUDE": "-135.057955"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3R7",
+    "LATITUDE": "60.71035",
+    "LONGITUDE": "-135.026351"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6P6",
+    "LATITUDE": "60.720625",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Z1",
+    "LATITUDE": "60.716117",
+    "LONGITUDE": "-135.057227"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5E6",
+    "LATITUDE": "60.7809",
+    "LONGITUDE": "-135.168429"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1P9",
+    "LATITUDE": "60.7218",
+    "LONGITUDE": "-135.065235"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6P8",
+    "LATITUDE": "60.720627",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1S4",
+    "LATITUDE": "60.720654",
+    "LONGITUDE": "-135.06633"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6S9",
+    "LATITUDE": "60.700351",
+    "LONGITUDE": "-135.109574"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2T9",
+    "LATITUDE": "60.736685",
+    "LONGITUDE": "-135.075734"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1E2",
+    "LATITUDE": "60.715159",
+    "LONGITUDE": "-135.051024"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5H5",
+    "LATITUDE": "60.783482",
+    "LONGITUDE": "-135.16821"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3E9",
+    "LATITUDE": "60.709813",
+    "LONGITUDE": "-135.096015"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4M2",
+    "LATITUDE": "60.70322",
+    "LONGITUDE": "-135.025436"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1L0",
+    "LATITUDE": "60.92375",
+    "LONGITUDE": "-137.855728"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4C1",
+    "LATITUDE": "60.762837",
+    "LONGITUDE": "-135.13199"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6L5",
+    "LATITUDE": "60.720598",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0M1",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2V8",
+    "LATITUDE": "60.74296",
+    "LONGITUDE": "-135.06835"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0H2",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1R4",
+    "LATITUDE": "60.723333",
+    "LONGITUDE": "-135.06607"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6C8",
+    "LATITUDE": "60.706881",
+    "LONGITUDE": "-135.113587"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Z2",
+    "LATITUDE": "60.718483",
+    "LONGITUDE": "-135.049359"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3B2",
+    "LATITUDE": "60.736593",
+    "LONGITUDE": "-135.09077"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2G2",
+    "LATITUDE": "60.720021",
+    "LONGITUDE": "-135.060282"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Z8",
+    "LATITUDE": "60.766399",
+    "LONGITUDE": "-135.128431"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5A4",
+    "LATITUDE": "60.762469",
+    "LONGITUDE": "-135.137998"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0H3",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5K1",
+    "LATITUDE": "60.783311",
+    "LONGITUDE": "-135.169168"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5T8",
+    "LATITUDE": "60.58749",
+    "LONGITUDE": "-134.931556"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4C9",
+    "LATITUDE": "60.762338",
+    "LONGITUDE": "-135.127087"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0X2",
+    "LATITUDE": "60.7227728",
+    "LONGITUDE": "-135.0547064"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6R6",
+    "LATITUDE": "60.720634",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Y4",
+    "LATITUDE": "60.717219",
+    "LONGITUDE": "-135.050613"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1E7",
+    "LATITUDE": "60.720635",
+    "LONGITUDE": "-135.055269"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6C5",
+    "LATITUDE": "60.764295",
+    "LONGITUDE": "-135.148876"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Z6",
+    "LATITUDE": "60.772502",
+    "LONGITUDE": "-135.168872"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0P1",
+    "LATITUDE": "60.7059",
+    "LONGITUDE": "-135.070697"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2E7",
+    "LATITUDE": "60.720851",
+    "LONGITUDE": "-135.055728"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3M5",
+    "LATITUDE": "60.708796",
+    "LONGITUDE": "-135.020769"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1X1",
+    "LATITUDE": "60.715889",
+    "LONGITUDE": "-135.049737"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2H9",
+    "LATITUDE": "60.720474",
+    "LONGITUDE": "-135.062519"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5B5",
+    "LATITUDE": "60.772813",
+    "LONGITUDE": "-135.113139"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0A6",
+    "LATITUDE": "60.72826",
+    "LONGITUDE": "-135.09845"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0L8",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1T7",
+    "LATITUDE": "60.7117355",
+    "LONGITUDE": "-135.0529911"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2A7",
+    "LATITUDE": "60.719887",
+    "LONGITUDE": "-135.050747"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3H4",
+    "LATITUDE": "60.712974",
+    "LONGITUDE": "-135.088557"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0E2",
+    "LATITUDE": "60.755814",
+    "LONGITUDE": "-135.088312"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4C8",
+    "LATITUDE": "60.762945",
+    "LONGITUDE": "-135.125486"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5V9",
+    "LATITUDE": "60.59713",
+    "LONGITUDE": "-134.85239"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2L3",
+    "LATITUDE": "60.723386",
+    "LONGITUDE": "-135.055798"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2V5",
+    "LATITUDE": "60.741987",
+    "LONGITUDE": "-135.067392"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3W6",
+    "LATITUDE": "60.769802",
+    "LONGITUDE": "-135.149716"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2R7",
+    "LATITUDE": "60.723782",
+    "LONGITUDE": "-135.0677705"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0E1",
+    "LATITUDE": "60.6998938",
+    "LONGITUDE": "-135.09565"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2G1",
+    "LATITUDE": "60.719848",
+    "LONGITUDE": "-135.061235"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1B1",
+    "LATITUDE": "60.717755",
+    "LONGITUDE": "-135.050568"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5B2",
+    "LATITUDE": "60.723155",
+    "LONGITUDE": "-135.062651"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Z3",
+    "LATITUDE": "60.764912",
+    "LONGITUDE": "-135.142083"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4P7",
+    "LATITUDE": "60.7025545",
+    "LONGITUDE": "-135.0175775"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6N1",
+    "LATITUDE": "60.720612",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1M6",
+    "LATITUDE": "60.718012",
+    "LONGITUDE": "-135.061294"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6G8",
+    "LATITUDE": "60.699314",
+    "LONGITUDE": "-135.114252"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5A8",
+    "LATITUDE": "60.700441",
+    "LONGITUDE": "-135.025859"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3W2",
+    "LATITUDE": "60.705716",
+    "LONGITUDE": "-135.017648"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3L6",
+    "LATITUDE": "60.7058955",
+    "LONGITUDE": "-135.027385"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3N9",
+    "LATITUDE": "60.709305",
+    "LONGITUDE": "-135.033524"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5R7",
+    "LATITUDE": "60.721922",
+    "LONGITUDE": "-135.063028"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6T5",
+    "LATITUDE": "60.743829",
+    "LONGITUDE": "-135.073867"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Y1",
+    "LATITUDE": "60.715523",
+    "LONGITUDE": "-135.055832"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3A8",
+    "LATITUDE": "60.739814",
+    "LONGITUDE": "-135.089433"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5H9",
+    "LATITUDE": "60.781439",
+    "LONGITUDE": "-135.139113"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Z3",
+    "LATITUDE": "60.717931",
+    "LONGITUDE": "-135.052206"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1J7",
+    "LATITUDE": "60.724278",
+    "LONGITUDE": "-135.061292"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3L5",
+    "LATITUDE": "60.706321",
+    "LONGITUDE": "-135.025024"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6L3",
+    "LATITUDE": "60.715375",
+    "LONGITUDE": "-135.048436"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5A1",
+    "LATITUDE": "60.7262937",
+    "LONGITUDE": "-135.063519"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3K2",
+    "LATITUDE": "60.710053",
+    "LONGITUDE": "-135.031169"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4C2",
+    "LATITUDE": "60.762708",
+    "LONGITUDE": "-135.131869"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2M6",
+    "LATITUDE": "60.721251",
+    "LONGITUDE": "-135.067433"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0T4",
+    "LATITUDE": "60.7692204",
+    "LONGITUDE": "-135.1464745"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6J3",
+    "LATITUDE": "60.6983915",
+    "LONGITUDE": "-135.1016311"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1V3",
+    "LATITUDE": "60.712457",
+    "LONGITUDE": "-135.053783"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3B4",
+    "LATITUDE": "60.738614",
+    "LONGITUDE": "-135.101062"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6R9",
+    "LATITUDE": "60.600064",
+    "LONGITUDE": "-134.903077"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4E9",
+    "LATITUDE": "60.766561",
+    "LONGITUDE": "-135.125842"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0R3",
+    "LATITUDE": "60.6999336",
+    "LONGITUDE": "-135.0703886"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6V1",
+    "LATITUDE": "60.746227",
+    "LONGITUDE": "-135.067771"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0L5",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2A2",
+    "LATITUDE": "60.718984",
+    "LONGITUDE": "-135.051933"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4L9",
+    "LATITUDE": "60.702767",
+    "LONGITUDE": "-135.020806"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5L1",
+    "LATITUDE": "60.782362",
+    "LONGITUDE": "-135.168499"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3B6",
+    "LATITUDE": "60.739235",
+    "LONGITUDE": "-135.101029"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0X1",
+    "LATITUDE": "60.7772897",
+    "LONGITUDE": "-135.142703"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4B1",
+    "LATITUDE": "60.779495",
+    "LONGITUDE": "-135.135066"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2M8",
+    "LATITUDE": "60.724093",
+    "LONGITUDE": "-135.05665"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5K3",
+    "LATITUDE": "60.72347",
+    "LONGITUDE": "-135.060265"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4S5",
+    "LATITUDE": "60.705177",
+    "LONGITUDE": "-135.031448"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2Z6",
+    "LATITUDE": "60.737614",
+    "LONGITUDE": "-135.07899"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4Y7",
+    "LATITUDE": "60.769351",
+    "LONGITUDE": "-135.118711"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Y2",
+    "LATITUDE": "60.788493",
+    "LONGITUDE": "-135.171395"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2S9",
+    "LATITUDE": "60.72473",
+    "LONGITUDE": "-135.067494"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1L6",
+    "LATITUDE": "60.719796",
+    "LONGITUDE": "-135.059142"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4S3",
+    "LATITUDE": "60.720586",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2X7",
+    "LATITUDE": "60.743445",
+    "LONGITUDE": "-135.076232"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4A2",
+    "LATITUDE": "60.773814",
+    "LONGITUDE": "-135.143273"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Z5",
+    "LATITUDE": "60.717727",
+    "LONGITUDE": "-135.053274"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5C6",
+    "LATITUDE": "60.780875",
+    "LONGITUDE": "-135.168553"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1P0",
+    "LATITUDE": "62.819543",
+    "LONGITUDE": "-136.60314"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3R6",
+    "LATITUDE": "60.710601",
+    "LONGITUDE": "-135.026484"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2R1",
+    "LATITUDE": "60.724767",
+    "LONGITUDE": "-135.06231"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0S3",
+    "LATITUDE": "60.766079",
+    "LONGITUDE": "-135.1360687"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Y4",
+    "LATITUDE": "60.742332",
+    "LONGITUDE": "-135.067916"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1A1",
+    "LATITUDE": "60.718528",
+    "LONGITUDE": "-135.049131"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6H4",
+    "LATITUDE": "60.71757",
+    "LONGITUDE": "-135.108003"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Y8",
+    "LATITUDE": "60.716596",
+    "LONGITUDE": "-135.054676"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3J6",
+    "LATITUDE": "60.709029",
+    "LONGITUDE": "-135.034037"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5A3",
+    "LATITUDE": "60.713131",
+    "LONGITUDE": "-135.054018"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4J3",
+    "LATITUDE": "60.766565",
+    "LONGITUDE": "-135.11769"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5T9",
+    "LATITUDE": "60.596273",
+    "LONGITUDE": "-134.914048"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Z6",
+    "LATITUDE": "60.772845",
+    "LONGITUDE": "-135.148916"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1B6",
+    "LATITUDE": "60.718721",
+    "LONGITUDE": "-135.051542"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2T6",
+    "LATITUDE": "60.727666",
+    "LONGITUDE": "-135.065923"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6R7",
+    "LATITUDE": "60.720635",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4R4",
+    "LATITUDE": "60.700474",
+    "LONGITUDE": "-135.024811"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Z1",
+    "LATITUDE": "60.761204",
+    "LONGITUDE": "-135.1385"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4T1",
+    "LATITUDE": "60.700408",
+    "LONGITUDE": "-135.034856"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2N9",
+    "LATITUDE": "60.722055",
+    "LONGITUDE": "-135.067758"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4X5",
+    "LATITUDE": "60.773751",
+    "LONGITUDE": "-135.121676"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0N3",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y0B 0A6",
+    "LATITUDE": "61.2524715",
+    "LONGITUDE": "-138.8008311"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6J1",
+    "LATITUDE": "60.71446",
+    "LONGITUDE": "-135.10288"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1E6",
+    "LATITUDE": "60.720497",
+    "LONGITUDE": "-135.055133"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2N6",
+    "LATITUDE": "60.722696",
+    "LONGITUDE": "-135.06427"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3P5",
+    "LATITUDE": "60.709803",
+    "LONGITUDE": "-135.031568"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5M4",
+    "LATITUDE": "60.701649",
+    "LONGITUDE": "-135.028035"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2W7",
+    "LATITUDE": "60.740187",
+    "LONGITUDE": "-135.072588"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2C7",
+    "LATITUDE": "60.719563",
+    "LONGITUDE": "-135.058015"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5V3",
+    "LATITUDE": "60.68044",
+    "LONGITUDE": "-135.06037"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4V5",
+    "LATITUDE": "60.776788",
+    "LONGITUDE": "-135.129165"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2P2",
+    "LATITUDE": "60.723929",
+    "LONGITUDE": "-135.063411"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3J1",
+    "LATITUDE": "60.702947",
+    "LONGITUDE": "-135.025141"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5T5",
+    "LATITUDE": "60.607865",
+    "LONGITUDE": "-134.976781"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3B9",
+    "LATITUDE": "60.73886",
+    "LONGITUDE": "-135.099048"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5X9",
+    "LATITUDE": "60.98237",
+    "LONGITUDE": "-135.127244"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0E3",
+    "LATITUDE": "60.734342",
+    "LONGITUDE": "-135.10138"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3A2",
+    "LATITUDE": "60.739984",
+    "LONGITUDE": "-135.090874"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4K7",
+    "LATITUDE": "60.766281",
+    "LONGITUDE": "-135.1347845"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4P1",
+    "LATITUDE": "60.724091",
+    "LONGITUDE": "-135.055728"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0N2",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1V1",
+    "LATITUDE": "60.712767",
+    "LONGITUDE": "-135.052131"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0L7",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1X5",
+    "LATITUDE": "60.7161603",
+    "LONGITUDE": "-135.0522323"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1R7",
+    "LATITUDE": "60.725686",
+    "LONGITUDE": "-135.067772"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5M1",
+    "LATITUDE": "60.768242",
+    "LONGITUDE": "-135.13726"
+  },
+  {
+    "POSTAL_CODE": "Y1A 7A2",
+    "LATITUDE": "60.714272",
+    "LONGITUDE": "-135.056586"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5J2",
+    "LATITUDE": "60.780675",
+    "LONGITUDE": "-135.169061"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6W1",
+    "LATITUDE": "60.70917",
+    "LONGITUDE": "-135.06163"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1A8",
+    "LATITUDE": "60.715499",
+    "LONGITUDE": "-135.049057"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1W2",
+    "LATITUDE": "60.713531",
+    "LONGITUDE": "-135.052651"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4Y9",
+    "LATITUDE": "60.715773",
+    "LONGITUDE": "-135.085655"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2B7",
+    "LATITUDE": "60.718627",
+    "LONGITUDE": "-135.05799"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2N4",
+    "LATITUDE": "60.722846",
+    "LONGITUDE": "-135.063473"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2G7",
+    "LATITUDE": "60.722346",
+    "LONGITUDE": "-135.052359"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4M9",
+    "LATITUDE": "60.767766",
+    "LONGITUDE": "-135.118332"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4B9",
+    "LATITUDE": "60.761389",
+    "LONGITUDE": "-135.132286"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1C7",
+    "LATITUDE": "60.725024",
+    "LONGITUDE": "-135.056424"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3L3",
+    "LATITUDE": "60.708329",
+    "LONGITUDE": "-135.019153"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2T7",
+    "LATITUDE": "60.7341557",
+    "LONGITUDE": "-135.0776717"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3H1",
+    "LATITUDE": "60.711621",
+    "LONGITUDE": "-135.089343"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2P7",
+    "LATITUDE": "60.722965",
+    "LONGITUDE": "-135.067483"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2L9",
+    "LATITUDE": "60.722126",
+    "LONGITUDE": "-135.062736"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6M7",
+    "LATITUDE": "60.720609",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4K1",
+    "LATITUDE": "60.7664085",
+    "LONGITUDE": "-135.121734"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3W8",
+    "LATITUDE": "60.768141",
+    "LONGITUDE": "-135.152122"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2J3",
+    "LATITUDE": "60.719829",
+    "LONGITUDE": "-135.065976"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6A5",
+    "LATITUDE": "60.703395",
+    "LONGITUDE": "-135.105912"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2K2",
+    "LATITUDE": "60.721954",
+    "LONGITUDE": "-135.05917"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5G6",
+    "LATITUDE": "60.742146",
+    "LONGITUDE": "-135.113982"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1N4",
+    "LATITUDE": "60.721215",
+    "LONGITUDE": "-135.062493"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5H8",
+    "LATITUDE": "60.785894",
+    "LONGITUDE": "-135.178971"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6P4",
+    "LATITUDE": "60.720623",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4T9",
+    "LATITUDE": "60.701355",
+    "LONGITUDE": "-135.035267"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0B6",
+    "LATITUDE": "60.70917",
+    "LONGITUDE": "-135.06163"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1S3",
+    "LATITUDE": "60.720261",
+    "LONGITUDE": "-135.066047"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6V5",
+    "LATITUDE": "60.696262",
+    "LONGITUDE": "-135.10289"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5M9",
+    "LATITUDE": "60.781087",
+    "LONGITUDE": "-135.168491"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1G1",
+    "LATITUDE": "60.7225068",
+    "LONGITUDE": "-135.0567067"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1C8",
+    "LATITUDE": "60.729058",
+    "LONGITUDE": "-135.064808"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0E8",
+    "LATITUDE": "60.734342",
+    "LONGITUDE": "-135.10138"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3N3",
+    "LATITUDE": "60.706561",
+    "LONGITUDE": "-135.030933"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1G8",
+    "LATITUDE": "60.713026",
+    "LONGITUDE": "-135.051579"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2J8",
+    "LATITUDE": "60.722498",
+    "LONGITUDE": "-135.05625"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3M2",
+    "LATITUDE": "60.706899",
+    "LONGITUDE": "-135.02609"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4R5",
+    "LATITUDE": "60.700035",
+    "LONGITUDE": "-135.027563"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2S1",
+    "LATITUDE": "60.723561",
+    "LONGITUDE": "-135.068978"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5K9",
+    "LATITUDE": "60.773922",
+    "LONGITUDE": "-135.142007"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0T7",
+    "LATITUDE": "60.7124839",
+    "LONGITUDE": "-135.053524"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Y5",
+    "LATITUDE": "60.7170239",
+    "LONGITUDE": "-135.0524316"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4K4",
+    "LATITUDE": "60.765836",
+    "LONGITUDE": "-135.130745"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3H7",
+    "LATITUDE": "60.717151",
+    "LONGITUDE": "-135.042533"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0K2",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4W6",
+    "LATITUDE": "60.7706545",
+    "LONGITUDE": "-135.1171335"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0R5",
+    "LATITUDE": "60.7742809",
+    "LONGITUDE": "-135.1029292"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Y9",
+    "LATITUDE": "60.770709",
+    "LONGITUDE": "-135.165645"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0A5",
+    "LATITUDE": "60.717789",
+    "LONGITUDE": "-135.062408"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0A4",
+    "LATITUDE": "60.732993",
+    "LONGITUDE": "-135.076599"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6S2",
+    "LATITUDE": "60.719985",
+    "LONGITUDE": "-135.053639"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5N3",
+    "LATITUDE": "60.703831",
+    "LONGITUDE": "-135.024612"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1A9",
+    "LATITUDE": "60.716612",
+    "LONGITUDE": "-135.049939"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1H1",
+    "LATITUDE": "60.7146605",
+    "LONGITUDE": "-135.0529075"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2G6",
+    "LATITUDE": "60.718874",
+    "LONGITUDE": "-135.066427"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4V6",
+    "LATITUDE": "60.7769935",
+    "LONGITUDE": "-135.128821"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2T3",
+    "LATITUDE": "60.72435",
+    "LONGITUDE": "-135.069381"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4R8",
+    "LATITUDE": "60.701228",
+    "LONGITUDE": "-135.028189"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1X6",
+    "LATITUDE": "60.715968",
+    "LONGITUDE": "-135.053309"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2K9",
+    "LATITUDE": "60.720813",
+    "LONGITUDE": "-135.065451"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0M8",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4H1",
+    "LATITUDE": "60.758971",
+    "LONGITUDE": "-135.129682"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1A3",
+    "LATITUDE": "60.720676",
+    "LONGITUDE": "-135.050765"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2C5",
+    "LATITUDE": "60.7199527",
+    "LONGITUDE": "-135.0558301"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6K7",
+    "LATITUDE": "60.720597",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1P5",
+    "LATITUDE": "60.72559",
+    "LONGITUDE": "-135.067519"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6L9",
+    "LATITUDE": "60.720602",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y0B 0B1",
+    "LATITUDE": "62.265778",
+    "LONGITUDE": "-136.362646"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6N8",
+    "LATITUDE": "60.720618",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1N7",
+    "LATITUDE": "60.722998",
+    "LONGITUDE": "-135.063856"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6E1",
+    "LATITUDE": "60.782549",
+    "LONGITUDE": "-135.164357"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0T1",
+    "LATITUDE": "60.7256795",
+    "LONGITUDE": "-135.062447"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5E3",
+    "LATITUDE": "60.724744",
+    "LONGITUDE": "-135.061867"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5P7",
+    "LATITUDE": "60.703555",
+    "LONGITUDE": "-135.099952"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0M9",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1H6",
+    "LATITUDE": "60.718566",
+    "LONGITUDE": "-135.055923"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0T8",
+    "LATITUDE": "60.7495318",
+    "LONGITUDE": "-135.0918766"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5G1",
+    "LATITUDE": "60.719051",
+    "LONGITUDE": "-135.054068"
+  },
+  {
+    "POSTAL_CODE": "Y0B 0B2",
+    "LATITUDE": "62.265778",
+    "LONGITUDE": "-136.362646"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6A3",
+    "LATITUDE": "60.702263",
+    "LONGITUDE": "-135.11038"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5X7",
+    "LATITUDE": "60.59713",
+    "LONGITUDE": "-134.85239"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0C8",
+    "LATITUDE": "60.7049883",
+    "LONGITUDE": "-135.1043613"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Z8",
+    "LATITUDE": "60.716972",
+    "LONGITUDE": "-135.057226"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0J4",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5H1",
+    "LATITUDE": "60.755907",
+    "LONGITUDE": "-135.084786"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1W8",
+    "LATITUDE": "60.7143238",
+    "LONGITUDE": "-135.053327"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6E4",
+    "LATITUDE": "60.597131",
+    "LONGITUDE": "-134.85239"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5T2",
+    "LATITUDE": "60.620754",
+    "LONGITUDE": "-134.994667"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2P9",
+    "LATITUDE": "60.7228376",
+    "LONGITUDE": "-135.0681668"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4B6",
+    "LATITUDE": "60.766028",
+    "LONGITUDE": "-135.138867"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1L7",
+    "LATITUDE": "60.720935",
+    "LONGITUDE": "-135.060008"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2J6",
+    "LATITUDE": "60.7231145",
+    "LONGITUDE": "-135.0530831"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0P5",
+    "LATITUDE": "60.7211871",
+    "LONGITUDE": "-135.0568449"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0R2",
+    "LATITUDE": "60.7692204",
+    "LONGITUDE": "-135.1464745"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4L7",
+    "LATITUDE": "60.769667",
+    "LONGITUDE": "-135.142149"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3C4",
+    "LATITUDE": "60.7351",
+    "LONGITUDE": "-135.092611"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3N1",
+    "LATITUDE": "60.7065695",
+    "LONGITUDE": "-135.030349"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6R5",
+    "LATITUDE": "60.720633",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0N5",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1M0",
+    "LATITUDE": "63.597731",
+    "LONGITUDE": "-135.858182"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2A5",
+    "LATITUDE": "60.718189",
+    "LONGITUDE": "-135.055602"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1X4",
+    "LATITUDE": "60.716567",
+    "LONGITUDE": "-135.049875"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5E1",
+    "LATITUDE": "60.780027",
+    "LONGITUDE": "-135.168756"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1R1",
+    "LATITUDE": "60.722561",
+    "LONGITUDE": "-135.065574"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0B5",
+    "LATITUDE": "60.70917",
+    "LONGITUDE": "-135.06163"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1S0",
+    "LATITUDE": "61.983351",
+    "LONGITUDE": "-132.464064"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Y5",
+    "LATITUDE": "60.787503",
+    "LONGITUDE": "-135.168234"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3P7",
+    "LATITUDE": "60.7101",
+    "LONGITUDE": "-135.030097"
+  },
+  {
+    "POSTAL_CODE": "Y0B 0A9",
+    "LATITUDE": "62.265778",
+    "LONGITUDE": "-136.362646"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1P7",
+    "LATITUDE": "60.72047",
+    "LONGITUDE": "-135.064181"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3S3",
+    "LATITUDE": "60.710009",
+    "LONGITUDE": "-135.018301"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3R5",
+    "LATITUDE": "60.707773",
+    "LONGITUDE": "-135.024856"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6T4",
+    "LATITUDE": "60.6958727",
+    "LONGITUDE": "-135.1092448"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3N7",
+    "LATITUDE": "60.707688",
+    "LONGITUDE": "-135.0305775"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0G1",
+    "LATITUDE": "60.734342",
+    "LONGITUDE": "-135.10138"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3M3",
+    "LATITUDE": "60.706197",
+    "LONGITUDE": "-135.03137"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1K4",
+    "LATITUDE": "60.72813",
+    "LONGITUDE": "-135.066907"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3J7",
+    "LATITUDE": "60.709624",
+    "LONGITUDE": "-135.032916"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0S4",
+    "LATITUDE": "60.7211871",
+    "LONGITUDE": "-135.0568448"
+  },
+  {
+    "POSTAL_CODE": "Y0A 1B0",
+    "LATITUDE": "60.168249",
+    "LONGITUDE": "-132.74365"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3H3",
+    "LATITUDE": "60.713326",
+    "LONGITUDE": "-135.084661"
+  },
+  {
+    "POSTAL_CODE": "Y0B 0A4",
+    "LATITUDE": "61.9791171",
+    "LONGITUDE": "-132.4484775"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1V8",
+    "LATITUDE": "60.713778",
+    "LONGITUDE": "-135.05127"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1K7",
+    "LATITUDE": "60.712635",
+    "LONGITUDE": "-135.053646"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1T8",
+    "LATITUDE": "60.711694",
+    "LONGITUDE": "-135.053253"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4C3",
+    "LATITUDE": "60.763388",
+    "LONGITUDE": "-135.13476"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3B8",
+    "LATITUDE": "60.738341",
+    "LONGITUDE": "-135.096991"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3H9",
+    "LATITUDE": "60.702444",
+    "LONGITUDE": "-135.023003"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3G1",
+    "LATITUDE": "60.708961",
+    "LONGITUDE": "-135.094903"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5W1",
+    "LATITUDE": "60.729578",
+    "LONGITUDE": "-135.063647"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3G6",
+    "LATITUDE": "60.7103436",
+    "LONGITUDE": "-135.0923639"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2E8",
+    "LATITUDE": "60.72033",
+    "LONGITUDE": "-135.058582"
+  },
+  {
+    "POSTAL_CODE": "Y0A 0A1",
+    "LATITUDE": "60.1686052",
+    "LONGITUDE": "-132.7203711"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6H5",
+    "LATITUDE": "60.717482",
+    "LONGITUDE": "-135.104901"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0E7",
+    "LATITUDE": "60.734342",
+    "LONGITUDE": "-135.10138"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1B0",
+    "LATITUDE": "60.168652",
+    "LONGITUDE": "-134.707678"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0G6",
+    "LATITUDE": "60.7272939",
+    "LONGITUDE": "-135.0565666"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4S4",
+    "LATITUDE": "60.7172197",
+    "LONGITUDE": "-135.0593684"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1N1",
+    "LATITUDE": "60.719273",
+    "LONGITUDE": "-135.060983"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0J2",
+    "LATITUDE": "60.7068328857422",
+    "LONGITUDE": "-135.039459228516"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6V4",
+    "LATITUDE": "60.70917",
+    "LONGITUDE": "-135.06163"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4X8",
+    "LATITUDE": "60.775067",
+    "LONGITUDE": "-135.13121"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2P3",
+    "LATITUDE": "60.723546",
+    "LONGITUDE": "-135.064338"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2R6",
+    "LATITUDE": "60.7242638",
+    "LONGITUDE": "-135.0650914"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0J5",
+    "LATITUDE": "60.6717376708984",
+    "LONGITUDE": "-135.060043334961"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4W7",
+    "LATITUDE": "60.770199",
+    "LONGITUDE": "-135.116496"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4H9",
+    "LATITUDE": "60.765016",
+    "LONGITUDE": "-135.122339"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6P7",
+    "LATITUDE": "60.720626",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0B4",
+    "LATITUDE": "60.702777",
+    "LONGITUDE": "-135.109115"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6J2",
+    "LATITUDE": "60.742068",
+    "LONGITUDE": "-135.078642"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5V5",
+    "LATITUDE": "60.68044",
+    "LONGITUDE": "-135.06037"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Y5",
+    "LATITUDE": "60.848487",
+    "LONGITUDE": "-135.58649"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6J6",
+    "LATITUDE": "60.726492",
+    "LONGITUDE": "-135.099136"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6B8",
+    "LATITUDE": "60.707303",
+    "LONGITUDE": "-135.11586"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6S8",
+    "LATITUDE": "60.720636",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5W4",
+    "LATITUDE": "60.835067",
+    "LONGITUDE": "-135.186596"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3M6",
+    "LATITUDE": "60.707623",
+    "LONGITUDE": "-135.023995"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0T3",
+    "LATITUDE": "60.7731138",
+    "LONGITUDE": "-135.1081421"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4B4",
+    "LATITUDE": "60.762906",
+    "LONGITUDE": "-135.136442"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1H3",
+    "LATITUDE": "60.716527",
+    "LONGITUDE": "-135.054179"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2P1",
+    "LATITUDE": "60.7219695",
+    "LONGITUDE": "-135.0682325"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2C4",
+    "LATITUDE": "60.7202455",
+    "LONGITUDE": "-135.0542789"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4C4",
+    "LATITUDE": "60.764654",
+    "LONGITUDE": "-135.135345"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0J6",
+    "LATITUDE": "60.6717376708984",
+    "LONGITUDE": "-135.060043334961"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2T2",
+    "LATITUDE": "60.724612",
+    "LONGITUDE": "-135.068065"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5T3",
+    "LATITUDE": "60.6175463",
+    "LONGITUDE": "-134.9502287"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6L1",
+    "LATITUDE": "60.651072",
+    "LONGITUDE": "-135.021968"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6A9",
+    "LATITUDE": "60.742304",
+    "LONGITUDE": "-135.07003"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4P6",
+    "LATITUDE": "60.702001",
+    "LONGITUDE": "-135.018321"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0M5",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2S4",
+    "LATITUDE": "60.725574",
+    "LONGITUDE": "-135.062642"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3T7",
+    "LATITUDE": "60.723869",
+    "LONGITUDE": "-135.055549"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3C9",
+    "LATITUDE": "60.731283",
+    "LONGITUDE": "-135.093184"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1T0",
+    "LATITUDE": "60.253915",
+    "LONGITUDE": "-134.300806"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4V2",
+    "LATITUDE": "60.768355",
+    "LONGITUDE": "-135.130766"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3X9",
+    "LATITUDE": "60.78956",
+    "LONGITUDE": "-135.168774"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0J9",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0N1",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4H8",
+    "LATITUDE": "60.762614",
+    "LONGITUDE": "-135.131232"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1J6",
+    "LATITUDE": "60.724185",
+    "LONGITUDE": "-135.061044"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0C5",
+    "LATITUDE": "60.7082345",
+    "LONGITUDE": "-135.1054586"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5G7",
+    "LATITUDE": "60.7808995",
+    "LONGITUDE": "-135.168429"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3J3",
+    "LATITUDE": "60.706419",
+    "LONGITUDE": "-135.034268"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4M5",
+    "LATITUDE": "60.7039835",
+    "LONGITUDE": "-135.0179675"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3H8",
+    "LATITUDE": "60.715168",
+    "LONGITUDE": "-135.03798"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3S5",
+    "LATITUDE": "60.703514",
+    "LONGITUDE": "-135.038618"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4W8",
+    "LATITUDE": "60.77054",
+    "LONGITUDE": "-135.116986"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2V1",
+    "LATITUDE": "60.737572",
+    "LONGITUDE": "-135.074971"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0G7",
+    "LATITUDE": "60.7661012",
+    "LONGITUDE": "-135.124155"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2A1",
+    "LATITUDE": "60.718718",
+    "LONGITUDE": "-135.051893"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4H2",
+    "LATITUDE": "60.760381",
+    "LONGITUDE": "-135.128531"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3A7",
+    "LATITUDE": "60.756457",
+    "LONGITUDE": "-135.082082"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0G4",
+    "LATITUDE": "60.743752",
+    "LONGITUDE": "-135.068514"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2B5",
+    "LATITUDE": "60.719125",
+    "LONGITUDE": "-135.055259"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6N9",
+    "LATITUDE": "60.720619",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0N8",
+    "LATITUDE": "60.7059",
+    "LONGITUDE": "-135.070697"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0E4",
+    "LATITUDE": "60.734342",
+    "LONGITUDE": "-135.10138"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6N3",
+    "LATITUDE": "60.720613",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1G0",
+    "LATITUDE": "64.061669",
+    "LONGITUDE": "-139.431399"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4B8",
+    "LATITUDE": "60.76002",
+    "LONGITUDE": "-135.130894"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Z4",
+    "LATITUDE": "60.769899",
+    "LONGITUDE": "-135.161158"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2H1",
+    "LATITUDE": "60.721873",
+    "LONGITUDE": "-135.054916"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6B4",
+    "LATITUDE": "60.709814",
+    "LONGITUDE": "-135.109662"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6M9",
+    "LATITUDE": "60.720611",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5W5",
+    "LATITUDE": "60.825129",
+    "LONGITUDE": "-135.190867"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6S1",
+    "LATITUDE": "60.794742",
+    "LONGITUDE": "-135.166523"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4X1",
+    "LATITUDE": "60.77383",
+    "LONGITUDE": "-135.120981"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1A7",
+    "LATITUDE": "60.7233292",
+    "LONGITUDE": "-135.0527929"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3L4",
+    "LATITUDE": "60.70823",
+    "LONGITUDE": "-135.019022"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0C2",
+    "LATITUDE": "60.734342",
+    "LONGITUDE": "-135.10138"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0B7",
+    "LATITUDE": "60.710697",
+    "LONGITUDE": "-135.095977"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4E1",
+    "LATITUDE": "60.764935",
+    "LONGITUDE": "-135.129112"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1L4",
+    "LATITUDE": "60.718726",
+    "LONGITUDE": "-135.058347"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3C2",
+    "LATITUDE": "60.735876",
+    "LONGITUDE": "-135.092225"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4B2",
+    "LATITUDE": "60.776952",
+    "LONGITUDE": "-135.133921"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1T1",
+    "LATITUDE": "60.72365",
+    "LONGITUDE": "-135.068832"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3T4",
+    "LATITUDE": "60.719288",
+    "LONGITUDE": "-135.049728"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6G7",
+    "LATITUDE": "60.69818",
+    "LONGITUDE": "-135.116222"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2H7",
+    "LATITUDE": "60.720623",
+    "LONGITUDE": "-135.061697"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Z4",
+    "LATITUDE": "60.771865",
+    "LONGITUDE": "-135.146762"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1B5",
+    "LATITUDE": "60.718404",
+    "LONGITUDE": "-135.051303"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4X3",
+    "LATITUDE": "60.774922",
+    "LONGITUDE": "-135.122448"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5B4",
+    "LATITUDE": "60.702633",
+    "LONGITUDE": "-135.023636"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5M3",
+    "LATITUDE": "60.741104",
+    "LONGITUDE": "-135.069167"
+  },
+  {
+    "POSTAL_CODE": "Y0B 0A5",
+    "LATITUDE": "60.1675851",
+    "LONGITUDE": "-134.7073506"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5P8",
+    "LATITUDE": "60.742741",
+    "LONGITUDE": "-135.065857"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2Y6",
+    "LATITUDE": "60.742263",
+    "LONGITUDE": "-135.07752"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4N8",
+    "LATITUDE": "60.777811",
+    "LONGITUDE": "-135.143355"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1V4",
+    "LATITUDE": "60.712289",
+    "LONGITUDE": "-135.054751"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0P6",
+    "LATITUDE": "60.725365",
+    "LONGITUDE": "-135.055051"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5A7",
+    "LATITUDE": "60.765943",
+    "LONGITUDE": "-135.137389"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Y7",
+    "LATITUDE": "60.775993",
+    "LONGITUDE": "-135.156745"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6K6",
+    "LATITUDE": "60.720368",
+    "LONGITUDE": "-135.051671"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Z6",
+    "LATITUDE": "60.7173731",
+    "LONGITUDE": "-135.0550162"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6N5",
+    "LATITUDE": "60.720615",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2Z4",
+    "LATITUDE": "60.740718",
+    "LONGITUDE": "-135.077562"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6M6",
+    "LATITUDE": "60.720608",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0L2",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6P9",
+    "LATITUDE": "60.720628",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0N4",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2C9",
+    "LATITUDE": "60.719151",
+    "LONGITUDE": "-135.06021"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3J5",
+    "LATITUDE": "60.705438",
+    "LONGITUDE": "-135.0388205"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1J2",
+    "LATITUDE": "60.722754",
+    "LONGITUDE": "-135.059487"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6R8",
+    "LATITUDE": "60.719984",
+    "LONGITUDE": "-135.053639"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4X4",
+    "LATITUDE": "60.772908",
+    "LONGITUDE": "-135.120678"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1E9",
+    "LATITUDE": "60.722166",
+    "LONGITUDE": "-135.056433"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3V3",
+    "LATITUDE": "60.705286",
+    "LONGITUDE": "-135.020344"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6N7",
+    "LATITUDE": "60.720617",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5A5",
+    "LATITUDE": "60.715968",
+    "LONGITUDE": "-135.106527"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1C9",
+    "LATITUDE": "60.728878",
+    "LONGITUDE": "-135.066506"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3V6",
+    "LATITUDE": "60.704226",
+    "LONGITUDE": "-135.019709"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6H8",
+    "LATITUDE": "60.71405",
+    "LONGITUDE": "-135.104136"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4Z8",
+    "LATITUDE": "60.720589",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6J4",
+    "LATITUDE": "60.702877",
+    "LONGITUDE": "-135.114379"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4N2",
+    "LATITUDE": "60.720583",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2J5",
+    "LATITUDE": "60.722956",
+    "LONGITUDE": "-135.053899"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2P5",
+    "LATITUDE": "60.7235",
+    "LONGITUDE": "-135.064579"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3X7",
+    "LATITUDE": "60.7885265",
+    "LONGITUDE": "-135.1673805"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1K0",
+    "LATITUDE": "62.225604",
+    "LONGITUDE": "-133.338937"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4W4",
+    "LATITUDE": "60.769533",
+    "LONGITUDE": "-135.11618"
+  },
+  {
+    "POSTAL_CODE": "Y0B 0A2",
+    "LATITUDE": "63.594262",
+    "LONGITUDE": "-135.896492"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0R9",
+    "LATITUDE": "60.7660502",
+    "LONGITUDE": "-135.1457359"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0T6",
+    "LATITUDE": "60.7211871",
+    "LONGITUDE": "-135.0568449"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6R4",
+    "LATITUDE": "60.720632",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2S8",
+    "LATITUDE": "60.725034",
+    "LONGITUDE": "-135.0657"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3V5",
+    "LATITUDE": "60.72058",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3S1",
+    "LATITUDE": "60.708614",
+    "LONGITUDE": "-135.023906"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4A6",
+    "LATITUDE": "60.781544",
+    "LONGITUDE": "-135.140222"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6K1",
+    "LATITUDE": "60.743641",
+    "LONGITUDE": "-135.091183"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4E3",
+    "LATITUDE": "60.766407",
+    "LONGITUDE": "-135.1302"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0H9",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3T9",
+    "LATITUDE": "60.71698",
+    "LONGITUDE": "-135.057174"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2L5",
+    "LATITUDE": "60.723017",
+    "LONGITUDE": "-135.057741"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3K9",
+    "LATITUDE": "60.704252",
+    "LONGITUDE": "-135.020046"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1S8",
+    "LATITUDE": "60.722264",
+    "LONGITUDE": "-135.067696"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2H4",
+    "LATITUDE": "60.7212963",
+    "LONGITUDE": "-135.0580472"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3M1",
+    "LATITUDE": "60.709041",
+    "LONGITUDE": "-135.018142"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1J0",
+    "LATITUDE": "63.886301",
+    "LONGITUDE": "-135.520172"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5P9",
+    "LATITUDE": "60.717982",
+    "LONGITUDE": "-135.040957"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2C8",
+    "LATITUDE": "60.719585",
+    "LONGITUDE": "-135.05787"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0B8",
+    "LATITUDE": "60.70318",
+    "LONGITUDE": "-135.113"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1G3",
+    "LATITUDE": "60.723023",
+    "LONGITUDE": "-135.056002"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0P3",
+    "LATITUDE": "60.7059",
+    "LONGITUDE": "-135.070697"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0R4",
+    "LATITUDE": "60.7742809",
+    "LONGITUDE": "-135.1029292"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4T6",
+    "LATITUDE": "60.701848",
+    "LONGITUDE": "-135.03755"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Z9",
+    "LATITUDE": "60.719061",
+    "LONGITUDE": "-135.049931"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0H8",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6G2",
+    "LATITUDE": "60.714652",
+    "LONGITUDE": "-135.055736"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0C3",
+    "LATITUDE": "60.625737",
+    "LONGITUDE": "-134.9739711"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4J5",
+    "LATITUDE": "60.76494",
+    "LONGITUDE": "-135.128721"
+  },
+  {
+    "POSTAL_CODE": "Y1A 7A1",
+    "LATITUDE": "60.718883",
+    "LONGITUDE": "-135.059566"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2L7",
+    "LATITUDE": "60.722485",
+    "LONGITUDE": "-135.060686"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0M7",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5M5",
+    "LATITUDE": "60.782153",
+    "LONGITUDE": "-135.170678"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5S4",
+    "LATITUDE": "60.829856",
+    "LONGITUDE": "-135.213926"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Z8",
+    "LATITUDE": "60.770348",
+    "LONGITUDE": "-135.146604"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1S2",
+    "LATITUDE": "60.719873",
+    "LONGITUDE": "-135.065761"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2H8",
+    "LATITUDE": "60.7203925",
+    "LONGITUDE": "-135.0629715"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5B6",
+    "LATITUDE": "60.743539",
+    "LONGITUDE": "-135.095338"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4L5",
+    "LATITUDE": "60.76606",
+    "LONGITUDE": "-135.136677"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3V8",
+    "LATITUDE": "60.703919",
+    "LONGITUDE": "-135.021911"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4Z5",
+    "LATITUDE": "60.737444",
+    "LONGITUDE": "-135.078993"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3R9",
+    "LATITUDE": "60.708291",
+    "LONGITUDE": "-135.024734"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3K7",
+    "LATITUDE": "60.70896",
+    "LONGITUDE": "-135.017936"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1M5",
+    "LATITUDE": "60.716024",
+    "LONGITUDE": "-135.058435"
+  },
+  {
+    "POSTAL_CODE": "Y1A 7A3",
+    "LATITUDE": "60.714273",
+    "LONGITUDE": "-135.056586"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1S7",
+    "LATITUDE": "60.72197",
+    "LONGITUDE": "-135.06737"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2M7",
+    "LATITUDE": "60.721741",
+    "LONGITUDE": "-135.069503"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Y1",
+    "LATITUDE": "60.741511",
+    "LONGITUDE": "-135.089524"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4A1",
+    "LATITUDE": "60.770839",
+    "LONGITUDE": "-135.144995"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0K9",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0T5",
+    "LATITUDE": "60.7189498",
+    "LONGITUDE": "-135.0562873"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6G9",
+    "LATITUDE": "60.697129",
+    "LONGITUDE": "-135.110476"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0S2",
+    "LATITUDE": "60.6019278",
+    "LONGITUDE": "-134.8176234"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3C5",
+    "LATITUDE": "60.734987",
+    "LONGITUDE": "-135.090752"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5T1",
+    "LATITUDE": "60.606529",
+    "LONGITUDE": "-134.974224"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0E5",
+    "LATITUDE": "60.734342",
+    "LONGITUDE": "-135.10138"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3A4",
+    "LATITUDE": "60.74233",
+    "LONGITUDE": "-135.094151"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1H7",
+    "LATITUDE": "60.7200533",
+    "LONGITUDE": "-135.0570965"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1P4",
+    "LATITUDE": "60.719714",
+    "LONGITUDE": "-135.063596"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0A2",
+    "LATITUDE": "60.695968",
+    "LONGITUDE": "-135.102353"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2B2",
+    "LATITUDE": "60.71964",
+    "LONGITUDE": "-135.052541"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0P8",
+    "LATITUDE": "60.7080709",
+    "LONGITUDE": "-135.0225084"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1M4",
+    "LATITUDE": "60.712219",
+    "LONGITUDE": "-135.055129"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1P1",
+    "LATITUDE": "60.725276",
+    "LONGITUDE": "-135.065596"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2K7",
+    "LATITUDE": "60.7213174",
+    "LONGITUDE": "-135.0628072"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1X7",
+    "LATITUDE": "60.715821",
+    "LONGITUDE": "-135.054141"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0S7",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2Y9",
+    "LATITUDE": "60.742836",
+    "LONGITUDE": "-135.074302"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6C9",
+    "LATITUDE": "60.786969",
+    "LONGITUDE": "-135.157961"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5X4",
+    "LATITUDE": "60.77545",
+    "LONGITUDE": "-135.134902"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3S4",
+    "LATITUDE": "60.701731",
+    "LONGITUDE": "-135.036357"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4S1",
+    "LATITUDE": "60.726632",
+    "LONGITUDE": "-135.058273"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2T5",
+    "LATITUDE": "60.727873",
+    "LONGITUDE": "-135.066453"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4A9",
+    "LATITUDE": "60.778336",
+    "LONGITUDE": "-135.137744"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2L6",
+    "LATITUDE": "60.722788",
+    "LONGITUDE": "-135.058956"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1X9",
+    "LATITUDE": "60.715435",
+    "LONGITUDE": "-135.05595"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2E4",
+    "LATITUDE": "60.721237",
+    "LONGITUDE": "-135.053788"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2H6",
+    "LATITUDE": "60.721056",
+    "LONGITUDE": "-135.060263"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2M1",
+    "LATITUDE": "60.722091",
+    "LONGITUDE": "-135.062931"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1N0",
+    "LATITUDE": "67.572261",
+    "LONGITUDE": "-139.827606"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Y6",
+    "LATITUDE": "60.788923",
+    "LONGITUDE": "-135.168784"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4L1",
+    "LATITUDE": "60.779898",
+    "LONGITUDE": "-135.156137"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3P1",
+    "LATITUDE": "60.709241",
+    "LONGITUDE": "-135.033438"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2C1",
+    "LATITUDE": "60.718318",
+    "LONGITUDE": "-135.060086"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3M4",
+    "LATITUDE": "60.706212",
+    "LONGITUDE": "-135.029741"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Z1",
+    "LATITUDE": "60.7693",
+    "LONGITUDE": "-135.1653745"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5E9",
+    "LATITUDE": "60.786404",
+    "LONGITUDE": "-135.180838"
+  },
+  {
+    "POSTAL_CODE": "Y0B 0A3",
+    "LATITUDE": "64.0600696",
+    "LONGITUDE": "-139.4320347"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1A0",
+    "LATITUDE": "62.388736",
+    "LONGITUDE": "-140.873270"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4T8",
+    "LATITUDE": "60.70109",
+    "LONGITUDE": "-135.037972"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4A5",
+    "LATITUDE": "60.779209",
+    "LONGITUDE": "-135.143944"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2T1",
+    "LATITUDE": "60.7246867",
+    "LONGITUDE": "-135.0677175"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4T3",
+    "LATITUDE": "60.700394",
+    "LONGITUDE": "-135.033101"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2M5",
+    "LATITUDE": "60.721443",
+    "LONGITUDE": "-135.066362"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6M8",
+    "LATITUDE": "60.72061",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0P9",
+    "LATITUDE": "60.7767045",
+    "LONGITUDE": "-135.099996"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Y7",
+    "LATITUDE": "60.716539",
+    "LONGITUDE": "-135.05497"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5B1",
+    "LATITUDE": "60.767222",
+    "LONGITUDE": "-135.124341"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2J4",
+    "LATITUDE": "60.719786",
+    "LONGITUDE": "-135.066194"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Z4",
+    "LATITUDE": "60.718039",
+    "LONGITUDE": "-135.051633"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6V6",
+    "LATITUDE": "60.706299",
+    "LONGITUDE": "-135.115264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3M9",
+    "LATITUDE": "60.706756",
+    "LONGITUDE": "-135.030349"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1P2",
+    "LATITUDE": "60.725001",
+    "LONGITUDE": "-135.065633"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1C0",
+    "LATITUDE": "61.977876",
+    "LONGITUDE": "-135.84539"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2M2",
+    "LATITUDE": "60.722003",
+    "LONGITUDE": "-135.063377"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3B7",
+    "LATITUDE": "60.739095",
+    "LONGITUDE": "-135.097068"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2K5",
+    "LATITUDE": "60.721406",
+    "LONGITUDE": "-135.062294"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6M2",
+    "LATITUDE": "60.720604",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1B9",
+    "LATITUDE": "60.71983",
+    "LONGITUDE": "-135.052402"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3B3",
+    "LATITUDE": "60.741657",
+    "LONGITUDE": "-135.09997"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6P3",
+    "LATITUDE": "60.720622",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0A7",
+    "LATITUDE": "60.642129",
+    "LONGITUDE": "-135.0008005"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3E8",
+    "LATITUDE": "60.710571",
+    "LONGITUDE": "-135.0964871"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4E6",
+    "LATITUDE": "60.7664",
+    "LONGITUDE": "-135.129385"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6M4",
+    "LATITUDE": "60.720606",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4Z3",
+    "LATITUDE": "60.715921",
+    "LONGITUDE": "-135.08213"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3G8",
+    "LATITUDE": "60.7103",
+    "LONGITUDE": "-135.093205"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6N2",
+    "LATITUDE": "60.71769",
+    "LONGITUDE": "-135.04469"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4H6",
+    "LATITUDE": "60.761503",
+    "LONGITUDE": "-135.135656"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3C3",
+    "LATITUDE": "60.735185",
+    "LONGITUDE": "-135.092473"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2P4",
+    "LATITUDE": "60.723195",
+    "LONGITUDE": "-135.066299"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4G7",
+    "LATITUDE": "60.767063",
+    "LONGITUDE": "-135.120797"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4G3",
+    "LATITUDE": "60.765108",
+    "LONGITUDE": "-135.121964"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3X3",
+    "LATITUDE": "60.783949",
+    "LONGITUDE": "-135.165341"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2G4",
+    "LATITUDE": "60.719487",
+    "LONGITUDE": "-135.063698"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4V4",
+    "LATITUDE": "60.777258",
+    "LONGITUDE": "-135.1302005"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6C7",
+    "LATITUDE": "60.703698",
+    "LONGITUDE": "-135.114862"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4S7",
+    "LATITUDE": "60.776916",
+    "LONGITUDE": "-135.133834"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5T4",
+    "LATITUDE": "60.6158094",
+    "LONGITUDE": "-134.9341996"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1N2",
+    "LATITUDE": "60.71987",
+    "LONGITUDE": "-135.061448"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1T5",
+    "LATITUDE": "60.710119",
+    "LONGITUDE": "-135.054315"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1Y2",
+    "LATITUDE": "60.514687",
+    "LONGITUDE": "-134.111237"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1K2",
+    "LATITUDE": "60.7263623",
+    "LONGITUDE": "-135.0636392"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4C7",
+    "LATITUDE": "60.7615005",
+    "LONGITUDE": "-135.126281"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0A9",
+    "LATITUDE": "60.70917",
+    "LONGITUDE": "-135.06163"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4A8",
+    "LATITUDE": "60.7798595",
+    "LONGITUDE": "-135.1401205"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3N5",
+    "LATITUDE": "60.706948",
+    "LONGITUDE": "-135.029822"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0N6",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0G9",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4Y1",
+    "LATITUDE": "60.775795",
+    "LONGITUDE": "-135.132251"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Z5",
+    "LATITUDE": "60.777454",
+    "LONGITUDE": "-135.148611"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4G5",
+    "LATITUDE": "60.766282",
+    "LONGITUDE": "-135.123216"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0S5",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0A8",
+    "LATITUDE": "60.70917",
+    "LONGITUDE": "-135.06163"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4W2",
+    "LATITUDE": "60.768294",
+    "LONGITUDE": "-135.118491"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6H6",
+    "LATITUDE": "60.717463",
+    "LONGITUDE": "-135.10565"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6K5",
+    "LATITUDE": "60.600063",
+    "LONGITUDE": "-134.903077"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0C7",
+    "LATITUDE": "60.7045326",
+    "LONGITUDE": "-135.0956632"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6C3",
+    "LATITUDE": "60.703694",
+    "LONGITUDE": "-135.110041"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2T4",
+    "LATITUDE": "60.725391",
+    "LONGITUDE": "-135.06765"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0V1",
+    "LATITUDE": "60.7767259",
+    "LONGITUDE": "-135.1032112"
+  },
+  {
+    "POSTAL_CODE": "Y0B 0B3",
+    "LATITUDE": "62.817979",
+    "LONGITUDE": "-136.568795"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6T2",
+    "LATITUDE": "60.695959",
+    "LONGITUDE": "-135.112476"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2B4",
+    "LATITUDE": "60.71916",
+    "LONGITUDE": "-135.05506"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4Y5",
+    "LATITUDE": "60.780055",
+    "LONGITUDE": "-135.154039"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4Y6",
+    "LATITUDE": "60.767119",
+    "LONGITUDE": "-135.11232"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4E2",
+    "LATITUDE": "60.756433",
+    "LONGITUDE": "-135.119208"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6T9",
+    "LATITUDE": "60.744132",
+    "LONGITUDE": "-135.064345"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5B9",
+    "LATITUDE": "60.72059",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2H5",
+    "LATITUDE": "60.721034",
+    "LONGITUDE": "-135.059469"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1C5",
+    "LATITUDE": "60.722062",
+    "LONGITUDE": "-135.054128"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2X6",
+    "LATITUDE": "60.744219",
+    "LONGITUDE": "-135.077411"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2V7",
+    "LATITUDE": "60.742383",
+    "LONGITUDE": "-135.067613"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1J8",
+    "LATITUDE": "60.725236",
+    "LONGITUDE": "-135.062711"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4Z7",
+    "LATITUDE": "60.7171181",
+    "LONGITUDE": "-135.0525051"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2C6",
+    "LATITUDE": "60.720572",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3W7",
+    "LATITUDE": "60.767029",
+    "LONGITUDE": "-135.15035"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0S1",
+    "LATITUDE": "60.7764704",
+    "LONGITUDE": "-135.1105379"
+  },
+  {
+    "POSTAL_CODE": "Y0B 0A8",
+    "LATITUDE": "60.7544541",
+    "LONGITUDE": "-137.5117818"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5J8",
+    "LATITUDE": "60.757829",
+    "LONGITUDE": "-135.124108"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6B1",
+    "LATITUDE": "60.740777",
+    "LONGITUDE": "-135.089482"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3V9",
+    "LATITUDE": "60.7035425",
+    "LONGITUDE": "-135.020584"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1G7",
+    "LATITUDE": "60.71344",
+    "LONGITUDE": "-135.051931"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0E6",
+    "LATITUDE": "60.734342",
+    "LONGITUDE": "-135.10138"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3V2",
+    "LATITUDE": "60.705742",
+    "LONGITUDE": "-135.017611"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4B7",
+    "LATITUDE": "60.759997",
+    "LONGITUDE": "-135.13087"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1Y0",
+    "LATITUDE": "60.884944",
+    "LONGITUDE": "-134.819615"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Z3",
+    "LATITUDE": "60.773175",
+    "LONGITUDE": "-135.161283"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5M2",
+    "LATITUDE": "60.724092",
+    "LONGITUDE": "-135.064076"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4M4",
+    "LATITUDE": "60.770959",
+    "LONGITUDE": "-135.118476"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3L1",
+    "LATITUDE": "60.705189",
+    "LONGITUDE": "-135.020219"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0L4",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2M4",
+    "LATITUDE": "60.7215814",
+    "LONGITUDE": "-135.0655809"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2N8",
+    "LATITUDE": "60.722182",
+    "LONGITUDE": "-135.067052"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4N4",
+    "LATITUDE": "60.7117987",
+    "LONGITUDE": "-135.0866878"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1W9",
+    "LATITUDE": "60.713961",
+    "LONGITUDE": "-135.054907"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6L2",
+    "LATITUDE": "60.715374",
+    "LONGITUDE": "-135.048436"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1M7",
+    "LATITUDE": "60.718047",
+    "LONGITUDE": "-135.060021"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1E1",
+    "LATITUDE": "60.714536",
+    "LONGITUDE": "-135.050041"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4P3",
+    "LATITUDE": "60.776916",
+    "LONGITUDE": "-135.133834"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2W4",
+    "LATITUDE": "60.741644",
+    "LONGITUDE": "-135.067397"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3L7",
+    "LATITUDE": "60.706623",
+    "LONGITUDE": "-135.024161"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5K4",
+    "LATITUDE": "60.720594",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0L3",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5C9",
+    "LATITUDE": "60.767112",
+    "LONGITUDE": "-135.114925"
+  },
+  {
+    "POSTAL_CODE": "Y0A 1C0",
+    "LATITUDE": "60.070272",
+    "LONGITUDE": "-128.697318"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5A9",
+    "LATITUDE": "60.789394",
+    "LONGITUDE": "-135.169565"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5V8",
+    "LATITUDE": "60.660897",
+    "LONGITUDE": "-135.04271"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4E4",
+    "LATITUDE": "60.764433",
+    "LONGITUDE": "-135.126777"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4A4",
+    "LATITUDE": "60.777225",
+    "LONGITUDE": "-135.136008"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3M8",
+    "LATITUDE": "60.709355",
+    "LONGITUDE": "-135.019639"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4G6",
+    "LATITUDE": "60.766897",
+    "LONGITUDE": "-135.120623"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Z9",
+    "LATITUDE": "60.701155",
+    "LONGITUDE": "-135.114285"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4T7",
+    "LATITUDE": "60.702163",
+    "LONGITUDE": "-135.039378"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1W1",
+    "LATITUDE": "60.713035",
+    "LONGITUDE": "-135.055404"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3P3",
+    "LATITUDE": "60.709843",
+    "LONGITUDE": "-135.032748"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5M8",
+    "LATITUDE": "60.772018",
+    "LONGITUDE": "-135.144128"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4R7",
+    "LATITUDE": "60.775629",
+    "LONGITUDE": "-135.140965"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4K3",
+    "LATITUDE": "60.767718",
+    "LONGITUDE": "-135.114247"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5R1",
+    "LATITUDE": "60.786544",
+    "LONGITUDE": "-135.167843"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3X4",
+    "LATITUDE": "60.7839145",
+    "LONGITUDE": "-135.1656285"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1M8",
+    "LATITUDE": "60.718376",
+    "LONGITUDE": "-135.060286"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2J2",
+    "LATITUDE": "60.7201646",
+    "LONGITUDE": "-135.0642057"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3E5",
+    "LATITUDE": "60.728169",
+    "LONGITUDE": "-135.087344"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4Y3",
+    "LATITUDE": "60.773172",
+    "LONGITUDE": "-135.118089"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5X6",
+    "LATITUDE": "60.59713",
+    "LONGITUDE": "-134.85239"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4B3",
+    "LATITUDE": "60.778166",
+    "LONGITUDE": "-135.133377"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6A6",
+    "LATITUDE": "60.701777",
+    "LONGITUDE": "-135.107971"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2Z7",
+    "LATITUDE": "60.73761",
+    "LONGITUDE": "-135.078978"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1L1",
+    "LATITUDE": "60.714979",
+    "LONGITUDE": "-135.055436"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0A3",
+    "LATITUDE": "60.695943",
+    "LONGITUDE": "-135.102309"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3H5",
+    "LATITUDE": "60.712597",
+    "LONGITUDE": "-135.090698"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3C7",
+    "LATITUDE": "60.735667",
+    "LONGITUDE": "-135.093303"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0H5",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6E2",
+    "LATITUDE": "60.780085",
+    "LONGITUDE": "-135.146711"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3T8",
+    "LATITUDE": "60.725834",
+    "LONGITUDE": "-135.057047"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2R5",
+    "LATITUDE": "60.724038",
+    "LONGITUDE": "-135.066363"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1C3",
+    "LATITUDE": "60.7216562",
+    "LONGITUDE": "-135.0538138"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2P6",
+    "LATITUDE": "60.7231116",
+    "LONGITUDE": "-135.0667342"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0J8",
+    "LATITUDE": "60.6717376708984",
+    "LONGITUDE": "-135.060043334961"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1V0",
+    "LATITUDE": "61.349198",
+    "LONGITUDE": "-139.026104"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1W3",
+    "LATITUDE": "60.713049",
+    "LONGITUDE": "-135.055327"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2K1",
+    "LATITUDE": "60.722196",
+    "LONGITUDE": "-135.057837"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1S9",
+    "LATITUDE": "60.722921",
+    "LONGITUDE": "-135.068234"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4J2",
+    "LATITUDE": "60.765891",
+    "LONGITUDE": "-135.119224"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1J3",
+    "LATITUDE": "60.722512",
+    "LONGITUDE": "-135.059162"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4X2",
+    "LATITUDE": "60.774708",
+    "LONGITUDE": "-135.122829"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0M3",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2Z1",
+    "LATITUDE": "60.74196",
+    "LONGITUDE": "-135.071846"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3G3",
+    "LATITUDE": "60.710776",
+    "LONGITUDE": "-135.091999"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Y4",
+    "LATITUDE": "60.784097",
+    "LONGITUDE": "-135.166473"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5L4",
+    "LATITUDE": "60.77175",
+    "LONGITUDE": "-135.136958"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4W5",
+    "LATITUDE": "60.770796",
+    "LONGITUDE": "-135.116309"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1G9",
+    "LATITUDE": "60.71377",
+    "LONGITUDE": "-135.052204"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1J5",
+    "LATITUDE": "60.7233681",
+    "LONGITUDE": "-135.0605988"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1B4",
+    "LATITUDE": "60.718005",
+    "LONGITUDE": "-135.050997"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6T8",
+    "LATITUDE": "60.799196",
+    "LONGITUDE": "-135.213026"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3X8",
+    "LATITUDE": "60.788554",
+    "LONGITUDE": "-135.166414"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6L4",
+    "LATITUDE": "60.667829",
+    "LONGITUDE": "-135.032736"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1T2",
+    "LATITUDE": "60.7236246",
+    "LONGITUDE": "-135.0686279"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1V2",
+    "LATITUDE": "60.7126595",
+    "LONGITUDE": "-135.052692"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5N8",
+    "LATITUDE": "60.722006",
+    "LONGITUDE": "-135.058873"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1L3",
+    "LATITUDE": "60.716385",
+    "LONGITUDE": "-135.05652"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2S7",
+    "LATITUDE": "60.725237",
+    "LONGITUDE": "-135.064609"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6H2",
+    "LATITUDE": "60.717748",
+    "LONGITUDE": "-135.102004"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2G5",
+    "LATITUDE": "60.719078",
+    "LONGITUDE": "-135.065377"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3P8",
+    "LATITUDE": "60.710016",
+    "LONGITUDE": "-135.029985"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1M9",
+    "LATITUDE": "60.718902",
+    "LONGITUDE": "-135.060683"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5L8",
+    "LATITUDE": "60.737148",
+    "LONGITUDE": "-135.080325"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5S8",
+    "LATITUDE": "60.814366",
+    "LONGITUDE": "-135.275653"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4J1",
+    "LATITUDE": "60.763959",
+    "LONGITUDE": "-135.1257"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1X8",
+    "LATITUDE": "60.715826",
+    "LONGITUDE": "-135.054112"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0L9",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2W3",
+    "LATITUDE": "60.742128",
+    "LONGITUDE": "-135.067878"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2K6",
+    "LATITUDE": "60.721106",
+    "LONGITUDE": "-135.063884"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4C5",
+    "LATITUDE": "60.767909",
+    "LONGITUDE": "-135.13685"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1K9",
+    "LATITUDE": "60.714805",
+    "LONGITUDE": "-135.055297"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6T6",
+    "LATITUDE": "60.74383",
+    "LONGITUDE": "-135.073867"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2S6",
+    "LATITUDE": "60.725153",
+    "LONGITUDE": "-135.065049"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5B7",
+    "LATITUDE": "60.7338234",
+    "LONGITUDE": "-135.0942662"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2K8",
+    "LATITUDE": "60.721209",
+    "LONGITUDE": "-135.064938"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2X9",
+    "LATITUDE": "60.742524",
+    "LONGITUDE": "-135.078708"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3K6",
+    "LATITUDE": "60.7077105",
+    "LONGITUDE": "-135.018158"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1G4",
+    "LATITUDE": "60.7232214",
+    "LONGITUDE": "-135.0572602"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5G5",
+    "LATITUDE": "60.7407242",
+    "LONGITUDE": "-135.1155646"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6V3",
+    "LATITUDE": "60.70917",
+    "LONGITUDE": "-135.06163"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2N2",
+    "LATITUDE": "60.723017",
+    "LONGITUDE": "-135.062541"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5X5",
+    "LATITUDE": "60.708401",
+    "LONGITUDE": "-135.119787"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1T3",
+    "LATITUDE": "60.723755",
+    "LONGITUDE": "-135.068746"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1L2",
+    "LATITUDE": "60.716131",
+    "LONGITUDE": "-135.056294"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5C1",
+    "LATITUDE": "60.790223",
+    "LONGITUDE": "-135.169511"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4P9",
+    "LATITUDE": "60.736805",
+    "LONGITUDE": "-135.075234"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3R2",
+    "LATITUDE": "60.710056",
+    "LONGITUDE": "-135.028716"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3C1",
+    "LATITUDE": "60.73764",
+    "LONGITUDE": "-135.096647"
+  },
+  {
+    "POSTAL_CODE": "Y0A 0A2",
+    "LATITUDE": "60.21674",
+    "LONGITUDE": "-129.866066"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3K1",
+    "LATITUDE": "60.710557",
+    "LONGITUDE": "-135.027668"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5G3",
+    "LATITUDE": "60.7887225",
+    "LONGITUDE": "-135.171482"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4J4",
+    "LATITUDE": "60.762429",
+    "LONGITUDE": "-135.138173"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6H7",
+    "LATITUDE": "60.715583",
+    "LONGITUDE": "-135.10594"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5A6",
+    "LATITUDE": "60.713691",
+    "LONGITUDE": "-135.044111"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3K3",
+    "LATITUDE": "60.710815",
+    "LONGITUDE": "-135.02611"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2S3",
+    "LATITUDE": "60.7257682",
+    "LONGITUDE": "-135.061683"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0N9",
+    "LATITUDE": "60.774224",
+    "LONGITUDE": "-135.099965"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6P5",
+    "LATITUDE": "60.720624",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2B3",
+    "LATITUDE": "60.719016",
+    "LONGITUDE": "-135.055851"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3R1",
+    "LATITUDE": "60.707418",
+    "LONGITUDE": "-135.026404"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6R2",
+    "LATITUDE": "60.72063",
+    "LONGITUDE": "-135.069191"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1H9",
+    "LATITUDE": "60.722039",
+    "LONGITUDE": "-135.058709"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4L8",
+    "LATITUDE": "60.704011",
+    "LONGITUDE": "-135.019999"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4J6",
+    "LATITUDE": "60.763913",
+    "LONGITUDE": "-135.131884"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3C6",
+    "LATITUDE": "60.73538",
+    "LONGITUDE": "-135.0923"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3T2",
+    "LATITUDE": "60.718039",
+    "LONGITUDE": "-135.051633"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Y8",
+    "LATITUDE": "60.771038",
+    "LONGITUDE": "-135.164983"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2R4",
+    "LATITUDE": "60.724399",
+    "LONGITUDE": "-135.064315"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3G7",
+    "LATITUDE": "60.710267",
+    "LONGITUDE": "-135.093165"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Y3",
+    "LATITUDE": "60.78404",
+    "LONGITUDE": "-135.166439"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3L8",
+    "LATITUDE": "60.707226",
+    "LONGITUDE": "-135.022435"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1W5",
+    "LATITUDE": "60.714853",
+    "LONGITUDE": "-135.050339"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5J5",
+    "LATITUDE": "60.726838",
+    "LONGITUDE": "-135.060016"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0G5",
+    "LATITUDE": "60.719901",
+    "LONGITUDE": "-135.049985"
+  },
+  {
+    "POSTAL_CODE": "Y0B 1H0",
+    "LATITUDE": "61.249591",
+    "LONGITUDE": "-138.814619"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3Y1",
+    "LATITUDE": "60.791704",
+    "LONGITUDE": "-135.195822"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6J8",
+    "LATITUDE": "60.721434",
+    "LONGITUDE": "-135.097766"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0L6",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1Z7",
+    "LATITUDE": "60.717276",
+    "LONGITUDE": "-135.055561"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3N2",
+    "LATITUDE": "60.7069295",
+    "LONGITUDE": "-135.033294"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5K2",
+    "LATITUDE": "60.7821735",
+    "LONGITUDE": "-135.1697165"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1N8",
+    "LATITUDE": "60.724161",
+    "LONGITUDE": "-135.064793"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4H7",
+    "LATITUDE": "60.763118",
+    "LONGITUDE": "-135.1294"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Y2",
+    "LATITUDE": "60.595295",
+    "LONGITUDE": "-134.892918"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5G4",
+    "LATITUDE": "60.719288",
+    "LONGITUDE": "-135.049728"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1G2",
+    "LATITUDE": "60.722936",
+    "LONGITUDE": "-135.057044"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0H1",
+    "LATITUDE": "60.7610412",
+    "LONGITUDE": "-135.1742264"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4H3",
+    "LATITUDE": "60.761015",
+    "LONGITUDE": "-135.131411"
+  },
+  {
+    "POSTAL_CODE": "Y1A 0N7",
+    "LATITUDE": "60.728741",
+    "LONGITUDE": "-135.078638"
+  },
+  {
+    "POSTAL_CODE": "Y1A 6G3",
+    "LATITUDE": "60.7127526",
+    "LONGITUDE": "-135.1047804"
+  },
+  {
+    "POSTAL_CODE": "Y0B 0A1",
+    "LATITUDE": "62.383753",
+    "LONGITUDE": "-140.875303"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3H2",
+    "LATITUDE": "60.711686",
+    "LONGITUDE": "-135.087656"
+  },
+  {
+    "POSTAL_CODE": "Y1A 5Z7",
+    "LATITUDE": "60.772649",
+    "LONGITUDE": "-135.168262"
+  },
+  {
+    "POSTAL_CODE": "Y1A 3X2",
+    "LATITUDE": "60.770139",
+    "LONGITUDE": "-135.149567"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4J8",
+    "LATITUDE": "60.76526",
+    "LONGITUDE": "-135.126387"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1B2",
+    "LATITUDE": "60.717268",
+    "LONGITUDE": "-135.050177"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1G5",
+    "LATITUDE": "60.7242472",
+    "LONGITUDE": "-135.0580256"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2R9",
+    "LATITUDE": "60.723895",
+    "LONGITUDE": "-135.067163"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4G1",
+    "LATITUDE": "60.765808",
+    "LONGITUDE": "-135.124994"
+  },
+  {
+    "POSTAL_CODE": "Y1A 4E7",
+    "LATITUDE": "60.765045",
+    "LONGITUDE": "-135.124267"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2L2",
+    "LATITUDE": "60.720895",
+    "LONGITUDE": "-135.066726"
+  },
+  {
+    "POSTAL_CODE": "Y1A 1R2",
+    "LATITUDE": "60.722679",
+    "LONGITUDE": "-135.06565"
+  },
+  {
+    "POSTAL_CODE": "Y1A 2H2",
+    "LATITUDE": "60.721531",
+    "LONGITUDE": "-135.056787"
+  }
+]

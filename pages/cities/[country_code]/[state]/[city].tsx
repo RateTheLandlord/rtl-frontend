@@ -1,6 +1,6 @@
 import CityPage from '@/components/city/CityPage'
 import Spinner from '@/components/ui/Spinner'
-import { ICityReviews, getCities, getCityReviews } from '@/lib/review/review'
+import { ICityReviews, getCityReviews } from '@/lib/review/review'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
@@ -72,25 +72,8 @@ const City = ({ city, state, country, data }: IProps) => {
 }
 
 export async function getStaticPaths() {
-	// Too many pages, need to work this out. Test of fixing static generation.
-	if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'production') {
-		return {
-			paths: [],
-			fallback: 'blocking',
-		}
-	}
-	const data = await getCities()
-
-	const paths = data.map((city) => ({
-		params: {
-			city: encodeURIComponent(city.city),
-			state: encodeURIComponent(city.state),
-			country_code: encodeURIComponent(city.country_code),
-		},
-	}))
 	return {
-		paths: [...paths],
-		// Enable statically generating additional pages
+		paths: [],
 		fallback: 'blocking',
 	}
 }
