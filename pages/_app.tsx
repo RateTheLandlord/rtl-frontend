@@ -1,5 +1,6 @@
 import Layout from '@/components/layout/layout'
 import { AppProps } from 'next/app'
+import 'mapbox-gl/dist/mapbox-gl.css'
 import '../styles/global.css'
 import '../i18n'
 import { Provider } from 'react-redux'
@@ -10,6 +11,8 @@ import { PHProvider } from '@/components/PostHog/PHProvider'
 import nProgress from 'nprogress'
 import { Router } from 'next/router'
 import 'nprogress/nprogress.css'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 
 const CAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string
 
@@ -25,7 +28,22 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 				<Provider store={store}>
 					<ReCaptchaProvider reCaptchaKey={CAPTCHA_SITE_KEY} useEnterprise>
 						<Layout>
-							<Component {...pageProps} />
+							<>
+								<Component {...pageProps} />
+								<ToastContainer
+									position='bottom-center'
+									autoClose={5000}
+									limit={3}
+									hideProgressBar
+									newestOnTop={false}
+									closeOnClick
+									rtl={false}
+									pauseOnFocusLoss={false}
+									draggable
+									pauseOnHover={false}
+									theme='light'
+								/>
+							</>
 						</Layout>
 					</ReCaptchaProvider>
 				</Provider>

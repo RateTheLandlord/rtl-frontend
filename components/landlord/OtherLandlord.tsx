@@ -24,7 +24,7 @@ const OtherLandlordInfo = ({ landlord }: IProps) => {
 			<h3 className='mt-4 text-lg text-gray-900'>
 				View Other Landlords in {landlords[0]?.topcity}:
 			</h3>
-			<div className='grid-rows-5 grid grid-cols-2 gap-2 lg:grid-cols-5 lg:grid-rows-2'>
+			<div className='grid grid-cols-2 grid-rows-5 gap-2 lg:grid-cols-5 lg:grid-rows-2'>
 				{landlords.map((otherLandlord, index) => {
 					return (
 						<Link

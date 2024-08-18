@@ -19,7 +19,10 @@ export async function createReview(
 		inputReview.country_code = inputReview.country_code.toLocaleUpperCase()
 		inputReview.city = inputReview.city.substring(0, 150).toLocaleUpperCase()
 		inputReview.state = inputReview.state.toLocaleUpperCase()
-		inputReview.zip = inputReview.zip.substring(0, 50).toLocaleUpperCase()
+		inputReview.zip = inputReview.zip
+			.substring(0, 50)
+			.toLocaleUpperCase()
+			.replace(' ', '')
 		inputReview.admin_approved = null
 		inputReview.flagged = filterResult.flagged
 		inputReview.flagged_reason = filterResult.flagged_reason
@@ -75,7 +78,10 @@ export async function updateReview(
                country_code = ${review.country_code.toLocaleUpperCase()},
                city = ${review.city.substring(0, 150).toLocaleUpperCase()},
                state = ${review.state.toLocaleUpperCase()},
-               zip = ${review.zip.substring(0, 50).toLocaleUpperCase()},
+               zip = ${review.zip
+									.substring(0, 50)
+									.toLocaleUpperCase()
+									.replace(' ', '')},
                review = ${review.review},
                repair = ${review.repair},
                health = ${review.health},
