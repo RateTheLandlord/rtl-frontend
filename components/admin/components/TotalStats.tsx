@@ -58,6 +58,12 @@ const TotalStats = ({ data }: { data: ICountryStats }) => {
 				data: data.countryStats.IE?.total,
 				isActive: country === 'IE',
 			},
+			{
+				country: 'NO',
+				label: 'Norway Reviews',
+				data: data.countryStats.NO?.total,
+				isActive: country === 'NO',
+			},
 		]
 
 		return stats.map((stat) => (
@@ -92,6 +98,8 @@ const TotalStats = ({ data }: { data: ICountryStats }) => {
 				return <StateStats states={data.countryStats.DE?.states} />
 			case 'IE':
 				return <StateStats states={data.countryStats.IE?.states} />
+			case 'NO':
+				return <StateStats states={data.countryStats.NO?.states} />
 			default:
 				return null
 		}

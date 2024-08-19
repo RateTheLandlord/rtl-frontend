@@ -236,6 +236,14 @@ const EditReviewModal = ({
 																</option>
 															)
 													  })
+													: country === 'NO'
+													? counties.map((county) => {
+															return (
+																<option key={county.short} value={county.name}>
+																	{county.name}
+																</option>
+															)
+													  })
 													: states.map((state) => {
 															return (
 																<option key={state.short} value={state.name}>

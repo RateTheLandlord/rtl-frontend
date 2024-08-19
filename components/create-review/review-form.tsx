@@ -282,6 +282,8 @@ function ReviewForm(): JSX.Element {
 		} else if (country === 'IE') {
 			setProvince('Dublin')
 			setPostal('')
+		} else if (country === 'NO') {
+			setProvince('Oslo')
 		} else {
 			setProvince('Alberta')
 		}

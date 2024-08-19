@@ -95,6 +95,7 @@ const Stats = () => {
 			{ name: 'UK', value: Number(data.total_stats.countryStats.GB?.total) },
 			{ name: 'DE', value: Number(data.total_stats.countryStats.DE?.total) },
 			{ name: 'IE', value: Number(data.total_stats.countryStats.IE?.total) },
+			{ name: 'NO', value: Number(data.total_stats.countryStats.NO?.total) },
 		]
 		return countryData
 	}
