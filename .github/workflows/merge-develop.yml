@@ -18,12 +18,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Lint Frontend
-      run: |
-        curl -fsSL https://bun.sh/install | bash
-        export PATH=$HOME/.bun/bin:$PATH
-        bun --version
-        bun install
-        bun run lint
+        run: |
+          curl -fsSL https://bun.sh/install | bash
+          export PATH=$HOME/.bun/bin:$PATH
+          bun --version
+          bun install
+          bun run lint
 
   test-fe:
     runs-on: ubuntu-latest
