@@ -11,6 +11,7 @@ coverage
 *.scss
 **/out/*
 next-env.d.ts
+util/countries
 # next.config.js
 
 
