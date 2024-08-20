@@ -16,6 +16,7 @@ module.exports = {
 			},
 		],
 	},
+	coverageDirectory: '/components',
 	moduleNameMapper: {
 		// "@/*": ["./*"]
 		'^@/(.*)$': ['<rootDir>/$1'],

@@ -17,10 +17,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Lint frontend
+      - name: Lint Frontend
         run: |
-          npm install
-          npm run lint
+          curl -fsSL https://bun.sh/install | bash
+          export PATH=$HOME/.bun/bin:$PATH
+          bun --version
+          bun install
+          bun run lint
 
   test-fe:
     runs-on: ubuntu-latest
@@ -35,7 +38,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Test frontend
+      - name: Test Frontend
         run: |
-          npm install
-          npm run test:merge
+          curl -fsSL https://bun.sh/install | bash
+          export PATH=$HOME/.bun/bin:$PATH
+          bun --version
+          bun install
+          bun run test:merge
