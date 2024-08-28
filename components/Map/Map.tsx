@@ -1,15 +1,15 @@
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { Options } from '@/util/interfaces/interfaces'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Map as MapView, Marker } from 'react-map-gl'
 import SelectList from '../reviews/ui/select-list'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
 import { useTranslation } from 'react-i18next'
 import ComboBox from '../reviews/ui/combobox'
 import CustomMarker from './CustomMarker'
-import { provinceMaps, usLocationMap } from './locationMaps'
 import { getStartingLocation } from '@/util/helpers/getStartingLocation'
 import Information from './Information'
+import { IZipLocations } from '@/lib/location/location'
 
 export interface ILocationType {
 	longitude: number
@@ -21,12 +21,12 @@ export interface ILocationType {
 
 const MapComponent = () => {
 	const { t } = useTranslation('reviews')
-	const [usZipCodes, setUSZipCodes] = useState<Options[]>([])
-	const [caPostalCodes, setCAPostalCodes] = useState<Options[]>([])
+	const [zipCodes, setZipCodes] = useState<Options[]>([])
 	const [country, setCountry] = useState<Options | null>(null)
 	const [state, setState] = useState<Options | null>(null)
 	const [dynamicStateOptions, setDynamicStateOptions] = useState<Options[]>([])
-	const [selectedPoint, setSelectedPoint] = useState<ILocationType | null>(null)
+	const [selectedPoint, setSelectedPoint] = useState<IZipLocations | null>(null)
+	const [locations, setLocations] = useState<Array<IZipLocations>>([])
 
 	// Default location is Toronto, Ontario, Canada
 	const [viewState, setViewState] = useState({
@@ -50,15 +50,37 @@ const MapComponent = () => {
 				'',
 				'',
 			)
-			if (country.value === 'CA') {
-				setCAPostalCodes(options.zips)
-			} else if (country.value === 'US') {
-				setUSZipCodes(options.zips)
-			}
+			setZipCodes(options.zips)
 		} catch (error) {
 			console.error('Error fetching zip codes:', error)
 		}
 	}
+
+	useEffect(() => {
+		const getLocations = async () => {
+			fetch('/api/location/get-location', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					zipCodes: zipCodes,
+					country_code: country?.value,
+				}),
+			})
+				.then((res) => {
+					if (!res.ok) {
+						throw new Error()
+					}
+					return res.json()
+				})
+				.then((data) => setLocations(data))
+				.catch((err) => console.log(err))
+		}
+		if (zipCodes) {
+			getLocations()
+		}
+	}, [zipCodes])
 
 	// Trigger Fetching Zips whenever Country and State are selected/Changed
 	useEffect(() => {
@@ -70,46 +92,8 @@ const MapComponent = () => {
 	// Reset state to null when country changes
 	useEffect(() => {
 		setState(null)
+		setSelectedPoint(null)
 	}, [country])
-
-	// Pair Zips in our reviews with the location coordinates found in the json Maps
-	const usLocations = useMemo(() => {
-		return usZipCodes
-			.map((location) => {
-				const usLocation = usLocationMap.get(Number(location.value))
-				if (usLocation) {
-					return {
-						...location,
-						longitude: usLocation['ZipLongitude'],
-						latitude: usLocation['ZipLatitude'],
-					}
-				}
-				return null
-			})
-			.filter((location) => location !== null)
-	}, [usZipCodes])
-
-	const caLocations = useMemo(() => {
-		if (country?.value === 'CA' && state?.value) {
-			const locationMap = provinceMaps[state.value]
-			if (locationMap) {
-				return caPostalCodes
-					.map((location) => {
-						const caLocation = locationMap.get(location.value)
-						if (caLocation) {
-							return {
-								...location,
-								longitude: Number(caLocation['LONGITUDE']),
-								latitude: Number(caLocation['LATITUDE']),
-							}
-						}
-						return null
-					})
-					.filter((location) => location !== null)
-			}
-		}
-		return []
-	}, [caPostalCodes, state, country])
 
 	// Fetch Filter options for dropdown menu's
 	const fetchDynamicFilterOptions = async () => {
@@ -203,44 +187,24 @@ const MapComponent = () => {
 					mapStyle='mapbox://styles/mapbox/streets-v9'
 					onMove={(evt) => setViewState(evt.viewState)}
 				>
-					{country.name === 'United States' &&
-						usLocations.map(
-							(location) =>
-								location?.latitude &&
-								location.longitude && (
-									<Marker
-										key={location.value}
-										longitude={location.longitude}
-										latitude={location.latitude}
-										anchor='bottom'
-									>
-										<CustomMarker
-											selectedPoint={selectedPoint}
-											setSelectedPoint={setSelectedPoint}
-											location={location}
-										/>
-									</Marker>
-								),
-						)}
-					{country.name === 'Canada' &&
-						caLocations.map(
-							(location) =>
-								location?.latitude &&
-								location.longitude && (
-									<Marker
-										key={location.value}
-										longitude={location.longitude}
-										latitude={location.latitude}
-										anchor='bottom'
-									>
-										<CustomMarker
-											selectedPoint={selectedPoint}
-											setSelectedPoint={setSelectedPoint}
-											location={location}
-										/>
-									</Marker>
-								),
-						)}
+					{locations.map(
+						(location) =>
+							location?.latitude &&
+							location.longitude && (
+								<Marker
+									key={location.zip}
+									longitude={Number(location.longitude)}
+									latitude={Number(location.latitude)}
+									anchor='bottom'
+								>
+									<CustomMarker
+										selectedPoint={selectedPoint}
+										setSelectedPoint={setSelectedPoint}
+										location={location}
+									/>
+								</Marker>
+							),
+					)}
 				</MapView>
 			)}
 		</div>

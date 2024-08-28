@@ -1,9 +1,9 @@
-import { ILocationType } from './Map'
+import { IZipLocations } from '@/lib/location/location'
 
 interface IProps {
-	location: ILocationType | null
-	selectedPoint: ILocationType | null
-	setSelectedPoint: (loc: ILocationType | null) => void
+	location: IZipLocations | null
+	selectedPoint: IZipLocations | null
+	setSelectedPoint: (loc: IZipLocations | null) => void
 }
 
 const CustomMarker = ({

@@ -44,6 +44,7 @@
 		"nookies": "^2.5.2",
 		"nprogress": "^0.2.0",
 		"openai": "^4.24.7",
+		"pg": "^8.12.0",
 		"pg-connection-string": "^2.6.2",
 		"postcode-validator": "^3.7.0",
 		"postgres": "^3.4.3",
