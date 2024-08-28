@@ -5,6 +5,7 @@ import { render, screen } from '@testing-library/react'
 import EditReviewModal from './EditReviewModal'
 import { store } from '@/redux/store'
 import { Provider } from 'react-redux'
+import { UserProvider } from '@auth0/nextjs-auth0/client'
 
 describe('EditReviewModal', () => {
 	const mockSelectedReview = {
@@ -26,19 +27,22 @@ describe('EditReviewModal', () => {
 		admin_approved: null,
 		admin_edited: false,
 		moderation_reason: null,
+		moderator: null,
 	}
 
 	test('renders EditReviewModal with selected review data', () => {
 		render(
-			<Provider store={store}>
-				<EditReviewModal
-					selectedReview={mockSelectedReview}
-					handleMutate={jest.fn()}
-					setEditReviewOpen={jest.fn()}
-					editReviewOpen={true}
-					setSelectedReview={jest.fn()}
-				/>
-			</Provider>,
+			<UserProvider>
+				<Provider store={store}>
+					<EditReviewModal
+						selectedReview={mockSelectedReview}
+						handleMutate={jest.fn()}
+						setEditReviewOpen={jest.fn()}
+						editReviewOpen={true}
+						setSelectedReview={jest.fn()}
+					/>
+				</Provider>
+			</UserProvider>,
 		)
 
 		expect(screen.getByLabelText('Landlord')).toHaveValue(
