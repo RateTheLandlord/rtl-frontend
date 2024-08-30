@@ -18,6 +18,7 @@ export interface Review {
 	admin_edited: boolean
 	rent?: number | null
 	moderation_reason: string | null
+	moderator: Array<string> | null
 }
 
 export interface OtherLandlord {
