@@ -15,15 +15,22 @@ export const getStartingLocation = (
 	}) => void,
 	country: Options,
 	state: Options,
+	affiliate: string | null,
 ) => {
-	if (state && country) {
+	if (affiliate && affiliate === 'stfx' && state.value === 'NOVA SCOTIA') {
+		setViewState({
+			longitude: -61.99546134654629,
+			latitude: 45.61779097076272,
+			zoom: 15,
+		})
+	} else if (state && country) {
 		if (country.value === 'CA') {
 			const location = caProvinceLocations[state.value]
 			if (location) {
 				setViewState({
 					latitude: location.latitude,
 					longitude: location.longitude,
-					zoom: 5,
+					zoom: 6,
 				})
 			} else {
 				toast.error('Error getting location, using default location.')
@@ -34,7 +41,7 @@ export const getStartingLocation = (
 				setViewState({
 					latitude: location.latitude,
 					longitude: location.longitude,
-					zoom: 5,
+					zoom: 6,
 				})
 			} else {
 				toast.error('Error getting location, using default location.')
@@ -42,7 +49,5 @@ export const getStartingLocation = (
 		} else {
 			toast.error('Error getting location, using default location.')
 		}
-	} else {
-		toast.error('Error getting location, using default location.')
 	}
 }
