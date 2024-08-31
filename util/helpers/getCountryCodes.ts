@@ -9,6 +9,7 @@ export const country_codes: string[] = Object.keys(countries).filter(
 		c === 'AU' ||
 		c === 'NZ' ||
 		c === 'IE' ||
+		c === 'NO' ||
 		c === 'DE',
 )
 

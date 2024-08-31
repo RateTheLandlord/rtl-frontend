@@ -11,6 +11,8 @@ import { country_codes } from '@/util/helpers/getCountryCodes'
 import { Dialog, Transition } from '@headlessui/react'
 import { useAppDispatch } from '@/redux/hooks'
 import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
+import { useUser } from '@auth0/nextjs-auth0/client'
+import dayjs from 'dayjs'
 
 interface IProps {
 	selectedReview: Review | undefined
@@ -42,9 +44,17 @@ const EditReviewModal = ({
 	const [moderationReason, setModerationReason] = useState<string | null>(
 		selectedReview?.moderation_reason || null,
 	)
+	const [moderators, setModerators] = useState<Array<string>>(
+		selectedReview?.moderator || [],
+	)
 	const isIreland = country === 'IE'
 
+	const { user } = useUser()
+
+	const date = dayjs().format('DD/MM/YYYY')
+
 	const onSubmitEditReview = () => {
+		moderators.unshift(`${user?.admin_id} on ${date}`)
 		const editedReview = {
 			...selectedReview,
 			landlord: landlord,
@@ -58,6 +68,7 @@ const EditReviewModal = ({
 			flagged: false,
 			rent: rent,
 			moderation_reason: moderationReason,
+			moderator: [...moderators],
 		}
 		fetch('/api/review/edit-review', {
 			method: 'POST',
@@ -236,6 +247,14 @@ const EditReviewModal = ({
 																</option>
 															)
 													  })
+													: country === 'NO'
+													? counties.map((county) => {
+															return (
+																<option key={county.short} value={county.name}>
+																	{county.name}
+																</option>
+															)
+													  })
 													: states.map((state) => {
 															return (
 																<option key={state.short} value={state.name}>
@@ -326,6 +345,17 @@ const EditReviewModal = ({
 												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 												data-testid='create-review-form-moderation-reason-1'
 											/>
+										</div>
+									</div>
+									<div className='sm:col-span-2'>
+										<label
+											htmlFor='moderators'
+											className='block text-sm  text-gray-700'
+										>
+											Previous Moderators
+										</label>
+										<div className='mt-1'>
+											<p>{moderators.map((mod) => mod).join(', ')}</p>
 										</div>
 									</div>
 								</div>

@@ -1,0 +1,77 @@
+[
+	{
+		"short": "NO-03",
+		"name": "Oslo",
+		"country": "NO"
+	},
+	{
+		"short": "NO-11",
+		"name": "Rogaland",
+		"country": "NO"
+	},
+	{
+		"short": "NO-15",
+		"name": "Møre og Romsdal",
+		"country": "NO"
+	},
+	{
+		"short": "NO-18",
+		"name": "Nordland",
+		"country": "NO"
+	},
+	{
+		"short": "NO-31",
+		"name": "Østfold",
+		"country": "NO"
+	},
+	{
+		"short": "NO-32",
+		"name": "Akershus",
+		"country": "NO"
+	},
+	{
+		"short": "NO-33",
+		"name": "Buskerud",
+		"country": "NO"
+	},
+	{
+		"short": "NO-34",
+		"name": "Innlandet",
+		"country": "NO"
+	},
+	{
+		"short": "NO-39",
+		"name": "Vestfold",
+		"country": "NO"
+	},
+	{
+		"short": "NO-40",
+		"name": "Telemark",
+		"country": "NO"
+	},
+	{
+		"short": "NO-42",
+		"name": "Agder",
+		"country": "NO"
+	},
+	{
+		"short": "NO-46",
+		"name": "Vestland",
+		"country": "NO"
+	},
+	{
+		"short": "NO-50",
+		"name": "Trøndelag",
+		"country": "NO"
+	},
+	{
+		"short": "NO-55",
+		"name": "Troms",
+		"country": "NO"
+	},
+	{
+		"short": "NO-56",
+		"name": "Finnmark",
+		"country": "NO"
+	}
+]

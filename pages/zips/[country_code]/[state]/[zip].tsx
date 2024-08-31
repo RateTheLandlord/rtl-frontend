@@ -1,6 +1,6 @@
-import CityPage from '@/components/city/CityPage'
 import Spinner from '@/components/ui/Spinner'
-import { ICityReviews, getCityReviews } from '@/lib/review/review'
+import ZipPage from '@/components/zip/ZipPage'
+import { IZipReviews, getZipReviews } from '@/lib/review/review'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
@@ -9,19 +9,20 @@ interface IProps {
 	city: string
 	state: string
 	country: string
-	data: ICityReviews
+	zip: string
+	data: IZipReviews
 }
 
-const City = ({ city, state, country, data }: IProps) => {
-	const title = `${toTitleCase(decodeURIComponent(city))}, ${toTitleCase(
+const Zip = ({ city, state, country, zip, data }: IProps) => {
+	const title = `${decodeURIComponent(zip).toLocaleUpperCase()}, ${toTitleCase(
 		decodeURIComponent(state),
 	)}, ${toTitleCase(decodeURIComponent(country))} Reviews | Rate The Landlord`
 	const desc = `Looking to rent in ${toTitleCase(
-		decodeURIComponent(city),
+		decodeURIComponent(zip),
 	)}? Read ${
 		data?.total
 	} landlord reviews and rental experiences for ${toTitleCase(
-		decodeURIComponent(city),
+		decodeURIComponent(zip),
 	)}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
@@ -66,7 +67,13 @@ const City = ({ city, state, country, data }: IProps) => {
 					},
 				]}
 			/>
-			<CityPage city={city} state={state} country={country} data={data} />
+			<ZipPage
+				city={city}
+				state={state}
+				country={country}
+				zip={zip}
+				data={data}
+			/>
 		</>
 	)
 }
@@ -79,7 +86,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-	const data = await getCityReviews(params)
+	const data = await getZipReviews(params)
 
 	if (data.reviews.length === 0) {
 		return {
@@ -98,6 +105,7 @@ export async function getStaticProps({ params }) {
 				state: params.state,
 				country: params.country_code,
 				data: data,
+				zip: params.zip,
 			}),
 		),
 		// Re-generate the page
@@ -106,4 +114,4 @@ export async function getStaticProps({ params }) {
 	}
 }
 
-export default City
+export default Zip

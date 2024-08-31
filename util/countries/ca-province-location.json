@@ -1,0 +1,15 @@
+{
+	"ALBERTA": { "latitude": 53.9333, "longitude": -116.5765 },
+	"BRITISH COLUMBIA": { "latitude": 53.7267, "longitude": -127.6476 },
+	"MANITOBA": { "latitude": 49.8951, "longitude": -97.1384 },
+	"NEW BRUNSWICK": { "latitude": 46.5653, "longitude": -66.4619 },
+	"NEWFOUNDLAND AND LABRADOR": { "latitude": 53.1355, "longitude": -57.6604 },
+	"NORTHWEST TERRITORIES": { "latitude": 64.8255, "longitude": -124.8457 },
+	"NOVA SCOTIA": { "latitude": 44.682, "longitude": -63.7443 },
+	"NUNAVUT": { "latitude": 70.2998, "longitude": -83.1076 },
+	"ONTARIO": { "latitude": 51.2538, "longitude": -85.3232 },
+	"PRINCE EDWARD ISLAND": { "latitude": 46.5107, "longitude": -63.4168 },
+	"QUEBEC": { "latitude": 52.9399, "longitude": -73.5491 },
+	"SASKATCHEWAN": { "latitude": 52.9399, "longitude": -106.4509 },
+	"YUKON": { "latitude": 64.2823, "longitude": -135.0 }
+}
