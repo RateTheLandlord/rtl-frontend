@@ -1,6 +1,11 @@
 import React, { Fragment } from 'react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-import { Listbox, Transition } from '@headlessui/react'
+import {
+	Listbox,
+	ListboxButton,
+	ListboxOptions,
+	Transition,
+} from '@headlessui/react'
 import { Options } from '@/util/interfaces/interfaces'
 
 interface ComponentProps {
@@ -19,7 +24,7 @@ export default function SelectList({
 	return (
 		<Listbox value={state} onChange={setState}>
 			<div className='px-2'>
-				<Listbox.Button className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
+				<ListboxButton className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
 					<span className='block w-full truncate'>{state?.name || name}</span>
 					<span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
 						<SelectorIcon
@@ -27,14 +32,17 @@ export default function SelectList({
 							aria-hidden='true'
 						/>
 					</span>
-				</Listbox.Button>
+				</ListboxButton>
 				<Transition
 					as={Fragment}
 					leave='transition ease-in duration-100'
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<Listbox.Options className='absolute z-50 mt-1 max-h-60 w-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+					<ListboxOptions
+						anchor='bottom start'
+						className='mt-1 max-h-[250px] w-[250px] overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'
+					>
 						{options.map((option) => (
 							<Listbox.Option
 								key={option.id}
@@ -62,7 +70,7 @@ export default function SelectList({
 								) : null}
 							</Listbox.Option>
 						))}
-					</Listbox.Options>
+					</ListboxOptions>
 				</Transition>
 			</div>
 		</Listbox>
