@@ -64,9 +64,5 @@ jobs:
             git pull
             bun install
             bun run build
-            if pm2 list | grep -q 'rtl-frontend'; then
-            pm2 reload rtl-frontend
-            else
-            pm2 start ecosystem.config.js
-            fi
+            bun run start:infisical
             pm2 list

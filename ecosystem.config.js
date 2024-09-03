@@ -6,10 +6,8 @@ module.exports = {
 			args: 'start', // Arguments to pass to the Next.js CLI
 			interpreter: 'node',
 			instances: 1, // Number of instances to start
+			autorestart: true,
 			env: {
-				NODE_ENV: 'development',
-			},
-			env_production: {
 				NODE_ENV: 'production',
 			},
 		},
