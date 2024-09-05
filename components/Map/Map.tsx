@@ -10,6 +10,7 @@ import CustomMarker from './CustomMarker'
 import { getStartingLocation } from '@/util/helpers/getStartingLocation'
 import Information from './Information'
 import { IZipLocations } from '@/lib/location/location'
+import { useRouter } from 'next/router'
 
 export interface ILocationType {
 	longitude: number
@@ -21,12 +22,20 @@ export interface ILocationType {
 
 const MapComponent = () => {
 	const { t } = useTranslation('reviews')
-	const [zipCodes, setZipCodes] = useState<Options[]>([])
-	const [country, setCountry] = useState<Options | null>(null)
-	const [state, setState] = useState<Options | null>(null)
-	const [dynamicStateOptions, setDynamicStateOptions] = useState<Options[]>([])
-	const [selectedPoint, setSelectedPoint] = useState<IZipLocations | null>(null)
-	const [locations, setLocations] = useState<Array<IZipLocations>>([])
+	const router = useRouter()
+	const { affiliate } = router.query
+
+	// Consolidate related states
+	const [formData, setFormData] = useState({
+		zipCodes: [] as Options[],
+		country: null as Options | null,
+		state: null as Options | null,
+		dynamicStateOptions: [] as Options[],
+		selectedPoint: null as IZipLocations | null,
+		locations: [] as IZipLocations[],
+		currAffiliate: null as string | null,
+		prevCountry: null as Options | null,
+	})
 
 	// Default location is Toronto, Ontario, Canada
 	const [viewState, setViewState] = useState({
@@ -36,12 +45,16 @@ const MapComponent = () => {
 	})
 
 	useEffect(() => {
-		if (country && state) {
-			getStartingLocation(setViewState, country, state)
+		if (formData.country && formData.state) {
+			getStartingLocation(
+				setViewState,
+				formData.country,
+				formData.state,
+				formData.currAffiliate,
+			)
 		}
-	}, [country, state])
+	}, [formData.country, formData.state, formData.currAffiliate])
 
-	// Get's Zips once a User has selected a Country and a State
 	const fetchZips = async (country: Options, state: Options) => {
 		try {
 			const options = await fetchFilterOptions(
@@ -50,70 +63,108 @@ const MapComponent = () => {
 				'',
 				'',
 			)
-			setZipCodes(options.zips)
+			setFormData((prevData) => ({ ...prevData, zipCodes: options.zips }))
 		} catch (error) {
 			console.error('Error fetching zip codes:', error)
 		}
 	}
 
 	useEffect(() => {
-		const getLocations = async () => {
-			fetch('/api/location/get-location', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					zipCodes: zipCodes,
-					country_code: country?.value,
-				}),
-			})
-				.then((res) => {
-					if (!res.ok) {
-						throw new Error()
-					}
-					return res.json()
-				})
-				.then((data) => setLocations(data))
-				.catch((err) => console.log(err))
+		if (formData.country && formData.state) {
+			fetchZips(formData.country, formData.state)
 		}
-		if (zipCodes) {
-			getLocations()
-		}
-	}, [zipCodes])
+	}, [formData.country, formData.state])
 
-	// Trigger Fetching Zips whenever Country and State are selected/Changed
 	useEffect(() => {
-		if (country && state) {
-			fetchZips(country, state)
+		if (!formData.currAffiliate) {
+			setFormData((prevData) => ({
+				...prevData,
+				state: null,
+				selectedPoint: null,
+			}))
 		}
-	}, [country, state])
+	}, [formData.currAffiliate])
 
-	// Reset state to null when country changes
-	useEffect(() => {
-		setState(null)
-		setSelectedPoint(null)
-	}, [country])
-
-	// Fetch Filter options for dropdown menu's
 	const fetchDynamicFilterOptions = async () => {
 		try {
 			const filterOptions = await fetchFilterOptions(
-				country?.value,
-				state?.value,
+				formData.country?.value,
+				formData.state?.value,
 				'',
 				'',
 			)
-			setDynamicStateOptions(filterOptions.states)
+			setFormData((prevData) => ({
+				...prevData,
+				dynamicStateOptions: filterOptions.states,
+			}))
 		} catch (error) {
 			console.error('Error fetching filter options:', error)
 		}
 	}
 
-	// Update Filter options when a country is selected
 	useEffect(() => {
-		fetchDynamicFilterOptions()
-	}, [country])
+		if (formData.prevCountry?.value !== formData.country?.value) {
+			setFormData((prevData) => ({
+				...prevData,
+				state: null,
+				currAffiliate: null,
+				prevCountry: formData.country,
+			}))
+			fetchDynamicFilterOptions()
+		} else {
+			fetchDynamicFilterOptions()
+		}
+	}, [formData.country])
+
+	useEffect(() => {
+		if (router.isReady && affiliate === 'stfx') {
+			setFormData({
+				zipCodes: [],
+				country: { id: 2, name: 'Canada', value: 'CA' },
+				state: { id: 7, name: 'Nova Scotia', value: 'NOVA SCOTIA' },
+				dynamicStateOptions: [],
+				selectedPoint: null,
+				locations: [],
+				currAffiliate: 'stfx',
+				prevCountry: { id: 2, name: 'Canada', value: 'CA' },
+			})
+		}
+	}, [affiliate, router.isReady])
+
+	useEffect(() => {
+		if (formData.zipCodes.length > 0) {
+			const getLocations = async () => {
+				try {
+					const res = await fetch('/api/location/get-location', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							zipCodes: formData.zipCodes,
+							country_code: formData.country?.value,
+						}),
+					})
+					if (!res.ok) throw new Error('Network response was not ok')
+					const data = await res.json()
+					setFormData((prevData) => ({ ...prevData, locations: data }))
+				} catch (error) {
+					console.error('Error fetching locations:', error)
+				}
+			}
+			getLocations()
+		}
+	}, [formData.zipCodes])
+
+	const updateCountry = (country: Options) => {
+		setFormData((prevData) => ({ ...prevData, country: country }))
+	}
+
+	const updateState = (state: Options) => {
+		setFormData((prevData) => ({ ...prevData, state: state }))
+	}
+
+	const updateSelectedPoint = (point: IZipLocations | null) => {
+		setFormData((prevData) => ({ ...prevData, selectedPoint: point }))
+	}
 
 	return (
 		<div className='divide mt-2 flex flex-col gap-2 divide-teal-600 lg:flex-row'>
@@ -121,33 +172,33 @@ const MapComponent = () => {
 			<div className='basis-1/5'>
 				<div className='py-2'>
 					<SelectList
-						state={country}
-						setState={setCountry}
+						state={formData.country}
+						setState={updateCountry}
 						options={countryOptions}
 						name={t('reviews.country')}
 					/>
 				</div>
 				<div className='py-2'>
 					<ComboBox
-						state={state}
-						setState={setState}
-						options={dynamicStateOptions}
+						state={formData.state}
+						setState={updateState}
+						options={formData.dynamicStateOptions}
 						name={t('reviews.state')}
 					/>
 				</div>
-				{selectedPoint && (
+				{formData.selectedPoint && (
 					<Information
-						selectedPoint={selectedPoint}
-						country={country}
-						state={state}
+						selectedPoint={formData.selectedPoint}
+						country={formData.country}
+						state={formData.state}
 					/>
 				)}
 			</div>
 
 			{/* Fallback if Country Selected is not Canada or the USA */}
-			{country &&
-				country.name !== 'Canada' &&
-				country.name !== 'United States' && (
+			{formData.country &&
+				formData.country.name !== 'Canada' &&
+				formData.country.name !== 'United States' && (
 					<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
 						<h1 className='mt-4 text-2xl text-gray-900 sm:text-5xl'>
 							Not Available
@@ -160,7 +211,7 @@ const MapComponent = () => {
 				)}
 
 			{/* Prompt to select a Country */}
-			{!state && !country && (
+			{!formData.state && !formData.country && (
 				<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
 					<h1 className='mt-4 text-2xl text-gray-900 sm:text-5xl'>
 						Please select a Country
@@ -169,16 +220,19 @@ const MapComponent = () => {
 			)}
 
 			{/* Prompt to select a Province / State */}
-			{!state && country && (
-				<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
-					<h1 className='mt-4 text-2xl text-gray-900 sm:text-5xl'>
-						Please select a Province / State
-					</h1>
-				</div>
-			)}
+			{!formData.state &&
+				formData.country &&
+				(formData.country.name === 'Canada' ||
+					formData.country.name === 'United States') && (
+					<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
+						<h1 className='mt-4 text-2xl text-gray-900 sm:text-5xl'>
+							Please select a Province / State
+						</h1>
+					</div>
+				)}
 
 			{/* Map View */}
-			{state && country && (
+			{formData.state && formData.country && (
 				<MapView
 					{...viewState}
 					reuseMaps
@@ -187,7 +241,7 @@ const MapComponent = () => {
 					mapStyle='mapbox://styles/mapbox/streets-v9'
 					onMove={(evt) => setViewState(evt.viewState)}
 				>
-					{locations.map(
+					{formData.locations.map(
 						(location) =>
 							location?.latitude &&
 							location.longitude && (
@@ -198,8 +252,8 @@ const MapComponent = () => {
 									anchor='bottom'
 								>
 									<CustomMarker
-										selectedPoint={selectedPoint}
-										setSelectedPoint={setSelectedPoint}
+										selectedPoint={formData.selectedPoint}
+										setSelectedPoint={updateSelectedPoint}
 										location={location}
 									/>
 								</Marker>
