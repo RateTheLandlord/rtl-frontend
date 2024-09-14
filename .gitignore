@@ -4,7 +4,6 @@
 /node_modules
 /.pnp
 .pnp.js
-bun.lockb
 
 # testing
 /coverage
@@ -12,7 +11,6 @@ bun.lockb
 # next.js
 /.next/
 /out/
-next-env.d.ts
 
 # production
 /build
