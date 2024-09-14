@@ -73,7 +73,6 @@ export default function MobileReviewFilters({
 
 	useEffect(() => {
 		fetchDynamicFilterOptions()
-		console.log("Mobile")
 	}, [stateFilter, cityFilter])
 
 	useEffect(() => {
