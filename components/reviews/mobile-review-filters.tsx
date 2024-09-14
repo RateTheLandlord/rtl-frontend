@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useState  } from 'react'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import MobileSelectList from './ui/mobile-select-list'
@@ -17,6 +17,7 @@ import {
 	updateZip,
 } from '@/redux/query/querySlice'
 import ButtonLight from '../ui/button-light'
+import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 
 interface FiltersProps {
 	mobileFiltersOpen: boolean
@@ -46,6 +47,40 @@ export default function MobileReviewFilters({
 	const dispatch = useAppDispatch()
 	const query = useAppSelector((state) => state.query)
 	const { t } = useTranslation('reviews')
+	const [dynamicCityOptions, setDynamicCityOptions] =
+		useState<Options[]>(cityOptions)
+	const [dynamicStateOptions, setDynamicStateOptions] =
+		useState<Options[]>(stateOptions)
+	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>(
+		zipOptions ?? [],
+	)
+
+	const fetchDynamicFilterOptions = async () => {
+		try {
+			const filterOptions = await fetchFilterOptions(
+				countryFilter?.value,
+				stateFilter?.value,
+				cityFilter?.value,
+				zipFilter?.value,
+			)
+			setDynamicCityOptions(filterOptions.cities)
+			setDynamicStateOptions(filterOptions.states)
+			setDynamicZipOptions(filterOptions.zips)
+		} catch (error) {
+			console.error('Error fetching filter options:', error)
+		}
+	}
+
+	useEffect(() => {
+		fetchDynamicFilterOptions()
+	}, [stateFilter, cityFilter])
+
+	useEffect(() => {
+		dispatch(clearFilters())
+		dispatch(updateCountry(countryFilter))
+		fetchDynamicFilterOptions()
+	}, [countryFilter])
+	
 	return (
 		<Transition.Root show={mobileFiltersOpen} as={Fragment}>
 			<Dialog
@@ -112,20 +147,20 @@ export default function MobileReviewFilters({
 									<ComboBox
 										state={stateFilter}
 										setState={(opt: Options) => dispatch(updateState(opt))}
-										options={stateOptions}
+										options={dynamicStateOptions}
 										name={t('reviews.state')}
 									/>
 									<ComboBox
 										state={cityFilter}
 										setState={(opt: Options) => dispatch(updateCity(opt))}
-										options={cityOptions}
+										options={dynamicCityOptions}
 										name={t('reviews.city')}
 									/>
 									{zipOptions && (
 										<ComboBox
 											state={zipFilter}
 											setState={(opt: Options) => dispatch(updateZip(opt))}
-											options={zipOptions}
+											options={dynamicZipOptions}
 											name={t('reviews.zip')}
 										/>
 									)}
