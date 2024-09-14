@@ -24,10 +24,10 @@ Additionally, if the review contains the following keywords, it is also against 
 
 Here's how this will work:
 - I will provide you with a single review, which may have multiple paragraphs, and may or may not contain content that is not allowed.
-- You will reply ONLY with TRUE and a short 5 word reason if the review violates the policies or FALSE if the review does not violate the policies
+- You will reply ONLY with TRUE and a short 5 word reason without punctuation if the review violates the policies or FALSE if the review does not violate the policies
 
 
-Here is the review you need to check (reminder, you can only reply with TRUE with a short 5 word reason or FALSE, no additional prose or commentary): 
+Here is the review you need to check (reminder, you can only reply with TRUE with a short 5 word reason without punctuation or FALSE, no additional prose or commentary): 
 
 `
 
@@ -36,7 +36,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 export const filterReviewWithAI = async (review: Review): Promise<IResult> => {
 	try {
 		const completion = await openai.chat.completions.create({
-			model: 'gpt-3.5-turbo',
+			model: 'gpt-4o',
 			messages: [
 				{ role: 'system', content: SYSTEM_MESSAGE },
 				{ role: 'user', content: `${review.landlord} ${review.review}` },
