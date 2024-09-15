@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState  } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import MobileSelectList from './ui/mobile-select-list'
@@ -80,7 +80,7 @@ export default function MobileReviewFilters({
 		dispatch(updateCountry(countryFilter))
 		fetchDynamicFilterOptions()
 	}, [countryFilter])
-	
+
 	return (
 		<Transition.Root show={mobileFiltersOpen} as={Fragment}>
 			<Dialog
