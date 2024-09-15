@@ -1,4 +1,5 @@
 import { Review } from '@/lib/review/models/review'
+import sql from '../db'
 
 /* https://www.educative.io/answers/the-levenshtein-distance-algorithm
  * uses the Levenshtein distance algorithm to compare the distance between two strings */
@@ -61,4 +62,41 @@ export async function checkReviewsForSimilarity(
 		}
 	}
 	return false
+}
+
+export async function checkForLandlordSpam(landlord: string): Promise<boolean> {
+	const recentReviews = await sql`
+		SELECT landlord
+		FROM recent_review
+		ORDER BY created_at DESC
+		LIMIT 25;
+	`
+
+	const occurances = recentReviews.filter(
+		(review) =>
+			review.landlord.toLocaleUpperCase() === landlord.toLocaleLowerCase(),
+	).length
+
+	if (occurances >= 5) {
+		return true
+	}
+
+	const recentEntries = recentReviews.slice(0, 2)
+
+	if (
+		recentEntries.length === 2 &&
+		recentEntries.every(
+			(review) => review.landlord.toUpperCase() === landlord.toLocaleUpperCase,
+		)
+	) {
+		return true
+	}
+
+	return false
+}
+
+export async function updateRecentReviews(landlord: string) {
+	await sql`INSERT INTO recent_review (landlord) VALUES (${landlord});`
+
+	await sql`DELETE FROM recent_review WHERE created_at < (SELECT MIN(created_at) FROM (SELECT created_at FROM recent_review ORDER BY created_at DESC LIMIT 25) AS subquery)`
 }

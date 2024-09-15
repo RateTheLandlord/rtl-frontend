@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next'
 import ButtonLight from '../ui/button-light'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import MapComponent from '../Map/Map'
+import { useRouter } from 'next/router'
 
 export type ReviewsResponse = {
 	reviews: IReview[]
@@ -60,6 +61,9 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 	// Localization
 	const { t } = useTranslation('reviews')
 
+	const router = useRouter()
+	const { view } = router.query
+
 	// Redux
 	const query = useAppSelector((state) => state.query)
 	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
@@ -78,6 +82,12 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
 	const [isLoading, setIsLoading] = useState(false)
 	const [selectedIndex, setSelectedIndex] = useState(0)
+
+	useEffect(() => {
+		if (view && view === 'map') {
+			setSelectedIndex(1)
+		}
+	}, [view])
 
 	// Query
 	const [queryParams, setQueryParams] = useState({

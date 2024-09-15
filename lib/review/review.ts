@@ -5,7 +5,11 @@ import {
 	FilterOptions,
 } from '@/lib/review/models/review'
 import { filterReviewWithAI, IResult } from './helpers'
-import { checkReviewsForSimilarity } from './review-text-match'
+import {
+	checkForLandlordSpam,
+	checkReviewsForSimilarity,
+	updateRecentReviews,
+} from './review-text-match'
 import sql from '../db'
 import { getExistingReviewsForLandlord } from '@/lib/review/models/review-data-layer'
 import { createReview } from '@/lib/review/models/review-data-layer'
@@ -258,8 +262,13 @@ export async function create(inputReview: Review): Promise<Review> {
 			existingReviewsForLandlord,
 			inputReview.review,
 		)
-		if (reviewSpamDetected) return inputReview // Don't post the review to the DB if we detect spam
+		const landlordSpamDetected: boolean = await checkForLandlordSpam(
+			inputReview.landlord,
+		)
 
+		if (reviewSpamDetected || landlordSpamDetected) return inputReview // Don't post the review to the DB if we detect spam
+
+		updateRecentReviews(inputReview.landlord)
 		if (process.env.NEXT_PUBLIC_ENVIRONMENT == 'development')
 			return createReview(inputReview, {
 				flagged: false,

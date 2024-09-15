@@ -8,6 +8,7 @@
 		"build": "next build",
 		"postbuild": "next-sitemap",
 		"start": "next start",
+		"start:infisical": "infisical run -- pm2 start ecosystem.config.js",
 		"start:debug": "NODE_OPTIONS='--inspect=0.0.0.0:9998' next dev",
 		"format": "prettier --write ./pages/**/*.{ts,tsx} ./components/**/*.{ts,tsx}",
 		"lint": "next lint --fix",
