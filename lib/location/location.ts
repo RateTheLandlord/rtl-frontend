@@ -16,7 +16,7 @@ export async function getLocations(
 	} // Return empty array if no zip codes are provided
 
 	// Extract zip code values from the array
-	const zipCodeValues = zipCodes.map((zipCode) => zipCode.value)
+	const zipCodeValues = zipCodes.map((zipCode) => zipCode.value).map((zipCode) => zipCode.split("-")[0])
 
 	if (zipCodeValues.length === 0) {
 		return []
