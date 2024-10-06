@@ -5,7 +5,12 @@ module.exports = {
 		tsconfigRootDir: __dirname,
 		sourceType: 'module',
 	},
-	plugins: ['@typescript-eslint/eslint-plugin', 'react', 'react-hooks'],
+	plugins: [
+		'@typescript-eslint/eslint-plugin',
+		'react',
+		'react-hooks',
+		'unused-imports',
+	],
 	extends: [
 		'plugin:@typescript-eslint/recommended',
 		'plugin:@next/next/recommended',
@@ -21,5 +26,7 @@ module.exports = {
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',
+		'no-unused-vars': 'off',
+		'unused-imports/no-unused-imports': 'error',
 	},
 }

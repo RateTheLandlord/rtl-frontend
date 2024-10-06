@@ -22,12 +22,10 @@ import CountrySelector from '../ui/CountrySelector'
 import StateSelector from '../ui/StateSelector'
 import TextInput from '../ui/TextInput'
 import LargeTextInput from '../ui/LargeTextInput'
-import { useAppDispatch } from '@/redux/hooks'
-import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
+import { toast } from 'react-toastify'
 
 function ReviewForm(): JSX.Element {
 	const { t } = useTranslation('create')
-	const dispatch = useAppDispatch()
 
 	const [maliciousAlertOpen, setMaliciousAlertOpen] = useState(false)
 	const [successModalOpen, setSuccessModalOpen] = useState(false)
@@ -252,15 +250,13 @@ function ReviewForm(): JSX.Element {
 							}
 						})
 						.catch(() => {
-							dispatch(updateAlertSuccess(false))
-							dispatch(updateAlertOpen(true))
+							toast.error('Failure: Something went wrong, please try again.')
 						})
 						.finally(() => {
 							setLoading(false)
 						})
 				} else {
-					dispatch(updateAlertSuccess(false))
-					dispatch(updateAlertOpen(true))
+					toast.error('Failure: Something went wrong, please try again.')
 				}
 			} else {
 				setPostalError(true)
