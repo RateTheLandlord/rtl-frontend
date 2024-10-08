@@ -10,7 +10,7 @@ interface IProps {
 const CountrySelector = ({ setValue }: IProps) => {
 	const { t } = useTranslation('create')
 	return (
-		<div className='sm:col-span-4'>
+		<div className='sm:col-span-1'>
 			<label htmlFor='country' className='block text-sm  text-gray-700'>
 				{t('create-review.review-form.country')}
 			</label>

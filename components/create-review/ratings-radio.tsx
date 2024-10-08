@@ -1,5 +1,5 @@
 import React from 'react'
-import { RadioGroup } from '@headlessui/react'
+import { Label, Radio, RadioGroup } from '@headlessui/react'
 import { classNames } from '@/util/helpers/helper-functions'
 import { useTranslation } from 'react-i18next'
 
@@ -23,26 +23,27 @@ function RatingsRadio({ title, rating, setRating, tooltip }: Props) {
 			<p className='text-xs text-gray-500'>{tooltip}</p>
 
 			<RadioGroup value={rating} onChange={setRating} className='mt-2'>
-				<RadioGroup.Label className='sr-only'>
+				<Label className='sr-only'>
 					{t('create-review.review-radio.choose')}
-				</RadioGroup.Label>
-				<div className='grid grid-cols-5 gap-2 sm:gap-3'>
-					{ratings.map((option) => (
-						<RadioGroup.Option
+				</Label>
+				<div className='grid grid-cols-5'>
+					{ratings.map((option, i) => (
+						<Radio
 							key={option}
 							value={option}
-							className={({ active, checked }) =>
+							className={({ checked }) =>
 								classNames(
-									active ? 'ring-2 ring-teal-500 ring-offset-2' : '',
+									i === 0 ? 'rounded-l-full' : 'border-l-0',
+									i === 4 ? 'rounded-r-full' : 'border-r-1',
 									checked
 										? 'border-transparent bg-teal-600 text-white hover:bg-teal-700'
-										: 'border-gray-200 bg-white text-gray-900 hover:bg-gray-50',
-									'flex cursor-pointer items-center justify-center rounded-md border px-3 py-3 text-sm  uppercase sm:flex-1',
+										: 'border-2 border-teal-600 bg-white text-teal-900 hover:bg-teal-50',
+									'flex cursor-pointer items-center justify-center border px-3 py-4 text-sm uppercase sm:flex-1',
 								)
 							}
 						>
-							<RadioGroup.Label as='span'>{option}</RadioGroup.Label>
-						</RadioGroup.Option>
+							<Label as='span'>{option}</Label>
+						</Radio>
 					))}
 				</div>
 			</RadioGroup>
