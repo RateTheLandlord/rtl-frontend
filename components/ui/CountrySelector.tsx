@@ -1,10 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { country_codes } from '@/util/helpers/getCountryCodes'
 import countries from '@/util/countries/countries.json'
-import { Dispatch, SetStateAction } from 'react'
 
 interface IProps {
-	setValue: Dispatch<SetStateAction<string>>
+	setValue: (str: string) => void
 }
 
 const CountrySelector = ({ setValue }: IProps) => {

@@ -8,7 +8,7 @@ const ratings = [1, 2, 3, 4, 5]
 interface Props {
 	title: string
 	rating: number
-	setRating: React.Dispatch<React.SetStateAction<number>>
+	setRating: (num: number) => void
 	tooltip: string
 }
 

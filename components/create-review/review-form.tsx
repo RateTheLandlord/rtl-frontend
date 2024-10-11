@@ -4,7 +4,6 @@ import AddReviewModal from './add-review-modal'
 import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import MaliciousStringAlert from '../alerts/MaliciousStringAlert'
-import RatingsRadio from './ratings-radio'
 import SuccessModal from './success-modal'
 import { postcodeValidator } from 'postcode-validator'
 import { useTranslation } from 'react-i18next'
@@ -12,30 +11,36 @@ import SpamReviewModal from '@/components/create-review/SpamReviewModal'
 import SheldonModal from '@/components/create-review/SheldonModal'
 import { sheldonReview } from '@/components/create-review/helper'
 import { useLocation } from '@/util/hooks/useLocation'
-import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
-import CityComboBox from '@/components/create-review/components/CityComboBox'
-import LandlordComboBox from '@/components/create-review/components/LandlordComboBox'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import { useReCaptcha } from 'next-recaptcha-v3'
 import Spinner from '../ui/Spinner'
-import CountrySelector from '../ui/CountrySelector'
-import StateSelector from '../ui/StateSelector'
-import TextInput from '../ui/TextInput'
-import LargeTextInput from '../ui/LargeTextInput'
 import { useAppDispatch } from '@/redux/hooks'
 import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 import { Transition, TransitionChild } from '@headlessui/react'
-import RatingStars from '../ui/RatingStars'
 import ReviewPreview from './components/ReviewPreview'
+import LandlordForm from './components/LandlordForm'
+import { classNames } from '@/util/helpers/helper-functions'
+import ReviewHero from './components/ReviewHero'
+import LocationForm from './components/LocationForm'
+import RatingForm from './components/RatingForm'
+import WrittenReviewForm from './components/WrittenReviewForm'
 
 function ReviewForm(): JSX.Element {
 	const { t } = useTranslation('create')
 	const dispatch = useAppDispatch()
 
 	const [getStarted, setGetStarted] = useState(false)
+	const [landlordOpen, setLandlordOpen] = useState(false)
+
 	const [showLocationForm, setShowLocationForm] = useState(false)
+	const [locationOpen, setLocationOpen] = useState(false)
+
 	const [showRatingForm, setShowRatingForm] = useState(false)
+	const [ratingsOpen, setRatingsOpen] = useState(false)
+
 	const [showReviewForm, setShowReviewForm] = useState(false)
+	const [reviewOpen, setReviewOpen] = useState(false)
+
 	const [showPreview, setShowPreview] = useState(false)
 
 	const [maliciousAlertOpen, setMaliciousAlertOpen] = useState(false)
@@ -56,11 +61,6 @@ function ReviewForm(): JSX.Element {
 		locations,
 	}: { searching: boolean; locations: Array<ILocationHookResponse> } =
 		useLocation(city, country)
-	const {
-		isSearching,
-		landlordSuggestions,
-	}: { isSearching: boolean; landlordSuggestions: Array<string> } =
-		useLandlordSuggestions(landlord)
 
 	const [repair, setRepair] = useState<number>(3)
 	const [health, setHealth] = useState<number>(3)
@@ -318,7 +318,10 @@ function ReviewForm(): JSX.Element {
 
 	return (
 		<div
-			className='container flex w-full flex-col items-center px-4 sm:px-0'
+			className={classNames(
+				'container flex w-full flex-col items-center justify-center px-4 sm:px-0',
+				getStarted ? '' : 'h-full',
+			)}
 			data-testid='create-review-form-1'
 		>
 			{maliciousAlertOpen && (
@@ -335,22 +338,11 @@ function ReviewForm(): JSX.Element {
 				setIsOpen={setSheldonReviewOpen}
 			/>
 
-			<div className='border-b-2 border-b-teal-600 py-2'>
-				<h1 className='text-4xl '>{t('create-review.review-form.header')}</h1>
-				<div className='my-3 w-full'>
-					Help us create a better living experience! Please take a moment to
-					rate your landlord using our feedback form. Your input is invaluable
-					in ensuring a responsive and supportive environment for everyone.
-					Thank you for sharing your thoughts!
-				</div>
-				<Button
-					onClick={() => {
-						setGetStarted(true)
-					}}
-				>
-					Get Started!
-				</Button>
-			</div>
+			<ReviewHero
+				setGetStarted={setGetStarted}
+				setLandlordOpen={setLandlordOpen}
+				getStarted={getStarted}
+			/>
 
 			<Transition show={getStarted}>
 				<TransitionChild
@@ -360,47 +352,16 @@ function ReviewForm(): JSX.Element {
 					leaveTo='transform scale-95 opacity-0 max-h-0'
 				>
 					<div className='flex w-full flex-col gap-3 overflow-hidden border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
-						{landlord !== null && showLocationForm ? (
-							<div className='w-full transition-all duration-500'>
-								{landlord}
-							</div>
-						) : (
-							<>
-								<div>
-									Please enter the name of your Landlord or Property Management
-									Company exactly as it appears on your Lease or Rental
-									Agreement. This information is crucial, as it ensures that
-									potential tenants can easily locate your property listing on
-									our site. An accurate name not only helps maintain clarity but
-									also builds trust within our community, allowing others to
-									make informed decisions. <br />
-									Please note that for privacy and security reasons, no
-									addresses are allowed in this field. Taking a moment to
-									double-check the spelling and format will go a long way in
-									connecting your property with prospective renters. Thank you
-									for your attention to detail!
-								</div>
-								<LandlordComboBox
-									name={t('create-review.review-form.landlord')}
-									state={landlord}
-									setState={setLandlordName}
-									suggestions={landlordSuggestions}
-									isSearching={isSearching}
-									error={landlordValidationError}
-									errorText={landlordValidationText}
-								/>
-								<div className='flex w-full justify-end'>
-									<Button
-										disabled={landlord === null}
-										onClick={() => {
-											setShowLocationForm(true)
-										}}
-									>
-										Continue
-									</Button>
-								</div>
-							</>
-						)}
+						<LandlordForm
+							landlordOpen={landlordOpen}
+							setLandlordOpen={setLandlordOpen}
+							landlord={landlord}
+							setLandlordName={setLandlordName}
+							setShowLocationForm={setShowLocationForm}
+							setLocationOpen={setLocationOpen}
+							landlordValidationError={landlordValidationError}
+							landlordValidationText={landlordValidationText}
+						/>
 					</div>
 				</TransitionChild>
 			</Transition>
@@ -413,70 +374,27 @@ function ReviewForm(): JSX.Element {
 					leaveTo='transform scale-95 opacity-0 max-h-0'
 				>
 					<div className='w-full border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
-						{city !== null && showRatingForm ? (
-							<div>{`${city}, ${province}, ${country}${
-								isIreland ? '' : `,${postal}`
-							}`}</div>
-						) : (
-							<>
-								<div className='grid w-full grid-cols-2 gap-3 overflow-hidden'>
-									<CountrySelector setValue={setCountry} />
-
-									<CityComboBox
-										name={t('create-review.review-form.city')}
-										state={city}
-										setState={setCityName}
-										options={locations}
-										searching={searching}
-										error={cityValidationError}
-										errorText={cityValidationErrorText}
-									/>
-
-									<StateSelector
-										value={province}
-										country={country}
-										setValue={setProvince}
-									/>
-									{isIreland ? null : (
-										<TextInput
-											id='postal-code'
-											title={t('create-review.review-form.zip')}
-											placeHolder={t('create-review.review-form.zip')}
-											value={postal}
-											setValue={(str: string) =>
-												handleTextChange(str, 'postal')
-											}
-											error={postalError}
-											errorText={t('create-review.review-form.postal-error')}
-											testid='create-review-form-postal-code-1'
-										/>
-									)}
-									<TextInput
-										id='rent'
-										type='number'
-										title={t('create-review.review-form.rent')}
-										placeHolder={t('create-review.review-form.rent')}
-										value={rent}
-										setValue={(str: string) => handleTextChange(str, 'rent')}
-										testid='create-review-form-rent-1'
-									/>
-								</div>
-								<div className='flex w-full justify-end'>
-									<Button
-										disabled={
-											isIreland
-												? city === null || city.length === 0
-												: city === null ||
-												  city.length === 0 ||
-												  postal.length === 0
-										}
-										onClick={() => setShowRatingForm(true)}
-									>
-										Continue
-									</Button>
-								</div>
-							</>
-						)}
+						<LocationForm
+							locationOpen={locationOpen}
+							city={city}
+							province={province}
+							country={country}
+							isIreland={isIreland}
+							postal={postal}
+							rent={rent}
+							setLocationOpen={setLocationOpen}
+							setCountry={setCountry}
+							setCityName={setCityName}
+							locations={locations}
+							searching={searching}
+							cityValidationError={cityValidationError}
+							cityValidationErrorText={cityValidationErrorText}
+							setProvince={setProvince}
+							handleTextChange={handleTextChange}
+							postalError={postalError}
+							setShowRatingForm={setShowRatingForm}
+							setRatingsOpen={setRatingsOpen}
+						/>
 					</div>
 				</TransitionChild>
 			</Transition>
@@ -489,70 +407,23 @@ function ReviewForm(): JSX.Element {
 					leaveTo='transform scale-95 opacity-0 max-h-0'
 				>
 					<div className='w-full overflow-hidden border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
-						{showReviewForm ? (
-							<div className='flex w-full flex-row gap-6'>
-								{ratings.map((rating) => {
-									return (
-										<div
-											key={rating.title}
-											className='flex flex-col items-center'
-										>
-											<p>{rating.title}</p>
-											<RatingStars value={rating.rating} />
-										</div>
-									)
-								})}
-							</div>
-						) : (
-							<>
-								<div className='flex flex-col gap-2'>
-									<h3 className='mt-2 text-lg  leading-6 text-gray-900'>
-										{t('create-review.review-form.rate-title')}
-									</h3>
-									<RatingsRadio
-										title={t('create-review.review-form.repair')}
-										rating={repair}
-										setRating={setRepair}
-										tooltip={t('create-review.review-form.repair_description')}
-									/>
-
-									<RatingsRadio
-										title={t('create-review.review-form.health')}
-										rating={health}
-										setRating={setHealth}
-										tooltip={t('create-review.review-form.health_description')}
-									/>
-
-									<RatingsRadio
-										title={t('create-review.review-form.stability')}
-										rating={stability}
-										setRating={setStability}
-										tooltip={t(
-											'create-review.review-form.stability_description',
-										)}
-									/>
-
-									<RatingsRadio
-										title={t('create-review.review-form.privacy')}
-										rating={privacy}
-										setRating={setPrivacy}
-										tooltip={t('create-review.review-form.privacy_description')}
-									/>
-
-									<RatingsRadio
-										title={t('create-review.review-form.respect')}
-										rating={respect}
-										setRating={setRespect}
-										tooltip={t('create-review.review-form.respect_description')}
-									/>
-								</div>
-								<div className='flex w-full justify-end pt-2'>
-									<Button onClick={() => setShowReviewForm(true)}>
-										Continue
-									</Button>
-								</div>
-							</>
-						)}
+						<RatingForm
+							ratingsOpen={ratingsOpen}
+							setRatingsOpen={setRatingsOpen}
+							ratings={ratings}
+							repair={repair}
+							setRepair={setRepair}
+							health={health}
+							setHealth={setHealth}
+							stability={stability}
+							setStability={setStability}
+							privacy={privacy}
+							setPrivacy={setPrivacy}
+							respect={respect}
+							setRespect={setRespect}
+							setShowReviewForm={setShowReviewForm}
+							setReviewOpen={setReviewOpen}
+						/>
 					</div>
 				</TransitionChild>
 			</Transition>
@@ -565,29 +436,13 @@ function ReviewForm(): JSX.Element {
 					leaveTo='transform scale-95 opacity-0 max-h-0'
 				>
 					<div className='w-full overflow-hidden border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
-						{showPreview ? (
-							<div>{review}</div>
-						) : (
-							<>
-								<LargeTextInput
-									title={t('create-review.review-form.review')}
-									setValue={(str: string) => handleTextChange(str, 'review')}
-									id='review'
-									placeHolder=''
-									testid='create-review-form-text-1'
-									limitText={t('create-review.review-form.limit', {
-										length: review.length,
-									})}
-									length={2000}
-									value={review}
-								/>
-								<div className='flex w-full justify-end pt-2'>
-									<Button onClick={() => setShowPreview(true)}>
-										Preview Review
-									</Button>
-								</div>
-							</>
-						)}
+						<WrittenReviewForm
+							review={review}
+							reviewOpen={reviewOpen}
+							setReviewOpen={setReviewOpen}
+							handleTextChange={handleTextChange}
+							setShowPreview={setShowPreview}
+						/>
 					</div>
 				</TransitionChild>
 			</Transition>
@@ -600,20 +455,22 @@ function ReviewForm(): JSX.Element {
 					leaveTo='transform scale-95 opacity-0 max-h-0'
 				>
 					<div className='w-full overflow-hidden border-b-2 border-b-teal-600 p-4 py-4 transition-all duration-500'>
-						<ReviewPreview
-							rent={rent}
-							review={review}
-							health={health}
-							respect={respect}
-							privacy={privacy}
-							repair={repair}
-							stability={stability}
-							landlord={landlord}
-							city={city}
-							state={province}
-							country_code={country}
-							zip={postal}
-						/>
+						<div className='flex w-full justify-center'>
+							<ReviewPreview
+								rent={rent}
+								review={review}
+								health={health}
+								respect={respect}
+								privacy={privacy}
+								repair={repair}
+								stability={stability}
+								landlord={landlord}
+								city={city}
+								state={province}
+								country_code={country}
+								zip={postal}
+							/>
+						</div>
 						<div className='w-full py-5'>
 							<div className='mb-2 flex w-full justify-start space-x-2'>
 								<div className='flex h-5 items-center'>
