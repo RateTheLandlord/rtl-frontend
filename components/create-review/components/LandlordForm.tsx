@@ -50,16 +50,15 @@ const LandlordForm = ({
 	) : (
 		<>
 			<div>
-				Please enter the name of your Landlord or Property Management Company
-				exactly as it appears on your Lease or Rental Agreement. This
-				information is crucial, as it ensures that potential tenants can easily
-				locate your property listing on our site. An accurate name not only
-				helps maintain clarity but also builds trust within our community,
-				allowing others to make informed decisions. <br />
-				Please note that for privacy and security reasons, no addresses are
-				allowed in this field. Taking a moment to double-check the spelling and
-				format will go a long way in connecting your property with prospective
-				renters. Thank you for your attention to detail!
+				<h2 className='text-base font-semibold leading-7 text-gray-900'>
+					Landlord
+				</h2>
+				<p className='mt-1 text-sm leading-6 text-gray-600'>
+					Enter the name of your landlord or property management company as it
+					appears on your lease. Double-check the spelling before you submit so
+					your review can be matched with other reviews for this landlord. Do
+					not include the full address, all addresses will be removed.
+				</p>
 			</div>
 			<LandlordComboBox
 				name={t('create-review.review-form.landlord')}

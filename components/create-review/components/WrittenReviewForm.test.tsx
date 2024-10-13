@@ -3,9 +3,6 @@
  */
 import { render, screen, fireEvent } from '@testing-library/react'
 import WrittenReviewForm from './WrittenReviewForm'
-import Button from '@/components/ui/button'
-import LargeTextInput from '@/components/ui/LargeTextInput'
-import { useTranslation } from 'react-i18next'
 
 jest.mock('@/components/ui/button', () =>
 	jest.fn(({ children, ...props }) => <button {...props}>{children}</button>),
@@ -61,7 +58,9 @@ describe('WrittenReviewForm Component', () => {
 	it('should render the review form and preview button when reviewOpen is true', () => {
 		render(<WrittenReviewForm {...defaultProps} reviewOpen={true} />)
 
-		expect(screen.getByText('Reminder for Reviews')).toBeInTheDocument()
+		expect(
+			screen.getByText('Please follow our moderation policy:'),
+		).toBeInTheDocument()
 		expect(screen.getByRole('textbox')).toBeInTheDocument()
 		expect(screen.getByText('Preview Review')).toBeInTheDocument()
 	})

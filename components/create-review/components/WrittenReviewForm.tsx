@@ -35,22 +35,28 @@ const WrittenReviewForm = ({
 			</div>
 		</div>
 	) : (
-		<div>
+		<>
 			<div>
-				<h5 className='font-montserrat-bold text-lg'>Reminder for Reviews</h5>
-				<p>
-					When sharing your experience, please adhere to our moderation policy.
-					Your feedback helps future tenants make informed decisions, so keep
-					your reviews relevant and respectful.
-					<br />
-					We prohibit threats, hate speech, and any lewd or discriminatory
-					language. While we allow landlord names for transparency, do not
-					include addresses, phone numbers, or personal information.
-					<br />
-					Reviews that violate these guidelines may be amended or removed at our
-					discretion. We appreciate your cooperation in maintaining a safe and
-					informative community!
+				<h2 className='text-base font-semibold leading-7 text-gray-900'>
+					Written Review
+				</h2>
+				<p className='mt-1 text-sm leading-6 text-gray-600'>
+					Please follow our moderation policy:
 				</p>
+				<ol className='mt-1 list-decimal pl-4 text-sm leading-6 text-gray-600'>
+					<li>
+						Keep reviews civil and avoid including personal information such as
+						addresses or phone numbers.
+					</li>
+					<li>
+						Avoid sharing personal details about yourself or your landlord that
+						are not relevant to your rental experience.
+					</li>
+					<li>
+						Inappropriate content may be removed. Thank you for maintaining a
+						safe and helpful community!
+					</li>
+				</ol>
 			</div>
 			<LargeTextInput
 				title={t('create-review.review-form.review')}
@@ -75,7 +81,7 @@ const WrittenReviewForm = ({
 					Preview Review
 				</Button>
 			</div>
-		</div>
+		</>
 	)
 }
 

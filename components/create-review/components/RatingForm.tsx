@@ -69,10 +69,15 @@ const RatingForm = ({
 		</div>
 	) : (
 		<>
-			<div className='flex flex-col gap-2'>
-				<h3 className='mt-2 text-lg  leading-6 text-gray-900'>
+			<div className='mb-3'>
+				<h2 className='text-base font-semibold leading-7 text-gray-900'>
+					Rating Form
+				</h2>
+				<p className='mt-1 text-sm leading-6 text-gray-600'>
 					{t('create-review.review-form.rate-title')}
-				</h3>
+				</p>
+			</div>
+			<div className='flex flex-col gap-2'>
 				<RatingsRadio
 					title={t('create-review.review-form.repair')}
 					rating={repair}
