@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import AddReviewModal from './add-review-modal'
 import Button from '../ui/button'
-import ButtonLight from '../ui/button-light'
 import MaliciousStringAlert from '../alerts/MaliciousStringAlert'
 import SuccessModal from './success-modal'
 import { postcodeValidator } from 'postcode-validator'
@@ -320,7 +319,7 @@ function ReviewForm(): JSX.Element {
 		<div
 			className={classNames(
 				'container flex w-full flex-col items-center justify-center px-4 sm:px-0',
-				getStarted ? '' : 'h-full',
+				getStarted ? '' : 'lg:h-full',
 			)}
 			data-testid='create-review-form-1'
 		>
@@ -522,9 +521,6 @@ function ReviewForm(): JSX.Element {
 								className='flex justify-center gap-5 pt-5 sm:gap-3'
 								data-testid='create-review-form-submit-button-1'
 							>
-								<ButtonLight>
-									{t('create-review.review-form.reset')}
-								</ButtonLight>
 								{loading ? (
 									<Spinner />
 								) : (
@@ -539,7 +535,7 @@ function ReviewForm(): JSX.Element {
 										}
 										onClick={() => handleSubmit()}
 									>
-										{t('create-review.review-form.submit')}
+										Submit Review
 									</Button>
 								)}
 							</div>

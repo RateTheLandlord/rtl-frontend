@@ -12,11 +12,11 @@ const ReviewHero = ({ getStarted, setGetStarted, setLandlordOpen }: IProps) => {
 	return (
 		<div
 			className={classNames(
-				'my-2 flex flex-col items-center justify-center',
-				getStarted ? '' : 'h-full',
+				'flex flex-col items-center justify-center',
+				getStarted ? '' : 'lg:h-full',
 			)}
 		>
-			<div className='flex flex-col items-center justify-center gap-4 rounded-3xl bg-gray-100 p-4'>
+			<div className='mt-2 flex flex-col items-center justify-center gap-4 rounded-3xl bg-gray-100 p-4 lg:mt-0'>
 				{getStarted ? null : (
 					<div className='mx-auto flex max-w-2xl lg:max-w-none lg:flex-none'>
 						<div className='max-w-3xl flex-none sm:max-w-5xl lg:max-w-none'>
@@ -36,9 +36,10 @@ const ReviewHero = ({ getStarted, setGetStarted, setLandlordOpen }: IProps) => {
 					</p>
 					<p>
 						Your thoughts are crucial in identifying areas for improvement and
-						recognizing what’s working well. Whether it’s communication,
-						maintenance responsiveness, or overall satisfaction, your feedback
-						will guide us in making positive changes for everyone’s benefit.
+						recognizing what&apos;s working well. Whether it&apos;s
+						communication, maintenance responsiveness, or overall satisfaction,
+						your feedback will guide us in making positive changes for
+						everyone&apos;s benefit.
 					</p>
 					<p>
 						Thank you for sharing your insights! Together, we can enhance our

@@ -66,6 +66,7 @@ const WrittenReviewForm = ({
 			/>
 			<div className='flex w-full justify-end pt-2'>
 				<Button
+					disabled={review.length === 0}
 					onClick={() => {
 						setShowPreview(true)
 						setReviewOpen(false)

@@ -46,7 +46,7 @@ const RatingForm = ({
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
 			<div className='flex flex-col gap-2'>
 				<p className='text-xs'>Ratings</p>
-				<div className='flex w-full flex-row gap-6'>
+				<div className='flex w-full flex-row flex-wrap gap-6'>
 					{ratings.map((rating) => {
 						return (
 							<div key={rating.title} className='flex flex-col items-center'>
