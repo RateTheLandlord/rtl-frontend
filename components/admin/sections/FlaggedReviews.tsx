@@ -5,11 +5,9 @@ import { fetcher } from '@/util/helpers/fetcher'
 import EditReviewModal from '@/components/modal/EditReviewModal'
 import RemoveReviewModal from '@/components/modal/RemoveReviewModal'
 import Spinner from '@/components/ui/Spinner'
-import { useAppDispatch } from '@/redux/hooks'
-import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
+import { toast } from 'react-toastify'
 
 const FlaggedReviews = () => {
-	const dispatch = useAppDispatch()
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
 
@@ -55,13 +53,11 @@ const FlaggedReviews = () => {
 			})
 			.then(() => {
 				mutate()
-				dispatch(updateAlertSuccess(true))
-				dispatch(updateAlertOpen(true))
+				toast.success('Success!')
 			})
 			.catch((err) => {
 				console.log(err)
-				dispatch(updateAlertSuccess(false))
-				dispatch(updateAlertOpen(true))
+				toast.error('Failure: Something went wrong, please try again.')
 			})
 	}
 

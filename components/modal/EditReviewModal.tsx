@@ -14,10 +14,9 @@ import {
 	Transition,
 	TransitionChild,
 } from '@headlessui/react'
-import { useAppDispatch } from '@/redux/hooks'
-import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import dayjs from 'dayjs'
+import { toast } from 'react-toastify'
 
 interface IProps {
 	selectedReview: Review | undefined
@@ -34,7 +33,6 @@ const EditReviewModal = ({
 	editReviewOpen,
 	setSelectedReview,
 }: IProps) => {
-	const dispatch = useAppDispatch()
 	const [landlord, setLandlord] = useState<string>(
 		selectedReview?.landlord || '',
 	)
@@ -89,14 +87,12 @@ const EditReviewModal = ({
 			.then(() => {
 				handleMutate()
 				setEditReviewOpen(false)
-				dispatch(updateAlertSuccess(true))
-				dispatch(updateAlertOpen(true))
+				toast.success('Success!')
 				setSelectedReview(undefined)
 			})
 			.catch((err) => {
 				console.log(err)
-				dispatch(updateAlertSuccess(false))
-				dispatch(updateAlertOpen(true))
+				toast.error('Failure: Something went wrong, please try again.')
 				setSelectedReview(undefined)
 			})
 	}
