@@ -13,8 +13,6 @@ import { useLocation } from '@/util/hooks/useLocation'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import { useReCaptcha } from 'next-recaptcha-v3'
 import Spinner from '../ui/Spinner'
-import { useAppDispatch } from '@/redux/hooks'
-import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
 import { Transition, TransitionChild } from '@headlessui/react'
 import ReviewPreview from './components/ReviewPreview'
 import LandlordForm from './components/LandlordForm'
@@ -23,10 +21,10 @@ import ReviewHero from './components/ReviewHero'
 import LocationForm from './components/LocationForm'
 import RatingForm from './components/RatingForm'
 import WrittenReviewForm from './components/WrittenReviewForm'
+import { toast } from 'react-toastify'
 
 function ReviewForm(): JSX.Element {
 	const { t } = useTranslation('create')
-	const dispatch = useAppDispatch()
 
 	const [getStarted, setGetStarted] = useState(false)
 	const [landlordOpen, setLandlordOpen] = useState(false)
@@ -258,15 +256,13 @@ function ReviewForm(): JSX.Element {
 							}
 						})
 						.catch(() => {
-							dispatch(updateAlertSuccess(false))
-							dispatch(updateAlertOpen(true))
+							toast.error('Failure: Something went wrong, please try again.')
 						})
 						.finally(() => {
 							setLoading(false)
 						})
 				} else {
-					dispatch(updateAlertSuccess(false))
-					dispatch(updateAlertOpen(true))
+					toast.error('Failure: Something went wrong, please try again.')
 				}
 			} else {
 				setPostalError(true)
