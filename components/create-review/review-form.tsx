@@ -2,9 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import AddReviewModal from './add-review-modal'
 import Button from '../ui/button'
-import ButtonLight from '../ui/button-light'
 import MaliciousStringAlert from '../alerts/MaliciousStringAlert'
-import RatingsRadio from './ratings-radio'
 import SuccessModal from './success-modal'
 import { postcodeValidator } from 'postcode-validator'
 import { useTranslation } from 'react-i18next'
@@ -12,20 +10,35 @@ import SpamReviewModal from '@/components/create-review/SpamReviewModal'
 import SheldonModal from '@/components/create-review/SheldonModal'
 import { sheldonReview } from '@/components/create-review/helper'
 import { useLocation } from '@/util/hooks/useLocation'
-import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
-import CityComboBox from '@/components/create-review/components/CityComboBox'
-import LandlordComboBox from '@/components/create-review/components/LandlordComboBox'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import { useReCaptcha } from 'next-recaptcha-v3'
 import Spinner from '../ui/Spinner'
-import CountrySelector from '../ui/CountrySelector'
-import StateSelector from '../ui/StateSelector'
-import TextInput from '../ui/TextInput'
-import LargeTextInput from '../ui/LargeTextInput'
+import { Transition, TransitionChild } from '@headlessui/react'
+import ReviewPreview from './components/ReviewPreview'
+import LandlordForm from './components/LandlordForm'
+import { classNames } from '@/util/helpers/helper-functions'
+import ReviewHero from './components/ReviewHero'
+import LocationForm from './components/LocationForm'
+import RatingForm from './components/RatingForm'
+import WrittenReviewForm from './components/WrittenReviewForm'
 import { toast } from 'react-toastify'
 
 function ReviewForm(): JSX.Element {
 	const { t } = useTranslation('create')
+
+	const [getStarted, setGetStarted] = useState(false)
+	const [landlordOpen, setLandlordOpen] = useState(false)
+
+	const [showLocationForm, setShowLocationForm] = useState(false)
+	const [locationOpen, setLocationOpen] = useState(false)
+
+	const [showRatingForm, setShowRatingForm] = useState(false)
+	const [ratingsOpen, setRatingsOpen] = useState(false)
+
+	const [showReviewForm, setShowReviewForm] = useState(false)
+	const [reviewOpen, setReviewOpen] = useState(false)
+
+	const [showPreview, setShowPreview] = useState(false)
 
 	const [maliciousAlertOpen, setMaliciousAlertOpen] = useState(false)
 	const [successModalOpen, setSuccessModalOpen] = useState(false)
@@ -45,11 +58,6 @@ function ReviewForm(): JSX.Element {
 		locations,
 	}: { searching: boolean; locations: Array<ILocationHookResponse> } =
 		useLocation(city, country)
-	const {
-		isSearching,
-		landlordSuggestions,
-	}: { isSearching: boolean; landlordSuggestions: Array<string> } =
-		useLandlordSuggestions(landlord)
 
 	const [repair, setRepair] = useState<number>(3)
 	const [health, setHealth] = useState<number>(3)
@@ -174,9 +182,7 @@ function ReviewForm(): JSX.Element {
 		}
 	}, [postal, country, touchedPostal])
 
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault()
-
+	const handleSubmit = async () => {
 		if (landlord.trim().length < 1) {
 			setLandlordValidationError(true)
 			setLandlordValidationText('Landlord Name cannot be empty')
@@ -297,9 +303,20 @@ function ReviewForm(): JSX.Element {
 
 	const isIreland = country === 'IE'
 
+	const ratings = [
+		{ title: 'Health and Safety', rating: health },
+		{ title: 'Respect', rating: respect },
+		{ title: 'Privacy', rating: privacy },
+		{ title: 'Repair', rating: repair },
+		{ title: 'Rental Stability', rating: stability },
+	]
+
 	return (
 		<div
-			className='container flex w-full flex-col items-center px-4 sm:px-0'
+			className={classNames(
+				'container flex w-full flex-col items-center justify-center px-4 sm:px-0',
+				getStarted ? '' : 'lg:h-full',
+			)}
 			data-testid='create-review-form-1'
 		>
 			{maliciousAlertOpen && (
@@ -315,204 +332,213 @@ function ReviewForm(): JSX.Element {
 				isOpen={sheldonReviewOpen}
 				setIsOpen={setSheldonReviewOpen}
 			/>
-			<div className='my-3 w-full'>
-				<h1 className='border-b-2 border-b-teal-600 text-4xl '>
-					{t('create-review.review-form.header')}
-				</h1>
-			</div>
-			<form
-				onSubmit={handleSubmit}
-				className='w-full space-y-8 divide-y divide-gray-200'
-			>
-				<div className='space-y-8 divide-y divide-gray-200'>
-					<div className='pt-8'>
-						<div>
-							<h3 className='text-lg  leading-6 text-gray-900'>
-								{t('create-review.review-form.title')}
-							</h3>
-							<p className='mt-1 text-sm text-gray-500'>
-								{t('create-review.review-form.sub')}
-							</p>
+
+			<ReviewHero
+				setGetStarted={setGetStarted}
+				setLandlordOpen={setLandlordOpen}
+				getStarted={getStarted}
+			/>
+
+			<Transition show={getStarted}>
+				<TransitionChild
+					enterFrom='transform scale-95 opacity-0 max-h-0'
+					enterTo='transform scale-100 opacity-100 max-h-96'
+					leaveFrom='transform scale-100 opacity-100 max-h-96'
+					leaveTo='transform scale-95 opacity-0 max-h-0'
+				>
+					<div className='flex w-full flex-col gap-3 overflow-hidden border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
+						<LandlordForm
+							landlordOpen={landlordOpen}
+							setLandlordOpen={setLandlordOpen}
+							landlord={landlord}
+							setLandlordName={setLandlordName}
+							setShowLocationForm={setShowLocationForm}
+							setLocationOpen={setLocationOpen}
+							landlordValidationError={landlordValidationError}
+							landlordValidationText={landlordValidationText}
+						/>
+					</div>
+				</TransitionChild>
+			</Transition>
+
+			<Transition show={showLocationForm}>
+				<TransitionChild
+					enterFrom='transform scale-95 opacity-0 max-h-0'
+					enterTo='transform scale-100 opacity-100 max-h-96'
+					leaveFrom='transform scale-100 opacity-100 max-h-96'
+					leaveTo='transform scale-95 opacity-0 max-h-0'
+				>
+					<div className='w-full border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
+						<LocationForm
+							locationOpen={locationOpen}
+							city={city}
+							province={province}
+							country={country}
+							isIreland={isIreland}
+							postal={postal}
+							rent={rent}
+							setLocationOpen={setLocationOpen}
+							setCountry={setCountry}
+							setCityName={setCityName}
+							locations={locations}
+							searching={searching}
+							cityValidationError={cityValidationError}
+							cityValidationErrorText={cityValidationErrorText}
+							setProvince={setProvince}
+							handleTextChange={handleTextChange}
+							postalError={postalError}
+							setShowRatingForm={setShowRatingForm}
+							setRatingsOpen={setRatingsOpen}
+						/>
+					</div>
+				</TransitionChild>
+			</Transition>
+
+			<Transition show={showRatingForm}>
+				<TransitionChild
+					enterFrom='transform scale-95 opacity-0 max-h-0'
+					enterTo='transform scale-100 opacity-100 max-h-96'
+					leaveFrom='transform scale-100 opacity-100 max-h-96'
+					leaveTo='transform scale-95 opacity-0 max-h-0'
+				>
+					<div className='w-full overflow-hidden border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
+						<RatingForm
+							ratingsOpen={ratingsOpen}
+							setRatingsOpen={setRatingsOpen}
+							ratings={ratings}
+							repair={repair}
+							setRepair={setRepair}
+							health={health}
+							setHealth={setHealth}
+							stability={stability}
+							setStability={setStability}
+							privacy={privacy}
+							setPrivacy={setPrivacy}
+							respect={respect}
+							setRespect={setRespect}
+							setShowReviewForm={setShowReviewForm}
+							setReviewOpen={setReviewOpen}
+						/>
+					</div>
+				</TransitionChild>
+			</Transition>
+
+			<Transition show={showReviewForm}>
+				<TransitionChild
+					enterFrom='transform scale-95 opacity-0 max-h-0'
+					enterTo='transform scale-100 opacity-100 max-h-96'
+					leaveFrom='transform scale-100 opacity-100 max-h-96'
+					leaveTo='transform scale-95 opacity-0 max-h-0'
+				>
+					<div className='w-full overflow-hidden border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
+						<WrittenReviewForm
+							review={review}
+							reviewOpen={reviewOpen}
+							setReviewOpen={setReviewOpen}
+							handleTextChange={handleTextChange}
+							setShowPreview={setShowPreview}
+						/>
+					</div>
+				</TransitionChild>
+			</Transition>
+
+			<Transition show={showPreview}>
+				<TransitionChild
+					enterFrom='transform scale-95 opacity-0 max-h-0'
+					enterTo='transform scale-100 opacity-100 max-h-96'
+					leaveFrom='transform scale-100 opacity-100 max-h-96'
+					leaveTo='transform scale-95 opacity-0 max-h-0'
+				>
+					<div className='w-full overflow-hidden border-b-2 border-b-teal-600 p-4 py-4 transition-all duration-500'>
+						<div className='flex w-full justify-center'>
+							<ReviewPreview
+								rent={rent}
+								review={review}
+								health={health}
+								respect={respect}
+								privacy={privacy}
+								repair={repair}
+								stability={stability}
+								landlord={landlord}
+								city={city}
+								state={province}
+								country_code={country}
+								zip={postal}
+							/>
 						</div>
-						<div className='mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-8'>
-							<div className='sm:col-span-4'>
-								<LandlordComboBox
-									name={t('create-review.review-form.landlord')}
-									state={landlord}
-									setState={setLandlordName}
-									suggestions={landlordSuggestions}
-									isSearching={isSearching}
-									error={landlordValidationError}
-									errorText={landlordValidationText}
-								/>
+						<div className='w-full py-5'>
+							<div className='mb-2 flex w-full justify-start space-x-2'>
+								<div className='flex h-5 items-center'>
+									<input
+										id='terms-1'
+										name='terms-1'
+										type='checkbox'
+										checked={disclaimerOne}
+										onChange={() => setDisclaimerOne((p) => !p)}
+										className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
+									/>
+								</div>
+								<label htmlFor='terms-1' className='text-sm text-gray-500'>
+									{t('create-review.review-form.disclaimer-1')}
+								</label>
+							</div>
+							<div className='mb-2 flex w-full justify-start space-x-2'>
+								<div className='flex h-5 items-center'>
+									<input
+										id='terms-2'
+										name='terms-2'
+										type='checkbox'
+										checked={disclaimerTwo}
+										onChange={() => setDisclaimerTwo((p) => !p)}
+										className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
+									/>
+								</div>
+								<label htmlFor='terms-2' className='text-sm text-gray-500'>
+									{t('create-review.review-form.disclaimer-2')}
+								</label>
+							</div>
+							<div className='mb-2 flex w-full justify-start space-x-2'>
+								<div className='flex h-5 items-center'>
+									<input
+										id='terms-3'
+										name='terms-3'
+										type='checkbox'
+										checked={disclaimerThree}
+										onChange={() => setDisclaimerThree((p) => !p)}
+										className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
+									/>
+								</div>
+								<label htmlFor='terms-3' className='text-sm text-gray-500'>
+									{t('create-review.review-form.disclaimer-3')}
+								</label>
 							</div>
 
-							<CountrySelector setValue={setCountry} />
-
-							<CityComboBox
-								name={t('create-review.review-form.city')}
-								state={city}
-								setState={setCityName}
-								options={locations}
-								searching={searching}
-								error={cityValidationError}
-								errorText={cityValidationErrorText}
-							/>
-
-							<StateSelector
-								value={province}
-								country={country}
-								setValue={setProvince}
-							/>
-							{isIreland ? null : (
-								<TextInput
-									id='postal-code'
-									title={t('create-review.review-form.zip')}
-									placeHolder={t('create-review.review-form.zip')}
-									value={postal}
-									setValue={(str: string) => handleTextChange(str, 'postal')}
-									error={postalError}
-									errorText={t('create-review.review-form.postal-error')}
-									testid='create-review-form-postal-code-1'
-								/>
-							)}
-
-							<TextInput
-								id='rent'
-								type='number'
-								title={t('create-review.review-form.rent')}
-								placeHolder={t('create-review.review-form.rent')}
-								value={rent}
-								setValue={(str: string) => handleTextChange(str, 'rent')}
-								testid='create-review-form-rent-1'
-							/>
-						</div>
-					</div>
-					<div className='flex flex-col gap-2'>
-						<h3 className='mt-2 text-lg  leading-6 text-gray-900'>
-							{t('create-review.review-form.rate-title')}
-						</h3>
-						<RatingsRadio
-							title={t('create-review.review-form.repair')}
-							rating={repair}
-							setRating={setRepair}
-							tooltip={t('create-review.review-form.repair_description')}
-						/>
-
-						<RatingsRadio
-							title={t('create-review.review-form.health')}
-							rating={health}
-							setRating={setHealth}
-							tooltip={t('create-review.review-form.health_description')}
-						/>
-
-						<RatingsRadio
-							title={t('create-review.review-form.stability')}
-							rating={stability}
-							setRating={setStability}
-							tooltip={t('create-review.review-form.stability_description')}
-						/>
-
-						<RatingsRadio
-							title={t('create-review.review-form.privacy')}
-							rating={privacy}
-							setRating={setPrivacy}
-							tooltip={t('create-review.review-form.privacy_description')}
-						/>
-
-						<RatingsRadio
-							title={t('create-review.review-form.respect')}
-							rating={respect}
-							setRating={setRespect}
-							tooltip={t('create-review.review-form.respect_description')}
-						/>
-					</div>
-				</div>
-
-				<LargeTextInput
-					title={t('create-review.review-form.review')}
-					setValue={(str: string) => handleTextChange(str, 'review')}
-					id='review'
-					placeHolder=''
-					testid='create-review-form-text-1'
-					limitText={t('create-review.review-form.limit', {
-						length: review.length,
-					})}
-					length={2000}
-					value={review}
-				/>
-
-				<div className='w-full py-5'>
-					<div className='mb-2 flex w-full justify-start space-x-2'>
-						<div className='flex h-5 items-center'>
-							<input
-								id='terms-1'
-								name='terms-1'
-								type='checkbox'
-								checked={disclaimerOne}
-								onChange={() => setDisclaimerOne((p) => !p)}
-								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
-							/>
-						</div>
-						<label htmlFor='terms-1' className='text-sm text-gray-500'>
-							{t('create-review.review-form.disclaimer-1')}
-						</label>
-					</div>
-					<div className='mb-2 flex w-full justify-start space-x-2'>
-						<div className='flex h-5 items-center'>
-							<input
-								id='terms-2'
-								name='terms-2'
-								type='checkbox'
-								checked={disclaimerTwo}
-								onChange={() => setDisclaimerTwo((p) => !p)}
-								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
-							/>
-						</div>
-						<label htmlFor='terms-2' className='text-sm text-gray-500'>
-							{t('create-review.review-form.disclaimer-2')}
-						</label>
-					</div>
-					<div className='mb-2 flex w-full justify-start space-x-2'>
-						<div className='flex h-5 items-center'>
-							<input
-								id='terms-3'
-								name='terms-3'
-								type='checkbox'
-								checked={disclaimerThree}
-								onChange={() => setDisclaimerThree((p) => !p)}
-								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
-							/>
-						</div>
-						<label htmlFor='terms-3' className='text-sm text-gray-500'>
-							{t('create-review.review-form.disclaimer-3')}
-						</label>
-					</div>
-
-					<div
-						className='flex justify-center gap-5 pt-5 sm:gap-3'
-						data-testid='create-review-form-submit-button-1'
-					>
-						<ButtonLight>{t('create-review.review-form.reset')}</ButtonLight>
-						{loading ? (
-							<Spinner />
-						) : (
-							<Button
-								disabled={
-									!disclaimerOne ||
-									!disclaimerTwo ||
-									!disclaimerThree ||
-									maliciousStringDetected ||
-									loading ||
-									review.length > 2000
-								}
+							<div
+								className='flex justify-center gap-5 pt-5 sm:gap-3'
+								data-testid='create-review-form-submit-button-1'
 							>
-								{t('create-review.review-form.submit')}
-							</Button>
-						)}
+								{loading ? (
+									<Spinner />
+								) : (
+									<Button
+										disabled={
+											!disclaimerOne ||
+											!disclaimerTwo ||
+											!disclaimerThree ||
+											maliciousStringDetected ||
+											loading ||
+											review.length > 2000
+										}
+										onClick={() => handleSubmit()}
+									>
+										Submit Review
+									</Button>
+								)}
+							</div>
+						</div>
 					</div>
-				</div>
-			</form>
+				</TransitionChild>
+			</Transition>
 		</div>
 	)
 }
