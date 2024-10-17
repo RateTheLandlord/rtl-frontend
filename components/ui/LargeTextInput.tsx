@@ -22,7 +22,7 @@ const LargeTextInput = ({
 	limitText,
 }: IProps) => {
 	return (
-		<div>
+		<div className='w-full'>
 			<label htmlFor={id} className='mt-2 block text-sm  text-gray-700'>
 				{title}
 			</label>

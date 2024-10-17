@@ -22,7 +22,7 @@ const TextInput = ({
 	type = 'text',
 }: IProps) => {
 	return (
-		<div data-testid={testid || ''} className='w-full sm:col-span-2'>
+		<div data-testid={testid || ''} className='w-full sm:col-span-1'>
 			<label htmlFor={id} className='block text-sm  text-gray-700 sm:mt-px'>
 				{title}
 			</label>
