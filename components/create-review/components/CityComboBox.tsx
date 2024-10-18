@@ -26,11 +26,11 @@ export default function CityComboBox({
 		error ? 'border-red-400' : ''
 	}`
 	return (
-		<div className='sm:col-span-2'>
+		<div className='sm:col-span-1'>
 			<Combobox value={state} onChange={setState}>
 				<div
 					data-testid='create-review-form-city-1'
-					className='relative w-full pt-2 lg:pt-0'
+					className='relative w-full'
 				>
 					<label htmlFor='city' className='block text-sm  text-gray-700'>
 						{name}

@@ -1,5 +1,11 @@
 import { Fragment, useState } from 'react'
-import { Menu, Transition } from '@headlessui/react'
+import {
+	Menu,
+	MenuButton,
+	MenuItem,
+	MenuItems,
+	Transition,
+} from '@headlessui/react'
 import { classNames } from '@/util/helpers/helper-functions'
 import { MenuAlt3Icon } from '@heroicons/react/solid'
 import Button from '@/components/ui/button'
@@ -11,16 +17,13 @@ import AddResourceModal from '../components/AddResourceModal'
 import Modal from '@/components/modal/Modal'
 import EditResourceModal from '@/components/modal/EditResourceModal'
 import RemoveResourceModal from '@/components/modal/RemoveResourceModal'
-import { useAppDispatch } from '@/redux/hooks'
-import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
+import { toast } from 'react-toastify'
 
 const TenantResources = () => {
 	const { data, error, mutate } = useSWR<ResourceResponse>(
 		['/api/tenant-resources/get-resources', { limit: '1000' }],
 		fetchWithBody,
 	)
-
-	const dispatch = useAppDispatch()
 
 	const [name, setName] = useState<string>('')
 	const [country, setCountry] = useState<string>('CA')
@@ -81,14 +84,12 @@ const TenantResources = () => {
 			.then(() => {
 				mutate()
 				setAddResourceOpen(false)
-				dispatch(updateAlertSuccess(true))
-				dispatch(updateAlertOpen(true))
+				toast.success('Success!')
 				resetForm()
 			})
 			.catch((err) => {
 				console.log(err)
-				dispatch(updateAlertSuccess(false))
-				dispatch(updateAlertOpen(true))
+				toast.error('Failure: Something went wrong, please try again.')
 			})
 			.finally(() => setLoading(false))
 	}
@@ -184,10 +185,10 @@ const TenantResources = () => {
 							</div>
 							<div className='flex flex-none items-center gap-x-4'>
 								<Menu as='div' className='relative flex-none'>
-									<Menu.Button className='-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900'>
+									<MenuButton className='-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900'>
 										<span className='sr-only'>Open options</span>
 										<MenuAlt3Icon className='h-5 w-5' aria-hidden='true' />
-									</Menu.Button>
+									</MenuButton>
 									<Transition
 										as={Fragment}
 										enter='transition ease-out duration-100'
@@ -197,8 +198,8 @@ const TenantResources = () => {
 										leaveFrom='transform opacity-100 scale-100'
 										leaveTo='transform opacity-0 scale-95'
 									>
-										<Menu.Items className='absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none'>
-											<Menu.Item>
+										<MenuItems className='absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none'>
+											<MenuItem>
 												{({ active }) => (
 													<button
 														onClick={() => {
@@ -214,9 +215,9 @@ const TenantResources = () => {
 														<span className='sr-only'>, {resource.name}</span>
 													</button>
 												)}
-											</Menu.Item>
+											</MenuItem>
 
-											<Menu.Item>
+											<MenuItem>
 												{({ active }) => (
 													<button
 														onClick={() => {
@@ -232,8 +233,8 @@ const TenantResources = () => {
 														<span className='sr-only'>, {resource.name}</span>
 													</button>
 												)}
-											</Menu.Item>
-										</Menu.Items>
+											</MenuItem>
+										</MenuItems>
 									</Transition>
 								</Menu>
 							</div>
