@@ -1,5 +1,7 @@
 {
 	"create-review": {
+		"edit": "Edit",
+		"continue": "Continue",
 		"review-radio": {
 			"rating": "Rating",
 			"choose": "Choose a rating"
@@ -28,7 +30,7 @@
 			"repair": "Repair",
 			"repair_description": "Landlords have a legal obligation to keep the rental property in a safe and habitable condition. Tenants should receive timely repairs by trained professionals to keep their vital systems like plumbing and heating in order.",
 			"review": "Written Review",
-			"submit": "Submit",
+			"submit": "Submit Review",
 			"reset": "Reset",
 			"postal-error": "Error. Postal Code / ZIP Invalid",
 			"limit": "Character Limit: {{length}}/2000",
@@ -51,6 +53,29 @@
 		"spam-modal": {
 			"title": "It appears you have reviewed this Landlord before...",
 			"description": "Please only leave one review per landlord you've had so that this site can remain a fair representation of rental experiences. Any repeat reviews or spam will be deleted. If you have any questions, please reach out to us at contact@ratethelandlord.org"
+		},
+		"hero": {
+			"title": "Help Us Create a Better Living Experience!",
+			"body": "Thank you for reviewing your landlord! Your feedback on maintenance, communication, and overall satisfaction will help tenants in your area make informed housing decisions.",
+			"start": "Start a Review"
+		},
+		"landlord-form": {
+			"title": "Landlord",
+			"body": "Enter the name of your landlord or property management company as it appears on your lease. Double-check the spelling before you submit so your review can be matched with other reviews for this landlord. Do not include the full address, all addresses will be removed."
+		},
+		"location-form": {
+			"title": "Location"
+		},
+		"ratings-form": {
+			"title": "Ratings"
+		},
+		"written-review": {
+			"title": "Written Review",
+			"policy-1": "Please follow our moderation policy",
+			"policy-2": "Keep reviews civil and avoid including personal information such as addresses or phone numbers.",
+			"policy-3": "Avoid sharing personal details about yourself or your landlord that are not relevant to your rental experience.",
+			"policy-4": "Inappropriate content may be removed. Thank you for maintaining a safe and helpful community!",
+			"preview-review": "Preview Review"
 		}
 	}
 }

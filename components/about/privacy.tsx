@@ -13,7 +13,7 @@ const Privacy = () => {
 					{t('about.privacy.info')}
 				</p>
 				<Link href='/privacy-policy' className='text-blue-500 underline'>
-					Read More
+					{t('about.privacy.readmore')}
 				</Link>
 			</div>
 		</div>

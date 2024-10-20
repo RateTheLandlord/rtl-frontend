@@ -48,15 +48,17 @@ describe('LandlordForm Component', () => {
 	it('should render landlord info and Edit button when landlordOpen is false', () => {
 		render(<LandlordForm {...defaultProps} />)
 
-		expect(screen.getByText('Landlord')).toBeInTheDocument()
+		expect(
+			screen.getByText('create-review.landlord-form.title'),
+		).toBeInTheDocument()
 		expect(screen.getByText('John Doe')).toBeInTheDocument()
-		expect(screen.getByText('Edit')).toBeInTheDocument()
+		expect(screen.getByText('create-review.edit')).toBeInTheDocument()
 	})
 
 	it('should call setLandlordOpen(true) when Edit button is clicked', () => {
 		render(<LandlordForm {...defaultProps} />)
 
-		fireEvent.click(screen.getByText('Edit'))
+		fireEvent.click(screen.getByText('create-review.edit'))
 
 		expect(mockSetLandlordOpen).toHaveBeenCalledWith(true)
 	})
@@ -76,7 +78,7 @@ describe('LandlordForm Component', () => {
 			/>,
 		)
 
-		fireEvent.click(screen.getByText('Continue'))
+		fireEvent.click(screen.getByText('create-review.continue'))
 
 		expect(mockSetShowLocationForm).toHaveBeenCalledWith(true)
 		expect(mockSetLocationOpen).toHaveBeenCalledWith(true)
@@ -86,7 +88,7 @@ describe('LandlordForm Component', () => {
 	it('should disable Continue button if landlord is empty', () => {
 		render(<LandlordForm {...defaultProps} landlordOpen={true} landlord='' />)
 
-		const continueButton = screen.getByText('Continue')
+		const continueButton = screen.getByText('create-review.continue')
 		expect(continueButton).toBeDisabled()
 	})
 })

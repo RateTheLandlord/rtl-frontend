@@ -56,18 +56,20 @@ describe('RatingForm Component', () => {
 	it('should render ratings info and Edit button when ratingsOpen is false', () => {
 		render(<RatingForm {...defaultProps} />)
 
-		expect(screen.getByText('Ratings')).toBeInTheDocument()
+		expect(
+			screen.getByText('create-review.ratings-form.title'),
+		).toBeInTheDocument()
 		expect(screen.getByText('Repair')).toBeInTheDocument()
 		expect(screen.getByText('Health')).toBeInTheDocument()
 		expect(screen.getByText('Privacy')).toBeInTheDocument()
 		expect(screen.getAllByText('RatingStars')).toHaveLength(3)
-		expect(screen.getByText('Edit')).toBeInTheDocument()
+		expect(screen.getByText('create-review.edit')).toBeInTheDocument()
 	})
 
 	it('should call setRatingsOpen(true) when Edit button is clicked', () => {
 		render(<RatingForm {...defaultProps} />)
 
-		fireEvent.click(screen.getByText('Edit'))
+		fireEvent.click(screen.getByText('create-review.edit'))
 
 		expect(mockSetRatingsOpen).toHaveBeenCalledWith(true)
 	})
@@ -81,7 +83,7 @@ describe('RatingForm Component', () => {
 	it('should call setShowReviewForm, setRatingsOpen(false), and setReviewOpen(true) when Continue button is clicked', () => {
 		render(<RatingForm {...defaultProps} ratingsOpen={true} />)
 
-		fireEvent.click(screen.getByText('Continue'))
+		fireEvent.click(screen.getByText('create-review.continue'))
 
 		expect(mockSetShowReviewForm).toHaveBeenCalledWith(true)
 		expect(mockSetRatingsOpen).toHaveBeenCalledWith(false)

@@ -5,43 +5,41 @@ import {
 } from '@heroicons/react/outline'
 import Patreon from '../svg/icons/patreon'
 import LinkButtonLightLG from '../ui/link-button-light-lg'
-
-const features = [
-	{
-		name: 'Platform Enhancements',
-		description:
-			'Supporting ongoing development to introduce new features and improve user experience.',
-		icon: CloudUploadIcon,
-	},
-	{
-		name: 'Server Maintenance',
-		description:
-			'Ensuring our platform stays accessible and reliable for users worldwide.',
-		icon: ServerIcon,
-	},
-	{
-		name: 'Community Initiatives',
-		description:
-			'Enabling us to host events and campaigns that bring our community together.',
-		icon: UserGroupIcon,
-	},
-]
+import { useTranslation } from 'react-i18next'
 
 export default function Support() {
+	const { t } = useTranslation('support')
+
+	const features = [
+		{
+			name: t('support.features.platform.title'),
+			description: t('support.features.platform.description'),
+			icon: CloudUploadIcon,
+		},
+		{
+			name: t('support.features.maintenance.title'),
+			description: t('support.features.maintenance.description'),
+			icon: ServerIcon,
+		},
+		{
+			name: t('support.features.community.title'),
+			description: t('support.features.community.description'),
+			icon: UserGroupIcon,
+		},
+	]
+
 	return (
 		<div className='py-24 sm:py-32'>
 			<div className='mx-auto max-w-7xl px-6 lg:px-8'>
 				<div className='mx-auto max-w-2xl lg:text-center'>
-					<h2 className='text-base  leading-7 text-indigo-600'>Support Us</h2>
+					<h2 className='text-base  leading-7 text-indigo-600'>
+						{t('support.support-us')}
+					</h2>
 					<p className='mt-2 text-3xl   text-gray-900 sm:text-4xl'>
-						Support Rate The Landlord in our journey
+						{t('support.header')}
 					</p>
 					<p className='mt-6 text-lg leading-8 text-gray-600'>
-						Rate The Landlord is on a mission to empower renters, promote
-						transparency, and build a global community dedicated to fostering
-						positive landlord-tenant relationships. As we continue to grow and
-						enhance our platform, we're faced with various operational
-						costs—from server maintenance to development resources.
+						{t('support.body-1')}
 					</p>
 				</div>
 				<div className='mx-auto my-16 max-w-2xl sm:my-20 lg:my-24 lg:max-w-4xl'>
@@ -66,18 +64,10 @@ export default function Support() {
 				</div>
 				<div className='mx-auto max-w-2xl lg:text-center'>
 					<p className='mt-6 text-lg leading-8 text-gray-600'>
-						Until now, the site has been supported by Ad Revenue, but it doesn't
-						always cover our monthly costs to keep the site running. If we want
-						to continue to grow the site and offer more resources, we need the
-						support of the community.
+						{t('support.body-2')}
 					</p>
 					<p className='mt-6 text-lg leading-8 text-gray-600'>
-						Rest assured though that we are NOT using this platform as a way to
-						enrich ourselves. Any money left over after overhead costs will be
-						put right back into site through various means such as advertising,
-						updating our UI/UX design, or a number of other ways to help enhance
-						the Tenant experience. We'll also periodically donate to local
-						Tenant Union's and resources to help spread the support!
+						{t('support.body-3')}
 					</p>
 				</div>
 				<div className='mt-10 flex w-full justify-center'>

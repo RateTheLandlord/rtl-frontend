@@ -21,7 +21,7 @@ const WrittenReviewForm = ({
 	return !reviewOpen ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
 			<div className='flex flex-col gap-2'>
-				<p className='text-xs'>Review</p>
+				<p className='text-xs'>{t('create-review.written-review.title')}</p>
 				<p className='text-md'>{review}</p>
 			</div>
 			<div>
@@ -30,7 +30,7 @@ const WrittenReviewForm = ({
 						setReviewOpen(true)
 					}}
 				>
-					Edit
+					{t('create-review.edit')}
 				</Button>
 			</div>
 		</div>
@@ -38,24 +38,15 @@ const WrittenReviewForm = ({
 		<>
 			<div>
 				<h2 className='text-base font-semibold leading-7 text-gray-900'>
-					Written Review
+					{t('create-review.written-review.title')}
 				</h2>
 				<p className='mt-1 text-sm leading-6 text-gray-600'>
-					Please follow our moderation policy:
+					{t('create-review.written-review.policy-1')}
 				</p>
 				<ol className='mt-1 list-decimal pl-4 text-sm leading-6 text-gray-600'>
-					<li>
-						Keep reviews civil and avoid including personal information such as
-						addresses or phone numbers.
-					</li>
-					<li>
-						Avoid sharing personal details about yourself or your landlord that
-						are not relevant to your rental experience.
-					</li>
-					<li>
-						Inappropriate content may be removed. Thank you for maintaining a
-						safe and helpful community!
-					</li>
+					<li>{t('create-review.written-review.policy-2')}</li>
+					<li>{t('create-review.written-review.policy-3')}</li>
+					<li>{t('create-review.written-review.policy-4')}</li>
 				</ol>
 			</div>
 			<LargeTextInput
@@ -78,7 +69,7 @@ const WrittenReviewForm = ({
 						setReviewOpen(false)
 					}}
 				>
-					Preview Review
+					{t('create-review.written-review.preview-review')}
 				</Button>
 			</div>
 		</>

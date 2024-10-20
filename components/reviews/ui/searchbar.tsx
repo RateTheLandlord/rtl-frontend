@@ -13,11 +13,11 @@ export default function SearchBar({
 	searchTitle,
 	value,
 }: SearchProps) {
-	const { t } = useTranslation('reviews')
+	const { t } = useTranslation('filters')
 	return (
 		<div className='mt-1 flex w-full flex-col gap-2'>
 			<label htmlFor='search' className='sr-only'>
-				Search
+				{t('filters.search')}
 			</label>
 			<div className='relative'>
 				<input
@@ -27,7 +27,11 @@ export default function SearchBar({
 					onChange={(e) => setSearchState(e.target.value)}
 					className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 					value={value}
-					placeholder={searchTitle ? searchTitle : t('reviews.search')}
+					placeholder={
+						searchTitle
+							? searchTitle
+							: `${t('filters.search')} ${t('filters.landlord')}`
+					}
 				/>
 				{value?.length ? (
 					<button

@@ -21,7 +21,7 @@ const resourceSortOptions: Array<SortOptions> = sortOptions.filter(
 
 export default function ResourceList({ data }: { data: ResourceResponse }) {
 	// Localization
-	const { t } = useTranslation('reviews')
+	const { t } = useTranslation('filters')
 
 	// Redux
 	const query = useAppSelector((state) => state.resourceQuery)
@@ -119,7 +119,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 			<div className='mx-auto max-w-2xl sm:px-6 lg:max-w-7xl lg:px-8'>
 				<div className='flex w-full justify-end px-4 lg:hidden'>
 					<ButtonLight onClick={() => setMobileFiltersOpen(true)}>
-						{t('reviews.filters')}
+						{t('filters.title')}
 					</ButtonLight>
 				</div>
 				<div className='mx-auto max-w-2xl lg:max-w-7xl'>
@@ -135,7 +135,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 							updateParams={updateParams}
 						/>
 						<ResourceFilters
-							searchTitle='Search Resources'
+							searchTitle={t('filters.resources')}
 							selectedSort={selectedSort}
 							setSelectedSort={setSelectedSort}
 							sortOptions={resourceSortOptions}
@@ -152,10 +152,10 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 						{!resources.length ? (
 							<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
 								<h1 className='mt-4 text-3xl   text-gray-900 sm:text-5xl'>
-									No results found
+									{t('filters.no-results')}
 								</h1>
 								<p className='mt-6 text-base leading-7 text-gray-600'>
-									Sorry, we couldn't find any results for those filters.
+									{t('filters.no-body')}
 								</p>
 							</div>
 						) : (

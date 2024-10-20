@@ -5,6 +5,7 @@ import AdsComponent from '@/components/adsense/Adsense'
 import ResourceList from '@/components/resources/ResourceList'
 import { ResourceResponse } from '@/util/interfaces/interfaces'
 import { getResources } from '@/lib/tenant-resource/resource'
+import { useTranslation } from 'react-i18next'
 
 interface IProps {
 	data: ResourceResponse
@@ -20,6 +21,7 @@ function Resources({ data }: IProps): JSX.Element {
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
+	const { t } = useTranslation('resourcesPage')
 	return (
 		<div className='flex w-full justify-center'>
 			<NextSeo
@@ -52,8 +54,7 @@ function Resources({ data }: IProps): JSX.Element {
 				<ResourcesInfo />
 				<ResourceList data={data} />
 				<p className='mt-8 text-center text-xl leading-8 text-gray-500'>
-					If you have a helpful resource you think should be on our site, send
-					us an email at contact@ratethelandlord.org
+					{t('resources.contribute')}
 				</p>
 			</div>
 		</div>

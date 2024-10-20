@@ -1,4 +1,4 @@
-import { Disclosure } from '@headlessui/react'
+import { Disclosure, DisclosurePanel } from '@headlessui/react'
 import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/solid'
 import { useTranslation } from 'react-i18next'
 
@@ -54,11 +54,11 @@ const Faq = () => {
 												</span>
 											</Disclosure.Button>
 										</dt>
-										<Disclosure.Panel as='dd' className='mt-2 pr-12'>
+										<DisclosurePanel as='dd' className='mt-2 pr-12'>
 											<p className='text-base leading-7 text-gray-600'>
 												{faq.answer}
 											</p>
-										</Disclosure.Panel>
+										</DisclosurePanel>
 									</>
 								)}
 							</Disclosure>

@@ -1,5 +1,5 @@
 import i18n from 'i18next'
-import {initReactI18next} from 'react-i18next'
+import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 
 import layoutENCA from './public/locales/en-CA/layout.json'
@@ -10,6 +10,8 @@ import aboutENCA from './public/locales/en-CA/about.json'
 import landlordENCA from './public/locales/en-CA/landlord.json'
 import alertsENCA from './public/locales/en-CA/alerts.json'
 import resourcesENCA from './public/locales/en-CA/resources.json'
+import supportENCA from './public/locales/en-CA/support.json'
+import filtersENCA from './public/locales/en-CA/filters.json'
 
 const resources = {
 	en: {
@@ -21,6 +23,8 @@ const resources = {
 		layout: layoutENCA,
 		resourcesPage: resourcesENCA,
 		reviews: reviewsENCA,
+		support: supportENCA,
+		filters: filtersENCA,
 	},
 }
 

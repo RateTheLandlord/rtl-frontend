@@ -45,7 +45,7 @@ const RatingForm = ({
 	return !ratingsOpen ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
 			<div className='flex flex-col gap-2'>
-				<p className='text-xs'>Ratings</p>
+				<p className='text-xs'>{t('create-review.ratings-form.title')}</p>
 				<div className='flex w-full flex-row flex-wrap gap-6'>
 					{ratings.map((rating) => {
 						return (
@@ -63,7 +63,7 @@ const RatingForm = ({
 						setRatingsOpen(true)
 					}}
 				>
-					Edit
+					{t('create-review.edit')}
 				</Button>
 			</div>
 		</div>
@@ -71,7 +71,7 @@ const RatingForm = ({
 		<>
 			<div className='mb-3'>
 				<h2 className='text-base font-semibold leading-7 text-gray-900'>
-					Rating Form
+					{t('create-review.ratings-form.title')}
 				</h2>
 				<p className='mt-1 text-sm leading-6 text-gray-600'>
 					{t('create-review.review-form.rate-title')}
@@ -121,7 +121,7 @@ const RatingForm = ({
 						setReviewOpen(true)
 					}}
 				>
-					Continue
+					{t('create-review.continue')}
 				</Button>
 			</div>
 		</>

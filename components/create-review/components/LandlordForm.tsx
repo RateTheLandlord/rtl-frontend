@@ -34,7 +34,7 @@ const LandlordForm = ({
 	return !landlordOpen && !landlordValidationError ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
 			<div className='flex flex-col gap-2'>
-				<p className='text-xs'>Landlord</p>
+				<p className='text-xs'>{t('create-review.landlord-form.title')}</p>
 				<p className='text-md'>{landlord}</p>
 			</div>
 			<div>
@@ -43,7 +43,7 @@ const LandlordForm = ({
 						setLandlordOpen(true)
 					}}
 				>
-					Edit
+					{t('create-review.edit')}
 				</Button>
 			</div>
 		</div>
@@ -51,13 +51,10 @@ const LandlordForm = ({
 		<>
 			<div>
 				<h2 className='text-base font-semibold leading-7 text-gray-900'>
-					Landlord
+					{t('create-review.landlord-form.title')}
 				</h2>
 				<p className='mt-1 text-sm leading-6 text-gray-600'>
-					Enter the name of your landlord or property management company as it
-					appears on your lease. Double-check the spelling before you submit so
-					your review can be matched with other reviews for this landlord. Do
-					not include the full address, all addresses will be removed.
+					{t('create-review.landlord-form.body')}
 				</p>
 			</div>
 			<LandlordComboBox
@@ -78,7 +75,7 @@ const LandlordForm = ({
 						setLandlordOpen(false)
 					}}
 				>
-					Continue
+					{t('create-review.continue')}
 				</Button>
 			</div>
 		</>

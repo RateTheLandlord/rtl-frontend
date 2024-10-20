@@ -4,8 +4,10 @@ import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
 import { Combobox, Transition } from '@headlessui/react'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const Search = () => {
+	const { t } = useTranslation('filters')
 	const dispatch = useAppDispatch()
 	const router = useRouter()
 	const [search, setSearch] = useState('')
@@ -29,11 +31,11 @@ const Search = () => {
 							htmlFor='landlord'
 							className='sr-only block text-sm text-gray-700'
 						>
-							Landlord Search
+							{`${t('filters.search')} ${t('filters.landlord')}`}
 						</label>
 						<Combobox.Input
 							className='block w-full rounded-tl-md rounded-tr-md border-0 bg-white px-4 py-3 text-base text-gray-900 placeholder-gray-500 sm:rounded-bl-md sm:rounded-tr-none'
-							placeholder='Search for your Landlord'
+							placeholder={t('filters.search-placeholder')}
 							displayValue={(state: string) => state}
 							onChange={(event) => setSearch(event.target.value)}
 						/>
@@ -54,13 +56,14 @@ const Search = () => {
 											}`
 										}
 									>
-										Search for <span>"{search}"</span>
+										{`${t('filters.search-for')} `}
+										<span>"{search}"</span>
 									</Combobox.Option>
 								)}
 								{suggestions.length === 0 && search !== '' ? (
 									isSearching ? (
 										<div className='relative cursor-default select-none px-4 py-2 text-gray-700'>
-											Loading...
+											{t('filters.loading')}.
 										</div>
 									) : null
 								) : (
@@ -87,7 +90,7 @@ const Search = () => {
 						type='submit'
 						className='block w-full rounded-bl-md rounded-br-md bg-teal-600 px-4 py-3 font-medium text-white shadow hover:bg-teal-500 focus:outline-none sm:rounded-bl-none sm:rounded-br-md sm:rounded-tr-md'
 					>
-						Search
+						{t('filters.search')}
 					</button>
 				</div>
 			</div>

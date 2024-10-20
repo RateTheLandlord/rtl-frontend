@@ -1,0 +1,23 @@
+{
+	"support": {
+		"header": "Support Rate The Landlord in our journey",
+		"support-us": "Support Us",
+		"body-1": "Rate The Landlord is on a mission to empower renters, promote transparency, and build a global community dedicated to fostering positive landlord-tenant relationships. As we continue to grow and enhance our platform, we're faced with various operational costs—from server maintenance to development resources.",
+		"body-2": "Until now, the site has been supported by Ad Revenue, but it doesn't always cover our monthly costs to keep the site running. If we want to continue to grow the site and offer more resources, we need the support of the community.",
+		"body-3": "Rest assured though that we are NOT using this platform as a way to enrich ourselves. Any money left over after overhead costs will be put right back into site through various means such as advertising, updating our UI/UX design, or a number of other ways to help enhance the Tenant experience. We'll also periodically donate to local Tenant Union's and resources to help spread the support!",
+		"features": {
+			"platform": {
+				"title": "Platform Enhancements",
+				"description": "Supporting ongoing development to introduce new features and improve user experience."
+			},
+			"maintenance": {
+				"title": "Server Maintenance",
+				"description": "Ensuring our platform stays accessible and reliable for users worldwide."
+			},
+			"community": {
+				"title": "Community Initiatives",
+				"description": "Enabling us to host events and campaigns that bring our community together."
+			}
+		}
+	}
+}

@@ -24,7 +24,7 @@ import WrittenReviewForm from './components/WrittenReviewForm'
 import { toast } from 'react-toastify'
 
 function ReviewForm(): JSX.Element {
-	const { t } = useTranslation('create')
+	const { t } = useTranslation(['create', 'alerts'])
 
 	const [getStarted, setGetStarted] = useState(false)
 	const [landlordOpen, setLandlordOpen] = useState(false)
@@ -185,7 +185,9 @@ function ReviewForm(): JSX.Element {
 	const handleSubmit = async () => {
 		if (landlord.trim().length < 1) {
 			setLandlordValidationError(true)
-			setLandlordValidationText('Landlord Name cannot be empty')
+			setLandlordValidationText(
+				t('alerts.landlord-validation', { ns: 'alerts' }),
+			)
 			return
 		}
 		if (checkLandlord(landlord.toLocaleUpperCase())) {
@@ -194,7 +196,7 @@ function ReviewForm(): JSX.Element {
 		}
 		if (city.trim().length < 1) {
 			setCityValidationError(true)
-			setCityValidationErrorText('City cannot be empty')
+			setCityValidationErrorText(t('alerts.city-validation', { ns: 'alerts' }))
 			return
 		}
 		if (checkSheldon()) {
@@ -256,13 +258,13 @@ function ReviewForm(): JSX.Element {
 							}
 						})
 						.catch(() => {
-							toast.error('Failure: Something went wrong, please try again.')
+							toast.error(t('alerts.error', { ns: 'alerts' }) as string)
 						})
 						.finally(() => {
 							setLoading(false)
 						})
 				} else {
-					toast.error('Failure: Something went wrong, please try again.')
+					toast.error(t('alerts.error', { ns: 'alerts' }) as string)
 				}
 			} else {
 				setPostalError(true)
@@ -531,7 +533,7 @@ function ReviewForm(): JSX.Element {
 										}
 										onClick={() => handleSubmit()}
 									>
-										Submit Review
+										{t('create-review.review-form.submit')}
 									</Button>
 								)}
 							</div>

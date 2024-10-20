@@ -1,6 +1,7 @@
 import { HouseIcon } from '@/components/icons/HouseIcon'
 import Button from '@/components/ui/button'
 import { classNames } from '@/util/helpers/helper-functions'
+import { useTranslation } from 'react-i18next'
 
 interface IProps {
 	getStarted: boolean
@@ -9,6 +10,7 @@ interface IProps {
 }
 
 const ReviewHero = ({ getStarted, setGetStarted, setLandlordOpen }: IProps) => {
+	const { t } = useTranslation('create')
 	return (
 		<div
 			className={classNames(
@@ -25,14 +27,10 @@ const ReviewHero = ({ getStarted, setGetStarted, setLandlordOpen }: IProps) => {
 					</div>
 				)}
 				<h1 className='text-center text-4xl'>
-					Help Us Create a Better Living Experience!
+					{t('create-review.hero.title')}
 				</h1>
 				<div className='my-3 flex w-full flex-col gap-3 text-center lg:px-10'>
-					<p>
-						Thank you for reviewing your landlord! Your feedback on maintenance,
-						communication, and overall satisfaction will help tenants in your
-						area make informed housing decisions.
-					</p>
+					<p>{t('create-review.hero.body')}</p>
 				</div>
 				{getStarted ? null : (
 					<Button
@@ -42,7 +40,7 @@ const ReviewHero = ({ getStarted, setGetStarted, setLandlordOpen }: IProps) => {
 							setLandlordOpen(true)
 						}}
 					>
-						Start a Review
+						{t('create-review.hero.start')}
 					</Button>
 				)}
 			</div>
