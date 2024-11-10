@@ -7,7 +7,7 @@ import nz_provinces from '@/util/countries/newZealand/nz-provinces.json'
 import de_states from '@/util/countries/germany/states.json'
 import ie_counties from '@/util/countries/ireland/counties.json'
 import no_counties from '@/util/countries/norway/counties.json'
-import { Dispatch, Fragment, SetStateAction } from 'react'
+import { Fragment } from 'react'
 import {
 	Listbox,
 	ListboxButton,
@@ -20,14 +20,14 @@ import { ChevronDownIcon } from '@heroicons/react/solid'
 interface IProps {
 	country: string | undefined
 	value: string
-	setValue: Dispatch<SetStateAction<string>>
+	setValue: (str: string) => void
 	noState?: boolean
 }
 
 const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 	const { t } = useTranslation('create')
 	return (
-		<div data-testid='state-selector' className='sm:col-span-2'>
+		<div data-testid='state-selector' className='sm:col-span-1'>
 			<Listbox value={value} onChange={setValue}>
 				<div className='relative mt-1'>
 					<label htmlFor='city' className='block text-sm  text-gray-700'>

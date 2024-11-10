@@ -1,11 +1,15 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { Resource } from '@/util/interfaces/interfaces'
 import { Dispatch, Fragment, SetStateAction, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
+import {
+	Dialog,
+	DialogPanel,
+	Transition,
+	TransitionChild,
+} from '@headlessui/react'
 import XIcon from '@heroicons/react/outline/XIcon'
 import Spinner from '../ui/Spinner'
-import { updateAlertOpen, updateAlertSuccess } from '@/redux/alert/alertSlice'
-import { useAppDispatch } from '@/redux/hooks'
+import { toast } from 'react-toastify'
 
 interface IProps {
 	selectedResource: Resource | undefined
@@ -22,7 +26,6 @@ const RemoveResourceModal = ({
 	removeResourceOpen,
 	setSelectedResource,
 }: IProps) => {
-	const dispatch = useAppDispatch()
 	const [loading, setLoading] = useState(false)
 	const onSubmitRemoveResource = () => {
 		if (selectedResource) {
@@ -42,14 +45,12 @@ const RemoveResourceModal = ({
 				.then(() => {
 					handleMutate()
 					setRemoveResourceOpen(false)
-					dispatch(updateAlertSuccess(true))
-					dispatch(updateAlertOpen(true))
+					toast.success('Success!')
 					setSelectedResource(undefined)
 				})
 				.catch((err) => {
 					console.log(err)
-					dispatch(updateAlertSuccess(false))
-					dispatch(updateAlertOpen(true))
+					toast.error('Failure: Something went wrong, please try again.')
 					setSelectedResource(undefined)
 				})
 				.finally(() => setLoading(false))
@@ -57,13 +58,13 @@ const RemoveResourceModal = ({
 	}
 
 	return (
-		<Transition.Root show={removeResourceOpen} as={Fragment}>
+		<Transition show={removeResourceOpen} as={Fragment}>
 			<Dialog
 				as='div'
 				className='relative z-50'
 				onClose={setRemoveResourceOpen}
 			>
-				<Transition.Child
+				<TransitionChild
 					as={Fragment}
 					enter='ease-out duration-300'
 					enterFrom='opacity-0'
@@ -73,11 +74,11 @@ const RemoveResourceModal = ({
 					leaveTo='opacity-0'
 				>
 					<div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity' />
-				</Transition.Child>
+				</TransitionChild>
 
 				<div className='fixed inset-0 z-10 overflow-y-auto'>
 					<div className='flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
-						<Transition.Child
+						<TransitionChild
 							as={Fragment}
 							enter='ease-out duration-300'
 							enterFrom='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
@@ -86,7 +87,7 @@ const RemoveResourceModal = ({
 							leaveFrom='opacity-100 translate-y-0 sm:scale-100'
 							leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
 						>
-							<Dialog.Panel className='relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
+							<DialogPanel className='relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
 								<div className='absolute right-0 top-0 hidden pr-4 pt-4 sm:block'>
 									<button
 										type='button'
@@ -135,12 +136,12 @@ const RemoveResourceModal = ({
 										Cancel
 									</button>
 								</div>
-							</Dialog.Panel>
-						</Transition.Child>
+							</DialogPanel>
+						</TransitionChild>
 					</div>
 				</div>
 			</Dialog>
-		</Transition.Root>
+		</Transition>
 	)
 }
 

@@ -1,16 +1,15 @@
 import { useTranslation } from 'react-i18next'
 import { country_codes } from '@/util/helpers/getCountryCodes'
 import countries from '@/util/countries/countries.json'
-import { Dispatch, SetStateAction } from 'react'
 
 interface IProps {
-	setValue: Dispatch<SetStateAction<string>>
+	setValue: (str: string) => void
 }
 
 const CountrySelector = ({ setValue }: IProps) => {
 	const { t } = useTranslation('create')
 	return (
-		<div className='sm:col-span-4'>
+		<div className='sm:col-span-1'>
 			<label htmlFor='country' className='block text-sm  text-gray-700'>
 				{t('create-review.review-form.country')}
 			</label>
