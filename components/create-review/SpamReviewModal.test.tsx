@@ -11,14 +11,16 @@ jest.mock('react-i18next', () => ({
 			if (key === 'create-review.spam-modal.localStorageDetection.title') {
 				return 'It appears you have reviewed this Landlord before...'
 			}
-			if (key === 'create-review.spam-modal.localStorageDetection.description') {
+			if (
+				key === 'create-review.spam-modal.localStorageDetection.description'
+			) {
 				return "We understand you want to voice your frustration about your previous Landlord in a safe and public way. However, leaving multiple reviews about the same landlord causes both the reviews for that Landlord, and the site, to lose their integrity. Please only leave 1 review per landlord you've had so that this site can remain a fair representation for both the Tenants and Landlords."
 			}
 			if (key === 'create-review.spam-modal.DBDetection.title') {
-				return "We have noticed potential spam reviews related to this landlord."
+				return 'We have noticed potential spam reviews related to this landlord.'
 			}
 			if (key === 'create-review.spam-modal.DBDetection.description') {
-				return "To protect the integrity of our reviews please try again later. If you have any questions, please reach out to us at contact@ratethelandlord.org"
+				return 'To protect the integrity of our reviews please try again later. If you have any questions, please reach out to us at contact@ratethelandlord.org'
 			}
 			if (key === 'create-review.modal.close') {
 				return 'Close'
@@ -32,7 +34,13 @@ describe('Spam Review Modal component', () => {
 	test('should render the modal when isOpen is true and detectionMethod is localStorageDetection', () => {
 		const setIsOpenMock = jest.fn()
 
-		render(<SpamReviewModal isOpen={true} setIsOpen={setIsOpenMock} detectionMethod='localStorageDetection'/>)
+		render(
+			<SpamReviewModal
+				isOpen={true}
+				setIsOpen={setIsOpenMock}
+				detectionMethod='localStorageDetection'
+			/>,
+		)
 
 		// Verify that the modal is rendered
 		const modalElement = screen.getByRole('dialog')
@@ -62,7 +70,13 @@ describe('Spam Review Modal component', () => {
 	test('should render the modal when isOpen is true and detectionMethod is DBDetection', () => {
 		const setIsOpenMock = jest.fn()
 
-		render(<SpamReviewModal isOpen={true} setIsOpen={setIsOpenMock} detectionMethod='DBDetection'/>)
+		render(
+			<SpamReviewModal
+				isOpen={true}
+				setIsOpen={setIsOpenMock}
+				detectionMethod='DBDetection'
+			/>,
+		)
 
 		// Verify that the modal is rendered
 		const modalElement = screen.getByRole('dialog')
@@ -70,11 +84,13 @@ describe('Spam Review Modal component', () => {
 
 		// Verify that the modal title and description are displayed correctly
 		expect(
-			screen.getByText("We have noticed potential spam reviews related to this landlord."),
+			screen.getByText(
+				'We have noticed potential spam reviews related to this landlord.',
+			),
 		).toBeInTheDocument()
 		expect(
 			screen.getByText(
-				"To protect the integrity of our reviews please try again later. If you have any questions, please reach out to us at contact@ratethelandlord.org",
+				'To protect the integrity of our reviews please try again later. If you have any questions, please reach out to us at contact@ratethelandlord.org',
 			),
 		).toBeInTheDocument()
 
@@ -92,7 +108,13 @@ describe('Spam Review Modal component', () => {
 	test('should not render the modal when isOpen is false', () => {
 		const setIsOpenMock = jest.fn()
 
-		render(<SpamReviewModal isOpen={false} setIsOpen={setIsOpenMock} detectionMethod='localStorageDetection'/>)
+		render(
+			<SpamReviewModal
+				isOpen={false}
+				setIsOpen={setIsOpenMock}
+				detectionMethod='localStorageDetection'
+			/>,
+		)
 
 		// Verify that the modal is not rendered
 		const modalElement = screen.queryByRole('dialog')

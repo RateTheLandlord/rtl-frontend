@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 interface IProps {
 	isOpen: boolean
-	setIsOpen: React.Dispatch<SetStateAction<boolean>>,
+	setIsOpen: React.Dispatch<SetStateAction<boolean>>
 	detectionMethod: string
 }
 
@@ -48,7 +48,9 @@ function SpamReviewModal({ isOpen, setIsOpen, detectionMethod }: IProps) {
 										</Dialog.Title>
 										<div className='mt-2'>
 											<p className='text-sm text-gray-500'>
-												{t(`create-review.spam-modal.${detectionMethod}.description`)}
+												{t(
+													`create-review.spam-modal.${detectionMethod}.description`,
+												)}
 											</p>
 										</div>
 									</div>
