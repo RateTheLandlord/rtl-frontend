@@ -15,6 +15,7 @@ const OtherLandlordInfo = ({ landlord }: IProps) => {
 		fetcher,
 	)
 
+
 	if (!landlords) return <Spinner />
 
 	if (error || !landlords.length) return null
