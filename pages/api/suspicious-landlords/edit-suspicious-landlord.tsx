@@ -21,7 +21,7 @@ const EditSuspiciousLandlordAPI = async (
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req
 
-	if (user && user.role === 'ADMIN') {
+	if (user && user.role === 'ADMIN' && user.admin_id === 'rtl-001') {
 		const edit = await update(body.id, body)
 		res.status(edit.status).json(edit.message)
 	} else {

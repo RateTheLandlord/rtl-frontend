@@ -15,7 +15,7 @@ const AddResource = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req
-	if (user && user.role === 'ADMIN') {
+	if (user && user.role === 'ADMIN' && user.admin_id === 'rtl-001') {
 		const resource = await create(body)
 
 		res.status(resource.status).json(resource.message)

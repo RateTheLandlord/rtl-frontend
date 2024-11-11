@@ -17,7 +17,7 @@ const deleteLandlordAPI = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	const id = body.id
 
-	if (user && user.role === 'ADMIN') {
+	if (user && user.role === 'ADMIN' && user.admin_id === 'rtl-001') {
 		const landlord = await deleteLandlord(id)
 
 		res.status(landlord.status).json(landlord.message)
