@@ -117,6 +117,19 @@ export type FilterOptions = {
 }
 
 export interface ReviewResponseStatus {
-	success: boolean,
+	success: boolean
 	message: string
+}
+
+export interface SuspiciousLandlord {
+	id?: number
+	landlord: string
+	message: string
+	date_added?: Date
+}
+
+export interface SuspiciousLandlordResponse {
+	landlords: Array<SuspiciousLandlord>
+	total: string
+	limit: number
 }
