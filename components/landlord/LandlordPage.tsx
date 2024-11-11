@@ -32,7 +32,7 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 
 	const handleBanner = () => {
 		setBannerOpen(false)
-		if (landlord.toLocaleLowerCase() == "outpost-club") {
+		if (landlord.toLocaleLowerCase() == 'outpost-club') {
 			setBannerOpen(true)
 		}
 	}
@@ -83,7 +83,7 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 
 	useEffect(() => {
 		handleBanner()
-	},[landlord])
+	}, [landlord])
 
 	return (
 		<>
@@ -94,7 +94,11 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 			/>
 			<div className='mt-10 flex w-full justify-center'>
 				<div className='mx-auto flex max-w-2xl flex-col gap-3 px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
-					<LandlordBanner landlord={landlord} bannerType="LandlordRequestedReviews" isOpen = {bannerOpen} />
+					<LandlordBanner
+						landlord={landlord}
+						bannerType='LandlordRequestedReviews'
+						isOpen={bannerOpen}
+					/>
 					<LandlordInfo name={landlord} data={data} />
 					<div className='flex w-full justify-start py-2'>
 						<SortList
