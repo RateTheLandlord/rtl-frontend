@@ -10,7 +10,7 @@ import SpamReviewModal from '@/components/create-review/SpamReviewModal'
 import SheldonModal from '@/components/create-review/SheldonModal'
 import { sheldonReview } from '@/components/create-review/helper'
 import { useLocation } from '@/util/hooks/useLocation'
-import { ILocationHookResponse } from '@/util/interfaces/interfaces'
+import { ILocationHookResponse, ReviewResponseStatus } from '@/util/interfaces/interfaces'
 import { useReCaptcha } from 'next-recaptcha-v3'
 import Spinner from '../ui/Spinner'
 import { Transition, TransitionChild } from '@headlessui/react'
@@ -44,6 +44,7 @@ function ReviewForm(): JSX.Element {
 	const [successModalOpen, setSuccessModalOpen] = useState(false)
 	const [reviewModalOpen, setReviewModalOpen] = useState(false)
 	const [spamReviewModalOpen, setSpamReviewModalOpen] = useState(false)
+	const [spamDetectionMethod, setSpamDetectionMethod] = useState("localStorageDetection")
 	const [sheldonReviewOpen, setSheldonReviewOpen] = useState(false)
 
 	const [landlord, setLandlord] = useState<string>('')
@@ -245,6 +246,13 @@ function ReviewForm(): JSX.Element {
 								return result.json()
 							}
 						})
+						.then((data: ReviewResponseStatus) => {
+							if (!data.success) {
+								setSpamDetectionMethod("DBDetection")
+								setSpamReviewModalOpen(true)
+								throw new Error()
+							}
+						})
 						.then(() => {
 							setSuccessModalOpen(true)
 							const storageItem = localStorage.getItem('rtl')
@@ -327,6 +335,7 @@ function ReviewForm(): JSX.Element {
 			<SpamReviewModal
 				isOpen={spamReviewModalOpen}
 				setIsOpen={setSpamReviewModalOpen}
+				detectionMethod={spamDetectionMethod}
 			/>
 			<SheldonModal
 				isOpen={sheldonReviewOpen}

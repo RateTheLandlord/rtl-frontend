@@ -3,6 +3,7 @@ import {
 	ReviewsResponse,
 	OtherLandlord,
 	FilterOptions,
+	ReviewResponseStatus
 } from '@/lib/review/models/review'
 import { filterReviewWithAI, IResult } from './helpers'
 import {
@@ -254,7 +255,7 @@ export async function findOne(id: number): Promise<Review[]> {
       WHERE id IN (${id});`
 }
 
-export async function create(inputReview: Review): Promise<Review> {
+export async function create(inputReview: Review): Promise<ReviewResponseStatus> {
 	try {
 		const existingReviewsForLandlord: Review[] =
 			await getExistingReviewsForLandlord(inputReview)
@@ -262,11 +263,13 @@ export async function create(inputReview: Review): Promise<Review> {
 			existingReviewsForLandlord,
 			inputReview.review,
 		)
+
 		const landlordSpamDetected: boolean = await checkForLandlordSpam(
 			inputReview.landlord,
 		)
 
-		if (reviewSpamDetected || landlordSpamDetected) return inputReview // Don't post the review to the DB if we detect spam
+		// Don't post the review to the DB if we detect spam
+		if (reviewSpamDetected || landlordSpamDetected) return {message:"This landlord is currently under spam protection please try again later", success:false} 
 
 		updateRecentReviews(inputReview.landlord)
 		if (process.env.NEXT_PUBLIC_ENVIRONMENT == 'development')

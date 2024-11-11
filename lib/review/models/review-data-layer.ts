@@ -1,7 +1,7 @@
 import { FAILED_TO_RETRIEVE_REVIEWS } from '@/lib/auth/constants'
 import { IResult } from '../helpers'
 import sql from '@/lib/db'
-import { Review } from '@/lib/review/models/review'
+import { Review, ReviewResponseStatus } from '@/lib/review/models/review'
 
 /**
  * Data service layer for the reviews service of our backend.
@@ -11,7 +11,7 @@ import { Review } from '@/lib/review/models/review'
 export async function createReview(
 	inputReview: Review,
 	filterResult: IResult,
-): Promise<Review> {
+): Promise<ReviewResponseStatus> {
 	try {
 		inputReview.landlord = inputReview.landlord
 			.substring(0, 150)
@@ -27,7 +27,7 @@ export async function createReview(
 		inputReview.flagged = filterResult.flagged
 		inputReview.flagged_reason = filterResult.flagged_reason
 
-		const id = await sql<{ id: number }[]>`
+		await sql<{ id: number }[]>`
           INSERT INTO review
           (landlord, country_code, city, state, zip, review, repair, health, stability, privacy, respect, flagged,
           flagged_reason, admin_approved, admin_edited, rent)
@@ -47,8 +47,7 @@ export async function createReview(
           RETURNING id;
         `
 
-		inputReview.id = await id[0].id
-		return inputReview
+		return {message: "Review successfully added", success: true}
 	} catch (e) {
 		throw e
 	}

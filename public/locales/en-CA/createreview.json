@@ -49,8 +49,15 @@
 			"patreon": "You can also support us on Patreon!"
 		},
 		"spam-modal": {
-			"title": "It appears you have reviewed this Landlord before...",
-			"description": "Please only leave one review per landlord you've had so that this site can remain a fair representation of rental experiences. Any repeat reviews or spam will be deleted. If you have any questions, please reach out to us at contact@ratethelandlord.org"
+			"localStorageDetection": {
+				"title": "It appears you have reviewed this Landlord before...",
+				"description": "Please only leave one review per landlord you've had so that this site can remain a fair representation of rental experiences. Any repeat reviews or spam will be deleted. If you have any questions, please reach out to us at contact@ratethelandlord.org"				
+			},
+			"DBDetection":{
+				"title": "We have noticed potential spam reviews related to this landlord.",
+				"description": "To protect the integrity of our reviews please try again later. If you have any questions, please reach out to us at contact@ratethelandlord.org"				
+			}
+
 		}
 	}
 }
