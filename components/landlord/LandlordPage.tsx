@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
 import LandlordInfo from './LandlordInfo'
 import OtherLandlordInfo from './OtherLandlord'
+import LandlordBanner from './LandlordBanner'
 import { useTranslation } from 'react-i18next'
 import { Review } from '@/util/interfaces/interfaces'
 import Spinner from '../ui/Spinner'
@@ -20,6 +21,7 @@ interface IProps {
 const LandlordPage = ({ landlord, data }: IProps) => {
 	const { t } = useTranslation('reviews')
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
+	const [bannerOpen, setBannerOpen] = useState<boolean>(false)
 	const [sortedReviews, setSortedReviews] = useState<Array<Review>>([])
 
 	const [sortState, setSortState] = useState(filteredSortOptions[0])
@@ -27,6 +29,13 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
 
 	if (!data.reviews.length) return <Spinner />
+
+	const handleBanner = () => {
+		setBannerOpen(false)
+		if (landlord.toLocaleLowerCase() == 'outpost-club') {
+			setBannerOpen(true)
+		}
+	}
 
 	const handleReport = (review: Review) => {
 		setSelectedReview(review)
@@ -72,6 +81,10 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 		}
 	}, [sortState, data.reviews])
 
+	useEffect(() => {
+		handleBanner()
+	}, [landlord])
+
 	return (
 		<>
 			<ReportModal
@@ -81,6 +94,11 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 			/>
 			<div className='mt-10 flex w-full justify-center'>
 				<div className='mx-auto flex max-w-2xl flex-col gap-3 px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
+					<LandlordBanner
+						landlord={landlord}
+						bannerType='LandlordRequestedReviews'
+						isOpen={bannerOpen}
+					/>
 					<LandlordInfo name={landlord} data={data} />
 					<div className='flex w-full justify-start py-2'>
 						<SortList
