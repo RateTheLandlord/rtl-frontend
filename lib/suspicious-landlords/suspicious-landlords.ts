@@ -17,8 +17,8 @@ export interface GetSuspiciousLandlordResponse {
 
 export async function getSuspiciousLandlords(): Promise<GetSuspiciousLandlordResponse> {
 	// Fetch Landlords
-	const landlords = (await sql`SELECT *
-        FROM spam_landlords;`) as Array<SuspiciousLandlord>
+	const landlords = await sql<Array<SuspiciousLandlord>>`SELECT *
+        FROM spam_landlords;`
 
 	// Fetch Total Number of Landlords
 	const totalResult = await sql`SELECT COUNT(*) as count FROM spam_landlords;`
