@@ -20,15 +20,31 @@ export async function getSuspiciousLandlords(): Promise<GetSuspiciousLandlordRes
 	const landlords = (await sql`SELECT *
         FROM spam_landlords`) as Array<SuspiciousLandlord>
 
-	// Fetch Total Number of Resources
+	// Fetch Total Number of Landlords
 	const totalResult = await sql`SELECT COUNT(*) as count FROM spam_landlords`
 	const total = totalResult[0].count
 
-	// Return ResourcesResponse object
+	// Return object
 	return {
 		landlords,
 		total,
 	}
+}
+
+export async function getOneSuspiciousLandlord(
+	landlord: string,
+): Promise<SuspiciousLandlord | boolean> {
+	// Fetch Landlords
+	const foundLandlord =
+		await sql`SELECT * from spam_landlords WHERE landlord = ${landlord.toLocaleUpperCase()} LIMIT 1;`
+
+	if (foundLandlord.length) {
+		return foundLandlord[0] as SuspiciousLandlord
+	} else {
+		return false
+	}
+
+	// Return ResourcesResponse object
 }
 
 export async function create(

@@ -4,12 +4,14 @@ import LandlordInfo from './LandlordInfo'
 import OtherLandlordInfo from './OtherLandlord'
 import LandlordBanner from './LandlordBanner'
 import { useTranslation } from 'react-i18next'
-import { Review } from '@/util/interfaces/interfaces'
+import { Review, SuspiciousLandlord } from '@/util/interfaces/interfaces'
 import Spinner from '../ui/Spinner'
 import { sortOptions } from '@/util/helpers/filter-options'
 import SortList from '../reviews/ui/sort-list'
 import { ILandlordReviews } from '@/lib/review/review'
 import ReviewComponent from '../reviews/ReviewComponent'
+import useSWR from 'swr'
+import { fetcher } from '@/util/helpers/fetcher'
 
 const filteredSortOptions = sortOptions.slice(2)
 
@@ -28,14 +30,22 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
 
+	const { data: suspiciousLandlord } = useSWR<SuspiciousLandlord | boolean>(
+		`/api/suspicious-landlords/get-suspicious-landlord?landlord=${encodeURIComponent(
+			landlord,
+		)}`,
+		fetcher,
+	)
+
 	if (!data.reviews.length) return <Spinner />
 
-	const handleBanner = () => {
-		setBannerOpen(false)
-		if (landlord.toLocaleLowerCase() == 'outpost-club') {
+	useEffect(() => {
+		if (suspiciousLandlord) {
 			setBannerOpen(true)
+		} else {
+			setBannerOpen(false)
 		}
-	}
+	}, [suspiciousLandlord])
 
 	const handleReport = (review: Review) => {
 		setSelectedReview(review)
@@ -81,10 +91,6 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 		}
 	}, [sortState, data.reviews])
 
-	useEffect(() => {
-		handleBanner()
-	}, [landlord])
-
 	return (
 		<>
 			<ReportModal
@@ -94,11 +100,13 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 			/>
 			<div className='mt-10 flex w-full justify-center'>
 				<div className='mx-auto flex max-w-2xl flex-col gap-3 px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
-					<LandlordBanner
-						landlord={landlord}
-						bannerType='LandlordRequestedReviews'
-						isOpen={bannerOpen}
-					/>
+					{bannerOpen ? (
+						<LandlordBanner
+							landlord={suspiciousLandlord as SuspiciousLandlord}
+						/>
+					) : (
+						false
+					)}
 					<LandlordInfo name={landlord} data={data} />
 					<div className='flex w-full justify-start py-2'>
 						<SortList

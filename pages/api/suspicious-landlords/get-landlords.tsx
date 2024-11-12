@@ -6,9 +6,9 @@ const getSuspiciousLandlordsAPI = async (
 	req: NextApiRequest,
 	res: NextApiResponse,
 ) => {
-	const resources = await getSuspiciousLandlords()
+	const landlords = await getSuspiciousLandlords()
 
-	res.status(200).json(resources)
+	res.status(200).json(landlords)
 }
 
 export default rateLimitMiddleware(getSuspiciousLandlordsAPI)

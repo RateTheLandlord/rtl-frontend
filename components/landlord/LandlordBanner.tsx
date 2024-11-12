@@ -1,29 +1,16 @@
-import { useTranslation } from 'react-i18next'
-import Spinner from '../ui/Spinner'
+import { SuspiciousLandlord } from '@/util/interfaces/interfaces'
 
 interface IProps {
-	landlord: string
-	bannerType: string
-	isOpen: boolean
+	landlord: SuspiciousLandlord
 }
 
-const LandlordBanner = ({ landlord, bannerType, isOpen }: IProps) => {
-	const { t } = useTranslation('landlord')
-
-	if (!bannerType) return <Spinner />
-
+const LandlordBanner = ({ landlord }: IProps) => {
 	return (
-		<>
-			{isOpen ? (
-				<div className='rounded-xl bg-red-200 p-1'>
-					<div className='text-center sm:py-1'>
-						<p>
-							{t(`landlord.banner.${bannerType}.text`, { landlord: landlord })}
-						</p>
-					</div>
-				</div>
-			) : null}
-		</>
+		<div className='rounded-xl bg-red-200 p-1'>
+			<div className='text-center sm:py-1'>
+				<p>{landlord.message}</p>
+			</div>
+		</div>
 	)
 }
 
