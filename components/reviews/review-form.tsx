@@ -19,7 +19,7 @@ export type ReviewsResponse = {
 function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 	const [locationOpen, setLocationOpen] = useState<boolean>(true)
 	const [loading, setLoading] = useState<boolean>(false)
-	
+
 	const handleSubmit = async () => {
 		setLoading(true)
 		setLocationOpen(false)
@@ -28,25 +28,20 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 
 	return !locationOpen ? (
 		<Review data={data} />
-	) :   (
+	) : (
 		<div>
 			<div className='w-full border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
 				<LocationForm data={data} />
 			</div>
-			<div
-				className='flex justify-center gap-5 pt-5 sm:gap-3'
-			>
+			<div className='flex justify-center gap-5 pt-5 sm:gap-3'>
 				{loading ? (
 					<Spinner />
 				) : (
-					<Button
-						disabled={false}
-						onClick={() => handleSubmit()}
-					>
+					<Button disabled={false} onClick={() => handleSubmit()}>
 						Continue
 					</Button>
 				)}
-				</div>
+			</div>
 		</div>
 	)
 }
