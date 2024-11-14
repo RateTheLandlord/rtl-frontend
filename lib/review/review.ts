@@ -71,6 +71,7 @@ export async function filterOptions(
     `
 	const cityList = cities.map(({ city }) => city)
 
+
 	// Fetch zips
 	const zips = await sql`
         SELECT DISTINCT zip
@@ -82,27 +83,28 @@ export async function filterOptions(
 	const zipList = zipsExtracted.filter((zip) => zip.length > 0)
 
 	const filteredCity = cityList.filter((n) => n)
-	const allCityOptions = filteredCity.map((c, id) => {
+	const allCityOptions = [...new Map(filteredCity.map((c, id) => {
 		const city = c.toLowerCase().trim()
 		return {
 			id: id + 1,
 			name: city.split(' ').map(capitalize).join(' '),
 			value: c.toLowerCase().trim(),
 		}
-	})
+	}).map(city => [city.value, city])).values()]
 
 	allCityOptions.sort((a: Options, b: Options): number =>
 		a.name.localeCompare(b.name),
 	)
 
-	const allStateOptions = stateList.map((s, id) => {
+
+	const allStateOptions = [...new Map(stateList.map((s, id) => {
 		const state = s.toLowerCase()
 		return {
 			id: id + 1,
 			name: state.split(' ').map(capitalize).join(' '),
 			value: s,
 		}
-	})
+	}).map(state => [state.value, state])).values()]
 
 	allStateOptions.sort((a: Options, b: Options): number =>
 		a.name.localeCompare(b.name),
