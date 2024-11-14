@@ -12,6 +12,7 @@ import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import InfiniteScroll from './InfiniteScroll'
 import AdsComponent from '@/components/adsense/Adsense'
+import Spinner from '../ui/Spinner'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import MobileReviewFilters from './mobile-review-filters'
 import { useTranslation } from 'react-i18next'
@@ -101,6 +102,7 @@ const Review = ({
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
 	const [selectedIndex, setSelectedIndex] = useState(0)
+	const [reviewsLoading, setReviewsLoading] = useState(false)
 
 	useEffect(() => {
 		if (view && view === 'map') {
@@ -136,6 +138,7 @@ const Review = ({
 
 	const fetchData = async () => {
 		setIsLoading(true)
+		setReviewsLoading(true)
 		try {
 			const moreData = await fetchReviews({ page, ...queryParams })
 
@@ -158,6 +161,7 @@ const Review = ({
 			console.error('Error fetching reviews:', error)
 		} finally {
 			setIsLoading(false)
+			setReviewsLoading(false)
 		}
 	}
 
@@ -199,6 +203,9 @@ const Review = ({
 					/>
 				</>
 			) : null}
+			{ reviewsLoading ? (
+				<Spinner />
+			) : (
 			<div className='w-full'>
 				<AdsComponent slot='2009320000' />
 				<div>
@@ -316,6 +323,7 @@ const Review = ({
 					</TabGroup>
 				</div>
 			</div>
+			)}
 		</>
 	)
 }

@@ -72,12 +72,10 @@ const LocationForm = ({
 
 	return (
 		<>
-			<div>
-				<h2 className='text-base font-semibold leading-7 text-gray-900'>
+			<h2 className='text-base font-semibold leading-7 text-gray-900'>
 					Location
 				</h2>
-			</div>
-			<div className='grid w-full grid-cols-2 gap-3 overflow-hidden'>
+			<div className='grid w-full grid-cols-2 gap-5'>
 				<div className='py-2'>
 					<SelectList
 						state={countryFilter}

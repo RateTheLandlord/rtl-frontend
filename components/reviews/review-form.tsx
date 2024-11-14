@@ -3,6 +3,7 @@ import React, { useState, useMemo } from 'react'
 import Button from '../ui/button'
 import Spinner from '../ui/Spinner'
 import LocationForm from './components/LocationForm'
+import ReviewHero from './components/ReviewHero'
 import { Options } from '@/util/interfaces/interfaces'
 import { Review as IReview } from '@/util/interfaces/interfaces'
 import Review from './review'
@@ -98,6 +99,7 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 		/>
 	) : (
 		<div>
+			<ReviewHero></ReviewHero>
 			<div className='w-full border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
 				<LocationForm
 					countryFilter={countryFilter}
