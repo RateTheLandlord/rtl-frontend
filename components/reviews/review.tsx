@@ -68,6 +68,8 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 	const query = useAppSelector((state) => state.query)
 	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
 		query
+	console.log("review " + countryFilter?.value)
+	console.log("review " + stateFilter?.value)
 
 	const dispatch = useAppDispatch()
 	// State
