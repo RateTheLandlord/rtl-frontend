@@ -1,10 +1,14 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import Button from '../ui/button'
 import Spinner from '../ui/Spinner'
 import LocationForm from './components/LocationForm'
-import { Review as IReview } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/interfaces'
+import { Review as IReview} from '@/util/interfaces/interfaces'
 import Review from './review'
+import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { getCityOptions, getStateOptions, getZipOptions } from './functions'
 
 export type ReviewsResponse = {
 	reviews: IReview[]
@@ -19,6 +23,15 @@ export type ReviewsResponse = {
 function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 	const [locationOpen, setLocationOpen] = useState<boolean>(true)
 	const [loading, setLoading] = useState<boolean>(false)
+	const [isLoading, setIsLoading] = useState(false)
+
+	// Redux
+	const query = useAppSelector((state) => state.query)
+	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
+		query
+
+
+	const dispatch = useAppDispatch()
 
 	const handleSubmit = async () => {
 		setLoading(true)
@@ -26,12 +39,79 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 		setLoading(true)
 	}
 
+	const cityOptions = useMemo(
+		() => getCityOptions(data?.cities ?? []),
+		[data?.cities],
+	)
+	const [dynamicCityOptions, setDynamicCityOptions] =
+		useState<Options[]>(cityOptions)
+
+	const stateOptions = useMemo(
+		() => getStateOptions(data?.states ?? []),
+		[data?.states],
+	)
+	const [dynamicStateOptions, setDynamicStateOptions] =
+		useState<Options[]>(stateOptions)
+
+	const zipOptions = useMemo(
+		() => getZipOptions(data?.zips ?? []),
+		[data?.zips],
+	)	
+	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>(
+		zipOptions ?? [],
+	)
+
+	const fetchDynamicFilterOptions = async () => {
+		setIsLoading(true)
+		try {
+			const filterOptions = await fetchFilterOptions(
+				countryFilter?.value,
+				stateFilter?.value,
+				cityFilter?.value,
+				zipFilter?.value,
+			)
+			setDynamicCityOptions(filterOptions.cities)
+			setDynamicStateOptions(filterOptions.states)
+			setDynamicZipOptions(filterOptions.zips)
+		} catch (error) {
+			console.error('Error fetching filter options:', error)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
 	return !locationOpen ? (
-		<Review data={data} />
+		<Review 
+			data={data}
+			query={query}
+			searchFilter={searchFilter}
+			countryFilter={countryFilter} 
+			stateFilter={stateFilter} 
+			cityFilter={cityFilter} 
+			zipFilter={zipFilter} 
+			dynamicCityOptions={dynamicCityOptions}
+			dynamicStateOptions={dynamicStateOptions}
+			dynamicZipOptions={dynamicZipOptions}
+			dispatch={dispatch}
+			fetchDynamicFilterOptions={fetchDynamicFilterOptions}
+			isLoading={isLoading}
+			setIsLoading={setIsLoading}
+		/>
 	) : (
 		<div>
 			<div className='w-full border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
-				<LocationForm data={data} />
+				<LocationForm 
+					countryFilter={countryFilter} 
+					stateFilter={stateFilter} 
+					cityFilter={cityFilter} 
+					zipFilter={zipFilter} 
+					dynamicCityOptions={dynamicCityOptions}
+					dynamicStateOptions={dynamicStateOptions}
+					zipOptions={zipOptions}
+					dynamicZipOptions={dynamicZipOptions}
+					dispatch={dispatch}
+					fetchDynamicFilterOptions={fetchDynamicFilterOptions}
+				/>
 			</div>
 			<div className='flex justify-center gap-5 pt-5 sm:gap-3'>
 				{loading ? (

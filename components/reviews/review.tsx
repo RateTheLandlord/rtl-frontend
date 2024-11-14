@@ -4,28 +4,22 @@ import {
 	Review as IReview,
 	SortOptions,
 	Options,
+	IQuery
 } from '@/util/interfaces/interfaces'
-import {
-	getCityOptions,
-	getStateOptions,
-	getZipOptions,
-} from '@/components/reviews/functions'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import ReportModal from '@/components/reviews/report-modal'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import InfiniteScroll from './InfiniteScroll'
 import AdsComponent from '@/components/adsense/Adsense'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { updateActiveFilters } from '@/redux/query/querySlice'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
-import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import MobileReviewFilters from './mobile-review-filters'
 import { useTranslation } from 'react-i18next'
 import ButtonLight from '../ui/button-light'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import MapComponent from '../Map/Map'
 import { useRouter } from 'next/router'
+import { AppDispatch } from '@/redux/store'
 
 export type ReviewsResponse = {
 	reviews: IReview[]
@@ -57,21 +51,45 @@ export interface QueryParams {
 	limit: string
 }
 
-const Review = ({ data }: { data: ReviewsResponse }) => {
+interface ReviewProps {
+	data: ReviewsResponse
+	query: IQuery
+	searchFilter: string | undefined
+	countryFilter: Options | null
+	stateFilter: Options | null
+	cityFilter: Options | null
+	zipFilter: Options | null
+	dynamicCityOptions: Options[]
+	dynamicStateOptions: Options[]
+	dynamicZipOptions: Options[]
+	dispatch: AppDispatch
+	fetchDynamicFilterOptions: () => Promise<void>
+	isLoading: boolean
+	setIsLoading: Dispatch<SetStateAction<boolean>>
+}
+
+const Review = ({ 
+	data,
+	query,
+	searchFilter,
+	countryFilter,
+	stateFilter,
+	cityFilter,
+	zipFilter,
+	dynamicCityOptions,
+	dynamicStateOptions,
+	dynamicZipOptions,
+	dispatch,
+	fetchDynamicFilterOptions,
+	isLoading,
+	setIsLoading
+}: ReviewProps) => {
 	// Localization
 	const { t } = useTranslation('reviews')
 
 	const router = useRouter()
 	const { view } = router.query
 
-	// Redux
-	const query = useAppSelector((state) => state.query)
-	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
-		query
-	console.log('review ' + countryFilter?.value)
-	console.log('review ' + stateFilter?.value)
-
-	const dispatch = useAppDispatch()
 	// State
 	const [reviews, setReviews] = useState<IReview[]>(data?.reviews || [])
 	const [page, setPage] = useState<number>(1)
@@ -82,7 +100,6 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
-	const [isLoading, setIsLoading] = useState(false)
 	const [selectedIndex, setSelectedIndex] = useState(0)
 
 	useEffect(() => {
@@ -113,9 +130,6 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 			search: searchFilter || '',
 			limit: '25',
 		}
-		dispatch(
-			updateActiveFilters([stateFilter, countryFilter, cityFilter, zipFilter]),
-		)
 		setQueryParams(params)
 		setPage(1)
 	}
@@ -152,48 +166,8 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 		setHasMore(true)
 	}, [queryParams])
 
-	// Filtering Options
-	const cityOptions = useMemo(
-		() => getCityOptions(data?.cities ?? []),
-		[data?.cities],
-	)
-	const [dynamicCityOptions, setDynamicCityOptions] =
-		useState<Options[]>(cityOptions)
-	const stateOptions = useMemo(
-		() => getStateOptions(data?.states ?? []),
-		[data?.states],
-	)
-	const [dynamicStateOptions, setDynamicStateOptions] =
-		useState<Options[]>(stateOptions)
-	const zipOptions = useMemo(
-		() => getZipOptions(data?.zips ?? []),
-		[data?.zips],
-	)
-	const [dynamicZipOptions, setDynamicZipOptions] =
-		useState<Options[]>(zipOptions)
-
-	const fetchDynamicFilterOptions = async () => {
-		setIsLoading(true)
-		try {
-			const filterOptions = await fetchFilterOptions(
-				queryParams?.country,
-				queryParams?.state,
-				queryParams?.city,
-				queryParams?.zip,
-			)
-			setDynamicCityOptions(filterOptions.cities)
-			setDynamicStateOptions(filterOptions.states)
-			setDynamicZipOptions(filterOptions.zips)
-		} catch (error) {
-			console.error('Error fetching filter options:', error)
-		} finally {
-			setIsLoading(false)
-		}
-	}
-
 	useEffect(() => {
 		fetchData()
-		fetchDynamicFilterOptions()
 	}, [queryParams, page])
 
 	return (
@@ -272,12 +246,16 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 										setMobileFiltersOpen={setMobileFiltersOpen}
 										countryFilter={countryFilter}
 										stateFilter={stateFilter}
-										stateOptions={dynamicStateOptions}
 										cityFilter={cityFilter}
-										cityOptions={dynamicCityOptions}
 										zipFilter={zipFilter}
+										dynamicCityOptions={dynamicCityOptions}
+										dynamicStateOptions={dynamicStateOptions}
 										zipOptions={dynamicZipOptions}
+										dynamicZipOptions={dynamicZipOptions}
 										updateParams={updateParams}
+										dispatch={dispatch}
+										fetchDynamicFilterOptions={fetchDynamicFilterOptions}
+										query={query}
 									/>
 									<ReviewFilters
 										selectedSort={selectedSort}
@@ -287,11 +265,15 @@ const Review = ({ data }: { data: ReviewsResponse }) => {
 										stateFilter={stateFilter}
 										cityFilter={cityFilter}
 										zipFilter={zipFilter}
-										cityOptions={dynamicCityOptions}
-										stateOptions={dynamicStateOptions}
+										dynamicCityOptions={dynamicCityOptions}
+										dynamicStateOptions={dynamicStateOptions}
 										zipOptions={dynamicZipOptions}
+										dynamicZipOptions={dynamicZipOptions}
 										updateParams={updateParams}
 										loading={isLoading}
+										dispatch={dispatch}
+										fetchDynamicFilterOptions={fetchDynamicFilterOptions}
+										query={query}
 									/>
 									{!reviews.length ? (
 										<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>

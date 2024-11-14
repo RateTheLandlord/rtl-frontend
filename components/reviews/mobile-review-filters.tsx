@@ -1,13 +1,13 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import MobileSelectList from './ui/mobile-select-list'
 import SearchBar from './ui/searchbar'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options, IQuery } from '@/util/interfaces/interfaces'
 import { useTranslation } from 'react-i18next'
 import ComboBox from './ui/combobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { AppDispatch } from '@/redux/store'
 import {
 	clearFilters,
 	updateCity,
@@ -17,7 +17,6 @@ import {
 	updateZip,
 } from '@/redux/query/querySlice'
 import ButtonLight from '../ui/button-light'
-import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 
 interface FiltersProps {
 	mobileFiltersOpen: boolean
@@ -26,10 +25,14 @@ interface FiltersProps {
 	stateFilter: Options | null
 	cityFilter: Options | null
 	zipFilter: Options | null
-	cityOptions: Options[]
-	stateOptions: Options[]
+	dynamicCityOptions: Options[]
+	dynamicStateOptions: Options[]
 	zipOptions?: Options[]
+	dynamicZipOptions: Options[]
 	updateParams: () => void
+	dispatch: AppDispatch
+	fetchDynamicFilterOptions: () => Promise<void>
+	query: IQuery
 }
 
 export default function MobileReviewFilters({
@@ -39,37 +42,16 @@ export default function MobileReviewFilters({
 	stateFilter,
 	cityFilter,
 	zipFilter,
-	cityOptions,
-	stateOptions,
+	dynamicCityOptions,
+	dynamicStateOptions,
 	zipOptions,
+	dynamicZipOptions,
 	updateParams,
+	dispatch,
+	fetchDynamicFilterOptions,
+	query
 }: FiltersProps) {
-	const dispatch = useAppDispatch()
-	const query = useAppSelector((state) => state.query)
 	const { t } = useTranslation('reviews')
-	const [dynamicCityOptions, setDynamicCityOptions] =
-		useState<Options[]>(cityOptions)
-	const [dynamicStateOptions, setDynamicStateOptions] =
-		useState<Options[]>(stateOptions)
-	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>(
-		zipOptions ?? [],
-	)
-
-	const fetchDynamicFilterOptions = async () => {
-		try {
-			const filterOptions = await fetchFilterOptions(
-				countryFilter?.value,
-				stateFilter?.value,
-				cityFilter?.value,
-				zipFilter?.value,
-			)
-			setDynamicCityOptions(filterOptions.cities)
-			setDynamicStateOptions(filterOptions.states)
-			setDynamicZipOptions(filterOptions.zips)
-		} catch (error) {
-			console.error('Error fetching filter options:', error)
-		}
-	}
 
 	useEffect(() => {
 		fetchDynamicFilterOptions()
