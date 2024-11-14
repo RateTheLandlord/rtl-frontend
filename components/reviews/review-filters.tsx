@@ -59,7 +59,7 @@ function ReviewFilters({
 	loading,
 	dispatch,
 	fetchDynamicFilterOptions,
-	query
+	query,
 }: FiltersProps): JSX.Element {
 	const { t } = useTranslation('reviews')
 	const keyDownAction = (e) => {

@@ -4,7 +4,7 @@ import {
 	Review as IReview,
 	SortOptions,
 	Options,
-	IQuery
+	IQuery,
 } from '@/util/interfaces/interfaces'
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import ReportModal from '@/components/reviews/report-modal'
@@ -68,7 +68,7 @@ interface ReviewProps {
 	setIsLoading: Dispatch<SetStateAction<boolean>>
 }
 
-const Review = ({ 
+const Review = ({
 	data,
 	query,
 	searchFilter,
@@ -82,7 +82,7 @@ const Review = ({
 	dispatch,
 	fetchDynamicFilterOptions,
 	isLoading,
-	setIsLoading
+	setIsLoading,
 }: ReviewProps) => {
 	// Localization
 	const { t } = useTranslation('reviews')

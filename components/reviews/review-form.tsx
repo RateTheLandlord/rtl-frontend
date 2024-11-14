@@ -4,7 +4,7 @@ import Button from '../ui/button'
 import Spinner from '../ui/Spinner'
 import LocationForm from './components/LocationForm'
 import { Options } from '@/util/interfaces/interfaces'
-import { Review as IReview} from '@/util/interfaces/interfaces'
+import { Review as IReview } from '@/util/interfaces/interfaces'
 import Review from './review'
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
@@ -29,7 +29,6 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 	const query = useAppSelector((state) => state.query)
 	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
 		query
-
 
 	const dispatch = useAppDispatch()
 
@@ -56,7 +55,7 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 	const zipOptions = useMemo(
 		() => getZipOptions(data?.zips ?? []),
 		[data?.zips],
-	)	
+	)
 	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>(
 		zipOptions ?? [],
 	)
@@ -81,14 +80,14 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 	}
 
 	return !locationOpen ? (
-		<Review 
+		<Review
 			data={data}
 			query={query}
 			searchFilter={searchFilter}
-			countryFilter={countryFilter} 
-			stateFilter={stateFilter} 
-			cityFilter={cityFilter} 
-			zipFilter={zipFilter} 
+			countryFilter={countryFilter}
+			stateFilter={stateFilter}
+			cityFilter={cityFilter}
+			zipFilter={zipFilter}
 			dynamicCityOptions={dynamicCityOptions}
 			dynamicStateOptions={dynamicStateOptions}
 			dynamicZipOptions={dynamicZipOptions}
@@ -100,11 +99,11 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 	) : (
 		<div>
 			<div className='w-full border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
-				<LocationForm 
-					countryFilter={countryFilter} 
-					stateFilter={stateFilter} 
-					cityFilter={cityFilter} 
-					zipFilter={zipFilter} 
+				<LocationForm
+					countryFilter={countryFilter}
+					stateFilter={stateFilter}
+					cityFilter={cityFilter}
+					zipFilter={zipFilter}
 					dynamicCityOptions={dynamicCityOptions}
 					dynamicStateOptions={dynamicStateOptions}
 					zipOptions={zipOptions}

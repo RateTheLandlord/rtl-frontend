@@ -49,7 +49,7 @@ export default function MobileReviewFilters({
 	updateParams,
 	dispatch,
 	fetchDynamicFilterOptions,
-	query
+	query,
 }: FiltersProps) {
 	const { t } = useTranslation('reviews')
 
