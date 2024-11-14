@@ -309,7 +309,10 @@ const Review = ({
 									</div>
 								</TabPanel>
 								<TabPanel>
-									<MapComponent />
+									<MapComponent
+										countryFilter={countryFilter}
+										stateFilter={stateFilter}
+									/>
 									<p className='mt-6 text-xs leading-7 text-gray-600'>
 										This map component is currently in Beta. It is provided “as
 										is” and may contain bugs, inaccuracies, or incomplete
