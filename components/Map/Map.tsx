@@ -25,10 +25,7 @@ interface MapProps {
 	stateFilter: Options | null
 }
 
-const MapComponent = ({
-	countryFilter,
-	stateFilter
-}: MapProps) => {
+const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 	const { t } = useTranslation('reviews')
 	const router = useRouter()
 	const { affiliate } = router.query
@@ -111,17 +108,20 @@ const MapComponent = ({
 	}
 
 	useEffect(() => {
-			if ((formData.prevCountry?.value !== formData.country?.value) && !inheritedFilter) {
-				setFormData((prevData) => ({
-					...prevData,
-					state: null,
-					currAffiliate: null,
-					prevCountry: formData.country,
-				}))
-				fetchDynamicFilterOptions()
-			} else {
-				fetchDynamicFilterOptions()
-			}
+		if (
+			formData.prevCountry?.value !== formData.country?.value &&
+			!inheritedFilter
+		) {
+			setFormData((prevData) => ({
+				...prevData,
+				state: null,
+				currAffiliate: null,
+				prevCountry: formData.country,
+			}))
+			fetchDynamicFilterOptions()
+		} else {
+			fetchDynamicFilterOptions()
+		}
 	}, [formData.country])
 
 	useEffect(() => {
