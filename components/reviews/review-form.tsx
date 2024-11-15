@@ -113,7 +113,10 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 				{loading ? (
 					<Spinner />
 				) : (
-					<Button disabled={!countryFilter || !stateFilter} onClick={() => handleSubmit()}>
+					<Button
+						disabled={!countryFilter || !stateFilter}
+						onClick={() => handleSubmit()}
+					>
 						Continue
 					</Button>
 				)}
