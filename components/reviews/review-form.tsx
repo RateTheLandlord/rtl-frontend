@@ -100,25 +100,20 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 	) : (
 		<div>
 			<ReviewHero></ReviewHero>
-			<div className='w-full border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
+			<div className='w-full border-b-2 border-b-teal-600 p-14 transition-all duration-500'>
 				<LocationForm
 					countryFilter={countryFilter}
 					stateFilter={stateFilter}
-					cityFilter={cityFilter}
-					zipFilter={zipFilter}
-					dynamicCityOptions={dynamicCityOptions}
 					dynamicStateOptions={dynamicStateOptions}
-					zipOptions={zipOptions}
-					dynamicZipOptions={dynamicZipOptions}
 					dispatch={dispatch}
 					fetchDynamicFilterOptions={fetchDynamicFilterOptions}
 				/>
 			</div>
-			<div className='flex justify-center gap-5 pt-5 sm:gap-3'>
+			<div className='flex justify-center gap-5 pt-8 sm:gap-3'>
 				{loading ? (
 					<Spinner />
 				) : (
-					<Button disabled={false} onClick={() => handleSubmit()}>
+					<Button disabled={!countryFilter || !stateFilter} onClick={() => handleSubmit()}>
 						Continue
 					</Button>
 				)}
