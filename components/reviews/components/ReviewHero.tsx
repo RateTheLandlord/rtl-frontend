@@ -1,6 +1,6 @@
 const ReviewHero = () => {
 	return (
-		<div className='mt-8 flex flex-col items-center justify-center gap-4 rounded-3xl bg-gray-100 p-10'>
+		<div className=''>
 			<h1 className='text-center text-4xl'>
 				See Reviews of Landlords in Your Community
 			</h1>

@@ -98,30 +98,33 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 			setIsLoading={setIsLoading}
 		/>
 	) : (
-		<div>
-			<ReviewHero></ReviewHero>
-			<div className='w-full border-b-2 border-b-teal-600 p-14 transition-all duration-500'>
-				<LocationForm
-					countryFilter={countryFilter}
-					stateFilter={stateFilter}
-					dynamicStateOptions={dynamicStateOptions}
-					dispatch={dispatch}
-					fetchDynamicFilterOptions={fetchDynamicFilterOptions}
-				/>
+		<div className='min-h-screen min-w-screen relative flex flex-col items-center rounded-3xl bg-gray-100 '>
+			<div className='mt-8 gap-2 p-10'>
+				<ReviewHero></ReviewHero>
+				<div className='w-full p-14 transition-all duration-500'>
+					<LocationForm
+						countryFilter={countryFilter}
+						stateFilter={stateFilter}
+						dynamicStateOptions={dynamicStateOptions}
+						dispatch={dispatch}
+						fetchDynamicFilterOptions={fetchDynamicFilterOptions}
+					/>
+				</div>
 			</div>
-			<div className='flex justify-center gap-5 pt-8 sm:gap-3'>
+			<div className='absolute bottom-10 sm:bottom-16 md:bottom-20 lg:bottom-20'>
 				{loading ? (
 					<Spinner />
 				) : (
 					<Button
 						disabled={!countryFilter || !stateFilter}
 						onClick={() => handleSubmit()}
+						size='large'
 					>
 						Continue
 					</Button>
 				)}
 			</div>
-		</div>
+		</div>	
 	)
 }
 

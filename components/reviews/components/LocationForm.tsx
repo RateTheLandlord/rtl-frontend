@@ -50,11 +50,11 @@ const LocationForm = ({
 
 	return (
 		<>
-			<h2 className='text-2xl font-semibold leading-10 text-gray-900 border-b'>
-					Please Select a Country and State/Province
-				</h2>
-			<div className='grid w-full grid-cols-2 gap-5'>
-				<div className='py-8'>
+			<div className='flex flex-col items-center '>
+				<div className='grid w-11/12 py-8'>
+					<h2 className='text-lg sm:text-lg md:text-xl lg:text-2xl xl:text-2xl font-semibold leading-10 text-gray-900 border-b'>
+						Please Select a Country
+					</h2>
 					<SelectList
 						state={countryFilter}
 						setState={(opt: Options) => dispatch(updateCountry(opt))}
@@ -62,14 +62,23 @@ const LocationForm = ({
 						name={t('reviews.country')}
 					/>
 				</div>
-				<div className='grid w-full py-8 '>
-					<ComboBox
-						state={stateFilter}
-						setState={(opt: Options) => dispatch(updateState(opt))}
-						options={dynamicStateOptions}
-						name={t('reviews.state')}
-					/>
+				<div className='py-4'></div>
+				<div className='grid w-11/12 py-8 animate-fade-in'>
+				{!countryFilter ? null : (
+					<>
+						<h2 className='text-lg sm:text-lg md:text-xl lg:text-2xl xl:text-2xl font-semibold leading-10 text-gray-900 border-b '>
+							Please Select a State/Province
+						</h2>
+						<ComboBox
+							state={stateFilter}
+							setState={(opt: Options) => dispatch(updateState(opt))}
+							options={dynamicStateOptions}
+							name={t('reviews.state')}
+						/>
+					</>
+				)}
 				</div>
+				
 			</div>
 			<div className='w-full'>
 				<AdsComponent slot='2009320000' />

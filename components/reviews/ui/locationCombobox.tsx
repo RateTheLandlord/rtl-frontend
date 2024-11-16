@@ -51,7 +51,7 @@ export default function ComboBox({
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<Combobox.Options className='absolute z-10 mt-1 max-h-60 w-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-md'>
+					<Combobox.Options className='absolute z-10 mt-1 max-h-60 w-9/12 sm:w-1/2 md:w-8/12 lg:w-9/12 xl:w-7/12 2xl:w-7/12 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-md'>
 						{filterOptions.length === 0 && query !== '' ? (
 							<div className='relative cursor-default select-none px-4 py-2 text-gray-700'>
 								Nothing found.

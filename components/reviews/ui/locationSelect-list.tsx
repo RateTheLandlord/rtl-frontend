@@ -41,7 +41,7 @@ export default function SelectList({
 				>
 					<ListboxOptions
 						anchor='bottom start'
-						className='absolute z-[999] mt-1 max-h-[250px] w-[250px] overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-md'
+						className='absolute z-[999] mt-1 max-h-[250px] w-1/2 sm:w-1/2 md:w-8/12 lg:w-9/12 xl:w-7/12 2xl:w-7/12 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-md'
 					>
 						{options.map((option) => (
 							<Listbox.Option
