@@ -98,7 +98,7 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 			setIsLoading={setIsLoading}
 		/>
 	) : (
-		<div className='min-h-screen min-w-screen relative flex flex-col items-center rounded-3xl bg-gray-100 '>
+		<div className='min-w-screen relative flex min-h-screen flex-col items-center rounded-3xl bg-gray-100 '>
 			<div className='mt-8 gap-2 p-10'>
 				<ReviewHero></ReviewHero>
 				<div className='w-full p-14 transition-all duration-500'>
@@ -124,7 +124,7 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 					</Button>
 				)}
 			</div>
-		</div>	
+		</div>
 	)
 }
 
