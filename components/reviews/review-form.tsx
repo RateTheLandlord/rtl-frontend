@@ -98,10 +98,10 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 			setIsLoading={setIsLoading}
 		/>
 	) : (
-		<div className='min-w-screen relative flex min-h-screen flex-col items-center rounded-3xl bg-gray-100 '>
-			<div className='mt-8 gap-2 p-10'>
+		<div className='mt-16 mb-36 xl:mb-80 mr-4 ml-4 min-w-screen relative flex flex-col items-center rounded-3xl bg-gray-100 '>
+			<div className='mt-10 mb-32'>
 				<ReviewHero></ReviewHero>
-				<div className='w-full p-14 transition-all duration-500'>
+				<div className='w-full p-8 transition-all duration-500'>
 					<LocationForm
 						countryFilter={countryFilter}
 						stateFilter={stateFilter}
@@ -111,7 +111,7 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 					/>
 				</div>
 			</div>
-			<div className='absolute bottom-10 sm:bottom-16 md:bottom-20 lg:bottom-20'>
+			<div className='absolute bottom-10 sm:bottom-16 md:bottom-20 lg:bottom-20 xl:bottom-10'>
 				{loading ? (
 					<Spinner />
 				) : (
