@@ -98,8 +98,8 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 			setIsLoading={setIsLoading}
 		/>
 	) : (
-		<div className='mt-16 mb-36 xl:mb-80 mr-4 ml-4 min-w-screen relative flex flex-col items-center rounded-3xl bg-gray-100 '>
-			<div className='mt-10 mb-32'>
+		<div className='min-w-screen relative mb-36 ml-4 mr-4 mt-16 flex flex-col items-center rounded-3xl bg-gray-100 xl:mb-80 '>
+			<div className='mb-32 mt-10'>
 				<ReviewHero></ReviewHero>
 				<div className='w-full p-8 transition-all duration-500'>
 					<LocationForm
