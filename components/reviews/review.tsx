@@ -19,7 +19,6 @@ import { useTranslation } from 'react-i18next'
 import ButtonLight from '../ui/button-light'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import MapComponent from '../Map/Map'
-import { useRouter } from 'next/router'
 import { AppDispatch } from '@/redux/store'
 
 export type ReviewsResponse = {
@@ -67,6 +66,7 @@ interface ReviewProps {
 	fetchDynamicFilterOptions: () => Promise<void>
 	isLoading: boolean
 	setIsLoading: Dispatch<SetStateAction<boolean>>
+	view: string | string[] | undefined
 }
 
 const Review = ({
@@ -84,12 +84,10 @@ const Review = ({
 	fetchDynamicFilterOptions,
 	isLoading,
 	setIsLoading,
+	view
 }: ReviewProps) => {
 	// Localization
 	const { t } = useTranslation('reviews')
-
-	const router = useRouter()
-	const { view } = router.query
 
 	// State
 	const [reviews, setReviews] = useState<IReview[]>(data?.reviews || [])

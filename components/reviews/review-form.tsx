@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import Button from '../ui/button'
 import Spinner from '../ui/Spinner'
 import LocationForm from './components/LocationForm'
@@ -10,6 +10,7 @@ import Review from './review'
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCityOptions, getStateOptions, getZipOptions } from './functions'
+import { useRouter } from 'next/router'
 
 export type ReviewsResponse = {
 	reviews: IReview[]
@@ -26,6 +27,14 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [isLoading, setIsLoading] = useState(false)
 
+	const router = useRouter()
+	const { view } = router.query
+
+	useEffect(() => {
+		if (view && view === 'map') {
+			setLocationOpen(false)
+		}
+	}, [view])
 	// Redux
 	const query = useAppSelector((state) => state.query)
 	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
@@ -80,6 +89,8 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 		}
 	}
 
+
+
 	return !locationOpen ? (
 		<Review
 			data={data}
@@ -96,6 +107,7 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 			fetchDynamicFilterOptions={fetchDynamicFilterOptions}
 			isLoading={isLoading}
 			setIsLoading={setIsLoading}
+			view={view}
 		/>
 	) : (
 		<div className='min-w-screen relative mb-36 ml-4 mr-4 mt-16 flex flex-col items-center rounded-3xl bg-gray-100 xl:mb-80 '>
