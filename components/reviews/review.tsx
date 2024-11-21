@@ -84,7 +84,7 @@ const Review = ({
 	fetchDynamicFilterOptions,
 	isLoading,
 	setIsLoading,
-	view
+	view,
 }: ReviewProps) => {
 	// Localization
 	const { t } = useTranslation('reviews')

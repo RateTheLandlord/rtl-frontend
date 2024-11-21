@@ -89,8 +89,6 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 		}
 	}
 
-
-
 	return !locationOpen ? (
 		<Review
 			data={data}
