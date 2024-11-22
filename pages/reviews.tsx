@@ -1,8 +1,9 @@
-import Review, { ReviewsResponse } from '@/components/reviews/review'
+import { ReviewsResponse } from '@/components/reviews/review'
 import { NextSeo } from 'next-seo'
 import React from 'react'
 import { useRouter } from 'next/router'
 import { getReviews } from '@/lib/review/review'
+import ReviewForm from '@/components/reviews/review-form'
 
 interface IProps {
 	data: ReviewsResponse
@@ -50,7 +51,7 @@ export default function Reviews({ data }: IProps): JSX.Element {
 					},
 				]}
 			/>
-			<Review data={data} />
+			<ReviewForm data={data} />
 		</>
 	)
 }

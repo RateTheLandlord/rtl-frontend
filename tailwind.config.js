@@ -16,6 +16,15 @@ module.exports = {
 				'montserrat-bold': ['Montserrat-Bold', 'sans-serif'],
 				'montserrat-extra-bold': ['Montserrat-Extra-Bold', 'sans-serif'],
 			},
+			animation: {
+				'fade-in': 'fadeIn 4s ease-in', 
+			  },
+			  keyframes: {
+				fadeIn: {
+				  '0%': { opacity: '0' },
+				  '100%': { opacity: '1' },
+				},
+			},
 		},
 	},
 	plugins: [
