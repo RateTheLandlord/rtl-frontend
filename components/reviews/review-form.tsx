@@ -1,9 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useState, useMemo, useEffect } from 'react'
-import Button from '../ui/button'
-import Spinner from '../ui/Spinner'
-import LocationForm from './components/LocationForm'
-import ReviewHero from './components/ReviewHero'
 import { Options } from '@/util/interfaces/interfaces'
 import { Review as IReview } from '@/util/interfaces/interfaces'
 import Review from './review'
@@ -11,6 +7,7 @@ import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCityOptions, getStateOptions, getZipOptions } from './functions'
 import { useRouter } from 'next/router'
+import Hero from './components/Hero'
 
 export type ReviewsResponse = {
 	reviews: IReview[]
@@ -108,33 +105,14 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 			view={view}
 		/>
 	) : (
-		<div className='min-w-screen relative mb-36 ml-4 mr-4 mt-16 flex flex-col items-center rounded-3xl bg-gray-100 xl:mb-80 '>
-			<div className='mb-32 mt-10'>
-				<ReviewHero></ReviewHero>
-				<div className='w-full p-8 transition-all duration-500'>
-					<LocationForm
-						countryFilter={countryFilter}
-						stateFilter={stateFilter}
-						dynamicStateOptions={dynamicStateOptions}
-						dispatch={dispatch}
-						fetchDynamicFilterOptions={fetchDynamicFilterOptions}
-					/>
-				</div>
-			</div>
-			<div className='absolute bottom-10 sm:bottom-16 md:bottom-20 lg:bottom-20 xl:bottom-10'>
-				{loading ? (
-					<Spinner />
-				) : (
-					<Button
-						disabled={!countryFilter || !stateFilter}
-						onClick={() => handleSubmit()}
-						size='large'
-					>
-						Continue
-					</Button>
-				)}
-			</div>
-		</div>
+		<Hero
+			loading={loading}
+			countryFilter={countryFilter}
+			stateFilter={stateFilter}
+			dynamicStateOptions={dynamicStateOptions}
+			fetchDynamicFilterOptions={fetchDynamicFilterOptions}
+			handleSubmit={handleSubmit}
+		/>
 	)
 }
 

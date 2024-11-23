@@ -3,23 +3,20 @@ import { Options } from '@/util/interfaces/interfaces'
 import { useTranslation } from 'react-i18next'
 import SelectList from '../ui/locationSelect-list'
 import ComboBox from '../ui/locationCombobox'
-import { AppDispatch } from '@/redux/store'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
 import AdsComponent from '@/components/adsense/Adsense'
 import {
 	clearFilters,
 	updateCountry,
 	updateState,
-	updateActiveFilters
+	updateActiveFilters,
 } from '@/redux/query/querySlice'
-
-
+import { useAppDispatch } from '@/redux/hooks'
 
 interface LocationProps {
 	countryFilter: Options | null
 	stateFilter: Options | null
 	dynamicStateOptions: Options[]
-	dispatch: AppDispatch
 	fetchDynamicFilterOptions: () => Promise<void>
 }
 
@@ -27,10 +24,12 @@ const LocationForm = ({
 	countryFilter,
 	stateFilter,
 	dynamicStateOptions,
-	dispatch,
-	fetchDynamicFilterOptions }: LocationProps) => {
+	fetchDynamicFilterOptions,
+}: LocationProps) => {
 	const { t } = useTranslation('reviews')
-	
+
+	const dispatch = useAppDispatch()
+
 	useEffect(() => {
 		fetchDynamicFilterOptions()
 	}, [stateFilter])
@@ -38,21 +37,19 @@ const LocationForm = ({
 	useEffect(() => {
 		dispatch(clearFilters())
 		dispatch(updateCountry(countryFilter)),
-		updateActiveFilters([countryFilter]),
-		fetchDynamicFilterOptions()
+			updateActiveFilters([countryFilter]),
+			fetchDynamicFilterOptions()
 	}, [countryFilter])
 
 	useEffect(() => {
-		dispatch(
-			updateActiveFilters([stateFilter]),
-		)
+		dispatch(updateActiveFilters([stateFilter]))
 	}, [stateFilter])
 
 	return (
 		<>
 			<div className='flex flex-col items-center '>
 				<div className='grid w-11/12'>
-					<h2 className='text-lg sm:text-lg md:text-xl lg:text-2xl xl:text-2xl font-semibold leading-10 text-gray-900 border-b'>
+					<h2 className='border-b text-lg font-semibold leading-10 text-gray-900 sm:text-lg md:text-xl lg:text-2xl xl:text-2xl'>
 						Please Select a Country
 					</h2>
 					<SelectList
@@ -63,22 +60,21 @@ const LocationForm = ({
 					/>
 				</div>
 				<div className='py-4'></div>
-				<div className='grid w-11/12 py-2 animate-fade-in'>
-				{!countryFilter ? null : (
-					<>
-						<h2 className='text-lg sm:text-lg md:text-xl lg:text-2xl xl:text-2xl font-semibold leading-10 text-gray-900 border-b '>
-							Please Select a State/Province
-						</h2>
-						<ComboBox
-							state={stateFilter}
-							setState={(opt: Options) => dispatch(updateState(opt))}
-							options={dynamicStateOptions}
-							name={t('reviews.state')}
-						/>
-					</>
-				)}
+				<div className='grid w-11/12 animate-fade-in py-2'>
+					{!countryFilter ? null : (
+						<>
+							<h2 className='border-b text-lg font-semibold leading-10 text-gray-900 sm:text-lg md:text-xl lg:text-2xl xl:text-2xl '>
+								Please Select a State/Province
+							</h2>
+							<ComboBox
+								state={stateFilter}
+								setState={(opt: Options) => dispatch(updateState(opt))}
+								options={dynamicStateOptions}
+								name={t('reviews.state')}
+							/>
+						</>
+					)}
 				</div>
-				
 			</div>
 			<div className='w-full'>
 				<AdsComponent slot='2009320000' />
