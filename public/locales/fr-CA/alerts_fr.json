@@ -1,0 +1,8 @@
+{
+	"alerts": {
+		"maliciousString": "Attention ! Nous avons détecté un lien ou un script dans votre entrée. Veuilleuz le retirer ou le reformuler avant de soumettre.",
+		"error": "Échec : Une erreur s'est produite, veuillez réessayer.",
+		"city-validation": "Le champ 'Ville' ne peut pas être vide.",
+		"landlord-validation": "Le champ 'Propriétaire' ne peut pas être vide."
+	}
+}

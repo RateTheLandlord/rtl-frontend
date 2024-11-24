@@ -1,0 +1,33 @@
+{
+	"reviews": {
+		"title": "Trouver votre propriétaire",
+		"body": "Recherchez dans notre base de données pour trouver des informations sur votre propriétaire. Si aucun résultat d'apparait soyez la première personne à ajouter un avis !",
+		"filters": "Filtres",
+		"sort": "Classer par",
+		"country": "Pays",
+		"state": "État / Province",
+		"city": "Ville",
+		"health": "Santé et sécurité",
+		"respect": "Respect",
+		"privacy": "Confidentialité des locataires",
+		"repair": "Réparation",
+		"stability": "Stabilité résidentielle",
+		"review": "Avis écrit",
+		"search": "Chercher par propriétaire",
+		"faq": "Que signifient ces évaluations ?",
+		"zip": "ZIP / Code postal",
+		"report-review": "SIGNALER",
+		"edited": "*Modifié par l'Admin après révision.",
+		"report": {
+			"error": "Erreur, veuillez réessayer",
+			"success": "Avis reçu!",
+			"report": "Signaler l'avis",
+			"description": "Vous pensez que cet avis devrais être supprimé ou modifié ?",
+			"reason": "Raison",
+			"cancel": "Annuler",
+			"submit": "Soumettre"
+		},
+		"rent": "Montant du loyer: $",
+		"local": "En devise locale"
+	}
+}
