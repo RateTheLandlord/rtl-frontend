@@ -1,6 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useState, useMemo, useEffect } from 'react'
 import { Options } from '@/util/interfaces/interfaces'
+import { debounce } from 'lodash'
 import { Review as IReview } from '@/util/interfaces/interfaces'
 import Review from './review'
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
@@ -42,8 +43,11 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 	const handleSubmit = async () => {
 		setLoading(true)
 		setLocationOpen(false)
-		setLoading(true)
 	}
+
+	useEffect(() => {
+		if (!countryFilter) setLoading(false)
+	}, [countryFilter])
 
 	const cityOptions = useMemo(
 		() => getCityOptions(data?.cities ?? []),
@@ -67,7 +71,7 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 		zipOptions ?? [],
 	)
 
-	const fetchDynamicFilterOptions = async () => {
+	const fetchDynamicFilterOptions = debounce(async () => {
 		setIsLoading(true)
 		try {
 			const filterOptions = await fetchFilterOptions(
@@ -84,7 +88,7 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 		} finally {
 			setIsLoading(false)
 		}
-	}
+	}, 300)
 
 	return !locationOpen ? (
 		<Review
@@ -96,13 +100,13 @@ function ReviewForm({ data }: { data: ReviewsResponse }): JSX.Element {
 			cityFilter={cityFilter}
 			zipFilter={zipFilter}
 			dynamicCityOptions={dynamicCityOptions}
-			dynamicStateOptions={dynamicStateOptions}
 			dynamicZipOptions={dynamicZipOptions}
 			dispatch={dispatch}
 			fetchDynamicFilterOptions={fetchDynamicFilterOptions}
 			isLoading={isLoading}
 			setIsLoading={setIsLoading}
 			view={view}
+			setLocationOpen={setLocationOpen}
 		/>
 	) : (
 		<Hero

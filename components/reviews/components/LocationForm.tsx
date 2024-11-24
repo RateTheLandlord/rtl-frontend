@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import SelectList from '../ui/locationSelect-list'
 import ComboBox from '../ui/locationCombobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
-import AdsComponent from '@/components/adsense/Adsense'
 import {
 	clearFilters,
 	updateCountry,
@@ -36,9 +35,9 @@ const LocationForm = ({
 
 	useEffect(() => {
 		dispatch(clearFilters())
-		dispatch(updateCountry(countryFilter)),
-			updateActiveFilters([countryFilter]),
-			fetchDynamicFilterOptions()
+		dispatch(updateCountry(countryFilter))
+		updateActiveFilters([countryFilter])
+		fetchDynamicFilterOptions()
 	}, [countryFilter])
 
 	useEffect(() => {
@@ -60,7 +59,7 @@ const LocationForm = ({
 					/>
 				</div>
 				<div className='py-4'></div>
-				<div className='grid w-11/12 animate-fade-in py-2'>
+				<div className='grid w-11/12 py-2'>
 					{!countryFilter ? null : (
 						<>
 							<h2 className='border-b text-lg font-semibold leading-10 text-gray-900 sm:text-lg md:text-xl lg:text-2xl xl:text-2xl '>
@@ -75,9 +74,6 @@ const LocationForm = ({
 						</>
 					)}
 				</div>
-			</div>
-			<div className='w-full'>
-				<AdsComponent slot='2009320000' />
 			</div>
 		</>
 	)

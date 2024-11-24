@@ -1,19 +1,16 @@
 import React, { Fragment, useEffect } from 'react'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
-import MobileSelectList from './ui/mobile-select-list'
 import SearchBar from './ui/searchbar'
 import { Options, IQuery } from '@/util/interfaces/interfaces'
 import { useTranslation } from 'react-i18next'
 import ComboBox from './ui/combobox'
-import { countryOptions } from '@/util/helpers/getCountryCodes'
 import { AppDispatch } from '@/redux/store'
 import {
 	clearFilters,
 	updateCity,
 	updateCountry,
 	updateSearch,
-	updateState,
 	updateZip,
 } from '@/redux/query/querySlice'
 import ButtonLight from '../ui/button-light'
@@ -26,7 +23,6 @@ interface FiltersProps {
 	cityFilter: Options | null
 	zipFilter: Options | null
 	dynamicCityOptions: Options[]
-	dynamicStateOptions: Options[]
 	zipOptions?: Options[]
 	dynamicZipOptions: Options[]
 	updateParams: () => void
@@ -43,7 +39,6 @@ export default function MobileReviewFilters({
 	cityFilter,
 	zipFilter,
 	dynamicCityOptions,
-	dynamicStateOptions,
 	zipOptions,
 	dynamicZipOptions,
 	updateParams,
@@ -120,18 +115,6 @@ export default function MobileReviewFilters({
 										value={query.searchFilter}
 									/>
 
-									<MobileSelectList
-										state={countryFilter}
-										setState={(opt: Options) => dispatch(updateCountry(opt))}
-										options={countryOptions}
-										name={t('reviews.country')}
-									/>
-									<ComboBox
-										state={stateFilter}
-										setState={(opt: Options) => dispatch(updateState(opt))}
-										options={dynamicStateOptions}
-										name={t('reviews.state')}
-									/>
 									<ComboBox
 										state={cityFilter}
 										setState={(opt: Options) => dispatch(updateCity(opt))}
