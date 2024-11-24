@@ -3,6 +3,7 @@ import {
 	ReviewsResponse,
 	OtherLandlord,
 	FilterOptions,
+	ReviewResponseStatus
 } from '@/lib/review/models/review'
 import { filterReviewWithAI, IResult } from './helpers'
 import {
@@ -70,6 +71,7 @@ export async function filterOptions(
     `
 	const cityList = cities.map(({ city }) => city)
 
+
 	// Fetch zips
 	const zips = await sql`
         SELECT DISTINCT zip
@@ -81,27 +83,28 @@ export async function filterOptions(
 	const zipList = zipsExtracted.filter((zip) => zip.length > 0)
 
 	const filteredCity = cityList.filter((n) => n)
-	const allCityOptions = filteredCity.map((c, id) => {
+	const allCityOptions = [...new Map(filteredCity.map((c, id) => {
 		const city = c.toLowerCase().trim()
 		return {
 			id: id + 1,
 			name: city.split(' ').map(capitalize).join(' '),
 			value: c.toLowerCase().trim(),
 		}
-	})
+	}).map(city => [city.value, city])).values()]
 
 	allCityOptions.sort((a: Options, b: Options): number =>
 		a.name.localeCompare(b.name),
 	)
 
-	const allStateOptions = stateList.map((s, id) => {
+
+	const allStateOptions = [...new Map(stateList.map((s, id) => {
 		const state = s.toLowerCase()
 		return {
 			id: id + 1,
 			name: state.split(' ').map(capitalize).join(' '),
 			value: s,
 		}
-	})
+	}).map(state => [state.value, state])).values()]
 
 	allStateOptions.sort((a: Options, b: Options): number =>
 		a.name.localeCompare(b.name),
@@ -254,7 +257,7 @@ export async function findOne(id: number): Promise<Review[]> {
       WHERE id IN (${id});`
 }
 
-export async function create(inputReview: Review): Promise<Review> {
+export async function create(inputReview: Review): Promise<ReviewResponseStatus> {
 	try {
 		const existingReviewsForLandlord: Review[] =
 			await getExistingReviewsForLandlord(inputReview)
@@ -262,11 +265,13 @@ export async function create(inputReview: Review): Promise<Review> {
 			existingReviewsForLandlord,
 			inputReview.review,
 		)
+
 		const landlordSpamDetected: boolean = await checkForLandlordSpam(
 			inputReview.landlord,
 		)
 
-		if (reviewSpamDetected || landlordSpamDetected) return inputReview // Don't post the review to the DB if we detect spam
+		// Don't post the review to the DB if we detect spam
+		if (reviewSpamDetected || landlordSpamDetected) return {message:"This landlord is currently under spam protection please try again later", success:false} 
 
 		updateRecentReviews(inputReview.landlord)
 		if (process.env.NEXT_PUBLIC_ENVIRONMENT == 'development')
@@ -395,23 +400,17 @@ export async function getOtherLandlords(
 		`
 
 	const otherLandlords = await sql<OtherLandlord[]>`
-		SELECT DISTINCT
-		re.landlord AS name,
-		(SELECT 
-			(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS combined_avg
-			FROM review
-			WHERE landlord = re.landlord) AS avgrating,
-		re.city AS topcity,
-		(SELECT
-			COUNT(*)
-			FROM review
-			WHERE landlord = re.landlord) AS ReviewCount,
-		RANDOM()
-		FROM review re
-		WHERE re.city = ${topCity[0].city}
-		AND re.landlord != ${landlord.toLocaleUpperCase()}
+		SELECT
+			landlord as name,
+			(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS avgrating,
+			COUNT(*) as ReviewCount,
+			RANDOM()
+		FROM review
+		WHERE city = ${topCity[0].city}
+		AND landlord != ${landlord.toLocaleUpperCase()}
+		GROUP BY landlord
 		ORDER BY RANDOM()
-		LIMIT 10
+		LIMIT 10;
 		`
 	return otherLandlords
 }

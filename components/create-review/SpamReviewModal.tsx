@@ -6,9 +6,10 @@ import { useTranslation } from 'react-i18next'
 interface IProps {
 	isOpen: boolean
 	setIsOpen: React.Dispatch<SetStateAction<boolean>>
+	detectionMethod: string
 }
 
-function SpamReviewModal({ isOpen, setIsOpen }: IProps) {
+function SpamReviewModal({ isOpen, setIsOpen, detectionMethod }: IProps) {
 	const { t } = useTranslation('create')
 	return (
 		<Transition.Root show={isOpen} as={Fragment}>
@@ -43,11 +44,13 @@ function SpamReviewModal({ isOpen, setIsOpen }: IProps) {
 											as='h3'
 											className='text-base  leading-6 text-gray-900'
 										>
-											{t('create-review.spam-modal.title')}
+											{t(`create-review.spam-modal.${detectionMethod}.title`)}
 										</Dialog.Title>
 										<div className='mt-2'>
 											<p className='text-sm text-gray-500'>
-												{t('create-review.spam-modal.description')}
+												{t(
+													`create-review.spam-modal.${detectionMethod}.description`,
+												)}
 											</p>
 										</div>
 									</div>

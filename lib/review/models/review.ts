@@ -46,3 +46,8 @@ export type FilterOptions = {
 	cities: Options[]
 	zips: Options[]
 }
+
+export interface ReviewResponseStatus {
+	success: boolean,
+	message: string
+}

@@ -115,3 +115,41 @@ export type FilterOptions = {
 	cities: Options[]
 	zips: Options[]
 }
+
+export interface ReviewResponseStatus {
+	success: boolean
+	message: string
+}
+
+export interface SuspiciousLandlord {
+	id?: number
+	landlord: string
+	message: string
+	date_added?: Date
+}
+
+export interface SuspiciousLandlordResponse {
+	landlords: Array<SuspiciousLandlord>
+	total: string
+	limit: number
+}
+
+export interface IQuery {
+	selectedSort: SortOptions
+	countryFilter: Options | null
+	stateFilter: Options | null
+	cityFilter: Options | null
+	zipFilter: Options | null
+	activeFilters: Array<Options | null> | null
+	searchFilter: string | undefined
+}
+
+export type ReviewsResponse = {
+	reviews: Review[]
+	total: number
+	countries: string[]
+	states: string[]
+	cities: string[]
+	zips: string[]
+	limit: number
+}

@@ -9,10 +9,12 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import TenantResources from '@/components/admin/sections/TenantResources'
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import { useUser } from '@auth0/nextjs-auth0/client'
+import SuspiciousLandlords from '@/components/admin/sections/SuspiciousLandlords'
 
 const tabs = [
 	{ name: 'Flagged Reviews', component: <FlaggedReviews /> },
 	{ name: 'Tenant Resources', component: <TenantResources /> },
+	{ name: 'Suspicous Landlords', component: <SuspiciousLandlords /> },
 	{ name: 'Stats', component: <Stats /> },
 ]
 
