@@ -20,6 +20,7 @@ import ButtonLight from '../ui/button-light'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import MapComponent from '../Map/Map'
 import { AppDispatch } from '@/redux/store'
+import StateInfo from './components/StateInfo'
 
 export type ReviewsResponse = {
 	reviews: IReview[]
@@ -60,13 +61,13 @@ interface ReviewProps {
 	cityFilter: Options | null
 	zipFilter: Options | null
 	dynamicCityOptions: Options[]
-	dynamicStateOptions: Options[]
 	dynamicZipOptions: Options[]
 	dispatch: AppDispatch
 	fetchDynamicFilterOptions: () => Promise<void>
 	isLoading: boolean
 	setIsLoading: Dispatch<SetStateAction<boolean>>
 	view: string | string[] | undefined
+	setLocationOpen: (bool: boolean) => void
 }
 
 const Review = ({
@@ -78,13 +79,13 @@ const Review = ({
 	cityFilter,
 	zipFilter,
 	dynamicCityOptions,
-	dynamicStateOptions,
 	dynamicZipOptions,
 	dispatch,
 	fetchDynamicFilterOptions,
 	isLoading,
 	setIsLoading,
 	view,
+	setLocationOpen,
 }: ReviewProps) => {
 	// Localization
 	const { t } = useTranslation('reviews')
@@ -208,7 +209,12 @@ const Review = ({
 					<AdsComponent slot='2009320000' />
 					<div>
 						<div className='mx-auto max-w-7xl border-b-gray-200 px-4 py-16 sm:px-6 lg:border-b lg:px-8'>
-							<div>
+							<StateInfo
+								country={countryFilter?.value || ''}
+								state={stateFilter?.value || ''}
+								setLocationOpen={setLocationOpen}
+							/>
+							<div className='mt-3'>
 								<h1 className='text-3xl   text-gray-900'>
 									{t('reviews.title')}
 								</h1>
@@ -256,7 +262,6 @@ const Review = ({
 											cityFilter={cityFilter}
 											zipFilter={zipFilter}
 											dynamicCityOptions={dynamicCityOptions}
-											dynamicStateOptions={dynamicStateOptions}
 											zipOptions={dynamicZipOptions}
 											dynamicZipOptions={dynamicZipOptions}
 											updateParams={updateParams}
@@ -273,7 +278,6 @@ const Review = ({
 											cityFilter={cityFilter}
 											zipFilter={zipFilter}
 											dynamicCityOptions={dynamicCityOptions}
-											dynamicStateOptions={dynamicStateOptions}
 											zipOptions={dynamicZipOptions}
 											dynamicZipOptions={dynamicZipOptions}
 											updateParams={updateParams}

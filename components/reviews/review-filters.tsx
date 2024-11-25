@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react'
 import { IQuery, Options, SortOptions } from '@/util/interfaces/interfaces'
-import SelectList from './ui/select-list'
 import SearchBar from './ui/searchbar'
 import { useTranslation } from 'react-i18next'
 import ComboBox from './ui/combobox'
-import { countryOptions } from '@/util/helpers/getCountryCodes'
 import { AppDispatch } from '@/redux/store'
 import {
 	clearFilters,
@@ -32,7 +30,6 @@ interface FiltersProps {
 	cityFilter: Options | null
 	zipFilter: Options | null
 	dynamicCityOptions: Options[]
-	dynamicStateOptions: Options[]
 	zipOptions?: Options[]
 	dynamicZipOptions: Options[]
 	updateParams: () => void
@@ -52,7 +49,6 @@ function ReviewFilters({
 	cityFilter,
 	zipFilter,
 	dynamicCityOptions,
-	dynamicStateOptions,
 	zipOptions,
 	dynamicZipOptions,
 	updateParams,
@@ -116,22 +112,6 @@ function ReviewFilters({
 										/>
 									</div>
 
-									<div className='py-2'>
-										<SelectList
-											state={countryFilter}
-											setState={(opt: Options) => dispatch(updateCountry(opt))}
-											options={countryOptions}
-											name={t('reviews.country')}
-										/>
-									</div>
-									<div className='py-2'>
-										<ComboBox
-											state={stateFilter}
-											setState={(opt: Options) => dispatch(updateState(opt))}
-											options={dynamicStateOptions}
-											name={t('reviews.state')}
-										/>
-									</div>
 									<div className='py-2'>
 										<ComboBox
 											state={cityFilter}
