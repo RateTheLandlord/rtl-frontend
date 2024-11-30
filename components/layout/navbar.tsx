@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import MobileNav from '@/components/layout/MobileNav'
-import { navigation, socialLinks } from '@/components/layout/links'
+import { navigation } from '@/components/layout/links'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import ChangeLanguage from '../ui/ChangeLanguage'
 
