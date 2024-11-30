@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import MobileNav from '@/components/layout/MobileNav'
 import { navigation, socialLinks } from '@/components/layout/links'
 import { useUser } from '@auth0/nextjs-auth0/client'
+import ChangeLanguage from '../ui/ChangeLanguage'
 
 export default function Navbar(): JSX.Element {
 	const { user } = useUser()
@@ -74,7 +75,7 @@ export default function Navbar(): JSX.Element {
 								</div>
 							</div>
 							<div className='flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end'>
-								<div className='hidden justify-center space-x-6 lg:flex'>
+								{/* <div className='hidden justify-center space-x-6 lg:flex'>
 									{socialLinks.map((item) => (
 										<a
 											key={item.name}
@@ -85,6 +86,9 @@ export default function Navbar(): JSX.Element {
 											{item.icon}
 										</a>
 									))}
+								</div> */}
+								<div className='hidden justify-center space-x-6 lg:flex'>
+									<ChangeLanguage />
 								</div>
 								<div className='hidden lg:ml-6 lg:flex lg:space-x-8'>
 									<div className='inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 text-sm  text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'>

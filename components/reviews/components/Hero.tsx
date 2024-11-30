@@ -4,6 +4,7 @@ import { Options } from '@/util/interfaces/interfaces'
 import Spinner from '@/components/ui/Spinner'
 import Button from '@/components/ui/button'
 import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
 
 interface IProps {
 	loading: boolean
@@ -22,6 +23,7 @@ const Hero = ({
 	fetchDynamicFilterOptions,
 	handleSubmit,
 }: IProps) => {
+	const { t } = useTranslation('reviews')
 	return (
 		<div className='m-2 w-full  max-w-7xl'>
 			<div className='relative h-[850px]'>
@@ -56,7 +58,7 @@ const Hero = ({
 										onClick={() => handleSubmit()}
 										size='large'
 									>
-										Continue
+										{t('reviews.continue')}
 									</Button>
 								)}
 							</div>

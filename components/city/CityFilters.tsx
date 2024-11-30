@@ -94,7 +94,7 @@ function CityFilters({
 							{loading ? (
 								<Spinner height='h-4' width='w-4' colour='text-white' />
 							) : (
-								'Update Filters'
+								t('reviews.update')
 							)}
 						</button>
 						<ButtonLight
@@ -103,7 +103,7 @@ function CityFilters({
 								updateParams()
 							}}
 						>
-							Clear Filters
+							{t('reviews.clear')}
 						</ButtonLight>
 					</div>
 				</div>

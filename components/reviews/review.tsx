@@ -232,14 +232,14 @@ const Review = ({
 						>
 							<TabList className='flex w-full justify-center gap-4 border-b p-3'>
 								<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
-									Reviews
+									{t('reviews.reviews')}
 								</Tab>
 								<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
 									<div className='flex flex-row gap-1'>
-										<p>Map</p>
+										<p>{t('reviews.map')}</p>
 										<div className='flex h-full flex-col justify-start'>
 											<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-teal-500/10'>
-												Beta
+												{t('reviews.beta')}
 											</span>
 										</div>
 									</div>

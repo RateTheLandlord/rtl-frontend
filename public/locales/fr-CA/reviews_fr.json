@@ -28,6 +28,7 @@
 			"submit": "Soumettre"
 		},
 		"rent": "Montant du loyer: $",
-		"local": "En devise locale"
+		"local": "En devise locale",
+		"continue": "Continuer"
 	}
 }
