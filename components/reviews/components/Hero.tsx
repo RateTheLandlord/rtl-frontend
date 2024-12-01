@@ -5,6 +5,7 @@ import Spinner from '@/components/ui/Spinner'
 import Button from '@/components/ui/button'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
+import AdsComponent from '@/components/adsense/Adsense'
 
 interface IProps {
 	loading: boolean
@@ -26,6 +27,9 @@ const Hero = ({
 	const { t } = useTranslation('reviews')
 	return (
 		<div className='m-2 w-full  max-w-7xl'>
+			<div className='w-full'>
+				<AdsComponent slot='2009320000' />
+			</div>
 			<div className='relative h-[850px]'>
 				<div className='mx-auto max-w-7xl rounded-md bg-white/20'>
 					<div className='relative z-10 lg:w-full lg:max-w-2xl'>
@@ -40,7 +44,7 @@ const Hero = ({
 
 						<div className='relative px-6 py-32 sm:py-40 lg:px-8 lg:py-56 lg:pr-0'>
 							<ReviewHero />
-							<div className='w-full p-8 transition-all duration-500'>
+							<div className='w-full p-8 transition-all duration-300'>
 								<LocationForm
 									countryFilter={countryFilter}
 									stateFilter={stateFilter}
