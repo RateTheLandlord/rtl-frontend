@@ -1,7 +1,7 @@
 import { HouseIcon } from '@/components/icons/HouseIcon'
 import Button from '@/components/ui/button'
 import { classNames } from '@/util/helpers/helper-functions'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 interface IProps {
 	getStarted: boolean

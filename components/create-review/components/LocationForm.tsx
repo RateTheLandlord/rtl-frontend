@@ -4,7 +4,7 @@ import TextInput from '@/components/ui/TextInput'
 import CityComboBox from './CityComboBox'
 import CountrySelector from '@/components/ui/CountrySelector'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 interface IProps {
 	locationOpen: boolean

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import AdsComponent from '../adsense/Adsense'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import RatingStars from '../ui/RatingStars'
 import ButtonLight from '../ui/button-light'
 import { FlagIcon } from '@heroicons/react/solid'

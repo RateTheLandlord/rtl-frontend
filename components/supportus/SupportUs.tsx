@@ -5,7 +5,7 @@ import {
 } from '@heroicons/react/outline'
 import Patreon from '../svg/icons/patreon'
 import LinkButtonLightLG from '../ui/link-button-light-lg'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 export default function Support() {
 	const { t } = useTranslation('support')

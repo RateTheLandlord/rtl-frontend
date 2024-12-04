@@ -1,6 +1,6 @@
 import { XCircleIcon, XIcon } from '@heroicons/react/solid'
 import { Dispatch, SetStateAction } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 interface IProps {
 	setMaliciousAlertOpen: Dispatch<SetStateAction<boolean>>

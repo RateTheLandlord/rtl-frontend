@@ -1,6 +1,6 @@
 import Button from '@/components/ui/button'
 import RatingsRadio from '../ratings-radio'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import RatingStars from '@/components/ui/RatingStars'
 
 interface IProps {

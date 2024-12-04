@@ -13,7 +13,7 @@ import { updateResourceActiveFilters } from '@/redux/resourceQuery/resourceQuery
 import { fetchResources } from '@/util/helpers/fetchReviews'
 import ResourceMobileFilters from './resource-mobile-filters'
 import ButtonLight from '../ui/button-light'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const resourceSortOptions: Array<SortOptions> = sortOptions.filter(
 	(r) => r.id < 5,
