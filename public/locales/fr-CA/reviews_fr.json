@@ -29,6 +29,15 @@
 		},
 		"rent": "Montant du loyer: $",
 		"local": "En devise locale",
-		"continue": "Continuer"
+		"continue": "Continuer",
+		"select_country": "Veuillez sélectionner un pays",
+		"select_state": "Veuillez sélectionner un état/province",
+		"hero_header": "Consultez les avis sur les propriétaires de votre communauté",
+		"hero_body": "Aidez-nous à vous guider en saisissant les informations de localisation de la zone qui vous intéresse ci-dessous. Si vous ne trouvez pas votre emplacement, soutenez votre communauté en soumettant un avis!",
+		"update": "Rafraîchir les filtres",
+		"clear": "Réinitialiser les filtres",
+		"reviews": "Avis",
+		"map": "Carte",
+		"beta": "Bêta"
 	}
 }
