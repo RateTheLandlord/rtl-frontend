@@ -3,7 +3,7 @@ import { Dialog, Popover, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import SearchBar from './ui/searchbar'
 import { Options, IQuery } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import ComboBox from './ui/combobox'
 import { AppDispatch } from '@/redux/store'
 import {

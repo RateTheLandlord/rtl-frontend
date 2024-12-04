@@ -1,5 +1,5 @@
 import LandlordComboBox from './LandlordComboBox'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
 import Button from '@/components/ui/button'
 

@@ -1,7 +1,7 @@
 import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import { Disclosure } from '@headlessui/react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import CatAverages from '../city/CatAverages'
 

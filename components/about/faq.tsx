@@ -1,6 +1,6 @@
 import { Disclosure, DisclosurePanel } from '@headlessui/react'
 import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/solid'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const Faq = () => {
 	const { t } = useTranslation('about')

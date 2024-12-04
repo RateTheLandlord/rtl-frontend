@@ -4,7 +4,7 @@ import { Options } from '@/util/interfaces/interfaces'
 import Spinner from '@/components/ui/Spinner'
 import Button from '@/components/ui/button'
 import Image from 'next/image'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import AdsComponent from '@/components/adsense/Adsense'
 
 interface IProps {

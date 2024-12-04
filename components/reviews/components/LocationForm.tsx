@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Options } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import SelectList from '../ui/locationSelect-list'
 import ComboBox from '../ui/locationCombobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'

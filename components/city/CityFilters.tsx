@@ -1,6 +1,6 @@
 import React from 'react'
 import { Options, SortOptions } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { clearFilters, updateSearch, updateZip } from '@/redux/query/querySlice'
 import ButtonLight from '../ui/button-light'

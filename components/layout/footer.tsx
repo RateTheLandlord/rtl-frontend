@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { socialLinks } from './links'
 import Github from '../svg/social/github'
 import Link from 'next/link'

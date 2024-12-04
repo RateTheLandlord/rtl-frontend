@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import provinces from '@/util/countries/canada/provinces.json'
 import regions from '@/util/countries/unitedKingdom/regions.json'
 import states from '@/util/countries/unitedStates/states.json'

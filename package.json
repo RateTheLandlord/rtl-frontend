@@ -39,6 +39,7 @@
 		"lodash": "^4.17.21",
 		"mapbox-gl": "^3.5.2",
 		"next": "^14.2.5",
+		"next-i18next": "^15.4.0",
 		"next-recaptcha-v3": "^1.4.1",
 		"next-router-mock": "^0.9.7",
 		"next-seo": "^6.0.0",

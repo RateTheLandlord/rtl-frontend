@@ -4,7 +4,7 @@ import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
 import { Combobox, Transition } from '@headlessui/react'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const Search = () => {
 	const { t } = useTranslation('filters')

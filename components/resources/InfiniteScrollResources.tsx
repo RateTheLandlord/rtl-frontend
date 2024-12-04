@@ -2,7 +2,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { Resource } from '@/util/interfaces/interfaces'
 import { countryName } from '@/util/helpers/getCountryCodes'
 import Spinner from '../ui/Spinner'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 interface IProps {
 	data: Resource[]

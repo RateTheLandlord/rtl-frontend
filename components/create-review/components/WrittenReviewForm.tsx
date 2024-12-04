@@ -1,6 +1,6 @@
 import Button from '@/components/ui/button'
 import LargeTextInput from '@/components/ui/LargeTextInput'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 interface IProps {
 	reviewOpen: boolean

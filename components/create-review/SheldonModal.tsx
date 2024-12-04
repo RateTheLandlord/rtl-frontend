@@ -1,7 +1,7 @@
 import React, { Fragment, SetStateAction } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Button from '../ui/button'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 interface IProps {
 	isOpen: boolean
