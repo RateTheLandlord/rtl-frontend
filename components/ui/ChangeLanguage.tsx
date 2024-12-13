@@ -1,4 +1,4 @@
-import i18n from '@/i18n'
+import { useRouter } from 'next/router'
 import {
 	Listbox,
 	ListboxButton,
@@ -6,20 +6,22 @@ import {
 	ListboxOptions,
 	Transition,
 } from '@headlessui/react'
+import { Fragment } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
-import { changeLanguage } from 'i18next'
-import { Fragment, useEffect, useState } from 'react'
 
 const ChangeLanguage = () => {
-	const [language, setLanguage] = useState(i18n.language)
-	useEffect(() => {
-		changeLanguage(language)
-	}, [language])
+	const router = useRouter()
+	const { locale, locales, asPath } = router // Extract current locale, available locales, and path
+
+	const changeLanguage = (newLocale) => {
+		router.push(asPath, asPath, { locale: newLocale }) // Change locale using Next.js routing
+	}
+
 	return (
-		<Listbox value={language} onChange={setLanguage}>
+		<Listbox value={locale} onChange={changeLanguage}>
 			<div className='relative mt-1'>
 				<ListboxButton className='relative flex w-full cursor-default items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-left shadow-sm focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
-					{language === 'en' ? 'English' : 'Francais (Canada)'}
+					{locale === 'en-CA' ? 'English' : 'Français (Canada)'}
 					<ChevronDownIcon className='h-4 w-4' />
 				</ListboxButton>
 			</div>
@@ -29,24 +31,20 @@ const ChangeLanguage = () => {
 				leaveFrom='opacity-100'
 				leaveTo='opacity-0'
 			>
-				<ListboxOptions
-					anchor='bottom start'
-					className='mt-1 max-h-[250px] w-[250px] overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'
-				>
-					<ListboxOption
-						className='cursor-pointer p-2 hover:bg-teal-300'
-						key='en'
-						value='en'
-					>
-						English
-					</ListboxOption>
-					<ListboxOption
-						className='cursor-pointer p-2 hover:bg-teal-300'
-						key='frca'
-						value='frca'
-					>
-						Francais (Canada)
-					</ListboxOption>
+				<ListboxOptions className='mt-1 max-h-[250px] w-[250px] overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+					{locales?.map((lang) => (
+						<ListboxOption
+							key={lang}
+							value={lang}
+							className={({ active }) =>
+								`cursor-pointer select-none p-2 ${
+									active ? 'bg-teal-300 text-white' : 'text-gray-900'
+								}`
+							}
+						>
+							{lang === 'en-CA' ? 'English' : 'Français (Canada)'}
+						</ListboxOption>
+					))}
 				</ListboxOptions>
 			</Transition>
 		</Listbox>

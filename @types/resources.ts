@@ -21,7 +21,7 @@ import supportFRCA from '@/public/locales/fr-CA/support.json'
 import filtersFRCA from '@/public/locales/fr-CA/filters.json'
 
 const resources = {
-	en: {
+	'en-CA': {
 		about: aboutENCA,
 		alerts: alertsENCA,
 		create: createreviewENCA,
@@ -33,7 +33,7 @@ const resources = {
 		support: supportENCA,
 		filters: filtersENCA,
 	},
-	frca: {
+	'fr-CA': {
 		about: aboutFRCA,
 		alerts: alertsFRCA,
 		create: createreviewFRCA,
