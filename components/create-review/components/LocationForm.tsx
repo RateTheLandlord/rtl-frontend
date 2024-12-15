@@ -4,7 +4,7 @@ import TextInput from '@/components/ui/TextInput'
 import CityComboBox from './CityComboBox'
 import CountrySelector from '@/components/ui/CountrySelector'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 interface IProps {
 	locationOpen: boolean
@@ -53,7 +53,7 @@ const LocationForm = ({
 	return !locationOpen ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
 			<div className='flex flex-col gap-2'>
-				<p className='text-xs'>Location</p>
+				<p className='text-xs'>{t('create-review.location-form.title')}</p>
 				<p className='text-md'>{`${city}, ${province}, ${country}${
 					isIreland ? '' : `, ${postal}`
 				}${rent ? ` - $${rent}` : ''}`}</p>
@@ -64,7 +64,7 @@ const LocationForm = ({
 						setLocationOpen(true)
 					}}
 				>
-					Edit
+					{t('create-review.edit')}
 				</Button>
 			</div>
 		</div>
@@ -72,7 +72,7 @@ const LocationForm = ({
 		<>
 			<div>
 				<h2 className='text-base font-semibold leading-7 text-gray-900'>
-					Location
+					{t('create-review.location-form.title')}
 				</h2>
 			</div>
 			<div className='grid w-full grid-cols-2 gap-3 overflow-hidden'>
@@ -128,7 +128,7 @@ const LocationForm = ({
 						setRatingsOpen(true)
 					}}
 				>
-					Continue
+					{t('create-review.continue')}
 				</Button>
 			</div>
 		</>

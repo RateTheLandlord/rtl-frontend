@@ -24,7 +24,7 @@ export default function Home(): JSX.Element {
 				canonical={pageURL}
 				openGraph={{
 					type: 'website',
-					locale: 'en_CA', //  Default is en_US
+					locale: 'en_CA',
 					url: pageURL,
 					title,
 					description: desc,

@@ -3,7 +3,7 @@ import { Dialog } from '@headlessui/react'
 import ButtonLight from '../ui/button-light'
 import Button from '../ui/button'
 import { Review } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useReCaptcha } from 'next-recaptcha-v3'
 
 interface IProps {

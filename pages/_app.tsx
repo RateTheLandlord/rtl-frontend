@@ -13,6 +13,7 @@ import { Router } from 'next/router'
 import 'nprogress/nprogress.css'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
+import { appWithTranslation } from 'next-i18next'
 
 const CAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string
 
@@ -52,4 +53,4 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 	)
 }
 
-export default MyApp
+export default appWithTranslation(MyApp)

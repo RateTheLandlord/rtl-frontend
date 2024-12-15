@@ -1,0 +1,19 @@
+{
+	"filters": {
+		"title": "Filters",
+		"no-results": "No results found",
+		"no-body": "Sorry, we couldn't find any results for those filters.",
+		"resources": "Search Resources",
+		"sort": "Sort By",
+		"country": "Country",
+		"state": "State / Province",
+		"city": "City",
+		"landlord": "Landlord",
+		"apply": "Apply Filters",
+		"clear": "Clear Filters",
+		"search": "Search",
+		"loading": "Loading...",
+		"search-for": "Search for",
+		"search-placeholder": "Search for your Landlord"
+	}
+}

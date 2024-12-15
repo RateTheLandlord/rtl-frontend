@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Options } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import SelectList from '../ui/locationSelect-list'
 import ComboBox from '../ui/locationCombobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
@@ -49,7 +49,7 @@ const LocationForm = ({
 			<div className='flex flex-col items-center '>
 				<div className='grid w-11/12'>
 					<h2 className='border-b text-lg font-semibold leading-10 text-gray-900 sm:text-lg md:text-xl lg:text-2xl xl:text-2xl'>
-						Please Select a Country
+						{t('reviews.select_country')}
 					</h2>
 					<SelectList
 						state={countryFilter}
@@ -63,7 +63,7 @@ const LocationForm = ({
 					{!countryFilter ? null : (
 						<>
 							<h2 className='border-b text-lg font-semibold leading-10 text-gray-900 sm:text-lg md:text-xl lg:text-2xl xl:text-2xl '>
-								Please Select a State/Province
+								{t('reviews.select_state')}
 							</h2>
 							<ComboBox
 								state={stateFilter}

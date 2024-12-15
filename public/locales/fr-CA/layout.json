@@ -1,0 +1,17 @@
+{
+	"layout": {
+		"footer": {
+			"copy": "Rate The Landlord Inc. Tous droits réservés."
+		},
+		"nav": {
+			"title": "Rate The Landlord",
+			"reviews": "Évaluations",
+			"search": "Recherche",
+			"submit": "Soumettre une évaluation",
+			"open": "Ouvrir le menu principal",
+			"about": "À propos",
+			"resources": "Ressources",
+			"support-us": "Nous soutenir"
+		}
+	}
+}

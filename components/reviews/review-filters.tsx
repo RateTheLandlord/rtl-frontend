@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { IQuery, Options, SortOptions } from '@/util/interfaces/interfaces'
 import SearchBar from './ui/searchbar'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import ComboBox from './ui/combobox'
 import { AppDispatch } from '@/redux/store'
 import {

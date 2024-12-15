@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import Privacy from '../svg/icons/privacy'
 import Solidarity from '../svg/icons/Solidarity'
 import Transparency from '../svg/icons/transparency'

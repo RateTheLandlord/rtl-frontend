@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const Privacy = () => {
 	const { t } = useTranslation('about')
@@ -13,7 +13,7 @@ const Privacy = () => {
 					{t('about.privacy.info')}
 				</p>
 				<Link href='/privacy-policy' className='text-blue-500 underline'>
-					Read More
+					{t('about.privacy.readmore')}
 				</Link>
 			</div>
 		</div>
