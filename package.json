@@ -50,7 +50,7 @@
 		"pg-connection-string": "^2.6.2",
 		"postcode-validator": "^3.7.0",
 		"postgres": "^3.4.3",
-		"posthog-js": "1.181.0",
+		"posthog-js": "1.200.1",
 		"react": "^18.3.1",
 		"react-adsense": "^0.1.0",
 		"react-dom": "^18.3.1",
