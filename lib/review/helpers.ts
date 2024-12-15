@@ -1,4 +1,3 @@
-import BadWordsFilter from 'bad-words'
 import { Review } from '@/lib/review/models/review'
 import OpenAI from 'openai'
 
@@ -55,32 +54,5 @@ export const filterReviewWithAI = async (review: Review): Promise<IResult> => {
 		}
 	} catch (e) {
 		throw e
-	}
-}
-
-const badWordsFilter = new BadWordsFilter()
-
-export const filterReview = (review: Review) => {
-	// Replace addresses
-	// This pattern is more permissive and covers a wider range of addresses, but may also have false positives
-	const addressPattern =
-		/(^|\s)\d+\s+\w+(\s+\w+)*(,\s*\w+(\s+\w+)*)*(\s+(Avenue|Street|Road|Boulevard|Drive|Terrace|Place|Court|Crescent|Lane|Parkway|Way|Circle|Heights|Loop|Alley|Run|Glen|Bend|Plaza|Trace|Row|Rd|St|Dr|Cres|Ave))?(\.)?(?=\s|$)/gi
-	// Replace phone numbers
-	const phonePattern =
-		/(\+\d{1,4}[-.\s]?)?(\(?\d{1,4}\)?[-.\s]?)?(\d{1,4}[-.\s]?){2,4}\d{1,4}([-.\s]?(x|ext\.?|extension)\s?\d{1,6})?/gi
-
-	// Replace emails
-	const emailPattern = /[\w\.-]+@[\w\.-]+\.\w+/gi
-
-	if (addressPattern.test(review.review)) {
-		return { flagged: true, reason: 'Filter Flagged for Address' }
-	} else if (emailPattern.test(review.review)) {
-		return { flagged: true, reason: 'Filter Flagged for Email' }
-	} else if (phonePattern.test(review.review)) {
-		return { flagged: true, reason: 'Filter flagged for Phone Number' }
-	} else if (badWordsFilter.isProfane(review.review)) {
-		return { flagged: true, reason: 'Filter flagged for Language' }
-	} else {
-		return { flagged: false, reason: '' }
 	}
 }
