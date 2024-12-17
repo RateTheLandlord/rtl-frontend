@@ -87,7 +87,7 @@ export default function Navbar(): JSX.Element {
 										</a>
 									))}
 								</div> */}
-								<div className='hidden justify-center space-x-6 lg:flex'>
+								<div className='justify-center space-x-6 lg:flex'>
 									<ChangeLanguage />
 								</div>
 								<div className='hidden lg:ml-6 lg:flex lg:space-x-8'>
