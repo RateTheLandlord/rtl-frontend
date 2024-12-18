@@ -65,7 +65,7 @@ const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
 					average={data.average}
 					total={data.total}
 				/>
-				<div className='flex w-full flex-row justify-center gap-2'>
+				<div className='flex flex-wrap w-full flex-row justify-center gap-2'>
 					{cities ? (
 						cities.map((city) => {
 							return (
