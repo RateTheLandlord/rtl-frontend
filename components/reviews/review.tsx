@@ -339,11 +339,7 @@ const Review = ({
 								</TabPanel>
 								<TabPanel>
 									<AnalyticsComponent
-										countryFilter={countryFilter}
-										stateFilter={stateFilter}
-										cityFilter={cityFilter}
-										zipFilter={zipFilter}
-										landlordFilter={searchFilter}
+										queryParams={queryParams}
 									/>
 								</TabPanel>
 							</TabPanels>
