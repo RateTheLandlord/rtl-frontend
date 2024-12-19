@@ -338,9 +338,7 @@ const Review = ({
 									</p>
 								</TabPanel>
 								<TabPanel>
-									<AnalyticsComponent
-										queryParams={queryParams}
-									/>
+									<AnalyticsComponent queryParams={queryParams} />
 								</TabPanel>
 							</TabPanels>
 						</TabGroup>
