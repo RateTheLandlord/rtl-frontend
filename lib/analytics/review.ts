@@ -183,11 +183,6 @@ export async function getChartData(
 	${zip.toUpperCase()}`
 		: sql``
 
-	const today = new Date();
-	const ninetyDays = today.setDate(today.getDate() - 90);
-	const oneHundredEightyDays = today.setDate(today.getDate() - 180);
-	const threeHunderedSixtyDays = today.setDate(today.getDate() - 360);
-
 	const trailingReviewsChartData = await sql`
 		WITH date_series AS (
 			-- Generate a series of dates for the last 360 days
@@ -209,11 +204,58 @@ export async function getChartData(
 		GROUP BY
 			ds.review_date
 		ORDER BY
-			ds.review_date;
-	`
+			ds.review_date;`
+
+		const trailingRatingChartData = await sql`
+			WITH date_series AS (
+				-- Generate a series of dates for the last 360 days
+				SELECT generate_series(
+					CURRENT_DATE - INTERVAL '360 days',  -- Start date (360 days ago)
+					CURRENT_DATE,                       -- End date (today)
+					'1 day'::INTERVAL                   -- Step size (1 day)
+				)::DATE AS review_date
+			)
+			SELECT
+				ds.review_date,
+				(AVG(r.repair) + AVG(r.health) + AVG(r.stability) + AVG(r.privacy) + AVG(r.respect)) / 5 AS combined_avg
+			FROM
+				date_series ds
+			LEFT JOIN
+				review r ON r.date_added >= ds.review_date - INTERVAL '360 days'
+						AND r.date_added < ds.review_date + INTERVAL '1 day'
+						AND 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
+			GROUP BY
+				ds.review_date
+			ORDER BY
+				ds.review_date;`
+
+		const trailingRentChartData = await sql`
+			WITH date_series AS (
+				-- Generate a series of dates for the last 360 days
+				SELECT generate_series(
+					CURRENT_DATE - INTERVAL '360 days',  -- Start date (360 days ago)
+					CURRENT_DATE,                       -- End date (today)
+					'1 day'::INTERVAL                   -- Step size (1 day)
+				)::DATE AS review_date
+			)
+			SELECT
+				ds.review_date,
+				percentile_cont(0.5) WITHIN GROUP (ORDER BY r.rent) AS median_rent
+			FROM
+				date_series ds
+			LEFT JOIN
+				review r ON r.date_added >= ds.review_date - INTERVAL '360 days'
+						AND r.date_added < ds.review_date + INTERVAL '1 day'
+						AND 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
+			GROUP BY
+				ds.review_date
+			ORDER BY
+				ds.review_date;`
 
 	
 	return {
-		reviewsChartData: trailingReviewsChartData
+		reviewsChartData: trailingReviewsChartData,
+		avgRatingChartData: trailingRatingChartData,
+		medianChartData: trailingRentChartData
 	}
 }

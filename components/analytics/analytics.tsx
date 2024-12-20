@@ -8,7 +8,7 @@ import {
 	AnalyticsResponse,
 } from '@/lib/analytics/models/review'
 import { ISortOptions } from '../reviews/review'
-import React from 'react'
+import React , { useState, useEffect } from 'react'
 import {
 	LineChart,
 	Line,
@@ -42,10 +42,30 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 		fetchWithBody,
 	)
 
-	const { chartData, chartDataError } = useSWR<AnalyticsChartResponse, Error>(
+	const { data: chartData, error: chartDataError } = useSWR<AnalyticsChartResponse, Error>(
 		['/api/review/review-analytics-chart', { queryParams }],
 		fetchWithBody,
 	)
+
+	const [activeChartData, setActiveChartData] = useState<any[]>(
+		chartData?.reviewsChartData || []
+	);
+
+	const handleClick = async (metric: string) => {
+		if(chartData) {
+			if(metric==='median'){
+				setActiveChartData(chartData.medianChartData)
+			}else if(metric==='rating'){
+				setActiveChartData(chartData.avgRatingChartData)
+			}else{
+				setActiveChartData(chartData.reviewsChartData)
+			}
+		}
+	}
+
+	useEffect(() => {
+			setActiveChartData(chartData?.reviewsChartData || [])
+		}, [chartData])
 
 	// const fetchDynamicFilterOptions = async () => {
 	// 	try {
@@ -75,7 +95,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 					<LineChart
 						width={500}
 						height={300}
-						data={chartData}
+						data={activeChartData}
 						margin={{
 							top: 5,
 							right: 30,
@@ -84,23 +104,22 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 						}}
 					>
 						<CartesianGrid strokeDasharray='3 3' />
-						<XAxis dataKey='name' />
-						<YAxis />
+						<XAxis dataKey='review_date'/>
+						<YAxis type='number' domain={[0, 500]} dataKey='review_count'/>
 						<Tooltip />
 						<Legend />
 						<Line
 							type='monotone'
-							dataKey='pv'
+							dataKey='review_count'
 							stroke='#8884d8'
 							activeDot={{ r: 8 }}
 						/>
-						<Line type='monotone' dataKey='uv' stroke='#82ca9d' />
 					</LineChart>
 				</ResponsiveContainer>
 			</div>
 			<div className='flex-1'>
 				<div className='h-4'></div>
-				<div className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4'>
+				<div className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4' onClick={() => setActiveChartData(chartData?.reviewsChartData || [])}>
 					<div className='bold flex items-center justify-center pb-12 pt-2 text-xl underline'>
 						Total Reviews
 					</div>
@@ -128,7 +147,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 					</div>
 				</div>
 				<div className='h-4'></div>
-				<div className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4'>
+				<div className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4' onClick={() => setActiveChartData(chartData?.avgRatingChartData || [])}>
 					<div className='bold flex items-center justify-center pb-12 pt-2 text-xl underline'>
 						Average Rating
 					</div>
@@ -150,7 +169,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 					</div>
 				</div>
 				<div className='h-4'></div>
-				<div className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4'>
+				<div className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4' onClick={() => setActiveChartData(chartData?.medianChartData || [])}>
 					<div className='bold flex items-center justify-center pb-12 pt-2 text-xl underline'>
 						Median Reported Rent
 					</div>
