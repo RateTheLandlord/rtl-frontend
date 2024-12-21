@@ -27,7 +27,6 @@ export type ReviewsResponse = {
 	reviews: IReview[]
 	total: number
 	countries: string[]
-	states: string[]
 	cities: string[]
 	zips: string[]
 	limit: number

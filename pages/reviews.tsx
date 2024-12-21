@@ -1,14 +1,9 @@
-import { ReviewsResponse } from '@/components/reviews/review'
 import { NextSeo } from 'next-seo'
 import React from 'react'
 import { useRouter } from 'next/router'
 import ReviewForm from '@/components/reviews/review-form'
 
-interface IProps {
-	data: ReviewsResponse
-}
-
-export default function Reviews({ data }: IProps): JSX.Element {
+export default function Reviews(): JSX.Element {
 	const title = 'Reviews | Rate The Landlord'
 	const desc =
 		'View and Search for Landlord Reviews and learn about others Rental Experience. We are a community platform that elevates tenant voices to promote landlord accountability.'
@@ -50,7 +45,7 @@ export default function Reviews({ data }: IProps): JSX.Element {
 					},
 				]}
 			/>
-			<ReviewForm data={data} />
+			<ReviewForm />
 		</>
 	)
 }
