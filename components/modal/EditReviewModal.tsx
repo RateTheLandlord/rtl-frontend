@@ -2,11 +2,6 @@
 import { Review } from '@/util/interfaces/interfaces'
 import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import countries from '@/util/countries/countries.json'
-import provinces from '@/util/countries/canada/provinces.json'
-import regions from '@/util/countries/unitedKingdom/regions.json'
-import states from '@/util/countries/unitedStates/states.json'
-import territories from '@/util/countries/australia/territories.json'
-import counties from '@/util/countries/ireland/counties.json'
 import { country_codes } from '@/util/helpers/getCountryCodes'
 import {
 	Dialog,
@@ -17,6 +12,7 @@ import {
 import { useUser } from '@auth0/nextjs-auth0/client'
 import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
+import { getStates } from '@/util/countries/combineStates'
 
 interface IProps {
 	selectedReview: Review | undefined
@@ -209,59 +205,11 @@ const EditReviewModal = ({
 												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 											>
 												<option>{province}</option>
-												{country === 'CA'
-													? provinces.map((province) => {
-															return (
-																<option
-																	key={province.short}
-																	value={province.name}
-																>
-																	{province.name}
-																</option>
-															)
-													  })
-													: country === 'GB'
-													? regions.map((region) => {
-															return (
-																<option key={region.short} value={region.name}>
-																	{region.name}
-																</option>
-															)
-													  })
-													: country === 'AU'
-													? territories.map((territory) => {
-															return (
-																<option
-																	key={territory.short}
-																	value={territory.name}
-																>
-																	{territory.name}
-																</option>
-															)
-													  })
-													: country === 'IE'
-													? counties.map((county) => {
-															return (
-																<option key={county.short} value={county.name}>
-																	{county.name}
-																</option>
-															)
-													  })
-													: country === 'NO'
-													? counties.map((county) => {
-															return (
-																<option key={county.short} value={county.name}>
-																	{county.name}
-																</option>
-															)
-													  })
-													: states.map((state) => {
-															return (
-																<option key={state.short} value={state.name}>
-																	{state.name}
-																</option>
-															)
-													  })}
+												{getStates(country).map((province) => (
+													<option key={province.value} value={province.value}>
+														{province.name}
+													</option>
+												))}
 											</select>
 										</div>
 									</div>

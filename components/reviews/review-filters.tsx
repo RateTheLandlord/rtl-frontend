@@ -6,6 +6,7 @@ import ComboBox from './ui/combobox'
 import { AppDispatch } from '@/redux/store'
 import {
 	clearFilters,
+	clearReviewFilters,
 	updateCity,
 	updateCountry,
 	updateSearch,
@@ -151,7 +152,7 @@ function ReviewFilters({
 						</button>
 						<ButtonLight
 							onClick={() => {
-								dispatch(clearFilters())
+								dispatch(clearReviewFilters())
 								updateParams()
 							}}
 						>

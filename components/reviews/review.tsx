@@ -4,7 +4,6 @@ import {
 	Review as IReview,
 	SortOptions,
 	Options,
-	IQuery,
 } from '@/util/interfaces/interfaces'
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import ReportModal from '@/components/reviews/report-modal'
@@ -19,8 +18,10 @@ import { useTranslation } from 'next-i18next'
 import ButtonLight from '../ui/button-light'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import MapComponent from '../Map/Map'
-import { AppDispatch } from '@/redux/store'
 import StateInfo from './components/StateInfo'
+import { debounce } from 'lodash'
+import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 
 export type ReviewsResponse = {
 	reviews: IReview[]
@@ -53,17 +54,6 @@ export interface QueryParams {
 }
 
 interface ReviewProps {
-	data: ReviewsResponse
-	query: IQuery
-	searchFilter: string | undefined
-	countryFilter: Options | null
-	stateFilter: Options | null
-	cityFilter: Options | null
-	zipFilter: Options | null
-	dynamicCityOptions: Options[]
-	dynamicZipOptions: Options[]
-	dispatch: AppDispatch
-	fetchDynamicFilterOptions: () => Promise<void>
 	isLoading: boolean
 	setIsLoading: Dispatch<SetStateAction<boolean>>
 	view: string | string[] | undefined
@@ -71,17 +61,6 @@ interface ReviewProps {
 }
 
 const Review = ({
-	data,
-	query,
-	searchFilter,
-	countryFilter,
-	stateFilter,
-	cityFilter,
-	zipFilter,
-	dynamicCityOptions,
-	dynamicZipOptions,
-	dispatch,
-	fetchDynamicFilterOptions,
 	isLoading,
 	setIsLoading,
 	view,
@@ -90,8 +69,14 @@ const Review = ({
 	// Localization
 	const { t } = useTranslation('reviews')
 
+	// Redux
+	const query = useAppSelector((state) => state.query)
+	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
+		query
+	const dispatch = useAppDispatch()
+
 	// State
-	const [reviews, setReviews] = useState<IReview[]>(data?.reviews || [])
+	const [reviews, setReviews] = useState<IReview[]>([])
 	const [page, setPage] = useState<number>(1)
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
 	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
@@ -172,6 +157,28 @@ const Review = ({
 	useEffect(() => {
 		fetchData()
 	}, [queryParams, page])
+
+	const [dynamicCityOptions, setDynamicCityOptions] = useState<Options[]>([])
+
+	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>([])
+
+	const fetchDynamicFilterOptions = debounce(async () => {
+		setIsLoading(true)
+		try {
+			const filterOptions = await fetchFilterOptions(
+				countryFilter?.value,
+				stateFilter?.value,
+				cityFilter?.value,
+				zipFilter?.value,
+			)
+			setDynamicCityOptions(filterOptions.cities)
+			setDynamicZipOptions(filterOptions.zips)
+		} catch (error) {
+			console.error('Error fetching filter options:', error)
+		} finally {
+			setIsLoading(false)
+		}
+	}, 300)
 
 	return (
 		<>

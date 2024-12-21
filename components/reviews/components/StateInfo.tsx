@@ -7,6 +7,7 @@ import { clearFilters } from '@/redux/query/querySlice'
 import { fetchWithBody } from '@/util/helpers/fetcher'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import useSWR from 'swr'
 
 interface IProps {
@@ -16,6 +17,7 @@ interface IProps {
 }
 
 const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
+	const router = useRouter()
 	const { data, error } = useSWR(
 		['/api/review/state-info', { state, country }],
 		fetchWithBody,
@@ -54,6 +56,7 @@ const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
 						onClick={() => {
 							dispatch(clearFilters())
 							setLocationOpen(true)
+							router.push(`/reviews`, undefined, { shallow: true })
 						}}
 					>
 						Change Country / State
@@ -65,7 +68,7 @@ const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
 					average={data.average}
 					total={data.total}
 				/>
-				<div className='flex flex-wrap w-full flex-row justify-center gap-2'>
+				<div className='flex w-full flex-row flex-wrap justify-center gap-2'>
 					{cities ? (
 						cities.map((city) => {
 							return (
