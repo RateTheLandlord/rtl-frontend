@@ -8,6 +8,7 @@ import ComboBox from './ui/combobox'
 import { AppDispatch } from '@/redux/store'
 import {
 	clearFilters,
+	clearReviewFilters,
 	updateCity,
 	updateCountry,
 	updateSearch,
@@ -143,7 +144,7 @@ export default function MobileReviewFilters({
 									<div className='flex w-full justify-end pt-2'>
 										<ButtonLight
 											onClick={() => {
-												dispatch(clearFilters())
+												dispatch(clearReviewFilters())
 												setMobileFiltersOpen(false)
 												updateParams()
 											}}

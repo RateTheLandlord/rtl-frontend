@@ -1,30 +1,40 @@
 import ReviewHero from './ReviewHero'
 import LocationForm from './LocationForm'
 import { Options } from '@/util/interfaces/interfaces'
-import Spinner from '@/components/ui/Spinner'
-import Button from '@/components/ui/button'
 import Image from 'next/image'
-import { useTranslation } from 'next-i18next'
 import AdsComponent from '@/components/adsense/Adsense'
+import { useState } from 'react'
+import Button from '@/components/ui/button'
+import { useAppDispatch } from '@/redux/hooks'
+import { updateStateAndCountry } from '@/redux/query/querySlice'
+import { useTranslation } from 'next-i18next'
 
 interface IProps {
-	loading: boolean
 	countryFilter: Options | null
 	stateFilter: Options | null
-	dynamicStateOptions: Options[]
-	fetchDynamicFilterOptions: () => Promise<void>
-	handleSubmit: () => Promise<void>
 }
 
-const Hero = ({
-	loading,
-	countryFilter,
-	stateFilter,
-	dynamicStateOptions,
-	fetchDynamicFilterOptions,
-	handleSubmit,
-}: IProps) => {
+const Hero = ({ countryFilter, stateFilter }: IProps) => {
 	const { t } = useTranslation('reviews')
+	const [selectedCountry, setSelectedCountry] = useState<Options | null>(
+		countryFilter,
+	)
+	const [selectedState, setSelectedState] = useState<Options | null>(
+		stateFilter,
+	)
+
+	const dispatch = useAppDispatch()
+
+	const handleSubmit = () => {
+		if (selectedCountry && selectedState) {
+			dispatch(
+				updateStateAndCountry({
+					country: selectedCountry,
+					state: selectedState,
+				}),
+			)
+		}
+	}
 	return (
 		<div className='m-2 w-full  max-w-7xl'>
 			<div className='w-full'>
@@ -46,19 +56,17 @@ const Hero = ({
 							<ReviewHero />
 							<div className='w-full p-8 transition-all duration-300'>
 								<LocationForm
-									countryFilter={countryFilter}
-									stateFilter={stateFilter}
-									dynamicStateOptions={dynamicStateOptions}
-									fetchDynamicFilterOptions={fetchDynamicFilterOptions}
+									selectedCountry={selectedCountry}
+									selectedState={selectedState}
+									setSelectedCountry={setSelectedCountry}
+									setSelectedState={setSelectedState}
 								/>
 							</div>
 
 							<div className='flex w-full justify-center'>
-								{loading ? (
-									<Spinner />
-								) : !countryFilter || !stateFilter ? null : (
+								{!selectedCountry || !selectedState ? null : (
 									<Button
-										disabled={!countryFilter || !stateFilter}
+										disabled={!selectedCountry || !selectedState}
 										onClick={() => handleSubmit()}
 										size='large'
 									>

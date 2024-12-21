@@ -1,12 +1,4 @@
 import { useTranslation } from 'next-i18next'
-import provinces from '@/util/countries/canada/provinces.json'
-import regions from '@/util/countries/unitedKingdom/regions.json'
-import states from '@/util/countries/unitedStates/states.json'
-import territories from '@/util/countries/australia/territories.json'
-import nz_provinces from '@/util/countries/newZealand/nz-provinces.json'
-import de_states from '@/util/countries/germany/states.json'
-import ie_counties from '@/util/countries/ireland/counties.json'
-import no_counties from '@/util/countries/norway/counties.json'
 import { Fragment } from 'react'
 import {
 	Listbox,
@@ -16,6 +8,7 @@ import {
 	Transition,
 } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
+import { getStates } from '@/util/countries/combineStates'
 
 interface IProps {
 	country: string | undefined
@@ -52,101 +45,11 @@ const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 						anchor='bottom start'
 						className='mt-1 max-h-[250px] w-[250px] overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'
 					>
-						{country === 'CA'
-							? provinces.map((province) => {
-									return (
-										<ListboxOption
-											className='cursor-pointer p-2 hover:bg-teal-300'
-											key={province.short}
-											value={province.name}
-										>
-											{province.name}
-										</ListboxOption>
-									)
-							  })
-							: country === 'GB'
-							? regions.map((region) => {
-									return (
-										<ListboxOption
-											className='cursor-pointer p-2 hover:bg-teal-300'
-											key={region.short}
-											value={region.name}
-										>
-											{region.name}
-										</ListboxOption>
-									)
-							  })
-							: country === 'AU'
-							? territories.map((territory) => {
-									return (
-										<ListboxOption
-											className='cursor-pointer p-2 hover:bg-teal-300'
-											key={territory.short}
-											value={territory.name}
-										>
-											{territory.name}
-										</ListboxOption>
-									)
-							  })
-							: country === 'NZ'
-							? nz_provinces.map((prov) => {
-									return (
-										<ListboxOption
-											className='cursor-pointer p-2 hover:bg-teal-300'
-											key={prov.short}
-											value={prov.name}
-										>
-											{prov.name}
-										</ListboxOption>
-									)
-							  })
-							: country === 'DE'
-							? de_states.map((state) => {
-									return (
-										<ListboxOption
-											className='cursor-pointer p-2 hover:bg-teal-300'
-											key={state.short}
-											value={state.name}
-										>
-											{state.name}
-										</ListboxOption>
-									)
-							  })
-							: country === 'IE'
-							? ie_counties.map((county) => {
-									return (
-										<ListboxOption
-											className='cursor-pointer p-2 hover:bg-teal-300'
-											key={county.short}
-											value={county.name}
-										>
-											{county.name}
-										</ListboxOption>
-									)
-							  })
-							: country === 'NO'
-							? no_counties.map((county) => {
-									return (
-										<ListboxOption
-											className='cursor-pointer p-2 hover:bg-teal-300'
-											key={county.short}
-											value={county.name}
-										>
-											{county.name}
-										</ListboxOption>
-									)
-							  })
-							: states.map((state) => {
-									return (
-										<ListboxOption
-											className='cursor-pointer p-2 hover:bg-teal-300'
-											key={state.short}
-											value={state.name}
-										>
-											{state.name}
-										</ListboxOption>
-									)
-							  })}
+						{getStates(country).map((province) => (
+							<option key={province.value} value={province.value}>
+								{province.name}
+							</option>
+						))}
 						{noState && (
 							<ListboxOption
 								className='cursor-pointer p-2 hover:bg-teal-300'
