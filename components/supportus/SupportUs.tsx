@@ -6,6 +6,7 @@ import {
 import Patreon from '../svg/icons/patreon'
 import LinkButtonLightLG from '../ui/link-button-light-lg'
 import { useTranslation } from 'next-i18next'
+import Poster from '../poster/Poster'
 
 export default function Support() {
 	const { t } = useTranslation('support')
@@ -29,7 +30,7 @@ export default function Support() {
 	]
 
 	return (
-		<div className='py-24 sm:py-32'>
+		<div className='pb-24 pt-8 sm:pb-32'>
 			<div className='mx-auto max-w-7xl px-6 lg:px-8'>
 				<div className='mx-auto max-w-2xl lg:text-center'>
 					<h2 className='text-base  leading-7 text-indigo-600'>
@@ -42,6 +43,7 @@ export default function Support() {
 						{t('support.body-1')}
 					</p>
 				</div>
+				<Poster />
 				<div className='mx-auto my-16 max-w-2xl sm:my-20 lg:my-24 lg:max-w-4xl'>
 					<dl className='grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-3 lg:gap-y-16'>
 						{features.map((feature) => (

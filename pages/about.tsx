@@ -8,6 +8,7 @@ import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import React from 'react'
 import Revenue from '@/components/about/revenue'
+import Poster from '@/components/poster/Poster'
 
 function About(): JSX.Element {
 	const title = 'About | Rate The Landlord'
@@ -54,6 +55,7 @@ function About(): JSX.Element {
 			/>
 			<div className='container mt-5 flex flex-col items-center gap-4 px-2'>
 				<AboutUs />
+				<Poster />
 				<Faq />
 				<Privacy />
 				<Moderation />
