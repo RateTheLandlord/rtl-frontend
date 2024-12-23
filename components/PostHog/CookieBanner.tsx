@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { usePostHog } from 'posthog-js/react'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 
 export function cookieConsentGiven() {
 	if (!localStorage.getItem('cookie_consent')) {
@@ -12,6 +13,7 @@ export function cookieConsentGiven() {
 }
 
 export default function Banner() {
+	const { t } = useTranslation('alerts')
 	const [consentGiven, setConsentGiven] = useState<string | null>('')
 	const posthog = usePostHog()
 
@@ -45,18 +47,14 @@ export default function Banner() {
 				<div className='pointer-events-none fixed inset-x-0 bottom-0 px-6 pb-6'>
 					<div className='pointer-events-auto ml-auto max-w-xl rounded-xl bg-white p-6 shadow-lg ring-1 ring-gray-900/10'>
 						<p className='text-sm leading-6 text-gray-900'>
-							🍪 We use cookies to enhance your browsing experience and analyze
-							site traffic. By clicking "Accept", you consent to the use of
-							cookies as outlined in our Privacy Policy. We do not sell or
-							otherwise transfer your data to third parties. If you prefer to
-							decline, only essential cookies will be used. See our{' '}
+							{t('cookie.body-1')}
 							<Link
 								href='/privacy-policy'
 								className='font-semibold text-indigo-600'
 							>
-								privacy policy
+								{t('cookie.privacy')}
 							</Link>
-							. 🍪
+							{t('cookie.body-2')}
 						</p>
 						<div className='mt-4 flex items-center gap-x-5'>
 							<button
@@ -64,7 +62,7 @@ export default function Banner() {
 								type='button'
 								onClick={handleAcceptCookies}
 							>
-								Accept
+								{t('cookie.accept')}
 							</button>
 							<span> </span>
 							<button
@@ -72,7 +70,7 @@ export default function Banner() {
 								type='button'
 								onClick={handleDeclineCookies}
 							>
-								Decline
+								{t('cookie.decline')}
 							</button>
 						</div>
 					</div>

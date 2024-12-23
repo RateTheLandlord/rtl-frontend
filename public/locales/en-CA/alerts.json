@@ -4,5 +4,12 @@
 		"error": "Failure: Something went wrong, please try again.",
 		"city-validation": "City cannot be empty",
 		"landlord-validation": "Landlord cannot be empty"
+	},
+	"cookie": {
+		"body-1": "🍪 We use cookies to enhance your browsing experience and analyze site traffic. By clicking \"Accept\", you consent to the use of cookies as outlined in our Privacy Policy. We do not sell or otherwise transfer your data to third parties. If you prefer to decline, only essential cookies will be used. See our ",
+		"body-2": ". 🍪",
+		"privacy": "privacy policy",
+		"accept": "Accept",
+		"decline": "Decline"
 	}
 }
