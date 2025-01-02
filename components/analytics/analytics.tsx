@@ -50,34 +50,48 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 		chartData?.reviewsChartData || [],
 	)
 
-	const [dataKey, setDataKey] = useState<string>("trailing_review_count")
+	const [dataKey, setDataKey] = useState<string>('trailing_review_count')
 	const [maxY, setMaxY] = useState<number>(500)
-	const [yAxisLabel, setYAxisLabel] = useState<string>("Review Count")
-	const [chartLabel, setChartLabel] = useState<string>("Trailing 360 Day Review Count as of Each Day")
+	const [yAxisLabel, setYAxisLabel] = useState<string>('Review Count')
+	const [chartLabel, setChartLabel] = useState<string>(
+		'Trailing 360 Day Review Count as of Each Day',
+	)
 
 	const handleClick = async (metric: string) => {
 		if (chartData) {
 			if (metric === 'median') {
 				setActiveChartData(chartData.medianChartData || [])
-				setDataKey("trailing_median_rent")
-				setYAxisLabel("Median Rent")
-				setChartLabel("Trailing 360 Day Median Rent as of Each Day")
-				if(chartData?.medianChartData){
-					setMaxY(Math.max(...chartData.medianChartData.map(chartData => chartData.trailing_median_rent)) + 500)
+				setDataKey('trailing_median_rent')
+				setYAxisLabel('Median Rent')
+				setChartLabel('Trailing 360 Day Median Rent as of Each Day')
+				if (chartData?.medianChartData) {
+					setMaxY(
+						Math.max(
+							...chartData.medianChartData.map(
+								(chartData) => chartData.trailing_median_rent,
+							),
+						) + 500,
+					)
 				}
 			} else if (metric === 'rating') {
 				setActiveChartData(chartData.avgRatingChartData || [])
-				setDataKey("trailing_combined_avg")
-				setYAxisLabel("Avg. Rating")
-				setChartLabel("Trailing 360 Day Avg. Rating as of Each Day")
+				setDataKey('trailing_combined_avg')
+				setYAxisLabel('Avg. Rating')
+				setChartLabel('Trailing 360 Day Avg. Rating as of Each Day')
 				setMaxY(5)
 			} else {
 				setActiveChartData(chartData.reviewsChartData || [])
-				setDataKey("trailing_review_count")
-				setYAxisLabel("Review Count")
-				setChartLabel("Trailing 360 Day Review Count as of Each Day")
-				if(chartData?.reviewsChartData){
-					setMaxY(Math.max(...chartData.reviewsChartData.map(chartData => chartData.trailing_review_count)) + 100)
+				setDataKey('trailing_review_count')
+				setYAxisLabel('Review Count')
+				setChartLabel('Trailing 360 Day Review Count as of Each Day')
+				if (chartData?.reviewsChartData) {
+					setMaxY(
+						Math.max(
+							...chartData.reviewsChartData.map(
+								(chartData) => chartData.trailing_review_count,
+							),
+						) + 100,
+					)
 				}
 			}
 		}
@@ -85,10 +99,15 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 
 	useEffect(() => {
 		setActiveChartData(chartData?.reviewsChartData || [])
-		if(chartData?.reviewsChartData){
-			setMaxY(Math.max(...chartData.reviewsChartData.map(chartData => chartData.trailing_review_count)) + 100)
+		if (chartData?.reviewsChartData) {
+			setMaxY(
+				Math.max(
+					...chartData.reviewsChartData.map(
+						(chartData) => chartData.trailing_review_count,
+					),
+				) + 100,
+			)
 		}
-		
 	}, [chartData])
 
 	if (!data) {
@@ -96,12 +115,10 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 	}
 
 	return (
-		<div className='grid w-full gap-2 grid-cols-2 bg-gray-50'>
+		<div className='grid w-full grid-cols-2 gap-2 bg-gray-50'>
 			<div className='flex-1'>
 				<div className='h-4'></div>
-				<div
-					className='h-128 rounded-lg border-4 border-teal-600 bg-white p-4'
-				>
+				<div className='h-128 rounded-lg border-4 border-teal-600 bg-white p-4'>
 					<ResponsiveContainer width={'100%'} height={'100%'}>
 						<LineChart
 							width={500}
@@ -115,11 +132,24 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 							}}
 						>
 							<XAxis dataKey='review_date' height={50}>
-								<Label value="Last 360 Days" position={'insideBottom'} offset={0}/>
-								<Label value={chartLabel} position={'insideBottom'} offset={560}/>
+								<Label
+									value='Last 360 Days'
+									position={'insideBottom'}
+									offset={0}
+								/>
+								<Label
+									value={chartLabel}
+									position={'insideBottom'}
+									offset={560}
+								/>
 							</XAxis>
-							<YAxis type='number' domain={[0, maxY]} dataKey={dataKey} >
-								<Label value={yAxisLabel} position={"insideLeft"} offset={0} angle={-90}/>
+							<YAxis type='number' domain={[0, maxY]} dataKey={dataKey}>
+								<Label
+									value={yAxisLabel}
+									position={'insideLeft'}
+									offset={0}
+									angle={-90}
+								/>
 							</YAxis>
 							<Tooltip />
 							<Line
@@ -135,8 +165,8 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 			<div className='flex-1'>
 				<div className='h-4'></div>
 				<div
-					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:opacity-70 hover:shadow-lg hover:cursor-pointer'
-					onClick={() => handleClick("review")}
+					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
+					onClick={() => handleClick('review')}
 				>
 					<div className='bold flex items-center justify-center pb-12 pt-2 text-xl underline'>
 						Total Reviews
@@ -166,10 +196,8 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 				</div>
 				<div className='h-4'></div>
 				<div
-					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:opacity-70 hover:shadow-lg hover:cursor-pointer'
-					onClick={() =>
-						handleClick("rating")
-					}
+					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
+					onClick={() => handleClick('rating')}
 				>
 					<div className='bold flex items-center justify-center pb-12 pt-2 text-xl underline'>
 						Average Rating
@@ -193,8 +221,8 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 				</div>
 				<div className='h-4'></div>
 				<div
-					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:opacity-70 hover:shadow-lg hover:cursor-pointer'
-					onClick={() => handleClick("median")}
+					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
+					onClick={() => handleClick('median')}
 				>
 					<div className='bold flex items-center justify-center pb-12 pt-2 text-xl underline'>
 						Median Reported Rent

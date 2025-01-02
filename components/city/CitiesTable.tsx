@@ -25,7 +25,7 @@ const CitiesTable = ({ state, country }: IProps) => {
 			<div className='text-center text-xs md:text-xl'>
 				Frequently Reviewed Cities in Your State/Province
 			</div>
-			<div className='grid w-full md:grid-cols-2 gap-2'>
+			<div className='grid w-full gap-2 md:grid-cols-2'>
 				{cities ? (
 					cities.map((city) => {
 						return (
