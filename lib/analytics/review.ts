@@ -193,8 +193,8 @@ export async function getChartData(
 			)::DATE AS review_date
 		)
 		SELECT
-			ds.review_date,
-			COUNT(r.id) AS review_count
+			TO_CHAR(ds.review_date, 'Mon, DD YYYY') AS review_date,
+			COUNT(r.id) AS trailing_review_count
 		FROM
 			date_series ds
 		LEFT JOIN
@@ -216,8 +216,8 @@ export async function getChartData(
 				)::DATE AS review_date
 			)
 			SELECT
-				ds.review_date,
-				(AVG(r.repair) + AVG(r.health) + AVG(r.stability) + AVG(r.privacy) + AVG(r.respect)) / 5 AS combined_avg
+				TO_CHAR(ds.review_date, 'Mon, DD YYYY') AS review_date,
+				(AVG(r.repair) + AVG(r.health) + AVG(r.stability) + AVG(r.privacy) + AVG(r.respect)) / 5 AS trailing_combined_avg
 			FROM
 				date_series ds
 			LEFT JOIN
@@ -239,8 +239,8 @@ export async function getChartData(
 				)::DATE AS review_date
 			)
 			SELECT
-				ds.review_date,
-				percentile_cont(0.5) WITHIN GROUP (ORDER BY r.rent) AS median_rent
+				TO_CHAR(ds.review_date, 'Mon, DD YYYY') AS review_date,
+				percentile_cont(0.5) WITHIN GROUP (ORDER BY r.rent) AS trailing_median_rent
 			FROM
 				date_series ds
 			LEFT JOIN

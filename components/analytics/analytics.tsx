@@ -14,10 +14,9 @@ import {
 	Line,
 	XAxis,
 	YAxis,
-	CartesianGrid,
 	Tooltip,
-	Legend,
 	ResponsiveContainer,
+	Label,
 } from 'recharts'
 
 export interface QueryParams {
@@ -51,77 +50,93 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 		chartData?.reviewsChartData || [],
 	)
 
+	const [dataKey, setDataKey] = useState<string>("trailing_review_count")
+	const [maxY, setMaxY] = useState<number>(500)
+	const [yAxisLabel, setYAxisLabel] = useState<string>("Review Count")
+	const [chartLabel, setChartLabel] = useState<string>("Trailing 360 Day Review Count as of Each Day")
+
 	const handleClick = async (metric: string) => {
 		if (chartData) {
 			if (metric === 'median') {
-				setActiveChartData(chartData.medianChartData)
+				setActiveChartData(chartData.medianChartData || [])
+				setDataKey("trailing_median_rent")
+				setYAxisLabel("Median Rent")
+				setChartLabel("Trailing 360 Day Median Rent as of Each Day")
+				if(chartData?.medianChartData){
+					setMaxY(Math.max(...chartData.medianChartData.map(chartData => chartData.trailing_median_rent)) + 500)
+				}
 			} else if (metric === 'rating') {
-				setActiveChartData(chartData.avgRatingChartData)
+				setActiveChartData(chartData.avgRatingChartData || [])
+				setDataKey("trailing_combined_avg")
+				setYAxisLabel("Avg. Rating")
+				setChartLabel("Trailing 360 Day Avg. Rating as of Each Day")
+				setMaxY(5)
 			} else {
-				setActiveChartData(chartData.reviewsChartData)
+				setActiveChartData(chartData.reviewsChartData || [])
+				setDataKey("trailing_review_count")
+				setYAxisLabel("Review Count")
+				setChartLabel("Trailing 360 Day Review Count as of Each Day")
+				if(chartData?.reviewsChartData){
+					setMaxY(Math.max(...chartData.reviewsChartData.map(chartData => chartData.trailing_review_count)) + 100)
+				}
 			}
 		}
 	}
 
 	useEffect(() => {
 		setActiveChartData(chartData?.reviewsChartData || [])
+		if(chartData?.reviewsChartData){
+			setMaxY(Math.max(...chartData.reviewsChartData.map(chartData => chartData.trailing_review_count)) + 100)
+		}
+		
 	}, [chartData])
-
-	// const fetchDynamicFilterOptions = async () => {
-	// 	try {
-	// 		const filterOptions = await fetchFilterOptions(
-	// 			formData.country?.value,
-	// 			formData.state?.value,
-	// 			'',
-	// 			'',
-	// 		)
-	// 		setFormData((prevData) => ({
-	// 			...prevData,
-	// 			dynamicStateOptions: filterOptions.states,
-	// 		}))
-	// 	} catch (error) {
-	// 		console.error('Error fetching filter options:', error)
-	// 	}
-	// }
 
 	if (!data) {
 		return <Spinner />
 	}
 
 	return (
-		<div className='grid w-full grid-cols-2 bg-gray-50'>
+		<div className='grid w-full gap-2 grid-cols-2 bg-gray-50'>
 			<div className='flex-1'>
-				<ResponsiveContainer width={'100%'} height={'100%'}>
-					<LineChart
-						width={500}
-						height={300}
-						data={activeChartData}
-						margin={{
-							top: 5,
-							right: 30,
-							left: 20,
-							bottom: 5,
-						}}
-					>
-						<CartesianGrid strokeDasharray='3 3' />
-						<XAxis dataKey='review_date' />
-						<YAxis type='number' domain={[0, 500]} dataKey='review_count' />
-						<Tooltip />
-						<Legend />
-						<Line
-							type='monotone'
-							dataKey='review_count'
-							stroke='#8884d8'
-							activeDot={{ r: 8 }}
-						/>
-					</LineChart>
-				</ResponsiveContainer>
+				<div className='h-4'></div>
+				<div
+					className='h-128 rounded-lg border-4 border-teal-600 bg-white p-4'
+				>
+					<ResponsiveContainer width={'100%'} height={'100%'}>
+						<LineChart
+							width={500}
+							height={300}
+							data={activeChartData}
+							margin={{
+								top: 5,
+								right: 30,
+								left: 20,
+								bottom: 5,
+							}}
+						>
+							<XAxis dataKey='review_date' height={50}>
+								<Label value="Last 360 Days" position={'insideBottom'} offset={0}/>
+								<Label value={chartLabel} position={'insideBottom'} offset={560}/>
+							</XAxis>
+							<YAxis type='number' domain={[0, maxY]} dataKey={dataKey} >
+								<Label value={yAxisLabel} position={"insideLeft"} offset={0} angle={-90}/>
+							</YAxis>
+							<Tooltip />
+							<Line
+								type='monotone'
+								dataKey={dataKey}
+								stroke='#8884d8'
+								activeDot={{ r: 8 }}
+							/>
+						</LineChart>
+					</ResponsiveContainer>
+				</div>
 			</div>
 			<div className='flex-1'>
 				<div className='h-4'></div>
 				<div
-					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4'
-					onClick={() => setActiveChartData(chartData?.reviewsChartData || [])}
+					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:opacity-70 hover:shadow-lg hover:cursor-pointer'
+					onClick={() => handleClick("review")}
 				>
 					<div className='bold flex items-center justify-center pb-12 pt-2 text-xl underline'>
 						Total Reviews
@@ -151,9 +166,9 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 				</div>
 				<div className='h-4'></div>
 				<div
-					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4'
+					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:opacity-70 hover:shadow-lg hover:cursor-pointer'
 					onClick={() =>
-						setActiveChartData(chartData?.avgRatingChartData || [])
+						handleClick("rating")
 					}
 				>
 					<div className='bold flex items-center justify-center pb-12 pt-2 text-xl underline'>
@@ -178,8 +193,8 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 				</div>
 				<div className='h-4'></div>
 				<div
-					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4'
-					onClick={() => setActiveChartData(chartData?.medianChartData || [])}
+					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:opacity-70 hover:shadow-lg hover:cursor-pointer'
+					onClick={() => handleClick("median")}
 				>
 					<div className='bold flex items-center justify-center pb-12 pt-2 text-xl underline'>
 						Median Reported Rent
