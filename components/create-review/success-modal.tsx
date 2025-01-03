@@ -30,7 +30,7 @@ interface IProps {
 }
 
 function SuccessModal({ isOpen, setIsOpen }: IProps) {
-	const { t } = useTranslation('create')
+	const { t } = useTranslation('createreview')
 	const router = useRouter()
 	return (
 		<Transition.Root show={isOpen} as={Fragment}>

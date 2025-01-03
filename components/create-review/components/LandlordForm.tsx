@@ -24,7 +24,7 @@ const LandlordForm = ({
 	landlordValidationError,
 	landlordValidationText,
 }: IProps) => {
-	const { t } = useTranslation('create')
+	const { t } = useTranslation('createreview')
 
 	const {
 		isSearching,

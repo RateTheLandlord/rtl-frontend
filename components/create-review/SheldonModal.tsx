@@ -9,7 +9,7 @@ interface IProps {
 }
 
 function SheldonModal({ isOpen, setIsOpen }: IProps) {
-	const { t } = useTranslation('create')
+	const { t } = useTranslation('createreview')
 	return (
 		<Transition.Root show={isOpen} as={Fragment}>
 			<Dialog as='div' className='relative z-10' onClose={setIsOpen}>

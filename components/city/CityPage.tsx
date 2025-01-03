@@ -26,7 +26,7 @@ interface IProps {
 
 const CityPage = ({ city, state, country, data }: IProps) => {
 	// Localization
-	const { t } = useTranslation('landlord')
+	const { t } = useTranslation('reviews')
 
 	// Redux
 	const query = useAppSelector((state) => state.query)

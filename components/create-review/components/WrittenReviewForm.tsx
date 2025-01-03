@@ -17,7 +17,7 @@ const WrittenReviewForm = ({
 	handleTextChange,
 	setShowPreview,
 }: IProps) => {
-	const { t } = useTranslation('create')
+	const { t } = useTranslation('createreview')
 	return !reviewOpen ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
 			<div className='flex flex-col gap-2'>
