@@ -48,9 +48,7 @@ function SpamReviewModal({ isOpen, setIsOpen, detectionMethod }: IProps) {
 										</Dialog.Title>
 										<div className='mt-2'>
 											<p className='text-sm text-gray-500'>
-												{t(
-													`create-review.${detectionMethod}.description`,
-												)}
+												{t(`create-review.${detectionMethod}.description`)}
 											</p>
 										</div>
 									</div>
