@@ -1,12 +1,10 @@
 import { SortOptions } from '../interfaces/interfaces'
 
 export const sortOptions: Array<SortOptions> = [
-	{ id: 1, name: 'Name A-Z', value: 'az' },
-	{ id: 2, name: 'Name Z-A', value: 'za' },
-	{ id: 3, name: 'Newest', value: 'new' },
-	{ id: 4, name: 'Oldest', value: 'old' },
-	{ id: 5, name: 'Highest', value: 'high' },
-	{ id: 6, name: 'Lowest', value: 'low' },
+	{ id: 1, name: 'sort.name_az', value: 'az' },
+	{ id: 2, name: 'sort.name_za', value: 'za' },
+	{ id: 3, name: 'sort.newest', value: 'new' },
+	{ id: 4, name: 'sort.oldest', value: 'old' },
+	{ id: 5, name: 'sort.highest', value: 'high' },
+	{ id: 6, name: 'sort.lowest', value: 'low' },
 ]
-
-

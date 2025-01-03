@@ -38,6 +38,16 @@
 		"clear": "Réinitialiser les filtres",
 		"reviews": "Avis",
 		"map": "Carte",
-		"beta": "Bêta"
+		"beta": "Bêta",
+		"read-all": "Lire tous les avis"
+	},
+	"report": {
+		"address": "L'adresse est dans la revue",
+		"fake": "Faux avis",
+		"language": "L'avis contient un langage inapproprié",
+		"sensitive": "Cet avis contient des informations sensibles",
+		"other": "Autre",
+		"select-reason": "Sélectionnez une raison",
+		"limit": "Limite de 250 caractères : {{total}}/250"
 	}
 }

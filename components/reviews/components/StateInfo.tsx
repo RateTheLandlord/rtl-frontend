@@ -9,6 +9,7 @@ import { toTitleCase } from '@/util/helpers/toTitleCase'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
+import { useTranslation } from 'next-i18next'
 
 interface IProps {
 	state: string
@@ -17,6 +18,7 @@ interface IProps {
 }
 
 const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
+	const { t } = useTranslation('landlord')
 	const router = useRouter()
 	const { data, error } = useSWR(
 		['/api/review/state-info', { state, country }],
@@ -44,11 +46,14 @@ const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
 							country.toLocaleUpperCase(),
 						)}`}
 					</h2>
-					<p className='mt-2 text-gray-700'>{`${
-						data.total
-					} reviews and rental experiences for ${toTitleCase(
-						decodeURIComponent(state),
-					)}, ${decodeURIComponent(country.toLocaleUpperCase())}`}</p>
+					<p className='mt-2 text-gray-700'>
+						{t('landlord.rental-experience', {
+							total: data.total,
+							location: `${toTitleCase(
+								decodeURIComponent(state),
+							)}, ${decodeURIComponent(country.toLocaleUpperCase())}`,
+						})}
+					</p>
 				</div>
 
 				<div className='flex w-full justify-center'>
@@ -59,7 +64,7 @@ const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
 							router.push(`/reviews`, undefined, { shallow: true })
 						}}
 					>
-						Change Country / State
+						{t('landlord.change-location')}
 					</Button>
 				</div>
 
@@ -88,7 +93,7 @@ const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
 										>
 											<h6 className='text-center'>{city.city}</h6>
 											<p className='text-center text-sm'>
-												Read {city.total} reviews
+												{t('landlord.read-total', { total: city.total })}
 											</p>
 										</div>
 										<RatingStars value={Math.floor(city.average)} />

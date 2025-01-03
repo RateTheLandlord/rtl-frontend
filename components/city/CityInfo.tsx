@@ -41,11 +41,16 @@ const CityInfo = ({
 							decodeURIComponent(state),
 						)}, ${decodeURIComponent(country.toLocaleUpperCase())}`}
 					</h2>
-					<p className='mt-2 text-gray-700'>{`Read ${total} reviews and rental experiences for ${toTitleCase(
-						decodeURIComponent(city),
-					)}, ${toTitleCase(decodeURIComponent(state))}, ${decodeURIComponent(
-						country.toLocaleUpperCase(),
-					)}`}</p>
+					<p className='mt-2 text-gray-700'>
+						{t('landlord.rental-experience', {
+							total: total,
+							location: `${toTitleCase(
+								decodeURIComponent(city),
+							)}, ${toTitleCase(
+								decodeURIComponent(state),
+							)}, ${decodeURIComponent(country.toLocaleUpperCase())}`,
+						})}
+					</p>
 				</div>
 
 				<CatAverages averages={averages} average={average} total={total} />
@@ -53,8 +58,7 @@ const CityInfo = ({
 				<div className='flex flex-col gap-4'>
 					<h3 className='mt-4 text-lg text-gray-900'>{t('landlord.share')}</h3>
 					<p className='mt-1 text-sm text-gray-600'>
-						If you've rented in this city, share your experience with other
-						tenants.
+						{t('landlord.rented-city')}
 					</p>
 
 					<div>
