@@ -22,33 +22,33 @@ const reportReasons: Array<IReportReason> = [
 	{
 		id: 1,
 		key: 'address',
-		reason: 'Address is in the review',
+		reason: 'report.address',
 	},
 	{
 		id: 3,
 		key: 'fake',
-		reason: 'Fake Review',
+		reason: 'report.fake',
 	},
 	{
 		id: 4,
 		key: 'language',
-		reason: 'Review contains inappropriate language',
+		reason: 'report.language',
 	},
 	{
 		id: 5,
 		key: 'sensitive',
-		reason: 'This review contains sensitive information',
+		reason: 'report.sensitive',
 	},
 	{
 		id: 8,
 		key: 'other',
-		reason: 'Other',
+		reason: 'report.other',
 	},
 ]
 
 function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 	const { t } = useTranslation('reviews')
-	const [reason, setReason] = useState<string>(reportReasons[0].reason)
+	const [reason, setReason] = useState<string>(reportReasons[0].key)
 	const [selectedReason, setSelectedReason] = useState<IReportReason>(
 		reportReasons[0],
 	)
@@ -96,7 +96,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 			className='relative z-50'
 			open={isOpen}
 			onClose={() => {
-				setReason(reportReasons[0].reason)
+				setReason(reportReasons[0].key)
 				setSubmitSuccess(false)
 				setSubmitError(false)
 				setIsOpen(false)
@@ -117,13 +117,13 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 							<div className='flex w-full justify-end'>
 								<ButtonLight
 									onClick={() => {
-										setReason(reportReasons[0].reason)
+										setReason(reportReasons[0].key)
 										setSubmitSuccess(false)
 										setSubmitError(false)
 										setIsOpen(false)
 									}}
 								>
-									Close
+									{t('reviews.report.cancel')}
 								</ButtonLight>
 							</div>
 						</div>
@@ -134,13 +134,13 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 							<div className='flex w-full justify-end'>
 								<ButtonLight
 									onClick={() => {
-										setReason(reportReasons[0].reason)
+										setReason(reportReasons[0].key)
 										setSubmitSuccess(false)
 										setSubmitError(false)
 										setIsOpen(false)
 									}}
 								>
-									Close
+									{t('reviews.report.cancel')}
 								</ButtonLight>
 							</div>
 						</div>
@@ -159,7 +159,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 									htmlFor='reason'
 									className='block text-sm  leading-6 text-gray-900'
 								>
-									Select a reason
+									{t('report.select-reason')}
 								</label>
 								<select
 									id='reason'
@@ -171,13 +171,13 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 											(reason: IReportReason) => reason.key === e.target.value,
 										)
 										setSelectedReason(selected[0])
-										setReason(selected[0].reason)
+										setReason(selected[0].key)
 									}}
 								>
 									{reportReasons.map((reason) => {
 										return (
 											<option key={reason.id} value={reason.key}>
-												{reason.reason}
+												{t(reason.reason)}
 											</option>
 										)
 									})}
@@ -198,7 +198,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 											name='report'
 											id='report'
 											onChange={(e) =>
-												setReason(`${selectedReason.reason}: ${e.target.value}`)
+												setReason(`${selectedReason.key}: ${e.target.value}`)
 											}
 											className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 											placeholder='Write your reasoning here...'
@@ -208,7 +208,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 												reason.length >= 255 ? 'text-red-400' : 'text-black'
 											}`}
 										>
-											Limit of 250 Characters: {reason.length - 5}/250
+											{t('report.limit', { total: reason.length - 5 })}
 										</p>
 									</div>
 								</div>
@@ -218,7 +218,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 								<ButtonLight
 									onClick={() => {
 										setSelectedReason(reportReasons[0])
-										setReason(reportReasons[0].reason)
+										setReason(reportReasons[0].key)
 										setIsOpen(false)
 									}}
 								>

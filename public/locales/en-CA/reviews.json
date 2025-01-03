@@ -38,6 +38,16 @@
 		"clear": "Clear Filters",
 		"reviews": "Reviews",
 		"map": "Map",
-		"beta": "Beta"
+		"beta": "Beta",
+		"read-all": "Read all reviews"
+	},
+	"report": {
+		"address": "Address is in the review",
+		"fake": "Fake Review",
+		"language": "Review contains inappropriate language",
+		"sensitive": "This review contains sensitive information",
+		"other": "Other",
+		"select-reason": "Select a reason",
+		"limit": "Limit of 250 Characters: {{total}}/250"
 	}
 }

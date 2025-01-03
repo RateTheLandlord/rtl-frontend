@@ -15,5 +15,13 @@
 		"loading": "Chargement en cours...",
 		"search-for": "Rechercher pour",
 		"search-placeholder": "Recherche votre propriétaire"
+	},
+	"sort": {
+		"name_az": "Nom A-Z",
+		"name_za": "Nom Z-A",
+		"newest": "Le plus récent",
+		"oldest": "Le plus ancien",
+		"highest": "Le plus haut",
+		"lowest": "Le plus bas"
 	}
 }

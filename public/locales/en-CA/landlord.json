@@ -11,6 +11,18 @@
 			"Consistency: Look for consistency in feedback across reviews. If several reviews mention similar pros or cons, they are likely reliable."
 		],
 		"average": "{{average}} out of 5 stars",
-		"total": "Based on {{total}} reviews"
+		"total": "Based on {{total}} reviews",
+		"read-total": "Read {{total}} reviews",
+		"rental-experience": "Read {{total}} reviews and rental experiences for {{location}}",
+		"rented-city": "If you've rented in this city, share your experience with other tenants.",
+		"rented-landlord": "If you've rented from this Landlord, share your experience with other tenants.",
+		"rented-zip": "If you've rented in this zip / postal code, share your experience with other tenants.",
+		"change-location": "Change Country / State",
+		"health": "Health and Safety",
+		"respect": "Respect",
+		"privacy": "Tenant Privacy",
+		"repair": "Repair",
+		"stability": "Rental Stability",
+		"overall": "Overall"
 	}
 }

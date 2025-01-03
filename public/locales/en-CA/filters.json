@@ -15,5 +15,13 @@
 		"loading": "Loading...",
 		"search-for": "Search for",
 		"search-placeholder": "Search for your Landlord"
+	},
+	"sort": {
+		"name_az": "Name A-Z",
+		"name_za": "Name Z-A",
+		"newest": "Newest",
+		"oldest": "Oldest",
+		"highest": "Highest",
+		"lowest": "Lowest"
 	}
 }
