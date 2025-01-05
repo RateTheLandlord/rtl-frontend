@@ -21,7 +21,7 @@ const ChangeLanguage = () => {
 
 	return (
 		<Listbox value={locale} onChange={changeLanguage}>
-			<ListboxButton className='relative flex cursor-pointer items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-left shadow-sm focus:outline-none focus-visible:border-teal-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:w-[100px] sm:text-sm md:w-[200px] lg:w-[200px] xl:w-[200px]'>
+			<ListboxButton className='relative flex cursor-pointer items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-left text-xs shadow-sm focus:outline-none focus-visible:border-teal-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:w-[100px] sm:text-sm md:w-[200px] lg:w-[200px] xl:w-[200px]'>
 				{locale === 'en-CA' ? 'English' : 'Français (Canada)'}
 				<ChevronDownIcon className='h-4 w-4' />
 			</ListboxButton>

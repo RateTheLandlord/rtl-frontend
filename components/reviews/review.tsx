@@ -10,7 +10,6 @@ import ReportModal from '@/components/reviews/report-modal'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import InfiniteScroll from './InfiniteScroll'
-import AdsComponent from '@/components/adsense/Adsense'
 import Spinner from '../ui/Spinner'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import MobileReviewFilters from './mobile-review-filters'
@@ -209,10 +208,11 @@ const Review = ({
 				</>
 			) : null}
 			{reviewsLoading ? (
-				<Spinner />
+				<div className='flex w-full items-center justify-center py-4'>
+					<Spinner />
+				</div>
 			) : (
 				<div className='w-full'>
-					<AdsComponent slot='2009320000' />
 					<div>
 						<div className='mx-auto max-w-7xl border-b-gray-200 px-4 py-16 sm:px-6 lg:border-b lg:px-8'>
 							<StateInfo

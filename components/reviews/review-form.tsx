@@ -8,6 +8,7 @@ import Hero from './components/Hero'
 import { updateStateAndCountry } from '@/redux/query/querySlice'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
 import { getStates } from '@/util/countries/combineStates'
+import AdsComponent from '../adsense/Adsense'
 
 export type ReviewsResponse = {
 	reviews: IReview[]
@@ -68,15 +69,22 @@ function ReviewForm(): JSX.Element {
 		}
 	}, [stateFilter, countryFilter])
 
-	return !locationOpen ? (
-		<Review
-			isLoading={isLoading}
-			setIsLoading={setIsLoading}
-			view={view}
-			setLocationOpen={setLocationOpen}
-		/>
-	) : (
-		<Hero countryFilter={countryFilter} stateFilter={stateFilter} />
+	return (
+		<div className='m-2 w-full  max-w-7xl'>
+			<div className='w-full'>
+				<AdsComponent slot='2009320000' />
+			</div>
+			{!locationOpen ? (
+				<Review
+					isLoading={isLoading}
+					setIsLoading={setIsLoading}
+					view={view}
+					setLocationOpen={setLocationOpen}
+				/>
+			) : (
+				<Hero countryFilter={countryFilter} stateFilter={stateFilter} />
+			)}
+		</div>
 	)
 }
 

@@ -14,7 +14,8 @@
 		"search": "Search",
 		"loading": "Loading...",
 		"search-for": "Search for",
-		"search-placeholder": "Search for your Landlord"
+		"search-placeholder": "Search for your Landlord",
+		"not-found": "No Landlord Found - Submit first review!"
 	},
 	"sort": {
 		"name_az": "Name A-Z",

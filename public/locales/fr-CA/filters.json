@@ -14,7 +14,8 @@
 		"search": "Rechercher",
 		"loading": "Chargement en cours...",
 		"search-for": "Rechercher pour",
-		"search-placeholder": "Recherche votre propriétaire"
+		"search-placeholder": "Recherche votre propriétaire",
+		"not-found": "Aucun propriétaire trouvé - Soumettez votre premier avis !"
 	},
 	"sort": {
 		"name_az": "Nom A-Z",

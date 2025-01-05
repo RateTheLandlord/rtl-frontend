@@ -2,7 +2,6 @@ import ReviewHero from './ReviewHero'
 import LocationForm from './LocationForm'
 import { Options } from '@/util/interfaces/interfaces'
 import Image from 'next/image'
-import AdsComponent from '@/components/adsense/Adsense'
 import { useState } from 'react'
 import Button from '@/components/ui/button'
 import { useAppDispatch } from '@/redux/hooks'
@@ -37,9 +36,6 @@ const Hero = ({ countryFilter, stateFilter }: IProps) => {
 	}
 	return (
 		<div className='m-2 w-full  max-w-7xl'>
-			<div className='w-full'>
-				<AdsComponent slot='2009320000' />
-			</div>
 			<div className='relative h-[850px]'>
 				<div className='mx-auto max-w-7xl rounded-md bg-white/20'>
 					<div className='relative z-10 lg:w-full lg:max-w-2xl'>

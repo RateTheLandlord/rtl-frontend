@@ -72,7 +72,7 @@ export const getTopCitiesStats = async (params: {
 	const { state, country } = params
 
 	const cities = await sql`
-        SELECT city, COUNT(*) as city_count FROM review WHERE state = ${state.toLocaleUpperCase()} AND country_code = ${country.toLocaleUpperCase()} GROUP BY city ORDER BY city_count DESC LIMIT 5;
+        SELECT city, COUNT(*) as city_count FROM review WHERE state = ${state.toLocaleUpperCase()} AND country_code = ${country.toLocaleUpperCase()} GROUP BY city ORDER BY city_count DESC LIMIT 4;
     `
 
 	const cityList = cities.map(({ city }) => city)
