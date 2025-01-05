@@ -78,42 +78,10 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 		if (!formData.currAffiliate) {
 			setFormData((prevData) => ({
 				...prevData,
-				state: null,
 				selectedPoint: null,
 			}))
 		}
 	}, [formData.currAffiliate])
-
-	const fetchDynamicFilterOptions = async () => {
-		try {
-			const filterOptions = await fetchFilterOptions(
-				formData.country?.value,
-				formData.state?.value,
-				'',
-				'',
-			)
-			setFormData((prevData) => ({
-				...prevData,
-				dynamicStateOptions: filterOptions.states,
-			}))
-		} catch (error) {
-			console.error('Error fetching filter options:', error)
-		}
-	}
-
-	useEffect(() => {
-		if (formData.prevCountry?.value !== formData.country?.value) {
-			setFormData((prevData) => ({
-				...prevData,
-				state: null,
-				currAffiliate: null,
-				prevCountry: formData.country,
-			}))
-			fetchDynamicFilterOptions()
-		} else {
-			fetchDynamicFilterOptions()
-		}
-	}, [formData.country])
 
 	useEffect(() => {
 		if (router.isReady && affiliate === 'stfx') {
@@ -185,57 +153,39 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 					</div>
 				)}
 
-			{/* Prompt to select a Country */}
-			{!formData.state && !formData.country && (
-				<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
-					<h1 className='mt-4 text-2xl text-gray-900 sm:text-5xl'>
-						Please select a Country
-					</h1>
-				</div>
-			)}
-
-			{/* Prompt to select a Province / State */}
-			{!formData.state &&
+			{/* Map View */}
+			{formData.state &&
 				formData.country &&
 				(formData.country.name === 'Canada' ||
 					formData.country.name === 'United States') && (
-					<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
-						<h1 className='mt-4 text-2xl text-gray-900 sm:text-5xl'>
-							Please select a Province / State
-						</h1>
-					</div>
+					<MapView
+						{...viewState}
+						reuseMaps
+						mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN as string}
+						style={{ width: '100%', aspectRatio: '1 / 1' }}
+						mapStyle='mapbox://styles/mapbox/streets-v9'
+						onMove={(evt) => setViewState(evt.viewState)}
+					>
+						{formData.locations.map(
+							(location) =>
+								location?.latitude &&
+								location.longitude && (
+									<Marker
+										key={location.zip}
+										longitude={Number(location.longitude)}
+										latitude={Number(location.latitude)}
+										anchor='bottom'
+									>
+										<CustomMarker
+											selectedPoint={formData.selectedPoint}
+											setSelectedPoint={updateSelectedPoint}
+											location={location}
+										/>
+									</Marker>
+								),
+						)}
+					</MapView>
 				)}
-
-			{/* Map View */}
-			{formData.state && formData.country && (
-				<MapView
-					{...viewState}
-					reuseMaps
-					mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN as string}
-					style={{ width: '100%', aspectRatio: '1 / 1' }}
-					mapStyle='mapbox://styles/mapbox/streets-v9'
-					onMove={(evt) => setViewState(evt.viewState)}
-				>
-					{formData.locations.map(
-						(location) =>
-							location?.latitude &&
-							location.longitude && (
-								<Marker
-									key={location.zip}
-									longitude={Number(location.longitude)}
-									latitude={Number(location.latitude)}
-									anchor='bottom'
-								>
-									<CustomMarker
-										selectedPoint={formData.selectedPoint}
-										setSelectedPoint={updateSelectedPoint}
-										location={location}
-									/>
-								</Marker>
-							),
-					)}
-				</MapView>
-			)}
 		</div>
 	)
 }
