@@ -98,10 +98,7 @@ export async function getStaticProps({ locale }) {
 
 	return {
 		props: {
-			...(await serverSideTranslations(locale, [
-				'supports',
-				'layout'
-			])),
+			...(await serverSideTranslations(locale, ['support', 'layout'])),
 			members: members,
 		},
 		revalidate: 86400,
