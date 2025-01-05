@@ -21,6 +21,7 @@ import StateInfo from './components/StateInfo'
 import { debounce } from 'lodash'
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { useRouter } from 'next/router'
 
 export type ReviewsResponse = {
 	reviews: IReview[]
@@ -72,6 +73,9 @@ const Review = ({
 	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
 		query
 	const dispatch = useAppDispatch()
+
+	const router = useRouter()
+	const { affiliate } = router.query
 
 	// State
 	const [reviews, setReviews] = useState<IReview[]>([])
@@ -216,8 +220,8 @@ const Review = ({
 					<div>
 						<div className='mx-auto max-w-7xl border-b-gray-200 px-4 py-16 sm:px-6 lg:border-b lg:px-8'>
 							<StateInfo
-								country={countryFilter?.value || ''}
-								state={stateFilter?.value || ''}
+								country={affiliate ? 'CA' : countryFilter?.value || ''}
+								state={affiliate ? 'NOVA SCOTIA' : stateFilter?.value || ''}
 								setLocationOpen={setLocationOpen}
 							/>
 							<div className='mt-3'>

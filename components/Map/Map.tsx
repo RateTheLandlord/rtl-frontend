@@ -2,10 +2,6 @@ import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { Options } from '@/util/interfaces/interfaces'
 import { useEffect, useState } from 'react'
 import { Map as MapView, Marker } from 'react-map-gl'
-import SelectList from '../reviews/ui/select-list'
-import { countryOptions } from '@/util/helpers/getCountryCodes'
-import { useTranslation } from 'next-i18next'
-import ComboBox from '../reviews/ui/combobox'
 import CustomMarker from './CustomMarker'
 import { getStartingLocation } from '@/util/helpers/getStartingLocation'
 import Information from './Information'
@@ -26,7 +22,6 @@ interface MapProps {
 }
 
 const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
-	const { t } = useTranslation('reviews')
 	const router = useRouter()
 	const { affiliate } = router.query
 	// Consolidate related states
@@ -40,7 +35,6 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 		currAffiliate: null as string | null,
 		prevCountry: null as Options | null,
 	})
-	const [inheritedFilter, setInheritedFilter] = useState(true)
 
 	// Default location is Toronto, Ontario, Canada
 	const [viewState, setViewState] = useState({
@@ -81,7 +75,7 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 	}, [formData.country, formData.state])
 
 	useEffect(() => {
-		if (!formData.currAffiliate && !inheritedFilter) {
+		if (!formData.currAffiliate) {
 			setFormData((prevData) => ({
 				...prevData,
 				state: null,
@@ -108,10 +102,7 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 	}
 
 	useEffect(() => {
-		if (
-			formData.prevCountry?.value !== formData.country?.value &&
-			!inheritedFilter
-		) {
+		if (formData.prevCountry?.value !== formData.country?.value) {
 			setFormData((prevData) => ({
 				...prevData,
 				state: null,
@@ -162,16 +153,6 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 		}
 	}, [formData.zipCodes])
 
-	const updateCountry = (country: Options) => {
-		setInheritedFilter(false)
-		setFormData((prevData) => ({ ...prevData, country: country }))
-	}
-
-	const updateState = (state: Options) => {
-		setInheritedFilter(false)
-		setFormData((prevData) => ({ ...prevData, state: state }))
-	}
-
 	const updateSelectedPoint = (point: IZipLocations | null) => {
 		setFormData((prevData) => ({ ...prevData, selectedPoint: point }))
 	}
@@ -180,22 +161,6 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 		<div className='divide mt-2 flex flex-col gap-2 divide-teal-600 lg:flex-row'>
 			{/* Filter Options */}
 			<div className='basis-1/5'>
-				<div className='py-2'>
-					<SelectList
-						state={formData.country}
-						setState={updateCountry}
-						options={countryOptions}
-						name={t('reviews.country')}
-					/>
-				</div>
-				<div className='py-2'>
-					<ComboBox
-						state={formData.state}
-						setState={updateState}
-						options={formData.dynamicStateOptions}
-						name={t('reviews.state')}
-					/>
-				</div>
 				{formData.selectedPoint && (
 					<Information
 						selectedPoint={formData.selectedPoint}
