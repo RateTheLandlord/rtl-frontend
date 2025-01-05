@@ -43,15 +43,17 @@ describe('WrittenReviewForm Component', () => {
 	it('should render review text and Edit button when reviewOpen is false', () => {
 		render(<WrittenReviewForm {...defaultProps} />)
 
-		expect(screen.getByText('Review')).toBeInTheDocument()
+		expect(
+			screen.getByText('create-review.written-review.title'),
+		).toBeInTheDocument()
 		expect(screen.getByText('This is a test review.')).toBeInTheDocument()
-		expect(screen.getByText('Edit')).toBeInTheDocument()
+		expect(screen.getByText('create-review.edit')).toBeInTheDocument()
 	})
 
 	it('should call setReviewOpen(true) when Edit button is clicked', () => {
 		render(<WrittenReviewForm {...defaultProps} />)
 
-		fireEvent.click(screen.getByText('Edit'))
+		fireEvent.click(screen.getByText('create-review.edit'))
 		expect(mockSetReviewOpen).toHaveBeenCalledWith(true)
 	})
 
@@ -59,10 +61,12 @@ describe('WrittenReviewForm Component', () => {
 		render(<WrittenReviewForm {...defaultProps} reviewOpen={true} />)
 
 		expect(
-			screen.getByText('Please follow our moderation policy:'),
+			screen.getByText('create-review.written-review.policy-1'),
 		).toBeInTheDocument()
 		expect(screen.getByRole('textbox')).toBeInTheDocument()
-		expect(screen.getByText('Preview Review')).toBeInTheDocument()
+		expect(
+			screen.getByText('create-review.written-review.preview-review'),
+		).toBeInTheDocument()
 	})
 
 	it('should call handleTextChange when LargeTextInput value changes', () => {
@@ -80,7 +84,9 @@ describe('WrittenReviewForm Component', () => {
 	it('should call setShowPreview(true) and setReviewOpen(false) when Preview Review button is clicked', () => {
 		render(<WrittenReviewForm {...defaultProps} reviewOpen={true} />)
 
-		fireEvent.click(screen.getByText('Preview Review'))
+		fireEvent.click(
+			screen.getByText('create-review.written-review.preview-review'),
+		)
 		expect(mockSetShowPreview).toHaveBeenCalledWith(true)
 		expect(mockSetReviewOpen).toHaveBeenCalledWith(false)
 	})
@@ -88,6 +94,8 @@ describe('WrittenReviewForm Component', () => {
 	it('should disable Preview Review button when review is empty', () => {
 		render(<WrittenReviewForm {...defaultProps} reviewOpen={true} review='' />)
 
-		expect(screen.getByText('Preview Review')).toBeDisabled()
+		expect(
+			screen.getByText('create-review.written-review.preview-review'),
+		).toBeDisabled()
 	})
 })

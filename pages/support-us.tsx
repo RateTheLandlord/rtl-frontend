@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { getMemberData, getTierData } from '@/util/helpers/patreon'
 import Supporters from '@/components/supportus/Supporters'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export default function SupportUs({ members }): JSX.Element {
 	const title = 'Support Us | Rate The Landlord'
@@ -26,7 +27,7 @@ export default function SupportUs({ members }): JSX.Element {
 				canonical={pageURL}
 				openGraph={{
 					type: 'website',
-					locale: 'en_CA', //  Default is en_US
+					locale: 'en_CA',
 					url: pageURL,
 					title,
 					description: desc,
@@ -58,7 +59,7 @@ export default function SupportUs({ members }): JSX.Element {
 }
 
 //Page is statically generated at build time and then revalidated at a minimum of every day based on when the page is accessed
-export async function getStaticProps() {
+export async function getStaticProps({ locale }) {
 	const accessToken = process.env.PATREON_ACCESS_TOKEN as string
 
 	const campaignId = await fetch(
@@ -97,6 +98,7 @@ export async function getStaticProps() {
 
 	return {
 		props: {
+			...(await serverSideTranslations(locale, ['support', 'layout'])),
 			members: members,
 		},
 		revalidate: 86400,

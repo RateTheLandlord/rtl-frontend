@@ -5,6 +5,9 @@ import AdsComponent from '@/components/adsense/Adsense'
 import ResourceList from '@/components/resources/ResourceList'
 import { ResourceResponse } from '@/util/interfaces/interfaces'
 import { getResources } from '@/lib/tenant-resource/resource'
+import { useTranslation } from 'next-i18next'
+import Poster from '@/components/poster/Poster'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface IProps {
 	data: ResourceResponse
@@ -20,6 +23,7 @@ function Resources({ data }: IProps): JSX.Element {
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
+	const { t } = useTranslation('resources')
 	return (
 		<div className='flex w-full justify-center'>
 			<NextSeo
@@ -50,10 +54,10 @@ function Resources({ data }: IProps): JSX.Element {
 			<div className='container mt-5 flex flex-col items-center gap-4 px-2'>
 				<AdsComponent slot='9611751505' />
 				<ResourcesInfo />
+				<Poster />
 				<ResourceList data={data} />
 				<p className='mt-8 text-center text-xl leading-8 text-gray-500'>
-					If you have a helpful resource you think should be on our site, send
-					us an email at contact@ratethelandlord.org
+					{t('resources.contribute')}
 				</p>
 			</div>
 		</div>
@@ -63,16 +67,27 @@ function Resources({ data }: IProps): JSX.Element {
 export default Resources
 
 //Page is statically generated at build time and then revalidated at a minimum of every 30 minutes based on when the page is accessed
-export async function getStaticProps() {
+export async function getStaticProps({ locale }) {
 	const data = await getResources({})
 	if (data) {
 		return {
-			props: JSON.parse(JSON.stringify({ data: data })),
-			revalidate: 100,
+			props:JSON.parse(JSON.stringify({ data: data,
+				...(await serverSideTranslations(locale, [
+					'filters',
+					'resources',
+					'layout'
+				  ])),
+			 }))
+			,
+			revalidate: 100,			
 		}
 	} else {
 		return {
 			props: {
+				...(await serverSideTranslations(locale, [
+					'resources',
+					'layout'
+				  ])),
 				data: [],
 			},
 			revalidate: 100,

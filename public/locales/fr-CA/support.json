@@ -1,0 +1,23 @@
+{
+	"support": {
+		"header": "Soutenez Rate the Landlord dans notre démarche",
+		"support-us": "Soutenez nous",
+		"body-1": "Rate The Landlord a pour mission de soutenir les locataires, de promouvoir la transparence et de construire une communauté mondiale dédiée à l'amélioration des relations entre propriétaires et locataires. À mesure que nous développons et améliorons notre plateforme, nous faisons face à divers coûts opérationnels, tels que la maintenance des serveurs et les ressources de développement.",
+		"body-2": "Jusqu'à présent, le site a été financé par les revenus publicitaires, mais ceux-ci ne couvrent pas toujours nos coûts mensuels pour assurer son fonctionnement. Si nous voulons continuer à développer le site et proposer davantage de ressources, nous avons besoin du soutien de la communauté.",
+		"body-3": "Soyez assuré·e que nous n'utilisons PAS cette plateforme pour nous enrichir. Tout surplus après les dépenses opérationnelles sera réinvesti dans le site par divers moyens. comme la publicité, la mise à jour de notre design UI/UX, ou d'autres initiatives visant à améliorer l'expérience des locataires. Nous ferons également des dons périodiques à des syndicats de locataires locaux et à des ressources pour étendre le soutien !",
+		"features": {
+			"platform": {
+				"title": "Amélioration de la plateforme",
+				"description": "Soutenir le développement continu pour introduire de nouvelles fonctionnalités et améliorer l'expérience des utilisateur·rice·s."
+			},
+			"maintenance": {
+				"title": "Maintenance des serveurs",
+				"description": "Assurer que notre plateforme demeure accessible et fiable pour les utilisateur·rice·s du monde entier."
+			},
+			"community": {
+				"title": "Initiative de communautés",
+				"description": "Nous permettre d'organiser des événements et des campagnes pour rassembler notre communauté."
+			}
+		}
+	}
+}

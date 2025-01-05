@@ -13,14 +13,13 @@ jobs:
         node-version: [18.x]
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          bun-version: latest
       - name: Lint frontend
         run: |
-          npm install
-          npm run lint
+          bun install
+          bun run lint
 
   test-fe:
     runs-on: ubuntu-latest
@@ -31,11 +30,10 @@ jobs:
         node-version: [18.x]
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          bun-version: latest
       - name: Test frontend
         run: |
-          npm install
-          npm run test:merge
+          bun install
+          bun run test:merge

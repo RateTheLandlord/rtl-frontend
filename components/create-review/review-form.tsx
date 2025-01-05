@@ -5,7 +5,7 @@ import Button from '../ui/button'
 import MaliciousStringAlert from '../alerts/MaliciousStringAlert'
 import SuccessModal from './success-modal'
 import { postcodeValidator } from 'postcode-validator'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import SpamReviewModal from '@/components/create-review/SpamReviewModal'
 import SheldonModal from '@/components/create-review/SheldonModal'
 import { sheldonReview } from '@/components/create-review/helper'
@@ -27,7 +27,7 @@ import WrittenReviewForm from './components/WrittenReviewForm'
 import { toast } from 'react-toastify'
 
 function ReviewForm(): JSX.Element {
-	const { t } = useTranslation('create')
+	const { t } = useTranslation(['createreview', 'alerts'])
 
 	const [getStarted, setGetStarted] = useState(false)
 	const [landlordOpen, setLandlordOpen] = useState(false)
@@ -191,7 +191,9 @@ function ReviewForm(): JSX.Element {
 	const handleSubmit = async () => {
 		if (landlord.trim().length < 1) {
 			setLandlordValidationError(true)
-			setLandlordValidationText('Landlord Name cannot be empty')
+			setLandlordValidationText(
+				t('alerts.landlord-validation', { ns: 'alerts' }),
+			)
 			return
 		}
 		if (checkLandlord(landlord.toLocaleUpperCase())) {
@@ -200,7 +202,7 @@ function ReviewForm(): JSX.Element {
 		}
 		if (city.trim().length < 1) {
 			setCityValidationError(true)
-			setCityValidationErrorText('City cannot be empty')
+			setCityValidationErrorText(t('alerts.city-validation', { ns: 'alerts' }))
 			return
 		}
 		if (checkSheldon()) {
@@ -269,13 +271,13 @@ function ReviewForm(): JSX.Element {
 							}
 						})
 						.catch(() => {
-							toast.error('Failure: Something went wrong, please try again.')
+							toast.error(t('alerts.error', { ns: 'alerts' }) as string)
 						})
 						.finally(() => {
 							setLoading(false)
 						})
 				} else {
-					toast.error('Failure: Something went wrong, please try again.')
+					toast.error(t('alerts.error', { ns: 'alerts' }) as string)
 				}
 			} else {
 				setPostalError(true)
@@ -360,7 +362,7 @@ function ReviewForm(): JSX.Element {
 					leaveFrom='transform scale-100 opacity-100 max-h-96'
 					leaveTo='transform scale-95 opacity-0 max-h-0'
 				>
-					<div className='flex w-full flex-col gap-3 overflow-hidden border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
+					<div className='flex w-full flex-col gap-3 border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
 						<LandlordForm
 							landlordOpen={landlordOpen}
 							setLandlordOpen={setLandlordOpen}
@@ -545,7 +547,7 @@ function ReviewForm(): JSX.Element {
 										}
 										onClick={() => handleSubmit()}
 									>
-										Submit Review
+										{t('create-review.review-form.submit')}
 									</Button>
 								)}
 							</div>

@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { Options, SortOptions } from '@/util/interfaces/interfaces'
-import SelectList from './ui/select-list'
+import React, { useEffect } from 'react'
+import { IQuery, Options, SortOptions } from '@/util/interfaces/interfaces'
 import SearchBar from './ui/searchbar'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import ComboBox from './ui/combobox'
-import { countryOptions } from '@/util/helpers/getCountryCodes'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { AppDispatch } from '@/redux/store'
 import {
 	clearFilters,
+	clearReviewFilters,
 	updateCity,
 	updateCountry,
 	updateSearch,
@@ -17,7 +16,6 @@ import {
 import ButtonLight from '../ui/button-light'
 import Spinner from '../ui/Spinner'
 import SortList from './ui/sort-list'
-import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 
 //Review filters and Logic
 
@@ -32,11 +30,14 @@ interface FiltersProps {
 	stateFilter: Options | null
 	cityFilter: Options | null
 	zipFilter: Options | null
-	cityOptions: Options[]
-	stateOptions: Options[]
+	dynamicCityOptions: Options[]
 	zipOptions?: Options[]
+	dynamicZipOptions: Options[]
 	updateParams: () => void
 	loading: boolean
+	dispatch: AppDispatch
+	fetchDynamicFilterOptions: () => Promise<void>
+	query: IQuery
 }
 
 function ReviewFilters({
@@ -48,40 +49,18 @@ function ReviewFilters({
 	stateFilter,
 	cityFilter,
 	zipFilter,
-	cityOptions,
-	stateOptions,
+	dynamicCityOptions,
 	zipOptions,
+	dynamicZipOptions,
 	updateParams,
 	loading,
+	dispatch,
+	fetchDynamicFilterOptions,
+	query,
 }: FiltersProps): JSX.Element {
 	const { t } = useTranslation('reviews')
-	const dispatch = useAppDispatch()
-	const query = useAppSelector((state) => state.query)
-	const [dynamicCityOptions, setDynamicCityOptions] =
-		useState<Options[]>(cityOptions)
-	const [dynamicStateOptions, setDynamicStateOptions] =
-		useState<Options[]>(stateOptions)
-	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>(
-		zipOptions ?? [],
-	)
 	const keyDownAction = (e) => {
 		e.key === 'Enter' || e.key === 'NumpadEnter' ? updateParams() : {}
-	}
-
-	const fetchDynamicFilterOptions = async () => {
-		try {
-			const filterOptions = await fetchFilterOptions(
-				countryFilter?.value,
-				stateFilter?.value,
-				cityFilter?.value,
-				zipFilter?.value,
-			)
-			setDynamicCityOptions(filterOptions.cities)
-			setDynamicStateOptions(filterOptions.states)
-			setDynamicZipOptions(filterOptions.zips)
-		} catch (error) {
-			console.error('Error fetching filter options:', error)
-		}
 	}
 
 	useEffect(() => {
@@ -93,6 +72,12 @@ function ReviewFilters({
 		dispatch(updateCountry(countryFilter))
 		fetchDynamicFilterOptions()
 	}, [countryFilter])
+
+	useEffect(() => {
+		dispatch(updateState(stateFilter))
+		dispatch(updateCity(cityFilter))
+		dispatch(updateZip(zipFilter))
+	}, [])
 
 	return (
 		<div data-testid='review-filters-1' className='mt-6 hidden lg:block'>
@@ -129,22 +114,6 @@ function ReviewFilters({
 									</div>
 
 									<div className='py-2'>
-										<SelectList
-											state={countryFilter}
-											setState={(opt: Options) => dispatch(updateCountry(opt))}
-											options={countryOptions}
-											name={t('reviews.country')}
-										/>
-									</div>
-									<div className='py-2'>
-										<ComboBox
-											state={stateFilter}
-											setState={(opt: Options) => dispatch(updateState(opt))}
-											options={dynamicStateOptions}
-											name={t('reviews.state')}
-										/>
-									</div>
-									<div className='py-2'>
 										<ComboBox
 											state={cityFilter}
 											setState={(opt: Options) => dispatch(updateCity(opt))}
@@ -178,16 +147,16 @@ function ReviewFilters({
 							{loading ? (
 								<Spinner height='h-4' width='w-4' colour='text-white' />
 							) : (
-								'Update Filters'
+								t('reviews.update')
 							)}
 						</button>
 						<ButtonLight
 							onClick={() => {
-								dispatch(clearFilters())
+								dispatch(clearReviewFilters())
 								updateParams()
 							}}
 						>
-							Clear Filters
+							{t('reviews.clear')}
 						</ButtonLight>
 					</div>
 				</div>

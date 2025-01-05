@@ -28,6 +28,26 @@
 			"submit": "Submit"
 		},
 		"rent": "Rent Amount: $",
-		"local": "In local currency"
+		"local": "In local currency",
+		"continue": "Continue",
+		"select_country": "Please select a Country",
+		"select_state": "Please select a State/Province",
+		"hero_header": "See Reviews of Landlords in Your Community",
+		"hero_body": "Help us get you started by entering in the location information of the area you are interested in below. If you cannot find your location help your community by submitting a review!",
+		"update": "Update Filters",
+		"clear": "Clear Filters",
+		"reviews": "Reviews",
+		"map": "Map",
+		"beta": "Beta",
+		"read-all": "Read all reviews"
+	},
+	"report": {
+		"address": "Address is in the review",
+		"fake": "Fake Review",
+		"language": "Review contains inappropriate language",
+		"sensitive": "This review contains sensitive information",
+		"other": "Other",
+		"select-reason": "Select a reason",
+		"limit": "Limit of 250 Characters: {{total}}/250"
 	}
 }

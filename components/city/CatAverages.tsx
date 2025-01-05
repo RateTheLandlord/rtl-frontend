@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import RatingStars from '../ui/RatingStars'
 
 interface IProps {
@@ -20,7 +20,7 @@ export default function CatAverages({ averages, average, total }: IProps) {
 			<div className='mx-auto max-w-7xl'>
 				<div className='grid grid-cols-3 gap-0.5 sm:mx-0 sm:rounded-2xl md:grid-cols-6'>
 					<div className='flex flex-col items-center justify-center gap-2 rounded-l-lg bg-teal-600 p-8 text-center text-white sm:p-10'>
-						<p>Overall</p>
+						<p className='text-center'>{t('landlord.overall')}</p>
 						<RatingStars value={average} />
 
 						<p className='sr-only'>
@@ -28,24 +28,24 @@ export default function CatAverages({ averages, average, total }: IProps) {
 						</p>
 					</div>
 					<div className='flex flex-col items-center justify-center gap-2 bg-teal-600/5 p-8 sm:p-10'>
-						<p>Stability</p>
+						<p className='text-center'>{t('landlord.stability')}</p>
 						<RatingStars value={averages.avg_stability} />
 					</div>
 
 					<div className='flex flex-col items-center justify-center gap-2 rounded-r-lg bg-teal-600/5 p-8 sm:p-10 md:rounded-r-none'>
-						<p>Respect</p>
+						<p className='text-center'>{t('landlord.respect')}</p>
 						<RatingStars value={averages.avg_respect} />
 					</div>
 					<div className='flex flex-col items-center justify-center gap-2 rounded-l-lg bg-teal-600/5 p-8 sm:p-10 md:rounded-l-none'>
-						<p>Health</p>
+						<p className='text-center'>{t('landlord.health')}</p>
 						<RatingStars value={averages.avg_health} />
 					</div>
 					<div className='flex flex-col items-center justify-center gap-2 bg-teal-600/5 p-8 sm:p-10'>
-						<p>Privacy</p>
+						<p className='text-center'>{t('landlord.privacy')}</p>
 						<RatingStars value={averages.avg_privacy} />
 					</div>
 					<div className='flex flex-col items-center justify-center gap-2 rounded-r-lg bg-teal-600/5 p-8 sm:p-10'>
-						<p>Repair</p>
+						<p className='text-center'>{t('landlord.repair')}</p>
 						<RatingStars value={averages.avg_repair} />
 					</div>
 				</div>

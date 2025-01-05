@@ -1,7 +1,7 @@
 import React, { SetStateAction, Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Button from '../ui/button'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 interface IProps {
 	isOpen: boolean
@@ -9,7 +9,7 @@ interface IProps {
 }
 
 function AddReviewModal({ isOpen, setIsOpen }: IProps) {
-	const { t } = useTranslation('create')
+	const { t } = useTranslation('createreview')
 	return (
 		<Transition.Root show={isOpen} as={Fragment}>
 			<Dialog as='div' className='relative z-10' onClose={setIsOpen}>

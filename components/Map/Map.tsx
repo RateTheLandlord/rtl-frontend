@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Map as MapView, Marker } from 'react-map-gl'
 import SelectList from '../reviews/ui/select-list'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import ComboBox from '../reviews/ui/combobox'
 import CustomMarker from './CustomMarker'
 import { getStartingLocation } from '@/util/helpers/getStartingLocation'
@@ -20,22 +20,27 @@ export interface ILocationType {
 	value: string
 }
 
-const MapComponent = () => {
+interface MapProps {
+	countryFilter: Options | null
+	stateFilter: Options | null
+}
+
+const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 	const { t } = useTranslation('reviews')
 	const router = useRouter()
 	const { affiliate } = router.query
-
 	// Consolidate related states
 	const [formData, setFormData] = useState({
 		zipCodes: [] as Options[],
-		country: null as Options | null,
-		state: null as Options | null,
+		country: countryFilter as Options | null,
+		state: stateFilter as Options | null,
 		dynamicStateOptions: [] as Options[],
 		selectedPoint: null as IZipLocations | null,
 		locations: [] as IZipLocations[],
 		currAffiliate: null as string | null,
 		prevCountry: null as Options | null,
 	})
+	const [inheritedFilter, setInheritedFilter] = useState(true)
 
 	// Default location is Toronto, Ontario, Canada
 	const [viewState, setViewState] = useState({
@@ -76,7 +81,7 @@ const MapComponent = () => {
 	}, [formData.country, formData.state])
 
 	useEffect(() => {
-		if (!formData.currAffiliate) {
+		if (!formData.currAffiliate && !inheritedFilter) {
 			setFormData((prevData) => ({
 				...prevData,
 				state: null,
@@ -103,7 +108,10 @@ const MapComponent = () => {
 	}
 
 	useEffect(() => {
-		if (formData.prevCountry?.value !== formData.country?.value) {
+		if (
+			formData.prevCountry?.value !== formData.country?.value &&
+			!inheritedFilter
+		) {
 			setFormData((prevData) => ({
 				...prevData,
 				state: null,
@@ -155,10 +163,12 @@ const MapComponent = () => {
 	}, [formData.zipCodes])
 
 	const updateCountry = (country: Options) => {
+		setInheritedFilter(false)
 		setFormData((prevData) => ({ ...prevData, country: country }))
 	}
 
 	const updateState = (state: Options) => {
+		setInheritedFilter(false)
 		setFormData((prevData) => ({ ...prevData, state: state }))
 	}
 

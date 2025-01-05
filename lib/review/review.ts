@@ -3,7 +3,7 @@ import {
 	ReviewsResponse,
 	OtherLandlord,
 	FilterOptions,
-	ReviewResponseStatus
+	ReviewResponseStatus,
 } from '@/lib/review/models/review'
 import { filterReviewWithAI, IResult } from './helpers'
 import {
@@ -55,14 +55,6 @@ export async function filterOptions(
     `
 	const countryList = countries.map(({ country_code }) => country_code)
 
-	// Fetch states
-	const states = await sql`
-        SELECT DISTINCT state
-        FROM review
-        WHERE 1 = 1 ${countryClause};
-    `
-	const stateList = states.map(({ state }) => state)
-
 	// Fetch cities
 	const cities = await sql`
         SELECT DISTINCT city
@@ -82,29 +74,22 @@ export async function filterOptions(
 	const zipList = zipsExtracted.filter((zip) => zip.length > 0)
 
 	const filteredCity = cityList.filter((n) => n)
-	const allCityOptions = filteredCity.map((c, id) => {
-		const city = c.toLowerCase().trim()
-		return {
-			id: id + 1,
-			name: city.split(' ').map(capitalize).join(' '),
-			value: c.toLowerCase().trim(),
-		}
-	})
+	const allCityOptions = [
+		...new Map(
+			filteredCity
+				.map((c, id) => {
+					const city = c.toLowerCase().trim()
+					return {
+						id: id + 1,
+						name: city.split(' ').map(capitalize).join(' '),
+						value: c.toLowerCase().trim(),
+					}
+				})
+				.map((city) => [city.value, city]),
+		).values(),
+	]
 
 	allCityOptions.sort((a: Options, b: Options): number =>
-		a.name.localeCompare(b.name),
-	)
-
-	const allStateOptions = stateList.map((s, id) => {
-		const state = s.toLowerCase()
-		return {
-			id: id + 1,
-			name: state.split(' ').map(capitalize).join(' '),
-			value: s,
-		}
-	})
-
-	allStateOptions.sort((a: Options, b: Options): number =>
 		a.name.localeCompare(b.name),
 	)
 
@@ -128,7 +113,6 @@ export async function filterOptions(
 
 	return {
 		countries: countryList,
-		states: allStateOptions,
 		cities: allCityOptions,
 		zips: allZipOptions,
 	}
@@ -211,14 +195,6 @@ export async function getReviews(
     `
 	const countryList = countries.map(({ country_code }) => country_code)
 
-	// Fetch states
-	const states = await sql`
-        SELECT DISTINCT state
-        FROM review
-        WHERE 1 = 1 ${countryClause};
-    `
-	const stateList = states.map(({ state }) => state)
-
 	// Fetch cities
 	const cities = await sql`
         SELECT DISTINCT city
@@ -242,7 +218,6 @@ export async function getReviews(
 		reviews,
 		total,
 		countries: countryList,
-		states: stateList,
 		cities: cityList,
 		zips: zipList,
 		limit: limitParam,
@@ -255,7 +230,9 @@ export async function findOne(id: number): Promise<Review[]> {
       WHERE id IN (${id});`
 }
 
-export async function create(inputReview: Review): Promise<ReviewResponseStatus> {
+export async function create(
+	inputReview: Review,
+): Promise<ReviewResponseStatus> {
 	try {
 		const existingReviewsForLandlord: Review[] =
 			await getExistingReviewsForLandlord(inputReview)
@@ -269,7 +246,12 @@ export async function create(inputReview: Review): Promise<ReviewResponseStatus>
 		)
 
 		// Don't post the review to the DB if we detect spam
-		if (reviewSpamDetected || landlordSpamDetected) return {message:"This landlord is currently under spam protection please try again later", success:false} 
+		if (reviewSpamDetected || landlordSpamDetected)
+			return {
+				message:
+					'This landlord is currently under spam protection please try again later',
+				success: false,
+			}
 
 		updateRecentReviews(inputReview.landlord)
 		if (process.env.NEXT_PUBLIC_ENVIRONMENT == 'development')
@@ -337,7 +319,7 @@ export async function getLandlordReviews(
 
 	const reviews = await sql<Review[]>`Select *
       FROM review
-      WHERE landlord IN (${landlord}) ORDER BY date_added DESC`
+      WHERE landlord IN (${landlord}) AND (flagged = false OR (flagged = true AND admin_approved = true)) ORDER BY date_added DESC`
 
 	const averageByCat = await sql`
 	  SELECT 
@@ -420,7 +402,7 @@ export async function getLandlordSuggestions(
 	const suggestions = await sql`
     SELECT DISTINCT landlord FROM review WHERE landlord LIKE ${
 			'%' + landlord.toLocaleUpperCase() + '%'
-		}
+		} LIMIT 10
     `
 	return suggestions.map(({ landlord }) => landlord)
 }

@@ -1,7 +1,7 @@
 import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import { Disclosure } from '@headlessui/react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { ILandlordReviews } from '@/lib/review/review'
 import CatAverages from '../city/CatAverages'
@@ -25,9 +25,12 @@ const LandlordInfo = ({ name, data }: IProps) => {
 					<h2 className='text-3xl font-bold tracking-tight sm:text-4xl'>
 						{`${toTitleCase(landlord)}`}
 					</h2>
-					<p className='mt-2 text-gray-700'>{`Read ${
-						data.total
-					} reviews and rental experiences for ${toTitleCase(landlord)}`}</p>
+					<p className='mt-2 text-gray-700'>
+						{t('landlord.rental-experience', {
+							total: data.total,
+							location: `${toTitleCase(landlord)}`,
+						})}
+					</p>
 				</div>
 
 				<CatAverages
@@ -39,8 +42,7 @@ const LandlordInfo = ({ name, data }: IProps) => {
 				<div className='flex flex-col'>
 					<h3 className='mt-4 text-lg text-gray-900'>{t('landlord.share')}</h3>
 					<p className='mt-1 text-sm text-gray-600'>
-						If you've rented from this Landlord, share your experience with
-						other tenants.
+						{t('landlord.rented-landlord')}
 					</p>
 
 					<Link className='mt-1' href='/create-review'>

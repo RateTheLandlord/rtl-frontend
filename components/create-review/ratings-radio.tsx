@@ -1,7 +1,7 @@
 import React from 'react'
 import { Label, Radio, RadioGroup } from '@headlessui/react'
 import { classNames } from '@/util/helpers/helper-functions'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const ratings = [1, 2, 3, 4, 5]
 
@@ -13,7 +13,7 @@ interface Props {
 }
 
 function RatingsRadio({ title, rating, setRating, tooltip }: Props) {
-	const { t } = useTranslation('create')
+	const { t } = useTranslation('createreview')
 
 	return (
 		<div data-testid='ratings-radio-1'>

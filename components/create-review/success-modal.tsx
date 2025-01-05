@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import ButtonLight from '../ui/button-light'
 import Button from '../ui/button'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import {
 	EmailShareButton,
 	FacebookShareButton,
@@ -30,7 +30,7 @@ interface IProps {
 }
 
 function SuccessModal({ isOpen, setIsOpen }: IProps) {
-	const { t } = useTranslation('create')
+	const { t } = useTranslation('createreview')
 	const router = useRouter()
 	return (
 		<Transition.Root show={isOpen} as={Fragment}>

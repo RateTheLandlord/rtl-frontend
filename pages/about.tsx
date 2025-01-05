@@ -8,6 +8,8 @@ import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import React from 'react'
 import Revenue from '@/components/about/revenue'
+import Poster from '@/components/poster/Poster'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 function About(): JSX.Element {
 	const title = 'About | Rate The Landlord'
@@ -54,6 +56,7 @@ function About(): JSX.Element {
 			/>
 			<div className='container mt-5 flex flex-col items-center gap-4 px-2'>
 				<AboutUs />
+				<Poster />
 				<Faq />
 				<Privacy />
 				<Moderation />
@@ -66,3 +69,15 @@ function About(): JSX.Element {
 }
 
 export default About
+
+export async function getStaticProps({ locale }) {
+  return {
+	props: {
+	  ...(await serverSideTranslations(locale, [
+		'about',
+		'layout'
+	  ])),
+	  // Will be passed to the page component as props
+	},
+  }
+}

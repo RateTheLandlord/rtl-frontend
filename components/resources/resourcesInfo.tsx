@@ -1,7 +1,7 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const ResourcesInfo = () => {
-	const { t } = useTranslation('resourcesPage')
+	const { t } = useTranslation('resources')
 	const info: Array<string> = t('resources.info', {
 		returnObjects: true,
 	})

@@ -1,0 +1,28 @@
+{
+	"filters": {
+		"title": "Filtres",
+		"no-results": "Aucun résultat trouvé.",
+		"no-body": "Désolé, aucun résultat n'a été trouvé pour ces filtres.",
+		"resources": "Rechercher des ressources",
+		"sort": "Classer par",
+		"country": "Pays",
+		"state": "État / Province",
+		"city": "Ville",
+		"landlord": "Propriétaire",
+		"apply": "Appliquer les filtres",
+		"clear": "Rafraichir les filtres",
+		"search": "Rechercher",
+		"loading": "Chargement en cours...",
+		"search-for": "Rechercher pour",
+		"search-placeholder": "Recherche votre propriétaire",
+		"not-found": "Aucun propriétaire trouvé - Soumettez votre premier avis !"
+	},
+	"sort": {
+		"name_az": "Nom A-Z",
+		"name_za": "Nom Z-A",
+		"newest": "Le plus récent",
+		"oldest": "Le plus ancien",
+		"highest": "Le plus haut",
+		"lowest": "Le plus bas"
+	}
+}

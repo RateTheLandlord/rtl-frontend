@@ -4,6 +4,7 @@ import { ICityReviews, getCityReviews } from '@/lib/review/review'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface IProps {
 	city: string
@@ -78,7 +79,8 @@ export async function getStaticPaths() {
 	}
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ locale, params }) {
+	console.log(params)
 	const data = await getCityReviews(params)
 
 	if (data.reviews.length === 0) {
@@ -92,14 +94,19 @@ export async function getStaticProps({ params }) {
 
 	// Pass post data to the page via props
 	return {
-		props: JSON.parse(
-			JSON.stringify({
+		props: JSON.parse(JSON.stringify({
 				city: params.city,
 				state: params.state,
 				country: params.country_code,
 				data: data,
-			}),
-		),
+				...(await serverSideTranslations(locale, [
+					'filters',
+					'resources',
+					'layout',
+					'landlord',
+					'reviews'
+				  ])),
+			})),
 		// Re-generate the page
 		// if a request comes in after 100 seconds
 		revalidate: 100,

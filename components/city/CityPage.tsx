@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Review, SortOptions } from '@/util/interfaces/interfaces'
 import ButtonLight from '../ui/button-light'
 import { sortOptions } from '@/util/helpers/filter-options'
@@ -26,7 +26,7 @@ interface IProps {
 
 const CityPage = ({ city, state, country, data }: IProps) => {
 	// Localization
-	const { t } = useTranslation('landlord')
+	const { t } = useTranslation('reviews')
 
 	// Redux
 	const query = useAppSelector((state) => state.query)

@@ -34,7 +34,6 @@ export type ReviewsResponse = {
 	reviews: Review[]
 	total: number
 	countries: string[]
-	states: string[]
 	cities: string[]
 	zips: string[]
 	limit: number
@@ -42,12 +41,11 @@ export type ReviewsResponse = {
 
 export type FilterOptions = {
 	countries: Options[]
-	states: Options[]
 	cities: Options[]
 	zips: Options[]
 }
 
 export interface ReviewResponseStatus {
-	success: boolean,
+	success: boolean
 	message: string
 }

@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import LinkButtonLG from '../ui/link-button-lg'
 import LinkButtonLightLG from '../ui/link-button-light-lg'
 import { HouseIcon } from '../icons/HouseIcon'

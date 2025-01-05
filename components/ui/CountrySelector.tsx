@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { country_codes } from '@/util/helpers/getCountryCodes'
 import countries from '@/util/countries/countries.json'
 
@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const CountrySelector = ({ setValue }: IProps) => {
-	const { t } = useTranslation('create')
+	const { t } = useTranslation('createreview')
 	return (
 		<div className='sm:col-span-1'>
 			<label htmlFor='country' className='block text-sm  text-gray-700'>

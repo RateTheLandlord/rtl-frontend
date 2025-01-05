@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { socialLinks } from './links'
 import Github from '../svg/social/github'
 import Link from 'next/link'
@@ -9,7 +9,7 @@ function Footer(): JSX.Element {
 	const year = date.getFullYear()
 	const { t } = useTranslation('layout')
 	return (
-		<footer className='bg-white' data-testid='footer-1'>
+		<footer className='bg-white font-montserrat-regular' data-testid='footer-1'>
 			<div className='mx-auto max-w-7xl px-4 py-12 sm:px-6 md:flex md:items-center md:justify-between lg:px-8'>
 				<div className='flex justify-center space-x-6 md:order-2'>
 					<Link href='/terms-and-conditions'>Terms and Conditions</Link>

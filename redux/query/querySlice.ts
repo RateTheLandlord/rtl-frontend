@@ -12,6 +12,11 @@ interface IQuery {
 	searchFilter: string | undefined
 }
 
+interface IStateAndCountry {
+	state: Options | null
+	country: Options | null
+}
+
 const initialState: IQuery = {
 	selectedSort: sortOptions[2],
 	countryFilter: null,
@@ -47,6 +52,17 @@ const querySlice = createSlice({
 		updateActiveFilters(state, action: PayloadAction<Array<Options | null>>) {
 			return { ...state, activeFilters: action.payload }
 		},
+		updateStateAndCountry(state, action: PayloadAction<IStateAndCountry>) {
+			state.countryFilter = action.payload.country
+			state.stateFilter = action.payload.state
+		},
+		clearReviewFilters(state) {
+			return {
+				...initialState,
+				countryFilter: state.countryFilter,
+				stateFilter: state.stateFilter,
+			}
+		},
 		clearFilters() {
 			return { ...initialState }
 		},
@@ -62,5 +78,7 @@ export const {
 	updateZip,
 	updateActiveFilters,
 	clearFilters,
+	updateStateAndCountry,
+	clearReviewFilters,
 } = querySlice.actions
 export default querySlice.reducer

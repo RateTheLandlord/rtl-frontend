@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import AdsComponent from '../adsense/Adsense'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import RatingStars from '../ui/RatingStars'
 import ButtonLight from '../ui/button-light'
 import { FlagIcon } from '@heroicons/react/solid'
@@ -59,7 +59,7 @@ const ReviewComponent = ({
 								className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg  hover:underline lg:mb-2 lg:items-center'
 							>
 								<h6 className='text-center'>{review.landlord}</h6>
-								<p className='text-center text-sm'>Read all reviews</p>
+								<p className='text-center text-sm'>{t('reviews.read-all')}</p>
 							</Link>
 						) : null}
 						<div

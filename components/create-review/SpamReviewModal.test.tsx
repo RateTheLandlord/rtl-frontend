@@ -8,18 +8,16 @@ import SpamReviewModal from '@/components/create-review/SpamReviewModal'
 jest.mock('react-i18next', () => ({
 	useTranslation: jest.fn().mockReturnValue({
 		t: jest.fn((key) => {
-			if (key === 'create-review.spam-modal.localStorageDetection.title') {
+			if (key === 'create-review.localStorageDetection.title') {
 				return 'It appears you have reviewed this Landlord before...'
 			}
-			if (
-				key === 'create-review.spam-modal.localStorageDetection.description'
-			) {
-				return "We understand you want to voice your frustration about your previous Landlord in a safe and public way. However, leaving multiple reviews about the same landlord causes both the reviews for that Landlord, and the site, to lose their integrity. Please only leave 1 review per landlord you've had so that this site can remain a fair representation for both the Tenants and Landlords."
+			if (key === 'create-review.localStorageDetection.description') {
+				return "Please only leave one review per landlord you've had so that this site can remain a fair representation of rental experiences. Any repeat reviews or spam will be deleted. If you have any questions, please reach out to us at contact@ratethelandlord.org"
 			}
-			if (key === 'create-review.spam-modal.DBDetection.title') {
+			if (key === 'create-review.DBDetection.title') {
 				return 'We have noticed potential spam reviews related to this landlord.'
 			}
-			if (key === 'create-review.spam-modal.DBDetection.description') {
+			if (key === 'create-review.DBDetection.description') {
 				return 'To protect the integrity of our reviews please try again later. If you have any questions, please reach out to us at contact@ratethelandlord.org'
 			}
 			if (key === 'create-review.modal.close') {
@@ -52,7 +50,7 @@ describe('Spam Review Modal component', () => {
 		).toBeInTheDocument()
 		expect(
 			screen.getByText(
-				"We understand you want to voice your frustration about your previous Landlord in a safe and public way. However, leaving multiple reviews about the same landlord causes both the reviews for that Landlord, and the site, to lose their integrity. Please only leave 1 review per landlord you've had so that this site can remain a fair representation for both the Tenants and Landlords.",
+				"Please only leave one review per landlord you've had so that this site can remain a fair representation of rental experiences. Any repeat reviews or spam will be deleted. If you have any questions, please reach out to us at contact@ratethelandlord.org",
 			),
 		).toBeInTheDocument()
 

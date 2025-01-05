@@ -4,6 +4,7 @@ import { IZipReviews, getZipReviews } from '@/lib/review/review'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface IProps {
 	city: string
@@ -85,7 +86,7 @@ export async function getStaticPaths() {
 	}
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ locale, params }) {
 	const data = await getZipReviews(params)
 
 	if (data.reviews.length === 0) {
@@ -106,6 +107,13 @@ export async function getStaticProps({ params }) {
 				country: params.country_code,
 				data: data,
 				zip: params.zip,
+				...(await serverSideTranslations(locale, [
+						'filters',
+						'resources',
+						'layout',
+						'landlord',
+						'reviews'
+						])),
 			}),
 		),
 		// Re-generate the page

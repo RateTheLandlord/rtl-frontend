@@ -1,0 +1,28 @@
+{
+	"landlord": {
+		"share": "Partagez votre pensée",
+		"share-sub": "Si vous avez déjà loué auprès de ce·cette propriétaire",
+		"submit": "Soumettre un avis",
+		"tenant": "Guide des avis pour les locataires",
+		"tenant-list": [
+			"Identifiez des détails spécifiques : les avis authentiques contiennent souvent des détails précis sur l'expérience locative. Les éloges vagues, la promotion ou les critiques sans fondement peuvent être moins fiables.",
+			"Équilibre des avis : si un avis négatif est soudainement suivi par un avis très positif, prenez un moment pour vous interroger. Un·e propriétaire ou une entreprise peut faire l'objet de commentaires positifs et négatifs, mais des changements de ton drastiques peuvent indiquer un problème.",
+			"Fréquence des avis : un afflux soudain d'avis positifs après une série d'avis négatifs peut indiquer que quelque chose cloche. Les avis authentiques ont tendance à être publiés à un rythme régulier au fil du temps.",
+			"Cohérence : cherchez à identifier une certaine cohérence à travers les avis. Si plusieurs avis mentionnent les mêmes points positifs ou négatifs, ils sont probablement fiables."
+		],
+		"average": "{{average}} sur 5 étoiles",
+		"total": "Fondé sur {{total}} avis",
+		"read-total": "Lire {{total}} avis",
+		"rental-experience": "Lire {{total}} avis et expériences de location pour {{location}}",
+		"rented-city": "Si vous avez loué dans cette ville, partagez votre expérience avec d'autres locataires.",
+		"rented-landlord": "Si vous avez loué auprès de ce propriétaire, partagez votre expérience avec d'autres locataires.",
+		"rented-zip": "Si vous avez loué dans ce code postal, partagez votre expérience avec d'autres locataires.",
+		"change-location": "Changer de pays / état",
+		"health": "Santé et sécurité",
+		"respect": "Respect",
+		"privacy": "Confidentialité des locataires",
+		"repair": "Réparation",
+		"stability": "Stabilité résidentielle",
+		"overall": "Dans l'ensemble"
+	}
+}

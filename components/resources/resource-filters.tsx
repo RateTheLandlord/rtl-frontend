@@ -2,7 +2,7 @@ import React from 'react'
 import { Options, SortOptions } from '@/util/interfaces/interfaces'
 import SelectList from '@/components/reviews/ui/select-list'
 import SearchBar from '@/components/reviews/ui/searchbar'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import ButtonLight from '../ui/button-light'
 import ComboBox from '@/components/reviews/ui/combobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
@@ -49,7 +49,7 @@ function ResourceFilters({
 	loading,
 	updateParams,
 }: FiltersProps): JSX.Element {
-	const { t } = useTranslation('reviews')
+	const { t } = useTranslation('filters')
 
 	const dispatch = useAppDispatch()
 	const query = resource
@@ -61,7 +61,7 @@ function ResourceFilters({
 			{/* Filters */}
 			<section aria-labelledby='filter-heading'>
 				<h2 id='filter-heading' className='sr-only'>
-					{t('reviews.filters')}
+					{t('filters.title')}
 				</h2>
 
 				<div className='relative z-10 bg-white pb-4'>
@@ -83,7 +83,7 @@ function ResourceFilters({
 											state={selectedSort}
 											setState={setSelectedSort}
 											options={sortOptions}
-											name={t('reviews.sort')}
+											name={t('filters.sort')}
 										/>
 									</div>
 
@@ -94,7 +94,7 @@ function ResourceFilters({
 												dispatch(updateResourceCountry(opt))
 											}
 											options={countryOptions}
-											name={t('reviews.country')}
+											name={t('filters.country')}
 										/>
 									</div>
 									<div className='py-2'>
@@ -104,7 +104,7 @@ function ResourceFilters({
 												dispatch(updateResourceState(opt))
 											}
 											options={stateOptions}
-											name={t('reviews.state')}
+											name={t('filters.state')}
 										/>
 									</div>
 									<div className='py-2'>
@@ -114,7 +114,7 @@ function ResourceFilters({
 												dispatch(updateResourceCity(opt))
 											}
 											options={cityOptions}
-											name={t('reviews.city')}
+											name={t('filters.city')}
 										/>
 									</div>
 								</div>
@@ -131,7 +131,7 @@ function ResourceFilters({
 							{loading ? (
 								<Spinner height='h-4' width='w-4' colour='text-white' />
 							) : (
-								'Update Filters'
+								t('filters.apply')
 							)}
 						</button>
 						<ButtonLight
@@ -140,7 +140,7 @@ function ResourceFilters({
 								updateParams()
 							}}
 						>
-							Clear Filters
+							{t('filters.clear')}
 						</ButtonLight>
 					</div>
 				</div>
