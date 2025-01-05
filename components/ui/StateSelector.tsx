@@ -11,7 +11,7 @@ interface IProps {
 const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 	const { t } = useTranslation('createreview')
 	return (
-		<div className='sm:col-span-1'>
+		<div className='sm:col-span-1' data-testid='state-selector'>
 			<label htmlFor='country' className='block text-sm  text-gray-700'>
 				{country === 'GB'
 					? t('create-review.review-form.region')
