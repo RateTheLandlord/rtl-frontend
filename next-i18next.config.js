@@ -6,6 +6,7 @@
 module.exports = {
 	// https://www.i18next.com/overview/configuration-options#logging
 	debug: process.env.NODE_ENV === 'development',
+	defaultNS: 'home',
 	i18n: {
 		defaultLocale: 'en-CA',
 		locales: ['en-CA', 'fr-CA'],

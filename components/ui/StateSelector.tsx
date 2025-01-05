@@ -18,7 +18,7 @@ interface IProps {
 }
 
 const StateSelector = ({ country, value, setValue, noState }: IProps) => {
-	const { t } = useTranslation('create')
+	const { t } = useTranslation('createreview')
 	return (
 		<div data-testid='state-selector' className='sm:col-span-1'>
 			<Listbox value={value} onChange={setValue}>

@@ -10,7 +10,7 @@ interface IProps {
 }
 
 function SpamReviewModal({ isOpen, setIsOpen, detectionMethod }: IProps) {
-	const { t } = useTranslation('create')
+	const { t } = useTranslation('createreview')
 	return (
 		<Transition.Root show={isOpen} as={Fragment}>
 			<Dialog as='div' className='relative z-10' onClose={setIsOpen}>
@@ -44,13 +44,11 @@ function SpamReviewModal({ isOpen, setIsOpen, detectionMethod }: IProps) {
 											as='h3'
 											className='text-base  leading-6 text-gray-900'
 										>
-											{t(`create-review.spam-modal.${detectionMethod}.title`)}
+											{t(`create-review.${detectionMethod}.title`)}
 										</Dialog.Title>
 										<div className='mt-2'>
 											<p className='text-sm text-gray-500'>
-												{t(
-													`create-review.spam-modal.${detectionMethod}.description`,
-												)}
+												{t(`create-review.${detectionMethod}.description`)}
 											</p>
 										</div>
 									</div>

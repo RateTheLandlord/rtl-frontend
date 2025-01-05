@@ -3,6 +3,7 @@ import Spinner from '@/components/ui/Spinner'
 import { ILandlordReviews, getLandlordReviews } from '@/lib/review/review'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface IProps {
 	landlord: string
@@ -69,7 +70,7 @@ export async function getStaticPaths() {
 	}
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ locale, params }) {
 	const data = await getLandlordReviews(params.landlord)
 
 	if (!data || data.reviews.length === 0) {
@@ -84,7 +85,16 @@ export async function getStaticProps({ params }) {
 	// Pass post data to the page via props
 	return {
 		props: JSON.parse(
-			JSON.stringify({ landlord: params.landlord, data: data }),
+			JSON.stringify({
+				landlord: params.landlord,
+				data: data,
+				...(await serverSideTranslations(locale, [
+					'filters',
+					'layout',
+					'landlord',
+					'reviews',
+				])),
+			}),
 		),
 		// Re-generate the page
 		// if a request comes in after 100 seconds

@@ -27,7 +27,7 @@ import WrittenReviewForm from './components/WrittenReviewForm'
 import { toast } from 'react-toastify'
 
 function ReviewForm(): JSX.Element {
-	const { t } = useTranslation(['create', 'alerts'])
+	const { t } = useTranslation(['createreview', 'alerts'])
 
 	const [getStarted, setGetStarted] = useState(false)
 	const [landlordOpen, setLandlordOpen] = useState(false)

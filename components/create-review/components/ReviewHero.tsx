@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const ReviewHero = ({ getStarted, setGetStarted, setLandlordOpen }: IProps) => {
-	const { t } = useTranslation('create')
+	const { t } = useTranslation('createreview')
 	return (
 		<div
 			className={classNames(

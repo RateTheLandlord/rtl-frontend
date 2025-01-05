@@ -19,7 +19,7 @@ function InfiniteScroll({
 	isLoading,
 	setIsLoading,
 }: IProps) {
-	const { t } = useTranslation('resourcesPage')
+	const { t } = useTranslation('resources')
 	const [content, setContent] = useState<Resource[]>([]) // Store loaded content: ;
 	// Add a scroll event listener
 	useEffect(() => {
