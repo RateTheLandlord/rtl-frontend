@@ -134,6 +134,19 @@ export interface SuspiciousLandlordResponse {
 	limit: number
 }
 
+export interface Keywords {
+	id?: number
+	keyword: string
+	reason: string
+	date_added?: Date
+}
+
+export interface FlaggedKeywordsResponse {
+	keywords: Array<Keywords>
+	total: string
+	limit: number
+}
+
 export interface IQuery {
 	selectedSort: SortOptions
 	countryFilter: Options | null
