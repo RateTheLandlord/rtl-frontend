@@ -10,7 +10,6 @@ import ReportModal from '@/components/reviews/report-modal'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import InfiniteScroll from './InfiniteScroll'
-import AdsComponent from '@/components/adsense/Adsense'
 import Spinner from '../ui/Spinner'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import MobileReviewFilters from './mobile-review-filters'
@@ -22,6 +21,7 @@ import StateInfo from './components/StateInfo'
 import { debounce } from 'lodash'
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { useRouter } from 'next/router'
 
 export type ReviewsResponse = {
 	reviews: IReview[]
@@ -73,6 +73,9 @@ const Review = ({
 	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
 		query
 	const dispatch = useAppDispatch()
+
+	const router = useRouter()
+	const { affiliate } = router.query
 
 	// State
 	const [reviews, setReviews] = useState<IReview[]>([])
@@ -209,15 +212,16 @@ const Review = ({
 				</>
 			) : null}
 			{reviewsLoading ? (
-				<Spinner />
+				<div className='flex w-full items-center justify-center py-4'>
+					<Spinner />
+				</div>
 			) : (
 				<div className='w-full'>
-					<AdsComponent slot='2009320000' />
 					<div>
 						<div className='mx-auto max-w-7xl border-b-gray-200 px-4 py-16 sm:px-6 lg:border-b lg:px-8'>
 							<StateInfo
-								country={countryFilter?.value || ''}
-								state={stateFilter?.value || ''}
+								country={affiliate ? 'CA' : countryFilter?.value || ''}
+								state={affiliate ? 'NOVA SCOTIA' : stateFilter?.value || ''}
 								setLocationOpen={setLocationOpen}
 							/>
 							<div className='mt-3'>

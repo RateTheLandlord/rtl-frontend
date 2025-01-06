@@ -32,7 +32,11 @@ const AdsComponent = ({
 		)
 	} else {
 		// For development environment, don't render the ad unit
-		return null
+		return (
+			<div className='mx-auto h-[100px] w-full max-w-2xl bg-red-500 px-4 pt-4 sm:px-6 md:h-[90px] lg:max-w-7xl lg:px-8'>
+				AD
+			</div>
+		)
 	}
 }
 

@@ -1,13 +1,4 @@
 import { useTranslation } from 'next-i18next'
-import { Fragment } from 'react'
-import {
-	Listbox,
-	ListboxButton,
-	ListboxOption,
-	ListboxOptions,
-	Transition,
-} from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
 import { getStates } from '@/util/countries/combineStates'
 
 interface IProps {
@@ -20,47 +11,39 @@ interface IProps {
 const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 	const { t } = useTranslation('createreview')
 	return (
-		<div data-testid='state-selector' className='sm:col-span-1'>
-			<Listbox value={value} onChange={setValue}>
-				<div className='relative mt-1'>
-					<label htmlFor='city' className='block text-sm  text-gray-700'>
-						{country === 'GB'
-							? t('create-review.review-form.region')
-							: country === 'IE'
-							? t('create-review.review-form.county')
-							: t('create-review.review-form.state')}
-					</label>
-					<ListboxButton className='relative flex w-full cursor-default items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-left shadow-sm focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
-						{value}
-						<ChevronDownIcon className='h-4 w-4' />
-					</ListboxButton>
-				</div>
-				<Transition
-					as={Fragment}
-					leave='transition ease-in duration-100'
-					leaveFrom='opacity-100'
-					leaveTo='opacity-0'
+		<div className='sm:col-span-1' data-testid='state-selector'>
+			<label htmlFor='country' className='block text-sm  text-gray-700'>
+				{country === 'GB'
+					? t('create-review.review-form.region')
+					: country === 'IE'
+					? t('create-review.review-form.county')
+					: t('create-review.review-form.state')}
+			</label>
+			<div className='mt-1'>
+				<select
+					data-testid='country-selector'
+					id='country'
+					name='country'
+					required
+					value={value}
+					onChange={(e) => setValue(e.target.value)}
+					className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 				>
-					<ListboxOptions
-						anchor='bottom start'
-						className='mt-1 max-h-[250px] w-[250px] overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'
-					>
-						{getStates(country).map((province) => (
-							<option key={province.value} value={province.value}>
-								{province.name}
-							</option>
-						))}
-						{noState && (
-							<ListboxOption
-								className='cursor-pointer p-2 hover:bg-teal-300'
-								value='NO STATE / PROVINCE'
-							>
-								No State / Province
-							</ListboxOption>
-						)}
-					</ListboxOptions>
-				</Transition>
-			</Listbox>
+					{getStates(country).map((province) => (
+						<option key={province.value} value={province.value}>
+							{province.name}
+						</option>
+					))}
+					{noState && (
+						<option
+							className='cursor-pointer p-2 hover:bg-teal-300'
+							value='NO STATE / PROVINCE'
+						>
+							No State / Province
+						</option>
+					)}
+				</select>
+			</div>
 		</div>
 	)
 }
