@@ -29,24 +29,39 @@ export default function CatAverages({ averages, average, total }: IProps) {
 					</div>
 					<div className='flex flex-col items-center justify-center gap-2 bg-teal-600/5 p-8 sm:p-10'>
 						<p className='text-center'>{t('landlord.stability')}</p>
-						<RatingStars testid='cataverage-stability' value={averages.avg_stability} />
+						<RatingStars
+							testid='cataverage-stability'
+							value={averages.avg_stability}
+						/>
 					</div>
 
 					<div className='flex flex-col items-center justify-center gap-2 rounded-r-lg bg-teal-600/5 p-8 sm:p-10 md:rounded-r-none'>
 						<p className='text-center'>{t('landlord.respect')}</p>
-						<RatingStars testid='cataverage-respect' value={averages.avg_respect} />
+						<RatingStars
+							testid='cataverage-respect'
+							value={averages.avg_respect}
+						/>
 					</div>
 					<div className='flex flex-col items-center justify-center gap-2 rounded-l-lg bg-teal-600/5 p-8 sm:p-10 md:rounded-l-none'>
 						<p className='text-center'>{t('landlord.health')}</p>
-						<RatingStars testid='cataverage-health' value={averages.avg_health} />
+						<RatingStars
+							testid='cataverage-health'
+							value={averages.avg_health}
+						/>
 					</div>
 					<div className='flex flex-col items-center justify-center gap-2 bg-teal-600/5 p-8 sm:p-10'>
 						<p className='text-center'>{t('landlord.privacy')}</p>
-						<RatingStars testid='cataverage-privacy' value={averages.avg_privacy} />
+						<RatingStars
+							testid='cataverage-privacy'
+							value={averages.avg_privacy}
+						/>
 					</div>
 					<div className='flex flex-col items-center justify-center gap-2 rounded-r-lg bg-teal-600/5 p-8 sm:p-10'>
 						<p className='text-center'>{t('landlord.repair')}</p>
-						<RatingStars testid='cataverage-repair' value={averages.avg_repair} />
+						<RatingStars
+							testid='cataverage-repair'
+							value={averages.avg_repair}
+						/>
 					</div>
 				</div>
 				<p className='ml-2 text-right text-sm text-gray-900'>

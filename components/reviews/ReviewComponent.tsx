@@ -128,7 +128,10 @@ const ReviewComponent = ({
 								return (
 									<div key={rating.title}>
 										<p>{rating.title}</p>
-										<RatingStars testid='reviewcomponentrating2' value={rating.rating} />
+										<RatingStars
+											testid='reviewcomponentrating2'
+											value={rating.rating}
+										/>
 									</div>
 								)
 							})}

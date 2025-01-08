@@ -30,7 +30,7 @@ function RatingsRadio({ title, rating, setRating, tooltip, testid }: Props) {
 				<div className='grid grid-cols-5'>
 					{ratings.map((option, i) => (
 						<Radio
-							data-testid={testid+option}
+							data-testid={testid + option}
 							key={option}
 							value={option}
 							className={({ checked }) =>

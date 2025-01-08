@@ -35,7 +35,7 @@ const TextInput = ({
 						id={id}
 						value={value || ''}
 						placeholder={placeHolder}
-						data-testid={testid+'input' || ''}
+						data-testid={testid + 'input' || ''}
 						className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
 							error ? 'border-red-400' : ''
 						}`}
