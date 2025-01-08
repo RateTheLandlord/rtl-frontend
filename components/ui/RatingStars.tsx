@@ -3,11 +3,12 @@ import { StarIcon } from '@heroicons/react/solid'
 
 interface IProps {
 	value: number
+	testid: string
 }
 
-const RatingStars = ({ value }: IProps) => {
+const RatingStars = ({ value, testid }: IProps) => {
 	return (
-		<div className='flex items-center'>
+		<div className='flex items-center' data-testid={testid}>
 			{[0, 1, 2, 3, 4].map((rating) => (
 				<StarIcon
 					key={rating}

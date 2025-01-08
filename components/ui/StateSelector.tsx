@@ -21,9 +21,9 @@ const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 			</label>
 			<div className='mt-1'>
 				<select
-					data-testid='country-selector'
-					id='country'
-					name='country'
+					data-testid='StateSelector-component'
+					id='state'
+					name='state'
 					required
 					value={value}
 					onChange={(e) => setValue(e.target.value)}

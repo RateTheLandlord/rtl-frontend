@@ -84,7 +84,7 @@ const ReviewComponent = ({
 						</div>
 					</div>
 
-					<RatingStars value={avgRating} />
+					<RatingStars testid='reviewcomponentrating' value={avgRating} />
 
 					<div className='hidden flex-col text-center lg:flex'>
 						<Link
@@ -128,7 +128,7 @@ const ReviewComponent = ({
 								return (
 									<div key={rating.title}>
 										<p>{rating.title}</p>
-										<RatingStars value={rating.rating} />
+										<RatingStars testid='reviewcomponentrating2' value={rating.rating} />
 									</div>
 								)
 							})}

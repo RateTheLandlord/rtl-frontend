@@ -42,7 +42,7 @@ const OtherLandlordInfo = ({ landlord }: IProps) => {
 										Read {otherLandlord.reviewcount} review(s)
 									</p>
 								</div>
-								<RatingStars value={Math.floor(otherLandlord.avgrating)} />
+								<RatingStars testid='otherlandlordsrating' value={Math.floor(otherLandlord.avgrating)} />
 							</div>
 						</Link>
 					)

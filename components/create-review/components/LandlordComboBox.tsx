@@ -33,6 +33,7 @@ export default function LandlordComboBox({
 					{name}
 				</label>
 				<Combobox.Input
+					data-testid="LandlordComboBox-component"
 					className={comboInputClassName}
 					placeholder={`${name}`}
 					displayValue={(state: string) => state}

@@ -18,6 +18,7 @@ describe('RatingsRadio component', () => {
 				rating={rating}
 				setRating={setRatingMock}
 				tooltip={tooltip}
+				testid='RatingsRadioUnitTest'
 			/>,
 		)
 
