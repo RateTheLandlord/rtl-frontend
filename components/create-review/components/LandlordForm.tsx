@@ -48,7 +48,7 @@ const LandlordForm = ({
 			</div>
 		</div>
 	) : (
-		<>
+		<div data-testid='LandlordForm-component'>
 			<div>
 				<h2 className='text-base font-semibold leading-7 text-gray-900'>
 					{t('create-review.landlord-form.title')}
@@ -66,7 +66,7 @@ const LandlordForm = ({
 				error={landlordValidationError}
 				errorText={landlordValidationText}
 			/>
-			<div className='flex w-full justify-end'>
+			<div className='flex w-full justify-end pt-4'>
 				<Button
 					disabled={landlord === null || landlord.length === 0}
 					onClick={() => {
@@ -78,7 +78,7 @@ const LandlordForm = ({
 					{t('create-review.continue')}
 				</Button>
 			</div>
-		</>
+		</div>
 	)
 }
 

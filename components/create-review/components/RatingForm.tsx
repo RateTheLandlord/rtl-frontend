@@ -51,7 +51,7 @@ const RatingForm = ({
 						return (
 							<div key={rating.title} className='flex flex-col items-center'>
 								<p>{rating.title}</p>
-								<RatingStars value={rating.rating} />
+								<RatingStars testid={rating.title+'RatingStars-component'} value={rating.rating} />
 							</div>
 						)
 					})}
@@ -69,7 +69,7 @@ const RatingForm = ({
 		</div>
 	) : (
 		<>
-			<div className='mb-3'>
+			<div className='mb-3' data-testid="RatingForm-component">
 				<h2 className='text-base font-semibold leading-7 text-gray-900'>
 					{t('create-review.ratings-form.title')}
 				</h2>
@@ -83,6 +83,7 @@ const RatingForm = ({
 					rating={repair}
 					setRating={setRepair}
 					tooltip={t('create-review.review-form.repair_description')}
+					testid='RepairRatingsRadio-component'
 				/>
 
 				<RatingsRadio
@@ -90,6 +91,7 @@ const RatingForm = ({
 					rating={health}
 					setRating={setHealth}
 					tooltip={t('create-review.review-form.health_description')}
+					testid='HealthRatingsRadio-component'
 				/>
 
 				<RatingsRadio
@@ -97,6 +99,7 @@ const RatingForm = ({
 					rating={stability}
 					setRating={setStability}
 					tooltip={t('create-review.review-form.stability_description')}
+					testid='StabilityRatingsRadio-component'
 				/>
 
 				<RatingsRadio
@@ -104,6 +107,7 @@ const RatingForm = ({
 					rating={privacy}
 					setRating={setPrivacy}
 					tooltip={t('create-review.review-form.privacy_description')}
+					testid='PrivacyRatingsRadio-component'
 				/>
 
 				<RatingsRadio
@@ -111,6 +115,7 @@ const RatingForm = ({
 					rating={respect}
 					setRating={setRespect}
 					tooltip={t('create-review.review-form.respect_description')}
+					testid='RespectRatingsRadio-component'
 				/>
 			</div>
 			<div className='flex w-full justify-end pt-2'>

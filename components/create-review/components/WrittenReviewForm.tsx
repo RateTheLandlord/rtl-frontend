@@ -35,7 +35,7 @@ const WrittenReviewForm = ({
 			</div>
 		</div>
 	) : (
-		<>
+		<div data-testid="WrittenReviewForm-component">
 			<div>
 				<h2 className='text-base font-semibold leading-7 text-gray-900'>
 					{t('create-review.written-review.title')}
@@ -72,7 +72,7 @@ const WrittenReviewForm = ({
 					{t('create-review.written-review.preview-review')}
 				</Button>
 			</div>
-		</>
+		</div>
 	)
 }
 

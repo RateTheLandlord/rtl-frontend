@@ -96,7 +96,7 @@ const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
 												{t('landlord.read-total', { total: city.total })}
 											</p>
 										</div>
-										<RatingStars value={Math.floor(city.average)} />
+										<RatingStars testid='staterating' value={Math.floor(city.average)} />
 									</div>
 								</Link>
 							)

@@ -69,7 +69,7 @@ const LocationForm = ({
 			</div>
 		</div>
 	) : (
-		<>
+		<div data-testid="LocationForm-component">
 			<div>
 				<h2 className='text-base font-semibold leading-7 text-gray-900'>
 					{t('create-review.location-form.title')}
@@ -107,6 +107,7 @@ const LocationForm = ({
 				)}
 				<TextInput
 					id='rent'
+					data-testid="rent-textinput"
 					type='number'
 					title={t('create-review.review-form.rent')}
 					placeHolder={t('create-review.review-form.rent')}
@@ -131,7 +132,7 @@ const LocationForm = ({
 					{t('create-review.continue')}
 				</Button>
 			</div>
-		</>
+		</div>
 	)
 }
 

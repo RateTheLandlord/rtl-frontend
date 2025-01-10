@@ -487,6 +487,7 @@ function ReviewForm(): JSX.Element {
 								<div className='flex h-5 items-center'>
 									<input
 										id='terms-1'
+										data-testid='terms-1-input'
 										name='terms-1'
 										type='checkbox'
 										checked={disclaimerOne}
@@ -502,6 +503,7 @@ function ReviewForm(): JSX.Element {
 								<div className='flex h-5 items-center'>
 									<input
 										id='terms-2'
+										data-testid='terms-2-input'
 										name='terms-2'
 										type='checkbox'
 										checked={disclaimerTwo}
@@ -517,6 +519,7 @@ function ReviewForm(): JSX.Element {
 								<div className='flex h-5 items-center'>
 									<input
 										id='terms-3'
+										data-testid='terms-3-input'
 										name='terms-3'
 										type='checkbox'
 										checked={disclaimerThree}
