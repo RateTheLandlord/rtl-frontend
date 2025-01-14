@@ -20,7 +20,10 @@ import {
 	ResponsiveContainer,
 	Label,
 } from 'recharts'
-import { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent'
+import {
+	NameType,
+	ValueType,
+} from 'recharts/types/component/DefaultTooltipContent'
 
 export interface QueryParams {
 	sort: ISortOptions
@@ -60,32 +63,45 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 		'Trailing 360 Day Review Count as of Each Day',
 	)
 
-	const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameType>) => {
+	const CustomTooltip = ({
+		active,
+		payload,
+		label,
+	}: TooltipProps<ValueType, NameType>) => {
 		if (active && payload && payload.length) {
-			if(dataKey === 'trailing_combined_avg') {
+			if (dataKey === 'trailing_combined_avg') {
 				return (
-					<div className="custom-tooltip">
-					<p className="label">Avg. Landlord Rating as of {label}: </p>
+					<div className='custom-tooltip'>
+						<p className='label'>Avg. Landlord Rating as of {label}: </p>
 						<div className='flex justify-center'>
-							<p className="label"><RatingStars value={Math.floor(Number(payload[0].value))} /></p>
+							<p className='label'>
+								<RatingStars value={Math.floor(Number(payload[0].value))} />
+							</p>
 						</div>
 					</div>
-				);				
-			}else if(dataKey === 'trailing_median_rent'){
+				)
+			} else if (dataKey === 'trailing_median_rent') {
 				return (
-					<div className="custom-tooltip">
-					<p className="label">Trailing 360 Day Median Reported Monthly Rent as of {label}: </p>
-					<p className="label justify-center text-center text-xl">{payload[0].value?.toLocaleString()}</p>
+					<div className='custom-tooltip'>
+						<p className='label'>
+							Trailing 360 Day Median Reported Monthly Rent as of {label}:{' '}
+						</p>
+						<p className='label justify-center text-center text-xl'>
+							{payload[0].value?.toLocaleString()}
+						</p>
 					</div>
-				);
-			}
-			else{
+				)
+			} else {
 				return (
-					<div className="custom-tooltip">
-					<p className="label">Reviews Created in Trailing 360 Days as of {label}: </p>
-					<p className="label justify-center text-center text-xl">{payload[0].value?.toLocaleString()}</p>
+					<div className='custom-tooltip'>
+						<p className='label'>
+							Reviews Created in Trailing 360 Days as of {label}:{' '}
+						</p>
+						<p className='label justify-center text-center text-xl'>
+							{payload[0].value?.toLocaleString()}
+						</p>
 					</div>
-				);
+				)
 			}
 		}
 	}
