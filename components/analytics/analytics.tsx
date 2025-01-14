@@ -47,9 +47,9 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 		Error
 	>(['/api/review/review-analytics-chart', { queryParams }], fetchWithBody)
 
-	const [activeChartData, setActiveChartData] = useState<AnalyticsResponseInterface[]>(
-		chartData?.reviewsChartData || [],
-	)
+	const [activeChartData, setActiveChartData] = useState<
+		AnalyticsResponseInterface[]
+	>(chartData?.reviewsChartData || [])
 
 	const [dataKey, setDataKey] = useState<string>('trailing_review_count')
 	const [maxY, setMaxY] = useState<number>(500)
@@ -68,9 +68,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 				if (chartData?.medianChartData) {
 					setMaxY(
 						Math.max(
-							...chartData.medianChartData.map(
-								(chartData) => chartData.metric,
-							),
+							...chartData.medianChartData.map((chartData) => chartData.metric),
 						) + 500,
 					)
 				}
@@ -103,9 +101,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 		if (chartData?.reviewsChartData) {
 			setMaxY(
 				Math.max(
-					...chartData.reviewsChartData.map(
-						(chartData) => chartData.metric,
-					),
+					...chartData.reviewsChartData.map((chartData) => chartData.metric),
 				) + 100,
 			)
 		}
