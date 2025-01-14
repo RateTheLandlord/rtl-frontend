@@ -108,7 +108,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 			}
 		}
 
-		return null;
+		return null
 	}
 
 	const handleClick = async (metric: string) => {

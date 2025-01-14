@@ -49,7 +49,10 @@ const CitiesTable = ({ state, country }: IProps) => {
 									</div>
 									<div className='flex-1 break-words pl-0 md:pl-20'>
 										<p className='pl-2'>Avg. Rating</p>
-										<RatingStars testid='CitiesTableRatingStars' value={Math.floor(city.average)} />
+										<RatingStars
+											testid='CitiesTableRatingStars'
+											value={Math.floor(city.average)}
+										/>
 									</div>
 								</div>
 							</Link>
