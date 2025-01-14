@@ -75,7 +75,10 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 						<p className='label'>Avg. Landlord Rating as of {label}: </p>
 						<div className='flex justify-center'>
 							<p className='label'>
-								<RatingStars testid='AnalyticsTooltipRatingsStars' value={Math.floor(Number(payload[0].value))} />
+								<RatingStars
+									testid='AnalyticsTooltipRatingsStars'
+									value={Math.floor(Number(payload[0].value))}
+								/>
 							</p>
 						</div>
 					</div>
@@ -251,16 +254,25 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 						<div className='flex h-16 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
 							<div>Last 90 Days:</div>
 							<div>
-								<RatingStars testid='Analytics90DayRatingStar' value={Math.floor(data.avgRatingT90)} />
+								<RatingStars
+									testid='Analytics90DayRatingStar'
+									value={Math.floor(data.avgRatingT90)}
+								/>
 							</div>
 						</div>
 						<div className='flex flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
 							<div>Last 180 Days:</div>
-							<RatingStars testid='Analytics180DayRatingStar' value={Math.floor(data.avgRatingT180)} />
+							<RatingStars
+								testid='Analytics180DayRatingStar'
+								value={Math.floor(data.avgRatingT180)}
+							/>
 						</div>
 						<div className='flex flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
 							<div>Last 360 Days:</div>
-							<RatingStars testid='Analytics360DayRatingStar' value={Math.floor(data.avgRatingT360)} />
+							<RatingStars
+								testid='Analytics360DayRatingStar'
+								value={Math.floor(data.avgRatingT360)}
+							/>
 						</div>
 					</div>
 				</div>
