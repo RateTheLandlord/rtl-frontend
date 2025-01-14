@@ -10,6 +10,9 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			height: {
+				'128': '41rem', // Adds a custom height of 32rem (512px)
+			  },
 			fontFamily: {
 				'montserrat-regular': ['Montserrat-Regular', 'sans-serif'],
 				'montserrat-medium': ['Montserrat-Medium', 'sans-serif'],
