@@ -1,5 +1,6 @@
 import { AnalyticsChartResponse, AnalyticsResponse } from './models/review'
 import sql from '../db'
+import { AnalyticsResponseInterface } from '@/util/interfaces/interfaces'
 
 export type ReviewQuery = {
 	page?: number
@@ -183,7 +184,7 @@ export async function getChartData(
 	${zip.toUpperCase()}`
 		: sql``
 
-	const trailingReviewsChartData = await sql`
+	const trailingReviewsChartData = await sql<AnalyticsResponseInterface[]>`
 		WITH date_series AS (
 			-- Generate a series of dates for the last 360 days
 			SELECT generate_series(
@@ -206,7 +207,7 @@ export async function getChartData(
 		ORDER BY
 			ds.review_date;`
 
-		const trailingRatingChartData = await sql`
+		const trailingRatingChartData = await sql<AnalyticsResponseInterface[]>`
 			WITH date_series AS (
 				-- Generate a series of dates for the last 360 days
 				SELECT generate_series(
@@ -229,7 +230,7 @@ export async function getChartData(
 			ORDER BY
 				ds.review_date;`
 
-		const trailingRentChartData = await sql`
+		const trailingRentChartData = await sql<AnalyticsResponseInterface[]>`
 			WITH date_series AS (
 				-- Generate a series of dates for the last 360 days
 				SELECT generate_series(

@@ -153,3 +153,8 @@ export type ReviewsResponse = {
 	zips: string[]
 	limit: number
 }
+
+export type AnalyticsResponseInterface = {
+	review_date: string
+	metric: number
+}

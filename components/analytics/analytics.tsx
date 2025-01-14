@@ -9,6 +9,7 @@ import {
 } from '@/lib/analytics/models/review'
 import { ISortOptions } from '../reviews/review'
 import React, { useState, useEffect } from 'react'
+import { AnalyticsResponseInterface } from '@/util/interfaces/interfaces'
 import {
 	LineChart,
 	Line,
@@ -46,7 +47,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 		Error
 	>(['/api/review/review-analytics-chart', { queryParams }], fetchWithBody)
 
-	const [activeChartData, setActiveChartData] = useState<any[]>(
+	const [activeChartData, setActiveChartData] = useState<AnalyticsResponseInterface[]>(
 		chartData?.reviewsChartData || [],
 	)
 
@@ -68,7 +69,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 					setMaxY(
 						Math.max(
 							...chartData.medianChartData.map(
-								(chartData) => chartData.trailing_median_rent,
+								(chartData) => chartData.metric,
 							),
 						) + 500,
 					)
@@ -88,7 +89,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 					setMaxY(
 						Math.max(
 							...chartData.reviewsChartData.map(
-								(chartData) => chartData.trailing_review_count,
+								(chartData) => chartData.metric,
 							),
 						) + 100,
 					)
@@ -103,7 +104,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 			setMaxY(
 				Math.max(
 					...chartData.reviewsChartData.map(
-						(chartData) => chartData.trailing_review_count,
+						(chartData) => chartData.metric,
 					),
 				) + 100,
 			)
