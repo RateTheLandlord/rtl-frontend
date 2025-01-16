@@ -166,13 +166,13 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 	}
 
 	return (
-		<div className='grid w-full grid-cols-1 gap-2 bg-gray-50 md:grid-cols-2'>
-			<div className='flex-1 md:hidden'>
+		<div className='grid w-full grid-cols-1 gap-2 bg-gray-50 lg:grid-cols-2'>
+			<div className='flex-1 lg:hidden'>
 				<Sidebar data={data} handleClick={handleClick} />
 			</div>
 			<div className='flex-1'>
-				<div className='hidden h-4 md:block'></div>
-				<div className='h-128 rounded-lg border-4 border-teal-600 bg-white p-4'>
+				<div className='hidden h-4 lg:block'></div>
+				<div className='h-128 rounded-lg border-4 border-teal-600 bg-white lg:p-4'>
 					<ResponsiveContainer width={'100%'} height={'100%'}>
 						<LineChart
 							width={600}
@@ -216,14 +216,17 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 					</ResponsiveContainer>
 				</div>
 			</div>
-			<div className='hidden flex-1 md:block'>
+			<div className='hidden lg:flex-1 lg:block'>
 				<div className='h-4'></div>
 				<div
 					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
 					onClick={() => handleClick('review')}
 				>
-					<div className='bold flex items-center justify-center pb-12 pt-2 text-xl underline'>
-						Total Reviews
+					<div className='flex text-center justify-center pb-4 pt-2'>
+						<div>
+							<p className="bold  text-xl underline">Total Reviews</p>
+							<div className="text-center text-xs">(Select to Filter)</div>
+						</div> 
 					</div>
 					<div className='grid w-full grid-cols-3 gap-2'>
 						<div className='flex h-16 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
@@ -253,8 +256,11 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
 					onClick={() => handleClick('rating')}
 				>
-					<div className='bold flex items-center justify-center pb-12 pt-2 text-xl underline'>
-						Average Rating
+					<div className='flex text-center justify-center pb-4 pt-2'>
+						<div>
+							<p className="bold  text-xl underline">Average Rating</p>
+							<div className="text-center text-xs">(Select to Filter)</div>
+						</div> 
 					</div>
 					<div className='grid w-full grid-cols-3 gap-2'>
 						<div className='flex h-16 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
@@ -287,8 +293,11 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
 					onClick={() => handleClick('median')}
 				>
-					<div className='bold flex items-center justify-center pb-12 pt-2 text-xl underline'>
-						Median Reported Rent
+					<div className='flex text-center justify-center pb-4 pt-2'>
+						<div>
+							<p className="bold  text-xl underline">Median Reported Rent</p>
+							<div className="text-center text-xs">(Select to Filter)</div>
+						</div> 
 					</div>
 					<div className='grid w-full grid-cols-3 gap-2'>
 						<div className='flex h-16 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
