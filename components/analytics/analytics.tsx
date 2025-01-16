@@ -216,17 +216,17 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 					</ResponsiveContainer>
 				</div>
 			</div>
-			<div className='hidden lg:flex-1 lg:block'>
+			<div className='hidden lg:block lg:flex-1'>
 				<div className='h-4'></div>
 				<div
 					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
 					onClick={() => handleClick('review')}
 				>
-					<div className='flex text-center justify-center pb-4 pt-2'>
+					<div className='flex justify-center pb-4 pt-2 text-center'>
 						<div>
-							<p className="bold  text-xl underline">Total Reviews</p>
-							<div className="text-center text-xs">(Select to Filter)</div>
-						</div> 
+							<p className='bold  text-xl underline'>Total Reviews</p>
+							<div className='text-center text-xs'>(Select to Filter)</div>
+						</div>
 					</div>
 					<div className='grid w-full grid-cols-3 gap-2'>
 						<div className='flex h-16 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
@@ -256,11 +256,11 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
 					onClick={() => handleClick('rating')}
 				>
-					<div className='flex text-center justify-center pb-4 pt-2'>
+					<div className='flex justify-center pb-4 pt-2 text-center'>
 						<div>
-							<p className="bold  text-xl underline">Average Rating</p>
-							<div className="text-center text-xs">(Select to Filter)</div>
-						</div> 
+							<p className='bold  text-xl underline'>Average Rating</p>
+							<div className='text-center text-xs'>(Select to Filter)</div>
+						</div>
 					</div>
 					<div className='grid w-full grid-cols-3 gap-2'>
 						<div className='flex h-16 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
@@ -293,11 +293,11 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
 					onClick={() => handleClick('median')}
 				>
-					<div className='flex text-center justify-center pb-4 pt-2'>
+					<div className='flex justify-center pb-4 pt-2 text-center'>
 						<div>
-							<p className="bold  text-xl underline">Median Reported Rent</p>
-							<div className="text-center text-xs">(Select to Filter)</div>
-						</div> 
+							<p className='bold  text-xl underline'>Median Reported Rent</p>
+							<div className='text-center text-xs'>(Select to Filter)</div>
+						</div>
 					</div>
 					<div className='grid w-full grid-cols-3 gap-2'>
 						<div className='flex h-16 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
