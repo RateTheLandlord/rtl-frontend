@@ -58,11 +58,6 @@ jobs:
           env-slug: "dev"
           project-slug: ${{ secrets.INFISICAL_PROJECT_SLUG }}
 
-      # # Sync environment variables with Infisical
-      # - name: Sync environment variables from Infisical
-      #   run: |
-      #     infisical sync --project-id ${{ secrets.INFISICAL_PROJECT_SLUG }} --env dev
-
       - name: Build frontend
         run: |
           bun install
