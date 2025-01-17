@@ -37,3 +37,42 @@ jobs:
         run: |
           bun install
           bun run test:merge
+
+  build-fe:
+    runs-on: ubuntu-latest
+    needs: [lint-fe, test-fe]
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - uses: Infisical/secrets-action@v1.0.7
+        with:
+          client-id: ${{ secrets.MACHINE_IDENTITY_CLIENT_ID }}
+          client-secret: ${{ secrets.MACHINE_IDENTITY_CLIENT_SECRET }}
+          env-slug: "dev"
+          project-slug: ${{ secrets.INFISICAL_PROJECT_SLUG }}
+
+      # Sync environment variables with Infisical
+      - name: Sync environment variables from Infisical
+        run: |
+          infisical sync --project-id rtl-frontend-vc-ux --env dev
+
+      - name: Build frontend
+        run: |
+          bun install
+          bun run build
+          
+      # Optionally, add caching to speed up the workflow on subsequent runs
+      - name: Cache Bun dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.bun
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
