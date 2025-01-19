@@ -1,47 +1,35 @@
-FROM node:alpine
+# Use the official Bun image
+# See all versions at https://hub.docker.com/r/oven/bun/tags
+FROM oven/bun:1 AS base
 
-ARG NEXT_PUBLIC_ENVIRONMENT=${NEXT_PUBLIC_ENVIRONMENT}
-ENV NEXT_PUBLIC_ENVIRONMENT=${NEXT_PUBLIC_ENVIRONMENT}
+# Set working directory
+WORKDIR /usr/src/app
 
-ARG API_URL=${API_URL}
-ENV API_URL=${API_URL}
-
-ARG NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-
-ARG NEXT_PUBLIC_CAPTCHA_SITE_KEY=${NEXT_PUBLIC_CAPTCHA_SITE_KEY}
-ENV NEXT_PUBLIC_CAPTCHA_SITE_KEY=${NEXT_PUBLIC_CAPTCHA_SITE_KEY}
-
-ARG ORIGIN_URL=${ORIGIN_URL}
-ENV ORIGIN_URL=${ORIGIN_URL}}
-
-ARG PORT=${PORT}
-ENV PORT=${PORT}
-
-# where our Next.js app will live
+# Create app directory
 RUN mkdir -p /app
 
 # Set /app as the working directory
 WORKDIR /app
 
-ENV NEXT_TELEMETRY_DISABLED 1
+# Disable telemetry
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # Copy package.json and package-lock.json
-# to the /app working directory
-COPY package*.json  /app/
+COPY package*.json /app/
 
-# Install dependencies in /app
-RUN npm ci
+# Install dependencies
+RUN bun install
 
-# Copy the rest of our Next.js folder into /app
+# Copy the rest of the app files into /app
 COPY . /app
 
-ENV NODE_ENV=production
+# Set environment variables
 
-# Build app
-RUN npm run build
+# Build the Next.js app
+RUN bun run build
 
+# Expose the app port
 EXPOSE ${PORT}
 
-# Run npm dev, as we would via the command line
-CMD [ "npm", "run", "start" ]
+# Start the app
+CMD ["bun", "run", "start"]
