@@ -1,12 +1,14 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 
-const isProd = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production'
+const isProd = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' || false
 
 export default class MyDocument extends Document {
 	render(): JSX.Element {
 		return (
 			<Html>
-				<Head />
+				<Head>
+					{!isProd && <meta name='robots' content='noindex, nofollow' />}
+				</Head>
 				<body>
 					<Main />
 					<NextScript />
