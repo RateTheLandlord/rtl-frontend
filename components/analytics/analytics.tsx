@@ -61,7 +61,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 	const [maxY, setMaxY] = useState<number>(5)
 	const [yAxisLabel, setYAxisLabel] = useState<string>('Avg. Rating')
 	const [chartLabel, setChartLabel] = useState<string>(
-		'T365 Day Avg. Rating as of Each Day',
+		'Avg. Landlord Rating over Last Year',
 	)
 
 	const CustomTooltip = ({
@@ -72,8 +72,8 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 		if (active && payload && payload.length) {
 			if (dataKey === 'trailing_combined_avg') {
 				return (
-					<div className='custom-tooltip border-4 border-teal-600 rounded-lg bg-gray-100'>
-						<p className='label pt-2 pl-2 pr-2'>Avg. Landlord Rating as of </p>
+					<div className='custom-tooltip rounded-lg border-4 border-teal-600 bg-gray-100'>
+						<p className='label pl-2 pr-2 pt-2'>Avg. Landlord Rating as of </p>
 						<p className='label pl-2 pr-2 text-center'>{label}: </p>
 						<div className='flex justify-center'>
 							<p className='label pb-2'>
@@ -85,15 +85,11 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 						</div>
 					</div>
 				)
-			} else{
+			} else {
 				return (
-					<div className='custom-tooltip border-4 border-teal-600 rounded-lg bg-gray-100'>
-						<p className='label pt-2 pl-2 pr-2'>
-							Median Recorded Rent as of
-						</p>
-						<p className='label pl-2 text-center'>
-							{label}:{' '}
-						</p>
+					<div className='custom-tooltip rounded-lg border-4 border-teal-600 bg-gray-100'>
+						<p className='label pl-2 pr-2 pt-2'>Median Recorded Rent as of</p>
+						<p className='label pl-2 text-center'>{label}: </p>
 						<p className='label justify-center text-center text-xl'>
 							${Math.round(Number(payload[0].value) ?? 0).toLocaleString()}
 						</p>
@@ -111,7 +107,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 				setActiveChartData(chartData.medianChartData || [])
 				setDataKey('trailing_median_rent')
 				setYAxisLabel('Median Rent')
-				setChartLabel('T365 Day Median Rent as of Each Day')
+				setChartLabel('Median Recorded Rent over Last Year')
 				if (chartData?.medianChartData) {
 					setMaxY(
 						Math.max(
@@ -119,11 +115,11 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 						) + 500,
 					)
 				}
-			}else {
+			} else {
 				setActiveChartData(chartData.avgRatingChartData || [])
 				setDataKey('trailing_combined_avg')
 				setYAxisLabel('Avg. Rating')
-				setChartLabel('T365 Day Avg. Rating as of Each Day')
+				setChartLabel('Avg. Landlord Rating over Last Year')
 				setMaxY(5)
 			}
 		}
