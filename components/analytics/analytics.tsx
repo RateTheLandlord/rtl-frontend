@@ -55,13 +55,13 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 
 	const [activeChartData, setActiveChartData] = useState<
 		AnalyticsResponseInterface[]
-	>(chartData?.reviewsChartData || [])
+	>(chartData?.avgRatingChartData || [])
 
-	const [dataKey, setDataKey] = useState<string>('trailing_review_count')
-	const [maxY, setMaxY] = useState<number>(500)
-	const [yAxisLabel, setYAxisLabel] = useState<string>('Review Count')
+	const [dataKey, setDataKey] = useState<string>('trailing_combined_avg')
+	const [maxY, setMaxY] = useState<number>(5)
+	const [yAxisLabel, setYAxisLabel] = useState<string>('Avg. Rating')
 	const [chartLabel, setChartLabel] = useState<string>(
-		'T360 Day Review Count as of Each Day',
+		'Avg. Landlord Rating over Last Year',
 	)
 
 	const CustomTooltip = ({
@@ -72,10 +72,11 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 		if (active && payload && payload.length) {
 			if (dataKey === 'trailing_combined_avg') {
 				return (
-					<div className='custom-tooltip'>
-						<p className='label'>Avg. Landlord Rating as of {label}: </p>
+					<div className='custom-tooltip rounded-lg border-4 border-teal-600 bg-gray-100'>
+						<p className='label pl-2 pr-2 pt-2'>Avg. Landlord Rating as of </p>
+						<p className='label pl-2 pr-2 text-center'>{label}: </p>
 						<div className='flex justify-center'>
-							<p className='label'>
+							<p className='label pb-2'>
 								<RatingStars
 									testid='AnalyticsTooltipRatingsStars'
 									value={Math.floor(Number(payload[0].value))}
@@ -84,25 +85,13 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 						</div>
 					</div>
 				)
-			} else if (dataKey === 'trailing_median_rent') {
-				return (
-					<div className='custom-tooltip'>
-						<p className='label'>
-							Trailing 360 Day Median Reported Monthly Rent as of {label}:{' '}
-						</p>
-						<p className='label justify-center text-center text-xl'>
-							{payload[0].value?.toLocaleString()}
-						</p>
-					</div>
-				)
 			} else {
 				return (
-					<div className='custom-tooltip'>
-						<p className='label'>
-							Reviews Created in Trailing 360 Days as of {label}:{' '}
-						</p>
+					<div className='custom-tooltip rounded-lg border-4 border-teal-600 bg-gray-100'>
+						<p className='label pl-2 pr-2 pt-2'>Median Recorded Rent as of</p>
+						<p className='label pl-2 text-center'>{label}: </p>
 						<p className='label justify-center text-center text-xl'>
-							{payload[0].value?.toLocaleString()}
+							${Math.round(Number(payload[0].value) ?? 0).toLocaleString()}
 						</p>
 					</div>
 				)
@@ -118,7 +107,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 				setActiveChartData(chartData.medianChartData || [])
 				setDataKey('trailing_median_rent')
 				setYAxisLabel('Median Rent')
-				setChartLabel('T360 Day Median Rent as of Each Day')
+				setChartLabel('Median Recorded Rent over Last Year')
 				if (chartData?.medianChartData) {
 					setMaxY(
 						Math.max(
@@ -126,38 +115,20 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 						) + 500,
 					)
 				}
-			} else if (metric === 'rating') {
+			} else {
 				setActiveChartData(chartData.avgRatingChartData || [])
 				setDataKey('trailing_combined_avg')
 				setYAxisLabel('Avg. Rating')
-				setChartLabel('T360 Day Avg. Rating as of Each Day')
+				setChartLabel('Avg. Landlord Rating over Last Year')
 				setMaxY(5)
-			} else {
-				setActiveChartData(chartData.reviewsChartData || [])
-				setDataKey('trailing_review_count')
-				setYAxisLabel('Review Count')
-				setChartLabel('T360 Day Review Count as of Each Day')
-				if (chartData?.reviewsChartData) {
-					setMaxY(
-						Math.max(
-							...chartData.reviewsChartData.map(
-								(chartData) => chartData.metric,
-							),
-						) + 100,
-					)
-				}
 			}
 		}
 	}
 
 	useEffect(() => {
-		setActiveChartData(chartData?.reviewsChartData || [])
-		if (chartData?.reviewsChartData) {
-			setMaxY(
-				Math.max(
-					...chartData.reviewsChartData.map((chartData) => chartData.metric),
-				) + 100,
-			)
+		setActiveChartData(chartData?.avgRatingChartData || [])
+		if (chartData?.avgRatingChartData) {
+			setMaxY(5)
 		}
 	}, [chartData])
 
@@ -166,11 +137,11 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 	}
 
 	return (
-		<div className='grid w-full grid-cols-1 gap-2 bg-gray-50 lg:grid-cols-2'>
+		<div className='grid w-full grid-cols-1 gap-2 bg-gray-50 lg:grid-cols-[3fr_1fr]'>
 			<div className='flex-1 lg:hidden'>
 				<Sidebar data={data} handleClick={handleClick} />
 			</div>
-			<div className='flex-1'>
+			<div className='flex-1 lg:w-[100%]'>
 				<div className='hidden h-4 lg:block'></div>
 				<div className='h-128 rounded-lg border-4 border-teal-600 bg-white lg:p-4'>
 					<ResponsiveContainer width={'100%'} height={'100%'}>
@@ -187,7 +158,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 						>
 							<XAxis dataKey='review_date' height={50}>
 								<Label
-									value='Last 360 Days'
+									value='Last 365 Days'
 									position={'insideBottom'}
 									offset={0}
 								/>
@@ -217,43 +188,9 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 				</div>
 			</div>
 			<div className='hidden lg:block lg:flex-1'>
-				<div className='h-4'></div>
+				<div className='h-5'></div>
 				<div
-					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
-					onClick={() => handleClick('review')}
-				>
-					<div className='flex justify-center pb-4 pt-2 text-center'>
-						<div>
-							<p className='bold  text-xl underline'>Total Reviews</p>
-							<div className='text-center text-xs'>(Select to Filter)</div>
-						</div>
-					</div>
-					<div className='grid w-full grid-cols-3 gap-2'>
-						<div className='flex h-16 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
-							<div>Last 90 Days:</div>
-							<div>
-								{data.totalReviewsT90
-									.toString()
-									.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-							</div>
-						</div>
-						<div className='flex flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
-							<div>Last 180 Days:</div>
-							{data.totalReviewsT180
-								.toString()
-								.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-						</div>
-						<div className='flex flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
-							<div>Last 360 Days:</div>
-							{data.totalReviewsT360
-								.toString()
-								.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-						</div>
-					</div>
-				</div>
-				<div className='h-4'></div>
-				<div
-					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
+					className='h-[47%] rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
 					onClick={() => handleClick('rating')}
 				>
 					<div className='flex justify-center pb-4 pt-2 text-center'>
@@ -262,7 +199,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 							<div className='text-center text-xs'>(Select to Filter)</div>
 						</div>
 					</div>
-					<div className='grid w-full grid-cols-3 gap-2'>
+					<div className='grid w-full grid-rows-3 gap-2'>
 						<div className='flex h-16 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
 							<div>Last 90 Days:</div>
 							<div>
@@ -280,17 +217,17 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 							/>
 						</div>
 						<div className='flex flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
-							<div>Last 360 Days:</div>
+							<div>Last 365 Days:</div>
 							<RatingStars
-								testid='Analytics360DayRatingStar'
-								value={Math.floor(data.avgRatingT360)}
+								testid='Analytics365DayRatingStar'
+								value={Math.floor(data.avgRatingT365)}
 							/>
 						</div>
 					</div>
 				</div>
-				<div className='h-4'></div>
+				<div className='h-2'></div>
 				<div
-					className='h-52 rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
+					className='h-[47%] rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
 					onClick={() => handleClick('median')}
 				>
 					<div className='flex justify-center pb-4 pt-2 text-center'>
@@ -299,7 +236,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 							<div className='text-center text-xs'>(Select to Filter)</div>
 						</div>
 					</div>
-					<div className='grid w-full grid-cols-3 gap-2'>
+					<div className='grid w-full grid-rows-3 gap-2'>
 						<div className='flex h-16 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
 							<div>Last 90 Days:</div>
 							<div>
@@ -316,8 +253,8 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 								.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
 						</div>
 						<div className='flex flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
-							<div>Last 360 Days:</div>$
-							{data.medianRentT360
+							<div>Last 365 Days:</div>$
+							{data.medianRentT365
 								.toString()
 								.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
 						</div>
