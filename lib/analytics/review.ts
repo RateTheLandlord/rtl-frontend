@@ -52,7 +52,7 @@ export async function getTrailingReviews(
 	const today = new Date();
 	const ninetyDays = today.setDate(today.getDate() - 90);
 	const oneHundredEightyDays = today.setDate(today.getDate() - 180);
-	const threeHunderedSixtyDays = today.setDate(today.getDate() - 360);
+	const threeHunderedSixtyFiveDays = today.setDate(today.getDate() - 365);
 
 	const totalReviewsT90 = await sql`
         SELECT COUNT(*) as count
@@ -70,13 +70,13 @@ export async function getTrailingReviews(
 	`
 	const totalT180 = totalReviewsT180[0].count
 
-	const totalReviewsT360 = await sql`
+	const totalReviewsT365 = await sql`
 	SELECT COUNT(*) as count
 	FROM review
 	WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-	AND date_added >= ${threeHunderedSixtyDays}
+	AND date_added >= ${threeHunderedSixtyFiveDays}
 	`
-	const totalT360 = totalReviewsT360[0].count
+	const totalT365 = totalReviewsT365[0].count
 
 	const avgRatingT90 = await sql`
 	SELECT 
@@ -96,14 +96,14 @@ export async function getTrailingReviews(
 
 	const avgT180 = Math.round(avgRatingT180[0].combined_avg)
 
-	const avgRatingT360 = await sql`
+	const avgRatingT365 = await sql`
 	SELECT 
 		(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS combined_avg
 	FROM review
 	WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-	AND date_added >= ${threeHunderedSixtyDays}`
+	AND date_added >= ${threeHunderedSixtyFiveDays}`
 
-	const avgT360 = Math.round(avgRatingT360[0].combined_avg)
+	const avgT365 = Math.round(avgRatingT365[0].combined_avg)
 
 	const medianRentT90 = await sql`
 	SELECT 
@@ -125,27 +125,27 @@ export async function getTrailingReviews(
 
 	const medianT180 = Math.round(medianRentT180[0].median_rent)
 
-	const medianRentT360 = await sql`
+	const medianRentT365 = await sql`
 	SELECT 
 		percentile_cont(0.5) WITHIN GROUP (ORDER BY rent) AS median_rent
 	FROM review
 	WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-	AND date_added >= ${threeHunderedSixtyDays}
+	AND date_added >= ${threeHunderedSixtyFiveDays}
 	AND rent > 0`
 
-	const medianT360 = Math.round(medianRentT360[0].median_rent)
+	const medianT365 = Math.round(medianRentT365[0].median_rent)
 
 	// Return AnalyticsResponse object
 	return {
 		totalReviewsT90: totalT90,
 		totalReviewsT180: totalT180,
-		totalReviewsT360: totalT360,
+		totalReviewsT365: totalT365,
 		avgRatingT90: avgT90,
 		avgRatingT180: avgT180,
-		avgRatingT360: avgT360,
+		avgRatingT365: avgT365,
 		medianRentT90: medianT90,
 		medianRentT180: medianT180,
-		medianRentT360: medianT360
+		medianRentT365: medianT365
 	}
 }
 
@@ -186,9 +186,9 @@ export async function getChartData(
 
 	const trailingReviewsChartData = await sql<AnalyticsResponseInterface[]>`
 		WITH date_series AS (
-			-- Generate a series of dates for the last 360 days
+			-- Generate a series of dates for the last 365 days
 			SELECT generate_series(
-				CURRENT_DATE - INTERVAL '360 days',  -- Start date (360 days ago)
+				CURRENT_DATE - INTERVAL '365 days',  -- Start date (365 days ago)
 				CURRENT_DATE,                       -- End date (today)
 				'1 day'::INTERVAL                   -- Step size (1 day)
 			)::DATE AS review_date
@@ -199,7 +199,7 @@ export async function getChartData(
 		FROM
 			date_series ds
 		LEFT JOIN
-			review r ON r.date_added >= ds.review_date - INTERVAL '360 days'
+			review r ON r.date_added >= ds.review_date - INTERVAL '365 days'
 					AND r.date_added < ds.review_date + INTERVAL '1 day'
 					AND 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 		GROUP BY
@@ -209,9 +209,9 @@ export async function getChartData(
 
 		const trailingRatingChartData = await sql<AnalyticsResponseInterface[]>`
 			WITH date_series AS (
-				-- Generate a series of dates for the last 360 days
+				-- Generate a series of dates for the last 365 days
 				SELECT generate_series(
-					CURRENT_DATE - INTERVAL '360 days',  -- Start date (360 days ago)
+					CURRENT_DATE - INTERVAL '365 days',  -- Start date (365 days ago)
 					CURRENT_DATE,                       -- End date (today)
 					'1 day'::INTERVAL                   -- Step size (1 day)
 				)::DATE AS review_date
@@ -222,7 +222,7 @@ export async function getChartData(
 			FROM
 				date_series ds
 			LEFT JOIN
-				review r ON r.date_added >= ds.review_date - INTERVAL '360 days'
+				review r ON r.date_added >= ds.review_date - INTERVAL '365 days'
 						AND r.date_added < ds.review_date + INTERVAL '1 day'
 						AND 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 			GROUP BY
@@ -232,9 +232,9 @@ export async function getChartData(
 
 		const trailingRentChartData = await sql<AnalyticsResponseInterface[]>`
 			WITH date_series AS (
-				-- Generate a series of dates for the last 360 days
+				-- Generate a series of dates for the last 365 days
 				SELECT generate_series(
-					CURRENT_DATE - INTERVAL '360 days',  -- Start date (360 days ago)
+					CURRENT_DATE - INTERVAL '365 days',  -- Start date (365 days ago)
 					CURRENT_DATE,                       -- End date (today)
 					'1 day'::INTERVAL                   -- Step size (1 day)
 				)::DATE AS review_date
@@ -245,7 +245,7 @@ export async function getChartData(
 			FROM
 				date_series ds
 			LEFT JOIN
-				review r ON r.date_added >= ds.review_date - INTERVAL '360 days'
+				review r ON r.date_added >= ds.review_date - INTERVAL '365 days'
 						AND r.date_added < ds.review_date + INTERVAL '1 day'
 						AND 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 			GROUP BY
