@@ -35,7 +35,7 @@ jobs:
       # Build the Docker image
       - name: Build Docker image
         run: |
-          docker build -t registry.digitalocean.com/rtl-container/rtl-application:${{ github.sha }} .
+          docker build -t registry.digitalocean.com/rtl-container/rtl-application:${{ github.sha }} --build-arg PORT=3500 .
           docker tag registry.digitalocean.com/rtl-container/rtl-application:${{ github.sha }} registry.digitalocean.com/rtl-container/rtl-application:dev
 
       # Push the Docker image
