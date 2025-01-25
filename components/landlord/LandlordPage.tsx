@@ -12,6 +12,7 @@ import { ILandlordReviews } from '@/lib/review/review'
 import ReviewComponent from '../reviews/ReviewComponent'
 import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
+import AdsComponent from '../adsense/Adsense'
 
 const filteredSortOptions = sortOptions.slice(2)
 
@@ -98,8 +99,9 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 				setIsOpen={setReportOpen}
 				selectedReview={selectedReview}
 			/>
-			<div className='mt-10 flex w-full justify-center'>
+			<div className='mt-3 flex w-full justify-center'>
 				<div className='mx-auto flex max-w-2xl flex-col gap-3 px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
+					<AdsComponent slot='1526837416' />
 					{bannerOpen ? (
 						<LandlordBanner
 							landlord={suspiciousLandlord as SuspiciousLandlord}
