@@ -19,7 +19,7 @@ jobs:
         with:
           client-id: ${{ secrets.MACHINE_IDENTITY_CLIENT_ID }}
           client-secret: ${{ secrets.MACHINE_IDENTITY_CLIENT_SECRET }}
-          env-slug: 'dev'
+          env-slug: 'prod'
           project-slug: ${{ secrets.INFISICAL_PROJECT_SLUG }}
           export-type: 'file'
           file-output-path: '/.env'
