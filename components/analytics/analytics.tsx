@@ -117,9 +117,12 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 				if (chartData?.medianChartData) {
 					setMaxY(
 						Math.max(
-							...chartData.medianChartData.map((chartData) =>
-								parseFloat(chartData.metric.toFixed(2)),
-							),
+						  ...chartData.medianChartData.map((data) => {
+							if (data.metric !== null && data.metric !== undefined) {
+							  return parseFloat(data.metric.toFixed(2));
+							}
+							return -Infinity; // Return a value that will not affect the max calculation
+						  }),
 						) + 500,
 					)
 				}
