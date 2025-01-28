@@ -112,12 +112,17 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 			if (metric === 'median') {
 				setActiveChartData(chartData.medianChartData || [])
 				setDataKey('trailing_median_rent')
-				setYAxisLabel('Median Rent')
-				setChartLabel('Median Recorded Rent over Last Year')
+				setYAxisLabel(t('analytics.median-rent'))
+				setChartLabel(t('analytics.median-reported'))
 				if (chartData?.medianChartData) {
 					setMaxY(
 						Math.max(
-							...chartData.medianChartData.map((chartData) => chartData.metric),
+							...chartData.medianChartData.map((data) => {
+								if (data.metric !== null && data.metric !== undefined) {
+									return parseFloat(data.metric.toFixed(2))
+								}
+								return -Infinity // Return a value that will not affect the max calculation
+							}),
 						) + 500,
 					)
 				}
@@ -143,7 +148,11 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 	}
 
 	if (error || chartDataError) {
-		return <h4>Oops, we've encountered an error... Sorry!</h4>
+		return (
+			<div className='flex w-full justify-center'>
+				<h4>Oops, we've encountered an error... Sorry!</h4>
+			</div>
+		)
 	}
 
 	return (

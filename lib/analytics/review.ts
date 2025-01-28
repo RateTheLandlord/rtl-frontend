@@ -16,14 +16,7 @@ export type ReviewQuery = {
 export async function getTrailingReviews(
 	params: ReviewQuery,
 ): Promise<AnalyticsResponse> {
-	const {
-		search,
-		state,
-		country,
-		city,
-		zip,
-	} = params
-
+	const { search, state, country, city, zip } = params
 
 	const searchClause =
 		search && search.length > 0
@@ -49,34 +42,10 @@ export async function getTrailingReviews(
     ${zip.toUpperCase()}`
 		: sql``
 
-	const today = new Date();
-	const ninetyDays = today.setDate(today.getDate() - 90);
-	const oneHundredEightyDays = today.setDate(today.getDate() - 180);
-	const threeHunderedSixtyFiveDays = today.setDate(today.getDate() - 365);
-
-	const totalReviewsT90 = await sql`
-        SELECT COUNT(*) as count
-        FROM review
-        WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-		AND date_added >= ${ninetyDays}
-    `
-	const totalT90 = totalReviewsT90[0].count
-
-	const totalReviewsT180 = await sql`
-	SELECT COUNT(*) as count
-	FROM review
-	WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-	AND date_added >= ${oneHundredEightyDays}
-	`
-	const totalT180 = totalReviewsT180[0].count
-
-	const totalReviewsT365 = await sql`
-	SELECT COUNT(*) as count
-	FROM review
-	WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-	AND date_added >= ${threeHunderedSixtyFiveDays}
-	`
-	const totalT365 = totalReviewsT365[0].count
+	const today = new Date()
+	const ninetyDays = today.setDate(today.getDate() - 90)
+	const oneHundredEightyDays = today.setDate(today.getDate() - 180)
+	const threeHunderedSixtyFiveDays = today.setDate(today.getDate() - 365)
 
 	const avgRatingT90 = await sql`
 	SELECT 
@@ -137,35 +106,26 @@ export async function getTrailingReviews(
 
 	// Return AnalyticsResponse object
 	return {
-		totalReviewsT90: totalT90,
-		totalReviewsT180: totalT180,
-		totalReviewsT365: totalT365,
 		avgRatingT90: avgT90,
 		avgRatingT180: avgT180,
 		avgRatingT365: avgT365,
 		medianRentT90: medianT90,
 		medianRentT180: medianT180,
-		medianRentT365: medianT365
+		medianRentT365: medianT365,
 	}
 }
 
 export async function getChartData(
 	params: ReviewQuery,
 ): Promise<AnalyticsChartResponse> {
-	const {
-		search,
-		state,
-		country,
-		city,
-		zip,
-	} = params
+	const { search, state, country, city, zip } = params
 
 	const searchClause =
-	search && search.length > 0
-		? sql`AND (r.landlord ILIKE
+		search && search.length > 0
+			? sql`AND (r.landlord ILIKE
 		  ${'%' + search + '%'}
 		  )`
-		: sql``
+			: sql``
 
 	const stateClause = state
 		? sql`AND r.state =
@@ -184,30 +144,7 @@ export async function getChartData(
 	${zip.toUpperCase()}`
 		: sql``
 
-	const trailingReviewsChartData = await sql<AnalyticsResponseInterface[]>`
-		WITH date_series AS (
-			-- Generate a series of dates for the last 365 days
-			SELECT generate_series(
-				CURRENT_DATE - INTERVAL '365 days',  -- Start date (365 days ago)
-				CURRENT_DATE,                       -- End date (today)
-				'1 day'::INTERVAL                   -- Step size (1 day)
-			)::DATE AS review_date
-		)
-		SELECT
-			TO_CHAR(ds.review_date, 'Mon, DD YYYY') AS review_date,
-			COUNT(r.id) AS metric
-		FROM
-			date_series ds
-		LEFT JOIN
-			review r ON r.date_added >= ds.review_date - INTERVAL '365 days'
-					AND r.date_added < ds.review_date + INTERVAL '1 day'
-					AND 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-		GROUP BY
-			ds.review_date
-		ORDER BY
-			ds.review_date;`
-
-		const trailingRatingChartData = await sql<AnalyticsResponseInterface[]>`
+	const trailingRatingChartData = await sql<AnalyticsResponseInterface[]>`
 			WITH date_series AS (
 				-- Generate a series of dates for the last 365 days
 				SELECT generate_series(
@@ -230,7 +167,7 @@ export async function getChartData(
 			ORDER BY
 				ds.review_date;`
 
-		const trailingRentChartData = await sql<AnalyticsResponseInterface[]>`
+	const trailingRentChartData = await sql<AnalyticsResponseInterface[]>`
 			WITH date_series AS (
 				-- Generate a series of dates for the last 365 days
 				SELECT generate_series(
@@ -253,10 +190,8 @@ export async function getChartData(
 			ORDER BY
 				ds.review_date;`
 
-	
 	return {
-		reviewsChartData: trailingReviewsChartData,
 		avgRatingChartData: trailingRatingChartData,
-		medianChartData: trailingRentChartData
+		medianChartData: trailingRentChartData,
 	}
 }
