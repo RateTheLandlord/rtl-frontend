@@ -178,7 +178,12 @@ export async function getChartData(
 			)
 			SELECT
 				TO_CHAR(ds.review_date, 'Mon, DD YYYY') AS review_date,
-				percentile_cont(0.5) WITHIN GROUP (ORDER BY r.rent) AS metric
+				CASE
+					WHEN COUNT(r.rent) >= 3 THEN
+						percentile_cont(0.5) WITHIN GROUP (ORDER BY r.rent)
+					ELSE
+						NULL
+				END AS metric
 			FROM
 				date_series ds
 			LEFT JOIN
