@@ -10,12 +10,14 @@ import TenantResources from '@/components/admin/sections/TenantResources'
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import SuspiciousLandlords from '@/components/admin/sections/SuspiciousLandlords'
+import FlaggedKeywords from '@/components/admin/sections/FlaggedKeywords'
 
 const tabs = [
 	{ name: 'Flagged Reviews', component: <FlaggedReviews /> },
 	{ name: 'Tenant Resources', component: <TenantResources /> },
 	{ name: 'Suspicous Landlords', component: <SuspiciousLandlords /> },
 	{ name: 'Stats', component: <Stats /> },
+	{ name: 'Flagged Keywords', component: <FlaggedKeywords /> },
 ]
 
 function Admin(): JSX.Element {

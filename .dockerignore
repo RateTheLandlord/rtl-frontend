@@ -7,6 +7,10 @@ build/
 .dockerignore
 Dockerfile
 docker-compose.yml
+.github/
+.husky/
+node_modules/
+
 
 coverage
 LICENSE

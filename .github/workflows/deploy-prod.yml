@@ -1,0 +1,45 @@
+name: Build and Push Production Docker Image
+
+on:
+  push:
+    branches:
+      - production # Trigger on pushes to the production branch
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create .env file
+        uses: Infisical/secrets-action@v1.0.7
+        with:
+          client-id: ${{ secrets.MACHINE_IDENTITY_CLIENT_ID }}
+          client-secret: ${{ secrets.MACHINE_IDENTITY_CLIENT_SECRET }}
+          env-slug: 'prod'
+          project-slug: ${{ secrets.INFISICAL_PROJECT_SLUG }}
+          export-type: 'file'
+          file-output-path: '/.env'
+
+      # Log in to the DigitalOcean Container Registry
+      - name: Log in to DigitalOcean Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: registry.digitalocean.com
+          username: ${{ secrets.DO_USERNAME }}
+          password: ${{ secrets.DO_API_TOKEN }}
+
+      # Build the Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t registry.digitalocean.com/rtl-container/rtl-application:${{ github.sha }} .
+          docker tag registry.digitalocean.com/rtl-container/rtl-application:${{ github.sha }} registry.digitalocean.com/rtl-container/rtl-application:latest
+
+      # Push the Docker image
+      - name: Push Docker image
+        run: |
+          docker push registry.digitalocean.com/rtl-container/rtl-application:${{ github.sha }}
+          docker push registry.digitalocean.com/rtl-container/rtl-application:latest

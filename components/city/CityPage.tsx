@@ -16,6 +16,8 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { updateActiveFilters } from '@/redux/query/querySlice'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import CityInfo from './CityInfo'
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
+import AnalyticsComponent from '../analytics/analytics'
 
 interface IProps {
 	city: string
@@ -45,6 +47,7 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
 	const [isLoading, setIsLoading] = useState(false)
+	const [selectedIndex, setSelectedIndex] = useState(0)
 
 	// Query
 	const [queryParams, setQueryParams] = useState({
@@ -145,7 +148,7 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 					/>
 				</>
 			) : null}
-			<div className='w-full px-2 md:px-0'>
+			<div className='mt-3 w-full px-2 md:px-0'>
 				<AdsComponent slot='1526837416' />
 				<div className='mx-auto mt-5 flex max-w-2xl flex-col gap-3 lg:max-w-7xl'>
 					<CityInfo
@@ -163,46 +166,75 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 					</ButtonLight>
 				</div>
 				<div className='mx-auto max-w-2xl lg:max-w-7xl'>
-					<div className='flex lg:flex-row lg:gap-2 lg:divide-x lg:divide-gray-200'>
-						<CityMobileFilters
-							mobileFiltersOpen={mobileFiltersOpen}
-							setMobileFiltersOpen={setMobileFiltersOpen}
-							zipFilter={zipFilter}
-							zipOptions={zipOptions}
-							updateParams={updateParams}
-						/>
-						<CityFilters
-							selectedSort={selectedSort}
-							setSelectedSort={setSelectedSort}
-							sortOptions={sortOptions}
-							zipFilter={zipFilter}
-							zipOptions={zipOptions}
-							updateParams={updateParams}
-							loading={isLoading}
-						/>
-						{!reviews.length ? (
-							<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
-								<h1 className='mt-4 text-3xl   text-gray-900 sm:text-5xl'>
-									No results found
-								</h1>
-								<p className='mt-6 text-base leading-7 text-gray-600'>
-									Sorry, we couldn't find any results for those filters.
-								</p>
-							</div>
-						) : (
-							<InfiniteScroll
-								data={reviews}
-								setReportOpen={setReportOpen}
-								setSelectedReview={setSelectedReview}
-								setRemoveReviewOpen={setRemoveReviewOpen}
-								setEditReviewOpen={setEditReviewOpen}
-								setPage={setPage}
-								hasMore={hasMore}
-								isLoading={isLoading}
-								setIsLoading={setIsLoading}
-							/>
-						)}
-					</div>
+					<TabGroup
+						selectedIndex={selectedIndex}
+						onChange={setSelectedIndex}
+						as='div'
+						className='w-full'
+					>
+						<TabList className='flex w-full justify-center gap-4 border-b p-3'>
+							<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+								{t('reviews.reviews')}
+							</Tab>
+							<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+								<div className='flex flex-row gap-1'>
+									<p>{t('reviews.analytics')}</p>
+									<div className='flex h-full flex-col justify-start'>
+										<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-teal-500/10'>
+											{t('reviews.beta')}
+										</span>
+									</div>
+								</div>
+							</Tab>
+						</TabList>
+						<TabPanels>
+							<TabPanel>
+								<div className='flex lg:flex-row lg:gap-2 lg:divide-x lg:divide-gray-200'>
+									<CityMobileFilters
+										mobileFiltersOpen={mobileFiltersOpen}
+										setMobileFiltersOpen={setMobileFiltersOpen}
+										zipFilter={zipFilter}
+										zipOptions={zipOptions}
+										updateParams={updateParams}
+									/>
+									<CityFilters
+										selectedSort={selectedSort}
+										setSelectedSort={setSelectedSort}
+										sortOptions={sortOptions}
+										zipFilter={zipFilter}
+										zipOptions={zipOptions}
+										updateParams={updateParams}
+										loading={isLoading}
+									/>
+									{!reviews.length ? (
+										<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
+											<h1 className='mt-4 text-3xl   text-gray-900 sm:text-5xl'>
+												No results found
+											</h1>
+											<p className='mt-6 text-base leading-7 text-gray-600'>
+												Sorry, we couldn't find any results for those filters.
+											</p>
+										</div>
+									) : (
+										<InfiniteScroll
+											data={reviews}
+											setReportOpen={setReportOpen}
+											setSelectedReview={setSelectedReview}
+											setRemoveReviewOpen={setRemoveReviewOpen}
+											setEditReviewOpen={setEditReviewOpen}
+											setPage={setPage}
+											hasMore={hasMore}
+											isLoading={isLoading}
+											setIsLoading={setIsLoading}
+										/>
+									)}
+								</div>
+							</TabPanel>
+							<TabPanel>
+								<AnalyticsComponent queryParams={queryParams} />
+							</TabPanel>
+						</TabPanels>
+					</TabGroup>
 				</div>
 			</div>
 		</>

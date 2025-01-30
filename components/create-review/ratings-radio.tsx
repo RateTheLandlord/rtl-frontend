@@ -10,13 +10,14 @@ interface Props {
 	rating: number
 	setRating: (num: number) => void
 	tooltip: string
+	testid: string
 }
 
-function RatingsRadio({ title, rating, setRating, tooltip }: Props) {
+function RatingsRadio({ title, rating, setRating, tooltip, testid }: Props) {
 	const { t } = useTranslation('createreview')
 
 	return (
-		<div data-testid='ratings-radio-1'>
+		<div data-testid={testid}>
 			<h2 className=' text-gray-900'>
 				{title} {t('create-review.review-radio.rating')}
 			</h2>
@@ -29,6 +30,7 @@ function RatingsRadio({ title, rating, setRating, tooltip }: Props) {
 				<div className='grid grid-cols-5'>
 					{ratings.map((option, i) => (
 						<Radio
+							data-testid={testid + option}
 							key={option}
 							value={option}
 							className={({ checked }) =>

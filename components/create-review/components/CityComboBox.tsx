@@ -36,6 +36,7 @@ export default function CityComboBox({
 						{name}
 					</label>
 					<Combobox.Input
+						data-testid="CityComboBox-component"
 						className={comboboxClassName}
 						placeholder={`${name}`}
 						displayValue={(state: string) => state}

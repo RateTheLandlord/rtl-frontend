@@ -38,6 +38,7 @@
 		"clear": "Réinitialiser les filtres",
 		"reviews": "Avis",
 		"map": "Carte",
+		"analytics": "Analytique",
 		"beta": "Bêta",
 		"read-all": "Lire tous les avis"
 	},
@@ -49,5 +50,19 @@
 		"other": "Autre",
 		"select-reason": "Sélectionnez une raison",
 		"limit": "Limite de 250 caractères : {{total}}/250"
+	},
+	"analytics": {
+		"avg-rating": "Note moyenne",
+		"avg-landlord": "Note moyenne des propriétaires au cours de l'année dernière",
+		"avg-landlord-as-of": "Note moyenne des propriétaires au",
+		"median-rent-as-of": "Loyer médian enregistré au",
+		"median-rent": "Loyer médian",
+		"median-rent-year": "Loyer médian enregistré au cours de l'année dernière",
+		"last-365": "Les 365 derniers jours :",
+		"average-rating": "Note moyenne",
+		"select-filter": "Sélectionner pour filtrer",
+		"last-90": "Les 90 derniers jours :",
+		"last-180": "Les 180 derniers jours :",
+		"median-reported": "Loyer médian du rapport"
 	}
 }

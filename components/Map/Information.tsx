@@ -63,7 +63,7 @@ const Information = ({ selectedPoint, country, state }: IProps) => {
 						Average
 					</dt>
 					<dd className='mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0'>
-						<RatingStars value={stats.average} />
+						<RatingStars testid='mapratings' value={stats.average} />
 					</dd>
 				</div>
 				<div className='flex w-full justify-center py-6'>

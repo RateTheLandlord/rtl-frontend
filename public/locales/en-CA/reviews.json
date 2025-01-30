@@ -38,6 +38,7 @@
 		"clear": "Clear Filters",
 		"reviews": "Reviews",
 		"map": "Map",
+		"analytics": "Analytics",
 		"beta": "Beta",
 		"read-all": "Read all reviews"
 	},
@@ -49,5 +50,19 @@
 		"other": "Other",
 		"select-reason": "Select a reason",
 		"limit": "Limit of 250 Characters: {{total}}/250"
+	},
+	"analytics": {
+		"avg-rating": "Avg. Rating",
+		"avg-landlord": "Avg. Landlord Rating over Last Year",
+		"avg-landlord-as-of": "Avg. Landlord Rating as of ",
+		"median-rent-as-of": "Median Recorded Rent as of ",
+		"median-rent": "Median Rent",
+		"median-rent-year": "Median Recorded Rent over Last Year",
+		"last-365": "Last 365 Days:",
+		"average-rating": "Average Rating",
+		"select-filter": "Select to Filter",
+		"last-90": "Last 90 Days:",
+		"last-180": "Last 180 Days:",
+		"median-reported": "Median Report Rent"
 	}
 }
