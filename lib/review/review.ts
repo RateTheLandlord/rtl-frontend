@@ -279,13 +279,24 @@ export async function report(id: number, reason: string): Promise<number> {
 	return id
 }
 
-export async function deleteReview(id: number): Promise<boolean> {
-	await sql`DELETE
-                                   FROM review
-                                   WHERE ID = ${id};`
-
-	return true
-}
+export async function deleteReview(id: number, reason: string, deleter: string): Promise<boolean> {
+	const deleteDate = new Date();
+	deleteDate.setDate(deleteDate.getDate() + 30); // Set delete_date to 30 days from today
+  
+	// Convert deleteDate to textual date format (e.g., "2025-02-28")
+	const formattedDate = deleteDate.toISOString().split('T')[0];
+  
+	await sql`
+	  UPDATE review
+	  SET
+		delete_date = ${formattedDate},
+		delete_reason = ${reason},
+		deleter = ${deleter}
+	  WHERE ID = ${id};
+	`;
+  
+	return true;
+  }
 
 export async function getFlagged(): Promise<Review[]> {
 	const reviews = await sql<
