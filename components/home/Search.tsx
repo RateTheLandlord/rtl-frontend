@@ -19,8 +19,10 @@ const Search = () => {
 		useLandlordSuggestions(search)
 
 	const submitCombo = (e) => {
-		dispatch(updateSearch(e))
-		router.push(`/landlord/${encodeURIComponent(e)}`)
+		if (e) {
+			dispatch(updateSearch(e))
+			router.push(`/landlord/${encodeURIComponent(e)}`)
+		}
 	}
 	return (
 		<div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
