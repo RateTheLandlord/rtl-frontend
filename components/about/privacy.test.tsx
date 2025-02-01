@@ -4,6 +4,8 @@
 
 import { render, screen } from '@testing-library/react'
 import Privacy from './privacy'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('Privacy', () => {
 	it('renders privacy information correctly', () => {
@@ -17,5 +19,11 @@ describe('Privacy', () => {
 
 		expect(heading).toHaveTextContent('Privacy') // Update with the expected translation
 		expect(paragraph).toHaveTextContent('At Rate the Landlord') // Update with the expected translation
+	})
+
+	it('Should not have a11y violation', async () => {
+		const { container } = render(<Privacy />)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

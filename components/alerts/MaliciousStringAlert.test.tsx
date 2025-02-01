@@ -3,6 +3,8 @@
  */
 import { render, fireEvent, screen } from '@testing-library/react'
 import MaliciousStringAlert from './MaliciousStringAlert'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('MaliciousStringAlert Component', () => {
 	test('renders correctly', () => {
@@ -53,5 +55,16 @@ describe('MaliciousStringAlert Component', () => {
 		fireEvent.click(screen.getByRole('button'))
 		expect(mockSetMaliciousAlertOpen).toHaveBeenCalled()
 		expect(mockSetMaliciousAlertOpen).toHaveBeenCalledWith(expect.any(Function))
+	})
+
+	it('Should not have a11y violation', async () => {
+		const mockSetMaliciousAlertOpen = jest.fn()
+		const { container } = render(
+			<MaliciousStringAlert
+				setMaliciousAlertOpen={mockSetMaliciousAlertOpen}
+			/>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })
