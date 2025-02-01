@@ -29,6 +29,7 @@ const TextInput = ({
 			<div className='pt-0.5'>
 				<div className='sm:col-span-2 sm:mt-0'>
 					<input
+						aria-label={`${id} Text Input`}
 						onChange={(e) => setValue(e.target.value)}
 						type={type}
 						name={id}

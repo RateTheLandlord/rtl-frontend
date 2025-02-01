@@ -1,9 +1,14 @@
 import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
-import { Disclosure } from '@headlessui/react'
+import {
+	Disclosure,
+	DisclosureButton,
+	DisclosurePanel,
+} from '@headlessui/react'
 import { useTranslation } from 'next-i18next'
 import CatAverages from './CatAverages'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
+import { Fragment } from 'react'
 
 interface IProps {
 	city: string
@@ -73,22 +78,20 @@ const CityInfo = ({
 			<div className='mt-4 divide-gray-900/10 border-t'>
 				<Disclosure as='div' className='py-3'>
 					{({ open }) => (
-						<>
-							<dt>
-								<Disclosure.Button className='flex w-full items-start justify-between text-left text-gray-900'>
-									<span className='text-base  leading-7'>
-										{t('landlord.tenant')}
-									</span>
-									<span className='ml-6 flex h-7 items-center'>
-										{open ? (
-											<MinusSmIcon className='h-6 w-6' aria-hidden='true' />
-										) : (
-											<PlusSmIcon className='h-6 w-6' aria-hidden='true' />
-										)}
-									</span>
-								</Disclosure.Button>
-							</dt>
-							<Disclosure.Panel as='dd' className='mt-2 pl-4 pr-12'>
+						<Fragment>
+							<DisclosureButton className='flex w-full items-start justify-between text-left text-gray-900'>
+								<span className='text-base  leading-7'>
+									{t('landlord.tenant')}
+								</span>
+								<span className='ml-6 flex h-7 items-center'>
+									{open ? (
+										<MinusSmIcon className='h-6 w-6' aria-hidden='true' />
+									) : (
+										<PlusSmIcon className='h-6 w-6' aria-hidden='true' />
+									)}
+								</span>
+							</DisclosureButton>
+							<DisclosurePanel as='dd' className='mt-2 pl-4 pr-12'>
 								<ol className='list-decimal'>
 									{tenantList.map((item, i) => {
 										return (
@@ -101,8 +104,8 @@ const CityInfo = ({
 										)
 									})}
 								</ol>
-							</Disclosure.Panel>
-						</>
+							</DisclosurePanel>
+						</Fragment>
 					)}
 				</Disclosure>
 			</div>

@@ -3,6 +3,8 @@
  */
 import { render, screen, fireEvent } from '@testing-library/react'
 import RatingForm from './RatingForm'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 jest.mock('react-i18next', () => ({
 	useTranslation: () => ({ t: (key: string) => key }),
@@ -88,5 +90,13 @@ describe('RatingForm Component', () => {
 		expect(mockSetShowReviewForm).toHaveBeenCalledWith(true)
 		expect(mockSetRatingsOpen).toHaveBeenCalledWith(false)
 		expect(mockSetReviewOpen).toHaveBeenCalledWith(true)
+	})
+
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<RatingForm {...defaultProps} ratingsOpen={true} />,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

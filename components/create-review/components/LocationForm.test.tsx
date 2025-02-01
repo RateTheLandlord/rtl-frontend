@@ -3,6 +3,8 @@
  */
 import { render, screen, fireEvent } from '@testing-library/react'
 import LocationForm from './LocationForm'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 jest.mock('react-i18next', () => ({
 	useTranslation: () => ({ t: (key: string) => key }),
@@ -15,7 +17,7 @@ jest.mock('@/components/ui/StateSelector', () =>
 	jest.fn(() => <div>StateSelector</div>),
 )
 jest.mock('@/components/ui/TextInput', () =>
-	jest.fn(() => <input data-testid='TextInput' />),
+	jest.fn(() => <input aria-label='TEST INPUT' data-testid='TextInput' />),
 )
 jest.mock('@/components/ui/CountrySelector', () =>
 	jest.fn(() => <div>CountrySelector</div>),
@@ -123,5 +125,19 @@ describe('LocationForm Component', () => {
 
 		const continueButton = screen.getByText('create-review.continue')
 		expect(continueButton).not.toBeDisabled()
+	})
+
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<LocationForm
+				{...defaultProps}
+				locationOpen={true}
+				isIreland={true}
+				postal=''
+				city='Dublin'
+			/>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })
