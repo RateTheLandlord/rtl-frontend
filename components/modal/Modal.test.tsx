@@ -4,13 +4,14 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import Modal from './Modal'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('Modal', () => {
+	const mockSetOpen = jest.fn()
+	const mockOnSubmit = jest.fn()
+	const mockElement = <div>Mock Element</div>
 	it('renders the component with the correct content', () => {
-		const mockSetOpen = jest.fn()
-		const mockOnSubmit = jest.fn()
-		const mockElement = <div>Mock Element</div>
-
 		render(
 			<Modal
 				open={true}
@@ -47,5 +48,22 @@ describe('Modal', () => {
 		fireEvent.click(cancelButton)
 		expect(mockSetOpen).toHaveBeenCalledTimes(1)
 		expect(mockSetOpen).toHaveBeenCalledWith(false)
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<Modal
+				open={true}
+				setOpen={mockSetOpen}
+				title='Modal Title'
+				description='Modal Description'
+				element={mockElement}
+				onSubmit={mockOnSubmit}
+				buttonColour='blue'
+				selectedId={1}
+				loading={false}
+			/>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

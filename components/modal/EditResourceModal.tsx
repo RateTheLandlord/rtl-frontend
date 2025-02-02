@@ -1,4 +1,4 @@
-import { ILocationHookResponse, Resource } from '@/util/interfaces/interfaces'
+import { Resource } from '@/util/interfaces/interfaces'
 import {
 	Dialog,
 	DialogPanel,
@@ -7,8 +7,6 @@ import {
 } from '@headlessui/react'
 import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import TextInput from '../ui/TextInput'
-import CityComboBox from '../create-review/components/CityComboBox'
-import { useLocation } from '@/util/hooks/useLocation'
 import StateSelector from '../ui/StateSelector'
 import CountrySelector from '../ui/CountrySelector'
 import LargeTextInput from '../ui/LargeTextInput'
@@ -45,11 +43,6 @@ const EditResourceModal = ({
 	)
 	const [href, setHref] = useState(selectedResource?.href || '')
 
-	const {
-		searching,
-		locations,
-	}: { searching: boolean; locations: Array<ILocationHookResponse> } =
-		useLocation(city, country)
 	const [loading, setLoading] = useState(false)
 
 	const onSubmitEditResource = () => {
@@ -151,15 +144,25 @@ const EditResourceModal = ({
 									/>
 
 									<div className='sm:col-span-2'>
-										<CityComboBox
-											name='City'
-											state={city}
-											setState={setCity}
-											options={locations}
-											searching={searching}
-											error={false}
-											errorText={'text'}
-										/>
+										<label
+											htmlFor='city'
+											className='block text-sm  text-gray-700'
+										>
+											City
+										</label>
+										<div className='mt-1'>
+											<input
+												type='text'
+												name='city'
+												id='city'
+												placeholder='city'
+												value={city ? city : selectedResource?.city}
+												required
+												onChange={(e) => setCity(e.target.value)}
+												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+												data-testid='create-review-form-city-1'
+											/>
+										</div>
 									</div>
 
 									<StateSelector

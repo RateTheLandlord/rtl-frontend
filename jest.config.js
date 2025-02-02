@@ -21,4 +21,7 @@ module.exports = {
 		'^@/(.*)$': ['<rootDir>/$1'],
 	},
 	transformIgnorePatterns: [`/node_modules/(?!next-recaptcha-v3)`],
+	globals: {
+		fetch: global.fetch,
+	},
 }
