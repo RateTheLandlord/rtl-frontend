@@ -14,7 +14,7 @@
 		"lint": "next lint --fix",
 		"tsc": "tsc",
 		"test": "jest  --runInBand --no-cache --watch",
-		"test:merge": "jest",
+		"test:merge": "jest --onlyChanged",
 		"prepare": "husky",
 		"migrate:up": "ley -r tsm up",
 		"migrate:down": "ley -r tsm down",
