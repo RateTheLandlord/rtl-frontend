@@ -5,6 +5,8 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import ReviewForm from './review-form'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 // Mocking useRouter hook
 jest.mock('next/router', () => ({
@@ -591,5 +593,10 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 
 		const successModalComponent = screen.getByTestId('SuccessModalComponent')
 		expect(successModalComponent).toBeInTheDocument()
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(<ReviewForm />)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

@@ -7,8 +7,6 @@ import SuccessModal from './success-modal'
 import { postcodeValidator } from 'postcode-validator'
 import { useTranslation } from 'next-i18next'
 import SpamReviewModal from '@/components/create-review/SpamReviewModal'
-import SheldonModal from '@/components/create-review/SheldonModal'
-import { sheldonReview } from '@/components/create-review/helper'
 import { useLocation } from '@/util/hooks/useLocation'
 import {
 	ILocationHookResponse,
@@ -50,7 +48,6 @@ function ReviewForm(): JSX.Element {
 	const [spamDetectionMethod, setSpamDetectionMethod] = useState(
 		'localStorageDetection',
 	)
-	const [sheldonReviewOpen, setSheldonReviewOpen] = useState(false)
 
 	const [landlord, setLandlord] = useState<string>('')
 	const [country, setCountry] = useState<string>('AU')
@@ -106,13 +103,6 @@ function ReviewForm(): JSX.Element {
 	const checkLandlord = (str: string) => {
 		if (localReviewedLandlords) {
 			return localReviewedLandlords.indexOf(str) > -1
-		}
-		return false
-	}
-
-	const checkSheldon = () => {
-		if (/sheldon rakowsky/i.test(landlord)) {
-			return review === sheldonReview
 		}
 		return false
 	}
@@ -203,10 +193,6 @@ function ReviewForm(): JSX.Element {
 		if (city.trim().length < 1) {
 			setCityValidationError(true)
 			setCityValidationErrorText(t('alerts.city-validation', { ns: 'alerts' }))
-			return
-		}
-		if (checkSheldon()) {
-			setSheldonReviewOpen(true)
 			return
 		}
 		if (review.trim().length < 1) {
@@ -343,10 +329,6 @@ function ReviewForm(): JSX.Element {
 				isOpen={spamReviewModalOpen}
 				setIsOpen={setSpamReviewModalOpen}
 				detectionMethod={spamDetectionMethod}
-			/>
-			<SheldonModal
-				isOpen={sheldonReviewOpen}
-				setIsOpen={setSheldonReviewOpen}
 			/>
 
 			<ReviewHero
