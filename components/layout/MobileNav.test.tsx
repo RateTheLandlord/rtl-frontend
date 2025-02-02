@@ -6,6 +6,8 @@ import { render } from '@testing-library/react'
 import { Disclosure } from '@headlessui/react'
 import MobileNav from './MobileNav'
 import { INav } from '@/util/interfaces/interfaces'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('MobileNav', () => {
 	const navigation: Array<INav> = [
@@ -29,5 +31,14 @@ describe('MobileNav', () => {
 				<MobileNav navigation={navigation} activeTab='/' />
 			</Disclosure>,
 		)
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<Disclosure>
+				<MobileNav navigation={navigation} activeTab='/' />
+			</Disclosure>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })
