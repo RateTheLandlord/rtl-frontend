@@ -5,6 +5,8 @@ import { render, screen } from '@testing-library/react'
 import LandlordPage from './LandlordPage'
 import { ILandlordReviews } from '@/lib/review/review'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('LandlordPage', () => {
 	const landlord = 'John Doe'
@@ -56,5 +58,14 @@ describe('LandlordPage', () => {
 	it('renders the landlord information', () => {
 		const landlordInfo = screen.getByText(landlord)
 		expect(landlordInfo).toBeInTheDocument()
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<UserProvider>
+				<LandlordPage landlord={landlord} data={data} />
+			</UserProvider>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

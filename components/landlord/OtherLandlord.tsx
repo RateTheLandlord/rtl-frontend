@@ -37,7 +37,7 @@ const OtherLandlordInfo = ({ landlord }: IProps) => {
 									className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg lg:mb-2 lg:items-center'
 									data-umami-event='Reviews / Landlord Link'
 								>
-									<h6 className='text-center'>{otherLandlord.name}</h6>
+									<p className='text-center text-lg'>{otherLandlord.name}</p>
 									<p className='text-center text-sm'>
 										Read {otherLandlord.reviewcount} review(s)
 									</p>
