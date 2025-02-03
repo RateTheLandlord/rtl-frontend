@@ -18,6 +18,7 @@ const tabs = [
 	{ name: 'Suspicous Landlords', component: <SuspiciousLandlords /> },
 	{ name: 'Stats', component: <Stats /> },
 	{ name: 'Flagged Keywords', component: <FlaggedKeywords /> },
+	{ name: 'Deleted Reviews', component: <FlaggedReviews /> },
 ]
 
 function Admin(): JSX.Element {
