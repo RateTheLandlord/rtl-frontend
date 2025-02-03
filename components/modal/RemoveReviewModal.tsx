@@ -28,8 +28,8 @@ const RemoveReviewModal = ({
 }: IProps) => {
 	const onSubmitRemoveReview = () => {
 		const [moderationReason, setModerationReason] = useState<string | null>(
-				selectedReview?.moderation_reason || null,
-			)
+			selectedReview?.moderation_reason || null,
+		)
 		const moderators = selectedReview?.moderator || []
 
 		if (selectedReview) {
