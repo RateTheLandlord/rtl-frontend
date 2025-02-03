@@ -305,6 +305,13 @@ export async function getFlagged(): Promise<Review[]> {
 	return reviews
 }
 
+export async function getDeleted(): Promise<Review[]> {
+	const reviews = await sql<
+		Review[]
+	>`SELECT * FROM review WHERE delete_date IS NOT NULL;`
+	return reviews
+}
+
 export async function getLandlords(): Promise<string[]> {
 	const landlords = await sql`SELECT DISTINCT landlord FROM review;`
 	return landlords.map(({ landlord }) => landlord)

@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { ITabs } from '@/components/admin/types/types'
 import FlaggedReviews from '@/components/admin/sections/FlaggedReviews'
+import DeletedReviews from '@/components/admin/sections/DeletedReviews'
 import Link from 'next/link'
 import Stats from '@/components/admin/sections/Stats'
 import { classNames } from '@/util/helpers/helper-functions'
@@ -18,7 +19,7 @@ const tabs = [
 	{ name: 'Suspicous Landlords', component: <SuspiciousLandlords /> },
 	{ name: 'Stats', component: <Stats /> },
 	{ name: 'Flagged Keywords', component: <FlaggedKeywords /> },
-	{ name: 'Deleted Reviews', component: <FlaggedReviews /> },
+	{ name: 'Deleted Reviews', component: <DeletedReviews /> },
 ]
 
 function Admin(): JSX.Element {
