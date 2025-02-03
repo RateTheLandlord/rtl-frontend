@@ -1,6 +1,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { Review } from '@/util/interfaces/interfaces'
-import { Dispatch, Fragment, SetStateAction } from 'react'
+import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import {
 	Dialog,
 	DialogPanel,
@@ -27,6 +27,11 @@ const RemoveReviewModal = ({
 	setSelectedReview,
 }: IProps) => {
 	const onSubmitRemoveReview = () => {
+		const [moderationReason, setModerationReason] = useState<string | null>(
+				selectedReview?.moderation_reason || null,
+			)
+		const moderators = selectedReview?.moderator || []
+
 		if (selectedReview) {
 			fetch('/api/review/delete-review', {
 				method: 'POST',
