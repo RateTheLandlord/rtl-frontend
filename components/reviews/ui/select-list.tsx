@@ -24,7 +24,10 @@ export default function SelectList({
 	return (
 		<Listbox value={state} onChange={setState}>
 			<div className='px-2'>
-				<ListboxButton className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
+				<ListboxButton
+					aria-label='Select List'
+					className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'
+				>
 					<span className='block w-full truncate'>{state?.name || name}</span>
 					<span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
 						<SelectorIcon

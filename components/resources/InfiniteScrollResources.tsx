@@ -64,14 +64,14 @@ function InfiniteScroll({
 								<h4 className='text-center text-xl leading-6 text-gray-900'>
 									{resource.name}
 								</h4>
-								<h6 className='text-xs leading-6 text-gray-900'>
+								<h5 className='text-xs leading-6 text-gray-900'>
 									{`${resource.city.length > 0 ? `${resource.city}, ` : ''}${
 										resource.state === 'NO STATE / PROVINCE'
 											? `${countryName(resource.country_code)}`
 											: `${resource.state},
 										${resource.country_code} `
 									}`}
-								</h6>
+								</h5>
 							</div>
 							<dl className='-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6'>
 								{resource.address && (

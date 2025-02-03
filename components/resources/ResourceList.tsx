@@ -115,7 +115,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 	)
 
 	return (
-		<div className='w-full'>
+		<div data-testid='ResourceListTest' className='w-full'>
 			<div className='mx-auto max-w-2xl sm:px-6 lg:max-w-7xl lg:px-8'>
 				<div className='flex w-full justify-end px-4 lg:hidden'>
 					<ButtonLight onClick={() => setMobileFiltersOpen(true)}>

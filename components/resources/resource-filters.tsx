@@ -123,8 +123,10 @@ function ResourceFilters({
 					</div>
 					<div className='flex w-full flex-col gap-2 border-t border-t-gray-200 py-2 lg:px-2'>
 						<button
+							aria-label='Apply Filters'
 							onClick={() => updateParams()}
 							type='submit'
+							title='submit'
 							className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm  text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${'bg-teal-600 hover:bg-teal-700'}`}
 							data-testid='submit-button-1'
 						>

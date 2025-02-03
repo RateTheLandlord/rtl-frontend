@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-import { Listbox, Transition } from '@headlessui/react'
+import { Listbox, ListboxButton, Transition } from '@headlessui/react'
 import { SortOptions } from '@/util/interfaces/interfaces'
 import { useTranslation } from 'next-i18next'
 
@@ -19,9 +19,12 @@ export default function SortList({
 }: ComponentProps) {
 	const { t } = useTranslation('filters')
 	return (
-		<Listbox value={state} onChange={setState}>
+		<Listbox data-testid='sort-list-test' value={state} onChange={setState}>
 			<div className='px-2'>
-				<Listbox.Button className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
+				<ListboxButton
+					aria-label='Select Sort'
+					className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'
+				>
 					<span className='block w-full truncate'>
 						{t(state?.name || name)}
 					</span>
@@ -31,7 +34,7 @@ export default function SortList({
 							aria-hidden='true'
 						/>
 					</span>
-				</Listbox.Button>
+				</ListboxButton>
 				<Transition
 					as={Fragment}
 					leave='transition ease-in duration-100'

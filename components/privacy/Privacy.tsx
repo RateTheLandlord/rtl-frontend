@@ -109,7 +109,7 @@ const Privacy = () => {
 				</p>
 				<h2 className=''>9. GDPR</h2>
 
-				<h5 className='underline'>Landlord Names</h5>
+				<h3 className='underline'>Landlord Names</h3>
 
 				<p>
 					We allow users to submit content that use or reference the Landlords
