@@ -2,13 +2,12 @@ import { Review } from '@/util/interfaces/interfaces'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
-import EditReviewModal from '@/components/modal/EditReviewModal'
 import RemoveReviewModal from '@/components/modal/RemoveReviewModal'
 import Spinner from '@/components/ui/Spinner'
 import { toast } from 'react-toastify'
 
 const DeletedReviews = () => {
-	const [editReviewOpen, setEditReviewOpen] = useState(false)
+	const [deleteReviewOpen, setDeleteReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
 
 	const [flaggedReviews, setFlaggedReviews] = useState<Array<Review>>([])
@@ -69,13 +68,6 @@ const DeletedReviews = () => {
 		<div className='container flex w-full flex-wrap justify-center'>
 			{selectedReview ? (
 				<>
-					<EditReviewModal
-						selectedReview={selectedReview}
-						handleMutate={handleMutate}
-						setEditReviewOpen={setEditReviewOpen}
-						editReviewOpen={editReviewOpen}
-						setSelectedReview={setSelectedReview}
-					/>
 					<RemoveReviewModal
 						selectedReview={selectedReview}
 						handleMutate={handleMutate}
@@ -146,33 +138,12 @@ const DeletedReviews = () => {
 								<td className='py-4 pl-3 pr-4 text-center text-sm  sm:pr-6'>
 									<button
 										onClick={() => {
-											onSubmitApproveReview(review)
-										}}
-										className='text-indigo-600 hover:text-indigo-900'
-									>
-										Approve
-									</button>
-								</td>
-								<td className='py-4 pl-3 pr-4 text-center text-sm  sm:pr-6'>
-									<button
-										onClick={() => {
-											setSelectedReview(review)
-											setEditReviewOpen(true)
-										}}
-										className='text-indigo-600 hover:text-indigo-900'
-									>
-										Edit
-									</button>
-								</td>
-								<td className='py-4 pl-3 pr-4 text-center text-sm  sm:pr-6'>
-									<button
-										onClick={() => {
 											setSelectedReview(review)
 											setRemoveReviewOpen((p) => !p)
 										}}
 										className='text-indigo-600 hover:text-indigo-900'
 									>
-										Remove
+										Restore
 									</button>
 								</td>
 							</tr>

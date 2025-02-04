@@ -31,6 +31,8 @@ const EditReview = async (req: NextApiRequest, res: NextApiResponse) => {
 	const user = session?.user
 	await runMiddleware(req, res)
 
+	console.log("Edit review entered")
+
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req
 

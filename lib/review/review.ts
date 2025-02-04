@@ -18,6 +18,7 @@ import { updateReview } from '@/lib/review/models/review-data-layer'
 import { Row, RowList } from 'postgres'
 import { capitalize } from '@/util/helpers/helper-functions'
 import { Options } from '@/util/interfaces/interfaces'
+import dayjs from 'dayjs'
 
 export type ReviewQuery = {
 	page?: number
@@ -279,19 +280,19 @@ export async function report(id: number, reason: string): Promise<number> {
 	return id
 }
 
-export async function deleteReview(id: number, reason: string, deleter: string): Promise<boolean> {
+export async function deleteReview(id: number, review: Review): Promise<boolean> {
 	const deleteDate = new Date();
 	deleteDate.setDate(deleteDate.getDate() + 30); // Set delete_date to 30 days from today
   
 	// Convert deleteDate to textual date format (e.g., "2025-02-28")
-	const formattedDate = deleteDate.toISOString().split('T')[0];
+	const formattedDate = dayjs(deleteDate).format('DD/MM/YYYY');
   
 	await sql`
 	  UPDATE review
 	  SET
 		delete_date = ${formattedDate},
-		delete_reason = ${reason},
-		deleter = ${deleter}
+		delete_reason = ${review.moderation_reason},
+		deleted_by = ${review.moderator}
 	  WHERE ID = ${id};
 	`;
   

@@ -3,6 +3,6 @@ exports.up = async function (DB) {
     ALTER TABLE review
     ADD COLUMN delete_date TEXT,
     ADD COLUMN delete_reason TEXT,
-    ADD COLUMN deleter TEXT[];
+    ADD COLUMN deleted_by TEXT[];
     `
 }

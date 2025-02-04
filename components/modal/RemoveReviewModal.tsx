@@ -8,7 +8,9 @@ import {
 	Transition,
 	TransitionChild,
 } from '@headlessui/react'
+import { useUser } from '@auth0/nextjs-auth0/client'
 import XIcon from '@heroicons/react/outline/XIcon'
+import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
 
 interface IProps {
@@ -26,28 +28,42 @@ const RemoveReviewModal = ({
 	removeReviewOpen,
 	setSelectedReview,
 }: IProps) => {
-	const onSubmitRemoveReview = () => {
-		const [moderationReason, setModerationReason] = useState<string | null>(
-			selectedReview?.moderation_reason || null,
-		)
-		const moderators = selectedReview?.moderator || []
+	const [landlord, setLandlord] = useState<string>(
+		selectedReview?.landlord || '',
+	)
+	const [moderationReason, setModerationReason] = useState<string | null>(
+		selectedReview?.moderation_reason || null,
+	)
+	const moderators = selectedReview?.moderator || []
+	const [review, setReview] = useState<string>(selectedReview?.review || '')
+	const { user } = useUser()
+	const date = dayjs().format('DD/MM/YYYY')
 
+	const onSubmitRemoveReview = () => {
+		moderators.unshift(`${user?.admin_id} on ${date}`)
+		const deletedReview = {
+			...selectedReview,
+			landlord: landlord,
+			moderation_reason: moderationReason,
+			moderator: [...moderators],
+		}
 		if (selectedReview) {
+			console.log("selectedReview entered")
 			fetch('/api/review/delete-review', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({
-					id: selectedReview.id,
-				}),
+				body: JSON.stringify(deletedReview),
 			})
 				.then((result) => {
+					console.log("result entered")
 					if (!result.ok) {
 						throw new Error()
 					}
 				})
 				.then(() => {
+					console.log("post entered")
 					fetch(
 						`/api/force-revalidate?path=${encodeURIComponent(
 							selectedReview.landlord,
@@ -81,7 +97,7 @@ const RemoveReviewModal = ({
 					<div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity' />
 				</TransitionChild>
 
-				<div className='fixed inset-0 z-10 overflow-y-auto'>
+				<div className='fixed inset-0 z-50 overflow-y-auto'>
 					<div className='flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
 						<TransitionChild
 							as={Fragment}
@@ -93,7 +109,7 @@ const RemoveReviewModal = ({
 							leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
 						>
 							<DialogPanel className='relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
-								<div className='absolute right-0 top-0 hidden pr-4 pt-4 sm:block'>
+							<div className='absolute right-0 top-0 hidden pr-4 pt-4 sm:block'>
 									<button
 										type='button'
 										className='rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
@@ -113,21 +129,63 @@ const RemoveReviewModal = ({
 										</DialogTitle>
 									</div>
 								</div>
-								<div>
-									<div className='ml-4' data-testid='remove-review-modal-1'>
-										<h2>
-											Are you sure you want to remove this review? This cannot
-											be undone.
-										</h2>
+								<div className='mt-1'>
+									<div className='sm:col-span-3'>
+										<label
+											htmlFor='landlord'
+											className='block text-sm  text-gray-700'
+										>
+											Landlord: {landlord ? landlord : selectedReview?.landlord}
+										</label>
+									</div>
+									<div className='sm:col-span-2'>
+										<label
+											htmlFor='review'
+											className='block text-sm  text-gray-700'
+										>
+											Review: {review ? review : selectedReview?.review}
+										</label>
+									</div>
+									<div className='sm:col-span-2'>
+										<label
+											htmlFor='moderation-reason'
+											className='block text-sm  text-gray-700'
+										>
+											Moderation Reason
+										</label>
+										<div className='mt-1'>
+											<input
+												type='text'
+												name='moderation-reason'
+												id='moderation-reason'
+												placeholder='Moderation Reason'
+												required
+												value={moderationReason ? moderationReason : ''}
+												onChange={(e) => setModerationReason(e.target.value)}
+												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+												data-testid='create-review-form-moderation-reason-1'
+											/>
+										</div>
+									</div>
+									<div className='sm:col-span-2'>
+										<label
+											htmlFor='moderators'
+											className='block text-sm  text-gray-700'
+										>
+											Previous Moderators
+										</label>
+										<div className='mt-1'>
+											<p>{moderators.map((mod) => mod).join(', ')}</p>
+										</div>
 									</div>
 								</div>
 								<div className='mt-5 sm:mt-4 sm:flex sm:flex-row-reverse'>
 									<button
 										type='button'
-										className={`hover:bg-red:700 inline-flex w-full justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-base  text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
+										className={`inline-flex w-full justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-base  text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
 										onClick={() => onSubmitRemoveReview()}
 									>
-										Remove
+										Submit
 									</button>
 									<button
 										type='button'
