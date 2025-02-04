@@ -49,6 +49,5 @@ describe('RemoveReviewModal', () => {
 		// Verify that the modal title is rendered
 		const modalTitle = screen.getByText('Remove Review')
 		expect(modalTitle).toBeInTheDocument()
-
 	})
 })
