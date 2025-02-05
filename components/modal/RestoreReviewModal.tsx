@@ -16,39 +16,37 @@ import { toast } from 'react-toastify'
 interface IProps {
 	selectedReview: Review | undefined
 	handleMutate: () => void
-	setRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
-	removeReviewOpen: boolean
+	setRestoreReviewOpen: Dispatch<SetStateAction<boolean>>
+	restoreReviewOpen: boolean
 	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
 }
 
-const RemoveReviewModal = ({
+const RestoreReviewModal = ({
 	selectedReview,
 	handleMutate,
-	setRemoveReviewOpen,
-	removeReviewOpen,
+	setRestoreReviewOpen,
+	restoreReviewOpen,
 	setSelectedReview,
 }: IProps) => {
 	const [landlord, setLandlord] = useState<string>(
 		selectedReview?.landlord || '',
 	)
-	const [deleteReason, setDeleteReason] = useState<string | null>(
-		selectedReview?.delete_reason || null,
+	const [restoreReason, setRestoreReason] = useState<string | null>(
+		selectedReview?.restore_reason || null,
 	)
-	const deleted_by = selectedReview?.deleted_by || []
+	const restored_by = selectedReview?.restored_by || []
 	const [review, setReview] = useState<string>(selectedReview?.review || '')
 	const { user } = useUser()
-	const deleteDate = new Date();
-	deleteDate.setDate(deleteDate.getDate() + 30);
 	const date = dayjs().format('DD/MM/YYYY')
-	const formattedDeleteDate = dayjs(deleteDate).format('DD/MM/YYYY')
 
-	const onSubmitRemoveReview = () => {
-		deleted_by.unshift(`${user?.admin_id} on ${date}`)
-		const deletedReview = {
+	const onSubmitRestoreReview = () => {
+		restored_by.unshift(`${user?.admin_id} on ${date}`)
+		const restoredReview = {
 			...selectedReview,
-			delete_reason: deleteReason,
-			deleted_by: [...deleted_by],
-			delete_date: formattedDeleteDate
+			restore_date: date,
+			restore_reason: restoreReason,
+			restored_by: [...restored_by],
+			delete_date: null
 		}
 		if (selectedReview) {
 			fetch('/api/review/edit-review', {
@@ -56,7 +54,7 @@ const RemoveReviewModal = ({
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(deletedReview),
+				body: JSON.stringify(restoredReview),
 			})
 				.then((result) => {
 					console.log('result entered')
@@ -72,7 +70,7 @@ const RemoveReviewModal = ({
 						)}`,
 					)
 					handleMutate()
-					setRemoveReviewOpen(false)
+					setRestoreReviewOpen(false)
 					toast.success('Success!')
 					setSelectedReview(undefined)
 				})
@@ -85,8 +83,8 @@ const RemoveReviewModal = ({
 	}
 
 	return (
-		<Transition show={removeReviewOpen} as={Fragment}>
-			<Dialog as='div' className='relative z-10' onClose={setRemoveReviewOpen}>
+		<Transition show={restoreReviewOpen} as={Fragment}>
+			<Dialog as='div' className='relative z-10' onClose={setRestoreReviewOpen}>
 				<TransitionChild
 					as={Fragment}
 					enter='ease-out duration-300'
@@ -115,7 +113,7 @@ const RemoveReviewModal = ({
 									<button
 										type='button'
 										className='rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
-										onClick={() => setRemoveReviewOpen(false)}
+										onClick={() => setRestoreReviewOpen(false)}
 									>
 										<span className='sr-only'>Close</span>
 										<XIcon className='h-6 w-6' aria-hidden='true' />
@@ -127,7 +125,7 @@ const RemoveReviewModal = ({
 											as='h3'
 											className='text-lg  leading-6 text-gray-900'
 										>
-											Remove Review
+											Restore Review
 										</DialogTitle>
 									</div>
 								</div>
@@ -153,17 +151,17 @@ const RemoveReviewModal = ({
 											htmlFor='moderation-reason'
 											className='block text-sm  text-gray-700'
 										>
-											Delete Reason
+											Restore Reason
 										</label>
 										<div className='mt-1'>
 											<input
 												type='text'
 												name='moderation-reason'
 												id='moderation-reason'
-												placeholder='Moderation Reason'
+												placeholder='Restore Reason'
 												required
-												value={deleteReason ? deleteReason : ''}
-												onChange={(e) => setDeleteReason(e.target.value)}
+												value={restoreReason ? restoreReason : ''}
+												onChange={(e) => setRestoreReason(e.target.value)}
 												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 												data-testid='create-review-form-moderation-reason-1'
 											/>
@@ -177,7 +175,7 @@ const RemoveReviewModal = ({
 											Previous Moderators
 										</label>
 										<div className='mt-1'>
-											<p>{deleted_by.map((mod) => mod).join(', ')}</p>
+											<p>{restored_by.map((mod) => mod).join(', ')}</p>
 										</div>
 									</div>
 								</div>
@@ -185,7 +183,7 @@ const RemoveReviewModal = ({
 									<button
 										type='button'
 										className={`inline-flex w-full justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-base  text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
-										onClick={() => onSubmitRemoveReview()}
+										onClick={() => onSubmitRestoreReview()}
 									>
 										Submit
 									</button>
@@ -194,7 +192,7 @@ const RemoveReviewModal = ({
 										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base  text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm'
 										onClick={() => {
 											setSelectedReview(undefined)
-											setRemoveReviewOpen(false)
+											setRestoreReviewOpen(false)
 										}}
 									>
 										Cancel
@@ -209,4 +207,4 @@ const RemoveReviewModal = ({
 	)
 }
 
-export default RemoveReviewModal
+export default RestoreReviewModal

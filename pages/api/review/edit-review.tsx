@@ -24,14 +24,18 @@ interface IBody {
 	rent: number | null
 	moderation_reason: string | null
 	moderator: Array<string> | null
+	delete_date: string | null
+	delete_reason: string | null
+	deleted_by: Array<string> | null
+	restore_date: string | null
+	restore_reason: string | null
+	restored_by: Array<string> | null
 }
 
 const EditReview = async (req: NextApiRequest, res: NextApiResponse) => {
 	const session = await getSession(req, res)
 	const user = session?.user
 	await runMiddleware(req, res)
-
-	console.log("Edit review entered")
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req

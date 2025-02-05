@@ -2,9 +2,8 @@ import { Review } from '@/util/interfaces/interfaces'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
-import RemoveReviewModal from '@/components/modal/RemoveReviewModal'
+import RestoreReviewModal from '@/components/modal/RestoreReviewModal'
 import Spinner from '@/components/ui/Spinner'
-import { toast } from 'react-toastify'
 
 const DeletedReviews = () => {
 	const [deleteReviewOpen, setDeleteReviewOpen] = useState(false)
@@ -12,7 +11,7 @@ const DeletedReviews = () => {
 
 	const [flaggedReviews, setFlaggedReviews] = useState<Array<Review>>([])
 
-	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
+	const [restoreReviewOpen, setRestoreReviewOpen] = useState(false)
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const {
@@ -32,33 +31,6 @@ const DeletedReviews = () => {
 	if (error) return <div>failed to load</div>
 	if (!reviews) return <Spinner />
 
-	const onSubmitApproveReview = (review: Review) => {
-		const editedReview = {
-			...review,
-			admin_approved: true,
-			flagged: false,
-		}
-		fetch('/api/review/edit-review', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(editedReview),
-		})
-			.then((result) => {
-				if (!result.ok) {
-					throw new Error()
-				}
-			})
-			.then(() => {
-				mutate()
-				toast.success('Success!')
-			})
-			.catch((err) => {
-				console.log(err)
-				toast.error('Failure: Something went wrong, please try again.')
-			})
-	}
 
 	const handleMutate = () => {
 		mutate()
@@ -68,11 +40,11 @@ const DeletedReviews = () => {
 		<div className='container flex w-full flex-wrap justify-center'>
 			{selectedReview ? (
 				<>
-					<RemoveReviewModal
+					<RestoreReviewModal
 						selectedReview={selectedReview}
 						handleMutate={handleMutate}
-						setRemoveReviewOpen={setRemoveReviewOpen}
-						removeReviewOpen={removeReviewOpen}
+						setRestoreReviewOpen={setRestoreReviewOpen}
+						restoreReviewOpen={restoreReviewOpen}
 						setSelectedReview={setSelectedReview}
 					/>
 				</>
@@ -91,22 +63,13 @@ const DeletedReviews = () => {
 								scope='col'
 								className='hidden px-3 py-3.5 text-left text-sm  text-gray-900 lg:table-cell'
 							>
-								Reason
+								Delete Reason
 							</th>
 							<th
 								scope='col'
 								className='hidden px-3 py-3.5 text-left text-sm  text-gray-900 sm:table-cell'
 							>
 								Review
-							</th>
-							<th scope='col' className='relative py-3.5 pl-3 pr-4 sm:pr-6'>
-								<span className='sr-only'>Approve</span>
-							</th>
-							<th scope='col' className='relative py-3.5 pl-3 pr-4 sm:pr-6'>
-								<span className='sr-only'>Edit</span>
-							</th>
-							<th scope='col' className='relative py-3.5 pl-3 pr-4 sm:pr-6'>
-								<span className='sr-only'>Remove</span>
 							</th>
 						</tr>
 					</thead>
@@ -119,9 +82,9 @@ const DeletedReviews = () => {
 								<td className='w-full max-w-0 py-4 pl-4 pr-3 text-sm  text-gray-900 sm:w-auto sm:max-w-none sm:pl-6'>
 									{review.landlord}
 									<dl className='lg:hidden'>
-										<dt className='sr-only'>Reason</dt>
+										<dt className='sr-only'>Delete Reason</dt>
 										<dd className='mt-1 truncate text-gray-500'>
-											{review.flagged_reason}
+											{review.delete_reason}
 										</dd>
 										<dt className='sr-only sm:hidden'>Review</dt>
 										<dd className='mt-1 truncate text-gray-700 sm:hidden'>
@@ -130,7 +93,7 @@ const DeletedReviews = () => {
 									</dl>
 								</td>
 								<td className='hidden max-w-xs px-3 py-4 text-sm text-gray-500 lg:table-cell'>
-									{review.flagged_reason}
+									{review.delete_reason}
 								</td>
 								<td className='hidden px-3 py-4 text-sm text-gray-500 sm:table-cell'>
 									{review.review}
@@ -139,7 +102,7 @@ const DeletedReviews = () => {
 									<button
 										onClick={() => {
 											setSelectedReview(review)
-											setRemoveReviewOpen((p) => !p)
+											setRestoreReviewOpen((p) => !p)
 										}}
 										className='text-indigo-600 hover:text-indigo-900'
 									>

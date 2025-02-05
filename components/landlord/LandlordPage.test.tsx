@@ -31,6 +31,12 @@ describe('LandlordPage', () => {
 				date_added: new Date(),
 				moderation_reason: null,
 				moderator: null,
+				delete_date: null,
+				delete_reason: null,
+				deleted_by: null,
+				restore_date: null,
+				restore_reason: null,
+				restored_by: null
 			},
 			// ... add more sample reviews if needed
 		],

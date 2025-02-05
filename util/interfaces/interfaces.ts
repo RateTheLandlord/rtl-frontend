@@ -19,6 +19,12 @@ export interface Review {
 	rent?: number | null
 	moderation_reason: string | null
 	moderator: Array<string> | null
+	delete_date: string | null
+	delete_reason: string | null
+	deleted_by: Array<string> | null
+	restore_date: string | null
+	restore_reason: string | null
+	restored_by: Array<string> | null
 }
 
 export interface OtherLandlord {
