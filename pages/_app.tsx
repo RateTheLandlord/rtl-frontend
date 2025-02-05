@@ -14,7 +14,7 @@ import 'nprogress/nprogress.css'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 import { appWithTranslation } from 'next-i18next'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 const CAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string
 
@@ -25,14 +25,12 @@ Router.events.on('routeChangeComplete', nProgress.done)
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 	const { user } = pageProps
 
-	const [cronStatus, setCronStatus] = useState<any>(null);
 
 	useEffect(() => {
 		const fetchCronStatus = async () => {
 		try {
 			const response = await fetch('/api/cron');
 			const data = await response.json();
-			setCronStatus(data); // Store the cron status in state
 			console.log('Cron status:', data); // Optionally log the status
 		} catch (error) {
 			console.error('Failed to fetch cron status:', error);
@@ -41,7 +39,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
 		fetchCronStatus(); // Call the function when the app is mounted
 	}, []);
-	
+
 	return (
 		<PHProvider>
 			<UserProvider user={user}>
