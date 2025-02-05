@@ -46,7 +46,7 @@ const RestoreReviewModal = ({
 			restore_date: date,
 			restore_reason: restoreReason,
 			restored_by: [...restored_by],
-			delete_date: null
+			delete_date: null,
 		}
 		if (selectedReview) {
 			fetch('/api/review/edit-review', {

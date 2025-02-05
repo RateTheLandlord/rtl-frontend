@@ -37,8 +37,8 @@ const RemoveReviewModal = ({
 	const deleted_by = selectedReview?.deleted_by || []
 	const [review, setReview] = useState<string>(selectedReview?.review || '')
 	const { user } = useUser()
-	const deleteDate = new Date();
-	deleteDate.setDate(deleteDate.getDate() + 30);
+	const deleteDate = new Date()
+	deleteDate.setDate(deleteDate.getDate() + 30)
 	const date = dayjs().format('DD/MM/YYYY')
 	const formattedDeleteDate = dayjs(deleteDate).format('DD/MM/YYYY')
 
@@ -48,7 +48,7 @@ const RemoveReviewModal = ({
 			...selectedReview,
 			delete_reason: deleteReason,
 			deleted_by: [...deleted_by],
-			delete_date: formattedDeleteDate
+			delete_date: formattedDeleteDate,
 		}
 		if (selectedReview) {
 			fetch('/api/review/edit-review', {

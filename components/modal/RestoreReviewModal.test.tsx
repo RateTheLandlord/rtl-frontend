@@ -34,7 +34,7 @@ describe('RestoreReviewModal', () => {
 		deleted_by: null,
 		restore_date: null,
 		restore_reason: null,
-		restored_by: null
+		restored_by: null,
 	}
 
 	test('renders the remove review modal', () => {
