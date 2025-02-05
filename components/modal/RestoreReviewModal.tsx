@@ -57,13 +57,11 @@ const RestoreReviewModal = ({
 				body: JSON.stringify(restoredReview),
 			})
 				.then((result) => {
-					console.log('result entered')
 					if (!result.ok) {
 						throw new Error()
 					}
 				})
 				.then(() => {
-					console.log('post entered')
 					fetch(
 						`/api/force-revalidate?path=${encodeURIComponent(
 							selectedReview.landlord,
