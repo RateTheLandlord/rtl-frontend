@@ -16,6 +16,7 @@ function Button({
 }: IProps): JSX.Element {
 	return (
 		<button
+			aria-label='Submit Button'
 			onClick={onClick}
 			type='submit'
 			className={classNames(

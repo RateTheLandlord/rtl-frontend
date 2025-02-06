@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { render, screen, fireEvent } from '@testing-library/react'
-import LocationForm from './LocationForm'
+import LocationForm from './CreateReviewLocationForm'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

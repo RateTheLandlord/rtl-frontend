@@ -28,6 +28,7 @@ const LocationForm = ({
 						{t('reviews.select_country')}
 					</h2>
 					<ComboBox
+						testid='location-country-test'
 						state={selectedCountry}
 						setState={(opt: Options) => setSelectedCountry(opt)}
 						options={countryOptions}
@@ -42,6 +43,7 @@ const LocationForm = ({
 								{t('reviews.select_state')}
 							</h2>
 							<ComboBox
+								testid='location-state-test'
 								state={selectedState}
 								setState={(opt: Options) => setSelectedState(opt)}
 								options={getStates(selectedCountry.value)}

@@ -13,7 +13,7 @@
 		"format": "prettier --write ./pages/**/*.{ts,tsx} ./components/**/*.{ts,tsx}",
 		"lint": "next lint --fix",
 		"tsc": "tsc",
-		"test": "jest  --runInBand --no-cache --watch",
+		"test": "jest  --runInBand --no-cache --watch -o",
 		"test:merge": "jest --onlyChanged",
 		"prepare": "husky",
 		"migrate:up": "ley -r tsm up",

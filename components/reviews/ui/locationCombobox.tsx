@@ -1,7 +1,14 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import React, { Fragment, useRef, useState } from 'react'
 import { SelectorIcon } from '@heroicons/react/solid'
-import { Combobox, Transition } from '@headlessui/react'
+import {
+	Combobox,
+	ComboboxButton,
+	ComboboxInput,
+	ComboboxOption,
+	ComboboxOptions,
+	Transition,
+} from '@headlessui/react'
 import { Options } from '@/util/interfaces/interfaces'
 import { useVirtualizer } from '@tanstack/react-virtual'
 
@@ -10,6 +17,7 @@ interface ComponentProps {
 	state: Options | null
 	setState: (state: Options) => void
 	options: Options[]
+	testid?: string
 }
 
 export default function ComboBox({
@@ -17,6 +25,7 @@ export default function ComboBox({
 	setState,
 	options,
 	name,
+	testid,
 }: ComponentProps) {
 	const [query, setQuery] = useState('')
 	const filterOptions =
@@ -29,21 +38,28 @@ export default function ComboBox({
 						.includes(query.toLowerCase().replace(/\s+/g, '')),
 			  )
 	return (
-		<Combobox value={state} onChange={setState}>
+		<Combobox
+			data-testid={testid || 'location-test'}
+			value={state}
+			onChange={setState}
+		>
 			<div className='relative w-full pt-2 lg:px-2 lg:pt-2'>
 				<div className='relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm'>
-					<Combobox.Input
-						className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-lg border-teal-600 border'
+					<ComboboxInput
+						className='relative w-full cursor-default rounded-lg border border-teal-600 bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-lg'
 						displayValue={(state: Options) => state?.name}
 						placeholder={`Search ${name}`}
 						onChange={(event) => setQuery(event.target.value)}
 					/>
-					<Combobox.Button className='absolute inset-y-0 right-0 flex items-center pr-2'>
+					<ComboboxButton
+						aria-label='Select Location'
+						className='absolute inset-y-0 right-0 flex items-center pr-2'
+					>
 						<SelectorIcon
 							className='h-5 w-5 text-gray-400'
 							aria-hidden='true'
 						/>
-					</Combobox.Button>
+					</ComboboxButton>
 				</div>
 				<Transition
 					as={Fragment}
@@ -51,7 +67,7 @@ export default function ComboBox({
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<Combobox.Options className='absolute z-10 mt-1 max-h-60 w-9/12 sm:w-1/2 md:w-8/12 lg:w-9/12 xl:w-7/12 2xl:w-7/12 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-md'>
+					<ComboboxOptions className='sm:text-md absolute z-10 mt-1 max-h-60 w-9/12 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:w-1/2 md:w-8/12 lg:w-9/12 xl:w-7/12 2xl:w-7/12'>
 						{filterOptions.length === 0 && query !== '' ? (
 							<div className='relative cursor-default select-none px-4 py-2 text-gray-700'>
 								Nothing found.
@@ -59,7 +75,7 @@ export default function ComboBox({
 						) : (
 							<VirtualizedList items={filterOptions ?? []} />
 						)}
-					</Combobox.Options>
+					</ComboboxOptions>
 				</Transition>
 			</div>
 		</Combobox>
@@ -86,7 +102,7 @@ function VirtualizedList({ items }: { items: Options[] }) {
 				}}
 			>
 				{rowVirtualizer.getVirtualItems().map((virtualRow) => (
-					<Combobox.Option
+					<ComboboxOption
 						key={virtualRow.index}
 						style={{
 							position: 'absolute',
@@ -114,7 +130,7 @@ function VirtualizedList({ items }: { items: Options[] }) {
 								{items?.[virtualRow.index].name}
 							</span>
 						)}
-					</Combobox.Option>
+					</ComboboxOption>
 				))}
 			</div>
 		</div>

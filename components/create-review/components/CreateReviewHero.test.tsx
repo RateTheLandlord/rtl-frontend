@@ -5,7 +5,7 @@
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 import { render, screen, fireEvent } from '@testing-library/react'
-import ReviewHero from './ReviewHero'
+import ReviewHero from './CreateReviewHero'
 
 jest.mock('next-i18next', () => ({
 	useTranslation: () => ({
@@ -42,9 +42,7 @@ describe('ReviewHero Component', () => {
 		expect(screen.getByTestId('HouseIcon-component')).toBeInTheDocument()
 
 		// Check if the "Get Started" button is rendered
-		expect(
-			screen.getByRole('button', { name: 'create-review.hero.start' }),
-		).toBeInTheDocument()
+		expect(screen.getByTestId('submit-button-1')).toBeInTheDocument()
 	})
 
 	it('hides HouseIcon and button when getStarted is true', () => {
@@ -74,9 +72,7 @@ describe('ReviewHero Component', () => {
 			/>,
 		)
 
-		const button = screen.getByRole('button', {
-			name: 'create-review.hero.start',
-		})
+		const button = screen.getByTestId('submit-button-1')
 
 		fireEvent.click(button)
 
