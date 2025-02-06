@@ -28,7 +28,6 @@
 		"@heroicons/react": "^1.0.6",
 		"@reduxjs/toolkit": "^1.9.2",
 		"@tanstack/react-virtual": "3.11.1",
-		"caniuse-lite": "^1.0.30001696",
 		"cors": "^2.8.5",
 		"dayjs": "^1.11.10",
 		"dotenv": "^16.3.1",
