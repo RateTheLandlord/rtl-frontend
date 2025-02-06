@@ -34,14 +34,14 @@ describe('StateInfo', () => {
 	const mockSetLocationOpen = jest.fn()
 
 	beforeEach(() => {
-		;(useAppDispatch as jest.Mock)
+		(useAppDispatch as jest.Mock)
 			.mockReturnValue(mockDispatch)(useRouter as jest.Mock)
 			.mockReturnValue({ push: mockRouterPush })
 		;(useTranslation as jest.Mock).mockReturnValue({ t: (key: string) => key })
 	})
 
 	it('renders Spinner when data is not available', () => {
-		;(useSWR as jest.Mock).mockReturnValue({ data: null, error: null })
+		(useSWR as jest.Mock).mockReturnValue({ data: null, error: null })
 		render(
 			<StateInfo
 				state='california'
@@ -53,7 +53,7 @@ describe('StateInfo', () => {
 	})
 
 	it('renders state and country information correctly', () => {
-		;(useSWR as jest.Mock).mockReturnValue({
+		(useSWR as jest.Mock).mockReturnValue({
 			data: {
 				total: '100',
 				catAverages: {
