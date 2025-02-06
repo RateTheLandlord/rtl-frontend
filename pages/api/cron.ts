@@ -1,14 +1,14 @@
 import cron from 'node-cron'
 import { getDeleted, deleteReview } from '@/lib/review/review'
-import dayjs from 'dayjs';
+import dayjs from 'dayjs'
 
 const readyToDelete = (delete_date: string | null): boolean => {
 	if (delete_date && delete_date.length > 0) {
 		const [day, month, year] = delete_date.split('/').map(Number)
 		if (day && month && year) {
-			const deleteDate = dayjs(`${year}-${month}-${day}`).startOf('day');
-			const today = dayjs().startOf('day');
-			return deleteDate.isBefore(today) || deleteDate.isSame(today);
+			const deleteDate = dayjs(`${year}-${month}-${day}`).startOf('day')
+			const today = dayjs().startOf('day')
+			return deleteDate.isBefore(today) || deleteDate.isSame(today)
 		}
 	}
 	return false
