@@ -64,7 +64,10 @@ function InfiniteScroll({
 				setEditReviewOpen={setEditReviewOpen}
 			/>
 			{isLoading && (
-				<div className='flex w-full justify-center py-5'>
+				<div
+					data-testid='loading-test'
+					className='flex w-full justify-center py-5'
+				>
 					<Spinner />
 				</div>
 			)}
