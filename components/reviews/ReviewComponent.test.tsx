@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import ReviewComponent from './ReviewComponent'
 import { Review } from '@/util/interfaces/interfaces'
