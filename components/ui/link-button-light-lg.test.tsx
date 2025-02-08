@@ -4,6 +4,8 @@
 import React from 'react'
 import { fireEvent, render } from '@testing-library/react'
 import LinkButtonLightLG from './link-button-light-lg'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('LinkButtonLightLG', () => {
 	it('renders button text correctly', () => {
@@ -22,7 +24,13 @@ describe('LinkButtonLightLG', () => {
 		)
 		const buttonElement = getByTestId('home-hero-read-btn-1')
 		fireEvent.click(buttonElement)
-		// You can add additional assertions to verify the navigation behavior if needed
-		// For example: expect(window.location.pathname).toBe(href);
+	})
+
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<LinkButtonLightLG href='/'>Test</LinkButtonLightLG>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

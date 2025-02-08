@@ -27,7 +27,7 @@ export default function Supporters({ members, tiers }: IProps) {
 									className='bg-gray-400/5 p-8 text-center sm:p-10'
 								>
 									<div>
-										<h6 className='text-xl '>{member.name}</h6>
+										<p className='text-xl '>{member.name}</p>
 										<p>{tierName}</p>
 									</div>
 								</div>

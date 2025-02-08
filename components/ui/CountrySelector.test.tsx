@@ -5,13 +5,15 @@ import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import CountrySelector from './CountrySelector'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('CountrySelector Component', () => {
 	const mockProps = {
 		setValue: jest.fn(),
 	}
 
-	test('renders CountrySelector component with default values', () => {
+	it('renders CountrySelector component with default values', () => {
 		render(<CountrySelector setValue={mockProps.setValue} />)
 		const selectElement = screen.getByTestId('country-selector')
 
@@ -28,5 +30,12 @@ describe('CountrySelector Component', () => {
 
 		// Ensure that the setValue function is called with the selected value
 		expect(mockProps.setValue).toHaveBeenCalledWith('US')
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<CountrySelector setValue={mockProps.setValue} />,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })
