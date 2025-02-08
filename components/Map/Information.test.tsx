@@ -12,10 +12,18 @@ import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
 jest.mock('swr')
-jest.mock('../ui/Spinner', () => () => <div>Loading...</div>)
-jest.mock('../ui/RatingStars', () => ({ value }: { value: number }) => (
-	<div data-testid='mapratings'>{value}</div>
-))
+jest.mock('../ui/Spinner', () => {
+	const MockSpinner = () => <div>Loading...</div>
+	MockSpinner.displayName = 'MockSpinner'
+	return MockSpinner
+})
+jest.mock('../ui/RatingStars', () => {
+	const MockRatingStars = ({ value }: { value: number }) => (
+		<div data-testid='mapratings'>{value}</div>
+	)
+	MockRatingStars.displayName = 'MockRatingStars'
+	return MockRatingStars
+})
 
 const mockUseSWR = useSWR as jest.Mock
 

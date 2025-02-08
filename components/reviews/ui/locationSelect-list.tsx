@@ -24,7 +24,7 @@ export default function SelectList({
 	return (
 		<Listbox value={state} onChange={setState}>
 			<div className='relative w-full pt-2 lg:px-2 lg:pt-2'>
-				<ListboxButton className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-lg border-teal-600 border'>
+				<ListboxButton className='relative w-full cursor-default rounded-lg border border-teal-600 bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-lg'>
 					<span className='block w-full truncate'>{state?.name || name}</span>
 					<span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
 						<SelectorIcon
@@ -41,7 +41,7 @@ export default function SelectList({
 				>
 					<ListboxOptions
 						anchor='bottom start'
-						className='absolute z-[999] mt-1 max-h-[250px] w-1/2 sm:w-1/2 md:w-8/12 lg:w-9/12 xl:w-7/12 2xl:w-5/12 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-md'
+						className='sm:text-md absolute z-[999] mt-1 max-h-[250px] w-1/2 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:w-1/2 md:w-8/12 lg:w-9/12 xl:w-7/12 2xl:w-5/12'
 					>
 						{options.map((option) => (
 							<Listbox.Option

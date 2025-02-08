@@ -57,7 +57,7 @@ const ZipInfo = ({ state, country, average, total, averages, zip }: IProps) => {
 
 					<div>
 						<Link href='/create-review'>
-							<p className='mt-2 inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm  text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'>
+							<p className='mt-2 inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'>
 								{t('landlord.submit')}
 							</p>
 						</Link>
@@ -69,7 +69,7 @@ const ZipInfo = ({ state, country, average, total, averages, zip }: IProps) => {
 					{({ open }) => (
 						<>
 							<Disclosure.Button className='flex w-full items-start justify-between text-left text-gray-900'>
-								<span className='text-base  leading-7'>
+								<span className='text-base leading-7'>
 									{t('landlord.tenant')}
 								</span>
 								<span className='ml-6 flex h-7 items-center'>

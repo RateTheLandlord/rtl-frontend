@@ -214,7 +214,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 				>
 					<div className='flex justify-center pb-4 pt-2 text-center'>
 						<div>
-							<p className='bold  text-xl underline'>
+							<p className='bold text-xl underline'>
 								{t('analytics.average-rating')}
 							</p>
 							<div className='text-center text-xs'>
@@ -255,7 +255,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 				>
 					<div className='flex justify-center pb-4 pt-2 text-center'>
 						<div>
-							<p className='bold  text-xl underline'>
+							<p className='bold text-xl underline'>
 								{t('analytics.median-reported')}
 							</p>
 							<div className='text-center text-xs'>

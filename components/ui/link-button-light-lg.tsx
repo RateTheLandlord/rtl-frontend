@@ -12,7 +12,7 @@ export default function LinkButtonLightLG({ children, href }: IProps) {
 			data-testid='home-hero-read-btn-1'
 		>
 			<Link href={href}>
-				<div className='w-full px-8 py-3 text-center text-base  text-teal-600 md:px-10 md:py-4 md:text-lg'>
+				<div className='w-full px-8 py-3 text-center text-base text-teal-600 md:px-10 md:py-4 md:text-lg'>
 					{children}
 				</div>
 			</Link>

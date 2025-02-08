@@ -151,7 +151,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 
 						{!resources.length ? (
 							<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
-								<h1 className='mt-4 text-3xl   text-gray-900 sm:text-5xl'>
+								<h1 className='mt-4 text-3xl text-gray-900 sm:text-5xl'>
 									{t('filters.no-results')}
 								</h1>
 								<p className='mt-6 text-base leading-7 text-gray-600'>

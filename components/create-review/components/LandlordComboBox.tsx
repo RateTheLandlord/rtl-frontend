@@ -29,11 +29,11 @@ export default function LandlordComboBox({
 				data-testid='create-review-form-landlord-1'
 				className='relative w-full pt-2 lg:pt-0'
 			>
-				<label htmlFor='landlord' className='block text-sm  text-gray-700'>
+				<label htmlFor='landlord' className='block text-sm text-gray-700'>
 					{name}
 				</label>
 				<Combobox.Input
-					data-testid="LandlordComboBox-component"
+					data-testid='LandlordComboBox-component'
 					className={comboInputClassName}
 					placeholder={`${name}`}
 					displayValue={(state: string) => state}

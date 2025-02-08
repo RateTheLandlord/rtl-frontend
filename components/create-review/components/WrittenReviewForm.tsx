@@ -35,7 +35,7 @@ const WrittenReviewForm = ({
 			</div>
 		</div>
 	) : (
-		<div data-testid="WrittenReviewForm-component">
+		<div data-testid='WrittenReviewForm-component'>
 			<div>
 				<h2 className='text-base font-semibold leading-7 text-gray-900'>
 					{t('create-review.written-review.title')}

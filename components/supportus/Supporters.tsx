@@ -12,7 +12,7 @@ export default function Supporters({ members, tiers }: IProps) {
 	}
 	return (
 		<div>
-			<h3 className='text-center text-4xl '>Our Generous Supporters</h3>
+			<h3 className='text-center text-4xl'>Our Generous Supporters</h3>
 			<div className='mx-auto mt-3 max-w-7xl px-6 lg:px-8'>
 				<div className='grid grid-cols-2 gap-0.5 overflow-hidden sm:mx-0 sm:rounded-2xl md:grid-cols-4'>
 					{members
@@ -27,7 +27,7 @@ export default function Supporters({ members, tiers }: IProps) {
 									className='bg-gray-400/5 p-8 text-center sm:p-10'
 								>
 									<div>
-										<p className='text-xl '>{member.name}</p>
+										<p className='text-xl'>{member.name}</p>
 										<p>{tierName}</p>
 									</div>
 								</div>

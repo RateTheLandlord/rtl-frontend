@@ -12,7 +12,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const session = await getSession(req, res)
 	const user = session?.user
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req
 
 	const id = body.id

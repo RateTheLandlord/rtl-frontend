@@ -56,7 +56,7 @@ const ReviewComponent = ({
 						{!landlordPage ? (
 							<Link
 								href={`/landlord/${encodeURIComponent(review.landlord)}`}
-								className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg  hover:underline lg:mb-2 lg:items-center'
+								className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg hover:underline lg:mb-2 lg:items-center'
 							>
 								<h6 className='text-center'>{review.landlord}</h6>
 								<p className='text-center text-sm'>{t('reviews.read-all')}</p>

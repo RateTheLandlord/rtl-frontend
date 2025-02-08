@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { Fragment, useRef, useState } from 'react'
 import { SelectorIcon } from '@heroicons/react/solid'
 import {
@@ -34,7 +33,7 @@ export default function ComboBox({
 						.toLowerCase()
 						.replace(/\s+/g, '')
 						.includes(query.toLowerCase().replace(/\s+/g, '')),
-			  )
+				)
 	return (
 		<Combobox value={state} onChange={setState}>
 			<div className='relative w-full pt-2 lg:px-2 lg:pt-0'>

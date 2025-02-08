@@ -29,7 +29,7 @@ export async function get({ startDate, groupBy }: StatsQuery): Promise<any> {
 			? combineArrays(
 					combineObjectsByMonth(formattedReviews),
 					combineObjectsByMonth(reviewByDate),
-			  )
+				)
 			: combineArrays(formattedReviews, reviewByDate)
 
 	const total_stats = await getTotalStats()

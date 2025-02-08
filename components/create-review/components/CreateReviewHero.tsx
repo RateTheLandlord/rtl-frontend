@@ -23,7 +23,10 @@ const ReviewHero = ({ getStarted, setGetStarted, setLandlordOpen }: IProps) => {
 				{getStarted ? null : (
 					<div className='mx-auto flex max-w-2xl lg:max-w-none lg:flex-none'>
 						<div className='max-w-3xl flex-none sm:max-w-5xl lg:max-w-none'>
-							<HouseIcon data-testid="HouseIcon-component" className='h-80 w-80 md:h-[500px] md:w-[500px]' />
+							<HouseIcon
+								data-testid='HouseIcon-component'
+								className='h-80 w-80 md:h-[500px] md:w-[500px]'
+							/>
 						</div>
 					</div>
 				)}

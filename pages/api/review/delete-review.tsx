@@ -12,7 +12,6 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
 	const user = session?.user
 	await runMiddleware(req, res)
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req
 
 	const id = body.id

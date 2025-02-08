@@ -51,7 +51,10 @@ const RatingForm = ({
 						return (
 							<div key={rating.title} className='flex flex-col items-center'>
 								<p>{rating.title}</p>
-								<RatingStars testid={rating.title+'RatingStars-component'} value={rating.rating} />
+								<RatingStars
+									testid={rating.title + 'RatingStars-component'}
+									value={rating.rating}
+								/>
 							</div>
 						)
 					})}
@@ -69,7 +72,7 @@ const RatingForm = ({
 		</div>
 	) : (
 		<>
-			<div className='mb-3' data-testid="RatingForm-component">
+			<div className='mb-3' data-testid='RatingForm-component'>
 				<h2 className='text-base font-semibold leading-7 text-gray-900'>
 					{t('create-review.ratings-form.title')}
 				</h2>

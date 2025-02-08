@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useEffect, useState } from 'react'
 import AddReviewModal from './add-review-modal'
 import Button from '../ui/button'

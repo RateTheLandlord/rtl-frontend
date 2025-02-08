@@ -34,11 +34,31 @@ const ReviewPreview = ({
 	const { t } = useTranslation('reviews')
 
 	const ratings = [
-		{ title: t('reviews.health'), rating: health, testid: 'HealthReviewPreviewRating' },
-		{ title: t('reviews.respect'), rating: respect, testid: 'RespectReviewPreviewRating' },
-		{ title: t('reviews.privacy'), rating: privacy, testid: 'PrivacyReviewPreviewRating' },
-		{ title: t('reviews.repair'), rating: repair, testid: 'RepairReviewPreviewRating' },
-		{ title: t('reviews.stability'), rating: stability, testid: 'StabilityReviewPreviewRating' },
+		{
+			title: t('reviews.health'),
+			rating: health,
+			testid: 'HealthReviewPreviewRating',
+		},
+		{
+			title: t('reviews.respect'),
+			rating: respect,
+			testid: 'RespectReviewPreviewRating',
+		},
+		{
+			title: t('reviews.privacy'),
+			rating: privacy,
+			testid: 'PrivacyReviewPreviewRating',
+		},
+		{
+			title: t('reviews.repair'),
+			rating: repair,
+			testid: 'RepairReviewPreviewRating',
+		},
+		{
+			title: t('reviews.stability'),
+			rating: stability,
+			testid: 'StabilityReviewPreviewRating',
+		},
 	]
 	let totalReview = 0
 	for (let i = 0; i < ratings.length; i++) {
@@ -46,20 +66,28 @@ const ReviewPreview = ({
 	}
 	const avgRating = Math.round(totalReview / ratings.length)
 	return (
-		<div className='max-w-[1000px]' data-testid="ReviewPreview-component">
+		<div className='max-w-[1000px]' data-testid='ReviewPreview-component'>
 			<div className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-8'>
 				<div className='flex flex-col items-center bg-gray-50 p-2 lg:min-w-[250px] lg:max-w-[275px] lg:flex-col'>
 					<div className='flex flex-col items-center justify-center'>
 						<div className='flex w-full flex-row justify-between'>
 							<div className='col mb-4 flex w-full flex-col break-words text-lg lg:mb-2 lg:items-center'>
-								<h6 className='text-center' data-testid="ReviewPreview-Landlord">{landlord}</h6>
+								<h6
+									className='text-center'
+									data-testid='ReviewPreview-Landlord'
+								>
+									{landlord}
+								</h6>
 							</div>
 						</div>
 
 						<RatingStars testid={'ReviewPreview-Rating'} value={avgRating} />
 					</div>
 					<div className={classNames('flex flex-col lg:hidden', 'text-end')}>
-						<div className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0' data-testid="ReviewPreview-Location">{`${city}, ${state}, ${
+						<div
+							className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'
+							data-testid='ReviewPreview-Location'
+						>{`${city}, ${state}, ${
 							country_code === 'GB' ? 'UK' : country_code
 						}, ${zip}`}</div>
 					</div>
@@ -83,7 +111,10 @@ const ReviewPreview = ({
 							})}
 							{rent && (
 								<div className='flex w-full flex-col'>
-									<p className='w-full' data-testid="ReviewPreviewRent">{`${t('reviews.rent')}${rent}`}</p>
+									<p
+										className='w-full'
+										data-testid='ReviewPreviewRent'
+									>{`${t('reviews.rent')}${rent}`}</p>
 									<p className='text-xs'>{t('reviews.local')}</p>
 								</div>
 							)}
@@ -94,7 +125,12 @@ const ReviewPreview = ({
 						<div>
 							<p>{t('reviews.review')}</p>
 
-							<p className='mt-3 space-y-6 text-sm text-gray-500' data-testid="WrittenReviewPreview">{review}</p>
+							<p
+								className='mt-3 space-y-6 text-sm text-gray-500'
+								data-testid='WrittenReviewPreview'
+							>
+								{review}
+							</p>
 						</div>
 					</div>
 				</div>

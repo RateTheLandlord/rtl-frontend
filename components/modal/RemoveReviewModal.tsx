@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import { Review } from '@/util/interfaces/interfaces'
 import { Dispatch, Fragment, SetStateAction } from 'react'
 import {
@@ -102,7 +101,7 @@ const RemoveReviewModal = ({
 									<div className='mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left'>
 										<DialogTitle
 											as='h3'
-											className='text-lg  leading-6 text-gray-900'
+											className='text-lg leading-6 text-gray-900'
 										>
 											Remove Review
 										</DialogTitle>
@@ -119,14 +118,14 @@ const RemoveReviewModal = ({
 								<div className='mt-5 sm:mt-4 sm:flex sm:flex-row-reverse'>
 									<button
 										type='button'
-										className={`hover:bg-red:700 inline-flex w-full justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-base  text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
+										className={`hover:bg-red:700 inline-flex w-full justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-base text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
 										onClick={() => onSubmitRemoveReview()}
 									>
 										Remove
 									</button>
 									<button
 										type='button'
-										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base  text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm'
+										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm'
 										onClick={() => {
 											setSelectedReview(undefined)
 											setRemoveReviewOpen(false)

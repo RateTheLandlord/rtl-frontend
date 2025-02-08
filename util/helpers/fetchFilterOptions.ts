@@ -4,7 +4,7 @@ export async function fetchFilterOptions(
 	country?: string,
 	state?: string,
 	city?: string,
-	zip?: string
+	zip?: string,
 ): Promise<FilterOptions> {
 	const url = `/api/review/get-filter-options`
 
@@ -28,5 +28,3 @@ export async function fetchFilterOptions(
 		throw error
 	}
 }
-
-

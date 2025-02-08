@@ -71,23 +71,22 @@ export async function getStaticProps({ locale }) {
 	const data = await getResources({})
 	if (data) {
 		return {
-			props:JSON.parse(JSON.stringify({ data: data,
-				...(await serverSideTranslations(locale, [
-					'filters',
-					'resources',
-					'layout'
-				  ])),
-			 }))
-			,
-			revalidate: 100,			
+			props: JSON.parse(
+				JSON.stringify({
+					data: data,
+					...(await serverSideTranslations(locale, [
+						'filters',
+						'resources',
+						'layout',
+					])),
+				}),
+			),
+			revalidate: 100,
 		}
 	} else {
 		return {
 			props: {
-				...(await serverSideTranslations(locale, [
-					'resources',
-					'layout'
-				  ])),
+				...(await serverSideTranslations(locale, ['resources', 'layout'])),
 				data: [],
 			},
 			revalidate: 100,

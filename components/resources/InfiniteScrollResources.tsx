@@ -88,7 +88,7 @@ function InfiniteScroll({
 								)}
 								<div className='flex justify-between gap-x-4 py-3'>
 									<dd className='flex items-start gap-x-2'>
-										<div className=' text-gray-700'>{resource.description}</div>
+										<div className='text-gray-700'>{resource.description}</div>
 									</dd>
 								</div>
 							</dl>

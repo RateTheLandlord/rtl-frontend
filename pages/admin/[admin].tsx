@@ -33,7 +33,7 @@ function Admin(): JSX.Element {
 				<h1 className='text-center'>Not Logged In</h1>
 				<Link
 					href='/login'
-					className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm  text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'
+					className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'
 				>
 					Go To Login
 				</Link>
@@ -109,7 +109,7 @@ function Admin(): JSX.Element {
 																	item === currentTab
 																		? 'bg-gray-50 text-indigo-600'
 																		: 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
-																	'group flex gap-x-3 rounded-md p-2 text-sm  leading-6',
+																	'group flex gap-x-3 rounded-md p-2 text-sm leading-6',
 																)}
 															>
 																{item.name}
@@ -143,7 +143,7 @@ function Admin(): JSX.Element {
 													item === currentTab
 														? 'bg-gray-50 text-indigo-600'
 														: 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
-													'group flex w-full gap-x-3 rounded-md p-2 text-sm  leading-6',
+													'group flex w-full gap-x-3 rounded-md p-2 text-sm leading-6',
 												)}
 											>
 												{item.name}
@@ -166,7 +166,7 @@ function Admin(): JSX.Element {
 					<span className='sr-only'>Open sidebar</span>
 					<MenuIcon className='h-6 w-6' aria-hidden='true' />
 				</button>
-				<div className='flex-1 text-sm  leading-6 text-gray-900'>Dashboard</div>
+				<div className='flex-1 text-sm leading-6 text-gray-900'>Dashboard</div>
 			</div>
 
 			<main className='py-10 lg:pl-72'>

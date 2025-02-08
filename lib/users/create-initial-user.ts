@@ -10,8 +10,8 @@ export async function createAdminUser() {
 		const id = (
 			await sql`
         INSERT INTO users (name, email, role) VALUES ( ${'admin'}, ${
-				process.env.INITIAL_USER_EMAIL || ''
-			}, ${'ADMIN'}) RETURNING id
+					process.env.INITIAL_USER_EMAIL || ''
+				}, ${'ADMIN'}) RETURNING id
         ;`
 		)[0].id
 		console.log('ADMIN CREATED WITH ID: ', id)

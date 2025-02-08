@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import { Review } from '@/util/interfaces/interfaces'
 import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import countries from '@/util/countries/countries.json'
@@ -123,7 +122,7 @@ const EditReviewModal = ({
 									<div className='sm:col-span-3'>
 										<label
 											htmlFor='landlord'
-											className='block text-sm  text-gray-700'
+											className='block text-sm text-gray-700'
 										>
 											Landlord
 										</label>
@@ -144,7 +143,7 @@ const EditReviewModal = ({
 									<div className='sm:col-span-3'>
 										<label
 											htmlFor='country'
-											className='block text-sm  text-gray-700'
+											className='block text-sm text-gray-700'
 										>
 											Country
 										</label>
@@ -170,7 +169,7 @@ const EditReviewModal = ({
 									<div className='sm:col-span-2'>
 										<label
 											htmlFor='city'
-											className='block text-sm  text-gray-700'
+											className='block text-sm text-gray-700'
 										>
 											City
 										</label>
@@ -191,7 +190,7 @@ const EditReviewModal = ({
 									<div className='sm:col-span-2'>
 										<label
 											htmlFor='region'
-											className='block text-sm  text-gray-700'
+											className='block text-sm text-gray-700'
 										>
 											Province / State
 										</label>
@@ -217,7 +216,7 @@ const EditReviewModal = ({
 										<div className='sm:col-span-2'>
 											<label
 												htmlFor='postal-code'
-												className='block text-sm  text-gray-700'
+												className='block text-sm text-gray-700'
 											>
 												Postal Code / ZIP
 											</label>
@@ -239,7 +238,7 @@ const EditReviewModal = ({
 									<div className='sm:col-span-2'>
 										<label
 											htmlFor='rent'
-											className='block text-sm  text-gray-700'
+											className='block text-sm text-gray-700'
 										>
 											Rent
 										</label>
@@ -260,7 +259,7 @@ const EditReviewModal = ({
 									<div className='sm:col-span-2'>
 										<label
 											htmlFor='review'
-											className='block text-sm  text-gray-700'
+											className='block text-sm text-gray-700'
 										>
 											Review
 										</label>
@@ -277,7 +276,7 @@ const EditReviewModal = ({
 									<div className='sm:col-span-2'>
 										<label
 											htmlFor='moderation-reason'
-											className='block text-sm  text-gray-700'
+											className='block text-sm text-gray-700'
 										>
 											Moderation Reason
 										</label>
@@ -298,7 +297,7 @@ const EditReviewModal = ({
 									<div className='sm:col-span-2'>
 										<label
 											htmlFor='moderators'
-											className='block text-sm  text-gray-700'
+											className='block text-sm text-gray-700'
 										>
 											Previous Moderators
 										</label>
@@ -310,14 +309,14 @@ const EditReviewModal = ({
 								<div className='mt-5 sm:mt-4 sm:flex sm:flex-row-reverse'>
 									<button
 										type='button'
-										className={`inline-flex w-full justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-base  text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
+										className={`inline-flex w-full justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-base text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
 										onClick={() => onSubmitEditReview()}
 									>
 										Submit
 									</button>
 									<button
 										type='button'
-										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base  text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm'
+										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm'
 										onClick={() => {
 											setSelectedReview(undefined)
 											setEditReviewOpen(false)

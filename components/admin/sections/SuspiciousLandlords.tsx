@@ -141,7 +141,7 @@ const SuspiciousLandlords = () => {
 						>
 							<div className='min-w-0'>
 								<div className='flex items-center justify-start gap-x-3'>
-									<p className='text-sm  leading-6 text-gray-900'>
+									<p className='text-sm leading-6 text-gray-900'>
 										{landlord.landlord}
 									</p>
 								</div>

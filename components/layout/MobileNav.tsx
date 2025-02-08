@@ -16,7 +16,7 @@ const MobileNav = ({ navigation, activeTab }: IProps) => {
 					<Link key={link.href} href={link.href}>
 						<Disclosure.Button
 							as='a'
-							className={`block cursor-pointer bg-teal-50 py-2 pl-3 pr-4 text-base  text-teal-700 ${
+							className={`block cursor-pointer bg-teal-50 py-2 pl-3 pr-4 text-base text-teal-700 ${
 								activeTab === link.href
 									? 'border-l-4 border-teal-500 bg-teal-50'
 									: 'bg-white'
@@ -29,7 +29,7 @@ const MobileNav = ({ navigation, activeTab }: IProps) => {
 				<Link href='/create-review'>
 					<Disclosure.Button
 						as='a'
-						className={`block cursor-pointer py-2 pl-3 pr-4 text-base  text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 ${
+						className={`block cursor-pointer py-2 pl-3 pr-4 text-base text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 ${
 							activeTab === '/create-review' ? 'border-l-4 border-teal-500' : ''
 						}`}
 					>

@@ -7,7 +7,6 @@ import SuccessModal from './success-modal'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 jest.mock('next/router', () => require('next-router-mock'))
 
 describe('SuccessModal', () => {

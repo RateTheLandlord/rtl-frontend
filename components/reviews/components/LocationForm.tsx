@@ -22,7 +22,7 @@ const LocationForm = ({
 
 	return (
 		<>
-			<div className='flex flex-col items-center '>
+			<div className='flex flex-col items-center'>
 				<div className='grid w-11/12'>
 					<h2 className='border-b text-lg font-semibold leading-10 text-gray-900 sm:text-lg md:text-xl lg:text-2xl xl:text-2xl'>
 						{t('reviews.select_country')}
@@ -39,7 +39,7 @@ const LocationForm = ({
 				<div className='grid w-11/12 py-2'>
 					{!selectedCountry ? null : (
 						<>
-							<h2 className='border-b text-lg font-semibold leading-10 text-gray-900 sm:text-lg md:text-xl lg:text-2xl xl:text-2xl '>
+							<h2 className='border-b text-lg font-semibold leading-10 text-gray-900 sm:text-lg md:text-xl lg:text-2xl xl:text-2xl'>
 								{t('reviews.select_state')}
 							</h2>
 							<ComboBox

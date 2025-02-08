@@ -3,7 +3,7 @@ const Privacy = () => {
 		<div data-testid='about-terms-1' className='w-full bg-white'>
 			<div className='mx-auto flex max-w-7xl flex-col gap-2 px-6 text-lg lg:px-8'>
 				<h1>
-					<span className='mt-2 block text-center text-3xl  leading-8  text-gray-900 sm:text-4xl'>
+					<span className='mt-2 block text-center text-3xl leading-8 text-gray-900 sm:text-4xl'>
 						Privacy Policy
 					</span>
 				</h1>

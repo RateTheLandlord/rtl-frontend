@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { Fragment } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
@@ -32,11 +31,11 @@ export default function CityComboBox({
 					data-testid='create-review-form-city-1'
 					className='relative w-full'
 				>
-					<label htmlFor='city' className='block text-sm  text-gray-700'>
+					<label htmlFor='city' className='block text-sm text-gray-700'>
 						{name}
 					</label>
 					<Combobox.Input
-						data-testid="CityComboBox-component"
+						data-testid='CityComboBox-component'
 						className={comboboxClassName}
 						placeholder={`${name}`}
 						displayValue={(state: string) => state}

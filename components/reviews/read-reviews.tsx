@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useState, useEffect } from 'react'
 import { Review as IReview } from '@/util/interfaces/interfaces'
 import Review from './review'
@@ -70,7 +69,7 @@ function ReviewForm(): JSX.Element {
 	}, [stateFilter, countryFilter])
 
 	return (
-		<div className='m-2 w-full  max-w-7xl'>
+		<div className='m-2 w-full max-w-7xl'>
 			<div className='w-full'>
 				<AdsComponent slot='2009320000' />
 			</div>

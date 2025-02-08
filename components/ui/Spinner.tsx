@@ -14,7 +14,7 @@ const Spinner = ({
 	return (
 		<div
 			className={classNames(
-				'inline-block animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em]  motion-reduce:animate-[spin_1.5s_linear_infinite]',
+				'inline-block animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]',
 				height,
 				width,
 				colour,

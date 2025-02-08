@@ -33,21 +33,21 @@ export async function createReview(
           flagged_reason, admin_approved, admin_edited, rent)
           VALUES
           (${inputReview.landlord}, ${inputReview.country_code}, ${
-			inputReview.city
-		}, ${inputReview.state},
+						inputReview.city
+					}, ${inputReview.state},
           ${inputReview.zip}, ${inputReview.review}, ${inputReview.repair}, ${
-			inputReview.health
-		},
+						inputReview.health
+					},
           ${inputReview.stability}, ${inputReview.privacy}, ${
-			inputReview.respect
-		}, ${inputReview.flagged},
+						inputReview.respect
+					}, ${inputReview.flagged},
           ${inputReview.flagged_reason}, ${inputReview.admin_approved}, ${
-			inputReview.admin_edited
-		}, ${inputReview.rent || null})
+						inputReview.admin_edited
+					}, ${inputReview.rent || null})
           RETURNING id;
         `
 
-		return {message: "Review successfully added", success: true}
+		return { message: 'Review successfully added', success: true }
 	} catch (e) {
 		throw e
 	}

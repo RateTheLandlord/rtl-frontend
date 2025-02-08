@@ -94,18 +94,21 @@ export async function filterOptions(
 	)
 
 	const seenZips = new Set<string>()
-	const allZipOptions = zipList.reduce((acc, z, id) => {
-		const zip = z.toUpperCase().replace(/\s+/g, '')
-		if (!seenZips.has(zip)) {
-			seenZips.add(zip)
-			acc.push({
-				id: id + 1,
-				name: zip,
-				value: zip,
-			})
-		}
-		return acc
-	}, [] as { id: number; name: string; value: string }[])
+	const allZipOptions = zipList.reduce(
+		(acc, z, id) => {
+			const zip = z.toUpperCase().replace(/\s+/g, '')
+			if (!seenZips.has(zip)) {
+				seenZips.add(zip)
+				acc.push({
+					id: id + 1,
+					name: zip,
+					value: zip,
+				})
+			}
+			return acc
+		},
+		[] as { id: number; name: string; value: string }[],
+	)
 
 	allZipOptions.sort((a: Options, b: Options): number =>
 		a.name.localeCompare(b.name),

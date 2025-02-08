@@ -11,8 +11,8 @@ module.exports = {
 	theme: {
 		extend: {
 			height: {
-				'128': '41rem', // Adds a custom height of 32rem (512px)
-			  },
+				128: '41rem', // Adds a custom height of 32rem (512px)
+			},
 			fontFamily: {
 				'montserrat-regular': ['Montserrat-Regular', 'sans-serif'],
 				'montserrat-medium': ['Montserrat-Medium', 'sans-serif'],
@@ -20,12 +20,12 @@ module.exports = {
 				'montserrat-extra-bold': ['Montserrat-Extra-Bold', 'sans-serif'],
 			},
 			animation: {
-				'fade-in': 'fadeIn 4s ease-in', 
-			  },
-			  keyframes: {
+				'fade-in': 'fadeIn 4s ease-in',
+			},
+			keyframes: {
 				fadeIn: {
-				  '0%': { opacity: '0' },
-				  '100%': { opacity: '1' },
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' },
 				},
 			},
 		},

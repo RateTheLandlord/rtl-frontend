@@ -226,9 +226,7 @@ const Review = ({
 								setLocationOpen={setLocationOpen}
 							/>
 							<div className='mt-3'>
-								<h1 className='text-3xl   text-gray-900'>
-									{t('reviews.title')}
-								</h1>
+								<h1 className='text-3xl text-gray-900'>{t('reviews.title')}</h1>
 								<p className='mt-4 max-w-xl text-sm text-gray-700'>
 									{t('reviews.body')}
 								</p>
@@ -309,7 +307,7 @@ const Review = ({
 										/>
 										{!reviews.length ? (
 											<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
-												<h1 className='mt-4 text-3xl   text-gray-900 sm:text-5xl'>
+												<h1 className='mt-4 text-3xl text-gray-900 sm:text-5xl'>
 													No results found
 												</h1>
 												<p className='mt-6 text-base leading-7 text-gray-600'>

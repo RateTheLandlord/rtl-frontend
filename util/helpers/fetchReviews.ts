@@ -53,5 +53,3 @@ export async function fetchResources(
 		throw error
 	}
 }
-
-
