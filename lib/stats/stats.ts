@@ -6,7 +6,27 @@ type StatsQuery = {
 	groupBy?: string
 }
 
-export async function get({ startDate, groupBy }: StatsQuery): Promise<any> {
+type DetailedStats = {
+	date: string
+	country_codes: Record<string, number>
+	cities: Record<string, number>
+	state: Record<string, number>
+	zip: Record<string, number>
+	total?: number
+}
+
+type TotalStats = {
+	total_reviews: number
+	countryStats: Record<
+		string,
+		{ total: number; states: { key: string; total: number }[] }
+	>
+}
+
+export async function get({ startDate, groupBy }: StatsQuery): Promise<{
+	detailed_stats: DetailedStats[]
+	total_stats: TotalStats
+}> {
 	const DEFAULT_START = dayjs(new Date())
 		.subtract(7, 'days')
 		.format('YYYY-MM-DD')
@@ -151,7 +171,7 @@ export function combineArrays(detailed_stats, reviewsByDate) {
 	})
 }
 
-export async function getTotalStats(): Promise<any> {
+export async function getTotalStats(): Promise<TotalStats> {
 	const getReviewStats = async (
 		countryCode: string,
 	): Promise<{ total: number; states: { key: string; total: number }[] }> => {

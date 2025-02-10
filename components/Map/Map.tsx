@@ -63,8 +63,8 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 				'',
 			)
 			setFormData((prevData) => ({ ...prevData, zipCodes: options.zips }))
-		} catch (error) {
-			console.error('Error fetching zip codes:', error)
+		} catch {
+			console.error('Error fetching zip codes')
 		}
 	}
 
@@ -113,13 +113,13 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 					if (!res.ok) throw new Error('Network response was not ok')
 					const data = await res.json()
 					setFormData((prevData) => ({ ...prevData, locations: data }))
-				} catch (error) {
-					console.error('Error fetching locations:', error)
+				} catch {
+					console.error('Error fetching locations')
 				}
 			}
 			getLocations()
 		}
-	}, [formData.zipCodes])
+	}, [formData.zipCodes, formData.country?.value])
 
 	const updateSelectedPoint = (point: IZipLocations | null) => {
 		setFormData((prevData) => ({ ...prevData, selectedPoint: point }))

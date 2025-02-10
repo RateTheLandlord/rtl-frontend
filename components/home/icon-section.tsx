@@ -21,7 +21,7 @@ export default function IconSection() {
 										<Privacy styling='className="w-16 h-16 mx-auto text-teal-600' />
 									</div>
 								</div>
-								<div className='mt-3 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-6'>
+								<div className='mt-3 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0'>
 									<h3 className='text-2xl text-gray-900'>
 										{t('home.icon.anonymity')}
 									</h3>
@@ -36,7 +36,7 @@ export default function IconSection() {
 										<Solidarity styling='className="w-16 h-16 mx-auto text-teal-600' />
 									</div>
 								</div>
-								<div className='mt-3 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-6'>
+								<div className='mt-3 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0'>
 									<h3 className='text-2xl text-gray-900'>
 										{t('home.icon.solidarity')}
 									</h3>
@@ -51,7 +51,7 @@ export default function IconSection() {
 										<Transparency styling='className="w-16 h-16 mx-auto text-teal-600' />
 									</div>
 								</div>
-								<div className='mt-3 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-6'>
+								<div className='mt-3 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0'>
 									<h3 className='text-2xl text-gray-900'>
 										{t('home.icon.transparency')}
 									</h3>

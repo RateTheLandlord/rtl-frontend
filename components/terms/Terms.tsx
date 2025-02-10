@@ -31,10 +31,11 @@ const Terms = () => {
 				</p>
 				<h2 className=''>3. Disclaimer</h2>
 				<p>
-					The information provided on ratethelandlord.org is provided "as is"
-					without any representations or warranties, express or implied.
-					ratethelandlord.org makes no representations or warranties in relation
-					to the accuracy or completeness of the information on the website.
+					The information provided on ratethelandlord.org is provided &quot;as
+					is&quot; without any representations or warranties, express or
+					implied. ratethelandlord.org makes no representations or warranties in
+					relation to the accuracy or completeness of the information on the
+					website.
 				</p>
 				<h2 className=''>4. Limitations of Liability</h2>
 				<p>
@@ -59,9 +60,9 @@ const Terms = () => {
 				</p>
 				<h2 className=''>6. Governing Law</h2>
 				<p>
-					Any claim relating to ratethelandlord.org's website shall be governed
-					by the laws of the jurisdiction of ratethelandlord.org's location
-					without regard to its conflict of law provisions.
+					Any claim relating to ratethelandlord.org&apos;s website shall be
+					governed by the laws of the jurisdiction of ratethelandlord.org&apos;s
+					location without regard to its conflict of law provisions.
 				</p>
 				<h2 className=''>7. Modifications</h2>
 				<p>

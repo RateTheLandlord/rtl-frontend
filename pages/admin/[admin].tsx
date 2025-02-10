@@ -33,7 +33,7 @@ function Admin(): JSX.Element {
 				<h1 className='text-center'>Not Logged In</h1>
 				<Link
 					href='/login'
-					className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'
+					className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm text-white shadow-sm hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none'
 				>
 					Go To Login
 				</Link>
@@ -81,7 +81,7 @@ function Admin(): JSX.Element {
 									leaveFrom='opacity-100'
 									leaveTo='opacity-0'
 								>
-									<div className='absolute left-full top-0 flex w-16 justify-center pt-5'>
+									<div className='absolute top-0 left-full flex w-16 justify-center pt-5'>
 										<button
 											type='button'
 											className='-m-2.5 p-2.5'
@@ -128,9 +128,9 @@ function Admin(): JSX.Element {
 			</Transition.Root>
 
 			{/* Static sidebar for desktop */}
-			<div className='hidden lg:fixed lg:bottom-0 lg:top-16 lg:z-50 lg:flex lg:w-72 lg:flex-col'>
+			<div className='hidden lg:fixed lg:top-16 lg:bottom-0 lg:z-50 lg:flex lg:w-72 lg:flex-col'>
 				{/* Sidebar component, swap this element with another sidebar if you like */}
-				<div className='flex grow flex-col gap-y-5 overflow-y-auto border-r border-t border-gray-200 bg-white px-6'>
+				<div className='flex grow flex-col gap-y-5 overflow-y-auto border-t border-r border-gray-200 bg-white px-6'>
 					<nav className='flex flex-1 flex-col'>
 						<ul role='list' className='flex flex-1 flex-col gap-y-7 pt-2'>
 							<li>

@@ -25,7 +25,9 @@ const ReviewComponent = ({
 	handleEdit,
 	landlordPage = false,
 }: IProps) => {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = useTranslation('reviews')
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { user } = useUser()
 	const date = new Date(review.date_added).toLocaleDateString()
 
@@ -51,12 +53,12 @@ const ReviewComponent = ({
 				/>
 			) : null}
 			<div className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-8'>
-				<div className='flex flex-col items-center bg-gray-50 p-2 lg:min-w-[250px] lg:max-w-[275px] lg:flex-col'>
+				<div className='flex flex-col items-center bg-gray-50 p-2 lg:max-w-[275px] lg:min-w-[250px] lg:flex-col'>
 					<div className='flex w-full flex-row justify-between'>
 						{!landlordPage ? (
 							<Link
 								href={`/landlord/${encodeURIComponent(review.landlord)}`}
-								className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg hover:underline lg:mb-2 lg:items-center'
+								className='col mb-4 flex w-full cursor-pointer flex-col text-lg break-words hover:underline lg:mb-2 lg:items-center'
 							>
 								<h6 className='text-center'>{review.landlord}</h6>
 								<p className='text-center text-sm'>{t('reviews.read-all')}</p>
@@ -74,11 +76,11 @@ const ReviewComponent = ({
 								)}/${encodeURIComponent(review.state)}/${encodeURIComponent(
 									review.city,
 								)}`}
-								className='w-full text-gray-500 hover:underline lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'
+								className='w-full text-gray-500 hover:underline lg:mt-2 lg:ml-0 lg:border-0 lg:pl-0'
 							>{`${review.city}, ${review.state}, ${
 								review.country_code === 'GB' ? 'UK' : review.country_code
 							}, ${review.zip}`}</Link>
-							<p className='mb-4 text-gray-500 lg:mb-0 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>
+							<p className='mb-4 text-gray-500 lg:mt-2 lg:mb-0 lg:ml-0 lg:border-0 lg:pl-0'>
 								{date}
 							</p>
 						</div>
@@ -93,11 +95,11 @@ const ReviewComponent = ({
 							)}/${encodeURIComponent(review.state)}/${encodeURIComponent(
 								review.city,
 							)}`}
-							className='w-full text-gray-500 hover:underline lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'
+							className='w-full text-gray-500 hover:underline lg:mt-2 lg:ml-0 lg:border-0 lg:pl-0'
 						>{`${review.city}, ${review.state}, ${
 							review.country_code === 'GB' ? 'UK' : review.country_code
 						}, ${review.zip}`}</Link>
-						<p className='mb-4 text-gray-500 lg:mb-0 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>
+						<p className='mb-4 text-gray-500 lg:mt-2 lg:mb-0 lg:ml-0 lg:border-0 lg:pl-0'>
 							{date}
 						</p>
 					</div>

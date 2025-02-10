@@ -43,7 +43,7 @@ const Information = ({ selectedPoint, country, state }: IProps) => {
 		<div className='mt-6 border-t border-gray-100'>
 			<div className='divide-y divide-gray-100'>
 				<div className='flex w-full items-center justify-between px-4 py-6'>
-					<p className='text-sm font-medium leading-6 text-gray-900'>
+					<p className='text-sm leading-6 font-medium text-gray-900'>
 						Postal Code
 					</p>
 					<p className='mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0'>
@@ -51,7 +51,7 @@ const Information = ({ selectedPoint, country, state }: IProps) => {
 					</p>
 				</div>
 				<div className='flex w-full items-center justify-between px-4 py-6'>
-					<p className='text-sm font-medium leading-6 text-gray-900'>
+					<p className='text-sm leading-6 font-medium text-gray-900'>
 						Total Reviews
 					</p>
 					<p className='mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0'>
@@ -59,7 +59,7 @@ const Information = ({ selectedPoint, country, state }: IProps) => {
 					</p>
 				</div>
 				<div className='flex w-full items-center justify-between px-4 py-6'>
-					<p className='text-sm font-medium leading-6 text-gray-900'>Average</p>
+					<p className='text-sm leading-6 font-medium text-gray-900'>Average</p>
 					<p className='mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0'>
 						<RatingStars testid='mapratings' value={stats.average} />
 					</p>
@@ -71,7 +71,7 @@ const Information = ({ selectedPoint, country, state }: IProps) => {
 						)}/${encodeURIComponent(state?.value || '')}/${encodeURIComponent(
 							selectedPoint.zip,
 						)}`}
-						className='cursor-pointer text-sm font-medium leading-6 text-gray-900 underline'
+						className='cursor-pointer text-sm leading-6 font-medium text-gray-900 underline'
 					>
 						View Reviews
 					</Link>

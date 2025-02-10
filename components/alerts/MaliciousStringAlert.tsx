@@ -24,7 +24,7 @@ const MaliciousStringAlert = ({ setMaliciousAlertOpen }: IProps) => {
 						<button
 							type='button'
 							onClick={() => setMaliciousAlertOpen((p) => !p)}
-							className='inline-flex rounded-md bg-orange-200 p-1.5 text-orange-600 hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2 focus:ring-offset-orange-200'
+							className='inline-flex rounded-md bg-orange-200 p-1.5 text-orange-600 hover:bg-orange-300 focus:ring-2 focus:ring-orange-600 focus:ring-offset-2 focus:ring-offset-orange-200 focus:outline-none'
 						>
 							<span className='sr-only'>Dismiss</span>
 							<XIcon className='h-5 w-5' aria-hidden='true' />

@@ -6,8 +6,7 @@ STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.tsx$
 # Loop through each staged file and check for test files and a11y tests
 for file in $STAGED_FILES; do
 
-  if [[ "$file" == *"pages/"* ]]; then
-    echo "Skipping file in pages directory: $file"  # Debug statement
+  if [[ "$file" != *"components/"* ]]; then
     continue
   fi
   

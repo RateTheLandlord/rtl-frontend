@@ -32,7 +32,7 @@
 		"**/*.tsx",
 		"**/*.js",
 		".next/types/**/*.ts"
-, "next-i18next.config.js", "next.config.js"	],
+, "next-i18next.config.mjs", "next.config.mjs", "tailwind.config.mjs", "postcss.config.mjs", "prettier.config.mjs", "ley.config.mjs"	],
 	"exclude": [
 		"node_modules",
 		".next",

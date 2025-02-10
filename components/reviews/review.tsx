@@ -123,43 +123,42 @@ const Review = ({
 		setPage(1)
 	}
 
-	const fetchData = async () => {
-		setIsLoading(true)
-		setReviewsLoading(true)
-		try {
-			const moreData = await fetchReviews({ page, ...queryParams })
-
-			setReviews((prevReviews) => {
-				if (page === 1) {
-					// Initial fetch
-					return [...moreData.reviews]
-				} else {
-					// If page changed or neither page nor other query parameters changed, append new reviews
-					return [...prevReviews, ...moreData.reviews]
-				}
-			})
-
-			if (moreData.reviews.length <= 0 || reviews.length >= moreData.total) {
-				setHasMore(false)
-			} else {
-				setHasMore(true)
-			}
-		} catch (error) {
-			console.error('Error fetching reviews:', error)
-		} finally {
-			setIsLoading(false)
-			setReviewsLoading(false)
-		}
-	}
-
 	// Reset hasMore when queryParams change
 	useEffect(() => {
 		setHasMore(true)
 	}, [queryParams])
 
 	useEffect(() => {
+		const fetchData = async () => {
+			setIsLoading(true)
+			setReviewsLoading(true)
+			try {
+				const moreData = await fetchReviews({ page, ...queryParams })
+
+				setReviews((prevReviews) => {
+					if (page === 1) {
+						// Initial fetch
+						return [...moreData.reviews]
+					} else {
+						// If page changed or neither page nor other query parameters changed, append new reviews
+						return [...prevReviews, ...moreData.reviews]
+					}
+				})
+
+				if (moreData.reviews.length <= 0 || reviews.length >= moreData.total) {
+					setHasMore(false)
+				} else {
+					setHasMore(true)
+				}
+			} catch {
+				console.error('Error fetching reviews')
+			} finally {
+				setIsLoading(false)
+				setReviewsLoading(false)
+			}
+		}
 		fetchData()
-	}, [queryParams, page])
+	}, [queryParams, page, reviews.length, setIsLoading])
 
 	const [dynamicCityOptions, setDynamicCityOptions] = useState<Options[]>([])
 
@@ -176,8 +175,8 @@ const Review = ({
 			)
 			setDynamicCityOptions(filterOptions.cities)
 			setDynamicZipOptions(filterOptions.zips)
-		} catch (error) {
-			console.error('Error fetching filter options:', error)
+		} catch {
+			console.error('Error fetching filter options')
 		} finally {
 			setIsLoading(false)
 		}
@@ -246,24 +245,24 @@ const Review = ({
 							className='w-full'
 						>
 							<TabList className='flex w-full justify-center gap-4 border-b p-3'>
-								<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+								<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
 									{t('reviews.reviews')}
 								</Tab>
-								<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+								<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
 									<div className='flex flex-row gap-1'>
 										<p>{t('reviews.map')}</p>
 										<div className='flex h-full flex-col justify-start'>
-											<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-teal-500/10'>
+											<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-teal-500/10 ring-inset'>
 												{t('reviews.beta')}
 											</span>
 										</div>
 									</div>
 								</Tab>
-								<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+								<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
 									<div className='flex flex-row gap-1'>
 										<p>{t('reviews.analytics')}</p>
 										<div className='flex h-full flex-col justify-start'>
-											<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-teal-500/10'>
+											<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-teal-500/10 ring-inset'>
 												{t('reviews.beta')}
 											</span>
 										</div>
@@ -311,7 +310,8 @@ const Review = ({
 													No results found
 												</h1>
 												<p className='mt-6 text-base leading-7 text-gray-600'>
-													Sorry, we couldn't find any results for those filters.
+													Sorry, we couldn&apos;t find any results for those
+													filters.
 												</p>
 											</div>
 										) : (

@@ -57,17 +57,6 @@ jest.mock('../Map/Map', () => {
 	}
 })
 
-jest.mock('next/router', () => ({
-	useRouter() {
-		return {
-			route: '/',
-			pathname: '',
-			query: '',
-			asPath: '',
-		}
-	},
-}))
-
 describe('Review Component', () => {
 	it('Should not have a11y violation', async () => {
 		const { container } = render(

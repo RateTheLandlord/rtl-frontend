@@ -24,17 +24,6 @@ afterAll(() => {
 	jest.restoreAllMocks() // Optionally restore the original fetch after the tests
 })
 
-// In your test file, mock the `next-recaptcha-v3` module
-jest.mock('next-recaptcha-v3', () => ({
-	// Mock the useReCaptcha hook correctly
-	useReCaptcha: jest.fn().mockReturnValue({
-		executeRecaptcha: jest.fn().mockResolvedValue('mock-token'),
-		resetRecaptcha: jest.fn(),
-	}),
-	// If needed, you can also mock ReCaptcha component, but it may not be necessary for your tests
-	ReCaptcha: () => null,
-}))
-
 jest.mock('react-i18next', () => ({
 	useTranslation: jest.fn().mockReturnValue({
 		t: jest.fn((key) => {

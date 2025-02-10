@@ -32,7 +32,7 @@ export const useLandlordSuggestions = (landlord: string) => {
 			}
 			void fetchData()
 		}
-	}, [debouncedSearchString])
+	}, [debouncedSearchString, landlord])
 
 	return { isSearching, landlordSuggestions }
 }

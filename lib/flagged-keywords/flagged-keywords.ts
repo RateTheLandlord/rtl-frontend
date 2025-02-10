@@ -33,7 +33,7 @@ export async function create(inputKeyword: Keywords): Promise<IResponse> {
 		const landlord = await createKeyword(inputKeyword)
 		if (landlord) return { status: 200, message: 'Created Landlord' }
 		throw new Error()
-	} catch (e) {
+	} catch {
 		return { status: 500, message: 'Failed to create Landlord' }
 	}
 }
@@ -47,7 +47,7 @@ export async function deleteKeyword(id: number): Promise<IResponse> {
 		`
 		if (deleteResource) return { status: 200, message: 'Deleted Keyword' }
 		throw new Error()
-	} catch (error) {
+	} catch {
 		return { status: 500, message: 'Failed to Delete Keyword' }
 	}
 }

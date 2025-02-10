@@ -48,7 +48,7 @@ export async function createReview(
         `
 
 		return { message: 'Review successfully added', success: true }
-	} catch (e) {
+	} catch {
 		throw e
 	}
 }
@@ -61,7 +61,7 @@ export async function getExistingReviewsForLandlord(
         FROM review
         WHERE landlord = ${inputReview.landlord.toLocaleUpperCase()}
           AND ZIP = ${inputReview.zip.toLocaleUpperCase()};`
-	} catch (e) {
+	} catch {
 		throw new Error(FAILED_TO_RETRIEVE_REVIEWS)
 	}
 }

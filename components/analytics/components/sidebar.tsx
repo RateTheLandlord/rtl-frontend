@@ -26,12 +26,12 @@ const Sidebar = ({ data, handleClick }: SidebarProps) => {
 
 			{/* Sidebar */}
 			<div
-				className={`fixed inset-0 z-40 transform bg-gray-800 bg-opacity-50 transition-all duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+				className={`bg-opacity-50 fixed inset-0 z-40 transform bg-gray-800 transition-all duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
 				onClick={toggleSidebar}
 			>
 				{/* Sidebar content */}
 				<div
-					className={`fixed left-0 top-0 h-full w-96 transform bg-white p-4 shadow-lg transition-all duration-300 ease-in-out ${
+					className={`fixed top-0 left-0 h-full w-96 transform bg-white p-4 shadow-lg transition-all duration-300 ease-in-out ${
 						isOpen ? 'translate-x-0' : '-translate-x-full'
 					}`}
 				>
@@ -40,7 +40,7 @@ const Sidebar = ({ data, handleClick }: SidebarProps) => {
 						className='h-48 rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
 						onClick={() => handleClick('rating')}
 					>
-						<div className='flex justify-center pb-4 pt-2 text-center'>
+						<div className='flex justify-center pt-2 pb-4 text-center'>
 							<div>
 								<p className='bold text-xl underline'>Average Rating</p>
 								<div className='text-center text-xs'>(Select to Filter)</div>
@@ -77,7 +77,7 @@ const Sidebar = ({ data, handleClick }: SidebarProps) => {
 						className='h-48 rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
 						onClick={() => handleClick('median')}
 					>
-						<div className='flex justify-center pb-4 pt-2 text-center'>
+						<div className='flex justify-center pt-2 pb-4 text-center'>
 							<div>
 								<p className='bold text-xl underline'>Median Reported Rent</p>
 								<div className='text-center text-xs'>(Select to Filter)</div>

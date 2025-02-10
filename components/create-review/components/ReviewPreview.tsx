@@ -31,6 +31,7 @@ const ReviewPreview = ({
 	rent,
 	zip,
 }: IProps) => {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = useTranslation('reviews')
 
 	const ratings = [
@@ -68,10 +69,10 @@ const ReviewPreview = ({
 	return (
 		<div className='max-w-[1000px]' data-testid='ReviewPreview-component'>
 			<div className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-8'>
-				<div className='flex flex-col items-center bg-gray-50 p-2 lg:min-w-[250px] lg:max-w-[275px] lg:flex-col'>
+				<div className='flex flex-col items-center bg-gray-50 p-2 lg:max-w-[275px] lg:min-w-[250px] lg:flex-col'>
 					<div className='flex flex-col items-center justify-center'>
 						<div className='flex w-full flex-row justify-between'>
-							<div className='col mb-4 flex w-full flex-col break-words text-lg lg:mb-2 lg:items-center'>
+							<div className='col mb-4 flex w-full flex-col text-lg break-words lg:mb-2 lg:items-center'>
 								<h6
 									className='text-center'
 									data-testid='ReviewPreview-Landlord'
@@ -85,7 +86,7 @@ const ReviewPreview = ({
 					</div>
 					<div className={classNames('flex flex-col lg:hidden', 'text-end')}>
 						<div
-							className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'
+							className='w-full text-gray-500 lg:mt-2 lg:ml-0 lg:border-0 lg:pl-0'
 							data-testid='ReviewPreview-Location'
 						>{`${city}, ${state}, ${
 							country_code === 'GB' ? 'UK' : country_code
@@ -93,7 +94,7 @@ const ReviewPreview = ({
 					</div>
 
 					<div className='hidden flex-col text-center lg:flex'>
-						<div className='w-full text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0'>{`${city}, ${state}, ${
+						<div className='w-full text-gray-500 lg:mt-2 lg:ml-0 lg:border-0 lg:pl-0'>{`${city}, ${state}, ${
 							country_code === 'GB' ? 'UK' : country_code
 						}, ${zip}`}</div>
 					</div>

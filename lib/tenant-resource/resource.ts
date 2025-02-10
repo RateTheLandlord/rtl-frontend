@@ -113,7 +113,7 @@ export async function create(inputResource: Resource): Promise<IResponse> {
 		const resource = await createResource(inputResource)
 		if (resource) return { status: 200, message: 'Created Resource' }
 		throw new Error()
-	} catch (e) {
+	} catch {
 		return { status: 500, message: 'Failed to create Resource' }
 	}
 }
@@ -126,7 +126,7 @@ export async function update(
 		const updated = await updateResource(id, resource)
 		if (updated) return { status: 200, message: 'Resource updated' }
 		throw new Error()
-	} catch (error) {
+	} catch {
 		return { status: 500, message: 'Failed to Update Resource' }
 	}
 }
@@ -140,7 +140,7 @@ export async function deleteResource(id: number): Promise<IResponse> {
 		`
 		if (deleteResource) return { status: 200, message: 'Deleted Resource' }
 		throw new Error()
-	} catch (error) {
+	} catch {
 		return { status: 500, message: 'Failed to Delete Resource' }
 	}
 }

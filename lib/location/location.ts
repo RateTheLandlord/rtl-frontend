@@ -27,30 +27,40 @@ export async function getLocations(
 	try {
 		if (country_code === 'CA') {
 			// Execute the query
-			const result = await sql`
-                        SELECT *
-                        FROM ca_location
-                        WHERE zip = ANY(${sql.array([zipCodeValues])});
-                    `
+			const result: Array<{
+				zip: string
+				latitude: string
+				longitude: string
+			}> = await sql`
+						SELECT *
+						FROM ca_location
+						WHERE zip = ANY(${sql.array([zipCodeValues])});
+					`
 
 			// Transform the result to match the IZipLocations type
-			const locations: Array<IZipLocations> = await result.map((row: any) => ({
-				zip: row.zip,
-				latitude: row.latitude,
-				longitude: row.longitude,
-			}))
+			const locations: Array<IZipLocations> = await result.map(
+				(row: { zip: string; latitude: string; longitude: string }) => ({
+					zip: row.zip,
+					latitude: row.latitude,
+					longitude: row.longitude,
+				}),
+			)
 
 			return await locations
 		} else {
 			// Execute the query
-			const result = await sql`
-            SELECT *
-            FROM us_location
-            WHERE zip = ANY(${sql.array([zipCodeValues])});
-        `
+			const result: Array<{
+				zip: string
+				latitude: string
+				longitude: string
+			}> = await sql`
+					SELECT *
+					FROM us_location
+					WHERE zip = ANY(${sql.array([zipCodeValues])});
+				`
 
 			// Transform the result to match the IZipLocations type
-			const locations: Array<IZipLocations> = await result.map((row: any) => ({
+			const locations: Array<IZipLocations> = result.map((row) => ({
 				zip: row.zip,
 				latitude: row.latitude,
 				longitude: row.longitude,

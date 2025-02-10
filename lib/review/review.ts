@@ -265,7 +265,7 @@ export async function create(
 
 		const filterResult: IResult = await filterReviewWithAI(inputReview)
 		return createReview(inputReview, filterResult) // Hit data layer to create review
-	} catch (e) {
+	} catch {
 		throw e
 	}
 }
@@ -275,7 +275,7 @@ export async function update(id: number, review: Review): Promise<Review> {
 }
 
 export async function report(id: number, reason: string): Promise<number> {
-	reason.length > 250 ? (reason = `${reason.substring(0, 250)}...`) : reason
+	reason = reason.length > 250 ? `${reason.substring(0, 250)}...` : reason
 	await sql`UPDATE review SET flagged = true, flagged_reason = ${reason}
       WHERE id = ${id} RETURNING id;`
 

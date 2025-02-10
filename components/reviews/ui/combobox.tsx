@@ -37,9 +37,9 @@ export default function ComboBox({
 	return (
 		<Combobox value={state} onChange={setState}>
 			<div className='relative w-full pt-2 lg:px-2 lg:pt-0'>
-				<div className='relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm'>
+				<div className='focus-visible:ring-opacity-75 relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm'>
 					<ComboboxInput
-						className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'
+						className='focus-visible:ring-opacity-75 relative w-full cursor-default rounded-lg bg-white py-2 pr-10 pl-3 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'
 						displayValue={(state: Options) => state?.name}
 						placeholder={name}
 						onChange={(event) => setQuery(event.target.value)}
@@ -60,9 +60,9 @@ export default function ComboBox({
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<ComboboxOptions className='absolute z-10 mt-1 max-h-60 w-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+					<ComboboxOptions className='ring-opacity-5 absolute z-10 mt-1 max-h-60 w-60 overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black focus:outline-none sm:text-sm'>
 						{filterOptions.length === 0 && query !== '' ? (
-							<div className='relative cursor-default select-none px-4 py-2 text-gray-700'>
+							<div className='relative cursor-default px-4 py-2 text-gray-700 select-none'>
 								Nothing found.
 							</div>
 						) : (
@@ -107,7 +107,7 @@ function VirtualizedList({ items }: { items: Options[] }) {
 							transform: `translateY(${virtualRow.start}px)`,
 						}}
 						className={({ active }) =>
-							`relative cursor-default select-none py-2 pl-10 pr-4 ${
+							`relative cursor-default py-2 pr-4 pl-10 select-none ${
 								active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
 							}`
 						}

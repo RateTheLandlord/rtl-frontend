@@ -22,9 +22,16 @@ export async function fetchReviews(
 
 		const data: ReviewsResponse = await response.json()
 		return data
-	} catch (error) {
-		console.error('Error fetching reviews:', error)
-		throw error
+	} catch {
+		console.error('Error fetching reviews')
+		return {
+			reviews: [],
+			total: 0,
+			countries: [],
+			zips: [],
+			limit: 25,
+			cities: [],
+		}
 	}
 }
 
@@ -48,8 +55,15 @@ export async function fetchResources(
 
 		const data: ResourceResponse = await response.json()
 		return data
-	} catch (error) {
-		console.error('Error fetching Resources:', error)
-		throw error
+	} catch {
+		console.error('Error fetching Resources')
+		return {
+			resources: [],
+			total: '1',
+			countries: [],
+			limit: 25,
+			states: [],
+			cities: [],
+		}
 	}
 }

@@ -30,7 +30,7 @@ export default function Support() {
 	]
 
 	return (
-		<div className='pb-24 pt-8 sm:pb-32'>
+		<div className='pt-8 pb-24 sm:pb-32'>
 			<div className='mx-auto max-w-7xl px-6 lg:px-8'>
 				<div className='mx-auto max-w-2xl lg:text-center'>
 					<h2 className='text-base leading-7 text-indigo-600'>
@@ -49,7 +49,7 @@ export default function Support() {
 						{features.map((feature) => (
 							<div key={feature.name} className='relative pl-16'>
 								<dt className='text-base leading-7 text-gray-900'>
-									<div className='absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600'>
+									<div className='absolute top-0 left-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600'>
 										<feature.icon
 											className='h-6 w-6 text-white'
 											aria-hidden='true'

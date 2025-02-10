@@ -38,8 +38,6 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 		fetcher,
 	)
 
-	if (!data.reviews.length) return <Spinner />
-
 	useEffect(() => {
 		if (suspiciousLandlord) {
 			setBannerOpen(true)
@@ -91,6 +89,8 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 				break
 		}
 	}, [sortState, data.reviews])
+
+	if (!data.reviews.length) return <Spinner />
 
 	return (
 		<>

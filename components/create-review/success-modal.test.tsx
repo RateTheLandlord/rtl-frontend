@@ -3,11 +3,10 @@
  */
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import SuccessModal from './success-modal'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
-jest.mock('next/router', () => require('next-router-mock'))
+import SuccessModal from './success-modal'
 
 describe('SuccessModal', () => {
 	test('renders', () => {

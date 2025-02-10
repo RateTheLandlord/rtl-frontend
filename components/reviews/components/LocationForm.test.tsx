@@ -29,7 +29,7 @@ jest.mock('@/util/helpers/getCountryCodes', () => ({
 }))
 
 jest.mock('@/util/countries/combineStates', () => ({
-	getStates: (country: string) => mockStateOptions,
+	getStates: () => mockStateOptions,
 }))
 
 describe('LocationForm', () => {

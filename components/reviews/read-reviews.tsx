@@ -53,7 +53,7 @@ function ReviewForm(): JSX.Element {
 				setLocationOpen(isLocationValid)
 			}
 		}
-	}, [view, country, state])
+	}, [view, country, state, countryFilter, stateFilter, dispatch])
 
 	useEffect(() => {
 		if (countryFilter && stateFilter) {
@@ -66,7 +66,7 @@ function ReviewForm(): JSX.Element {
 				{ shallow: true },
 			)
 		}
-	}, [stateFilter, countryFilter])
+	}, [stateFilter, countryFilter, router])
 
 	return (
 		<div className='m-2 w-full max-w-7xl'>

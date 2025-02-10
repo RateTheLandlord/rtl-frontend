@@ -9,7 +9,7 @@ expect.extend(toHaveNoViolations)
 
 jest.mock('next-i18next', () => ({
 	useTranslation: () => ({
-		t: (key: string, params?: Record<string, any>) => {
+		t: (key: string, params?: Record<string, string | number>) => {
 			const translations: Record<string, string> = {
 				'landlord.overall': 'Overall',
 				'landlord.stability': 'Stability',

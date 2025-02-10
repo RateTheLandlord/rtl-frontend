@@ -22,7 +22,7 @@ jest.mock('@/components/ui/LargeTextInput', () =>
 
 jest.mock('react-i18next', () => ({
 	useTranslation: () => ({
-		t: (key: string, options?: any) =>
+		t: (key: string, options?: { length?: number }) =>
 			key === 'create-review.review-form.limit'
 				? `Limit ${options?.length}/2000`
 				: key,

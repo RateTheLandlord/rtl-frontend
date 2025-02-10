@@ -19,7 +19,7 @@ jest.mock('next-i18next', () => ({
 const mockStore = configureStore([])
 
 describe('ResourceMobileFilters', () => {
-	let store: any
+	let store: ReturnType<typeof mockStore>
 
 	beforeEach(() => {
 		store = mockStore({

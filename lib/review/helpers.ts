@@ -59,7 +59,7 @@ export const filterReviewWithAI = async (review: Review): Promise<IResult> => {
 		} else {
 			return { flagged: false, flagged_reason: '' }
 		}
-	} catch (e) {
+	} catch {
 		throw e
 	}
 }

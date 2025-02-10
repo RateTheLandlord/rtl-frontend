@@ -65,39 +65,38 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 		setQueryParams(params)
 	}
 
-	const fetchData = async () => {
-		setIsLoading(true)
-		try {
-			const moreData = await fetchResources({ page, ...queryParams })
-
-			setResources((prevReviews) => {
-				if (page === 1) {
-					// Initial fetch
-					return [...moreData.resources]
-				} else {
-					// If page changed or neither page nor other query parameters changed, append new reviews
-					return [...prevReviews, ...moreData.resources]
-				}
-			})
-
-			if (
-				moreData.resources.length <= 0 ||
-				resources.length >= Number(moreData.total)
-			) {
-				setHasMore(false)
-			} else {
-				setHasMore(true)
-			}
-		} catch (error) {
-			console.error('Error fetching reviews:', error)
-		} finally {
-			setIsLoading(false)
-		}
-	}
-
 	useEffect(() => {
+		const fetchData = async () => {
+			setIsLoading(true)
+			try {
+				const moreData = await fetchResources({ page, ...queryParams })
+
+				setResources((prevReviews) => {
+					if (page === 1) {
+						// Initial fetch
+						return [...moreData.resources]
+					} else {
+						// If page changed or neither page nor other query parameters changed, append new reviews
+						return [...prevReviews, ...moreData.resources]
+					}
+				})
+
+				if (
+					moreData.resources.length <= 0 ||
+					resources.length >= Number(moreData.total)
+				) {
+					setHasMore(false)
+				} else {
+					setHasMore(true)
+				}
+			} catch {
+				console.error('Error fetching reviews')
+			} finally {
+				setIsLoading(false)
+			}
+		}
 		fetchData()
-	}, [queryParams, page])
+	}, [queryParams, page, resources.length])
 
 	// Reset hasMore when queryParams change
 	useEffect(() => {

@@ -75,10 +75,10 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 			if (dataKey === 'trailing_combined_avg') {
 				return (
 					<div className='custom-tooltip rounded-lg border-4 border-teal-600 bg-gray-100'>
-						<p className='label pl-2 pr-2 pt-2'>
+						<p className='label pt-2 pr-2 pl-2'>
 							{t('analytics.avg-landlord-as-of')}
 						</p>
-						<p className='label pl-2 pr-2 text-center'>{label}: </p>
+						<p className='label pr-2 pl-2 text-center'>{label}: </p>
 						<div className='flex justify-center'>
 							<p className='label pb-2'>
 								<RatingStars
@@ -92,7 +92,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 			} else {
 				return (
 					<div className='custom-tooltip rounded-lg border-4 border-teal-600 bg-gray-100'>
-						<p className='label pl-2 pr-2 pt-2'>
+						<p className='label pt-2 pr-2 pl-2'>
 							{t('analytics.median-rent-as-of')}
 						</p>
 						<p className='label pl-2 text-center'>{label}: </p>
@@ -150,7 +150,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 	if (error || chartDataError) {
 		return (
 			<div className='flex w-full justify-center'>
-				<h4>Oops, we've encountered an error... Sorry!</h4>
+				<h4>Oops, we&apos;ve encountered an error... Sorry!</h4>
 			</div>
 		)
 	}
@@ -212,7 +212,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 					className='h-[47%] rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
 					onClick={() => handleClick('rating')}
 				>
-					<div className='flex justify-center pb-4 pt-2 text-center'>
+					<div className='flex justify-center pt-2 pb-4 text-center'>
 						<div>
 							<p className='bold text-xl underline'>
 								{t('analytics.average-rating')}
@@ -253,7 +253,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 					className='h-[47%] rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
 					onClick={() => handleClick('median')}
 				>
-					<div className='flex justify-center pb-4 pt-2 text-center'>
+					<div className='flex justify-center pt-2 pb-4 text-center'>
 						<div>
 							<p className='bold text-xl underline'>
 								{t('analytics.median-reported')}

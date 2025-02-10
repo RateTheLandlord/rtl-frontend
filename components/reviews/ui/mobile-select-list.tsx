@@ -21,7 +21,7 @@ export default function MobileSelectList({
 			{({ open }) => (
 				<>
 					<div className='relative w-full pt-2'>
-						<Listbox.Button className='relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'>
+						<Listbox.Button className='relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pr-10 pl-3 text-left shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none sm:text-sm'>
 							<span className='block truncate'>{state?.name || name}</span>
 							<span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
 								<SelectorIcon
@@ -38,12 +38,12 @@ export default function MobileSelectList({
 							leaveFrom='opacity-100'
 							leaveTo='opacity-0'
 						>
-							<Listbox.Options className='absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+							<Listbox.Options className='ring-opacity-5 absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black focus:outline-none sm:text-sm'>
 								{options.map((option) => (
 									<Listbox.Option
 										key={option.id}
 										className={({ active }) =>
-											`relative cursor-default select-none py-2 pl-10 pr-4 ${
+											`relative cursor-default py-2 pr-4 pl-10 select-none ${
 												active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
 											}`
 										}

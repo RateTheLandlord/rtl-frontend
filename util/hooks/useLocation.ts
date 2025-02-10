@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
 	ILocationHookResponse,
 	ILocationResponse,
@@ -11,13 +11,7 @@ export const useLocation = (input: string, country: string) => {
 
 	const debouncedSearchString = useDebounce(input, 500)
 
-	useEffect(() => {
-		if (debouncedSearchString) {
-			searchLocations()
-		}
-	}, [debouncedSearchString])
-
-	const searchLocations = async () => {
+	const searchLocations = useCallback(async () => {
 		setSearching(true)
 		fetch(
 			`https://nominatim.openstreetmap.org/search?q=${input}&format=json&limit=5&addressdetails=1&countrycodes=${country}`,
@@ -38,7 +32,13 @@ export const useLocation = (input: string, country: string) => {
 			.finally(() => {
 				setSearching(false)
 			})
-	}
+	}, [input, country])
+
+	useEffect(() => {
+		if (debouncedSearchString) {
+			searchLocations()
+		}
+	}, [debouncedSearchString, searchLocations])
 
 	return { searching, locations }
 }

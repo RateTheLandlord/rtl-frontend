@@ -10,7 +10,7 @@ function ButtonLight({ children, onClick }: IProps): JSX.Element {
 			type='reset'
 			aria-label='Reset Button'
 			onClick={onClick}
-			className='rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'
+			className='rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none'
 			data-testid='light-button'
 		>
 			{children}

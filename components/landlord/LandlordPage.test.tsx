@@ -5,8 +5,7 @@ import { render, screen } from '@testing-library/react'
 import LandlordPage from './LandlordPage'
 import { ILandlordReviews } from '@/lib/review/review'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
-import { axe, toHaveNoViolations } from 'jest-axe'
-expect.extend(toHaveNoViolations)
+import { axe } from 'jest-axe'
 
 describe('LandlordPage', () => {
 	const landlord = 'John Doe'

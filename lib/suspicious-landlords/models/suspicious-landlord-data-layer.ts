@@ -19,7 +19,7 @@ export async function createLandlord(
 		suspiciousLandlord.id = await id[0].id
 
 		return suspiciousLandlord
-	} catch (e) {
+	} catch {
 		console.log(e)
 		throw e
 	}

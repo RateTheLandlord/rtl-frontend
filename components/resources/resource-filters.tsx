@@ -52,9 +52,9 @@ function ResourceFilters({
 	const { t } = useTranslation('filters')
 
 	const dispatch = useAppDispatch()
-	const query = resource
-		? useAppSelector((state) => state.resourceQuery)
-		: useAppSelector((state) => state.query)
+	const resourceQuery = useAppSelector((state) => state.resourceQuery)
+	const queryState = useAppSelector((state) => state.query)
+	const query = resource ? resourceQuery : queryState
 
 	return (
 		<div data-testid='review-filters-1' className='mt-6 hidden lg:block'>
@@ -127,7 +127,7 @@ function ResourceFilters({
 							onClick={() => updateParams()}
 							type='submit'
 							title='submit'
-							className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${'bg-teal-600 hover:bg-teal-700'}`}
+							className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm text-white shadow-sm focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none ${'bg-teal-600 hover:bg-teal-700'}`}
 							data-testid='submit-button-1'
 						>
 							{loading ? (

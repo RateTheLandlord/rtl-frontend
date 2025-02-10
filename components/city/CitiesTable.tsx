@@ -46,11 +46,11 @@ const CitiesTable = ({ state, country }: IProps) => {
 									<div>City Name: </div>
 									<div className='pl-1 lg:pl-2'>{city.city}</div>
 								</div>
-								<div className='flex-1 flex-wrap justify-center break-words text-center'>
+								<div className='flex-1 flex-wrap justify-center text-center break-words'>
 									<p>Read</p>
 									<p>{city.total} reviews</p>
 								</div>
-								<div className='flex-1 break-words pl-0 lg:pl-20'>
+								<div className='flex-1 pl-0 break-words lg:pl-20'>
 									<p className='pl-2'>Avg. Rating</p>
 									<RatingStars
 										testid='CitiesTableRatingStars'

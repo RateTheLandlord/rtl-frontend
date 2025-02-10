@@ -20,7 +20,7 @@ jest.mock('next-i18next', () => ({
 const mockStore = configureStore([thunk])
 
 describe('MobileReviewFilters', () => {
-	let store: any
+	let store: ReturnType<typeof mockStore>
 	let setMobileFiltersOpen: jest.Mock
 
 	beforeEach(() => {

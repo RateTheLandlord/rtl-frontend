@@ -35,7 +35,7 @@ const Privacy = () => {
 					appropriate measures to ensure the security of our website and protect
 					against unauthorized access, alteration, disclosure, or destruction.
 				</p>
-				<h2 className=''>5. Children's Privacy</h2>
+				<h2 className=''>5. Children&apos;s Privacy</h2>
 				<p>
 					Our website is not directed at children under the age of 13, and we do
 					not knowingly collect any personal information from children.
@@ -63,9 +63,10 @@ const Privacy = () => {
 					use cookies or other tracking technologies to collect and store this
 					information. By using our website, you consent to the processing of
 					data about you by PostHog in the manner and for the purposes set out
-					above. Please note that your use of PostHog is subject to PostHog's
-					Privacy Policy and Terms of Service, which govern the collection and
-					use of data by PostHog in connection with analytics services.
+					above. Please note that your use of PostHog is subject to
+					PostHog&apos;s Privacy Policy and Terms of Service, which govern the
+					collection and use of data by PostHog in connection with analytics
+					services.
 					<br />
 					By using our website, you consent to the processing of data about you
 					by PostHog in the manner and for the purposes set out above.
@@ -84,9 +85,9 @@ const Privacy = () => {
 					about you by Google reCAPTCHA in the manner and for the purposes set
 					out above.
 					<br />
-					Please note that your use of reCAPTCHA is subject to Google's Privacy
-					Policy and Terms of Service, which govern the collection and use of
-					data by Google in connection with reCAPTCHA.
+					Please note that your use of reCAPTCHA is subject to Google&apos;s
+					Privacy Policy and Terms of Service, which govern the collection and
+					use of data by Google in connection with reCAPTCHA.
 				</p>
 
 				<h2 className=''>8. Advertising Services</h2>
@@ -103,9 +104,9 @@ const Privacy = () => {
 					campaigns. <br />
 					By using our website, you consent to the processing of data about you
 					by Google Ads in the manner and for the purposes set out above. <br />
-					Please note that your use of Google Ads is subject to Google's Privacy
-					Policy and Terms of Service, which govern the collection and use of
-					data by Google in connection with advertising services.
+					Please note that your use of Google Ads is subject to Google&apos;s
+					Privacy Policy and Terms of Service, which govern the collection and
+					use of data by Google in connection with advertising services.
 				</p>
 				<h2 className=''>9. GDPR</h2>
 

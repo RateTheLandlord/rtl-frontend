@@ -34,7 +34,7 @@ const OtherLandlordInfo = ({ landlord }: IProps) => {
 						>
 							<div className='flex flex-col items-center justify-center'>
 								<div
-									className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg lg:mb-2 lg:items-center'
+									className='col mb-4 flex w-full cursor-pointer flex-col text-lg break-words lg:mb-2 lg:items-center'
 									data-umami-event='Reviews / Landlord Link'
 								>
 									<p className='text-center text-lg'>{otherLandlord.name}</p>

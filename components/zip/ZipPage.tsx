@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
 import { Review } from '@/util/interfaces/interfaces'
 import { IZipReviews } from '@/lib/review/review'
@@ -30,46 +30,48 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 	const [isLoading, setIsLoading] = useState(false)
 
 	// Query
-	const queryParams = {
-		sort: 'new' as ISortOptions,
-		state: state,
-		country: country,
-		city: city,
-		zip: zip,
-		search: '',
-		limit: '25',
-	}
-
-	const fetchData = async () => {
-		setIsLoading(true)
-		try {
-			const moreData = await fetchReviews({ page, ...queryParams })
-
-			setReviews((prevReviews) => {
-				if (page === 1) {
-					// Initial fetch
-					return [...moreData.reviews]
-				} else {
-					// If page changed or neither page nor other query parameters changed, append new reviews
-					return [...prevReviews, ...moreData.reviews]
-				}
-			})
-
-			if (moreData.reviews.length <= 0 || reviews.length >= moreData.total) {
-				setHasMore(false)
-			} else {
-				setHasMore(true)
-			}
-		} catch (error) {
-			console.error('Error fetching reviews:', error)
-		} finally {
-			setIsLoading(false)
-		}
-	}
+	const queryParams = useMemo(
+		() => ({
+			sort: 'new' as ISortOptions,
+			state: state,
+			country: country,
+			city: city,
+			zip: zip,
+			search: '',
+			limit: '25',
+		}),
+		[state, country, city, zip],
+	)
 
 	useEffect(() => {
+		const fetchData = async () => {
+			setIsLoading(true)
+			try {
+				const moreData = await fetchReviews({ page, ...queryParams })
+
+				setReviews((prevReviews) => {
+					if (page === 1) {
+						// Initial fetch
+						return [...moreData.reviews]
+					} else {
+						// If page changed or neither page nor other query parameters changed, append new reviews
+						return [...prevReviews, ...moreData.reviews]
+					}
+				})
+
+				if (moreData.reviews.length <= 0 || reviews.length >= moreData.total) {
+					setHasMore(false)
+				} else {
+					setHasMore(true)
+				}
+			} catch {
+				console.error('Error fetching reviews')
+			} finally {
+				setIsLoading(false)
+			}
+		}
 		fetchData()
-	}, [queryParams, page])
+	}, [queryParams, page, reviews.length])
 
 	// Reset hasMore when queryParams change
 	useEffect(() => {
@@ -127,7 +129,7 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 									No results found
 								</h1>
 								<p className='mt-6 text-base leading-7 text-gray-600'>
-									Sorry, we couldn't find any results for those filters.
+									Sorry, we couldn&apos;t find any results for those filters.
 								</p>
 							</div>
 						) : (

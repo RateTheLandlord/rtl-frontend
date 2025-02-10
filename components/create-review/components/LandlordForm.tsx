@@ -50,7 +50,7 @@ const LandlordForm = ({
 	) : (
 		<div data-testid='LandlordForm-component'>
 			<div>
-				<h2 className='text-base font-semibold leading-7 text-gray-900'>
+				<h2 className='text-base leading-7 font-semibold text-gray-900'>
 					{t('create-review.landlord-form.title')}
 				</h2>
 				<p className='mt-1 text-sm leading-6 text-gray-600'>

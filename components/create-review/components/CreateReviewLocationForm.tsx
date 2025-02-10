@@ -71,7 +71,7 @@ const LocationForm = ({
 	) : (
 		<div data-testid='LocationForm-component'>
 			<div>
-				<h2 className='text-base font-semibold leading-7 text-gray-900'>
+				<h2 className='text-base leading-7 font-semibold text-gray-900'>
 					{t('create-review.location-form.title')}
 				</h2>
 			</div>

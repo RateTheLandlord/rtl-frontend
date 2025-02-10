@@ -1,6 +1,6 @@
 // @ts-check
 
-const { i18n } = require('./next-i18next.config.js')
+const { i18n } = require('./next-i18next.config.mjs')
 
 /** @type {import('next').NextConfig} */
 

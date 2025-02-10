@@ -29,7 +29,7 @@ export async function createResource(
 		inputResource.id = await id[0].id
 
 		return inputResource
-	} catch (e) {
+	} catch {
 		console.log(e)
 		throw e
 	}
