@@ -80,6 +80,7 @@ const EditReviewModal = ({
 				}
 			})
 			.then(() => {
+				fetch(`/api/force-revalidate?path=${encodeURIComponent(landlord)}`)
 				handleMutate()
 				setEditReviewOpen(false)
 				toast.success('Success!')

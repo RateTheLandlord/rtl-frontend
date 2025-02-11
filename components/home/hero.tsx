@@ -26,7 +26,7 @@ function Hero(): JSX.Element {
 					</LinkButtonLightLG>
 				</div>
 			</div>
-			<div className='mx-auto flex max-w-2xl lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32'>
+			<div className='mx-auto flex max-w-2xl lg:mt-0 lg:mr-0 lg:ml-10 lg:max-w-none lg:flex-none xl:ml-32'>
 				<div className='max-w-3xl flex-none sm:max-w-5xl lg:max-w-none'>
 					<HouseIcon className='h-80 w-80 md:h-[500px] md:w-[500px]' />
 				</div>
