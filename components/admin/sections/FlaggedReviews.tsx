@@ -65,7 +65,10 @@ const FlaggedReviews = () => {
 	}
 
 	return (
-		<div className='container flex w-full flex-wrap justify-center'>
+		<div
+			data-testid='flagged-reviews'
+			className='container flex w-full flex-wrap justify-center'
+		>
 			{selectedReview ? (
 				<>
 					<EditReviewModal
@@ -84,13 +87,13 @@ const FlaggedReviews = () => {
 					/>
 				</>
 			) : null}
-			<div className='container -mx-4 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg'>
+			<div className='ring-opacity-5 container -mx-4 overflow-hidden ring-1 shadow ring-black sm:-mx-6 md:mx-0 md:rounded-lg'>
 				<table className='min-w-full divide-y divide-gray-300'>
 					<thead className='bg-gray-50'>
 						<tr>
 							<th
 								scope='col'
-								className='py-3.5 pl-4 pr-3 text-left text-sm text-gray-900 sm:pl-6'
+								className='py-3.5 pr-3 pl-4 text-left text-sm text-gray-900 sm:pl-6'
 							>
 								Landlord
 							</th>
@@ -106,13 +109,13 @@ const FlaggedReviews = () => {
 							>
 								Review
 							</th>
-							<th scope='col' className='relative py-3.5 pl-3 pr-4 sm:pr-6'>
+							<th scope='col' className='relative py-3.5 pr-4 pl-3 sm:pr-6'>
 								<span className='sr-only'>Approve</span>
 							</th>
-							<th scope='col' className='relative py-3.5 pl-3 pr-4 sm:pr-6'>
+							<th scope='col' className='relative py-3.5 pr-4 pl-3 sm:pr-6'>
 								<span className='sr-only'>Edit</span>
 							</th>
-							<th scope='col' className='relative py-3.5 pl-3 pr-4 sm:pr-6'>
+							<th scope='col' className='relative py-3.5 pr-4 pl-3 sm:pr-6'>
 								<span className='sr-only'>Remove</span>
 							</th>
 						</tr>
@@ -123,7 +126,7 @@ const FlaggedReviews = () => {
 								key={review.id}
 								className={`${review.admin_approved ? 'bg-green-100' : ''}`}
 							>
-								<td className='w-full max-w-0 py-4 pl-4 pr-3 text-sm text-gray-900 sm:w-auto sm:max-w-none sm:pl-6'>
+								<td className='w-full max-w-0 py-4 pr-3 pl-4 text-sm text-gray-900 sm:w-auto sm:max-w-none sm:pl-6'>
 									{review.landlord}
 									<dl className='lg:hidden'>
 										<dt className='sr-only'>Reason</dt>
@@ -142,7 +145,7 @@ const FlaggedReviews = () => {
 								<td className='hidden px-3 py-4 text-sm text-gray-500 sm:table-cell'>
 									{review.review}
 								</td>
-								<td className='py-4 pl-3 pr-4 text-center text-sm sm:pr-6'>
+								<td className='py-4 pr-4 pl-3 text-center text-sm sm:pr-6'>
 									<button
 										onClick={() => {
 											onSubmitApproveReview(review)
@@ -152,7 +155,7 @@ const FlaggedReviews = () => {
 										Approve
 									</button>
 								</td>
-								<td className='py-4 pl-3 pr-4 text-center text-sm sm:pr-6'>
+								<td className='py-4 pr-4 pl-3 text-center text-sm sm:pr-6'>
 									<button
 										onClick={() => {
 											setSelectedReview(review)
@@ -163,7 +166,7 @@ const FlaggedReviews = () => {
 										Edit
 									</button>
 								</td>
-								<td className='py-4 pl-3 pr-4 text-center text-sm sm:pr-6'>
+								<td className='py-4 pr-4 pl-3 text-center text-sm sm:pr-6'>
 									<button
 										onClick={() => {
 											setSelectedReview(review)
