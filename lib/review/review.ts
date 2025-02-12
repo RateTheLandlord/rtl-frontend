@@ -15,7 +15,6 @@ import sql from '../db'
 import { getExistingReviewsForLandlord } from '@/lib/review/models/review-data-layer'
 import { createReview } from '@/lib/review/models/review-data-layer'
 import { updateReview } from '@/lib/review/models/review-data-layer'
-import { Row, RowList } from 'postgres'
 import { capitalize } from '@/util/helpers/helper-functions'
 import { Options } from '@/util/interfaces/interfaces'
 
@@ -227,12 +226,6 @@ export async function getReviews(
 	}
 }
 
-export async function findOne(id: number): Promise<Review[]> {
-	return sql<Review[]>`Select *
-      FROM review
-      WHERE id IN (${id});`
-}
-
 export async function create(
 	inputReview: Review,
 ): Promise<ReviewResponseStatus> {
@@ -266,7 +259,7 @@ export async function create(
 		const filterResult: IResult = await filterReviewWithAI(inputReview)
 		return createReview(inputReview, filterResult) // Hit data layer to create review
 	} catch {
-		throw e
+		throw new Error()
 	}
 }
 
@@ -408,21 +401,6 @@ export async function getLandlordSuggestions(
 		} LIMIT 10
     `
 	return suggestions.map(({ landlord }) => landlord)
-}
-
-export async function getCities(): Promise<RowList<Row[]>> {
-	const cities = await sql`SELECT DISTINCT ON (city)
-    city,
-    state,
-    country_code
-FROM
-    review
-ORDER BY
-    city,
-    state,
-    country_code`
-
-	return cities
 }
 
 export interface ICityReviews {

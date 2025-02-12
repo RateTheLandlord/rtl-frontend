@@ -1,5 +1,5 @@
 {
-	"ignore": ["migrations/*"],
+	"ignore": ["migrations/*", "*.config.*", "resources.ts", "setupTests.ts"],
 	"rules": {
 		"files": "warn",
 		"devDependencies": "off"
