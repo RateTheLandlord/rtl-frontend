@@ -40,11 +40,6 @@ export interface SortOptions {
 	value: 'az' | 'za' | 'new' | 'old' | 'high' | 'low' | undefined
 }
 
-export interface NewFilter {
-	key: string
-	value: string
-}
-
 export interface ILinks {
 	name: string
 	href: string
@@ -155,16 +150,6 @@ export interface IQuery {
 	zipFilter: Options | null
 	activeFilters: Array<Options | null> | null
 	searchFilter: string | undefined
-}
-
-export type ReviewsResponse = {
-	reviews: Review[]
-	total: number
-	countries: string[]
-	states: string[]
-	cities: string[]
-	zips: string[]
-	limit: number
 }
 
 export type AnalyticsResponseInterface = {

@@ -12,7 +12,7 @@ export type ResourceQuery = {
 	city?: string
 }
 
-export interface IResponse {
+interface IResponse {
 	status: number
 	message: string
 }

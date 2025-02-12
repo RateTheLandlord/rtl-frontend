@@ -1,7 +1,12 @@
 {
-	"ignore": ["migrations/*", "*.config.*", "resources.ts", "setupTests.ts"],
+	"ignore": [
+		"migrations/*",
+		"*.config.*",
+		"resources.ts",
+		"setupTests.ts",
+		"i18n.ts"
+	],
 	"rules": {
-		"files": "warn",
 		"devDependencies": "off"
 	}
 }

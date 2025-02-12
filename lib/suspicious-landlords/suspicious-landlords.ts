@@ -5,12 +5,12 @@ import {
 	updateLandlord,
 } from './models/suspicious-landlord-data-layer'
 
-export interface IResponse {
+interface IResponse {
 	status: number
 	message: string
 }
 
-export interface GetSuspiciousLandlordResponse {
+interface GetSuspiciousLandlordResponse {
 	landlords: Array<SuspiciousLandlord>
 	total: number
 }

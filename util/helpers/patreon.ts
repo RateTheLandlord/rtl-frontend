@@ -1,4 +1,4 @@
-export interface PatreonData {
+interface PatreonData {
 	data: Array<{
 		attributes: {
 			full_name: string

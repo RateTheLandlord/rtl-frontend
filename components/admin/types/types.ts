@@ -65,7 +65,7 @@ export interface ICountryStats {
 	}
 }
 
-export interface IDetailedStats {
+interface IDetailedStats {
 	date: string
 	country_codes: { [key: string]: number }
 	cities: { [key: string]: number }

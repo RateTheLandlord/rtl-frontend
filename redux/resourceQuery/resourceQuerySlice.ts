@@ -24,9 +24,6 @@ const resourceQuery = createSlice({
 	name: 'resourceQuery',
 	initialState,
 	reducers: {
-		updateResourceSort(state, action: PayloadAction<SortOptions>) {
-			state.selectedSort = action.payload
-		},
 		updateResourceCountry(state, action: PayloadAction<Options | null>) {
 			state.countryFilter = action.payload
 		},
@@ -55,7 +52,6 @@ export const {
 	updateResourceCity,
 	updateResourceCountry,
 	updateResourceSearch,
-	updateResourceSort,
 	updateResourceState,
 	updateResourceActiveFilters,
 	clearResourceFilters,

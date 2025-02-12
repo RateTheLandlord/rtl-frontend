@@ -1,6 +1,6 @@
 import sql from '../db'
 
-export interface IStateStats {
+interface IStateStats {
 	total: number
 	average: number
 	catAverages: {

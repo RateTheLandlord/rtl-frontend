@@ -57,7 +57,7 @@ export async function get({ startDate, groupBy }: StatsQuery): Promise<{
 	return { detailed_stats, total_stats }
 }
 
-export async function getReviewStatistics(dateRange: string) {
+async function getReviewStatistics(dateRange: string) {
 	return await sql`
 	WITH ReviewStats AS (
 	  SELECT
@@ -93,7 +93,7 @@ export async function getReviewStatistics(dateRange: string) {
   `
 }
 
-export async function getReviewByDate(dateRange: string) {
+async function getReviewByDate(dateRange: string) {
 	return await sql`
     SELECT
 		date_trunc('day', date_added) AS date,
@@ -108,7 +108,7 @@ export async function getReviewByDate(dateRange: string) {
     `
 }
 
-export function combineObjectsByMonth(objects) {
+function combineObjectsByMonth(objects) {
 	const groupedByMonth = {}
 
 	objects.forEach((obj) => {
@@ -160,7 +160,7 @@ export function combineObjectsByMonth(objects) {
 	return Object.values(groupedByMonth)
 }
 
-export function combineArrays(detailed_stats, reviewsByDate) {
+function combineArrays(detailed_stats, reviewsByDate) {
 	return detailed_stats.map((reviewStat) => {
 		const correspondingReview = reviewsByDate.find(
 			(review) =>
@@ -171,7 +171,7 @@ export function combineArrays(detailed_stats, reviewsByDate) {
 	})
 }
 
-export async function getTotalStats(): Promise<TotalStats> {
+async function getTotalStats(): Promise<TotalStats> {
 	const getReviewStats = async (
 		countryCode: string,
 	): Promise<{ total: number; states: { key: string; total: number }[] }> => {

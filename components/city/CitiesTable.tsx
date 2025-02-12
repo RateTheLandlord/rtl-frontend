@@ -4,7 +4,7 @@ import { fetchWithBody } from '@/util/helpers/fetcher'
 import Link from 'next/link'
 import useSWR from 'swr'
 
-export interface ICities {
+interface ICities {
 	total: string
 	average: number
 	city: string

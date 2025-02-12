@@ -8,14 +8,6 @@ import Information from './Information'
 import { IZipLocations } from '@/lib/location/location'
 import { useRouter } from 'next/router'
 
-export interface ILocationType {
-	longitude: number
-	latitude: number
-	id: number
-	name: string
-	value: string
-}
-
 interface MapProps {
 	countryFilter: Options | null
 	stateFilter: Options | null

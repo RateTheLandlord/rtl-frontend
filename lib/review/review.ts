@@ -508,7 +508,7 @@ export type ZipQuery = {
 	country_code: string
 }
 
-export interface IZipStats {
+interface IZipStats {
 	average: number
 	total: number
 	catAverages: {

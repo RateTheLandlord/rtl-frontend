@@ -26,7 +26,7 @@ import {
 } from 'recharts/types/component/DefaultTooltipContent'
 import Sidebar from './components/sidebar'
 
-export interface QueryParams {
+interface QueryParams {
 	sort: ISortOptions
 	state: string
 	country: string

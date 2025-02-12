@@ -4,3 +4,4 @@
 bun run test:merge
 bun run lint
 bun run format
+bun run knip

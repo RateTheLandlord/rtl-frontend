@@ -1,4 +1,4 @@
-export type CaptchaPayload = {
+type CaptchaPayload = {
 	secret: string
 	response: string
 }

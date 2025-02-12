@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Review as IReview } from '@/util/interfaces/interfaces'
 import Review from './review'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { useRouter } from 'next/router'
@@ -8,15 +7,6 @@ import { updateStateAndCountry } from '@/redux/query/querySlice'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
 import { getStates } from '@/util/countries/combineStates'
 import AdsComponent from '../adsense/Adsense'
-
-export type ReviewsResponse = {
-	reviews: IReview[]
-	total: number
-	countries: string[]
-	cities: string[]
-	zips: string[]
-	limit: number
-}
 
 function ReviewForm(): JSX.Element {
 	const [locationOpen, setLocationOpen] = useState<boolean>(true)

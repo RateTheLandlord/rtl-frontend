@@ -4,11 +4,12 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { axe, toHaveNoViolations } from 'jest-axe'
-import AnalyticsComponent, { QueryParams } from './analytics'
+import AnalyticsComponent from './analytics'
+import { ISortOptions } from '../reviews/review'
 expect.extend(toHaveNoViolations)
 
-const mockData: QueryParams = {
-	sort: 'new',
+const mockData = {
+	sort: 'az' as ISortOptions,
 	state: 'on',
 	country: 'ca',
 	city: 'toronto',

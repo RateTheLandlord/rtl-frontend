@@ -2,12 +2,12 @@ import sql from '../db'
 import { Keywords } from '@/util/interfaces/interfaces'
 import { createKeyword } from './models/flagged-keywords-data-layer'
 
-export interface IResponse {
+interface IResponse {
 	status: number
 	message: string
 }
 
-export interface getFlaggedKeywordsResponse {
+interface getFlaggedKeywordsResponse {
 	keywords: Array<Keywords>
 	total: number
 }

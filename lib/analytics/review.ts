@@ -2,7 +2,7 @@ import { AnalyticsChartResponse, AnalyticsResponse } from './models/review'
 import sql from '../db'
 import { AnalyticsResponseInterface } from '@/util/interfaces/interfaces'
 
-export type ReviewQuery = {
+type ReviewQuery = {
 	page?: number
 	limit?: number
 	search?: string
