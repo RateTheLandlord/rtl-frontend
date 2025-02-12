@@ -1,0 +1,7 @@
+{
+	"ignore": ["migrations/*"],
+	"rules": {
+		"files": "warn",
+		"devDependencies": "off"
+	}
+}
