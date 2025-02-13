@@ -25,7 +25,7 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 	const { t } = useTranslation('reviews')
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
 	const [bannerOpen, setBannerOpen] = useState<boolean>(false)
-	const [sortedReviews, setSortedReviews] = useState<Array<Review>>([])
+	const [sortedReviews, setSortedReviews] = useState<Review[]>([])
 
 	const [sortState, setSortState] = useState(filteredSortOptions[0])
 

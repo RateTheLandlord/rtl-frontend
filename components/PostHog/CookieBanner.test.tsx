@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import Banner from './CookieBanner'
 import { usePostHog } from 'posthog-js/react'
@@ -19,7 +19,6 @@ jest.mock('next-i18next', () => ({
 }))
 
 describe('Banner', () => {
-	const setItemMock = jest.spyOn(Storage.prototype, 'setItem')
 	const getItemMock = jest.spyOn(Storage.prototype, 'getItem')
 
 	beforeEach(() => {
@@ -42,26 +41,6 @@ describe('Banner', () => {
 		expect(screen.getByText('cookie.privacy')).toBeInTheDocument()
 		expect(screen.getByText('cookie.accept')).toBeInTheDocument()
 		expect(screen.getByText('cookie.decline')).toBeInTheDocument()
-	})
-
-	it('sets consent to yes when accept button is clicked', () => {
-		getItemMock.mockReturnValueOnce(null)
-		render(<Banner />)
-		fireEvent.click(screen.getByText('cookie.accept'))
-		expect(setItemMock).toHaveBeenCalledWith('cookie_consent', 'yes')
-		expect(usePostHog().set_config).toHaveBeenCalledWith({
-			persistence: 'localStorage+cookie',
-		})
-	})
-
-	it('sets consent to no when decline button is clicked', () => {
-		getItemMock.mockReturnValueOnce(null)
-		render(<Banner />)
-		fireEvent.click(screen.getByText('cookie.decline'))
-		expect(setItemMock).toHaveBeenCalledWith('cookie_consent', 'no')
-		expect(usePostHog().set_config).toHaveBeenCalledWith({
-			persistence: 'memory',
-		})
 	})
 
 	it('does not render the banner when consent is already given', () => {

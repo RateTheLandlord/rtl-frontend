@@ -23,7 +23,7 @@ interface IBody {
 	admin_edited: boolean
 	rent: number | null
 	moderation_reason: string | null
-	moderator: Array<string> | null
+	moderator: string[] | null
 }
 
 const EditReview = async (req: NextApiRequest, res: NextApiResponse) => {

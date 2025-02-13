@@ -11,7 +11,7 @@ expect.extend(toHaveNoViolations)
 interface RenderComponentProps {
 	state: string | undefined
 	setState: (state: string) => void
-	options: Array<ILocationHookResponse>
+	options: ILocationHookResponse[]
 	searching: boolean
 	error: boolean
 	errorText: string

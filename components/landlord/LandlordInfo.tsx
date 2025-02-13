@@ -13,7 +13,7 @@ interface IProps {
 
 const LandlordInfo = ({ name, data }: IProps) => {
 	const { t } = useTranslation('landlord')
-	const tenantList: Array<string> = t('landlord.tenant-list', {
+	const tenantList: string[] = t('landlord.tenant-list', {
 		returnObjects: true,
 	})
 

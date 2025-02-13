@@ -7,7 +7,7 @@ interface IQuery {
 	countryFilter: Options | null
 	stateFilter: Options | null
 	cityFilter: Options | null
-	activeFilters: Array<Options | null> | null
+	activeFilters: (Options | null)[] | null
 	searchFilter: string | undefined
 }
 
@@ -38,7 +38,7 @@ const resourceQuery = createSlice({
 		},
 		updateResourceActiveFilters(
 			state,
-			action: PayloadAction<Array<Options | null>>,
+			action: PayloadAction<(Options | null)[]>,
 		) {
 			return { ...state, activeFilters: action.payload }
 		},

@@ -12,7 +12,7 @@ expect.extend(toHaveNoViolations)
 // Mock the useSWR hook
 jest.mock('swr')
 
-const mockLandlords: Array<OtherLandlord> = [
+const mockLandlords: OtherLandlord[] = [
 	{
 		name: 'Landlord A',
 		topcity: 'City A',

@@ -1,12 +1,12 @@
 import dayjs from 'dayjs'
 import sql from '../db'
 
-type StatsQuery = {
+interface StatsQuery {
 	startDate?: string
 	groupBy?: string
 }
 
-type DetailedStats = {
+interface DetailedStats {
 	date: string
 	country_codes: Record<string, number>
 	cities: Record<string, number>
@@ -15,7 +15,7 @@ type DetailedStats = {
 	total?: number
 }
 
-type TotalStats = {
+interface TotalStats {
 	total_reviews: number
 	countryStats: Record<
 		string,
@@ -183,7 +183,7 @@ async function getTotalStats(): Promise<TotalStats> {
 			await sql`SELECT DISTINCT state FROM review WHERE country_code = ${countryCode}`
 		const states_list = statesResult.map(({ state }) => state)
 
-		const total_for_states: Array<{ key: string; total: number }> = []
+		const total_for_states: { key: string; total: number }[] = []
 
 		for (let i = 0; i < states_list.length; i++) {
 			const key = states_list[i]

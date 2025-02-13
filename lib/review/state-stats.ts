@@ -68,7 +68,7 @@ interface ITopCityStats {
 export const getTopCitiesStats = async (params: {
 	state: string
 	country: string
-}): Promise<Array<ITopCityStats>> => {
+}): Promise<ITopCityStats[]> => {
 	const { state, country } = params
 
 	const cities = await sql`
@@ -77,7 +77,7 @@ export const getTopCitiesStats = async (params: {
 
 	const cityList = cities.map(({ city }) => city)
 
-	const citiesStats: Array<ITopCityStats> = []
+	const citiesStats: ITopCityStats[] = []
 
 	for (let i = 0; i < cityList.length; i++) {
 		const totalResult = await sql`

@@ -51,7 +51,9 @@ const EditReviewModal = ({
 	const date = dayjs().format('DD/MM/YYYY')
 
 	const onSubmitEditReview = () => {
-		moderators.unshift(`${user?.admin_id} on ${date}`)
+		if (typeof user?.admin_id === 'string') {
+			moderators.unshift(`${user.admin_id} on ${date}`)
+		}
 		const editedReview = {
 			...selectedReview,
 			landlord: landlord,
@@ -80,7 +82,9 @@ const EditReviewModal = ({
 				}
 			})
 			.then(() => {
-				fetch(`/api/force-revalidate?path=${encodeURIComponent(landlord)}`)
+				fetch(
+					`/api/force-revalidate?path=${encodeURIComponent(landlord)}`,
+				).catch(() => console.error('Revalidate Failed'))
 				handleMutate()
 				setEditReviewOpen(false)
 				toast.success('Success!')
@@ -160,7 +164,7 @@ const EditReviewModal = ({
 												{country_codes.map((country) => {
 													return (
 														<option key={country} value={country}>
-															{countries[country]}
+															{countries[country as keyof typeof countries]}
 														</option>
 													)
 												})}

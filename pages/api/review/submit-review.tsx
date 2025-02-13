@@ -24,7 +24,7 @@ interface IBody {
 		rent: number | null
 		date_added: Date
 		moderation_reason: string | null
-		moderator: Array<string> | null
+		moderator: string[] | null
 	}
 }
 

@@ -1,8 +1,8 @@
 import { MemberData, TierData } from '@/util/helpers/patreon'
 
 interface IProps {
-	members: Array<MemberData>
-	tiers: Array<TierData>
+	members: MemberData[]
+	tiers: TierData[]
 }
 
 export default function Supporters({ members, tiers }: IProps) {

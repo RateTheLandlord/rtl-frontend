@@ -15,9 +15,7 @@ import ResourceMobileFilters from './resource-mobile-filters'
 import ButtonLight from '../ui/button-light'
 import { useTranslation } from 'next-i18next'
 
-const resourceSortOptions: Array<SortOptions> = sortOptions.filter(
-	(r) => r.id < 5,
-)
+const resourceSortOptions: SortOptions[] = sortOptions.filter((r) => r.id < 5)
 
 export default function ResourceList({ data }: { data: ResourceResponse }) {
 	// Localization

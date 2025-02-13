@@ -32,7 +32,7 @@ describe('ZipInfo Component', () => {
 	beforeEach(() => {
 		;(useTranslation as jest.Mock).mockReturnValue({
 			t: (key: string) => {
-				const translations: { [key: string]: string } = {
+				const translations: Record<string, string> = {
 					'landlord.rental-experience': `Total: 1, Location: Toronto`,
 					'landlord.share': 'Share your experience',
 					'landlord.rented-zip': 'Have you rented in this zip code?',

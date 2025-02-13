@@ -18,7 +18,7 @@ interface IReportReason {
 	reason: string
 }
 
-const reportReasons: Array<IReportReason> = [
+const reportReasons: IReportReason[] = [
 	{
 		id: 1,
 		key: 'address',
@@ -167,7 +167,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 									className='mt-2 block w-full rounded-md border-0 py-1.5 pr-10 pl-3 text-gray-900 ring-1 ring-gray-300 ring-inset focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'
 									defaultValue={reason}
 									onChange={(e) => {
-										const selected: Array<IReportReason> = reportReasons.filter(
+										const selected: IReportReason[] = reportReasons.filter(
 											(reason: IReportReason) => reason.key === e.target.value,
 										)
 										setSelectedReason(selected[0])

@@ -20,7 +20,7 @@ export interface Review {
 	admin_edited: boolean
 	rent?: number | null
 	moderation_reason: string | null
-	moderator: Array<string> | null
+	moderator: string[] | null
 }
 
 export interface OtherLandlord {
@@ -30,7 +30,7 @@ export interface OtherLandlord {
 	reviewcount: number
 }
 
-export type ReviewsResponse = {
+export interface ReviewsResponse {
 	reviews: Review[]
 	total: number
 	countries: string[]
@@ -39,7 +39,7 @@ export type ReviewsResponse = {
 	limit: number
 }
 
-export type FilterOptions = {
+export interface FilterOptions {
 	countries: Options[]
 	cities: Options[]
 	zips: Options[]

@@ -29,7 +29,7 @@ const LandlordForm = ({
 	const {
 		isSearching,
 		landlordSuggestions,
-	}: { isSearching: boolean; landlordSuggestions: Array<string> } =
+	}: { isSearching: boolean; landlordSuggestions: string[] } =
 		useLandlordSuggestions(landlord)
 	return !landlordOpen && !landlordValidationError ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>

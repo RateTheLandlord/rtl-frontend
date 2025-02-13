@@ -2,7 +2,7 @@ import { Resource, ResourcesResponse } from './models/resource'
 import { createResource, updateResource } from './models/resource-data-layer'
 import sql from '../db'
 
-export type ResourceQuery = {
+export interface ResourceQuery {
 	page?: number
 	limit?: string
 	search?: string
@@ -70,7 +70,7 @@ export async function getResources(
         FROM tenant_resource
         WHERE 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause}
         ORDER BY ${orderBy} ${sortOrder} LIMIT ${limitParam}
-        OFFSET ${offset}`) as Array<Resource>
+        OFFSET ${offset}`) as Resource[]
 
 	// Fetch Total Number of Resources
 	const totalResult =

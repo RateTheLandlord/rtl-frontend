@@ -8,13 +8,13 @@ interface IResponse {
 }
 
 interface getFlaggedKeywordsResponse {
-	keywords: Array<Keywords>
+	keywords: Keywords[]
 	total: number
 }
 
 export async function getFlaggedKeywords(): Promise<getFlaggedKeywordsResponse> {
 	// Fetch Keywords
-	const keywords = await sql<Array<Keywords>>`SELECT *
+	const keywords = await sql<Keywords[]>`SELECT *
         FROM keyword_flags;`
 
 	// Fetch Total Number of Landlords

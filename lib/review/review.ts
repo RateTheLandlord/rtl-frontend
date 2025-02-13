@@ -18,7 +18,7 @@ import { updateReview } from '@/lib/review/models/review-data-layer'
 import { capitalize } from '@/util/helpers/helper-functions'
 import { Options } from '@/util/interfaces/interfaces'
 
-export type ReviewQuery = {
+export interface ReviewQuery {
 	page?: number
 	limit?: number
 	search?: string
@@ -180,7 +180,7 @@ export async function getReviews(
 		AND (flagged = false OR (flagged = true AND admin_approved = true))
         ORDER BY ${orderBy} ${sortOrder} LIMIT ${limitParam}
         OFFSET ${offset}
-    `) as Array<Review>
+    `) as Review[]
 
 	// Fetch total number of reviews
 	const totalResult = await sql`
@@ -502,7 +502,7 @@ export async function getCityReviews(params: {
 	}
 }
 
-export type ZipQuery = {
+export interface ZipQuery {
 	zip: string
 	state: string
 	country_code: string

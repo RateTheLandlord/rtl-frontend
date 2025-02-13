@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next'
 
 const AboutUs = () => {
 	const { t } = useTranslation('about')
-	const info: Array<string> = t('about.about-us.info', { returnObjects: true })
+	const info: string[] = t('about.about-us.info', { returnObjects: true })
 	return (
 		<div data-testid='about-aboutus-1' className='w-full bg-white'>
 			<div className='mx-auto max-w-7xl px-6 text-lg lg:px-8'>

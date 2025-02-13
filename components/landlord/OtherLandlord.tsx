@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const OtherLandlordInfo = ({ landlord }: IProps) => {
-	const { data: landlords, error } = useSWR<Array<OtherLandlord>>(
+	const { data: landlords, error } = useSWR<OtherLandlord[]>(
 		`/api/review/get-other-landlords?landlord=${encodeURIComponent(landlord)}`,
 		fetcher,
 	)

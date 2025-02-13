@@ -11,7 +11,7 @@ const FlaggedReviews = () => {
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
 
-	const [flaggedReviews, setFlaggedReviews] = useState<Array<Review>>([])
+	const [flaggedReviews, setFlaggedReviews] = useState<Review[]>([])
 
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
 
@@ -19,7 +19,7 @@ const FlaggedReviews = () => {
 		data: reviews,
 		error,
 		mutate,
-	} = useSWR<Array<Review>>('/api/admin/get-flagged', fetcher)
+	} = useSWR<Review[]>('/api/admin/get-flagged', fetcher)
 
 	useEffect(() => {
 		if (reviews) {

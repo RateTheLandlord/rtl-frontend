@@ -19,8 +19,8 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 	// Consolidate related states
 	const [formData, setFormData] = useState({
 		zipCodes: [] as Options[],
-		country: countryFilter as Options | null,
-		state: stateFilter as Options | null,
+		country: countryFilter,
+		state: stateFilter,
 		dynamicStateOptions: [] as Options[],
 		selectedPoint: null as IZipLocations | null,
 		locations: [] as IZipLocations[],

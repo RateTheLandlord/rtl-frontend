@@ -1,6 +1,6 @@
 import { AnalyticsResponseInterface } from '@/util/interfaces/interfaces'
 
-export type AnalyticsResponse = {
+export interface AnalyticsResponse {
 	avgRatingT90: number
 	avgRatingT180: number
 	avgRatingT365: number
@@ -9,7 +9,7 @@ export type AnalyticsResponse = {
 	medianRentT365: number
 }
 
-export type AnalyticsChartResponse = {
+export interface AnalyticsChartResponse {
 	avgRatingChartData: AnalyticsResponseInterface[]
 	medianChartData: AnalyticsResponseInterface[]
 }

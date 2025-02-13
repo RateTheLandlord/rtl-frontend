@@ -97,10 +97,14 @@ connection string from there. The service is free.
 
 ### Step 5: Run migrations
 
-Run "npm run migrate:up" in order to create the necessary tables in your
-postgres instance.
+Copy the Operations in the migrations folder in order while connected to your DB
 
 ## Troubleshooting
+
+#### Linting is taking FOREVER
+
+The first time you run `bun run lint` it may take a while to complete while it
+builds a local cache. After that, it should be much faster
 
 #### Auth0
 
@@ -146,10 +150,14 @@ This project uses Husky to run a pre-commit check to make sure the project
 passes tests and linting. It also formats the files to prettier standard we have
 set.
 
-If it fails, then there is a chance that your changes have linting errors, or
-broke some tests.
+If it fails, it could be for the following reasons:
 
-You may get this error: `/usr/bin/env: ‘sh\r’: No such file or directory`
+- You have Linting errors - run `bun run lint` to find them
+- You have tests failing - run `bun run test` to find them
+- You are committing new files that are missing tests - run `./check-tests.sh`
+  to see the output
+
+If you get this error: `/usr/bin/env: ‘sh\r’: No such file or directory`
 
 If you encounter this error, you'll need to install `dos2unix` in your terminal.
 Then run `sudo dos2unix .husky/pre-commit`.

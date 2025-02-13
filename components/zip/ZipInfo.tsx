@@ -23,7 +23,7 @@ interface IProps {
 
 const ZipInfo = ({ state, country, average, total, averages, zip }: IProps) => {
 	const { t } = useTranslation('landlord')
-	const tenantList: Array<string> = t('landlord.tenant-list', {
+	const tenantList: string[] = t('landlord.tenant-list', {
 		returnObjects: true,
 	})
 	return (

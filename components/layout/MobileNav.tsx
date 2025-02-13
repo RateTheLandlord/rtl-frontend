@@ -4,7 +4,7 @@ import { INav } from '@/util/interfaces/interfaces'
 import { useTranslation } from 'next-i18next'
 
 interface IProps {
-	navigation: Array<INav>
+	navigation: INav[]
 	activeTab: string
 }
 const MobileNav = ({ navigation, activeTab }: IProps) => {

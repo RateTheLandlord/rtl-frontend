@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next'
 
 const Moderation = () => {
 	const { t } = useTranslation('about')
-	const info: Array<string> = t('about.moderation.info', {
+	const info: string[] = t('about.moderation.info', {
 		returnObjects: true,
 	})
 

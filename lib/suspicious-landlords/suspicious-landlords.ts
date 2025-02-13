@@ -11,13 +11,13 @@ interface IResponse {
 }
 
 interface GetSuspiciousLandlordResponse {
-	landlords: Array<SuspiciousLandlord>
+	landlords: SuspiciousLandlord[]
 	total: number
 }
 
 export async function getSuspiciousLandlords(): Promise<GetSuspiciousLandlordResponse> {
 	// Fetch Landlords
-	const landlords = await sql<Array<SuspiciousLandlord>>`SELECT *
+	const landlords = await sql<SuspiciousLandlord[]>`SELECT *
         FROM spam_landlords;`
 
 	// Fetch Total Number of Landlords

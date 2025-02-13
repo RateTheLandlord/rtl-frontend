@@ -1,6 +1,6 @@
 import { Options } from '../interfaces/interfaces'
 
-export function classNames(...classes: Array<string>) {
+export function classNames(...classes: string[]) {
 	return classes.filter(Boolean).join(' ')
 }
 

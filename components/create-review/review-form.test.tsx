@@ -116,11 +116,13 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		//Check for LandlordForm component
 		const landlordComboBoxComponent = screen.getByTestId(
 			'LandlordComboBox-component',
-		) as HTMLInputElement
+		)
 		// Simulate typing "John Doe" into the LandlordComboBox
 		await userEvent.type(landlordComboBoxComponent, 'John Doe')
 		//Check that simulated typed value is reflected in LandlordComboBox
-		expect(landlordComboBoxComponent.value).toBe('John Doe')
+		expect((landlordComboBoxComponent as HTMLInputElement).value).toBe(
+			'John Doe',
+		)
 
 		//Check for Continue button
 		const continueReviewButton = screen.getByText('Continue')
@@ -142,54 +144,48 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		expect(locationFormComponent).toBeInTheDocument()
 
 		//Check for CountrySelector component
-		const countrySelectorComponent = screen.getByTestId(
-			'country-selector',
-		) as HTMLSelectElement
+		const countrySelectorComponent = screen.getByTestId('country-selector')
 		expect(countrySelectorComponent).toBeInTheDocument()
 		// Simulate selecting "United States" from the CountrySelector
 		await userEvent.selectOptions(countrySelectorComponent, 'United States')
 		//Check that simulated typed value is reflected in LandlordComboBox
-		expect(countrySelectorComponent.value).toBe('US')
+		expect((countrySelectorComponent as HTMLSelectElement).value).toBe('US')
 
 		//Check for StateSelector component
-		const stateSelectorComponent = screen.getByTestId(
-			'StateSelector-component',
-		) as HTMLSelectElement
+		const stateSelectorComponent = screen.getByTestId('StateSelector-component')
 		expect(stateSelectorComponent).toBeInTheDocument()
 		// Simulate selecting "Illinois" from the StateSelector
 		await userEvent.selectOptions(stateSelectorComponent, 'Illinois')
 		//Check that simulated typed value is reflected in LandlordComboBox
-		expect(stateSelectorComponent.value).toBe('ILLINOIS')
+		expect((stateSelectorComponent as HTMLSelectElement).value).toBe('ILLINOIS')
 
 		//Check for Rent Amount TextInput component
 		const rentInputComponent = screen.getByTestId(
 			'create-review-form-rent-1input',
-		) as HTMLInputElement
+		)
 		expect(rentInputComponent).toBeInTheDocument()
 		// Simulate typing "2500" into Rent TextInput
 		await userEvent.type(rentInputComponent, '2500')
 		//Check that simulated typed value is reflected in LandlordComboBox
-		expect(rentInputComponent.value).toBe('2500')
+		expect((rentInputComponent as HTMLInputElement).value).toBe('2500')
 
 		//Check for City ComboBox component
-		const cityComboBoxComponent = screen.getByTestId(
-			'CityComboBox-component',
-		) as HTMLInputElement
+		const cityComboBoxComponent = screen.getByTestId('CityComboBox-component')
 		expect(cityComboBoxComponent).toBeInTheDocument()
 		// Simulate typing "Chicago" into Rent TextInput
 		await userEvent.type(cityComboBoxComponent, 'Chicago')
 		//Check that simulated typed value is reflected in LandlordComboBox
-		expect(cityComboBoxComponent.value).toBe('Chicago')
+		expect((cityComboBoxComponent as HTMLInputElement).value).toBe('Chicago')
 
 		//Check for ZIP/Postal-Code TextInput component
 		const zipInputComponent = screen.getByTestId(
 			'create-review-form-postal-code-1input',
-		) as HTMLInputElement
+		)
 		expect(zipInputComponent).toBeInTheDocument()
 		// Simulate typing "2500" into Rent TextInput
 		await userEvent.type(zipInputComponent, '60618')
 		//Check that simulated typed value is reflected in LandlordComboBox
-		expect(zipInputComponent.value).toBe('60618')
+		expect((zipInputComponent as HTMLInputElement).value).toBe('60618')
 
 		//Check for Continue button again
 		const continueReviewButton2 = screen.getByText('Continue')
@@ -218,7 +214,7 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		//Check for each number and click 1
 		const repairRatingRadio1Value = screen.getByTestId(
 			'RepairRatingsRadio-component1',
-		) as HTMLSelectElement
+		)
 		expect(repairRatingRadio1Value).toBeInTheDocument()
 		const repairRatingRadio2Value = screen.getByTestId(
 			'RepairRatingsRadio-component2',
@@ -250,7 +246,7 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		expect(healthRatingRadio1Value).toBeInTheDocument()
 		const healthRatingRadio2Value = screen.getByTestId(
 			'HealthRatingsRadio-component2',
-		) as HTMLSelectElement
+		)
 		expect(healthRatingRadio2Value).toBeInTheDocument()
 		const healthRatingRadio3Value = screen.getByTestId(
 			'HealthRatingsRadio-component3',
@@ -282,7 +278,7 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		expect(stabilityRatingRadio2Value).toBeInTheDocument()
 		const stabilityRatingRadio3Value = screen.getByTestId(
 			'StabilityRatingsRadio-component3',
-		) as HTMLSelectElement
+		)
 		expect(stabilityRatingRadio3Value).toBeInTheDocument()
 		const stabilityRatingRadio4Value = screen.getByTestId(
 			'StabilityRatingsRadio-component4',
@@ -314,7 +310,7 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		expect(privacyRatingRadio3Value).toBeInTheDocument()
 		const privacyRatingRadio4Value = screen.getByTestId(
 			'PrivacyRatingsRadio-component4',
-		) as HTMLSelectElement
+		)
 		expect(privacyRatingRadio4Value).toBeInTheDocument()
 		const privacyRatingRadio5Value = screen.getByTestId(
 			'PrivacyRatingsRadio-component5',
@@ -346,7 +342,7 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		expect(respectRatingRadio4Value).toBeInTheDocument()
 		const respectRatingRadio5Value = screen.getByTestId(
 			'RespectRatingsRadio-component5',
-		) as HTMLSelectElement
+		)
 		expect(respectRatingRadio5Value).toBeInTheDocument()
 		await userEvent.click(respectRatingRadio5Value)
 
@@ -439,14 +435,16 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 
 		const writtenReviewLargeTextInputComponent = screen.getByTestId(
 			'create-review-form-text-1',
-		) as HTMLInputElement
+		)
 		expect(writtenReviewLargeTextInputComponent).toBeInTheDocument()
 		// Simulate typing written review
 		await userEvent.type(
 			writtenReviewLargeTextInputComponent,
 			'This is a test review written as part of components/create-review/review-form.test.tsx',
 		)
-		expect(writtenReviewLargeTextInputComponent.value).toBe(
+		expect(
+			(writtenReviewLargeTextInputComponent as HTMLTextAreaElement).value,
+		).toBe(
 			'This is a test review written as part of components/create-review/review-form.test.tsx',
 		)
 
@@ -476,9 +474,7 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		expect(landlordPreviewComponent).toHaveTextContent('John Doe')
 
 		//Check for summarized rating in preview
-		const ratingPreviewComponent = screen.getByTestId(
-			'ReviewPreview-Rating',
-		) as HTMLInputElement
+		const ratingPreviewComponent = screen.getByTestId('ReviewPreview-Rating')
 		expect(
 			ratingPreviewComponent.querySelectorAll('div > svg.text-yellow-400')
 				.length,
@@ -487,7 +483,7 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		//Check for location in preview
 		const locationPreviewComponent = screen.getByTestId(
 			'ReviewPreview-Location',
-		) as HTMLInputElement
+		)
 		expect(locationPreviewComponent).toHaveTextContent(
 			'Chicago, ILLINOIS, US, 60618',
 		)
@@ -495,7 +491,7 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		//Check for Health and Safety rating in preview
 		const healthRatingPreviewComponent = screen.getByTestId(
 			'HealthReviewPreviewRating',
-		) as HTMLInputElement
+		)
 		expect(
 			healthRatingPreviewComponent.querySelectorAll('div > svg.text-yellow-400')
 				.length,
@@ -504,7 +500,7 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		//Check for Respect rating in preview
 		const respectRatingPreviewComponent = screen.getByTestId(
 			'RespectReviewPreviewRating',
-		) as HTMLInputElement
+		)
 		expect(
 			respectRatingPreviewComponent.querySelectorAll(
 				'div > svg.text-yellow-400',
@@ -514,7 +510,7 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		//Check for Tenant Privacy rating in preview
 		const privacyRatingPreviewComponent = screen.getByTestId(
 			'PrivacyReviewPreviewRating',
-		) as HTMLInputElement
+		)
 		expect(
 			privacyRatingPreviewComponent.querySelectorAll(
 				'div > svg.text-yellow-400',
@@ -524,7 +520,7 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		//Check for Repair rating in preview
 		const repairRatingPreviewComponent = screen.getByTestId(
 			'RepairReviewPreviewRating',
-		) as HTMLInputElement
+		)
 		expect(
 			repairRatingPreviewComponent.querySelectorAll('div > svg.text-yellow-400')
 				.length,
@@ -533,7 +529,7 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		//Check for Rental Stability rating in preview
 		const stabilityRatingPreviewComponent = screen.getByTestId(
 			'StabilityReviewPreviewRating',
-		) as HTMLInputElement
+		)
 		expect(
 			stabilityRatingPreviewComponent.querySelectorAll(
 				'div > svg.text-yellow-400',
@@ -541,37 +537,29 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		).toBe(3)
 
 		//Check for Rent in preview
-		const rentPreviewComponent = screen.getByTestId(
-			'ReviewPreviewRent',
-		) as HTMLInputElement
+		const rentPreviewComponent = screen.getByTestId('ReviewPreviewRent')
 		expect(rentPreviewComponent).toHaveTextContent('Rent Amount: $2500')
 
 		//Check for Written Review in preview
 		const writtenReviewPreviewComponent = screen.getByTestId(
 			'WrittenReviewPreview',
-		) as HTMLInputElement
+		)
 		expect(writtenReviewPreviewComponent).toHaveTextContent(
 			'This is a test review written as part of components/create-review/review-form.test.tsx',
 		)
 
 		//Check for Disclaimer 1 and check
-		const disclaimer1Input = screen.getByTestId(
-			'terms-1-input',
-		) as HTMLInputElement
+		const disclaimer1Input = screen.getByTestId('terms-1-input')
 		expect(disclaimer1Input).toBeInTheDocument()
 		await userEvent.click(disclaimer1Input)
 
 		//Check for Disclaimer 2 and check
-		const disclaimer2Input = screen.getByTestId(
-			'terms-2-input',
-		) as HTMLInputElement
+		const disclaimer2Input = screen.getByTestId('terms-2-input')
 		expect(disclaimer2Input).toBeInTheDocument()
 		await userEvent.click(disclaimer2Input)
 
 		//Check for Disclaimer 3 and check
-		const disclaimer3Input = screen.getByTestId(
-			'terms-3-input',
-		) as HTMLInputElement
+		const disclaimer3Input = screen.getByTestId('terms-3-input')
 		expect(disclaimer3Input).toBeInTheDocument()
 		await userEvent.click(disclaimer3Input)
 

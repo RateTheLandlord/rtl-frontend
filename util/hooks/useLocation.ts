@@ -6,7 +6,7 @@ import {
 import { useDebounce } from './useDebounce'
 
 export const useLocation = (input: string, country: string) => {
-	const [locations, setLocations] = useState<Array<ILocationHookResponse>>([])
+	const [locations, setLocations] = useState<ILocationHookResponse[]>([])
 	const [searching, setSearching] = useState(false)
 
 	const debouncedSearchString = useDebounce(input, 500)
@@ -43,10 +43,8 @@ export const useLocation = (input: string, country: string) => {
 	return { searching, locations }
 }
 
-const formatData = (
-	data: Array<ILocationResponse>,
-): Array<ILocationHookResponse> => {
-	const newData: Array<ILocationHookResponse> = []
+const formatData = (data: ILocationResponse[]): ILocationHookResponse[] => {
+	const newData: ILocationHookResponse[] = []
 	for (let i = 0; i < data.length; i++) {
 		if (data[i].address.city) {
 			const existingCity = newData.some(

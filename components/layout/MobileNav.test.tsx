@@ -10,7 +10,7 @@ import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
 describe('MobileNav', () => {
-	const navigation: Array<INav> = [
+	const navigation: INav[] = [
 		{
 			href: '/reviews',
 			name: 'layout.nav.reviews',

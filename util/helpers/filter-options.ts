@@ -1,6 +1,6 @@
 import { SortOptions } from '../interfaces/interfaces'
 
-export const sortOptions: Array<SortOptions> = [
+export const sortOptions: SortOptions[] = [
 	{ id: 1, name: 'sort.name_az', value: 'az' },
 	{ id: 2, name: 'sort.name_za', value: 'za' },
 	{ id: 3, name: 'sort.newest', value: 'new' },

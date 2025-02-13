@@ -2,7 +2,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import js from '@eslint/js'
 import { FlatCompat } from '@eslint/eslintrc'
-import ts from 'typescript-eslint'
+import tseslint from 'typescript-eslint'
 import prettierConfigRecommended from 'eslint-plugin-prettier/recommended'
 import { fixupConfigRules } from '@eslint/compat'
 
@@ -18,27 +18,44 @@ const patchedConfig = fixupConfigRules([
 	...compat.extends('next/core-web-vitals'),
 ])
 
-const config = [
-	...patchedConfig,
-	...ts.configs.recommended,
-	prettierConfigRecommended,
-	// Add more flat configs here
-	{
-		ignores: [
-			'**/node_modules/*',
-			'**/dist',
-			'**/coverage',
-			'**/.next/*',
-			'**/*.json',
-			'**/*.lock',
-			'**/*.css',
-			'**/*.scss',
-			'**/out/*',
-			'**/next-env.d.ts',
-			'util/countries',
-			'**/*.mjs',
-		],
+export default tseslint.config({
+	extends: [
+		patchedConfig,
+		tseslint.configs.recommendedTypeChecked,
+		prettierConfigRecommended,
+	],
+	ignores: [
+		'**/node_modules/*',
+		'**/dist',
+		'/coverage',
+		'**/.next/*',
+		'*.json',
+		'*.lock',
+		'*.css',
+		'*.scss',
+		'**/out/*',
+		'next-env.d.ts',
+		'**/util/countries',
+		'*.mjs',
+		'**/migrations/*',
+	],
+	languageOptions: {
+		parserOptions: {
+			projectService: true,
+			tsconfigRootDir: __dirname,
+		},
 	},
-]
-
-export default config
+	// TODO RULES TO FIX - SET TO WARN FOR NOW
+	rules: {
+		'@typescript-eslint/no-unsafe-call': 'warn',
+		'@typescript-eslint/no-unsafe-return': 'warn',
+		'@typescript-eslint/no-unsafe-member-access': 'warn',
+		'@typescript-eslint/no-floating-promises': 'warn',
+		'@typescript-eslint/no-unsafe-argument': 'warn',
+		'@typescript-eslint/require-await': 'warn',
+		'@typescript-eslint/no-unsafe-assignment': 'warn',
+		'@typescript-eslint/await-thenable': 'warn',
+		'@typescript-eslint/restrict-plus-operands': 'warn',
+		'@typescript-eslint/no-misused-promises': 'warn',
+	},
+})

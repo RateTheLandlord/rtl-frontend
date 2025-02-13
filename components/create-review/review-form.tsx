@@ -58,8 +58,10 @@ function ReviewForm(): JSX.Element {
 	const {
 		searching,
 		locations,
-	}: { searching: boolean; locations: Array<ILocationHookResponse> } =
-		useLocation(city, country)
+	}: { searching: boolean; locations: ILocationHookResponse[] } = useLocation(
+		city,
+		country,
+	)
 
 	const [repair, setRepair] = useState<number>(3)
 	const [health, setHealth] = useState<number>(3)
@@ -88,8 +90,9 @@ function ReviewForm(): JSX.Element {
 	const { executeRecaptcha } = useReCaptcha()
 
 	// Check for already reviewed landlord from browser
-	const [localReviewedLandlords, setLocalReviewedLandlords] =
-		useState<Array<string> | null>(null)
+	const [localReviewedLandlords, setLocalReviewedLandlords] = useState<
+		string[] | null
+	>(null)
 
 	useEffect(() => {
 		const prevLandlords = localStorage.getItem('rtl')
@@ -256,13 +259,13 @@ function ReviewForm(): JSX.Element {
 							}
 						})
 						.catch(() => {
-							toast.error(t('alerts.error', { ns: 'alerts' }) as string)
+							toast.error('ERROR: Please try again')
 						})
 						.finally(() => {
 							setLoading(false)
 						})
 				} else {
-					toast.error(t('alerts.error', { ns: 'alerts' }) as string)
+					toast.error('ERROR:Please try again')
 				}
 			} else {
 				setPostalError(true)

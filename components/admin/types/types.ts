@@ -8,73 +8,73 @@ export interface ICountryStats {
 	countryStats: {
 		CA?: {
 			total: string
-			states: Array<{
+			states: {
 				key: string
 				total: string
-			}>
+			}[]
 		}
 		US?: {
 			total: string
-			states: Array<{
+			states: {
 				key: string
 				total: string
-			}>
+			}[]
 		}
 		AU?: {
 			total: string
-			states: Array<{
+			states: {
 				key: string
 				total: string
-			}>
+			}[]
 		}
 		GB?: {
 			total: string
-			states: Array<{
+			states: {
 				key: string
 				total: string
-			}>
+			}[]
 		}
 		NZ?: {
 			total: string
-			states: Array<{
+			states: {
 				key: string
 				total: string
-			}>
+			}[]
 		}
 		DE?: {
 			total: string
-			states: Array<{
+			states: {
 				key: string
 				total: string
-			}>
+			}[]
 		}
 		IE?: {
 			total: string
-			states: Array<{
+			states: {
 				key: string
 				total: string
-			}>
+			}[]
 		}
 		NO?: {
 			total: string
-			states: Array<{
+			states: {
 				key: string
 				total: string
-			}>
+			}[]
 		}
 	}
 }
 
 interface IDetailedStats {
 	date: string
-	country_codes: { [key: string]: number }
-	cities: { [key: string]: number }
-	state: { [key: string]: number }
-	zip: { [key: string]: number }
+	country_codes: Record<string, number>
+	cities: Record<string, number>
+	state: Record<string, number>
+	zip: Record<string, number>
 	total: string
 }
 
 export interface IStats {
-	detailed_stats: Array<IDetailedStats>
+	detailed_stats: IDetailedStats[]
 	total_stats: ICountryStats
 }

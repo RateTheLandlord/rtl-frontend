@@ -24,7 +24,7 @@ import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { useRouter } from 'next/router'
 
-export type ReviewsResponse = {
+export interface ReviewsResponse {
 	reviews: IReview[]
 	total: number
 	countries: string[]

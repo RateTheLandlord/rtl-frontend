@@ -15,7 +15,7 @@ const Search = () => {
 	const {
 		isSearching,
 		landlordSuggestions: suggestions,
-	}: { isSearching: boolean; landlordSuggestions: Array<string> } =
+	}: { isSearching: boolean; landlordSuggestions: string[] } =
 		useLandlordSuggestions(search)
 
 	const submitCombo = (e) => {
