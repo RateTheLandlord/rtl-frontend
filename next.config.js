@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 // @ts-check
 
-const { i18n } = require('./next-i18next.config.mjs')
+const { i18n } = require('./next-i18next.config.js')
 
 /** @type {import('next').NextConfig} */
 

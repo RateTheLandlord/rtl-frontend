@@ -30,8 +30,8 @@
 		"**/*.ts",
 		"**/*.tsx",
 		"**/*.js",
-		"next-i18next.config.mjs",
-		"next.config.mjs",
+		"next-i18next.config.js",
+		"next.config.js",
 		"tailwind.config.mjs",
 		"postcss.config.mjs",
 		"prettier.config.mjs"
