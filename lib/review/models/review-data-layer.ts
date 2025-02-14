@@ -48,7 +48,8 @@ export async function createReview(
         `
 
 		return { message: 'Review successfully added', success: true }
-	} catch {
+	} catch (e) {
+		console.error('Error Creating Review')
 		throw e
 	}
 }
