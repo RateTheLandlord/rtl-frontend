@@ -60,13 +60,13 @@ export default CreateReview
 
 export async function getStaticProps({ locale }) {
 	return {
-	  props: {
-		...(await serverSideTranslations(locale, [
-		  'createreview',
-		  'layout',
-		  'reviews'
-		])),
-		// Will be passed to the page component as props
-	  },
+		props: {
+			...(await serverSideTranslations(locale, [
+				'createreview',
+				'layout',
+				'reviews',
+			])),
+			// Will be passed to the page component as props
+		},
 	}
-  }
+}

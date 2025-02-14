@@ -24,12 +24,11 @@ interface IBody {
 		rent: number | null
 		date_added: Date
 		moderation_reason: string | null
-		moderator: Array<string> | null
+		moderator: string[] | null
 	}
 }
 
 const SubmitReview = async (req: NextApiRequest, res: NextApiResponse) => {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req
 
 	const captcha = await verifyToken(body.captchaToken)

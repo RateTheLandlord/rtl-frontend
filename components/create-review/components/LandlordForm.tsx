@@ -29,7 +29,7 @@ const LandlordForm = ({
 	const {
 		isSearching,
 		landlordSuggestions,
-	}: { isSearching: boolean; landlordSuggestions: Array<string> } =
+	}: { isSearching: boolean; landlordSuggestions: string[] } =
 		useLandlordSuggestions(landlord)
 	return !landlordOpen && !landlordValidationError ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
@@ -50,7 +50,7 @@ const LandlordForm = ({
 	) : (
 		<div data-testid='LandlordForm-component'>
 			<div>
-				<h2 className='text-base font-semibold leading-7 text-gray-900'>
+				<h2 className='text-base leading-7 font-semibold text-gray-900'>
 					{t('create-review.landlord-form.title')}
 				</h2>
 				<p className='mt-1 text-sm leading-6 text-gray-600'>

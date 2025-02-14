@@ -5,10 +5,12 @@ import React from 'react'
 import { render, RenderResult } from '@testing-library/react'
 import { useTranslation } from 'react-i18next'
 import Contributing from './contributing'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 jest.mock('react-i18next')
 
-describe('Contributing', () => {
+describe('Contributing Test Suite', () => {
 	let renderResult: RenderResult
 
 	beforeEach(() => {
@@ -18,7 +20,7 @@ describe('Contributing', () => {
 		renderResult = render(<Contributing />)
 	})
 
-	test('renders the component with translated content', () => {
+	it('renders the component with translated content', () => {
 		const { getByTestId, getByText } = renderResult
 
 		// Check if the component renders correctly
@@ -34,5 +36,9 @@ describe('Contributing', () => {
 		expect(paragraphElement).toBeInTheDocument()
 	})
 
-	// Add more test cases as needed
+	it('Should not have a11y violation', async () => {
+		const { container } = render(<Contributing />)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
+	})
 })

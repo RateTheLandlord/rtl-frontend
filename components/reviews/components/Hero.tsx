@@ -35,7 +35,7 @@ const Hero = ({ countryFilter, stateFilter }: IProps) => {
 		}
 	}
 	return (
-		<div className='m-2 w-full  max-w-7xl'>
+		<div className='m-2 w-full max-w-7xl'>
 			<div className='relative h-[850px]'>
 				<div className='mx-auto max-w-7xl rounded-md bg-white/20'>
 					<div className='relative z-10 lg:w-full lg:max-w-2xl'>

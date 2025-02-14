@@ -21,7 +21,7 @@ const handler = async (req, res) => {
 	try {
 		await res.revalidate(`/landlord/${encodeURIComponent(path)}`)
 		return res.json({ revalidated: true })
-	} catch (err) {
+	} catch {
 		return res.status(500).send('Error revalidating')
 	}
 }

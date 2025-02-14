@@ -18,7 +18,6 @@ const EditSuspiciousLandlordAPI = async (
 	const user = session?.user
 	await runMiddleware(req, res)
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req
 
 	if (user && user.role === 'ADMIN' && user.admin_id === 'rtl-001') {

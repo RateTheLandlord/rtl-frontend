@@ -61,19 +61,19 @@ export default function Home(): JSX.Element {
 }
 
 export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, [
-		'about',
-		'alerts',
-		'createreview',
-		'filters',
-		'home',
-		'layout',
-		'landlord',
-		'reviews'
-      ])),
-      // Will be passed to the page component as props
-    },
-  }
+	return {
+		props: {
+			...(await serverSideTranslations(locale, [
+				'about',
+				'alerts',
+				'createreview',
+				'filters',
+				'home',
+				'layout',
+				'landlord',
+				'reviews',
+			])),
+			// Will be passed to the page component as props
+		},
+	}
 }

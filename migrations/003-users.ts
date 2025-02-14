@@ -9,4 +9,3 @@ exports.up = async function (DB) {
     DROP COLUMN IF EXISTS lockout_time;
     `
 }
-

@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo'
 import React from 'react'
 import { useRouter } from 'next/router'
-import ReviewForm from '@/components/reviews/review-form'
+import ReviewForm from '@/components/reviews/read-reviews'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export default function Reviews(): JSX.Element {
@@ -52,15 +52,15 @@ export default function Reviews(): JSX.Element {
 }
 
 export async function getStaticProps({ locale }) {
-  return {
-	props: {
-	  ...(await serverSideTranslations(locale, [
-		'reviews',
-		'filters',
-		'landlord',
-		'layout'
-	  ])),
-	  // Will be passed to the page component as props
-	},
-  }
+	return {
+		props: {
+			...(await serverSideTranslations(locale, [
+				'reviews',
+				'filters',
+				'landlord',
+				'layout',
+			])),
+			// Will be passed to the page component as props
+		},
+	}
 }

@@ -10,12 +10,12 @@ const TotalStats = ({ data }: { data: ICountryStats }) => {
 	}
 
 	const renderStats = () => {
-		const stats: Array<{
+		const stats: {
 			country: string
 			label: string
 			data?: string
 			isActive: boolean
-		}> = [
+		}[] = [
 			{
 				country: 'CA',
 				label: 'Canadian Reviews',
@@ -74,10 +74,10 @@ const TotalStats = ({ data }: { data: ICountryStats }) => {
 					stat.isActive ? 'bg-gray-200' : ''
 				}`}
 			>
-				<dt className='order-2 mt-2 text-lg  leading-6 text-gray-500'>
+				<p className='order-2 mt-2 text-lg leading-6 text-gray-500'>
 					{stat.label}
-				</dt>
-				<dd className='order-1 text-5xl   text-indigo-600'>{stat.data}</dd>
+				</p>
+				<p className='order-1 text-5xl text-indigo-600'>{stat.data}</p>
 			</div>
 		))
 	}
@@ -109,12 +109,12 @@ const TotalStats = ({ data }: { data: ICountryStats }) => {
 		<div className='container flex w-full flex-wrap justify-center px-4 sm:px-6 lg:px-8'>
 			<div className='mt-3 flex w-full flex-col justify-center gap-3 lg:flex-row'>
 				<div className='flex flex-col p-6 text-center'>
-					<dt className='order-2 mt-2 text-lg  leading-6 text-gray-500'>
+					<div className='order-2 mt-2 text-lg leading-6 text-gray-500'>
 						Total Reviews
-					</dt>
-					<dd className='order-1 text-5xl   text-indigo-600'>
+					</div>
+					<div className='order-1 text-5xl text-indigo-600'>
 						{data.total_reviews}
-					</dd>
+					</div>
 				</div>
 				{renderStats()}
 			</div>

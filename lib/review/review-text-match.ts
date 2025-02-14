@@ -3,7 +3,7 @@ import sql from '../db'
 
 /* https://www.educative.io/answers/the-levenshtein-distance-algorithm
  * uses the Levenshtein distance algorithm to compare the distance between two strings */
-export function editDistance(string1: string, string2: string): number {
+function editDistance(string1: string, string2: string): number {
 	string1 = string1.toLowerCase()
 	string2 = string2.toLowerCase()
 	const costs: number[] = []
@@ -30,7 +30,7 @@ export function editDistance(string1: string, string2: string): number {
 }
 
 // https://stackoverflow.com/questions/10473745/compare-strings-javascript-return-of-likely
-export function reviewSimilarity(review1: string, review2: string): number {
+function reviewSimilarity(review1: string, review2: string): number {
 	let longer: string = review1
 	let shorter: string = review2
 	if (review1.length < review2.length) {

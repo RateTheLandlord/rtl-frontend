@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { Fragment, useEffect } from 'react'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
@@ -75,7 +76,7 @@ export default function MobileReviewFilters({
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<div className='fixed inset-0 bg-black bg-opacity-25' />
+					<div className='bg-opacity-25 fixed inset-0 bg-black' />
 				</Transition.Child>
 
 				<div
@@ -93,7 +94,7 @@ export default function MobileReviewFilters({
 					>
 						<Dialog.Panel className='relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl'>
 							<div className='flex items-center justify-between px-4'>
-								<h2 className='text-lg  text-gray-900'>
+								<h2 className='text-lg text-gray-900'>
 									{t('reviews.filters')}
 								</h2>
 								<button

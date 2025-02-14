@@ -23,7 +23,7 @@ interface IBody {
 	admin_edited: boolean
 	rent: number | null
 	moderation_reason: string | null
-	moderator: Array<string> | null
+	moderator: string[] | null
 }
 
 const EditReview = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -31,7 +31,6 @@ const EditReview = async (req: NextApiRequest, res: NextApiResponse) => {
 	const user = session?.user
 	await runMiddleware(req, res)
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { body }: { body: IBody } = req
 
 	const id = body.id

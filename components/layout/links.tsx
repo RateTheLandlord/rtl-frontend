@@ -5,7 +5,7 @@ import TikTok from '@/components/svg/social/tiktok'
 import Facebook from '../svg/social/facebook'
 import Patreon from '../svg/icons/patreon'
 
-export const navigation: Array<INav> = [
+export const navigation: INav[] = [
 	{
 		href: '/reviews',
 		name: 'layout.nav.reviews',
@@ -24,7 +24,7 @@ export const navigation: Array<INav> = [
 	},
 ]
 
-export const socialLinks: Array<ILinks> = [
+export const socialLinks: ILinks[] = [
 	{
 		name: 'Instagram',
 		href: 'https://www.instagram.com/ratethelandlord',

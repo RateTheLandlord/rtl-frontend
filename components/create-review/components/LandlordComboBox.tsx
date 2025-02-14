@@ -29,11 +29,11 @@ export default function LandlordComboBox({
 				data-testid='create-review-form-landlord-1'
 				className='relative w-full pt-2 lg:pt-0'
 			>
-				<label htmlFor='landlord' className='block text-sm  text-gray-700'>
+				<label htmlFor='landlord' className='block text-sm text-gray-700'>
 					{name}
 				</label>
 				<Combobox.Input
-					data-testid="LandlordComboBox-component"
+					data-testid='LandlordComboBox-component'
 					className={comboInputClassName}
 					placeholder={`${name}`}
 					displayValue={(state: string) => state}
@@ -46,10 +46,10 @@ export default function LandlordComboBox({
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<Combobox.Options className='absolute z-10 mt-1 flex max-h-60 w-60 flex-col overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+					<Combobox.Options className='ring-opacity-5 absolute z-10 mt-1 flex max-h-60 w-60 flex-col overflow-auto rounded-md bg-white text-base ring-1 shadow-lg ring-black focus:outline-none sm:text-sm'>
 						{suggestions.length === 0 && state !== '' ? (
 							isSearching ? (
-								<div className='relative cursor-default select-none px-4 py-2 text-gray-700'>
+								<div className='relative cursor-default px-4 py-2 text-gray-700 select-none'>
 									Loading...
 								</div>
 							) : null

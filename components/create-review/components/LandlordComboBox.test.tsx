@@ -4,6 +4,8 @@
 import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import LandlordComboBox from './LandlordComboBox'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 interface RenderComponentProps {
 	state: string | undefined
@@ -132,5 +134,21 @@ describe('LandlordComboBox', () => {
 		await waitFor(() => {
 			expect(screen.getByText('Loading...')).toBeInTheDocument()
 		})
+	})
+
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<LandlordComboBox
+				name='Landlord Name (or Property Management Company) - No Addresses'
+				state='some state'
+				setState={handleChange}
+				suggestions={[]}
+				isSearching={true}
+				error={false}
+				errorText=''
+			/>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

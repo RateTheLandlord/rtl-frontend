@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { IQuery, Options, SortOptions } from '@/util/interfaces/interfaces'
 import SearchBar from './ui/searchbar'
@@ -60,7 +61,9 @@ function ReviewFilters({
 }: FiltersProps): JSX.Element {
 	const { t } = useTranslation('reviews')
 	const keyDownAction = (e) => {
-		e.key === 'Enter' || e.key === 'NumpadEnter' ? updateParams() : {}
+		if (e.key === 'Enter' || e.key === 'NumpadEnter') {
+			updateParams()
+		}
 	}
 
 	useEffect(() => {
@@ -77,7 +80,7 @@ function ReviewFilters({
 		dispatch(updateState(stateFilter))
 		dispatch(updateCity(cityFilter))
 		dispatch(updateZip(zipFilter))
-	}, [])
+	}, [cityFilter, dispatch, stateFilter, zipFilter])
 
 	return (
 		<div data-testid='review-filters-1' className='mt-6 hidden lg:block'>
@@ -141,7 +144,7 @@ function ReviewFilters({
 								updateParams()
 							}}
 							type='submit'
-							className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm  text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${'bg-teal-600 hover:bg-teal-700'}`}
+							className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm text-white shadow-sm focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none ${'bg-teal-600 hover:bg-teal-700'}`}
 							data-testid='submit-button-1'
 						>
 							{loading ? (

@@ -23,12 +23,13 @@ const TextInput = ({
 }: IProps) => {
 	return (
 		<div data-testid={testid || ''} className='w-full sm:col-span-1'>
-			<label htmlFor={id} className='block text-sm  text-gray-700 sm:mt-px'>
+			<label htmlFor={id} className='block text-sm text-gray-700 sm:mt-px'>
 				{title}
 			</label>
 			<div className='pt-0.5'>
 				<div className='sm:col-span-2 sm:mt-0'>
 					<input
+						aria-label={`${id} Text Input`}
 						onChange={(e) => setValue(e.target.value)}
 						type={type}
 						name={id}

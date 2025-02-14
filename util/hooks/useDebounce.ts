@@ -9,7 +9,7 @@ export const useDebounce = (value: string | undefined, delay: number) => {
 		}, delay)
 
 		return () => clearTimeout(timeoutId)
-	}, [value])
+	}, [value, delay])
 
 	return debouncedValue
 }

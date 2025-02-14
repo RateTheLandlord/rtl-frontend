@@ -6,6 +6,8 @@ import { render, screen } from '@testing-library/react'
 import RemoveReviewModal from './RemoveReviewModal'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('RemoveReviewModal', () => {
 	const mockSelectedReview = {
@@ -52,5 +54,20 @@ describe('RemoveReviewModal', () => {
 			'Are you sure you want to remove this review? This cannot be undone.',
 		)
 		expect(confirmationMessage).toBeInTheDocument()
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<Provider store={store}>
+				<RemoveReviewModal
+					selectedReview={mockSelectedReview}
+					handleMutate={jest.fn()}
+					setRemoveReviewOpen={jest.fn()}
+					removeReviewOpen={true}
+					setSelectedReview={jest.fn()}
+				/>
+			</Provider>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

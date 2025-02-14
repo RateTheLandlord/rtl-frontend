@@ -8,7 +8,7 @@ interface IQuery {
 	stateFilter: Options | null
 	cityFilter: Options | null
 	zipFilter: Options | null
-	activeFilters: Array<Options | null> | null
+	activeFilters: (Options | null)[] | null
 	searchFilter: string | undefined
 }
 
@@ -31,9 +31,6 @@ const querySlice = createSlice({
 	name: 'query',
 	initialState,
 	reducers: {
-		updateSort(state, action: PayloadAction<SortOptions>) {
-			state.selectedSort = action.payload
-		},
 		updateCountry(state, action: PayloadAction<Options | null>) {
 			state.countryFilter = action.payload
 		},
@@ -49,7 +46,7 @@ const querySlice = createSlice({
 		updateSearch(state, action: PayloadAction<string | undefined>) {
 			state.searchFilter = action.payload
 		},
-		updateActiveFilters(state, action: PayloadAction<Array<Options | null>>) {
+		updateActiveFilters(state, action: PayloadAction<(Options | null)[]>) {
 			return { ...state, activeFilters: action.payload }
 		},
 		updateStateAndCountry(state, action: PayloadAction<IStateAndCountry>) {
@@ -73,7 +70,6 @@ export const {
 	updateCity,
 	updateCountry,
 	updateSearch,
-	updateSort,
 	updateState,
 	updateZip,
 	updateActiveFilters,

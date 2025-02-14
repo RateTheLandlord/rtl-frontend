@@ -41,30 +41,28 @@ const Information = ({ selectedPoint, country, state }: IProps) => {
 	}
 	return (
 		<div className='mt-6 border-t border-gray-100'>
-			<dl className='divide-y divide-gray-100'>
+			<div className='divide-y divide-gray-100'>
 				<div className='flex w-full items-center justify-between px-4 py-6'>
-					<dt className='text-sm font-medium leading-6 text-gray-900'>
+					<p className='text-sm leading-6 font-medium text-gray-900'>
 						Postal Code
-					</dt>
-					<dd className='mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0'>
+					</p>
+					<p className='mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0'>
 						{selectedPoint.zip}
-					</dd>
+					</p>
 				</div>
 				<div className='flex w-full items-center justify-between px-4 py-6'>
-					<dt className='text-sm font-medium leading-6 text-gray-900'>
+					<p className='text-sm leading-6 font-medium text-gray-900'>
 						Total Reviews
-					</dt>
-					<dd className='mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0'>
+					</p>
+					<p className='mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0'>
 						{stats.total}
-					</dd>
+					</p>
 				</div>
 				<div className='flex w-full items-center justify-between px-4 py-6'>
-					<dt className='text-sm font-medium leading-6 text-gray-900'>
-						Average
-					</dt>
-					<dd className='mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0'>
+					<p className='text-sm leading-6 font-medium text-gray-900'>Average</p>
+					<p className='mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0'>
 						<RatingStars testid='mapratings' value={stats.average} />
-					</dd>
+					</p>
 				</div>
 				<div className='flex w-full justify-center py-6'>
 					<Link
@@ -73,12 +71,12 @@ const Information = ({ selectedPoint, country, state }: IProps) => {
 						)}/${encodeURIComponent(state?.value || '')}/${encodeURIComponent(
 							selectedPoint.zip,
 						)}`}
-						className='cursor-pointer text-sm font-medium leading-6 text-gray-900 underline'
+						className='cursor-pointer text-sm leading-6 font-medium text-gray-900 underline'
 					>
 						View Reviews
 					</Link>
 				</div>
-			</dl>
+			</div>
 		</div>
 	)
 }

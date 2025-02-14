@@ -108,12 +108,12 @@ export async function getStaticProps({ locale, params }) {
 				data: data,
 				zip: params.zip,
 				...(await serverSideTranslations(locale, [
-						'filters',
-						'resources',
-						'layout',
-						'landlord',
-						'reviews'
-						])),
+					'filters',
+					'resources',
+					'layout',
+					'landlord',
+					'reviews',
+				])),
 			}),
 		),
 		// Re-generate the page

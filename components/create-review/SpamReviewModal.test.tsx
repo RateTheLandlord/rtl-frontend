@@ -4,6 +4,8 @@
 import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import SpamReviewModal from '@/components/create-review/SpamReviewModal'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 jest.mock('react-i18next', () => ({
 	useTranslation: jest.fn().mockReturnValue({
@@ -122,5 +124,15 @@ describe('Spam Review Modal component', () => {
 		expect(setIsOpenMock).not.toHaveBeenCalled()
 	})
 
-	// Add more tests as needed for other functionality in the component
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<SpamReviewModal
+				isOpen={true}
+				setIsOpen={() => jest.fn()}
+				detectionMethod='localStorageDetection'
+			/>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
+	})
 })

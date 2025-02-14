@@ -11,7 +11,7 @@ export interface Resource {
 	href: string
 }
 
-export type ResourcesResponse = {
+export interface ResourcesResponse {
 	resources: Resource[]
 	total: number
 	countries: string[]

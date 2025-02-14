@@ -11,6 +11,7 @@ interface IProps {
 }
 
 const Landlord = ({ landlord, data }: IProps) => {
+	const pathName = useRouter().pathname
 	if (!data) return <div>Error Loading Landlord</div>
 
 	if (!data.reviews) return <Spinner />
@@ -20,7 +21,6 @@ const Landlord = ({ landlord, data }: IProps) => {
 	const title = `${decodeURIComponent(landlord)} Reviews | Rate The Landlord`
 	const desc = `Reviews for ${landlord}. Read ${data.total} reviews and rental experiences for ${landlord}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
 	const siteURL = 'https://ratethelandlord.org'
-	const pathName = useRouter().pathname
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'

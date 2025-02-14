@@ -94,7 +94,8 @@ export async function getStaticProps({ locale, params }) {
 
 	// Pass post data to the page via props
 	return {
-		props: JSON.parse(JSON.stringify({
+		props: JSON.parse(
+			JSON.stringify({
 				city: params.city,
 				state: params.state,
 				country: params.country_code,
@@ -104,9 +105,10 @@ export async function getStaticProps({ locale, params }) {
 					'resources',
 					'layout',
 					'landlord',
-					'reviews'
-				  ])),
-			})),
+					'reviews',
+				])),
+			}),
+		),
 		// Re-generate the page
 		// if a request comes in after 100 seconds
 		revalidate: 100,

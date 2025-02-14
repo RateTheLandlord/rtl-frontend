@@ -18,7 +18,7 @@ export interface Review {
 	admin_edited: boolean
 	rent?: number | null
 	moderation_reason: string | null
-	moderator: Array<string> | null
+	moderator: string[] | null
 }
 
 export interface OtherLandlord {
@@ -38,11 +38,6 @@ export interface SortOptions {
 	id: number
 	name: string
 	value: 'az' | 'za' | 'new' | 'old' | 'high' | 'low' | undefined
-}
-
-export interface NewFilter {
-	key: string
-	value: string
 }
 
 export interface ILinks {
@@ -67,7 +62,7 @@ export interface ILocationResponse {
 		state: string
 		state_district: string
 	}
-	boundingbox: Array<string>
+	boundingbox: string[]
 	class: string
 	display_name: string
 	icon: string
@@ -101,15 +96,15 @@ export interface Resource {
 }
 
 export interface ResourceResponse {
-	resources: Array<Resource>
+	resources: Resource[]
 	total: string
-	countries: Array<string>
-	states: Array<string>
-	cities: Array<string>
+	countries: string[]
+	states: string[]
+	cities: string[]
 	limit: number
 }
 
-export type FilterOptions = {
+export interface FilterOptions {
 	countries: Options[]
 	states: Options[]
 	cities: Options[]
@@ -129,7 +124,7 @@ export interface SuspiciousLandlord {
 }
 
 export interface SuspiciousLandlordResponse {
-	landlords: Array<SuspiciousLandlord>
+	landlords: SuspiciousLandlord[]
 	total: string
 	limit: number
 }
@@ -142,7 +137,7 @@ export interface Keywords {
 }
 
 export interface FlaggedKeywordsResponse {
-	keywords: Array<Keywords>
+	keywords: Keywords[]
 	total: string
 	limit: number
 }
@@ -153,21 +148,11 @@ export interface IQuery {
 	stateFilter: Options | null
 	cityFilter: Options | null
 	zipFilter: Options | null
-	activeFilters: Array<Options | null> | null
+	activeFilters: (Options | null)[] | null
 	searchFilter: string | undefined
 }
 
-export type ReviewsResponse = {
-	reviews: Review[]
-	total: number
-	countries: string[]
-	states: string[]
-	cities: string[]
-	zips: string[]
-	limit: number
-}
-
-export type AnalyticsResponseInterface = {
+export interface AnalyticsResponseInterface {
 	review_date: string
 	metric: number
 }
