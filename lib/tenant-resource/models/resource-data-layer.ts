@@ -3,7 +3,7 @@ import sql from '@/lib/db'
 
 export async function createResource(
 	inputResource: Resource,
-): Promise<Resource> {
+): Promise<Resource | undefined> {
 	try {
 		inputResource.name = inputResource.name
 			.substring(0, 150)
@@ -30,8 +30,7 @@ export async function createResource(
 
 		return inputResource
 	} catch {
-		console.log(e)
-		throw e
+		console.error('Failed to create resource')
 	}
 }
 

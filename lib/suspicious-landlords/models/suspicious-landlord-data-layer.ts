@@ -3,7 +3,7 @@ import { SuspiciousLandlord } from '@/util/interfaces/interfaces'
 
 export async function createLandlord(
 	suspiciousLandlord: SuspiciousLandlord,
-): Promise<SuspiciousLandlord> {
+): Promise<SuspiciousLandlord | undefined> {
 	try {
 		suspiciousLandlord.landlord = suspiciousLandlord.landlord
 			.substring(0, 150)
@@ -20,8 +20,7 @@ export async function createLandlord(
 
 		return suspiciousLandlord
 	} catch {
-		console.log(e)
-		throw e
+		console.error('Failed to create Suspicious Landlord')
 	}
 }
 
