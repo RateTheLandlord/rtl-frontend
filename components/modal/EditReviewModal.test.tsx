@@ -6,6 +6,8 @@ import EditReviewModal from './EditReviewModal'
 import { store } from '@/redux/store'
 import { Provider } from 'react-redux'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('EditReviewModal', () => {
 	const mockSelectedReview = {
@@ -67,5 +69,22 @@ describe('EditReviewModal', () => {
 		expect(screen.getByLabelText('Review')).toHaveValue(
 			mockSelectedReview.review,
 		)
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<UserProvider>
+				<Provider store={store}>
+					<EditReviewModal
+						selectedReview={mockSelectedReview}
+						handleMutate={jest.fn()}
+						setEditReviewOpen={jest.fn()}
+						editReviewOpen={true}
+						setSelectedReview={jest.fn()}
+					/>
+				</Provider>
+			</UserProvider>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

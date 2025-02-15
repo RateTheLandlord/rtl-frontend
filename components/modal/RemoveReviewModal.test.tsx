@@ -7,6 +7,8 @@ import RemoveReviewModal from './RemoveReviewModal'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('RemoveReviewModal', () => {
 	const mockSelectedReview = {
@@ -55,5 +57,22 @@ describe('RemoveReviewModal', () => {
 		// Verify that the modal title is rendered
 		const modalTitle = screen.getByText('Remove Review')
 		expect(modalTitle).toBeInTheDocument()
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<UserProvider>
+				<Provider store={store}>
+					<RemoveReviewModal
+						selectedReview={mockSelectedReview}
+						handleMutate={jest.fn()}
+						setRemoveReviewOpen={jest.fn()}
+						removeReviewOpen={true}
+						setSelectedReview={jest.fn()}
+					/>
+				</Provider>
+			</UserProvider>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

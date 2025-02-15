@@ -4,6 +4,8 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import ResourcesInfo from './resourcesInfo'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 jest.mock('react-i18next', () => ({
 	useTranslation: jest.fn().mockReturnValue({
@@ -24,5 +26,10 @@ describe('ResourcesInfo', () => {
 		// Verify that the title is rendered
 		const title = screen.getByText('Resources')
 		expect(title).toBeInTheDocument()
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(<ResourcesInfo />)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

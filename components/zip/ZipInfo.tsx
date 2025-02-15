@@ -23,7 +23,7 @@ interface IProps {
 
 const ZipInfo = ({ state, country, average, total, averages, zip }: IProps) => {
 	const { t } = useTranslation('landlord')
-	const tenantList: Array<string> = t('landlord.tenant-list', {
+	const tenantList: string[] = t('landlord.tenant-list', {
 		returnObjects: true,
 	})
 	return (
@@ -57,7 +57,7 @@ const ZipInfo = ({ state, country, average, total, averages, zip }: IProps) => {
 
 					<div>
 						<Link href='/create-review'>
-							<p className='mt-2 inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm  text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'>
+							<p className='mt-2 inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm text-white shadow-sm hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none'>
 								{t('landlord.submit')}
 							</p>
 						</Link>
@@ -68,23 +68,21 @@ const ZipInfo = ({ state, country, average, total, averages, zip }: IProps) => {
 				<Disclosure as='div' className='py-3'>
 					{({ open }) => (
 						<>
-							<dt>
-								<Disclosure.Button className='flex w-full items-start justify-between text-left text-gray-900'>
-									<span className='text-base  leading-7'>
-										{t('landlord.tenant')}
-									</span>
-									<span className='ml-6 flex h-7 items-center'>
-										{open ? (
-											<MinusSmIcon className='h-6 w-6' aria-hidden='true' />
-										) : (
-											<PlusSmIcon className='h-6 w-6' aria-hidden='true' />
-										)}
-									</span>
-								</Disclosure.Button>
-							</dt>
-							<Disclosure.Panel as='dd' className='mt-2 pl-4 pr-12'>
+							<Disclosure.Button className='flex w-full items-start justify-between text-left text-gray-900'>
+								<span className='text-base leading-7'>
+									{t('landlord.tenant')}
+								</span>
+								<span className='ml-6 flex h-7 items-center'>
+									{open ? (
+										<MinusSmIcon className='h-6 w-6' aria-hidden='true' />
+									) : (
+										<PlusSmIcon className='h-6 w-6' aria-hidden='true' />
+									)}
+								</span>
+							</Disclosure.Button>
+							<Disclosure.Panel as='dd' className='mt-2 pr-12 pl-4'>
 								<ol className='list-decimal'>
-									{tenantList.map((item, i) => {
+									{tenantList?.map((item, i) => {
 										return (
 											<li
 												key={i}

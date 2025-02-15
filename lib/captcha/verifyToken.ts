@@ -1,4 +1,4 @@
-export type CaptchaPayload = {
+interface CaptchaPayload {
 	secret: string
 	response: string
 }

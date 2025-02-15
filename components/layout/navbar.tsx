@@ -35,7 +35,7 @@ export default function Navbar(): JSX.Element {
 	}, [router])
 
 	return (
-		<Disclosure as='nav' className='bg-white font-montserrat-regular shadow'>
+		<Disclosure as='nav' className='font-montserrat-regular bg-white shadow'>
 			{({ open }) => (
 				<>
 					<div
@@ -55,7 +55,7 @@ export default function Navbar(): JSX.Element {
 												activeTab === link.href
 													? 'border-b-2 border-teal-500'
 													: ''
-											} inline-flex items-center px-1 pt-1 text-sm  text-gray-900`}
+											} inline-flex items-center px-1 pt-1 text-sm text-gray-900`}
 											key={link.href}
 										>
 											<Link href={link.href}>{t(link.name)}</Link>
@@ -67,7 +67,7 @@ export default function Navbar(): JSX.Element {
 												activeTab === '/admin'
 													? 'border-b-2 border-teal-500'
 													: ''
-											} inline-flex items-center px-1 pt-1 text-sm  text-gray-900`}
+											} inline-flex items-center px-1 pt-1 text-sm text-gray-900`}
 										>
 											<Link href={`/admin/${user.nickname || 0}`}>Admin</Link>
 										</div>
@@ -91,7 +91,7 @@ export default function Navbar(): JSX.Element {
 									<ChangeLanguage />
 								</div>
 								<div className='hidden lg:ml-6 lg:flex lg:space-x-8'>
-									<div className='inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 text-sm  text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'>
+									<div className='inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 text-sm text-white shadow-sm hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none'>
 										<Link href='/create-review'>
 											<p className='px-4 py-2'>{t('layout.nav.submit')}</p>
 										</Link>
@@ -100,7 +100,7 @@ export default function Navbar(): JSX.Element {
 								<div className='hidden lg:ml-6 lg:flex lg:space-x-8'>
 									{user && user.role === 'ADMIN' && (
 										<Link
-											className='inline-flex cursor-pointer items-center rounded-md border border-transparent bg-blue-600 text-sm  text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+											className='inline-flex cursor-pointer items-center rounded-md border border-transparent bg-blue-600 text-sm text-white shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none'
 											href='/api/auth/logout'
 										>
 											<p className='px-4 py-2'>Logout</p>
@@ -109,7 +109,7 @@ export default function Navbar(): JSX.Element {
 								</div>
 							</div>
 							<div className='flex items-center lg:hidden'>
-								<Disclosure.Button className='inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500'>
+								<Disclosure.Button className='inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-teal-500 focus:outline-none focus:ring-inset'>
 									<span className='sr-only'>{t('layout.nav.open')}</span>
 									{open ? (
 										<XIcon className='block h-6 w-6' aria-hidden='true' />

@@ -23,23 +23,21 @@ function InfiniteScroll({
 	const [content, setContent] = useState<Resource[]>([]) // Store loaded content: ;
 	// Add a scroll event listener
 	useEffect(() => {
+		const handleScroll = () => {
+			if (
+				window.innerHeight + window.scrollY >= document.body.offsetHeight &&
+				!isLoading &&
+				hasMore
+			) {
+				setIsLoading(true)
+				// Fetch more content here
+				// Update state with the loaded content and adjust page, hasMore, isLoading accordingly
+				setPage((page) => page + 1)
+			}
+		}
 		window.addEventListener('scroll', handleScroll)
 		return () => window.removeEventListener('scroll', handleScroll)
-	}, [])
-
-	// Fetch more content when reaching the bottom
-	const handleScroll = () => {
-		if (
-			window.innerHeight + window.scrollY >= document.body.offsetHeight &&
-			!isLoading &&
-			hasMore
-		) {
-			setIsLoading(true)
-			// Fetch more content here
-			// Update state with the loaded content and adjust page, hasMore, isLoading accordingly
-			setPage((page) => page + 1)
-		}
-	}
+	}, [isLoading, hasMore, setIsLoading, setPage])
 
 	// Fetch initial content when the component mounts
 	useEffect(() => {
@@ -64,14 +62,14 @@ function InfiniteScroll({
 								<h4 className='text-center text-xl leading-6 text-gray-900'>
 									{resource.name}
 								</h4>
-								<h6 className='text-xs leading-6 text-gray-900'>
+								<h5 className='text-xs leading-6 text-gray-900'>
 									{`${resource.city.length > 0 ? `${resource.city}, ` : ''}${
 										resource.state === 'NO STATE / PROVINCE'
 											? `${countryName(resource.country_code)}`
 											: `${resource.state},
 										${resource.country_code} `
 									}`}
-								</h6>
+								</h5>
 							</div>
 							<dl className='-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6'>
 								{resource.address && (
@@ -88,7 +86,7 @@ function InfiniteScroll({
 								)}
 								<div className='flex justify-between gap-x-4 py-3'>
 									<dd className='flex items-start gap-x-2'>
-										<div className=' text-gray-700'>{resource.description}</div>
+										<div className='text-gray-700'>{resource.description}</div>
 									</dd>
 								</div>
 							</dl>

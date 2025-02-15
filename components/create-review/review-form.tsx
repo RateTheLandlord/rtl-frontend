@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useEffect, useState } from 'react'
 import AddReviewModal from './add-review-modal'
 import Button from '../ui/button'
@@ -7,8 +6,6 @@ import SuccessModal from './success-modal'
 import { postcodeValidator } from 'postcode-validator'
 import { useTranslation } from 'next-i18next'
 import SpamReviewModal from '@/components/create-review/SpamReviewModal'
-import SheldonModal from '@/components/create-review/SheldonModal'
-import { sheldonReview } from '@/components/create-review/helper'
 import { useLocation } from '@/util/hooks/useLocation'
 import {
 	ILocationHookResponse,
@@ -20,8 +17,8 @@ import { Transition, TransitionChild } from '@headlessui/react'
 import ReviewPreview from './components/ReviewPreview'
 import LandlordForm from './components/LandlordForm'
 import { classNames } from '@/util/helpers/helper-functions'
-import ReviewHero from './components/ReviewHero'
-import LocationForm from './components/LocationForm'
+import ReviewHero from './components/CreateReviewHero'
+import LocationForm from './components/CreateReviewLocationForm'
 import RatingForm from './components/RatingForm'
 import WrittenReviewForm from './components/WrittenReviewForm'
 import { toast } from 'react-toastify'
@@ -50,7 +47,6 @@ function ReviewForm(): JSX.Element {
 	const [spamDetectionMethod, setSpamDetectionMethod] = useState(
 		'localStorageDetection',
 	)
-	const [sheldonReviewOpen, setSheldonReviewOpen] = useState(false)
 
 	const [landlord, setLandlord] = useState<string>('')
 	const [country, setCountry] = useState<string>('AU')
@@ -62,8 +58,10 @@ function ReviewForm(): JSX.Element {
 	const {
 		searching,
 		locations,
-	}: { searching: boolean; locations: Array<ILocationHookResponse> } =
-		useLocation(city, country)
+	}: { searching: boolean; locations: ILocationHookResponse[] } = useLocation(
+		city,
+		country,
+	)
 
 	const [repair, setRepair] = useState<number>(3)
 	const [health, setHealth] = useState<number>(3)
@@ -92,8 +90,9 @@ function ReviewForm(): JSX.Element {
 	const { executeRecaptcha } = useReCaptcha()
 
 	// Check for already reviewed landlord from browser
-	const [localReviewedLandlords, setLocalReviewedLandlords] =
-		useState<Array<string> | null>(null)
+	const [localReviewedLandlords, setLocalReviewedLandlords] = useState<
+		string[] | null
+	>(null)
 
 	useEffect(() => {
 		const prevLandlords = localStorage.getItem('rtl')
@@ -106,13 +105,6 @@ function ReviewForm(): JSX.Element {
 	const checkLandlord = (str: string) => {
 		if (localReviewedLandlords) {
 			return localReviewedLandlords.indexOf(str) > -1
-		}
-		return false
-	}
-
-	const checkSheldon = () => {
-		if (/sheldon rakowsky/i.test(landlord)) {
-			return review === sheldonReview
 		}
 		return false
 	}
@@ -205,10 +197,6 @@ function ReviewForm(): JSX.Element {
 			setCityValidationErrorText(t('alerts.city-validation', { ns: 'alerts' }))
 			return
 		}
-		if (checkSheldon()) {
-			setSheldonReviewOpen(true)
-			return
-		}
 		if (review.trim().length < 1) {
 			setReviewModalOpen(true)
 		} else {
@@ -271,13 +259,13 @@ function ReviewForm(): JSX.Element {
 							}
 						})
 						.catch(() => {
-							toast.error(t('alerts.error', { ns: 'alerts' }) as string)
+							toast.error('ERROR: Please try again')
 						})
 						.finally(() => {
 							setLoading(false)
 						})
 				} else {
-					toast.error(t('alerts.error', { ns: 'alerts' }) as string)
+					toast.error('ERROR:Please try again')
 				}
 			} else {
 				setPostalError(true)
@@ -343,10 +331,6 @@ function ReviewForm(): JSX.Element {
 				isOpen={spamReviewModalOpen}
 				setIsOpen={setSpamReviewModalOpen}
 				detectionMethod={spamDetectionMethod}
-			/>
-			<SheldonModal
-				isOpen={sheldonReviewOpen}
-				setIsOpen={setSheldonReviewOpen}
 			/>
 
 			<ReviewHero

@@ -67,10 +67,7 @@ const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
 					average={data.average}
 					total={data.total}
 				/>
-				<CitiesTable
-					state={state}
-					country={country}
-				/>
+				<CitiesTable state={state} country={country} />
 			</div>
 		</div>
 	)

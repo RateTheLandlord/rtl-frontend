@@ -5,6 +5,8 @@ import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import TextInput from './TextInput'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('TextInput Component', () => {
 	const mockProps = {
@@ -72,5 +74,11 @@ describe('TextInput Component', () => {
 
 		const inputElement = screen.getByPlaceholderText(propsWithError.placeHolder)
 		expect(inputElement).toHaveClass('border-red-400')
+	})
+
+	it('Should not have a11y violation', async () => {
+		const { container } = render(<TextInput {...mockProps} />)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

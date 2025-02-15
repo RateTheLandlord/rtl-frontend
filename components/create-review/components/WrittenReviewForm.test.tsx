@@ -3,6 +3,8 @@
  */
 import { render, screen, fireEvent } from '@testing-library/react'
 import WrittenReviewForm from './WrittenReviewForm'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 jest.mock('@/components/ui/button', () =>
 	jest.fn(({ children, ...props }) => <button {...props}>{children}</button>),
@@ -10,13 +12,17 @@ jest.mock('@/components/ui/button', () =>
 
 jest.mock('@/components/ui/LargeTextInput', () =>
 	jest.fn(({ value, setValue }) => (
-		<textarea value={value} onChange={(e) => setValue(e.target.value)} />
+		<textarea
+			aria-label='TEST TEXT AREA'
+			value={value}
+			onChange={(e) => setValue(e.target.value)}
+		/>
 	)),
 )
 
 jest.mock('react-i18next', () => ({
 	useTranslation: () => ({
-		t: (key: string, options?: any) =>
+		t: (key: string, options?: { length?: number }) =>
 			key === 'create-review.review-form.limit'
 				? `Limit ${options?.length}/2000`
 				: key,
@@ -97,5 +103,12 @@ describe('WrittenReviewForm Component', () => {
 		expect(
 			screen.getByText('create-review.written-review.preview-review'),
 		).toBeDisabled()
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<WrittenReviewForm {...defaultProps} reviewOpen={true} />,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

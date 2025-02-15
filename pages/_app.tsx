@@ -25,20 +25,19 @@ Router.events.on('routeChangeComplete', nProgress.done)
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 	const { user } = pageProps
 
-
 	useEffect(() => {
 		const fetchCronStatus = async () => {
-		try {
-			const response = await fetch('/api/cron');
-			const data = await response.json();
-			console.log('Cron status:', data); // Optionally log the status
-		} catch (error) {
-			console.error('Failed to fetch cron status:', error);
+			try {
+				const response = await fetch('/api/cron')
+				const data = await response.json()
+				console.log('Cron status:', data) // Optionally log the status
+			} catch (error) {
+				console.error('Failed to fetch cron status:', error)
+			}
 		}
-		};
 
-		fetchCronStatus(); // Call the function when the app is mounted
-	}, []);
+		fetchCronStatus() // Call the function when the app is mounted
+	}, [])
 
 	return (
 		<PHProvider>

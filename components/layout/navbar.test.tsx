@@ -7,6 +7,8 @@ import Navbar from './navbar'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 jest.mock('next/router', () => ({
 	useRouter: () => ({
@@ -34,7 +36,16 @@ describe('Navbar', () => {
 		// Check if the Navbar title is rendered
 		const titleElement = screen.getByText('Rate The Landlord')
 		expect(titleElement).toBeInTheDocument()
-
-		// You can add more assertions here based on your component's behavior
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<Provider store={store}>
+				<UserProvider>
+					<Navbar />
+				</UserProvider>
+			</Provider>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

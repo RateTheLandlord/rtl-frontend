@@ -12,12 +12,16 @@ const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 	const { t } = useTranslation('createreview')
 	return (
 		<div className='sm:col-span-1' data-testid='state-selector'>
-			<label htmlFor='country' className='block text-sm  text-gray-700'>
+			<label
+				aria-label='state selector'
+				htmlFor='state'
+				className='block text-sm text-gray-700'
+			>
 				{country === 'GB'
 					? t('create-review.review-form.region')
 					: country === 'IE'
-					? t('create-review.review-form.county')
-					: t('create-review.review-form.state')}
+						? t('create-review.review-form.county')
+						: t('create-review.review-form.state')}
 			</label>
 			<div className='mt-1'>
 				<select

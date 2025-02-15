@@ -63,7 +63,7 @@ export default function ResourceMobileFilters({
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<div className='fixed inset-0 bg-black bg-opacity-25' />
+					<div className='bg-opacity-25 fixed inset-0 bg-black' />
 				</TransitionChild>
 
 				<div
@@ -81,7 +81,7 @@ export default function ResourceMobileFilters({
 					>
 						<DialogPanel className='relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl'>
 							<div className='flex items-center justify-between px-4'>
-								<h2 className='text-lg  text-gray-900'>{t('filters.title')}</h2>
+								<h2 className='text-lg text-gray-900'>{t('filters.title')}</h2>
 								<button
 									type='button'
 									className='-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400'

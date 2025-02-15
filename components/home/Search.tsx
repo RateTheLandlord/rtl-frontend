@@ -15,7 +15,7 @@ const Search = () => {
 	const {
 		isSearching,
 		landlordSuggestions: suggestions,
-	}: { isSearching: boolean; landlordSuggestions: Array<string> } =
+	}: { isSearching: boolean; landlordSuggestions: string[] } =
 		useLandlordSuggestions(search)
 
 	const submitCombo = (e) => {
@@ -48,16 +48,16 @@ const Search = () => {
 							leaveFrom='opacity-100'
 							leaveTo='opacity-0'
 						>
-							<Combobox.Options className='absolute z-10 mt-1 flex max-h-60 w-full flex-col overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+							<Combobox.Options className='ring-opacity-5 absolute z-10 mt-1 flex max-h-60 w-full flex-col overflow-auto rounded-md bg-white text-base ring-1 shadow-lg ring-black focus:outline-none sm:text-sm'>
 								{suggestions.length === 0 && search !== '' ? (
 									isSearching ? (
-										<div className='relative cursor-default select-none px-4 py-2 text-gray-700'>
+										<div className='relative cursor-default px-4 py-2 text-gray-700 select-none'>
 											{t('filters.loading')}.
 										</div>
 									) : (
 										<button
 											onClick={() => router.push(`/create-review`)}
-											className='relative cursor-pointer select-none px-4 py-2 text-left text-gray-700 hover:bg-teal-100'
+											className='relative cursor-pointer px-4 py-2 text-left text-gray-700 select-none hover:bg-teal-100'
 										>
 											{t('filters.not-found')}
 										</button>

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-import { Listbox, Transition } from '@headlessui/react'
+import { Listbox, ListboxButton, Transition } from '@headlessui/react'
 import { SortOptions } from '@/util/interfaces/interfaces'
 import { useTranslation } from 'next-i18next'
 
@@ -19,9 +19,12 @@ export default function SortList({
 }: ComponentProps) {
 	const { t } = useTranslation('filters')
 	return (
-		<Listbox value={state} onChange={setState}>
+		<Listbox data-testid='sort-list-test' value={state} onChange={setState}>
 			<div className='px-2'>
-				<Listbox.Button className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
+				<ListboxButton
+					aria-label='Select Sort'
+					className='focus-visible:ring-opacity-75 relative w-full cursor-default rounded-lg bg-white py-2 pr-10 pl-3 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'
+				>
 					<span className='block w-full truncate'>
 						{t(state?.name || name)}
 					</span>
@@ -31,19 +34,19 @@ export default function SortList({
 							aria-hidden='true'
 						/>
 					</span>
-				</Listbox.Button>
+				</ListboxButton>
 				<Transition
 					as={Fragment}
 					leave='transition ease-in duration-100'
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<Listbox.Options className='absolute z-50 mt-1 max-h-60 w-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+					<Listbox.Options className='ring-opacity-5 absolute z-50 mt-1 max-h-60 w-60 overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black focus:outline-none sm:text-sm'>
 						{options.map((option) => (
 							<Listbox.Option
 								key={option.id}
 								className={({ active }) =>
-									`relative cursor-default select-none py-2 pl-10 pr-4 ${
+									`relative cursor-default py-2 pr-4 pl-10 select-none ${
 										active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
 									}`
 								}

@@ -4,4 +4,3 @@ exports.up = async function (DB) {
     ADD COLUMN rent numeric DEFAULT NULL;
     `
 }
-

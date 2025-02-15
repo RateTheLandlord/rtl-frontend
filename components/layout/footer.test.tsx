@@ -4,6 +4,8 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import Footer from './footer'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('Footer', () => {
 	test('renders the footer links', () => {
@@ -36,5 +38,10 @@ describe('Footer', () => {
 			'href',
 			'https://github.com/RateTheLandlord',
 		)
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(<Footer />)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

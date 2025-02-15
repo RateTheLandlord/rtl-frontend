@@ -3,7 +3,7 @@ const Terms = () => {
 		<div data-testid='about-terms-1' className='w-full bg-white'>
 			<div className='mx-auto max-w-7xl px-6 text-lg lg:px-8'>
 				<h1>
-					<span className='mt-2 block text-center text-3xl  leading-8  text-gray-900 sm:text-4xl'>
+					<span className='mt-2 block text-center text-3xl leading-8 text-gray-900 sm:text-4xl'>
 						Terms and Conditions
 					</span>
 				</h1>
@@ -31,10 +31,11 @@ const Terms = () => {
 				</p>
 				<h2 className=''>3. Disclaimer</h2>
 				<p>
-					The information provided on ratethelandlord.org is provided "as is"
-					without any representations or warranties, express or implied.
-					ratethelandlord.org makes no representations or warranties in relation
-					to the accuracy or completeness of the information on the website.
+					The information provided on ratethelandlord.org is provided &quot;as
+					is&quot; without any representations or warranties, express or
+					implied. ratethelandlord.org makes no representations or warranties in
+					relation to the accuracy or completeness of the information on the
+					website.
 				</p>
 				<h2 className=''>4. Limitations of Liability</h2>
 				<p>
@@ -59,9 +60,9 @@ const Terms = () => {
 				</p>
 				<h2 className=''>6. Governing Law</h2>
 				<p>
-					Any claim relating to ratethelandlord.org's website shall be governed
-					by the laws of the jurisdiction of ratethelandlord.org's location
-					without regard to its conflict of law provisions.
+					Any claim relating to ratethelandlord.org&apos;s website shall be
+					governed by the laws of the jurisdiction of ratethelandlord.org&apos;s
+					location without regard to its conflict of law provisions.
 				</p>
 				<h2 className=''>7. Modifications</h2>
 				<p>

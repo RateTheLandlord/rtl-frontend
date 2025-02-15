@@ -15,11 +15,10 @@ import sql from '../db'
 import { getExistingReviewsForLandlord } from '@/lib/review/models/review-data-layer'
 import { createReview } from '@/lib/review/models/review-data-layer'
 import { updateReview } from '@/lib/review/models/review-data-layer'
-import { Row, RowList } from 'postgres'
 import { capitalize } from '@/util/helpers/helper-functions'
 import { Options } from '@/util/interfaces/interfaces'
 
-export type ReviewQuery = {
+export interface ReviewQuery {
 	page?: number
 	limit?: number
 	search?: string
@@ -94,18 +93,21 @@ export async function filterOptions(
 	)
 
 	const seenZips = new Set<string>()
-	const allZipOptions = zipList.reduce((acc, z, id) => {
-		const zip = z.toUpperCase().replace(/\s+/g, '')
-		if (!seenZips.has(zip)) {
-			seenZips.add(zip)
-			acc.push({
-				id: id + 1,
-				name: zip,
-				value: zip,
-			})
-		}
-		return acc
-	}, [] as { id: number; name: string; value: string }[])
+	const allZipOptions = zipList.reduce(
+		(acc, z, id) => {
+			const zip = z.toUpperCase().replace(/\s+/g, '')
+			if (!seenZips.has(zip)) {
+				seenZips.add(zip)
+				acc.push({
+					id: id + 1,
+					name: zip,
+					value: zip,
+				})
+			}
+			return acc
+		},
+		[] as { id: number; name: string; value: string }[],
+	)
 
 	allZipOptions.sort((a: Options, b: Options): number =>
 		a.name.localeCompare(b.name),
@@ -179,7 +181,7 @@ export async function getReviews(
 		AND delete_date IS NULL
         ORDER BY ${orderBy} ${sortOrder} LIMIT ${limitParam}
         OFFSET ${offset}
-    `) as Array<Review>
+    `) as Review[]
 
 	// Fetch total number of reviews
 	const totalResult = await sql`
@@ -225,12 +227,6 @@ export async function getReviews(
 	}
 }
 
-export async function findOne(id: number): Promise<Review[]> {
-	return sql<Review[]>`Select *
-      FROM review
-      WHERE id IN (${id});`
-}
-
 export async function create(
 	inputReview: Review,
 ): Promise<ReviewResponseStatus> {
@@ -263,8 +259,8 @@ export async function create(
 
 		const filterResult: IResult = await filterReviewWithAI(inputReview)
 		return createReview(inputReview, filterResult) // Hit data layer to create review
-	} catch (e) {
-		throw e
+	} catch {
+		throw new Error()
 	}
 }
 
@@ -273,7 +269,7 @@ export async function update(id: number, review: Review): Promise<Review> {
 }
 
 export async function report(id: number, reason: string): Promise<number> {
-	reason.length > 250 ? (reason = `${reason.substring(0, 250)}...`) : reason
+	reason = reason.length > 250 ? `${reason.substring(0, 250)}...` : reason
 	await sql`UPDATE review SET flagged = true, flagged_reason = ${reason}
       WHERE id = ${id} RETURNING id;`
 
@@ -414,21 +410,6 @@ export async function getLandlordSuggestions(
 	return suggestions.map(({ landlord }) => landlord)
 }
 
-export async function getCities(): Promise<RowList<Row[]>> {
-	const cities = await sql`SELECT DISTINCT ON (city)
-    city,
-    state,
-    country_code
-FROM
-    review
-ORDER BY
-    city,
-    state,
-    country_code`
-
-	return cities
-}
-
 export interface ICityReviews {
 	reviews: Review[]
 	average: number
@@ -528,13 +509,13 @@ export async function getCityReviews(params: {
 	}
 }
 
-export type ZipQuery = {
+export interface ZipQuery {
 	zip: string
 	state: string
 	country_code: string
 }
 
-export interface IZipStats {
+interface IZipStats {
 	average: number
 	total: number
 	catAverages: {

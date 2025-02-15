@@ -4,6 +4,8 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import AddReviewModal from './add-review-modal'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 jest.mock('react-i18next', () => ({
 	useTranslation: jest.fn().mockReturnValue({
@@ -60,5 +62,11 @@ describe('AddReviewModal component', () => {
 		expect(setIsOpenMock).not.toHaveBeenCalled()
 	})
 
-	// Add more tests as needed for other functionality in the component
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<AddReviewModal isOpen={true} setIsOpen={() => jest.fn()} />,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
+	})
 })

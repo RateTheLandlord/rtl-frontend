@@ -18,7 +18,7 @@ function RatingsRadio({ title, rating, setRating, tooltip, testid }: Props) {
 
 	return (
 		<div data-testid={testid}>
-			<h2 className=' text-gray-900'>
+			<h2 className='text-gray-900'>
 				{title} {t('create-review.review-radio.rating')}
 			</h2>
 			<p className='text-xs text-gray-500'>{tooltip}</p>

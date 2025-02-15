@@ -4,7 +4,7 @@ export async function fetchFilterOptions(
 	country?: string,
 	state?: string,
 	city?: string,
-	zip?: string
+	zip?: string,
 ): Promise<FilterOptions> {
 	const url = `/api/review/get-filter-options`
 
@@ -23,10 +23,8 @@ export async function fetchFilterOptions(
 
 		const data: FilterOptions = await response.json()
 		return data
-	} catch (error) {
-		console.error('Error fetching filter options:', error)
-		throw error
+	} catch {
+		console.error('Error fetching filter options')
+		return { countries: [], states: [], cities: [], zips: [] }
 	}
 }
-
-

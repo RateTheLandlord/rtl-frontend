@@ -4,6 +4,8 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import LandlordForm from './LandlordForm'
 import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 jest.mock('react-i18next', () => ({
 	useTranslation: () => ({ t: (key: string) => key }),
@@ -90,5 +92,13 @@ describe('LandlordForm Component', () => {
 
 		const continueButton = screen.getByText('create-review.continue')
 		expect(continueButton).toBeDisabled()
+	})
+
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<LandlordForm {...defaultProps} landlordOpen={true} landlord='' />,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

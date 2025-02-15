@@ -21,3 +21,4 @@ CODE_OF_CONDUCT.md
 .vscode
 npm-debug.log
 npm-debug.log.*
+*.test.*
