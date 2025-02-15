@@ -1,5 +1,4 @@
 import {
-	Review,
 	ReviewsResponse,
 	OtherLandlord,
 	FilterOptions,
@@ -16,7 +15,7 @@ import { getExistingReviewsForLandlord } from '@/lib/review/models/review-data-l
 import { createReview } from '@/lib/review/models/review-data-layer'
 import { updateReview } from '@/lib/review/models/review-data-layer'
 import { capitalize } from '@/util/helpers/helper-functions'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options, Review } from '@/util/interfaces/interfaces'
 
 export interface ReviewQuery {
 	page?: number
@@ -178,6 +177,7 @@ export async function getReviews(
         FROM review
         WHERE 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 		AND (flagged = false OR (flagged = true AND admin_approved = true))
+		AND delete_date IS NULL
         ORDER BY ${orderBy} ${sortOrder} LIMIT ${limitParam}
         OFFSET ${offset}
     `) as Review[]
@@ -277,22 +277,28 @@ export async function report(id: number, reason: string): Promise<number> {
 
 export async function deleteReview(id: number): Promise<boolean> {
 	await sql`DELETE
-                                   FROM review
-                                   WHERE ID = ${id};`
-
+				FROM review
+				WHERE ID = ${id};`
 	return true
 }
 
 export async function getFlagged(): Promise<Review[]> {
 	const reviews = await sql<
 		Review[]
-	>`SELECT * FROM review WHERE flagged = true;`
+	>`SELECT * FROM review WHERE flagged = true AND delete_date IS NULL;`
+	return reviews
+}
+
+export async function getDeleted(): Promise<Review[]> {
+	const reviews = await sql<
+		Review[]
+	>`SELECT * FROM review WHERE delete_date IS NOT NULL;`
 	return reviews
 }
 
 export async function getLandlords(): Promise<string[]> {
 	const landlords = await sql`SELECT DISTINCT landlord FROM review;`
-	return landlords.map(({ landlord }) => landlord)
+	return landlords.map(({ landlord }) => landlord as string)
 }
 
 export interface ILandlordReviews {

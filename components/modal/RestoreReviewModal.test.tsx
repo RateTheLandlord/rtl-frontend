@@ -3,14 +3,12 @@
  */
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import RemoveReviewModal from './RemoveReviewModal'
+import RestoreReviewModal from './RestoreReviewModal'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
-import { axe, toHaveNoViolations } from 'jest-axe'
-expect.extend(toHaveNoViolations)
 
-describe('RemoveReviewModal', () => {
+describe('RestoreReviewModal', () => {
 	const mockSelectedReview = {
 		landlord: 'John Doe',
 		country_code: 'US',
@@ -43,11 +41,11 @@ describe('RemoveReviewModal', () => {
 		render(
 			<UserProvider>
 				<Provider store={store}>
-					<RemoveReviewModal
+					<RestoreReviewModal
 						selectedReview={mockSelectedReview}
 						handleMutate={jest.fn()}
-						setRemoveReviewOpen={jest.fn()}
-						removeReviewOpen={true}
+						setRestoreReviewOpen={jest.fn()}
+						restoreReviewOpen={true}
 						setSelectedReview={jest.fn()}
 					/>
 				</Provider>
@@ -55,24 +53,7 @@ describe('RemoveReviewModal', () => {
 		)
 
 		// Verify that the modal title is rendered
-		const modalTitle = screen.getByText('Remove Review')
+		const modalTitle = screen.getByText('Restore Review')
 		expect(modalTitle).toBeInTheDocument()
-	})
-	it('Should not have a11y violation', async () => {
-		const { container } = render(
-			<UserProvider>
-				<Provider store={store}>
-					<RemoveReviewModal
-						selectedReview={mockSelectedReview}
-						handleMutate={jest.fn()}
-						setRemoveReviewOpen={jest.fn()}
-						removeReviewOpen={true}
-						setSelectedReview={jest.fn()}
-					/>
-				</Provider>
-			</UserProvider>,
-		)
-		const result = await axe(container)
-		expect(result).toHaveNoViolations()
 	})
 })

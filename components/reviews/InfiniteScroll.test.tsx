@@ -31,6 +31,12 @@ const mockData: Review[] = [
 		rent: 2000,
 		moderation_reason: null,
 		moderator: null,
+		delete_date: null,
+		delete_reason: null,
+		deleted_by: null,
+		restore_date: null,
+		restore_reason: null,
+		restored_by: null,
 	},
 	{
 		id: 2,
@@ -53,6 +59,12 @@ const mockData: Review[] = [
 		rent: 1500,
 		moderation_reason: null,
 		moderator: null,
+		delete_date: null,
+		delete_reason: null,
+		deleted_by: null,
+		restore_date: null,
+		restore_reason: null,
+		restored_by: null,
 	},
 ]
 

@@ -1,6 +1,6 @@
-import { Review } from '@/lib/review/models/review'
 import OpenAI from 'openai'
 import { getFlaggedKeywords } from '../flagged-keywords/flagged-keywords'
+import { Review } from '@/util/interfaces/interfaces'
 
 export interface IResult {
 	flagged: boolean

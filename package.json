@@ -13,10 +13,9 @@
 		"lint": "eslint . --fix --cache",
 		"tsc": "tsc",
 		"test": "jest --watch -o",
-		"test:merge": "jest --onlyChanged",
+		"test:merge": "jest -o",
 		"prepare": "husky",
-		"knip": "knip --production",
-		"lint:merge": "eslint --fix --quiet $(git --no-pager diff --name-only --diff-filter=d origin/develop...$(git rev-parse --abbrev-ref HEAD) -- '*.{ts,tsx}')"
+		"knip": "knip --production"
 	},
 	"dependencies": {
 		"@auth0/nextjs-auth0": "^3.5.0",
@@ -36,6 +35,7 @@
 		"next-recaptcha-v3": "^1.5.2",
 		"next-seo": "^6.0.0",
 		"next-sitemap": "^4.2.3",
+		"node-cron": "^3.0.3",
 		"nprogress": "^0.2.0",
 		"openai": "^4.24.7",
 		"postcode-validator": "^3.7.0",

@@ -36,19 +36,26 @@ function ReviewForm(): JSX.Element {
 			)
 
 			if (foundCountry && foundState) {
-				dispatch(
-					updateStateAndCountry({ country: foundCountry, state: foundState }),
-				)
 				const isLocationValid = Boolean(countryFilter && stateFilter)
-				setLocationOpen(isLocationValid)
+
+				if (
+					countryFilter?.value !== foundCountry.value ||
+					stateFilter?.value !== foundState.value
+				) {
+					dispatch(
+						updateStateAndCountry({ country: foundCountry, state: foundState }),
+					)
+				}
+				setLocationOpen(!isLocationValid)
 			}
 		}
-	}, [view, country, state, countryFilter, stateFilter, dispatch])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [view, country, state])
 
 	useEffect(() => {
 		if (countryFilter && stateFilter) {
 			setLocationOpen(false)
-			router.push(
+			void router.push(
 				`/reviews?country=${encodeURIComponent(
 					countryFilter.value,
 				)}&state=${encodeURIComponent(stateFilter.value)}`,
@@ -56,7 +63,8 @@ function ReviewForm(): JSX.Element {
 				{ shallow: true },
 			)
 		}
-	}, [stateFilter, countryFilter, router])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [stateFilter, countryFilter])
 
 	return (
 		<div className='m-2 w-full max-w-7xl'>

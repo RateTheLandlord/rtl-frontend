@@ -101,7 +101,6 @@ const FlaggedKeywords = () => {
 						/>
 					}
 					onSubmit={onSubmitNewLandlord}
-					buttonColour='blue'
 					selectedId={1}
 				/>
 			)}

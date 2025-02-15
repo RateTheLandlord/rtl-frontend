@@ -1,4 +1,4 @@
-import { Review } from '@/lib/review/models/review'
+import { Review } from '@/util/interfaces/interfaces'
 import sql from '../db'
 
 /* https://www.educative.io/answers/the-levenshtein-distance-algorithm

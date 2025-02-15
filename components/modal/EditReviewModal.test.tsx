@@ -30,6 +30,12 @@ describe('EditReviewModal', () => {
 		admin_edited: false,
 		moderation_reason: null,
 		moderator: null,
+		delete_date: null,
+		delete_reason: null,
+		deleted_by: null,
+		restore_date: null,
+		restore_reason: null,
+		restored_by: null,
 	}
 
 	test('renders EditReviewModal with selected review data', () => {

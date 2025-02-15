@@ -6,7 +6,6 @@
 	"endOfLine": "lf",
 	"htmlWhitespaceSensitivity": "css",
 	"insertPragma": false,
-	"jsxBracketSameLine": false,
 	"jsxSingleQuote": true,
 	"proseWrap": "always",
 	"quoteProps": "as-needed",
@@ -15,6 +14,5 @@
 	"tabWidth": 2,
 	"trailingComma": "all",
 	"useTabs": true,
-	"plugins": ["prettier-plugin-tailwindcss"],
-	"pluginSearchDirs": false
+	"plugins": ["prettier-plugin-tailwindcss"]
 }

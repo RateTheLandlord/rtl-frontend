@@ -1,5 +1,11 @@
 import React, { Fragment } from 'react'
-import { Combobox, Transition } from '@headlessui/react'
+import {
+	Combobox,
+	ComboboxInput,
+	ComboboxOption,
+	ComboboxOptions,
+	Transition,
+} from '@headlessui/react'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 
 interface ComponentProps {
@@ -21,11 +27,11 @@ export default function CityComboBox({
 	error,
 	errorText,
 }: ComponentProps) {
-	const comboboxClassName = `mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
+	const comboboxClassName = `mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
 		error ? 'border-red-400' : ''
 	}`
 	return (
-		<div className='sm:col-span-1'>
+		<div className='mx-0.5 sm:col-span-1'>
 			<Combobox value={state} onChange={setState}>
 				<div
 					data-testid='create-review-form-city-1'
@@ -34,7 +40,7 @@ export default function CityComboBox({
 					<label htmlFor='city' className='block text-sm text-gray-700'>
 						{name}
 					</label>
-					<Combobox.Input
+					<ComboboxInput
 						data-testid='CityComboBox-component'
 						className={comboboxClassName}
 						placeholder={`${name}`}
@@ -48,7 +54,7 @@ export default function CityComboBox({
 						leaveFrom='opacity-100'
 						leaveTo='opacity-0'
 					>
-						<Combobox.Options className='ring-opacity-5 absolute z-10 mt-1 flex max-h-60 w-60 flex-col overflow-auto rounded-md bg-white text-base ring-1 shadow-lg ring-black focus:outline-none sm:text-sm'>
+						<ComboboxOptions className='ring-opacity-5 absolute z-10 mt-1 flex max-h-60 w-60 flex-col overflow-auto rounded-md bg-white text-base ring-1 shadow-lg ring-black focus:outline-none sm:text-sm'>
 							{options.length === 0 && state !== '' ? (
 								searching ? (
 									<div className='relative cursor-default px-4 py-2 text-gray-700 select-none'>
@@ -61,7 +67,7 @@ export default function CityComboBox({
 								)
 							) : (
 								options.map((option) => (
-									<Combobox.Option
+									<ComboboxOption
 										key={option.id}
 										className={({ active }) =>
 											`cursor-pointer rounded-md p-2 text-left hover:bg-teal-100 ${
@@ -71,10 +77,10 @@ export default function CityComboBox({
 										value={option.city}
 									>
 										{option.city}
-									</Combobox.Option>
+									</ComboboxOption>
 								))
 							)}
-						</Combobox.Options>
+						</ComboboxOptions>
 					</Transition>
 					{error ? <p className='text-xs text-red-400'>{errorText}</p> : null}
 				</div>

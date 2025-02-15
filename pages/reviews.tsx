@@ -54,7 +54,7 @@ export default function Reviews(): JSX.Element {
 export async function getStaticProps({ locale }) {
 	return {
 		props: {
-			...(await serverSideTranslations(locale, [
+			...(await serverSideTranslations(locale as string, [
 				'reviews',
 				'filters',
 				'landlord',

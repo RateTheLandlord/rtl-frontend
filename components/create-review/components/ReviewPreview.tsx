@@ -127,7 +127,7 @@ const ReviewPreview = ({
 							<p>{t('reviews.review')}</p>
 
 							<p
-								className='mt-3 space-y-6 text-sm text-gray-500'
+								className='mt-3 space-y-6 text-sm break-words text-gray-500'
 								data-testid='WrittenReviewPreview'
 							>
 								{review}

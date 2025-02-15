@@ -18,6 +18,12 @@ jest.mock('next-i18next', () => ({
 }))
 
 const review: Review = {
+	delete_date: null,
+	delete_reason: '',
+	deleted_by: [''],
+	restore_date: null,
+	restore_reason: '',
+	restored_by: [''],
 	id: 1,
 	landlord: 'John Doe',
 	country_code: 'US',

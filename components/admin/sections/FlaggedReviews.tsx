@@ -19,7 +19,7 @@ const FlaggedReviews = () => {
 		data: reviews,
 		error,
 		mutate,
-	} = useSWR<Review[]>('/api/admin/get-flagged', fetcher)
+	} = useSWR<Review[], unknown>('/api/admin/get-flagged', fetcher)
 
 	useEffect(() => {
 		if (reviews) {
@@ -51,7 +51,7 @@ const FlaggedReviews = () => {
 				}
 			})
 			.then(() => {
-				mutate()
+				void mutate()
 				toast.success('Success!')
 			})
 			.catch((err) => {
@@ -61,7 +61,7 @@ const FlaggedReviews = () => {
 	}
 
 	const handleMutate = () => {
-		mutate()
+		void mutate()
 	}
 
 	return (
@@ -150,7 +150,7 @@ const FlaggedReviews = () => {
 										onClick={() => {
 											onSubmitApproveReview(review)
 										}}
-										className='text-indigo-600 hover:text-indigo-900'
+										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
 									>
 										Approve
 									</button>
@@ -161,7 +161,7 @@ const FlaggedReviews = () => {
 											setSelectedReview(review)
 											setEditReviewOpen(true)
 										}}
-										className='text-indigo-600 hover:text-indigo-900'
+										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
 									>
 										Edit
 									</button>
@@ -172,7 +172,7 @@ const FlaggedReviews = () => {
 											setSelectedReview(review)
 											setRemoveReviewOpen((p) => !p)
 										}}
-										className='text-indigo-600 hover:text-indigo-900'
+										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
 									>
 										Remove
 									</button>

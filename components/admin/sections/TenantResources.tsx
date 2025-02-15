@@ -144,7 +144,6 @@ const TenantResources = () => {
 						/>
 					}
 					onSubmit={onSubmitNewResource}
-					buttonColour='blue'
 					selectedId={1}
 				/>
 			)}

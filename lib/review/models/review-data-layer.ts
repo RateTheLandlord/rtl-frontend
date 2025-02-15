@@ -1,7 +1,8 @@
 import { FAILED_TO_RETRIEVE_REVIEWS } from '@/lib/auth/constants'
 import { IResult } from '../helpers'
 import sql from '@/lib/db'
-import { Review, ReviewResponseStatus } from '@/lib/review/models/review'
+import { ReviewResponseStatus } from '@/lib/review/models/review'
+import { Review } from '@/util/interfaces/interfaces'
 
 /**
  * Data service layer for the reviews service of our backend.
@@ -94,7 +95,13 @@ export async function updateReview(
                admin_edited   = ${review.admin_edited},
 			   rent = ${review.rent || null},
 			   moderation_reason = ${review.moderation_reason || null},
-			   moderator = ${review.moderator}
+			   moderator = ${review.moderator},
+			   delete_date = ${review.delete_date},
+			   delete_reason = ${review.delete_reason},
+			   deleted_by = ${review.deleted_by},
+			   restore_date = ${review.restore_date},
+			   restore_reason = ${review.restore_reason},
+			   restored_by = ${review.restored_by}
            WHERE id = ${id};`
 
 	return review

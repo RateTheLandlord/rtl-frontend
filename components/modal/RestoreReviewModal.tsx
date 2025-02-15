@@ -14,42 +14,41 @@ import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import CloseButton from '../ui/CloseButton'
 
-const ENVIRONMENT = process.env.NEXT_PUBLIC_ENVIRONMENT as string
-
 interface IProps {
 	selectedReview: Review | undefined
 	handleMutate: () => void
-	setRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
-	removeReviewOpen: boolean
+	setRestoreReviewOpen: Dispatch<SetStateAction<boolean>>
+	restoreReviewOpen: boolean
 	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
 }
 
-const RemoveReviewModal = ({
+const RestoreReviewModal = ({
 	selectedReview,
 	handleMutate,
-	setRemoveReviewOpen,
-	removeReviewOpen,
+	setRestoreReviewOpen,
+	restoreReviewOpen,
 	setSelectedReview,
 }: IProps) => {
 	const landlord = selectedReview?.landlord || ''
 
-	const [deleteReason, setDeleteReason] = useState<string | null>(
-		selectedReview?.delete_reason || null,
+	const [restoreReason, setRestoreReason] = useState<string | null>(
+		selectedReview?.restore_reason || null,
 	)
-	const deleted_by = selectedReview?.deleted_by || []
+	const restored_by = selectedReview?.restored_by || []
 	const review = selectedReview?.review || ''
 	const { user } = useUser()
-	const delete_date = dayjs().add(ENVIRONMENT === 'production' ? 30 : 2, 'day')
-
 	const date = dayjs().format('DD/MM/YYYY')
 
-	const onSubmitRemoveReview = () => {
-		deleted_by.unshift(`${user?.admin_id as string} on ${date}`)
-		const deletedReview = {
+	const onSubmitRestoreReview = () => {
+		restored_by.unshift(`${user?.admin_id as string} on ${date}`)
+		const restoredReview = {
 			...selectedReview,
-			delete_reason: deleteReason,
-			deleted_by: [...deleted_by],
-			delete_date,
+			restore_date: date,
+			restore_reason: restoreReason,
+			restored_by: [...restored_by],
+			delete_date: null,
+			delete_reason: null,
+			deleted_by: null,
 		}
 		if (selectedReview) {
 			fetch('/api/review/edit-review', {
@@ -57,7 +56,7 @@ const RemoveReviewModal = ({
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(deletedReview),
+				body: JSON.stringify(restoredReview),
 			})
 				.then((result) => {
 					if (!result.ok) {
@@ -76,11 +75,10 @@ const RemoveReviewModal = ({
 							}
 						})
 						.catch((err) => {
-							console.log(err)
-							toast.error('Revalidation failed')
+							console.error(err)
 						})
 					handleMutate()
-					setRemoveReviewOpen(false)
+					setRestoreReviewOpen(false)
 					toast.success('Success!')
 					setSelectedReview(undefined)
 				})
@@ -93,8 +91,8 @@ const RemoveReviewModal = ({
 	}
 
 	return (
-		<Transition show={removeReviewOpen} as={Fragment}>
-			<Dialog as='div' className='relative z-10' onClose={setRemoveReviewOpen}>
+		<Transition show={restoreReviewOpen} as={Fragment}>
+			<Dialog as='div' className='relative z-10' onClose={setRestoreReviewOpen}>
 				<TransitionChild
 					as={Fragment}
 					enter='ease-out duration-300'
@@ -118,17 +116,15 @@ const RemoveReviewModal = ({
 							leaveFrom='opacity-100 translate-y-0 sm:scale-100'
 							leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
 						>
-							<DialogPanel className='relative transform gap-3 overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
-								<div className='absolute top-0 right-0 hidden pt-4 pr-4 sm:block'>
-									<CloseButton onClick={() => setRemoveReviewOpen(false)} />
-								</div>
+							<DialogPanel className='relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
+								<CloseButton onClick={() => setRestoreReviewOpen(false)} />
 								<div className='sm:flex sm:items-start'>
 									<div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
 										<DialogTitle
 											as='h3'
 											className='text-lg leading-6 text-gray-900'
 										>
-											Remove Review
+											Restore Review
 										</DialogTitle>
 									</div>
 								</div>
@@ -154,17 +150,17 @@ const RemoveReviewModal = ({
 											htmlFor='moderation-reason'
 											className='block text-sm text-gray-700'
 										>
-											Delete Reason
+											Restore Reason
 										</label>
 										<div className='mt-1'>
 											<input
 												type='text'
 												name='moderation-reason'
 												id='moderation-reason'
-												placeholder='Moderation Reason'
+												placeholder='Restore Reason'
 												required
-												value={deleteReason ? deleteReason : ''}
-												onChange={(e) => setDeleteReason(e.target.value)}
+												value={restoreReason ? restoreReason : ''}
+												onChange={(e) => setRestoreReason(e.target.value)}
 												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 												data-testid='create-review-form-moderation-reason-1'
 											/>
@@ -178,16 +174,18 @@ const RemoveReviewModal = ({
 											Previous Moderators
 										</label>
 										<div className='mt-1'>
-											<p>{deleted_by.map((mod) => mod).join(', ')}</p>
+											<p>{restored_by.map((mod) => mod).join(', ')}</p>
 										</div>
 									</div>
 								</div>
 								<div className='mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse'>
-									<Button onClick={() => onSubmitRemoveReview()}>Submit</Button>
+									<Button onClick={() => onSubmitRestoreReview()}>
+										Submit
+									</Button>
 									<ButtonLight
 										onClick={() => {
 											setSelectedReview(undefined)
-											setRemoveReviewOpen(false)
+											setRestoreReviewOpen(false)
 										}}
 									>
 										Cancel
@@ -202,4 +200,4 @@ const RemoveReviewModal = ({
 	)
 }
 
-export default RemoveReviewModal
+export default RestoreReviewModal

@@ -532,6 +532,7 @@ function ReviewForm(): JSX.Element {
 											loading ||
 											review.length > 2000
 										}
+										// eslint-disable-next-line @typescript-eslint/no-misused-promises
 										onClick={() => handleSubmit()}
 									>
 										{t('create-review.review-form.submit')}
