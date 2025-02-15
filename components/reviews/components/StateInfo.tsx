@@ -9,6 +9,7 @@ import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import { useTranslation } from 'next-i18next'
+import { IStateStats } from '@/lib/review/state-stats'
 
 interface IProps {
 	state: string
@@ -19,7 +20,7 @@ interface IProps {
 const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
 	const { t } = useTranslation('landlord')
 	const router = useRouter()
-	const { data, error } = useSWR(
+	const { data, error } = useSWR<IStateStats, unknown>(
 		['/api/review/state-info', { state, country }],
 		fetchWithBody,
 	)
@@ -53,9 +54,11 @@ const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
 				<div className='flex w-full justify-center'>
 					<Button
 						onClick={() => {
+							router
+								.push(`/reviews`, undefined, { shallow: true })
+								.catch(() => console.log('Error Setting URL'))
 							dispatch(clearFilters())
 							setLocationOpen(true)
-							router.push(`/reviews`, undefined, { shallow: true })
 						}}
 					>
 						{t('landlord.change-location')}

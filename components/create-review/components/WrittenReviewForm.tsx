@@ -22,7 +22,7 @@ const WrittenReviewForm = ({
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
 			<div className='flex flex-col gap-2'>
 				<p className='text-xs'>{t('create-review.written-review.title')}</p>
-				<p className='text-md'>{review}</p>
+				<p className='text-md break-words'>{review}</p>
 			</div>
 			<div>
 				<Button

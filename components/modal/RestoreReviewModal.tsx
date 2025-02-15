@@ -8,9 +8,11 @@ import {
 	TransitionChild,
 } from '@headlessui/react'
 import { useUser } from '@auth0/nextjs-auth0/client'
-import XIcon from '@heroicons/react/outline/XIcon'
 import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
+import Button from '../ui/button'
+import ButtonLight from '../ui/button-light'
+import CloseButton from '../ui/CloseButton'
 
 interface IProps {
 	selectedReview: Review | undefined
@@ -45,6 +47,8 @@ const RestoreReviewModal = ({
 			restore_reason: restoreReason,
 			restored_by: [...restored_by],
 			delete_date: null,
+			delete_reason: null,
+			deleted_by: null,
 		}
 		if (selectedReview) {
 			fetch('/api/review/edit-review', {
@@ -113,16 +117,7 @@ const RestoreReviewModal = ({
 							leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
 						>
 							<DialogPanel className='relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
-								<div className='absolute top-0 right-0 hidden pt-4 pr-4 sm:block'>
-									<button
-										type='button'
-										className='rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none'
-										onClick={() => setRestoreReviewOpen(false)}
-									>
-										<span className='sr-only'>Close</span>
-										<XIcon className='h-6 w-6' aria-hidden='true' />
-									</button>
-								</div>
+								<CloseButton onClick={() => setRestoreReviewOpen(false)} />
 								<div className='sm:flex sm:items-start'>
 									<div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
 										<DialogTitle
@@ -166,7 +161,7 @@ const RestoreReviewModal = ({
 												required
 												value={restoreReason ? restoreReason : ''}
 												onChange={(e) => setRestoreReason(e.target.value)}
-												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 												data-testid='create-review-form-moderation-reason-1'
 											/>
 										</div>
@@ -183,24 +178,18 @@ const RestoreReviewModal = ({
 										</div>
 									</div>
 								</div>
-								<div className='mt-5 sm:mt-4 sm:flex sm:flex-row-reverse'>
-									<button
-										type='button'
-										className={`inline-flex w-full justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-base text-white shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm`}
-										onClick={() => onSubmitRestoreReview()}
-									>
+								<div className='mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse'>
+									<Button onClick={() => onSubmitRestoreReview()}>
 										Submit
-									</button>
-									<button
-										type='button'
-										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 shadow-sm hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm'
+									</Button>
+									<ButtonLight
 										onClick={() => {
 											setSelectedReview(undefined)
 											setRestoreReviewOpen(false)
 										}}
 									>
 										Cancel
-									</button>
+									</ButtonLight>
 								</div>
 							</DialogPanel>
 						</TransitionChild>

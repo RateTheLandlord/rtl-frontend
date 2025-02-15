@@ -1,6 +1,7 @@
-import { XCircleIcon, XIcon } from '@heroicons/react/solid'
+import { XCircleIcon } from '@heroicons/react/solid'
 import { Dispatch, SetStateAction } from 'react'
 import { useTranslation } from 'next-i18next'
+import CloseButton from '../ui/CloseButton'
 
 interface IProps {
 	setMaliciousAlertOpen: Dispatch<SetStateAction<boolean>>
@@ -20,16 +21,7 @@ const MaliciousStringAlert = ({ setMaliciousAlertOpen }: IProps) => {
 					</p>
 				</div>
 				<div className='ml-auto pl-3'>
-					<div className='-mx-1.5 -my-1.5'>
-						<button
-							type='button'
-							onClick={() => setMaliciousAlertOpen((p) => !p)}
-							className='inline-flex rounded-md bg-orange-200 p-1.5 text-orange-600 hover:bg-orange-300 focus:ring-2 focus:ring-orange-600 focus:ring-offset-2 focus:ring-offset-orange-200 focus:outline-none'
-						>
-							<span className='sr-only'>Dismiss</span>
-							<XIcon className='h-5 w-5' aria-hidden='true' />
-						</button>
-					</div>
+					<CloseButton onClick={() => setMaliciousAlertOpen((p) => !p)} />
 				</div>
 			</div>
 		</div>

@@ -37,6 +37,7 @@ function ReviewForm(): JSX.Element {
 
 			if (foundCountry && foundState) {
 				const isLocationValid = Boolean(countryFilter && stateFilter)
+
 				if (
 					countryFilter?.value !== foundCountry.value ||
 					stateFilter?.value !== foundState.value
@@ -45,10 +46,11 @@ function ReviewForm(): JSX.Element {
 						updateStateAndCountry({ country: foundCountry, state: foundState }),
 					)
 				}
-				setLocationOpen(isLocationValid)
+				setLocationOpen(!isLocationValid)
 			}
 		}
-	}, [view, country, state, countryFilter, stateFilter, dispatch])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [view, country, state])
 
 	useEffect(() => {
 		if (countryFilter && stateFilter) {

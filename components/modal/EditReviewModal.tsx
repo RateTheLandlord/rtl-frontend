@@ -12,6 +12,8 @@ import { useUser } from '@auth0/nextjs-auth0/client'
 import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
 import { getStates } from '@/util/countries/combineStates'
+import Button from '../ui/button'
+import ButtonLight from '../ui/button-light'
 
 interface IProps {
 	selectedReview: Review | undefined
@@ -140,7 +142,7 @@ const EditReviewModal = ({
 												placeholder='Landlord'
 												value={landlord ? landlord : selectedReview?.landlord}
 												onChange={(e) => setLandlord(e.target.value)}
-												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 												data-testid='create-review-form-landlord-1'
 											/>
 										</div>
@@ -159,7 +161,7 @@ const EditReviewModal = ({
 												required
 												value={country ? country : selectedReview?.country_code}
 												onChange={(e) => setCountry(e.target.value)}
-												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 											>
 												{country_codes.map((country) => {
 													return (
@@ -187,7 +189,7 @@ const EditReviewModal = ({
 												value={city ? city : selectedReview?.city}
 												required
 												onChange={(e) => setCity(e.target.value)}
-												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 												data-testid='create-review-form-city-1'
 											/>
 										</div>
@@ -206,7 +208,7 @@ const EditReviewModal = ({
 												required
 												value={province ? province : selectedReview?.state}
 												onChange={(e) => setProvince(e.target.value)}
-												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 											>
 												<option>{province}</option>
 												{getStates(country).map((province) => (
@@ -234,7 +236,7 @@ const EditReviewModal = ({
 													required
 													value={postal ? postal : selectedReview?.zip}
 													onChange={(e) => setPostal(e.target.value)}
-													className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+													className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 													data-testid='create-review-form-postal-code-1'
 												/>
 											</div>
@@ -256,7 +258,7 @@ const EditReviewModal = ({
 												required
 												value={rent ? rent : selectedReview?.rent || ''}
 												onChange={(e) => setRent(Number(e.target.value))}
-												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 												data-testid='create-review-form-rent-1'
 											/>
 										</div>
@@ -272,7 +274,7 @@ const EditReviewModal = ({
 											rows={4}
 											name='review'
 											id='review'
-											className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+											className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 											onChange={(e) => setReview(e.target.value)}
 											value={review ? review : selectedReview?.review}
 											data-testid='edit-review-modal-1'
@@ -294,7 +296,7 @@ const EditReviewModal = ({
 												required
 												value={moderationReason ? moderationReason : ''}
 												onChange={(e) => setModerationReason(e.target.value)}
-												className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 												data-testid='create-review-form-moderation-reason-1'
 											/>
 										</div>
@@ -311,24 +313,16 @@ const EditReviewModal = ({
 										</div>
 									</div>
 								</div>
-								<div className='mt-5 sm:mt-4 sm:flex sm:flex-row-reverse'>
-									<button
-										type='button'
-										className={`inline-flex w-full justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-base text-white shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm`}
-										onClick={() => onSubmitEditReview()}
-									>
-										Submit
-									</button>
-									<button
-										type='button'
-										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 shadow-sm hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm'
+								<div className='mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse'>
+									<Button onClick={() => onSubmitEditReview()}>Submit</Button>
+									<ButtonLight
 										onClick={() => {
 											setSelectedReview(undefined)
 											setEditReviewOpen(false)
 										}}
 									>
 										Cancel
-									</button>
+									</ButtonLight>
 								</div>
 							</DialogPanel>
 						</TransitionChild>

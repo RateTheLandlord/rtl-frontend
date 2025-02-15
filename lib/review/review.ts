@@ -285,7 +285,7 @@ export async function deleteReview(id: number): Promise<boolean> {
 export async function getFlagged(): Promise<Review[]> {
 	const reviews = await sql<
 		Review[]
-	>`SELECT * FROM review WHERE flagged = true;`
+	>`SELECT * FROM review WHERE flagged = true AND delete_date IS NULL;`
 	return reviews
 }
 
@@ -298,7 +298,7 @@ export async function getDeleted(): Promise<Review[]> {
 
 export async function getLandlords(): Promise<string[]> {
 	const landlords = await sql`SELECT DISTINCT landlord FROM review;`
-	return landlords.map(({ landlord }) => landlord)
+	return landlords.map(({ landlord }) => landlord as string)
 }
 
 export interface ILandlordReviews {

@@ -13,10 +13,9 @@
 		"lint": "eslint . --fix --cache",
 		"tsc": "tsc",
 		"test": "jest --watch -o",
-		"test:merge": "jest --onlyChanged",
+		"test:merge": "jest -o",
 		"prepare": "husky",
-		"knip": "knip --production",
-		"lint:merge": "eslint --fix --quiet $(git --no-pager diff --name-only --diff-filter=d origin/develop...$(git rev-parse --abbrev-ref HEAD) -- '*.{ts,tsx}')"
+		"knip": "knip --production"
 	},
 	"dependencies": {
 		"@auth0/nextjs-auth0": "^3.5.0",

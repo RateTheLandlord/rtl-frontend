@@ -5,8 +5,7 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import ButtonLight from './button-light'
-import { axe, toHaveNoViolations } from 'jest-axe'
-expect.extend(toHaveNoViolations)
+import { axe } from 'jest-axe'
 
 describe('ButtonLight', () => {
 	it('renders button text correctly', () => {

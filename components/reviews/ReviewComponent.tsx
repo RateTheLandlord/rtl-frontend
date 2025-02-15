@@ -152,7 +152,7 @@ const ReviewComponent = ({
 						<div>
 							<p>{t('reviews.review')}</p>
 
-							<p className='mt-3 space-y-6 text-sm text-gray-500'>
+							<p className='mt-3 space-y-6 text-sm break-words hyphens-auto text-gray-500'>
 								{review.review}
 							</p>
 						</div>

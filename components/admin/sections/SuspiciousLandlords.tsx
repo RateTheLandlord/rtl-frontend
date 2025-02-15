@@ -123,7 +123,6 @@ const SuspiciousLandlords = () => {
 						/>
 					}
 					onSubmit={onSubmitNewLandlord}
-					buttonColour='blue'
 					selectedId={1}
 				/>
 			)}

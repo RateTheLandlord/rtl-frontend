@@ -20,7 +20,6 @@ describe('Modal', () => {
 				description='Modal Description'
 				element={mockElement}
 				onSubmit={mockOnSubmit}
-				buttonColour='blue'
 				selectedId={1}
 				loading={false}
 			/>,
@@ -35,10 +34,10 @@ describe('Modal', () => {
 		const descriptionElement = screen.getByText('Modal Description')
 		expect(descriptionElement).toBeInTheDocument()
 
-		const submitButton = screen.getByRole('button', { name: 'Submit' })
+		const submitButton = screen.getByText('Submit')
 		expect(submitButton).toBeInTheDocument()
 
-		const cancelButton = screen.getByRole('button', { name: 'Cancel' })
+		const cancelButton = screen.getByText('Cancel')
 		expect(cancelButton).toBeInTheDocument()
 
 		fireEvent.click(submitButton)
@@ -58,7 +57,6 @@ describe('Modal', () => {
 				description='Modal Description'
 				element={mockElement}
 				onSubmit={mockOnSubmit}
-				buttonColour='blue'
 				selectedId={1}
 				loading={false}
 			/>,

@@ -3,12 +3,13 @@ import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import {
 	Dialog,
 	DialogPanel,
+	DialogTitle,
 	Transition,
 	TransitionChild,
 } from '@headlessui/react'
-import XIcon from '@heroicons/react/outline/XIcon'
 import { toast } from 'react-toastify'
 import Spinner from '@/components/ui/Spinner'
+import CloseButton from '@/components/ui/CloseButton'
 
 interface IProps {
 	selectedLandlord: SuspiciousLandlord | undefined
@@ -89,24 +90,17 @@ const RemoveSuspiciousLandlord = ({
 							leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
 						>
 							<DialogPanel className='relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
-								<div className='absolute top-0 right-0 hidden pt-4 pr-4 sm:block'>
-									<button
-										type='button'
-										className='rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none'
-										onClick={() => setRemoveSuspiciousLandlordOpen(false)}
-									>
-										<span className='sr-only'>Close</span>
-										<XIcon className='h-6 w-6' aria-hidden='true' />
-									</button>
-								</div>
+								<CloseButton
+									onClick={() => setRemoveSuspiciousLandlordOpen(false)}
+								/>
 								<div className='sm:flex sm:items-start'>
 									<div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
-										<Dialog.Title
+										<DialogTitle
 											as='h3'
 											className='text-lg leading-6 text-gray-900'
 										>
 											Remove Landlord
-										</Dialog.Title>
+										</DialogTitle>
 									</div>
 								</div>
 								<div>

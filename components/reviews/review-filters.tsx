@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { IQuery, Options, SortOptions } from '@/util/interfaces/interfaces'
@@ -17,6 +18,7 @@ import {
 import ButtonLight from '../ui/button-light'
 import Spinner from '../ui/Spinner'
 import SortList from './ui/sort-list'
+import Button from '../ui/button'
 
 //Review filters and Logic
 
@@ -60,7 +62,11 @@ function ReviewFilters({
 	query,
 }: FiltersProps): JSX.Element {
 	const { t } = useTranslation('reviews')
-	const keyDownAction = (e) => {
+	interface KeyDownActionEvent extends React.KeyboardEvent<HTMLDivElement> {
+		key: string
+	}
+
+	const keyDownAction = (e: KeyDownActionEvent): void => {
 		if (e.key === 'Enter' || e.key === 'NumpadEnter') {
 			updateParams()
 		}
@@ -139,20 +145,18 @@ function ReviewFilters({
 						</div>
 					</div>
 					<div className='flex w-full flex-col gap-2 border-t border-t-gray-200 py-2 lg:px-2'>
-						<button
-							onClick={() => {
-								updateParams()
-							}}
-							type='submit'
-							className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm text-white shadow-sm focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none ${'bg-teal-600 hover:bg-teal-700'}`}
-							data-testid='submit-button-1'
-						>
-							{loading ? (
-								<Spinner height='h-4' width='w-4' colour='text-white' />
-							) : (
-								t('reviews.update')
-							)}
-						</button>
+						{loading ? (
+							<Spinner height='h-4' width='w-4' colour='text-white' />
+						) : (
+							<Button
+								onClick={() => {
+									updateParams()
+								}}
+							>
+								{t('reviews.update')}
+							</Button>
+						)}
+
 						<ButtonLight
 							onClick={() => {
 								dispatch(clearReviewFilters())

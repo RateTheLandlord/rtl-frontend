@@ -4,11 +4,12 @@ import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
 import RestoreReviewModal from '@/components/modal/RestoreReviewModal'
 import Spinner from '@/components/ui/Spinner'
+import dayjs from 'dayjs'
 
 const DeletedReviews = () => {
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
 
-	const [flaggedReviews, setFlaggedReviews] = useState<Array<Review>>([])
+	const [deletedReviews, setDeletedReviews] = useState<Array<Review>>([])
 
 	const [restoreReviewOpen, setRestoreReviewOpen] = useState(false)
 
@@ -21,7 +22,12 @@ const DeletedReviews = () => {
 	useEffect(() => {
 		if (reviews) {
 			if (reviews.length) {
-				setFlaggedReviews([...reviews])
+				const sorted = reviews.sort((a, b) =>
+					dayjs(a.delete_date).isValid() && dayjs(b.delete_date).isValid()
+						? dayjs(a.delete_date).valueOf() - dayjs(b.delete_date).valueOf()
+						: 0,
+				)
+				setDeletedReviews([...sorted])
 			}
 		}
 	}, [reviews])
@@ -66,12 +72,24 @@ const DeletedReviews = () => {
 								scope='col'
 								className='hidden px-3 py-3.5 text-left text-sm text-gray-900 sm:table-cell'
 							>
+								Delete Date
+							</th>
+							<th
+								scope='col'
+								className='hidden px-3 py-3.5 text-left text-sm text-gray-900 sm:table-cell'
+							>
 								Review
+							</th>
+							<th
+								scope='col'
+								className='hidden px-3 py-3.5 text-center text-sm text-gray-900 sm:table-cell'
+							>
+								Restore
 							</th>
 						</tr>
 					</thead>
 					<tbody className='divide-y divide-gray-200 bg-white'>
-						{flaggedReviews.map((review) => (
+						{deletedReviews.map((review) => (
 							<tr
 								key={review.id}
 								className={`${review.admin_approved ? 'bg-green-100' : ''}`}
@@ -92,7 +110,10 @@ const DeletedReviews = () => {
 								<td className='hidden max-w-xs px-3 py-4 text-sm text-gray-500 lg:table-cell'>
 									{review.delete_reason}
 								</td>
-								<td className='hidden px-3 py-4 text-sm text-gray-500 sm:table-cell'>
+								<td className='hidden max-w-xs px-3 py-4 text-sm text-gray-500 lg:table-cell'>
+									{dayjs(review.delete_date).format('DD/MM/YYYY')}
+								</td>
+								<td className='hidden px-3 py-4 text-sm break-words hyphens-auto text-gray-500 sm:table-cell'>
 									{review.review}
 								</td>
 								<td className='py-4 pr-4 pl-3 text-center text-sm sm:pr-6'>
@@ -101,7 +122,7 @@ const DeletedReviews = () => {
 											setSelectedReview(review)
 											setRestoreReviewOpen((p) => !p)
 										}}
-										className='text-indigo-600 hover:text-indigo-900'
+										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
 									>
 										Restore
 									</button>

@@ -157,13 +157,14 @@ const Review = ({
 				setReviewsLoading(false)
 			}
 		}
-		fetchData()
+		fetchData().catch(() => console.error('Error Fetching Data'))
 	}, [queryParams, page, reviews.length, setIsLoading])
 
 	const [dynamicCityOptions, setDynamicCityOptions] = useState<Options[]>([])
 
 	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>([])
 
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 	const fetchDynamicFilterOptions = debounce(async () => {
 		setIsLoading(true)
 		try {
@@ -284,6 +285,7 @@ const Review = ({
 											dynamicZipOptions={dynamicZipOptions}
 											updateParams={updateParams}
 											dispatch={dispatch}
+											// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 											fetchDynamicFilterOptions={fetchDynamicFilterOptions}
 											query={query}
 										/>
@@ -301,6 +303,7 @@ const Review = ({
 											updateParams={updateParams}
 											loading={isLoading}
 											dispatch={dispatch}
+											// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 											fetchDynamicFilterOptions={fetchDynamicFilterOptions}
 											query={query}
 										/>
