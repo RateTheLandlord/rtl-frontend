@@ -1,7 +1,8 @@
 import { FAILED_TO_RETRIEVE_REVIEWS } from '@/lib/auth/constants'
 import { IResult } from '../helpers'
 import sql from '@/lib/db'
-import { Review, ReviewResponseStatus } from '@/lib/review/models/review'
+import { ReviewResponseStatus } from '@/lib/review/models/review'
+import { Review } from '@/util/interfaces/interfaces'
 
 /**
  * Data service layer for the reviews service of our backend.

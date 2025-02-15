@@ -1,5 +1,4 @@
 import {
-	Review,
 	ReviewsResponse,
 	OtherLandlord,
 	FilterOptions,
@@ -16,7 +15,7 @@ import { getExistingReviewsForLandlord } from '@/lib/review/models/review-data-l
 import { createReview } from '@/lib/review/models/review-data-layer'
 import { updateReview } from '@/lib/review/models/review-data-layer'
 import { capitalize } from '@/util/helpers/helper-functions'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options, Review } from '@/util/interfaces/interfaces'
 
 export interface ReviewQuery {
 	page?: number
