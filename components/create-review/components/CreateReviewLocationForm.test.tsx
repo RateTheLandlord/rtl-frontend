@@ -1,13 +1,13 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@/test-utils'
 import LocationForm from './CreateReviewLocationForm'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
 jest.mock('react-i18next', () => ({
-	useTranslation: () => ({ t: (key: string) => key }),
+	useTranslations: () => ({ t: (key: string) => key }),
 }))
 
 jest.mock('@/components/ui/button', () =>
@@ -63,18 +63,18 @@ describe('LocationForm Component', () => {
 		render(<LocationForm {...defaultProps} />)
 
 		expect(
-			screen.getByText('create-review.location-form.title'),
+			screen.getByText('createreview.location-form.title'),
 		).toBeInTheDocument()
 		expect(
 			screen.getByText('Toronto, Ontario, Canada, M5V 2T6 - $1200'),
 		).toBeInTheDocument()
-		expect(screen.getByText('create-review.edit')).toBeInTheDocument()
+		expect(screen.getByText('createreview.edit')).toBeInTheDocument()
 	})
 
 	it('should call setLocationOpen(true) when Edit button is clicked', () => {
 		render(<LocationForm {...defaultProps} />)
 
-		fireEvent.click(screen.getByText('create-review.edit'))
+		fireEvent.click(screen.getByText('createreview.edit'))
 
 		expect(mockSetLocationOpen).toHaveBeenCalledWith(true)
 	})
@@ -91,7 +91,7 @@ describe('LocationForm Component', () => {
 	it('should call setShowRatingForm, setLocationOpen, and setRatingsOpen when Continue button is clicked', () => {
 		render(<LocationForm {...defaultProps} locationOpen={true} />)
 
-		fireEvent.click(screen.getByText('create-review.continue'))
+		fireEvent.click(screen.getByText('createreview.continue'))
 
 		expect(mockSetShowRatingForm).toHaveBeenCalledWith(true)
 		expect(mockSetLocationOpen).toHaveBeenCalledWith(false)
@@ -101,14 +101,14 @@ describe('LocationForm Component', () => {
 	it('should disable Continue button when city is empty and not in Ireland', () => {
 		render(<LocationForm {...defaultProps} locationOpen={true} city='' />)
 
-		const continueButton = screen.getByText('create-review.continue')
+		const continueButton = screen.getByText('createreview.continue')
 		expect(continueButton).toBeDisabled()
 	})
 
 	it('should disable Continue button when postal is empty and not in Ireland', () => {
 		render(<LocationForm {...defaultProps} locationOpen={true} postal='' />)
 
-		const continueButton = screen.getByText('create-review.continue')
+		const continueButton = screen.getByText('createreview.continue')
 		expect(continueButton).toBeDisabled()
 	})
 
@@ -123,7 +123,7 @@ describe('LocationForm Component', () => {
 			/>,
 		)
 
-		const continueButton = screen.getByText('create-review.continue')
+		const continueButton = screen.getByText('createreview.continue')
 		expect(continueButton).not.toBeDisabled()
 	})
 

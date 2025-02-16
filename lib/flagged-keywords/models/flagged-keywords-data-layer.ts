@@ -14,7 +14,7 @@ export async function createKeyword(
 					(${keyword.keyword}, ${keyword.reason}) RETURNING id;
 				`
 
-		keyword.id = await id[0].id
+		keyword.id = id[0].id
 
 		return keyword
 	} catch {

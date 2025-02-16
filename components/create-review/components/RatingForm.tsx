@@ -1,7 +1,10 @@
+/**
+ * @jest-environment jsdom
+ */
 import Button from '@/components/ui/button'
 import RatingsRadio from '../ratings-radio'
-import { useTranslation } from 'next-i18next'
 import RatingStars from '@/components/ui/RatingStars'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
 	ratingsOpen: boolean
@@ -41,11 +44,11 @@ const RatingForm = ({
 	setShowReviewForm,
 	setReviewOpen,
 }: IProps) => {
-	const { t } = useTranslation('createreview')
+	const t = useTranslations('createreview')
 	return !ratingsOpen ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
 			<div className='flex flex-col gap-2'>
-				<p className='text-xs'>{t('create-review.ratings-form.title')}</p>
+				<p className='text-xs'>{t('ratings-form.title')}</p>
 				<div className='flex w-full flex-row flex-wrap gap-6'>
 					{ratings.map((rating) => {
 						return (
@@ -66,7 +69,7 @@ const RatingForm = ({
 						setRatingsOpen(true)
 					}}
 				>
-					{t('create-review.edit')}
+					{t('edit')}
 				</Button>
 			</div>
 		</div>
@@ -74,50 +77,50 @@ const RatingForm = ({
 		<>
 			<div className='mb-3' data-testid='RatingForm-component'>
 				<h2 className='text-base leading-7 font-semibold text-gray-900'>
-					{t('create-review.ratings-form.title')}
+					{t('ratings-form.title')}
 				</h2>
 				<p className='mt-1 text-sm leading-6 text-gray-600'>
-					{t('create-review.review-form.rate-title')}
+					{t('review-form.rate-title')}
 				</p>
 			</div>
 			<div className='flex flex-col gap-2'>
 				<RatingsRadio
-					title={t('create-review.review-form.repair')}
+					title={t('review-form.repair')}
 					rating={repair}
 					setRating={setRepair}
-					tooltip={t('create-review.review-form.repair_description')}
+					tooltip={t('review-form.repair_description')}
 					testid='RepairRatingsRadio-component'
 				/>
 
 				<RatingsRadio
-					title={t('create-review.review-form.health')}
+					title={t('review-form.health')}
 					rating={health}
 					setRating={setHealth}
-					tooltip={t('create-review.review-form.health_description')}
+					tooltip={t('review-form.health_description')}
 					testid='HealthRatingsRadio-component'
 				/>
 
 				<RatingsRadio
-					title={t('create-review.review-form.stability')}
+					title={t('review-form.stability')}
 					rating={stability}
 					setRating={setStability}
-					tooltip={t('create-review.review-form.stability_description')}
+					tooltip={t('review-form.stability_description')}
 					testid='StabilityRatingsRadio-component'
 				/>
 
 				<RatingsRadio
-					title={t('create-review.review-form.privacy')}
+					title={t('review-form.privacy')}
 					rating={privacy}
 					setRating={setPrivacy}
-					tooltip={t('create-review.review-form.privacy_description')}
+					tooltip={t('review-form.privacy_description')}
 					testid='PrivacyRatingsRadio-component'
 				/>
 
 				<RatingsRadio
-					title={t('create-review.review-form.respect')}
+					title={t('review-form.respect')}
 					rating={respect}
 					setRating={setRespect}
-					tooltip={t('create-review.review-form.respect_description')}
+					tooltip={t('review-form.respect_description')}
 					testid='RespectRatingsRadio-component'
 				/>
 			</div>
@@ -129,7 +132,7 @@ const RatingForm = ({
 						setReviewOpen(true)
 					}}
 				>
-					{t('create-review.continue')}
+					{t('continue')}
 				</Button>
 			</div>
 		</>

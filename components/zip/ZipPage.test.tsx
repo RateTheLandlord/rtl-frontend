@@ -1,12 +1,12 @@
 /**
  * @jest-environment jsdom
  */
-import { render } from '@testing-library/react'
+import { render } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import ZipPage from './ZipPage'
-import { IZipReviews } from '@/lib/review/review'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { IZipReviews } from '@/lib/review/types/review'
 expect.extend(toHaveNoViolations)
 
 jest.mock('@/util/helpers/fetchReviews')

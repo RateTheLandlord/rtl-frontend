@@ -1,6 +1,6 @@
 import { QueryParams, ReviewsResponse } from '@/components/reviews/review'
 import { ResourceResponse } from '../interfaces/interfaces'
-import { ResourceQuery } from '@/lib/tenant-resource/resource'
+import { ResourceQuery } from '@/lib/tenant-resource/types'
 
 export async function fetchReviews(
 	queryParams?: QueryParams,
@@ -20,7 +20,7 @@ export async function fetchReviews(
 			throw new Error('Network response was not ok')
 		}
 
-		const data: ReviewsResponse = await response.json()
+		const data: ReviewsResponse = (await response.json()) as ReviewsResponse
 		return data
 	} catch {
 		console.error('Error fetching reviews')
@@ -53,7 +53,7 @@ export async function fetchResources(
 			throw new Error('Network response was not ok')
 		}
 
-		const data: ResourceResponse = await response.json()
+		const data: ResourceResponse = (await response.json()) as ResourceResponse
 		return data
 	} catch {
 		console.error('Error fetching Resources')

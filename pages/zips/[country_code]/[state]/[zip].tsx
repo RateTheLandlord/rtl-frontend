@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import Spinner from '@/components/ui/Spinner'
 import ZipPage from '@/components/zip/ZipPage'
-import { IZipReviews, getZipReviews } from '@/lib/review/review'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { IZipReviews } from '@/lib/review/types/review'
+import { getZipReviews } from '@/lib/review/zip'
 
 interface IProps {
 	city: string
@@ -79,14 +82,20 @@ const Zip = ({ city, state, country, zip, data }: IProps) => {
 	)
 }
 
-export async function getStaticPaths() {
+export function getStaticPaths() {
 	return {
 		paths: [],
 		fallback: 'blocking',
 	}
 }
 
-export async function getStaticProps({ locale, params }) {
+export async function getStaticProps({
+	locale,
+	params,
+}: {
+	locale: string
+	params: { city: string; state: string; country_code: string; zip: string }
+}) {
 	const data = await getZipReviews(params)
 
 	if (data.reviews.length === 0) {

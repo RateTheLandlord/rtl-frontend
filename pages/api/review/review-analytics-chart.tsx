@@ -1,10 +1,10 @@
 import { getChartData } from '@/lib/analytics/review'
+import { ReviewQuery } from '@/lib/review/types/Queries'
 import rateLimitMiddleware from '@/util/rateLimit'
-import { ReviewQuery } from '@/lib/review/review'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const getChartStats = async (req: NextApiRequest, res: NextApiResponse) => {
-	const queryParams: ReviewQuery = req.body.queryParams || {}
+	const { queryParams = {} } = req.body as { queryParams: ReviewQuery }
 
 	const stats = await getChartData(queryParams)
 	res.status(200).json(stats)

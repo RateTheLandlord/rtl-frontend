@@ -2,20 +2,12 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react'
+import { render } from '@/test-utils'
 import '@testing-library/jest-dom'
 import ReviewComponent from './ReviewComponent'
 import { Review } from '@/util/interfaces/interfaces'
-import { UserProvider } from '@auth0/nextjs-auth0/client'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
-
-jest.mock('@auth0/nextjs-auth0/client')
-jest.mock('next-i18next', () => ({
-	useTranslation: () => ({
-		t: (key: string) => key,
-	}),
-}))
 
 const review: Review = {
 	delete_date: null,
@@ -68,14 +60,12 @@ describe('ReviewComponent', () => {
 
 	it('Should not have a11y violation', async () => {
 		const { container } = render(
-			<UserProvider>
-				<ReviewComponent
-					review={review}
-					handleReport={jest.fn()}
-					handleDelete={jest.fn()}
-					handleEdit={jest.fn()}
-				/>
-			</UserProvider>,
+			<ReviewComponent
+				review={review}
+				handleReport={jest.fn()}
+				handleDelete={jest.fn()}
+				handleEdit={jest.fn()}
+			/>,
 		)
 		const result = await axe(container)
 		expect(result).toHaveNoViolations()

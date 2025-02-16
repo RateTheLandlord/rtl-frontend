@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render } from '@/test-utils'
 import Layout from './layout'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { UserProvider } from '@auth0/nextjs-auth0/client'

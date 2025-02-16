@@ -1,19 +1,19 @@
 import Link from 'next/link'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 
 const Privacy = () => {
-	const { t } = useTranslation('about')
+	const t = useTranslations('about')
 	return (
 		<div data-testid='about-privacy-1' className='w-full bg-white'>
 			<div className='mx-auto max-w-7xl px-6 text-lg lg:px-8'>
 				<h3 className='mt-2 block text-center text-xl leading-8 text-gray-900 sm:text-2xl'>
-					{t('about.privacy.privacy')}
+					{t('privacy.privacy')}
 				</h3>
 				<p className='mt-8 text-xl leading-8 text-gray-500'>
-					{t('about.privacy.info')}
+					{t('privacy.info')}
 				</p>
 				<Link href='/privacy-policy' className='text-blue-500 underline'>
-					{t('about.privacy.readmore')}
+					{t('privacy.readmore')}
 				</Link>
 			</div>
 		</div>

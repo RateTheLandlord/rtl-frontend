@@ -1,4 +1,4 @@
-import { getLandlordSuggestions } from '@/lib/review/review'
+import { getLandlordSuggestions } from '@/lib/review/landlords'
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -7,13 +7,10 @@ export const removeSpecialChars = (input: string) => {
 	return input.replace(specialCharsRegex, '')
 }
 
-const getLandlordSuggestionsAPI = async (
-	req: NextApiRequest,
-	res: NextApiResponse,
-) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res)
 
-	const { body }: { body: { input: string } } = req
+	const { body } = req as { body: { input: string } }
 	const sanitizedLandlord = removeSpecialChars(body.input)
 
 	const landlords = await getLandlordSuggestions(sanitizedLandlord)
@@ -21,4 +18,4 @@ const getLandlordSuggestionsAPI = async (
 	res.status(200).json(landlords)
 }
 
-export default getLandlordSuggestionsAPI
+export default handler

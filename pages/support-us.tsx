@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import Support from '@/components/supportus/SupportUs'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { getMemberData, getTierData } from '@/util/helpers/patreon'
+import { getMemberData, getTierData, PatreonData } from '@/util/helpers/patreon'
 import Supporters from '@/components/supportus/Supporters'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
@@ -16,8 +18,8 @@ export default function SupportUs({ members }): JSX.Element {
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
 
-	const memberData = getMemberData(members)
-	const tierData = getTierData(members)
+	const memberData = getMemberData(members as PatreonData)
+	const tierData = getTierData(members as PatreonData)
 
 	return (
 		<div>
@@ -98,7 +100,10 @@ export async function getStaticProps({ locale }) {
 
 	return {
 		props: {
-			...(await serverSideTranslations(locale, ['support', 'layout'])),
+			messages: {
+				...require(`../messages/${locale}/support.json`),
+				...require(`../messages/${locale}/layout.json`),
+			},
 			members: members,
 		},
 		revalidate: 86400,

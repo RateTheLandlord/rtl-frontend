@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@/test-utils'
 import EditResourceModal from './EditResourceModal'
 import { Resource } from '@/util/interfaces/interfaces'
 import '@testing-library/jest-dom/extend-expect'

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import ComboBox from './combobox'
 import { Options } from '@/util/interfaces/interfaces'

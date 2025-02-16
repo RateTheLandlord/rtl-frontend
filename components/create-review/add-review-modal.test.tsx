@@ -2,13 +2,13 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@/test-utils'
 import AddReviewModal from './add-review-modal'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
 jest.mock('react-i18next', () => ({
-	useTranslation: jest.fn().mockReturnValue({
+	useTranslations: jest.fn().mockReturnValue({
 		t: jest.fn((key) => {
 			if (key === 'create-review.modal.add-review') {
 				return 'Add Review'
@@ -35,11 +35,15 @@ describe('AddReviewModal component', () => {
 		expect(modalElement).toBeInTheDocument()
 
 		// Verify that the modal title and description are displayed correctly
-		expect(screen.getByText('Add Review')).toBeInTheDocument()
-		expect(screen.getByText('Please provide your review.')).toBeInTheDocument()
+		expect(
+			screen.getByText('createreview.modal.add-review'),
+		).toBeInTheDocument()
+		expect(
+			screen.getByText('createreview.modal.add-review-desc'),
+		).toBeInTheDocument()
 
 		// Verify that the close button is rendered
-		const closeButton = screen.getByText('Close')
+		const closeButton = screen.getByText('createreview.modal.close')
 		expect(closeButton).toBeInTheDocument()
 
 		// Simulate clicking the close button

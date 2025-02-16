@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import CityPage from '@/components/city/CityPage'
 import Spinner from '@/components/ui/Spinner'
-import { ICityReviews, getCityReviews } from '@/lib/review/review'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { getCityReviews } from '@/lib/review/city'
+import { ICityQuery } from '@/lib/review/types/Queries'
 
 interface IProps {
 	city: string
@@ -72,7 +75,7 @@ const City = ({ city, state, country, data }: IProps) => {
 	)
 }
 
-export async function getStaticPaths() {
+export function getStaticPaths() {
 	return {
 		paths: [],
 		fallback: 'blocking',
@@ -81,7 +84,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ locale, params }) {
 	console.log(params)
-	const data = await getCityReviews(params)
+	const data = await getCityReviews(params as ICityQuery)
 
 	if (data.reviews.length === 0) {
 		return {
@@ -100,7 +103,7 @@ export async function getStaticProps({ locale, params }) {
 				state: params.state,
 				country: params.country_code,
 				data: data,
-				...(await serverSideTranslations(locale, [
+				...(await serverSideTranslations((locale as string) ?? 'en-CA', [
 					'filters',
 					'resources',
 					'layout',

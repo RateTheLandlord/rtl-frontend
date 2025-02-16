@@ -2,7 +2,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { Resource } from '@/util/interfaces/interfaces'
 import { countryName } from '@/util/helpers/getCountryCodes'
 import Spinner from '../ui/Spinner'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
 	data: Resource[]
@@ -19,7 +19,7 @@ function InfiniteScroll({
 	isLoading,
 	setIsLoading,
 }: IProps) {
-	const { t } = useTranslation('resources')
+	const t = useTranslations('resources')
 	const [content, setContent] = useState<Resource[]>([]) // Store loaded content: ;
 	// Add a scroll event listener
 	useEffect(() => {
@@ -74,13 +74,13 @@ function InfiniteScroll({
 							<dl className='-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6'>
 								{resource.address && (
 									<div className='flex justify-between gap-x-4 py-3'>
-										<dt className='text-gray-500'>{t('resources.address')}</dt>
+										<dt className='text-gray-500'>{t('address')}</dt>
 										<dd className='text-gray-700'>{resource.address}</dd>
 									</div>
 								)}
 								{resource.phone_number && (
 									<div className='flex justify-between gap-x-4 py-3'>
-										<dt className='text-gray-500'>{t('resources.phone')}</dt>
+										<dt className='text-gray-500'>{t('phone')}</dt>
 										<dd className='text-gray-700'>{resource.phone_number}</dd>
 									</div>
 								)}

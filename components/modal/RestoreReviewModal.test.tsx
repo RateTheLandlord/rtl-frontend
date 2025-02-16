@@ -2,11 +2,12 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import RestoreReviewModal from './RestoreReviewModal'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { axe } from 'jest-axe'
 
 describe('RestoreReviewModal', () => {
 	const mockSelectedReview = {
@@ -55,5 +56,23 @@ describe('RestoreReviewModal', () => {
 		// Verify that the modal title is rendered
 		const modalTitle = screen.getByText('Restore Review')
 		expect(modalTitle).toBeInTheDocument()
+	})
+
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<UserProvider>
+				<Provider store={store}>
+					<RestoreReviewModal
+						selectedReview={mockSelectedReview}
+						handleMutate={jest.fn()}
+						setRestoreReviewOpen={jest.fn()}
+						restoreReviewOpen={true}
+						setSelectedReview={jest.fn()}
+					/>
+				</Provider>
+			</UserProvider>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

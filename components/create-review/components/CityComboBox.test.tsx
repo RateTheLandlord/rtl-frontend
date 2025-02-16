@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@/test-utils'
 import CityComboBox from './CityComboBox'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'

@@ -2,10 +2,10 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render } from '@/test-utils'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import Sidebar from './sidebar'
-import { AnalyticsResponse } from '@/lib/analytics/models/review'
+import { AnalyticsResponse } from '@/lib/analytics/types'
 expect.extend(toHaveNoViolations)
 
 const mockData: AnalyticsResponse = {

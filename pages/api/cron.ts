@@ -15,6 +15,7 @@ const readyToDelete = (delete_date: string | null): boolean => {
 }
 
 // Schedule a cron job to run every day
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 cron.schedule('0 0 * * *', async () => {
 	const reviews = await getDeleted()
 
@@ -29,5 +30,6 @@ cron.schedule('0 0 * * *', async () => {
 })
 
 export default function handler(req, res) {
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 	res.status(200).json({ message: 'Cron job API is running!' })
 }

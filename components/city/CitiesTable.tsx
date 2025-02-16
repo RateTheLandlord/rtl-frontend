@@ -16,7 +16,7 @@ interface IProps {
 }
 
 const CitiesTable = ({ state, country }: IProps) => {
-	const { data: cities, error: cityError } = useSWR<ICities[]>(
+	const { data: cities, error: cityError } = useSWR<ICities[], unknown>(
 		['/api/review/state-city-info', { state, country }],
 		fetchWithBody,
 	)

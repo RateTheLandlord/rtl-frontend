@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@/test-utils'
 import '@testing-library/jest-dom'
 import FlaggedKeywords from './FlaggedKeywords'
 import { SWRConfig } from 'swr'

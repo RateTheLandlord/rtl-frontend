@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react'
+import { render } from '@/test-utils'
 import '@testing-library/jest-dom'
 import SuspiciousLandlords from './SuspiciousLandlords'
 import { axe } from 'jest-axe'

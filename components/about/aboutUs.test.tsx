@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import AboutUs from './aboutUs'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
@@ -12,7 +12,7 @@ test('renders about section with info items', () => {
 	const aboutSection = screen.getByTestId('about-aboutus-1')
 	expect(aboutSection).toBeInTheDocument()
 
-	expect(screen.getByText('About Us')).toBeInTheDocument()
+	expect(screen.getByText('about.about-us.about')).toBeInTheDocument()
 })
 
 it('Should not have a11y violation', async () => {

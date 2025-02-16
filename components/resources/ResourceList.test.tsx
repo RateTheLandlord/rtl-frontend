@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import ResourceList from './ResourceList'
 import { Provider } from 'react-redux'

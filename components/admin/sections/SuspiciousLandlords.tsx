@@ -23,7 +23,7 @@ import EditSuspiciousLandlordModal from '../components/EditSuspiciousLandlordMod
 import RemoveSuspiciousLandlord from '../components/RemoveSuspiciousLandlordModal'
 
 const SuspiciousLandlords = () => {
-	const { data, error, mutate } = useSWR<SuspiciousLandlordResponse>(
+	const { data, error, mutate } = useSWR<SuspiciousLandlordResponse, unknown>(
 		['/api/suspicious-landlords/get-landlords', { limit: '1000' }],
 		fetchWithBody,
 	)
@@ -70,7 +70,9 @@ const SuspiciousLandlords = () => {
 				}
 			})
 			.then(() => {
-				mutate()
+				mutate().catch(() =>
+					console.error('Failed to Mutute Suspicious Landlords'),
+				)
 				setAddSuspiciousLandlordOpen(false)
 				toast.success('Success!')
 				resetForm()
@@ -83,7 +85,7 @@ const SuspiciousLandlords = () => {
 	}
 
 	const handleMutate = () => {
-		mutate()
+		mutate().catch(() => console.error('Failed to Mutute Suspicious Landlords'))
 	}
 	return (
 		<div

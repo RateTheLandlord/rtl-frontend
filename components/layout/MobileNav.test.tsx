@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render } from '@/test-utils'
 import { Disclosure } from '@headlessui/react'
 import MobileNav from './MobileNav'
 import { INav } from '@/util/interfaces/interfaces'

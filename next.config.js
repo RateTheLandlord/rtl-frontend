@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 // @ts-check
-
-const { i18n } = require('./next-i18next.config.js')
 
 /** @type {import('next').NextConfig} */
 
@@ -21,8 +18,11 @@ const nextConfig = {
 			},
 		]
 	},
-	i18n,
 	reactStrictMode: true,
+	i18n: {
+		locales: ['en-CA', 'fr-CA'],
+		defaultLocale: 'en-CA',
+	},
 }
 
 module.exports = nextConfig

@@ -2,11 +2,11 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import CustomMarker from './CustomMarker'
-import { IZipLocations } from '@/lib/location/location'
 import { axe, toHaveNoViolations } from 'jest-axe'
+import { IZipLocations } from '@/lib/location/types'
 expect.extend(toHaveNoViolations)
 
 describe('CustomMarker', () => {

@@ -51,16 +51,15 @@ export default function Reviews(): JSX.Element {
 	)
 }
 
-export async function getStaticProps({ locale }) {
+export function getStaticProps({ locale }) {
 	return {
 		props: {
-			...(await serverSideTranslations(locale as string, [
-				'reviews',
-				'filters',
-				'landlord',
-				'layout',
-			])),
-			// Will be passed to the page component as props
+			messages: {
+				...require(`../messages/${locale}/reviews.json`),
+				...require(`../messages/${locale}/filters.json`),
+				...require(`../messages/${locale}/landlord.json`),
+				...require(`../messages/${locale}/layout.json`),
+			},
 		},
 	}
 }

@@ -1,6 +1,6 @@
 import Button from '@/components/ui/button'
 import LargeTextInput from '@/components/ui/LargeTextInput'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
 	reviewOpen: boolean
@@ -17,11 +17,11 @@ const WrittenReviewForm = ({
 	handleTextChange,
 	setShowPreview,
 }: IProps) => {
-	const { t } = useTranslation('createreview')
+	const t = useTranslations('createreview')
 	return !reviewOpen ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
 			<div className='flex flex-col gap-2'>
-				<p className='text-xs'>{t('create-review.written-review.title')}</p>
+				<p className='text-xs'>{t('written-review.title')}</p>
 				<p className='text-md break-words'>{review}</p>
 			</div>
 			<div>
@@ -30,7 +30,7 @@ const WrittenReviewForm = ({
 						setReviewOpen(true)
 					}}
 				>
-					{t('create-review.edit')}
+					{t('edit')}
 				</Button>
 			</div>
 		</div>
@@ -38,24 +38,24 @@ const WrittenReviewForm = ({
 		<div data-testid='WrittenReviewForm-component'>
 			<div>
 				<h2 className='text-base leading-7 font-semibold text-gray-900'>
-					{t('create-review.written-review.title')}
+					{t('written-review.title')}
 				</h2>
 				<p className='mt-1 text-sm leading-6 text-gray-600'>
-					{t('create-review.written-review.policy-1')}
+					{t('written-review.policy-1')}
 				</p>
 				<ol className='mt-1 list-decimal pl-4 text-sm leading-6 text-gray-600'>
-					<li>{t('create-review.written-review.policy-2')}</li>
-					<li>{t('create-review.written-review.policy-3')}</li>
-					<li>{t('create-review.written-review.policy-4')}</li>
+					<li>{t('written-review.policy-2')}</li>
+					<li>{t('written-review.policy-3')}</li>
+					<li>{t('written-review.policy-4')}</li>
 				</ol>
 			</div>
 			<LargeTextInput
-				title={t('create-review.review-form.review')}
+				title={t('review-form.review')}
 				setValue={(str: string) => handleTextChange(str, 'review')}
 				id='review'
 				placeHolder=''
 				testid='create-review-form-text-1'
-				limitText={t('create-review.review-form.limit', {
+				limitText={t('review-form.limit', {
 					length: review.length,
 				})}
 				length={2000}
@@ -69,7 +69,7 @@ const WrittenReviewForm = ({
 						setReviewOpen(false)
 					}}
 				>
-					{t('create-review.written-review.preview-review')}
+					{t('written-review.preview-review')}
 				</Button>
 			</div>
 		</div>

@@ -1,9 +1,14 @@
 import React, { SetStateAction, useState } from 'react'
-import { Dialog } from '@headlessui/react'
+import {
+	Description,
+	Dialog,
+	DialogPanel,
+	DialogTitle,
+} from '@headlessui/react'
 import ButtonLight from '../ui/button-light'
 import Button from '../ui/button'
 import { Review } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import { useReCaptcha } from 'next-recaptcha-v3'
 
 interface IProps {
@@ -47,7 +52,7 @@ const reportReasons: IReportReason[] = [
 ]
 
 function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
-	const { t } = useTranslation('reviews')
+	const t = useTranslations('reviews')
 	const [reason, setReason] = useState<string>(reportReasons[0].key)
 	const [selectedReason, setSelectedReason] = useState<IReportReason>(
 		reportReasons[0],
@@ -108,12 +113,12 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 				data-testid='report-modal-1'
 			/>
 			<div className='fixed inset-0 flex items-center justify-center p-4'>
-				<Dialog.Panel className='w-full max-w-sm rounded-md bg-white p-10'>
+				<DialogPanel className='w-full max-w-sm rounded-md bg-white p-10'>
 					{submitError ? (
 						<div className='flex w-full flex-col items-center gap-4'>
-							<Dialog.Title className='text-red-400'>
-								{t('reviews.report.error')}
-							</Dialog.Title>
+							<DialogTitle className='text-red-400'>
+								{t('report.error')}
+							</DialogTitle>
 							<div className='flex w-full justify-end'>
 								<ButtonLight
 									onClick={() => {
@@ -123,14 +128,14 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 										setIsOpen(false)
 									}}
 								>
-									{t('reviews.report.cancel')}
+									{t('report.cancel')}
 								</ButtonLight>
 							</div>
 						</div>
 					) : null}
 					{submitSuccess ? (
 						<div className='flex w-full flex-col items-center gap-4'>
-							<Dialog.Title>{t('reviews.report.success')}</Dialog.Title>
+							<DialogTitle>{t('report.success')}</DialogTitle>
 							<div className='flex w-full justify-end'>
 								<ButtonLight
 									onClick={() => {
@@ -140,19 +145,19 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 										setIsOpen(false)
 									}}
 								>
-									{t('reviews.report.cancel')}
+									{t('report.cancel')}
 								</ButtonLight>
 							</div>
 						</div>
 					) : null}
 					{!submitError && !submitSuccess ? (
 						<>
-							<Dialog.Title className='mb-2 text-center text-xl'>
-								{t('reviews.report.report')}
-							</Dialog.Title>
-							<Dialog.Description className='text-sm'>
-								{t('reviews.report.description')}
-							</Dialog.Description>
+							<DialogTitle className='mb-2 text-center text-xl'>
+								{t('report.report')}
+							</DialogTitle>
+							<Description className='text-sm'>
+								{t('report.description')}
+							</Description>
 
 							<div className='mb-3'>
 								<label
@@ -190,7 +195,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 										htmlFor='report'
 										className='block text-sm text-gray-700'
 									>
-										{t('reviews.report.reason')}
+										{t('report.reason')}
 									</label>
 									<div className='mt-1'>
 										<textarea
@@ -222,18 +227,22 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 										setIsOpen(false)
 									}}
 								>
-									{t('reviews.report.cancel')}
+									{t('report.cancel')}
 								</ButtonLight>
 								<Button
-									onClick={() => handleSubmit()}
+									onClick={() => {
+										handleSubmit().catch(() =>
+											console.error('Failed To Submit Report'),
+										)
+									}}
 									disabled={reason.length >= 255}
 								>
-									{t('reviews.report.submit')}
+									{t('report.submit')}
 								</Button>
 							</div>
 						</>
 					) : null}
-				</Dialog.Panel>
+				</DialogPanel>
 			</div>
 		</Dialog>
 	)

@@ -1,7 +1,7 @@
 import { HouseIcon } from '@/components/icons/HouseIcon'
 import Button from '@/components/ui/button'
 import { classNames } from '@/util/helpers/helper-functions'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
 	getStarted: boolean
@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const ReviewHero = ({ getStarted, setGetStarted, setLandlordOpen }: IProps) => {
-	const { t } = useTranslation('createreview')
+	const t = useTranslations('createreview')
 	return (
 		<div
 			className={classNames(
@@ -30,11 +30,9 @@ const ReviewHero = ({ getStarted, setGetStarted, setLandlordOpen }: IProps) => {
 						</div>
 					</div>
 				)}
-				<h1 className='text-center text-4xl'>
-					{t('create-review.hero.title')}
-				</h1>
+				<h1 className='text-center text-4xl'>{t('hero.title')}</h1>
 				<div className='my-3 flex w-full flex-col gap-3 text-center lg:px-10'>
-					<p>{t('create-review.hero.body')}</p>
+					<p>{t('hero.body')}</p>
 				</div>
 				{getStarted ? null : (
 					<Button
@@ -44,7 +42,7 @@ const ReviewHero = ({ getStarted, setGetStarted, setLandlordOpen }: IProps) => {
 							setLandlordOpen(true)
 						}}
 					>
-						{t('create-review.hero.start')}
+						{t('hero.start')}
 					</Button>
 				)}
 			</div>

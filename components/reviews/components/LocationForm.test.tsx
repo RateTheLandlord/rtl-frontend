@@ -3,18 +3,12 @@
  */
 
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import LocationForm from './LocationForm'
 import { Options } from '@/util/interfaces/interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
-
-jest.mock('next-i18next', () => ({
-	useTranslation: () => ({
-		t: (key: string) => key,
-	}),
-}))
 
 const mockStateOptions: Options[] = [
 	{ id: 1, name: 'State 1', value: 'state1' },

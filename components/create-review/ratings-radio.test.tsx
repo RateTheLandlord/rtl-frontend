@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent } from '@/test-utils'
 import RatingsRadio from './ratings-radio'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)

@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
 import { Review } from '@/util/interfaces/interfaces'
-import { IZipReviews } from '@/lib/review/review'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import AdsComponent from '../adsense/Adsense'
@@ -9,6 +8,7 @@ import InfiniteScroll from '../reviews/InfiniteScroll'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import ZipInfo from './ZipInfo'
 import { ISortOptions } from '../reviews/review'
+import { IZipReviews } from '@/lib/review/types/review'
 
 interface IProps {
 	city: string
@@ -70,7 +70,7 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 				setIsLoading(false)
 			}
 		}
-		fetchData()
+		fetchData().catch(() => console.error('Failed to get Zip Reviews'))
 	}, [queryParams, page, reviews.length])
 
 	// Reset hasMore when queryParams change

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import ResourcesInfo from '@/components/resources/resourcesInfo'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
@@ -5,9 +6,8 @@ import AdsComponent from '@/components/adsense/Adsense'
 import ResourceList from '@/components/resources/ResourceList'
 import { ResourceResponse } from '@/util/interfaces/interfaces'
 import { getResources } from '@/lib/tenant-resource/resource'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import Poster from '@/components/poster/Poster'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface IProps {
 	data: ResourceResponse
@@ -23,7 +23,7 @@ function Resources({ data }: IProps): JSX.Element {
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
-	const { t } = useTranslation('resources')
+	const t = useTranslations('resources')
 	return (
 		<div className='flex w-full justify-center'>
 			<NextSeo
@@ -57,7 +57,7 @@ function Resources({ data }: IProps): JSX.Element {
 				<Poster />
 				<ResourceList data={data} />
 				<p className='mt-8 text-center text-xl leading-8 text-gray-500'>
-					{t('resources.contribute')}
+					{t('contribute')}
 				</p>
 			</div>
 		</div>
@@ -74,11 +74,11 @@ export async function getStaticProps({ locale }) {
 			props: JSON.parse(
 				JSON.stringify({
 					data: data,
-					...(await serverSideTranslations(locale, [
-						'filters',
-						'resources',
-						'layout',
-					])),
+					messages: {
+						...require(`../messages/${locale}/filters.json`),
+						...require(`../messages/${locale}/layout.json`),
+						...require(`../messages/${locale}/resources.json`),
+					},
 				}),
 			),
 			revalidate: 100,
@@ -86,7 +86,11 @@ export async function getStaticProps({ locale }) {
 	} else {
 		return {
 			props: {
-				...(await serverSideTranslations(locale, ['resources', 'layout'])),
+				messages: {
+					...require(`../messages/${locale}/filters.json`),
+					...require(`../messages/${locale}/layout.json`),
+					...require(`../messages/${locale}/resources.json`),
+				},
 				data: [],
 			},
 			revalidate: 100,

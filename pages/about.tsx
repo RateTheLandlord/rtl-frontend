@@ -70,11 +70,13 @@ function About(): JSX.Element {
 
 export default About
 
-export async function getStaticProps({ locale }) {
+export function getStaticProps({ locale }: { locale: string }) {
 	return {
 		props: {
-			...(await serverSideTranslations(locale, ['about', 'layout'])),
-			// Will be passed to the page component as props
+			messages: {
+				...require(`../messages/${locale}/about.json`),
+				...require(`../messages/${locale}/layout.json`),
+			},
 		},
 	}
 }

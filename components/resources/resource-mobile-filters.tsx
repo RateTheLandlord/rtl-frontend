@@ -9,7 +9,7 @@ import {
 import MobileSelectList from '@/components/reviews/ui/mobile-select-list'
 import SearchBar from '@/components/reviews/ui/searchbar'
 import { Options } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import ComboBox from '@/components/reviews/ui/combobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
@@ -46,7 +46,7 @@ export default function ResourceMobileFilters({
 }: FiltersProps) {
 	const dispatch = useAppDispatch()
 	const query = useAppSelector((state) => state.resourceQuery)
-	const { t } = useTranslation('filters')
+	const t = useTranslations('filters')
 	return (
 		<Transition show={mobileFiltersOpen} as={Fragment}>
 			<Dialog
@@ -81,7 +81,7 @@ export default function ResourceMobileFilters({
 					>
 						<DialogPanel className='relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl'>
 							<div className='flex items-center justify-between px-4'>
-								<h2 className='text-lg text-gray-900'>{t('filters.title')}</h2>
+								<h2 className='text-lg text-gray-900'>{t('title')}</h2>
 								<CloseButton onClick={() => setMobileFiltersOpen(false)} />
 							</div>
 
@@ -101,7 +101,7 @@ export default function ResourceMobileFilters({
 											dispatch(updateResourceCountry(opt))
 										}
 										options={countryOptions}
-										name={t('filters.country')}
+										name={t('country')}
 									/>
 									<ComboBox
 										state={stateFilter}
@@ -109,7 +109,7 @@ export default function ResourceMobileFilters({
 											dispatch(updateResourceState(opt))
 										}
 										options={stateOptions}
-										name={t('filters.state')}
+										name={t('state')}
 									/>
 									<ComboBox
 										state={cityFilter}
@@ -117,7 +117,7 @@ export default function ResourceMobileFilters({
 											dispatch(updateResourceCity(opt))
 										}
 										options={cityOptions}
-										name={t('filters.city')}
+										name={t('city')}
 									/>
 
 									<div className='w-full pt-2'>
@@ -128,7 +128,7 @@ export default function ResourceMobileFilters({
 											}}
 											className='w-full rounded-lg bg-teal-600 py-2 text-white'
 										>
-											{t('filters.apply')}
+											{t('apply')}
 										</button>
 									</div>
 									<div className='flex w-full justify-end pt-2'>
@@ -139,7 +139,7 @@ export default function ResourceMobileFilters({
 												updateParams()
 											}}
 										>
-											{t('filters.clear')}
+											{t('clear')}
 										</ButtonLight>
 									</div>
 								</PopoverGroup>

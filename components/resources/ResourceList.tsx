@@ -13,13 +13,13 @@ import { updateResourceActiveFilters } from '@/redux/resourceQuery/resourceQuery
 import { fetchResources } from '@/util/helpers/fetchReviews'
 import ResourceMobileFilters from './resource-mobile-filters'
 import ButtonLight from '../ui/button-light'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 
 const resourceSortOptions: SortOptions[] = sortOptions.filter((r) => r.id < 5)
 
 export default function ResourceList({ data }: { data: ResourceResponse }) {
 	// Localization
-	const { t } = useTranslation('filters')
+	const t = useTranslations('filters')
 
 	// Redux
 	const query = useAppSelector((state) => state.resourceQuery)
@@ -93,7 +93,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 				setIsLoading(false)
 			}
 		}
-		fetchData()
+		fetchData().catch(() => console.error('Failed to Resource Data'))
 	}, [queryParams, page, resources.length])
 
 	// Reset hasMore when queryParams change
@@ -116,7 +116,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 			<div className='mx-auto max-w-2xl sm:px-6 lg:max-w-7xl lg:px-8'>
 				<div className='flex w-full justify-end px-4 lg:hidden'>
 					<ButtonLight onClick={() => setMobileFiltersOpen(true)}>
-						{t('filters.title')}
+						{t('title')}
 					</ButtonLight>
 				</div>
 				<div className='mx-auto max-w-2xl lg:max-w-7xl'>
@@ -132,7 +132,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 							updateParams={updateParams}
 						/>
 						<ResourceFilters
-							searchTitle={t('filters.resources')}
+							searchTitle={t('resources')}
 							selectedSort={selectedSort}
 							setSelectedSort={setSelectedSort}
 							sortOptions={resourceSortOptions}
@@ -149,10 +149,10 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 						{!resources.length ? (
 							<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
 								<h1 className='mt-4 text-3xl text-gray-900 sm:text-5xl'>
-									{t('filters.no-results')}
+									{t('no-results')}
 								</h1>
 								<p className='mt-6 text-base leading-7 text-gray-600'>
-									{t('filters.no-body')}
+									{t('no-body')}
 								</p>
 							</div>
 						) : (

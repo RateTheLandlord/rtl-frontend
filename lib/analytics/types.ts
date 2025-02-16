@@ -1,4 +1,14 @@
 import { AnalyticsResponseInterface } from '@/util/interfaces/interfaces'
+export interface ReviewQuery {
+	page?: number
+	limit?: number
+	search?: string
+	sort?: 'az' | 'za' | 'new' | 'old' | 'high' | 'low'
+	state?: string
+	country?: string
+	city?: string
+	zip?: string
+}
 
 export interface AnalyticsResponse {
 	avgRatingT90: number

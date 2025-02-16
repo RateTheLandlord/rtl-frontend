@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent } from '@/test-utils'
 import ButtonLight from './button-light'
 import { axe } from 'jest-axe'
 

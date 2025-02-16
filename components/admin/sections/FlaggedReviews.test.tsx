@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import useSWR from 'swr'
 import { axe } from 'jest-axe'
 import FlaggedReviews from './FlaggedReviews'

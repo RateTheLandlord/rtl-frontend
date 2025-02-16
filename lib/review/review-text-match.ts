@@ -48,10 +48,10 @@ function reviewSimilarity(review1: string, review2: string): number {
 }
 
 // Loop through all the reviews retrieved from the db for this landlord and check if they are similar to the input text
-export async function checkReviewsForSimilarity(
+export function checkReviewsForSimilarity(
 	reviewsFromDbForThatUser: Review[],
 	reviewUserSubmitted: string,
-): Promise<boolean> {
+): boolean {
 	for (const review of reviewsFromDbForThatUser) {
 		const similarityScore: number = reviewSimilarity(
 			review.review,
@@ -65,19 +65,19 @@ export async function checkReviewsForSimilarity(
 }
 
 export async function checkForLandlordSpam(landlord: string): Promise<boolean> {
-	const recentReviews = await sql`
+	const recentReviews: { landlord: string }[] = await sql`
 		SELECT landlord
 		FROM recent_review
 		ORDER BY created_at DESC
 		LIMIT 25;
 	`
 
-	const occurances = recentReviews.filter(
+	const occurrences = recentReviews.filter(
 		(review) =>
 			review.landlord.toLocaleUpperCase() === landlord.toLocaleLowerCase(),
 	).length
 
-	if (occurances >= 5) {
+	if (occurrences >= 5) {
 		return true
 	}
 

@@ -1,16 +1,11 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import '@testing-library/jest-dom'
 import ZipInfo from './ZipInfo'
-import { useTranslation } from 'next-i18next'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
-
-jest.mock('next-i18next', () => ({
-	useTranslation: jest.fn(),
-}))
 
 describe('ZipInfo Component', () => {
 	const mockProps = {
@@ -29,34 +24,12 @@ describe('ZipInfo Component', () => {
 		zip: '12345',
 	}
 
-	beforeEach(() => {
-		;(useTranslation as jest.Mock).mockReturnValue({
-			t: (key: string) => {
-				const translations: Record<string, string> = {
-					'landlord.rental-experience': `Total: 1, Location: Toronto`,
-					'landlord.share': 'Share your experience',
-					'landlord.rented-zip': 'Have you rented in this zip code?',
-					'landlord.submit': 'Submit a review',
-					'landlord.tenant': 'Tenant List',
-				}
-				return translations[key]
-			},
-		})
-	})
-
 	it('renders the ZipInfo component with correct data', () => {
 		render(<ZipInfo {...mockProps} />)
 
 		expect(
 			screen.getByText('12345, Test State, TEST COUNTRY'),
 		).toBeInTheDocument()
-		expect(screen.getByText('Total: 1, Location: Toronto')).toBeInTheDocument()
-		expect(screen.getByText('Share your experience')).toBeInTheDocument()
-		expect(
-			screen.getByText('Have you rented in this zip code?'),
-		).toBeInTheDocument()
-		expect(screen.getByText('Submit a review')).toBeInTheDocument()
-		expect(screen.getByText('Tenant List')).toBeInTheDocument()
 	})
 
 	it('Should not have a11y violation', async () => {

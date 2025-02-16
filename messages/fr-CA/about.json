@@ -3,12 +3,10 @@
 		"about-us": {
 			"about": "À propos",
 			"header": "Il est possible d'évaluer toutes les entreprises et les prestataires de services. Pourquoi le logement et les propriétaires feraient-ils·elle·s exception ?",
-			"info": [
-				"Rate the landlord a été créé dans le but d'offrir aux locataires un outil leur permettant de se tenir informés sur le logement et les propriétaires, de la même manière qu'il est possible de le faire pour n'importe quel·le entreprise ou prestataire service, à travers des avis partagés par la communauté.",
-				"Nous savons que les locataires sont souvent dans le flou lorsqu'il·elle·s signent un bail avec un·e nouveau·elle propriétaire. Cela est contraire aux standards que nous appliquons aux autres types de services, où les avis partagés par les membres de la communauté nous permettent de prendre des décisions éclairées.",
-				"Un secteur aussi important que le logement ne devrait pas faire exception. Évaluer et partager son avis sur les propriétaires, comme il est déjà possible de le faire pour les autres services et entreprises, permet de rendre le marché plus transparent. En partageant leurs expériences de location, les locataires peuvent aider les autres locataires à non seulement éviter des situations de négligeance ou d'harcèlement, mais aussi à trouver des propriétaires qui adoptent de bonnes pratiques et qui se conforment aux réglementations locales.",
-				"Partagez vos expériences, consultez les avis, et surtout, protégeons-nous les un·e·s les autres, restons informé·e·s et donnons-nous les moyens de lutter pour le droit au logement."
-			]
+			"info-1": "Rate the landlord a été créé dans le but d'offrir aux locataires un outil leur permettant de se tenir informés sur le logement et les propriétaires, de la même manière qu'il est possible de le faire pour n'importe quel·le entreprise ou prestataire service, à travers des avis partagés par la communauté.",
+			"info-2": "Nous savons que les locataires sont souvent dans le flou lorsqu'il·elle·s signent un bail avec un·e nouveau·elle propriétaire. Cela est contraire aux standards que nous appliquons aux autres types de services, où les avis partagés par les membres de la communauté nous permettent de prendre des décisions éclairées.",
+			"info-3": "Un secteur aussi important que le logement ne devrait pas faire exception. Évaluer et partager son avis sur les propriétaires, comme il est déjà possible de le faire pour les autres services et entreprises, permet de rendre le marché plus transparent. En partageant leurs expériences de location, les locataires peuvent aider les autres locataires à non seulement éviter des situations de négligeance ou d'harcèlement, mais aussi à trouver des propriétaires qui adoptent de bonnes pratiques et qui se conforment aux réglementations locales.",
+			"info-4": "Partagez vos expériences, consultez les avis, et surtout, protégeons-nous les un·e·s les autres, restons informé·e·s et donnons-nous les moyens de lutter pour le droit au logement."
 		},
 		"privacy": {
 			"privacy": "Politique de confidentialité",
@@ -17,12 +15,10 @@
 		},
 		"moderation": {
 			"moderation": "Politique de modération",
-			"info": [
-				"Les locataires consultent Rate the Landlord pour y trouver des informations sur des propriétaires. Puisque ces informations sont fondés sur les avis de d'autres locataires, nous nous assurons de modérer attentivement les avis soumis afin de garantir que ces-derniers soient pertinents, appropriés et respectent la vie privée des différentes parties.",
-				"Nous interdisons strictement la publication de menaces, de discours haineux, de propos obscènes ou discriminatoires.",
-				"Rate the Landlord accorde une grande importance à la confidentialité. Le nom des propriétaires est utilisé parce qu'ils·elles offrent un service sous ce nom. Cependant, la publication de tout type d'information personnelle liée aux propriétaires, comme l'adresse ou le numéro de téléphone, n'est en aucun cas autoriée.",
-				"Tout avis enfreignant cette politique sera modifié ou supprimé à notre discrétion. Il est à noter que Rate the Landlord reste neutre et n'intervient pas dans les litiges factuels concernant le contenu des avis."
-			]
+			"info-1": "Les locataires consultent Rate the Landlord pour y trouver des informations sur des propriétaires. Puisque ces informations sont fondés sur les avis de d'autres locataires, nous nous assurons de modérer attentivement les avis soumis afin de garantir que ces-derniers soient pertinents, appropriés et respectent la vie privée des différentes parties.",
+			"info-2": "Nous interdisons strictement la publication de menaces, de discours haineux, de propos obscènes ou discriminatoires.",
+			"info-3": "Rate the Landlord accorde une grande importance à la confidentialité. Le nom des propriétaires est utilisé parce qu'ils·elles offrent un service sous ce nom. Cependant, la publication de tout type d'information personnelle liée aux propriétaires, comme l'adresse ou le numéro de téléphone, n'est en aucun cas autoriée.",
+			"info-4": "Tout avis enfreignant cette politique sera modifié ou supprimé à notre discrétion. Il est à noter que Rate the Landlord reste neutre et n'intervient pas dans les litiges factuels concernant le contenu des avis."
 		},
 		"contributing": {
 			"contributing": "Vous voulez contribuez ?",

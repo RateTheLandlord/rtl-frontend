@@ -1,11 +1,11 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import LandlordPage from './LandlordPage'
-import { ILandlordReviews } from '@/lib/review/review'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
 import { axe } from 'jest-axe'
+import { ILandlordReviews } from '@/lib/review/types/Queries'
 
 describe('LandlordPage', () => {
 	const landlord = 'John Doe'

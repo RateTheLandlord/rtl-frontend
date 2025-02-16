@@ -19,7 +19,7 @@ import AddFlaggedKeywordModal from '../components/AddFlaggedKeywordModal'
 import RemoveFlaggedKeywordModal from '../components/RemoveFlaggedKeywordModal'
 
 const FlaggedKeywords = () => {
-	const { data, error, mutate } = useSWR<FlaggedKeywordsResponse>(
+	const { data, error, mutate } = useSWR<FlaggedKeywordsResponse, unknown>(
 		['/api/flagged-keywords/get-flagged-keywords', { limit: '1000' }],
 		fetchWithBody,
 	)
@@ -60,7 +60,7 @@ const FlaggedKeywords = () => {
 				}
 			})
 			.then(() => {
-				mutate()
+				mutate().catch(() => console.error('Failed to Mutute Flagged Keywords'))
 				setAddKeywordOpen(false)
 				toast.success('Success!')
 				resetForm()
@@ -73,7 +73,7 @@ const FlaggedKeywords = () => {
 	}
 
 	const handleMutate = () => {
-		mutate()
+		mutate().catch(() => console.error('Failed to Mutute Flagged Keywords'))
 	}
 	return (
 		<div className='container flex w-full flex-col justify-center'>

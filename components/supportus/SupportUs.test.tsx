@@ -2,18 +2,11 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import Support from './SupportUs'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
-
-// Mock the useTranslation hook
-jest.mock('next-i18next', () => ({
-	useTranslation: () => ({
-		t: (key: string) => key,
-	}),
-}))
 
 describe('Support', () => {
 	it('renders the support us header', () => {

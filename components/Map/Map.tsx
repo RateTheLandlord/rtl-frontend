@@ -5,7 +5,7 @@ import { Map as MapView, Marker } from 'react-map-gl'
 import CustomMarker from './CustomMarker'
 import { getStartingLocation } from '@/util/helpers/getStartingLocation'
 import Information from './Information'
-import { IZipLocations } from '@/lib/location/location'
+import { IZipLocations } from '@/lib/location/types'
 import { useRouter } from 'next/router'
 
 interface MapProps {

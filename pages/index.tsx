@@ -5,7 +5,6 @@ import Testimonials from '@/components/home/testimonials'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export default function Home(): JSX.Element {
 	const title = 'Rate The Landlord'
@@ -60,20 +59,13 @@ export default function Home(): JSX.Element {
 	)
 }
 
-export async function getStaticProps({ locale }) {
+export function getStaticProps({ locale }: { locale: string }) {
 	return {
 		props: {
-			...(await serverSideTranslations(locale, [
-				'about',
-				'alerts',
-				'createreview',
-				'filters',
-				'home',
-				'layout',
-				'landlord',
-				'reviews',
-			])),
-			// Will be passed to the page component as props
+			messages: {
+				...require(`../messages/${locale}/home.json`),
+				...require(`../messages/${locale}/filters.json`),
+			},
 		},
 	}
 }

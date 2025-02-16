@@ -1,4 +1,4 @@
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import { classNames } from '@/util/helpers/helper-functions'
 import RatingStars from '@/components/ui/RatingStars'
 
@@ -32,31 +32,31 @@ const ReviewPreview = ({
 	zip,
 }: IProps) => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { t } = useTranslation('reviews')
+	const t = useTranslations('reviews')
 
 	const ratings = [
 		{
-			title: t('reviews.health'),
+			title: t('health'),
 			rating: health,
 			testid: 'HealthReviewPreviewRating',
 		},
 		{
-			title: t('reviews.respect'),
+			title: t('respect'),
 			rating: respect,
 			testid: 'RespectReviewPreviewRating',
 		},
 		{
-			title: t('reviews.privacy'),
+			title: t('privacy'),
 			rating: privacy,
 			testid: 'PrivacyReviewPreviewRating',
 		},
 		{
-			title: t('reviews.repair'),
+			title: t('repair'),
 			rating: repair,
 			testid: 'RepairReviewPreviewRating',
 		},
 		{
-			title: t('reviews.stability'),
+			title: t('stability'),
 			rating: stability,
 			testid: 'StabilityReviewPreviewRating',
 		},
@@ -115,8 +115,8 @@ const ReviewPreview = ({
 									<p
 										className='w-full'
 										data-testid='ReviewPreviewRent'
-									>{`${t('reviews.rent')}${rent}`}</p>
-									<p className='text-xs'>{t('reviews.local')}</p>
+									>{`${t('rent')}${rent}`}</p>
+									<p className='text-xs'>{t('local')}</p>
 								</div>
 							)}
 						</div>
@@ -124,7 +124,7 @@ const ReviewPreview = ({
 
 					<div className='mt-4 flex h-full flex-col justify-between lg:mt-6 xl:col-span-2 xl:mt-0'>
 						<div>
-							<p>{t('reviews.review')}</p>
+							<p>{t('review')}</p>
 
 							<p
 								className='mt-3 space-y-6 text-sm break-words text-gray-500'

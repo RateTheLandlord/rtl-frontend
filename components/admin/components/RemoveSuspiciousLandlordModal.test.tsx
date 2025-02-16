@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@/test-utils'
 import '@testing-library/jest-dom'
 import RemoveSuspiciousLandlord from './RemoveSuspiciousLandlordModal'
 import { SuspiciousLandlord } from '@/util/interfaces/interfaces'

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render } from '@/test-utils'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import AnalyticsComponent from './analytics'
 import { ISortOptions } from '../reviews/review'

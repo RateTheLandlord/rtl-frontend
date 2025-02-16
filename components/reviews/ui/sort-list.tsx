@@ -1,8 +1,14 @@
 import React, { Fragment } from 'react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-import { Listbox, ListboxButton, Transition } from '@headlessui/react'
+import {
+	Listbox,
+	ListboxButton,
+	ListboxOption,
+	ListboxOptions,
+	Transition,
+} from '@headlessui/react'
 import { SortOptions } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 
 interface ComponentProps {
 	name: string
@@ -17,7 +23,7 @@ export default function SortList({
 	options,
 	name,
 }: ComponentProps) {
-	const { t } = useTranslation('filters')
+	const t = useTranslations('filters')
 	return (
 		<Listbox data-testid='sort-list-test' value={state} onChange={setState}>
 			<div className='px-2'>
@@ -41,9 +47,9 @@ export default function SortList({
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<Listbox.Options className='ring-opacity-5 absolute z-50 mt-1 max-h-60 w-60 overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black focus:outline-none sm:text-sm'>
+					<ListboxOptions className='ring-opacity-5 absolute z-50 mt-1 max-h-60 w-60 overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black focus:outline-none sm:text-sm'>
 						{options.map((option) => (
-							<Listbox.Option
+							<ListboxOption
 								key={option.id}
 								className={({ active }) =>
 									`relative cursor-default py-2 pr-4 pl-10 select-none ${
@@ -67,9 +73,9 @@ export default function SortList({
 										<CheckIcon className='h-5 w-5' aria-hidden='true' />
 									</span>
 								) : null}
-							</Listbox.Option>
+							</ListboxOption>
 						))}
-					</Listbox.Options>
+					</ListboxOptions>
 				</Transition>
 			</div>
 		</Listbox>

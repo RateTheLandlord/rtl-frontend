@@ -1,13 +1,12 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import StateInfo from './StateInfo'
 import { useAppDispatch } from '@/redux/hooks'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import { useTranslation } from 'next-i18next'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
@@ -20,9 +19,6 @@ jest.mock('next/router', () => ({
 }))
 
 jest.mock('swr', () => jest.fn())
-jest.mock('next-i18next', () => ({
-	useTranslation: jest.fn(),
-}))
 
 jest.mock('@/components/city/CitiesTable', () =>
 	jest.fn(() => <div>CitiesTable</div>),
@@ -37,19 +33,6 @@ describe('StateInfo', () => {
 		;(useAppDispatch as jest.Mock)
 			.mockReturnValue(mockDispatch)(useRouter as jest.Mock)
 			.mockReturnValue({ push: mockRouterPush })
-		;(useTranslation as jest.Mock).mockReturnValue({ t: (key: string) => key })
-	})
-
-	it('renders Spinner when data is not available', () => {
-		;(useSWR as jest.Mock).mockReturnValue({ data: null, error: null })
-		render(
-			<StateInfo
-				state='california'
-				country='us'
-				setLocationOpen={mockSetLocationOpen}
-			/>,
-		)
-		expect(screen.getByRole('status')).toBeInTheDocument()
 	})
 
 	it('renders state and country information correctly', () => {
@@ -76,6 +59,17 @@ describe('StateInfo', () => {
 		)
 		expect(screen.getByText('California, US')).toBeInTheDocument()
 		expect(screen.getByText('landlord.rental-experience')).toBeInTheDocument()
+	})
+	it('renders Spinner when data is not available', () => {
+		;(useSWR as jest.Mock).mockReturnValue({ data: null, error: null })
+		render(
+			<StateInfo
+				state='california'
+				country='us'
+				setLocationOpen={mockSetLocationOpen}
+			/>,
+		)
+		expect(screen.getByRole('status')).toBeInTheDocument()
 	})
 
 	it('Should not have a11y violation', async () => {

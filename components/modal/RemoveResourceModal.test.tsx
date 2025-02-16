@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import RemoveResourceModal from './RemoveResourceModal'
 import { toast } from 'react-toastify'

@@ -11,7 +11,7 @@ import {
 import { XIcon } from '@heroicons/react/outline'
 import SearchBar from './ui/searchbar'
 import { Options, IQuery } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import ComboBox from './ui/combobox'
 import { AppDispatch } from '@/redux/store'
 import {
@@ -56,7 +56,7 @@ export default function MobileReviewFilters({
 	fetchDynamicFilterOptions,
 	query,
 }: FiltersProps) {
-	const { t } = useTranslation('reviews')
+	const t = useTranslations('reviews')
 
 	useEffect(() => {
 		fetchDynamicFilterOptions()
@@ -102,9 +102,7 @@ export default function MobileReviewFilters({
 					>
 						<DialogPanel className='relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl'>
 							<div className='flex items-center justify-between px-4'>
-								<h2 className='text-lg text-gray-900'>
-									{t('reviews.filters')}
-								</h2>
+								<h2 className='text-lg text-gray-900'>{t('filters')}</h2>
 								<button
 									type='button'
 									className='-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400'
@@ -129,14 +127,14 @@ export default function MobileReviewFilters({
 										state={cityFilter}
 										setState={(opt: Options) => dispatch(updateCity(opt))}
 										options={dynamicCityOptions}
-										name={t('reviews.city')}
+										name={t('city')}
 									/>
 									{zipOptions && (
 										<ComboBox
 											state={zipFilter}
 											setState={(opt: Options) => dispatch(updateZip(opt))}
 											options={dynamicZipOptions}
-											name={t('reviews.zip')}
+											name={t('zip')}
 										/>
 									)}
 									<div className='flex w-full justify-end gap-2 pt-2'>

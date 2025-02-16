@@ -1,10 +1,10 @@
-import { useTranslation } from 'next-i18next'
 import LinkButtonLG from '../ui/link-button-lg'
 import LinkButtonLightLG from '../ui/link-button-light-lg'
 import { HouseIcon } from '../icons/HouseIcon'
+import { useTranslations } from 'next-intl'
 
 function Hero(): JSX.Element {
-	const { t } = useTranslation('home')
+	const t = useTranslations('home')
 	return (
 		<div
 			data-testid='home-hero-1'

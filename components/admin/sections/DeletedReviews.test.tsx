@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render } from '@testing-library/react'
+import { render } from '@/test-utils'
 import DeletedReviews from './DeletedReviews'
 import { axe } from 'jest-axe'
 

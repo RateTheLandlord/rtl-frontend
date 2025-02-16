@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react'
+import { render } from '@/test-utils'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import AddFlaggedKeywordModal from './AddFlaggedKeywordModal'
 expect.extend(toHaveNoViolations)

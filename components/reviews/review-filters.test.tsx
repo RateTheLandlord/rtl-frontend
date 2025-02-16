@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import ReviewFilters from './review-filters'
 import { IQuery, Options, SortOptions } from '@/util/interfaces/interfaces'
@@ -10,12 +10,6 @@ import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
-
-jest.mock('next-i18next', () => ({
-	useTranslation: () => ({
-		t: (key: string) => key,
-	}),
-}))
 
 const mockProps = {
 	selectedSort: { id: 1, name: 'az', value: 'az' } as SortOptions,

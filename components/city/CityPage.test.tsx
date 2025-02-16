@@ -1,12 +1,12 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import CityPage from './CityPage'
-import { ICityReviews } from '@/lib/review/review'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { axe } from 'jest-axe'
+import { ICityReviews } from '@/lib/review/types/review'
 
 const mockData: ICityReviews = {
 	reviews: [],

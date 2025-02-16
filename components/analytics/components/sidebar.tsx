@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { AnalyticsResponse } from '@/lib/analytics/models/review'
 import RatingStars from '@/components/ui/RatingStars'
+import posthog from 'posthog-js'
+import { AnalyticsResponse } from '@/lib/analytics/types'
 
 interface SidebarProps {
 	data: AnalyticsResponse
@@ -11,6 +12,7 @@ const Sidebar = ({ data, handleClick }: SidebarProps) => {
 	const [isOpen, setIsOpen] = useState(false)
 
 	const toggleSidebar = () => {
+		posthog.capture('analytics_side_bar_toggled', { open: !isOpen })
 		setIsOpen(!isOpen)
 	}
 

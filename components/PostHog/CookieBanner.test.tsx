@@ -2,20 +2,15 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import Banner from './CookieBanner'
 import { usePostHog } from 'posthog-js/react'
-import { useTranslation } from 'next-i18next'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
 jest.mock('posthog-js/react', () => ({
 	usePostHog: jest.fn(),
-}))
-
-jest.mock('next-i18next', () => ({
-	useTranslation: jest.fn(),
 }))
 
 describe('Banner', () => {
@@ -25,16 +20,13 @@ describe('Banner', () => {
 		;(usePostHog as jest.Mock).mockReturnValue({
 			set_config: jest.fn(),
 		})
-		;(useTranslation as jest.Mock).mockReturnValue({
-			t: (key: string) => key,
-		})
 	})
 
 	afterEach(() => {
 		jest.clearAllMocks()
 	})
 
-	it('renders the banner when consent is undecided', () => {
+	it('renders the banner when consent is undecided', async () => {
 		getItemMock.mockReturnValueOnce(null)
 		render(<Banner />)
 
