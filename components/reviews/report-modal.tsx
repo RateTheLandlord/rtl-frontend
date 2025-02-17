@@ -27,32 +27,33 @@ const reportReasons: IReportReason[] = [
 	{
 		id: 1,
 		key: 'address',
-		reason: 'report.address',
+		reason: 'address',
 	},
 	{
 		id: 3,
 		key: 'fake',
-		reason: 'report.fake',
+		reason: 'fake',
 	},
 	{
 		id: 4,
 		key: 'language',
-		reason: 'report.language',
+		reason: 'language',
 	},
 	{
 		id: 5,
 		key: 'sensitive',
-		reason: 'report.sensitive',
+		reason: 'sensitive',
 	},
 	{
 		id: 8,
 		key: 'other',
-		reason: 'report.other',
+		reason: 'other',
 	},
 ]
 
 function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 	const t = useTranslations('reviews')
+	const tr = useTranslations('report')
 	const [reason, setReason] = useState<string>(reportReasons[0].key)
 	const [selectedReason, setSelectedReason] = useState<IReportReason>(
 		reportReasons[0],
@@ -182,7 +183,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 									{reportReasons.map((reason) => {
 										return (
 											<option key={reason.id} value={reason.key}>
-												{t(reason.reason)}
+												{tr(reason.reason)}
 											</option>
 										)
 									})}
