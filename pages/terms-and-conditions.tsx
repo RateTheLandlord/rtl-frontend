@@ -54,3 +54,17 @@ function TermsAndConditions(): JSX.Element {
 }
 
 export default TermsAndConditions
+
+
+export async function getStaticProps({ locale }) {
+	const layoutMessages = (await import(
+		`@/messages/${locale}/layout.json`
+	)) as Record<string, string>
+	return {
+		props: {
+			messages: {
+				...layoutMessages,
+			},
+		},
+	}
+}
