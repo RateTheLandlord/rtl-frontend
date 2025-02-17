@@ -7,23 +7,6 @@ import AddReviewModal from './add-review-modal'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
-jest.mock('react-i18next', () => ({
-	useTranslations: jest.fn().mockReturnValue({
-		t: jest.fn((key) => {
-			if (key === 'create-review.modal.add-review') {
-				return 'Add Review'
-			}
-			if (key === 'create-review.modal.add-review-desc') {
-				return 'Please provide your review.'
-			}
-			if (key === 'create-review.modal.close') {
-				return 'Close'
-			}
-			return ''
-		}),
-	}),
-}))
-
 describe('AddReviewModal component', () => {
 	test('should render the modal when isOpen is true', () => {
 		const setIsOpenMock = jest.fn()

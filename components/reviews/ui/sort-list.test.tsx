@@ -42,7 +42,7 @@ describe('SortList', () => {
 		)
 
 		fireEvent.click(screen.getByLabelText('Select Sort'))
-		fireEvent.click(screen.getByText('filters.option2'))
+		fireEvent.click(screen.getByText('sort.option2'))
 
 		expect(mockSetState).toHaveBeenCalledWith(mockOptions[1])
 	})
@@ -58,7 +58,7 @@ describe('SortList', () => {
 			/>,
 		)
 
-		expect(screen.getByText('filters.option2')).toBeInTheDocument()
+		expect(screen.getByText('sort.option2')).toBeInTheDocument()
 	})
 	it('Should not have a11y violation', async () => {
 		const { container } = render(

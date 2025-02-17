@@ -59,16 +59,16 @@ export default CreateReview
 
 export async function getStaticProps({ locale }: { locale: string }) {
 	const createreviewMessages = (await import(
-		`../messages/${locale}/createreview.json`
+		`@/messages/${locale}/createreview.json`
 	)) as Record<string, string>
 	const alertsMessages = (await import(
-		`../messages/${locale}/alerts.json`
+		`@/messages/${locale}/alerts.json`
 	)) as Record<string, string>
 	const layoutMessages = (await import(
-		`../messages/${locale}/layout.json`
+		`@/messages/${locale}/layout.json`
 	)) as Record<string, string>
 	const filtersMessages = (await import(
-		`../messages/${locale}/filters.json`
+		`@/messages/${locale}/filters.json`
 	)) as Record<string, string>
 	return {
 		props: {

@@ -6,10 +6,6 @@ import LocationForm from './CreateReviewLocationForm'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
-jest.mock('react-i18next', () => ({
-	useTranslations: () => ({ t: (key: string) => key }),
-}))
-
 jest.mock('@/components/ui/button', () =>
 	jest.fn(({ children, ...props }) => <button {...props}>{children}</button>),
 )

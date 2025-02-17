@@ -7,18 +7,6 @@ import Contact from './contact'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
-jest.mock('react-i18next', () => ({
-	useTranslations: jest.fn().mockReturnValue({
-		t: jest.fn().mockImplementation((key) => {
-			if (key === 'contact.title') {
-				return 'Contact Us'
-			} else if (key === 'contact.email') {
-				return 'contact@ratethelandlord.org'
-			}
-		}),
-	}),
-}))
-
 test('renders contact section with title and email', () => {
 	render(<Contact />)
 	const contactSection = screen.getByTestId('about-contact-1')

@@ -62,13 +62,13 @@ export default function SupportUs({ members }): JSX.Element {
 //Page is statically generated at build time and then revalidated at a minimum of every day based on when the page is accessed
 export async function getStaticProps({ locale }) {
 	const supportMessages = (await import(
-		`../messages/${locale}/support.json`
+		`@/messages/${locale}/support.json`
 	)) as Record<string, string>
 	const alertsMessages = (await import(
-		`../messages/${locale}/alerts.json`
+		`@/messages/${locale}/alerts.json`
 	)) as Record<string, string>
 	const layoutMessages = (await import(
-		`../messages/${locale}/layout.json`
+		`@/messages/${locale}/layout.json`
 	)) as Record<string, string>
 
 	const accessToken = process.env.PATREON_ACCESS_TOKEN as string

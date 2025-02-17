@@ -23,7 +23,7 @@ export default function SortList({
 	options,
 	name,
 }: ComponentProps) {
-	const t = useTranslations('filters')
+	const t = useTranslations('sort')
 	return (
 		<Listbox data-testid='sort-list-test' value={state} onChange={setState}>
 			<div className='px-2'>
