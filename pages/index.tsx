@@ -59,12 +59,27 @@ export default function Home(): JSX.Element {
 	)
 }
 
-export function getStaticProps({ locale }: { locale: string }) {
+export async function getStaticProps({ locale }: { locale: string }) {
+	const homeMessages = (await import(
+		`../messages/${locale}/home.json`
+	)) as Record<string, string>
+	const alertsMessages = (await import(
+		`../messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`../messages/${locale}/layout.json`
+	)) as Record<string, string>
+	const filtersMessages = (await import(
+		`../messages/${locale}/filters.json`
+	)) as Record<string, string>
+
 	return {
 		props: {
 			messages: {
-				...require(`../messages/${locale}/home.json`),
-				...require(`../messages/${locale}/filters.json`),
+				...homeMessages,
+				...alertsMessages,
+				...layoutMessages,
+				...filtersMessages,
 			},
 		},
 	}

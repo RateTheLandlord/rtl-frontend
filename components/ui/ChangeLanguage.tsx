@@ -6,17 +6,17 @@ import {
 	ListboxOptions,
 	Transition,
 } from '@headlessui/react'
-import { changeLanguage as CL } from 'i18next'
 import { Fragment } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
 const ChangeLanguage = () => {
 	const router = useRouter()
-	const { locale, locales, asPath } = router // Extract current locale, available locales, and path
+	const { locale, locales, asPath } = router
 
-	const changeLanguage = (newLocale) => {
-		router.push(asPath, asPath, { locale: newLocale }) // Change locale using Next.js routing
-		CL(newLocale)
+	const changeLanguage = (newLocale: string) => {
+		router
+			.push(asPath, asPath, { locale: newLocale })
+			.catch(() => console.error('Unable to change Locale'))
 	}
 
 	return (

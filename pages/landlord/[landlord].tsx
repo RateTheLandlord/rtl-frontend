@@ -3,7 +3,6 @@ import LandlordPage from '@/components/landlord/LandlordPage'
 import Spinner from '@/components/ui/Spinner'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { getLandlordReviews } from '@/lib/review/landlords'
 import { ILandlordReviews } from '@/lib/review/types/Queries'
 
@@ -79,6 +78,22 @@ export async function getStaticProps({
 	locale: string
 	params: { landlord: string }
 }) {
+	const landlordMessages = (await import(
+		`../messages/${locale}/landlord.json`
+	)) as Record<string, string>
+	const alertsMessages = (await import(
+		`../messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`../messages/${locale}/layout.json`
+	)) as Record<string, string>
+	const filtersMessages = (await import(
+		`../messages/${locale}/filters.json`
+	)) as Record<string, string>
+	const reviewsMessages = (await import(
+		`../messages/${locale}/reviews.json`
+	)) as Record<string, string>
+
 	const data = await getLandlordReviews(params.landlord)
 
 	if (!data || data.reviews.length === 0) {
@@ -96,12 +111,13 @@ export async function getStaticProps({
 			JSON.stringify({
 				landlord: params.landlord,
 				data: data,
-				...(await serverSideTranslations(locale, [
-					'filters',
-					'layout',
-					'landlord',
-					'reviews',
-				])),
+				messages: {
+					...alertsMessages,
+					...layoutMessages,
+					...filtersMessages,
+					...landlordMessages,
+					...reviewsMessages,
+				},
 			}),
 		),
 		// Re-generate the page

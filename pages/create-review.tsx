@@ -57,14 +57,26 @@ function CreateReview(): JSX.Element {
 
 export default CreateReview
 
-export function getStaticProps({ locale }: { locale: string }) {
-	console.log(locale)
+export async function getStaticProps({ locale }: { locale: string }) {
+	const createreviewMessages = (await import(
+		`../messages/${locale}/createreview.json`
+	)) as Record<string, string>
+	const alertsMessages = (await import(
+		`../messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`../messages/${locale}/layout.json`
+	)) as Record<string, string>
+	const filtersMessages = (await import(
+		`../messages/${locale}/filters.json`
+	)) as Record<string, string>
 	return {
 		props: {
 			messages: {
-				...require(`../messages/${locale}/createreview.json`),
-				...require(`../messages/${locale}/layout.json`),
-				...require(`../messages/${locale}/reviews.json`),
+				...createreviewMessages,
+				...alertsMessages,
+				...layoutMessages,
+				...filtersMessages,
 			},
 		},
 	}

@@ -38,6 +38,7 @@ export default tseslint.config({
 		'util/countries',
 		'*.mjs',
 		'migrations/*',
+		'.next',
 	],
 	languageOptions: {
 		parserOptions: {

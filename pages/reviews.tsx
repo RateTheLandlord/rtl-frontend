@@ -2,7 +2,6 @@ import { NextSeo } from 'next-seo'
 import React from 'react'
 import { useRouter } from 'next/router'
 import ReviewForm from '@/components/reviews/read-reviews'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export default function Reviews(): JSX.Element {
 	const title = 'Reviews | Rate The Landlord'
@@ -51,14 +50,30 @@ export default function Reviews(): JSX.Element {
 	)
 }
 
-export function getStaticProps({ locale }) {
+export async function getStaticProps({ locale }) {
+	const landlordMessages = (await import(
+		`../messages/${locale}/landlord.json`
+	)) as Record<string, string>
+	const alertsMessages = (await import(
+		`../messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`../messages/${locale}/layout.json`
+	)) as Record<string, string>
+	const filtersMessages = (await import(
+		`../messages/${locale}/filters.json`
+	)) as Record<string, string>
+	const reviewsMessages = (await import(
+		`../messages/${locale}/reviews.json`
+	)) as Record<string, string>
 	return {
 		props: {
 			messages: {
-				...require(`../messages/${locale}/reviews.json`),
-				...require(`../messages/${locale}/filters.json`),
-				...require(`../messages/${locale}/landlord.json`),
-				...require(`../messages/${locale}/layout.json`),
+				...landlordMessages,
+				...alertsMessages,
+				...layoutMessages,
+				...filtersMessages,
+				...reviewsMessages,
 			},
 		},
 	}

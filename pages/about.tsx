@@ -9,7 +9,6 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import Revenue from '@/components/about/revenue'
 import Poster from '@/components/poster/Poster'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 function About(): JSX.Element {
 	const title = 'About | Rate The Landlord'
@@ -70,12 +69,27 @@ function About(): JSX.Element {
 
 export default About
 
-export function getStaticProps({ locale }: { locale: string }) {
+export async function getStaticProps({ locale }: { locale: string }) {
+	const aboutMessages = (await import(
+		`../messages/${locale}/about.json`
+	)) as Record<string, string>
+	const alertsMessages = (await import(
+		`../messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`../messages/${locale}/layout.json`
+	)) as Record<string, string>
+	const filtersMessages = (await import(
+		`../messages/${locale}/filters.json`
+	)) as Record<string, string>
+
 	return {
 		props: {
 			messages: {
-				...require(`../messages/${locale}/about.json`),
-				...require(`../messages/${locale}/layout.json`),
+				...aboutMessages,
+				...alertsMessages,
+				...layoutMessages,
+				...filtersMessages,
 			},
 		},
 	}

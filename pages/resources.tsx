@@ -68,6 +68,18 @@ export default Resources
 
 //Page is statically generated at build time and then revalidated at a minimum of every 30 minutes based on when the page is accessed
 export async function getStaticProps({ locale }) {
+	const resourcesMessages = (await import(
+		`../messages/${locale}/resources.json`
+	)) as Record<string, string>
+	const alertsMessages = (await import(
+		`../messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`../messages/${locale}/layout.json`
+	)) as Record<string, string>
+	const filtersMessages = (await import(
+		`../messages/${locale}/filters.json`
+	)) as Record<string, string>
 	const data = await getResources({})
 	if (data) {
 		return {
@@ -75,9 +87,10 @@ export async function getStaticProps({ locale }) {
 				JSON.stringify({
 					data: data,
 					messages: {
-						...require(`../messages/${locale}/filters.json`),
-						...require(`../messages/${locale}/layout.json`),
-						...require(`../messages/${locale}/resources.json`),
+						...resourcesMessages,
+						...alertsMessages,
+						...layoutMessages,
+						...filtersMessages,
 					},
 				}),
 			),
@@ -87,9 +100,10 @@ export async function getStaticProps({ locale }) {
 		return {
 			props: {
 				messages: {
-					...require(`../messages/${locale}/filters.json`),
-					...require(`../messages/${locale}/layout.json`),
-					...require(`../messages/${locale}/resources.json`),
+					...resourcesMessages,
+					...alertsMessages,
+					...layoutMessages,
+					...filtersMessages,
 				},
 				data: [],
 			},

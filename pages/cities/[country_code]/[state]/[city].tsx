@@ -5,9 +5,9 @@ import Spinner from '@/components/ui/Spinner'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { getCityReviews } from '@/lib/review/city'
 import { ICityQuery } from '@/lib/review/types/Queries'
+import { ICityReviews } from '@/lib/review/types/review'
 
 interface IProps {
 	city: string
@@ -83,7 +83,22 @@ export function getStaticPaths() {
 }
 
 export async function getStaticProps({ locale, params }) {
-	console.log(params)
+	const resourcesMessages = (await import(
+		`../resources/${locale}/home.json`
+	)) as Record<string, string>
+	const alertsMessages = (await import(
+		`../messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`../messages/${locale}/layout.json`
+	)) as Record<string, string>
+	const filtersMessages = (await import(
+		`../messages/${locale}/filters.json`
+	)) as Record<string, string>
+	const reviewsMessages = (await import(
+		`../messages/${locale}/reviews.json`
+	)) as Record<string, string>
+
 	const data = await getCityReviews(params as ICityQuery)
 
 	if (data.reviews.length === 0) {
@@ -103,13 +118,13 @@ export async function getStaticProps({ locale, params }) {
 				state: params.state,
 				country: params.country_code,
 				data: data,
-				...(await serverSideTranslations((locale as string) ?? 'en-CA', [
-					'filters',
-					'resources',
-					'layout',
-					'landlord',
-					'reviews',
-				])),
+				messages: {
+					...resourcesMessages,
+					...alertsMessages,
+					...layoutMessages,
+					...reviewsMessages,
+					...filtersMessages,
+				},
 			}),
 		),
 		// Re-generate the page
