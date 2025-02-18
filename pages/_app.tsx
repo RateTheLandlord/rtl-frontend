@@ -18,6 +18,7 @@ import { useEffect } from 'react'
 import { NextIntlClientProvider } from 'next-intl'
 
 const CAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string
+const ENVIRONMENT = process.env.NEXT_PUBLIC_ENVIRONMENT as string
 
 Router.events.on('routeChangeStart', nProgress.start)
 Router.events.on('routeChangeError', nProgress.done)
@@ -40,7 +41,9 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 				const response = await fetch('/api/cron')
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				const data = await response.json()
-				console.log('Cron status:', data) // Optionally log the status
+				if (ENVIRONMENT !== 'production') {
+					console.log('Cron status:', data) // Optionally log the status
+				}
 			} catch (error) {
 				console.error('Failed to fetch cron status:', error)
 			}
