@@ -3,23 +3,18 @@
  */
 
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
 import { useAppDispatch } from '@/redux/hooks'
 import { updateSearch } from '@/redux/query/querySlice'
 import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
 import Search from './Search'
 import { axe, toHaveNoViolations } from 'jest-axe'
+import { render, screen, fireEvent, waitFor } from '@/test-utils'
 expect.extend(toHaveNoViolations)
 
 jest.mock('next/router', () => ({
 	useRouter: jest.fn(),
-}))
-
-jest.mock('next-i18next', () => ({
-	useTranslation: jest.fn(),
 }))
 
 jest.mock('@/redux/hooks', () => ({
@@ -33,9 +28,6 @@ jest.mock('@/util/hooks/useLandlordSuggestions', () => ({
 describe('Search', () => {
 	const mockPush = jest.fn()
 	const mockDispatch = jest.fn()
-	const mockUseTranslation = jest.fn().mockReturnValue({
-		t: (key) => key,
-	})
 	const mockUseLandlordSuggestions = jest.fn().mockReturnValue({
 		isSearching: false,
 		landlordSuggestions: [],
@@ -43,7 +35,6 @@ describe('Search', () => {
 
 	beforeEach(() => {
 		;(useRouter as jest.Mock).mockReturnValue({ push: mockPush })
-		;(useTranslation as jest.Mock).mockImplementation(mockUseTranslation)
 		;(useAppDispatch as jest.Mock).mockReturnValue(mockDispatch)
 		;(useLandlordSuggestions as jest.Mock).mockImplementation(
 			mockUseLandlordSuggestions,

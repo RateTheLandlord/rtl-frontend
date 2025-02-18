@@ -2,11 +2,11 @@
  * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import '@testing-library/jest-dom'
 import Information from './Information'
 import useSWR from 'swr'
-import { IZipLocations } from '@/lib/location/location'
+import { IZipLocations } from '@/lib/location/types'
 import { Options } from '@/util/interfaces/interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)

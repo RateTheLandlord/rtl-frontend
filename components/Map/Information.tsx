@@ -4,7 +4,7 @@ import { fetchWithBody } from '@/util/helpers/fetcher'
 import Spinner from '../ui/Spinner'
 import { Options } from '@/util/interfaces/interfaces'
 import Link from 'next/link'
-import { IZipLocations } from '@/lib/location/location'
+import { IZipLocations } from '@/lib/location/types'
 
 interface IProps {
 	country: Options | null

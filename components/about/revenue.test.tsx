@@ -2,21 +2,15 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, RenderResult } from '@testing-library/react'
-import { useTranslation } from 'react-i18next'
 import Revenue from './revenue'
 import { axe, toHaveNoViolations } from 'jest-axe'
+import { render, RenderResult } from '@/test-utils'
 expect.extend(toHaveNoViolations)
-
-jest.mock('react-i18next')
 
 describe('Revenue', () => {
 	let renderResult: RenderResult
 
 	beforeEach(() => {
-		const tMock = jest.fn((key: string) => key)
-		;(useTranslation as jest.Mock).mockReturnValue({ t: tMock })
-
 		renderResult = render(<Revenue />)
 	})
 

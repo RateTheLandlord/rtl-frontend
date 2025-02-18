@@ -1,4 +1,4 @@
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import { getStates } from '@/util/countries/combineStates'
 
 interface IProps {
@@ -9,7 +9,7 @@ interface IProps {
 }
 
 const StateSelector = ({ country, value, setValue, noState }: IProps) => {
-	const { t } = useTranslation('createreview')
+	const t = useTranslations('createreview')
 	return (
 		<div className='mx-0.5 sm:col-span-1' data-testid='state-selector'>
 			<label
@@ -18,10 +18,10 @@ const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 				className='block text-sm text-gray-700'
 			>
 				{country === 'GB'
-					? t('create-review.review-form.region')
+					? t('review-form.region')
 					: country === 'IE'
-						? t('create-review.review-form.county')
-						: t('create-review.review-form.state')}
+						? t('review-form.country')
+						: t('review-form.state')}
 			</label>
 			<div className='mt-1'>
 				<select

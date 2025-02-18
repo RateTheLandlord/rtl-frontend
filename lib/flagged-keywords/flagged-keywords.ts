@@ -1,16 +1,7 @@
 import sql from '../db'
 import { Keywords } from '@/util/interfaces/interfaces'
 import { createKeyword } from './models/flagged-keywords-data-layer'
-
-interface IResponse {
-	status: number
-	message: string
-}
-
-interface getFlaggedKeywordsResponse {
-	keywords: Keywords[]
-	total: number
-}
+import { getFlaggedKeywordsResponse, IResponse } from './types'
 
 export async function getFlaggedKeywords(): Promise<getFlaggedKeywordsResponse> {
 	// Fetch Keywords
@@ -19,7 +10,7 @@ export async function getFlaggedKeywords(): Promise<getFlaggedKeywordsResponse> 
 
 	// Fetch Total Number of Landlords
 	const totalResult = await sql`SELECT COUNT(*) as count FROM keyword_flags;`
-	const total = totalResult[0].count
+	const total = totalResult[0].count as number
 
 	// Return object
 	return {

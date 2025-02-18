@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import { Provider } from 'react-redux'
 import ReviewForm from './read-reviews'

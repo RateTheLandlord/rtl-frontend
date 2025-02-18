@@ -5,26 +5,26 @@ import {
 } from '@heroicons/react/outline'
 import Patreon from '../svg/icons/patreon'
 import LinkButtonLightLG from '../ui/link-button-light-lg'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import Poster from '../poster/Poster'
 
 export default function Support() {
-	const { t } = useTranslation('support')
+	const t = useTranslations('support')
 
 	const features = [
 		{
-			name: t('support.features.platform.title'),
-			description: t('support.features.platform.description'),
+			name: t('features.platform.title'),
+			description: t('features.platform.description'),
 			icon: CloudUploadIcon,
 		},
 		{
-			name: t('support.features.maintenance.title'),
-			description: t('support.features.maintenance.description'),
+			name: t('features.maintenance.title'),
+			description: t('features.maintenance.description'),
 			icon: ServerIcon,
 		},
 		{
-			name: t('support.features.community.title'),
-			description: t('support.features.community.description'),
+			name: t('features.community.title'),
+			description: t('features.community.description'),
 			icon: UserGroupIcon,
 		},
 	]
@@ -34,14 +34,12 @@ export default function Support() {
 			<div className='mx-auto max-w-7xl px-6 lg:px-8'>
 				<div className='mx-auto max-w-2xl lg:text-center'>
 					<h2 className='text-base leading-7 text-indigo-600'>
-						{t('support.support-us')}
+						{t('support-us')}
 					</h2>
 					<p className='mt-2 text-3xl text-gray-900 sm:text-4xl'>
-						{t('support.header')}
+						{t('header')}
 					</p>
-					<p className='mt-6 text-lg leading-8 text-gray-600'>
-						{t('support.body-1')}
-					</p>
+					<p className='mt-6 text-lg leading-8 text-gray-600'>{t('body-1')}</p>
 				</div>
 				<Poster />
 				<div className='mx-auto my-16 max-w-2xl sm:my-20 lg:my-24 lg:max-w-4xl'>
@@ -65,12 +63,8 @@ export default function Support() {
 					</dl>
 				</div>
 				<div className='mx-auto max-w-2xl lg:text-center'>
-					<p className='mt-6 text-lg leading-8 text-gray-600'>
-						{t('support.body-2')}
-					</p>
-					<p className='mt-6 text-lg leading-8 text-gray-600'>
-						{t('support.body-3')}
-					</p>
+					<p className='mt-6 text-lg leading-8 text-gray-600'>{t('body-2')}</p>
+					<p className='mt-6 text-lg leading-8 text-gray-600'>{t('body-3')}</p>
 				</div>
 				<div className='mt-10 flex w-full justify-center'>
 					<LinkButtonLightLG href='https://patreon.com/RateTheLandlord?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator&utm_content=join_link'>

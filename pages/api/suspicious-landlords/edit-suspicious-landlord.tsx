@@ -18,7 +18,7 @@ const EditSuspiciousLandlordAPI = async (
 	const user = session?.user
 	await runMiddleware(req, res)
 
-	const { body }: { body: IBody } = req
+	const { body } = req as { body: IBody }
 
 	if (user && user.role === 'ADMIN' && user.admin_id === 'rtl-001') {
 		const edit = await update(body.id, body)

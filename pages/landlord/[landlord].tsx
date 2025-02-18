@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import LandlordPage from '@/components/landlord/LandlordPage'
 import Spinner from '@/components/ui/Spinner'
-import { ILandlordReviews, getLandlordReviews } from '@/lib/review/review'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { getLandlordReviews } from '@/lib/review/landlords'
+import { ILandlordReviews } from '@/lib/review/types/Queries'
 
 interface IProps {
 	landlord: string
@@ -63,14 +64,36 @@ const Landlord = ({ landlord, data }: IProps) => {
 	)
 }
 
-export async function getStaticPaths() {
+export function getStaticPaths() {
 	return {
 		paths: [],
 		fallback: 'blocking',
 	}
 }
 
-export async function getStaticProps({ locale, params }) {
+export async function getStaticProps({
+	locale,
+	params,
+}: {
+	locale: string
+	params: { landlord: string }
+}) {
+	const landlordMessages = (await import(
+		`@/messages/${locale}/landlord.json`
+	)) as Record<string, string>
+	const alertsMessages = (await import(
+		`@/messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`@/messages/${locale}/layout.json`
+	)) as Record<string, string>
+	const filtersMessages = (await import(
+		`@/messages/${locale}/filters.json`
+	)) as Record<string, string>
+	const reviewsMessages = (await import(
+		`@/messages/${locale}/reviews.json`
+	)) as Record<string, string>
+
 	const data = await getLandlordReviews(params.landlord)
 
 	if (!data || data.reviews.length === 0) {
@@ -88,12 +111,13 @@ export async function getStaticProps({ locale, params }) {
 			JSON.stringify({
 				landlord: params.landlord,
 				data: data,
-				...(await serverSideTranslations(locale, [
-					'filters',
-					'layout',
-					'landlord',
-					'reviews',
-				])),
+				messages: {
+					...alertsMessages,
+					...layoutMessages,
+					...filtersMessages,
+					...landlordMessages,
+					...reviewsMessages,
+				},
 			}),
 		),
 		// Re-generate the page

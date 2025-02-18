@@ -2,18 +2,12 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import SortList from './sort-list'
 import { SortOptions } from '@/util/interfaces/interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
-
-jest.mock('next-i18next', () => ({
-	useTranslation: () => ({
-		t: (key: string) => key,
-	}),
-}))
 
 const mockOptions: SortOptions[] = [
 	{ id: 1, name: 'option1', value: 'az' },
@@ -48,7 +42,7 @@ describe('SortList', () => {
 		)
 
 		fireEvent.click(screen.getByLabelText('Select Sort'))
-		fireEvent.click(screen.getByText('option2'))
+		fireEvent.click(screen.getByText('sort.option2'))
 
 		expect(mockSetState).toHaveBeenCalledWith(mockOptions[1])
 	})
@@ -64,7 +58,7 @@ describe('SortList', () => {
 			/>,
 		)
 
-		expect(screen.getByText('option2')).toBeInTheDocument()
+		expect(screen.getByText('sort.option2')).toBeInTheDocument()
 	})
 	it('Should not have a11y violation', async () => {
 		const { container } = render(

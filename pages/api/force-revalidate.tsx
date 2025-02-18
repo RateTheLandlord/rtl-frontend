@@ -1,12 +1,13 @@
 import { runMiddleware } from '@/util/cors'
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-const handler = async (req, res) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res)
 	const session = await getSession(req, res)
 	const user = session?.user
 
-	const path = req.query.path
+	const path = req.query.path as string
 
 	console.log(`/landlord/${encodeURIComponent(path)}`)
 

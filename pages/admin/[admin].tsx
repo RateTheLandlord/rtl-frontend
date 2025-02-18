@@ -175,3 +175,27 @@ function Admin(): JSX.Element {
 }
 
 export default withPageAuthRequired(Admin)
+
+export const getStaticPaths = () => {
+	return {
+		paths: [],
+		fallback: true,
+	}
+}
+
+export async function getStaticProps({ locale }) {
+	const alertsMessages = (await import(
+		`@/messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`@/messages/${locale}/layout.json`
+	)) as Record<string, string>
+	return {
+		props: {
+			messages: {
+				...alertsMessages,
+				...layoutMessages,
+			},
+		},
+	}
+}

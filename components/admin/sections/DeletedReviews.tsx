@@ -36,7 +36,7 @@ const DeletedReviews = () => {
 	if (!reviews) return <Spinner />
 
 	const handleMutate = () => {
-		void mutate()
+		mutate().catch(() => console.error('Failed to Mutate Deleted Reviews'))
 	}
 
 	return (

@@ -1,6 +1,6 @@
 import { XIcon } from '@heroicons/react/solid'
 import React from 'react'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 
 interface SearchProps {
 	setSearchState: (str: string) => void
@@ -13,11 +13,11 @@ export default function SearchBar({
 	searchTitle,
 	value,
 }: SearchProps) {
-	const { t } = useTranslation('filters')
+	const t = useTranslations('filters')
 	return (
 		<div className='mt-1 flex w-full flex-col gap-2'>
 			<label htmlFor='search' className='sr-only'>
-				{t('filters.search')}
+				{t('search')}
 			</label>
 			<div className='relative'>
 				<input
@@ -28,9 +28,7 @@ export default function SearchBar({
 					className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 					value={value}
 					placeholder={
-						searchTitle
-							? searchTitle
-							: `${t('filters.search')} ${t('filters.landlord')}`
+						searchTitle ? searchTitle : `${t('search')} ${t('landlord')}`
 					}
 				/>
 				{value?.length ? (

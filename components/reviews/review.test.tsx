@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import Review from './review'
 import { axe, toHaveNoViolations } from 'jest-axe'
@@ -10,12 +10,6 @@ import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
 expect.extend(toHaveNoViolations)
-
-jest.mock('next-i18next', () => ({
-	useTranslation: () => ({
-		t: (key: string) => key,
-	}),
-}))
 
 jest.mock('@/util/helpers/fetchReviews', () => ({
 	fetchReviews: jest.fn().mockResolvedValue({

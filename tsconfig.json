@@ -42,6 +42,7 @@
 		"**/.vercel",
 		"**/out",
 		"**/migrations/",
-		"**/util/countries"
+		"**/util/countries",
+		".next"
 	]
 }

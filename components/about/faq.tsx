@@ -1,25 +1,25 @@
 import { Disclosure, DisclosurePanel } from '@headlessui/react'
 import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/solid'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 
 const Faq = () => {
-	const { t } = useTranslation('about')
+	const t = useTranslations('about')
 	const faqs = [
 		{
-			question: t('about.faq.anonymous'),
-			answer: t('about.faq.anonymous_description'),
+			question: t('faq.anonymous'),
+			answer: t('faq.anonymous_description'),
 		},
 		{
-			question: t('about.faq.fair'),
-			answer: t('about.faq.fair_description'),
+			question: t('faq.fair'),
+			answer: t('faq.fair_description'),
 		},
 		{
-			question: t('about.faq.help'),
-			answer: t('about.faq.help_description'),
+			question: t('faq.help'),
+			answer: t('faq.help_description'),
 		},
 		{
-			question: t('about.faq.names'),
-			answer: t('about.faq.names_description'),
+			question: t('faq.names'),
+			answer: t('faq.names_description'),
 		},
 	]
 	return (
@@ -27,7 +27,7 @@ const Faq = () => {
 			<div className='mx-auto max-w-7xl px-6 py-8 lg:px-8'>
 				<div className='mx-auto max-w-4xl divide-y divide-gray-900/10'>
 					<h2 className='mt-2 block text-center text-xl leading-8 text-gray-900 sm:text-2xl'>
-						{t('about.faq.faq')}
+						{t('faq.faq')}
 					</h2>
 					<dl className='mt-10 space-y-6 divide-y divide-gray-900/10'>
 						{faqs.map((faq) => (

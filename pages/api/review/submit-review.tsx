@@ -10,7 +10,7 @@ interface IBody {
 }
 
 const SubmitReview = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { body }: { body: IBody } = req
+	const { body } = req as { body: IBody }
 
 	const captcha = await verifyToken(body.captchaToken)
 

@@ -2,18 +2,12 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import ReportModal from './report-modal'
 import { Review } from '@/util/interfaces/interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
-
-jest.mock('next-i18next', () => ({
-	useTranslation: () => ({
-		t: (key: string) => key,
-	}),
-}))
 
 jest.mock('next-recaptcha-v3', () => ({
 	useReCaptcha: () => ({
@@ -89,7 +83,7 @@ describe('ReportModal', () => {
 			/>,
 		)
 
-		fireEvent.change(screen.getByLabelText('report.select-reason'), {
+		fireEvent.change(screen.getByLabelText('reviews.report.select-reason'), {
 			target: { value: 'fake' },
 		})
 

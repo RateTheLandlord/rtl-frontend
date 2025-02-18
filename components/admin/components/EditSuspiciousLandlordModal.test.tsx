@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@/test-utils'
 import EditSuspiciousLandlordModal from './EditSuspiciousLandlordModal'
 import { SuspiciousLandlord } from '@/util/interfaces/interfaces'
 import { toast } from 'react-toastify'

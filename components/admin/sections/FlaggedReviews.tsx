@@ -51,7 +51,7 @@ const FlaggedReviews = () => {
 				}
 			})
 			.then(() => {
-				void mutate()
+				mutate().catch(() => console.error('Failed to Mutute Flagged Reviews'))
 				toast.success('Success!')
 			})
 			.catch((err) => {
@@ -61,7 +61,7 @@ const FlaggedReviews = () => {
 	}
 
 	const handleMutate = () => {
-		void mutate()
+		mutate().catch(() => console.error('Failed to Mutute Flagged Reviews'))
 	}
 
 	return (

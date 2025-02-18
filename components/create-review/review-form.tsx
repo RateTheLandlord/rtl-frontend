@@ -4,7 +4,6 @@ import Button from '../ui/button'
 import MaliciousStringAlert from '../alerts/MaliciousStringAlert'
 import SuccessModal from './success-modal'
 import { postcodeValidator } from 'postcode-validator'
-import { useTranslation } from 'next-i18next'
 import SpamReviewModal from '@/components/create-review/SpamReviewModal'
 import { useLocation } from '@/util/hooks/useLocation'
 import {
@@ -22,9 +21,10 @@ import LocationForm from './components/CreateReviewLocationForm'
 import RatingForm from './components/RatingForm'
 import WrittenReviewForm from './components/WrittenReviewForm'
 import { toast } from 'react-toastify'
+import { useTranslations } from 'next-intl'
 
 function ReviewForm(): JSX.Element {
-	const { t } = useTranslation(['createreview', 'alerts'])
+	const t = useTranslations()
 
 	const [getStarted, setGetStarted] = useState(false)
 	const [landlordOpen, setLandlordOpen] = useState(false)
@@ -183,9 +183,7 @@ function ReviewForm(): JSX.Element {
 	const handleSubmit = async () => {
 		if (landlord.trim().length < 1) {
 			setLandlordValidationError(true)
-			setLandlordValidationText(
-				t('alerts.landlord-validation', { ns: 'alerts' }),
-			)
+			setLandlordValidationText(t('alerts.landlord-validation'))
 			return
 		}
 		if (checkLandlord(landlord.toLocaleUpperCase())) {
@@ -194,7 +192,7 @@ function ReviewForm(): JSX.Element {
 		}
 		if (city.trim().length < 1) {
 			setCityValidationError(true)
-			setCityValidationErrorText(t('alerts.city-validation', { ns: 'alerts' }))
+			setCityValidationErrorText(t('alerts.city-validation'))
 			return
 		}
 		if (review.trim().length < 1) {
@@ -480,7 +478,7 @@ function ReviewForm(): JSX.Element {
 									/>
 								</div>
 								<label htmlFor='terms-1' className='text-sm text-gray-500'>
-									{t('create-review.review-form.disclaimer-1')}
+									{t('createreview.review-form.disclaimer-1')}
 								</label>
 							</div>
 							<div className='mb-2 flex w-full justify-start space-x-2'>
@@ -496,7 +494,7 @@ function ReviewForm(): JSX.Element {
 									/>
 								</div>
 								<label htmlFor='terms-2' className='text-sm text-gray-500'>
-									{t('create-review.review-form.disclaimer-2')}
+									{t('createreview.review-form.disclaimer-2')}
 								</label>
 							</div>
 							<div className='mb-2 flex w-full justify-start space-x-2'>
@@ -512,7 +510,7 @@ function ReviewForm(): JSX.Element {
 									/>
 								</div>
 								<label htmlFor='terms-3' className='text-sm text-gray-500'>
-									{t('create-review.review-form.disclaimer-3')}
+									{t('createreview.review-form.disclaimer-3')}
 								</label>
 							</div>
 
@@ -535,7 +533,7 @@ function ReviewForm(): JSX.Element {
 										// eslint-disable-next-line @typescript-eslint/no-misused-promises
 										onClick={() => handleSubmit()}
 									>
-										{t('create-review.review-form.submit')}
+										{t('createreview.review-form.submit')}
 									</Button>
 								)}
 							</div>

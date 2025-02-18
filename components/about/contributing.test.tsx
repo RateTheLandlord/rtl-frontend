@@ -2,21 +2,16 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, RenderResult } from '@testing-library/react'
-import { useTranslation } from 'react-i18next'
+import { RenderResult } from '@/test-utils'
 import Contributing from './contributing'
 import { axe, toHaveNoViolations } from 'jest-axe'
+import { render } from '@/test-utils'
 expect.extend(toHaveNoViolations)
-
-jest.mock('react-i18next')
 
 describe('Contributing Test Suite', () => {
 	let renderResult: RenderResult
 
 	beforeEach(() => {
-		const tMock = jest.fn((key: string) => key)
-		;(useTranslation as jest.Mock).mockReturnValue({ t: tMock })
-
 		renderResult = render(<Contributing />)
 	})
 

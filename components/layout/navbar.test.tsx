@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import Navbar from './navbar'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
@@ -25,16 +25,10 @@ describe('Navbar', () => {
 	test('renders Navbar component correctly', () => {
 		// Mock the user object with jwt property
 
-		render(
-			<Provider store={store}>
-				<UserProvider>
-					<Navbar />
-				</UserProvider>
-			</Provider>,
-		)
+		render(<Navbar />)
 
 		// Check if the Navbar title is rendered
-		const titleElement = screen.getByText('Rate The Landlord')
+		const titleElement = screen.getByText('layout.nav.title')
 		expect(titleElement).toBeInTheDocument()
 	})
 	it('Should not have a11y violation', async () => {

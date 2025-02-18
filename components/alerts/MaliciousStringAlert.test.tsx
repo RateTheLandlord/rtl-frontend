@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, fireEvent, screen } from '@testing-library/react'
+import { render, fireEvent, screen } from '@/test-utils'
 import MaliciousStringAlert from './MaliciousStringAlert'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
@@ -26,11 +26,7 @@ describe('MaliciousStringAlert Component', () => {
 				setMaliciousAlertOpen={mockSetMaliciousAlertOpen}
 			/>,
 		)
-		expect(
-			screen.getByText(
-				/Warning! We've detected that a link or script in your entry. Please remove or rephrase before submitting./i,
-			),
-		).toBeInTheDocument()
+		expect(screen.getByText('alerts.maliciousString')).toBeInTheDocument()
 	})
 
 	test('has dismiss button with correct role', () => {

@@ -13,7 +13,7 @@ interface IBody {
 const FlagReview = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res)
 
-	const { body }: { body: IBody } = req
+	const { body } = req as { body: IBody }
 
 	const captcha = await verifyToken(body.captchaToken)
 

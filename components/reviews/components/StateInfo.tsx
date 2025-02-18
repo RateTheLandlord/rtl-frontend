@@ -8,7 +8,7 @@ import { fetchWithBody } from '@/util/helpers/fetcher'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import { IStateStats } from '@/lib/review/state-stats'
 
 interface IProps {
@@ -18,7 +18,7 @@ interface IProps {
 }
 
 const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
-	const { t } = useTranslation('landlord')
+	const t = useTranslations('landlord')
 	const router = useRouter()
 	const { data, error } = useSWR<IStateStats, unknown>(
 		['/api/review/state-info', { state, country }],
@@ -42,7 +42,7 @@ const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
 						)}`}
 					</h2>
 					<p className='mt-2 text-gray-700'>
-						{t('landlord.rental-experience', {
+						{t('rental-experience', {
 							total: data.total,
 							location: `${toTitleCase(
 								decodeURIComponent(state),
@@ -61,7 +61,7 @@ const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
 							setLocationOpen(true)
 						}}
 					>
-						{t('landlord.change-location')}
+						{t('change-location')}
 					</Button>
 				</div>
 

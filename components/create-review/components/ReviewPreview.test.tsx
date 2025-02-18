@@ -3,14 +3,8 @@
  */
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import ReviewPreview from './ReviewPreview'
-
-jest.mock('next-i18next', () => ({
-	useTranslation: () => ({
-		t: (key: string) => key, // Mock translation function
-	}),
-}))
 
 describe('ReviewPreview Component', () => {
 	const defaultProps = {

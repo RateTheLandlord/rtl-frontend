@@ -19,7 +19,7 @@ const AddResource = async (req: NextApiRequest, res: NextApiResponse) => {
 	const session = await getSession(req, res)
 	const user = session?.user
 
-	const { body }: { body: IBody } = req
+	const { body } = req as { body: IBody }
 	if (user && user.role === 'ADMIN') {
 		const resource = await create(body)
 

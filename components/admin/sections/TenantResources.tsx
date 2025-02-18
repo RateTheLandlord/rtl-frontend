@@ -20,7 +20,7 @@ import RemoveResourceModal from '@/components/modal/RemoveResourceModal'
 import { toast } from 'react-toastify'
 
 const TenantResources = () => {
-	const { data, error, mutate } = useSWR<ResourceResponse>(
+	const { data, error, mutate } = useSWR<ResourceResponse, unknown>(
 		['/api/tenant-resources/get-resources', { limit: '1000' }],
 		fetchWithBody,
 	)
@@ -82,7 +82,7 @@ const TenantResources = () => {
 				}
 			})
 			.then(() => {
-				mutate()
+				mutate().catch(() => console.error('Failed to Mutute Tenant Resources'))
 				setAddResourceOpen(false)
 				toast.success('Success!')
 				resetForm()
@@ -95,7 +95,7 @@ const TenantResources = () => {
 	}
 
 	const handleMutate = () => {
-		mutate()
+		mutate().catch(() => console.error('Failed to Mutute Tenant Resources'))
 	}
 	return (
 		<div className='container flex w-full flex-col justify-center'>

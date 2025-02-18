@@ -1,9 +1,11 @@
-import { ReviewQuery, getReviews } from '@/lib/review/review'
+import { getReviews } from '@/lib/review/review'
+import { ReviewQuery } from '@/lib/review/types/Queries'
 import rateLimitMiddleware from '@/util/rateLimit'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const getReviewsAPI = async (req: NextApiRequest, res: NextApiResponse) => {
-	const queryParams: ReviewQuery = req.body.queryParams || {}
+	const queryParams: ReviewQuery =
+		(req.body as { queryParams: ReviewQuery }).queryParams || {}
 
 	const reviews = await getReviews(queryParams)
 

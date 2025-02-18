@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import Support from '@/components/supportus/SupportUs'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { getMemberData, getTierData } from '@/util/helpers/patreon'
+import { getMemberData, getTierData, PatreonData } from '@/util/helpers/patreon'
 import Supporters from '@/components/supportus/Supporters'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export default function SupportUs({ members }): JSX.Element {
 	const title = 'Support Us | Rate The Landlord'
@@ -16,8 +17,8 @@ export default function SupportUs({ members }): JSX.Element {
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
 
-	const memberData = getMemberData(members)
-	const tierData = getTierData(members)
+	const memberData = getMemberData(members as PatreonData)
+	const tierData = getTierData(members as PatreonData)
 
 	return (
 		<div>
@@ -60,6 +61,16 @@ export default function SupportUs({ members }): JSX.Element {
 
 //Page is statically generated at build time and then revalidated at a minimum of every day based on when the page is accessed
 export async function getStaticProps({ locale }) {
+	const supportMessages = (await import(
+		`@/messages/${locale}/support.json`
+	)) as Record<string, string>
+	const alertsMessages = (await import(
+		`@/messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`@/messages/${locale}/layout.json`
+	)) as Record<string, string>
+
 	const accessToken = process.env.PATREON_ACCESS_TOKEN as string
 
 	const campaignId = await fetch(
@@ -75,6 +86,7 @@ export async function getStaticProps({ locale }) {
 			return res.json()
 		})
 		.then((data) => {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 			return data.data[0].id
 		})
 		.catch((err) => console.log('Error: ', err))
@@ -98,7 +110,11 @@ export async function getStaticProps({ locale }) {
 
 	return {
 		props: {
-			...(await serverSideTranslations(locale, ['support', 'layout'])),
+			messages: {
+				...supportMessages,
+				...alertsMessages,
+				...layoutMessages,
+			},
 			members: members,
 		},
 		revalidate: 86400,

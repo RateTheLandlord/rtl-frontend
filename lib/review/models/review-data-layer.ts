@@ -1,8 +1,7 @@
-import { FAILED_TO_RETRIEVE_REVIEWS } from '@/lib/auth/constants'
 import { IResult } from '../helpers'
 import sql from '@/lib/db'
-import { ReviewResponseStatus } from '@/lib/review/models/review'
 import { Review } from '@/util/interfaces/interfaces'
+import { ReviewResponseStatus } from '../types/Responses'
 
 /**
  * Data service layer for the reviews service of our backend.
@@ -52,19 +51,6 @@ export async function createReview(
 	} catch (e) {
 		console.error('Error Creating Review')
 		throw e
-	}
-}
-
-export async function getExistingReviewsForLandlord(
-	inputReview: Review,
-): Promise<Review[]> {
-	try {
-		return await sql<Review[]>`SELECT REVIEW
-        FROM review
-        WHERE landlord = ${inputReview.landlord.toLocaleUpperCase()}
-          AND ZIP = ${inputReview.zip.toLocaleUpperCase()};`
-	} catch {
-		throw new Error(FAILED_TO_RETRIEVE_REVIEWS)
 	}
 }
 

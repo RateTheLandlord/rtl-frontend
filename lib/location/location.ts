@@ -1,11 +1,6 @@
 import { Options } from '@/util/interfaces/interfaces'
 import sql from '../db'
-
-export interface IZipLocations {
-	zip: string
-	latitude: string
-	longitude: string
-}
+import { IZipLocations } from './types'
 
 export async function getLocations(
 	zipCodes: Options[],
@@ -38,7 +33,7 @@ export async function getLocations(
 					`
 
 			// Transform the result to match the IZipLocations type
-			const locations: IZipLocations[] = await result.map(
+			const locations: IZipLocations[] = result.map(
 				(row: { zip: string; latitude: string; longitude: string }) => ({
 					zip: row.zip,
 					latitude: row.latitude,
@@ -46,7 +41,7 @@ export async function getLocations(
 				}),
 			)
 
-			return await locations
+			return locations
 		} else {
 			// Execute the query
 			const result: {
@@ -66,7 +61,7 @@ export async function getLocations(
 				longitude: row.longitude,
 			}))
 
-			return await locations
+			return locations
 		}
 	} catch (err) {
 		console.error('Error querying database:', err)

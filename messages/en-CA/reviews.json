@@ -25,7 +25,9 @@
 			"description": "Think this review should be removed or altered?",
 			"reason": "Reason",
 			"cancel": "Cancel",
-			"submit": "Submit"
+			"submit": "Submit",
+			"select-reason": "Select a reason",
+			"limit": "Limit of 250 Characters: {total}/250"
 		},
 		"rent": "Rent Amount: $",
 		"local": "In local currency",
@@ -49,7 +51,7 @@
 		"sensitive": "This review contains sensitive information",
 		"other": "Other",
 		"select-reason": "Select a reason",
-		"limit": "Limit of 250 Characters: {{total}}/250"
+		"limit": "Limit of 250 Characters: {total}/250"
 	},
 	"analytics": {
 		"avg-rating": "Avg. Rating",

@@ -2,7 +2,6 @@ import ReviewForm from '@/components/create-review/review-form'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 function CreateReview(): JSX.Element {
 	const title = 'Create Review | Rate The Landlord'
@@ -58,15 +57,27 @@ function CreateReview(): JSX.Element {
 
 export default CreateReview
 
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale }: { locale: string }) {
+	const createreviewMessages = (await import(
+		`@/messages/${locale}/createreview.json`
+	)) as Record<string, string>
+	const alertsMessages = (await import(
+		`@/messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`@/messages/${locale}/layout.json`
+	)) as Record<string, string>
+	const filtersMessages = (await import(
+		`@/messages/${locale}/filters.json`
+	)) as Record<string, string>
 	return {
 		props: {
-			...(await serverSideTranslations(locale, [
-				'createreview',
-				'layout',
-				'reviews',
-			])),
-			// Will be passed to the page component as props
+			messages: {
+				...createreviewMessages,
+				...alertsMessages,
+				...layoutMessages,
+				...filtersMessages,
+			},
 		},
 	}
 }

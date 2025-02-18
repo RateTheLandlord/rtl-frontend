@@ -1,17 +1,6 @@
-import { AnalyticsChartResponse, AnalyticsResponse } from './models/review'
 import sql from '../db'
 import { AnalyticsResponseInterface } from '@/util/interfaces/interfaces'
-
-interface ReviewQuery {
-	page?: number
-	limit?: number
-	search?: string
-	sort?: 'az' | 'za' | 'new' | 'old' | 'high' | 'low'
-	state?: string
-	country?: string
-	city?: string
-	zip?: string
-}
+import { ReviewQuery, AnalyticsChartResponse, AnalyticsResponse } from './types'
 
 export async function getTrailingReviews(
 	params: ReviewQuery,
@@ -54,7 +43,7 @@ export async function getTrailingReviews(
 	WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 	AND date_added >= ${ninetyDays}`
 
-	const avgT90 = Math.round(avgRatingT90[0].combined_avg)
+	const avgT90 = Math.round(avgRatingT90[0].combined_avg as number)
 
 	const avgRatingT180 = await sql`
 	SELECT 
@@ -63,7 +52,7 @@ export async function getTrailingReviews(
 	WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 	AND date_added >= ${oneHundredEightyDays}`
 
-	const avgT180 = Math.round(avgRatingT180[0].combined_avg)
+	const avgT180 = Math.round(avgRatingT180[0].combined_avg as number)
 
 	const avgRatingT365 = await sql`
 	SELECT 
@@ -72,7 +61,7 @@ export async function getTrailingReviews(
 	WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 	AND date_added >= ${threeHunderedSixtyFiveDays}`
 
-	const avgT365 = Math.round(avgRatingT365[0].combined_avg)
+	const avgT365 = Math.round(avgRatingT365[0].combined_avg as number)
 
 	const medianRentT90 = await sql`
 	SELECT 
@@ -82,7 +71,7 @@ export async function getTrailingReviews(
 	AND date_added >= ${ninetyDays}
 	AND rent > 0`
 
-	const medianT90 = Math.round(medianRentT90[0].median_rent)
+	const medianT90 = Math.round(medianRentT90[0].median_rent as number)
 
 	const medianRentT180 = await sql`
 	SELECT 
@@ -92,7 +81,7 @@ export async function getTrailingReviews(
 	AND date_added >= ${oneHundredEightyDays}
 	AND rent > 0`
 
-	const medianT180 = Math.round(medianRentT180[0].median_rent)
+	const medianT180 = Math.round(medianRentT180[0].median_rent as number)
 
 	const medianRentT365 = await sql`
 	SELECT 
@@ -102,7 +91,7 @@ export async function getTrailingReviews(
 	AND date_added >= ${threeHunderedSixtyFiveDays}
 	AND rent > 0`
 
-	const medianT365 = Math.round(medianRentT365[0].median_rent)
+	const medianT365 = Math.round(medianRentT365[0].median_rent as number)
 
 	// Return AnalyticsResponse object
 	return {

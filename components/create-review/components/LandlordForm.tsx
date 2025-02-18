@@ -1,7 +1,7 @@
 import LandlordComboBox from './LandlordComboBox'
-import { useTranslation } from 'next-i18next'
 import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
 import Button from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
 	landlordOpen: boolean
@@ -24,7 +24,7 @@ const LandlordForm = ({
 	landlordValidationError,
 	landlordValidationText,
 }: IProps) => {
-	const { t } = useTranslation('createreview')
+	const t = useTranslations('createreview')
 
 	const {
 		isSearching,
@@ -34,7 +34,7 @@ const LandlordForm = ({
 	return !landlordOpen && !landlordValidationError ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
 			<div className='flex flex-col gap-2'>
-				<p className='text-xs'>{t('create-review.landlord-form.title')}</p>
+				<p className='text-xs'>{t('landlord-form.title')}</p>
 				<p className='text-md'>{landlord}</p>
 			</div>
 			<div>
@@ -43,7 +43,7 @@ const LandlordForm = ({
 						setLandlordOpen(true)
 					}}
 				>
-					{t('create-review.edit')}
+					{t('edit')}
 				</Button>
 			</div>
 		</div>
@@ -51,14 +51,14 @@ const LandlordForm = ({
 		<div data-testid='LandlordForm-component'>
 			<div>
 				<h2 className='text-base leading-7 font-semibold text-gray-900'>
-					{t('create-review.landlord-form.title')}
+					{t('landlord-form.title')}
 				</h2>
 				<p className='mt-1 text-sm leading-6 text-gray-600'>
-					{t('create-review.landlord-form.body')}
+					{t('landlord-form.body')}
 				</p>
 			</div>
 			<LandlordComboBox
-				name={t('create-review.review-form.landlord')}
+				name={t('review-form.landlord')}
 				state={landlord}
 				setState={setLandlordName}
 				suggestions={landlordSuggestions}
@@ -75,7 +75,7 @@ const LandlordForm = ({
 						setLandlordOpen(false)
 					}}
 				>
-					{t('create-review.continue')}
+					{t('continue')}
 				</Button>
 			</div>
 		</div>

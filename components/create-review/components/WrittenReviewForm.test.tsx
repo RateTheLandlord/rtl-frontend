@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@/test-utils'
 import WrittenReviewForm from './WrittenReviewForm'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
@@ -19,15 +19,6 @@ jest.mock('@/components/ui/LargeTextInput', () =>
 		/>
 	)),
 )
-
-jest.mock('react-i18next', () => ({
-	useTranslation: () => ({
-		t: (key: string, options?: { length?: number }) =>
-			key === 'create-review.review-form.limit'
-				? `Limit ${options?.length}/2000`
-				: key,
-	}),
-}))
 
 describe('WrittenReviewForm Component', () => {
 	const mockSetReviewOpen = jest.fn()
@@ -50,16 +41,16 @@ describe('WrittenReviewForm Component', () => {
 		render(<WrittenReviewForm {...defaultProps} />)
 
 		expect(
-			screen.getByText('create-review.written-review.title'),
+			screen.getByText('createreview.written-review.title'),
 		).toBeInTheDocument()
 		expect(screen.getByText('This is a test review.')).toBeInTheDocument()
-		expect(screen.getByText('create-review.edit')).toBeInTheDocument()
+		expect(screen.getByText('createreview.edit')).toBeInTheDocument()
 	})
 
 	it('should call setReviewOpen(true) when Edit button is clicked', () => {
 		render(<WrittenReviewForm {...defaultProps} />)
 
-		fireEvent.click(screen.getByText('create-review.edit'))
+		fireEvent.click(screen.getByText('createreview.edit'))
 		expect(mockSetReviewOpen).toHaveBeenCalledWith(true)
 	})
 
@@ -67,11 +58,11 @@ describe('WrittenReviewForm Component', () => {
 		render(<WrittenReviewForm {...defaultProps} reviewOpen={true} />)
 
 		expect(
-			screen.getByText('create-review.written-review.policy-1'),
+			screen.getByText('createreview.written-review.policy-1'),
 		).toBeInTheDocument()
 		expect(screen.getByRole('textbox')).toBeInTheDocument()
 		expect(
-			screen.getByText('create-review.written-review.preview-review'),
+			screen.getByText('createreview.written-review.preview-review'),
 		).toBeInTheDocument()
 	})
 
@@ -91,7 +82,7 @@ describe('WrittenReviewForm Component', () => {
 		render(<WrittenReviewForm {...defaultProps} reviewOpen={true} />)
 
 		fireEvent.click(
-			screen.getByText('create-review.written-review.preview-review'),
+			screen.getByText('createreview.written-review.preview-review'),
 		)
 		expect(mockSetShowPreview).toHaveBeenCalledWith(true)
 		expect(mockSetReviewOpen).toHaveBeenCalledWith(false)
@@ -101,7 +92,7 @@ describe('WrittenReviewForm Component', () => {
 		render(<WrittenReviewForm {...defaultProps} reviewOpen={true} review='' />)
 
 		expect(
-			screen.getByText('create-review.written-review.preview-review'),
+			screen.getByText('createreview.written-review.preview-review'),
 		).toBeDisabled()
 	})
 	it('Should not have a11y violation', async () => {

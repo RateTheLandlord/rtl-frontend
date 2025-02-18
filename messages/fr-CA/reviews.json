@@ -25,7 +25,9 @@
 			"description": "Vous pensez que cet avis devrais être supprimé ou modifié ?",
 			"reason": "Raison",
 			"cancel": "Annuler",
-			"submit": "Soumettre"
+			"submit": "Soumettre",
+			"select-reason": "Sélectionnez une raison",
+			"limit": "Limite de 250 caractères : {total}/250"
 		},
 		"rent": "Montant du loyer: $",
 		"local": "En devise locale",
@@ -49,7 +51,7 @@
 		"sensitive": "Cet avis contient des informations sensibles",
 		"other": "Autre",
 		"select-reason": "Sélectionnez une raison",
-		"limit": "Limite de 250 caractères : {{total}}/250"
+		"limit": "Limite de 250 caractères : {total}/250"
 	},
 	"analytics": {
 		"avg-rating": "Note moyenne",

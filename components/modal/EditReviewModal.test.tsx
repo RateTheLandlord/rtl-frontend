@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import EditReviewModal from './EditReviewModal'
 import { store } from '@/redux/store'
 import { Provider } from 'react-redux'

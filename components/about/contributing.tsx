@@ -1,15 +1,15 @@
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 
 const Contributing = () => {
-	const { t } = useTranslation('about')
+	const t = useTranslations('about')
 	return (
 		<div data-testid='about-contributing-1' className='w-full bg-white'>
 			<div className='mx-auto max-w-7xl px-6 text-lg lg:px-8'>
 				<h3 className='mt-2 block text-center text-xl leading-8 text-gray-900 sm:text-2xl'>
-					{t('about.contributing.contributing')}
+					{t('contributing.contributing')}
 				</h3>
 				<p className='mt-8 text-xl leading-8 text-gray-500'>
-					{t('about.contributing.info')}
+					{t('contributing.info')}
 				</p>
 			</div>
 		</div>

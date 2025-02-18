@@ -4,7 +4,7 @@ import TextInput from '@/components/ui/TextInput'
 import CityComboBox from './CityComboBox'
 import CountrySelector from '@/components/ui/CountrySelector'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
 	locationOpen: boolean
@@ -49,11 +49,11 @@ const LocationForm = ({
 	setRatingsOpen,
 	setShowRatingForm,
 }: IProps) => {
-	const { t } = useTranslation('createreview')
+	const t = useTranslations('createreview')
 	return !locationOpen ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
 			<div className='flex flex-col gap-2'>
-				<p className='text-xs'>{t('create-review.location-form.title')}</p>
+				<p className='text-xs'>{t('location-form.title')}</p>
 				<p className='text-md'>{`${city}, ${province}, ${country}${
 					isIreland ? '' : `, ${postal}`
 				}${rent ? ` - $${rent}` : ''}`}</p>
@@ -64,7 +64,7 @@ const LocationForm = ({
 						setLocationOpen(true)
 					}}
 				>
-					{t('create-review.edit')}
+					{t('edit')}
 				</Button>
 			</div>
 		</div>
@@ -72,14 +72,14 @@ const LocationForm = ({
 		<div data-testid='LocationForm-component'>
 			<div>
 				<h2 className='text-base leading-7 font-semibold text-gray-900'>
-					{t('create-review.location-form.title')}
+					{t('location-form.title')}
 				</h2>
 			</div>
 			<div className='grid w-full grid-cols-2 gap-3 overflow-hidden'>
 				<CountrySelector setValue={setCountry} />
 
 				<CityComboBox
-					name={t('create-review.review-form.city')}
+					name={t('review-form.city')}
 					state={city}
 					setState={setCityName}
 					options={locations}
@@ -96,12 +96,12 @@ const LocationForm = ({
 				{isIreland ? null : (
 					<TextInput
 						id='postal-code'
-						title={t('create-review.review-form.zip')}
-						placeHolder={t('create-review.review-form.zip')}
+						title={t('review-form.zip')}
+						placeHolder={t('review-form.zip')}
 						value={postal}
 						setValue={(str: string) => handleTextChange(str, 'postal')}
 						error={postalError}
-						errorText={t('create-review.review-form.postal-error')}
+						errorText={t('review-form.postal-error')}
 						testid='create-review-form-postal-code-1'
 					/>
 				)}
@@ -109,8 +109,8 @@ const LocationForm = ({
 					id='rent'
 					data-testid='rent-textinput'
 					type='number'
-					title={t('create-review.review-form.rent')}
-					placeHolder={t('create-review.review-form.rent')}
+					title={t('review-form.rent')}
+					placeHolder={t('review-form.rent')}
 					value={rent}
 					setValue={(str: string) => handleTextChange(str, 'rent')}
 					testid='create-review-form-rent-1'
@@ -129,7 +129,7 @@ const LocationForm = ({
 						setRatingsOpen(true)
 					}}
 				>
-					{t('create-review.continue')}
+					{t('continue')}
 				</Button>
 			</div>
 		</div>

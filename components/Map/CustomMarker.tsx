@@ -1,4 +1,4 @@
-import { IZipLocations } from '@/lib/location/location'
+import { IZipLocations } from '@/lib/location/types'
 
 interface IProps {
 	location: IZipLocations | null

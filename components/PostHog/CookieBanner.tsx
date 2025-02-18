@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { usePostHog } from 'posthog-js/react'
 import Link from 'next/link'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 
 export function cookieConsentGiven() {
 	if (!localStorage.getItem('cookie_consent')) {
@@ -13,7 +13,7 @@ export function cookieConsentGiven() {
 }
 
 export default function Banner() {
-	const { t } = useTranslation('alerts')
+	const t = useTranslations('cookie')
 	const [consentGiven, setConsentGiven] = useState<string | null>('')
 	const posthog = usePostHog()
 
@@ -32,11 +32,13 @@ export default function Banner() {
 	}, [consentGiven, posthog])
 
 	const handleAcceptCookies = () => {
+		posthog.capture('cookies_accepted')
 		localStorage.setItem('cookie_consent', 'yes')
 		setConsentGiven('yes')
 	}
 
 	const handleDeclineCookies = () => {
+		posthog.capture('cookies_declined')
 		localStorage.setItem('cookie_consent', 'no')
 		setConsentGiven('no')
 	}
@@ -47,14 +49,14 @@ export default function Banner() {
 				<div className='font-montserrat-regular pointer-events-none fixed inset-x-0 bottom-0 px-6 pb-6'>
 					<div className='pointer-events-auto ml-auto max-w-xl rounded-xl bg-white p-6 ring-1 shadow-lg ring-gray-900/10'>
 						<p className='text-sm leading-6 text-gray-900'>
-							{t('cookie.body-1')}
+							{t('body-1')}
 							<Link
 								href='/privacy-policy'
 								className='font-semibold text-indigo-600'
 							>
-								{t('cookie.privacy')}
+								{t('privacy')}
 							</Link>
-							{t('cookie.body-2')}
+							{t('body-2')}
 						</p>
 						<div className='mt-4 flex items-center gap-x-5'>
 							<button
@@ -62,7 +64,7 @@ export default function Banner() {
 								type='button'
 								onClick={handleAcceptCookies}
 							>
-								{t('cookie.accept')}
+								{t('accept')}
 							</button>
 							<span> </span>
 							<button
@@ -70,7 +72,7 @@ export default function Banner() {
 								type='button'
 								onClick={handleDeclineCookies}
 							>
-								{t('cookie.decline')}
+								{t('decline')}
 							</button>
 						</div>
 					</div>

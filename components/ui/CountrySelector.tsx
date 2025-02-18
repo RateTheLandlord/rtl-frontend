@@ -1,4 +1,4 @@
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import { country_codes } from '@/util/helpers/getCountryCodes'
 import countries from '@/util/countries/countries.json'
 
@@ -7,11 +7,11 @@ interface IProps {
 }
 
 const CountrySelector = ({ setValue }: IProps) => {
-	const { t } = useTranslation('createreview')
+	const t = useTranslations('createreview')
 	return (
 		<div className='mx-0.5 sm:col-span-1'>
 			<label htmlFor='country' className='block text-sm text-gray-700'>
-				{t('create-review.review-form.country')}
+				{t('review-form.country')}
 			</label>
 			<div className='mt-1'>
 				<select

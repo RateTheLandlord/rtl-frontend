@@ -1,27 +1,9 @@
 import dayjs from 'dayjs'
 import sql from '../db'
+import { DetailedStats, StatsQuery, TotalStats } from './types'
+import { Row, RowList } from 'postgres'
 
-interface StatsQuery {
-	startDate?: string
-	groupBy?: string
-}
-
-interface DetailedStats {
-	date: string
-	country_codes: Record<string, number>
-	cities: Record<string, number>
-	state: Record<string, number>
-	zip: Record<string, number>
-	total?: number
-}
-
-interface TotalStats {
-	total_reviews: number
-	countryStats: Record<
-		string,
-		{ total: number; states: { key: string; total: number }[] }
-	>
-}
+// TODO Properly Type this file
 
 export async function get({ startDate, groupBy }: StatsQuery): Promise<{
 	detailed_stats: DetailedStats[]
@@ -36,12 +18,12 @@ export async function get({ startDate, groupBy }: StatsQuery): Promise<{
 
 	const reviewsStatistics = await getReviewStatistics(dateRange)
 	const reviewByDate = await getReviewByDate(dateRange)
-	const formattedReviews = reviewsStatistics.map((row) => ({
-		date: row.date,
-		country_codes: row.country_codes || {},
-		cities: row.cities || {},
-		state: row.states || {},
-		zip: row.zips || {},
+	const formattedReviews = reviewsStatistics.map((row: Row) => ({
+		date: row.date as string,
+		country_codes: (row.country_codes as Record<string, number>) || {},
+		cities: (row.cities as Record<string, number>) || {},
+		state: (row.states as Record<string, number>) || {},
+		zip: (row.zips as Record<string, number>) || {},
 	}))
 
 	const detailed_stats =
@@ -57,7 +39,7 @@ export async function get({ startDate, groupBy }: StatsQuery): Promise<{
 	return { detailed_stats, total_stats }
 }
 
-async function getReviewStatistics(dateRange: string) {
+async function getReviewStatistics(dateRange: string): Promise<RowList<Row[]>> {
 	return await sql`
 	WITH ReviewStats AS (
 	  SELECT

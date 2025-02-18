@@ -4,14 +4,8 @@
 
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@/test-utils'
 import ReviewHero from './CreateReviewHero'
-
-jest.mock('next-i18next', () => ({
-	useTranslation: () => ({
-		t: (key: string) => key, // Mock translation function
-	}),
-}))
 
 describe('ReviewHero Component', () => {
 	let setGetStartedMock: jest.Mock
@@ -35,8 +29,8 @@ describe('ReviewHero Component', () => {
 		expect(screen.getByTestId('ReviewHero-component')).toBeInTheDocument()
 
 		// Check if the hero title and body text are displayed
-		expect(screen.getByText('create-review.hero.title')).toBeInTheDocument()
-		expect(screen.getByText('create-review.hero.body')).toBeInTheDocument()
+		expect(screen.getByText('createreview.hero.title')).toBeInTheDocument()
+		expect(screen.getByText('createreview.hero.body')).toBeInTheDocument()
 
 		// Check if the HouseIcon is present
 		expect(screen.getByTestId('HouseIcon-component')).toBeInTheDocument()
@@ -59,7 +53,7 @@ describe('ReviewHero Component', () => {
 
 		// "Get Started" button should not be in the document
 		expect(
-			screen.queryByRole('button', { name: 'create-review.hero.start' }),
+			screen.queryByRole('button', { name: 'createreview.hero.start' }),
 		).not.toBeInTheDocument()
 	})
 

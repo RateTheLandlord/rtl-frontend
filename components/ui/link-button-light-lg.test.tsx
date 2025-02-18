@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render } from '@/test-utils'
 import LinkButtonLightLG from './link-button-light-lg'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)

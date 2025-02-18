@@ -4,16 +4,7 @@ import {
 	createLandlord,
 	updateLandlord,
 } from './models/suspicious-landlord-data-layer'
-
-interface IResponse {
-	status: number
-	message: string
-}
-
-interface GetSuspiciousLandlordResponse {
-	landlords: SuspiciousLandlord[]
-	total: number
-}
+import { GetSuspiciousLandlordResponse, IResponse } from './types'
 
 export async function getSuspiciousLandlords(): Promise<GetSuspiciousLandlordResponse> {
 	// Fetch Landlords
@@ -22,7 +13,7 @@ export async function getSuspiciousLandlords(): Promise<GetSuspiciousLandlordRes
 
 	// Fetch Total Number of Landlords
 	const totalResult = await sql`SELECT COUNT(*) as count FROM spam_landlords;`
-	const total = totalResult[0].count
+	const total = totalResult[0].count as number
 
 	// Return object
 	return {

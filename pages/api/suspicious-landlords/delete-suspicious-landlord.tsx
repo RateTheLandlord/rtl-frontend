@@ -12,7 +12,7 @@ const deleteLandlordAPI = async (req: NextApiRequest, res: NextApiResponse) => {
 	const session = await getSession(req, res)
 	const user = session?.user
 
-	const { body }: { body: IBody } = req
+	const { body } = req as { body: IBody }
 
 	const id = body.id
 

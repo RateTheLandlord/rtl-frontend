@@ -9,7 +9,7 @@ const EditReview = async (req: NextApiRequest, res: NextApiResponse) => {
 	const user = session?.user
 	await runMiddleware(req, res)
 
-	const { body }: { body: Review } = req
+	const { body } = req as { body: Review }
 
 	const id = body.id
 

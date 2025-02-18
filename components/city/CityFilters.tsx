@@ -1,6 +1,5 @@
 import React from 'react'
 import { Options, SortOptions } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'next-i18next'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { clearFilters, updateSearch, updateZip } from '@/redux/query/querySlice'
 import ButtonLight from '../ui/button-light'
@@ -8,6 +7,7 @@ import Spinner from '../ui/Spinner'
 import SearchBar from '../reviews/ui/searchbar'
 import SortList from '../reviews/ui/sort-list'
 import ComboBox from '../reviews/ui/combobox'
+import { useTranslations } from 'next-intl'
 
 //Review filters and Logic
 
@@ -34,7 +34,7 @@ function CityFilters({
 	updateParams,
 	loading,
 }: FiltersProps): JSX.Element {
-	const { t } = useTranslation('reviews')
+	const t = useTranslations('reviews')
 
 	const dispatch = useAppDispatch()
 	const query = useAppSelector((state) => state.query)
@@ -44,7 +44,7 @@ function CityFilters({
 			{/* Filters */}
 			<section aria-labelledby='filter-heading'>
 				<h2 id='filter-heading' className='sr-only'>
-					{t('reviews.filters')}
+					{t('filters')}
 				</h2>
 
 				<div className='relative z-10 bg-white pb-4'>
@@ -66,7 +66,7 @@ function CityFilters({
 											state={selectedSort}
 											setState={setSelectedSort}
 											options={sortOptions}
-											name={t('reviews.sort')}
+											name={t('sort')}
 										/>
 									</div>
 
@@ -76,7 +76,7 @@ function CityFilters({
 												state={zipFilter}
 												setState={(opt: Options) => dispatch(updateZip(opt))}
 												options={zipOptions}
-												name={t('reviews.zip')}
+												name={t('zip')}
 											/>
 										)}
 									</div>
@@ -94,7 +94,7 @@ function CityFilters({
 							{loading ? (
 								<Spinner height='h-4' width='w-4' colour='text-white' />
 							) : (
-								t('reviews.update')
+								t('update')
 							)}
 						</button>
 						<ButtonLight
@@ -103,7 +103,7 @@ function CityFilters({
 								updateParams()
 							}}
 						>
-							{t('reviews.clear')}
+							{t('clear')}
 						</ButtonLight>
 					</div>
 				</div>

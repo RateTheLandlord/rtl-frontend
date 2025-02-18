@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import AdsComponent from '../adsense/Adsense'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import RatingStars from '../ui/RatingStars'
 import ButtonLight from '../ui/button-light'
 import { FlagIcon } from '@heroicons/react/solid'
@@ -26,17 +26,17 @@ const ReviewComponent = ({
 	landlordPage = false,
 }: IProps) => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { t } = useTranslation('reviews')
+	const t = useTranslations('reviews')
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { user } = useUser()
 	const date = new Date(review.date_added).toLocaleDateString()
 
 	const ratings = [
-		{ title: t('reviews.health'), rating: review.health },
-		{ title: t('reviews.respect'), rating: review.respect },
-		{ title: t('reviews.privacy'), rating: review.privacy },
-		{ title: t('reviews.repair'), rating: review.repair },
-		{ title: t('reviews.stability'), rating: review.stability },
+		{ title: t('health'), rating: review.health },
+		{ title: t('respect'), rating: review.respect },
+		{ title: t('privacy'), rating: review.privacy },
+		{ title: t('repair'), rating: review.repair },
+		{ title: t('stability'), rating: review.stability },
 	]
 	let totalReview = 0
 	for (let i = 0; i < ratings.length; i++) {
@@ -61,7 +61,7 @@ const ReviewComponent = ({
 								className='col mb-4 flex w-full cursor-pointer flex-col text-lg break-words hover:underline lg:mb-2 lg:items-center'
 							>
 								<h6 className='text-center'>{review.landlord}</h6>
-								<p className='text-center text-sm'>{t('reviews.read-all')}</p>
+								<p className='text-center text-sm'>{t('read-all')}</p>
 							</Link>
 						) : null}
 						<div
@@ -139,10 +139,8 @@ const ReviewComponent = ({
 							})}
 							{review.rent && (
 								<div className='flex w-full flex-col'>
-									<p className='w-full'>{`${t('reviews.rent')}${
-										review.rent
-									}`}</p>
-									<p className='text-xs'>{t('reviews.local')}</p>
+									<p className='w-full'>{`${t('rent')}${review.rent}`}</p>
+									<p className='text-xs'>{t('local')}</p>
 								</div>
 							)}
 						</div>
@@ -150,14 +148,14 @@ const ReviewComponent = ({
 
 					<div className='mt-4 flex h-full flex-col justify-between lg:mt-6 xl:col-span-2 xl:mt-0'>
 						<div>
-							<p>{t('reviews.review')}</p>
+							<p>{t('review')}</p>
 
 							<p className='mt-3 space-y-6 text-sm break-words hyphens-auto text-gray-500'>
 								{review.review}
 							</p>
 						</div>
 						{review.admin_edited ? (
-							<p className='text-xs text-red-400'>{`${t('reviews.edited')} ${
+							<p className='text-xs text-red-400'>{`${t('edited')} ${
 								review.moderation_reason
 									? `Reason: ${review.moderation_reason}`
 									: ''

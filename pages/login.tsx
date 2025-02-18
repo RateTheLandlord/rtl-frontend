@@ -11,7 +11,9 @@ function Login(): JSX.Element {
 	const { user } = useUser()
 
 	if (user && user.role === 'ADMIN') {
-		router.push(`/admin/${user.name}`)
+		router
+			.push(`/admin/${user.name}`)
+			.catch(() => console.error('Unable to change route'))
 	}
 	return (
 		<div>

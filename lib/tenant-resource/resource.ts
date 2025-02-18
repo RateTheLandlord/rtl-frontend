@@ -1,21 +1,7 @@
 import { Resource, ResourcesResponse } from './models/resource'
 import { createResource, updateResource } from './models/resource-data-layer'
 import sql from '../db'
-
-export interface ResourceQuery {
-	page?: number
-	limit?: string
-	search?: string
-	sort?: 'az' | 'za' | 'new' | 'old' | 'high' | 'low' | undefined
-	country?: string
-	state?: string
-	city?: string
-}
-
-interface IResponse {
-	status: number
-	message: string
-}
+import { IResponse, ResourceQuery } from './types'
 
 export async function getResources(
 	params: ResourceQuery,
@@ -75,19 +61,21 @@ export async function getResources(
 	// Fetch Total Number of Resources
 	const totalResult =
 		await sql`SELECT COUNT(*) as count FROM tenant_resource WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause}`
-	const total = totalResult[0].count
+	const total = totalResult[0].count as number
 
 	//Fetch Countries
 	const countries =
 		await sql`SELECT DISTINCT country_code FROM tenant_resource;`
-	const countryList = countries.map(({ country_code }) => country_code)
+	const countryList = countries.map(
+		({ country_code }) => country_code as string,
+	)
 
 	const states = await sql`
         SELECT DISTINCT state
         FROM tenant_resource
         WHERE 1 = 1 ${countryClause};
     `
-	const stateList = states.map(({ state }) => state)
+	const stateList = states.map(({ state }) => state as string)
 
 	// Fetch cities
 	const cities = await sql`
@@ -95,7 +83,7 @@ export async function getResources(
         FROM tenant_resource
         WHERE 1 = 1 ${countryClause} ${stateClause};
     `
-	const cityList = cities.map(({ city }) => city)
+	const cityList = cities.map(({ city }) => city as string)
 
 	// Return ResourcesResponse object
 	return {

@@ -1,5 +1,5 @@
 {
-	"create-review": {
+	"createreview": {
 		"edit": "Modifier",
 		"continue": "Continuer",
 		"review-radio": {
@@ -76,6 +76,14 @@
 			"policy-3": "Évitez de partager des détails personnels vous concernant ou concernant votre propriétaire qui ne sont pas pertinents pour décrire votre expérience locative.",
 			"policy-4": "Les commentaires inappropriés pourront être supprimés. Merci de contribuer à maintenir un communauté sécuritaire et utile !",
 			"preview-review": "Aperçu de votre avis"
+		},
+		"localStorageDetection": {
+			"title": "Il semble que vous ayez déjà évalué ce propriétaire...",
+			"description": "Veuillez ne laisser qu'un seul avis par propriétaire que vous avez eu afin que ce site puisse rester une représentation équitable des expériences de location. Tous les avis répétés ou spam seront supprimés. Si vous avez des questions, veuillez nous contacter à contact@ratethelandlord.org"
+		},
+		"DBDetection": {
+			"title": "Nous avons remarqué des critiques potentielles de spam liées à ce propriétaire.",
+			"description": "Pour protéger l'intégrité de nos avis, veuillez réessayer plus tard. Si vous avez des questions, veuillez nous contacter à contact@ratethelandlord.org"
 		}
 	}
 }

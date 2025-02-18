@@ -1,13 +1,19 @@
 import { useAppDispatch } from '@/redux/hooks'
 import { updateSearch } from '@/redux/query/querySlice'
 import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
-import { Combobox, Transition } from '@headlessui/react'
+import {
+	Combobox,
+	ComboboxInput,
+	ComboboxOption,
+	ComboboxOptions,
+	Transition,
+} from '@headlessui/react'
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
-import { useTranslation } from 'next-i18next'
 
 const Search = () => {
-	const { t } = useTranslation('filters')
+	const t = useTranslations('filters')
 	const dispatch = useAppDispatch()
 	const router = useRouter()
 	const [search, setSearch] = useState('')
@@ -33,11 +39,11 @@ const Search = () => {
 							htmlFor='landlord'
 							className='sr-only block text-sm text-gray-700'
 						>
-							{`${t('filters.search')} ${t('filters.landlord')}`}
+							{`${t('search')} ${t('landlord')}`}
 						</label>
-						<Combobox.Input
+						<ComboboxInput
 							className='block w-full rounded-md border-0 bg-white px-4 py-3 text-base text-gray-900 placeholder-gray-500'
-							placeholder={t('filters.search-placeholder')}
+							placeholder={t('search-placeholder')}
 							displayValue={(state: string) => state}
 							onChange={(event) => setSearch(event.target.value)}
 						/>
@@ -48,23 +54,23 @@ const Search = () => {
 							leaveFrom='opacity-100'
 							leaveTo='opacity-0'
 						>
-							<Combobox.Options className='ring-opacity-5 absolute z-10 mt-1 flex max-h-60 w-full flex-col overflow-auto rounded-md bg-white text-base ring-1 shadow-lg ring-black focus:outline-none sm:text-sm'>
+							<ComboboxOptions className='ring-opacity-5 absolute z-10 mt-1 flex max-h-60 w-full flex-col overflow-auto rounded-md bg-white text-base ring-1 shadow-lg ring-black focus:outline-none sm:text-sm'>
 								{suggestions.length === 0 && search !== '' ? (
 									isSearching ? (
 										<div className='relative cursor-default px-4 py-2 text-gray-700 select-none'>
-											{t('filters.loading')}.
+											{t('loading')}.
 										</div>
 									) : (
 										<button
 											onClick={() => router.push(`/create-review`)}
 											className='relative cursor-pointer px-4 py-2 text-left text-gray-700 select-none hover:bg-teal-100'
 										>
-											{t('filters.not-found')}
+											{t('not-found')}
 										</button>
 									)
 								) : (
 									suggestions.map((landlord) => (
-										<Combobox.Option
+										<ComboboxOption
 											key={landlord}
 											className={({ active }) =>
 												`cursor-pointer rounded-md p-2 text-left empty:invisible hover:bg-teal-100 ${
@@ -74,10 +80,10 @@ const Search = () => {
 											value={landlord}
 										>
 											{landlord}
-										</Combobox.Option>
+										</ComboboxOption>
 									))
 								)}
-							</Combobox.Options>
+							</ComboboxOptions>
 						</Transition>
 					</div>
 				</Combobox>
