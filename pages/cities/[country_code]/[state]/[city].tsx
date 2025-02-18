@@ -98,6 +98,9 @@ export async function getStaticProps({ locale, params }) {
 	const reviewsMessages = (await import(
 		`@/messages/${locale}/reviews.json`
 	)) as Record<string, string>
+	const landlordMessages = (await import(
+		`@/messages/${locale}/landlord.json`
+	)) as Record<string, string>
 
 	const data = await getCityReviews(params as ICityQuery)
 
@@ -124,6 +127,7 @@ export async function getStaticProps({ locale, params }) {
 					...layoutMessages,
 					...reviewsMessages,
 					...filtersMessages,
+					...landlordMessages,
 				},
 			}),
 		),
