@@ -176,16 +176,10 @@ function Admin(): JSX.Element {
 
 export default withPageAuthRequired(Admin)
 
-export const getStaticPaths = async () => {
+export const getStaticPaths = () => {
 	return {
-		paths: [
-			{
-				params: {
-					admin: 'placeholder',
-				},
-			}, // See the "paths" section below
-		],
-		fallback: true, // false or "blocking"
+		paths: [],
+		fallback: true,
 	}
 }
 
