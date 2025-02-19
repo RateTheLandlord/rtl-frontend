@@ -1,6 +1,7 @@
 import Button from '@/components/ui/button'
 import LargeTextInput from '@/components/ui/LargeTextInput'
 import { useTranslations } from 'next-intl'
+import posthog from 'posthog-js'
 
 interface IProps {
 	reviewOpen: boolean
@@ -65,6 +66,7 @@ const WrittenReviewForm = ({
 				<Button
 					disabled={review.length === 0}
 					onClick={() => {
+						posthog.capture('create_review_written_review')
 						setShowPreview(true)
 						setReviewOpen(false)
 					}}

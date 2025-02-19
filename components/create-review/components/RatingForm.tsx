@@ -5,6 +5,7 @@ import Button from '@/components/ui/button'
 import RatingsRadio from '../ratings-radio'
 import RatingStars from '@/components/ui/RatingStars'
 import { useTranslations } from 'next-intl'
+import posthog from 'posthog-js'
 
 interface IProps {
 	ratingsOpen: boolean
@@ -127,6 +128,7 @@ const RatingForm = ({
 			<div className='flex w-full justify-end pt-2'>
 				<Button
 					onClick={() => {
+						posthog.capture('create_review_ratings')
 						setShowReviewForm(true)
 						setRatingsOpen(false)
 						setReviewOpen(true)

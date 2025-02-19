@@ -32,31 +32,31 @@ const ReviewPreview = ({
 	zip,
 }: IProps) => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const t = useTranslations('reviews')
+	const t = useTranslations('createreview')
 
 	const ratings = [
 		{
-			title: t('health'),
+			title: t('review-form.health'),
 			rating: health,
 			testid: 'HealthReviewPreviewRating',
 		},
 		{
-			title: t('respect'),
+			title: t('review-form.respect'),
 			rating: respect,
 			testid: 'RespectReviewPreviewRating',
 		},
 		{
-			title: t('privacy'),
+			title: t('review-form.privacy'),
 			rating: privacy,
 			testid: 'PrivacyReviewPreviewRating',
 		},
 		{
-			title: t('repair'),
+			title: t('review-form.repair'),
 			rating: repair,
 			testid: 'RepairReviewPreviewRating',
 		},
 		{
-			title: t('stability'),
+			title: t('review-form.stability'),
 			rating: stability,
 			testid: 'StabilityReviewPreviewRating',
 		},
@@ -115,8 +115,8 @@ const ReviewPreview = ({
 									<p
 										className='w-full'
 										data-testid='ReviewPreviewRent'
-									>{`${t('rent')}${rent}`}</p>
-									<p className='text-xs'>{t('local')}</p>
+									>{`${t('review-form.rent')}: $${rent}`}</p>
+									<p className='text-xs'>{t('review-form.local')}</p>
 								</div>
 							)}
 						</div>
@@ -124,7 +124,7 @@ const ReviewPreview = ({
 
 					<div className='mt-4 flex h-full flex-col justify-between lg:mt-6 xl:col-span-2 xl:mt-0'>
 						<div>
-							<p>{t('review')}</p>
+							<p>{t('review-form.review')}</p>
 
 							<p
 								className='mt-3 space-y-6 text-sm break-words text-gray-500'

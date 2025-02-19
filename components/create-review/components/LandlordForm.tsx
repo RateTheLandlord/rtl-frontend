@@ -2,6 +2,7 @@ import LandlordComboBox from './LandlordComboBox'
 import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
 import Button from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
+import posthog from 'posthog-js'
 
 interface IProps {
 	landlordOpen: boolean
@@ -70,6 +71,7 @@ const LandlordForm = ({
 				<Button
 					disabled={landlord === null || landlord.length === 0}
 					onClick={() => {
+						posthog.capture('create_review_landlord_name')
 						setShowLocationForm(true)
 						setLocationOpen(true)
 						setLandlordOpen(false)

@@ -22,6 +22,7 @@ import RatingForm from './components/RatingForm'
 import WrittenReviewForm from './components/WrittenReviewForm'
 import { toast } from 'react-toastify'
 import { useTranslations } from 'next-intl'
+import posthog from 'posthog-js'
 
 function ReviewForm(): JSX.Element {
 	const t = useTranslations()
@@ -530,8 +531,13 @@ function ReviewForm(): JSX.Element {
 											loading ||
 											review.length > 2000
 										}
-										// eslint-disable-next-line @typescript-eslint/no-misused-promises
-										onClick={() => handleSubmit()}
+										onClick={() => {
+											posthog.capture('create_review_submitted')
+											handleSubmit().catch(() => {
+												posthog.capture('create_review_submit_error')
+												console.error('Error submitting Review')
+											})
+										}}
 									>
 										{t('createreview.review-form.submit')}
 									</Button>

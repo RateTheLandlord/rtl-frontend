@@ -37,7 +37,8 @@
 			"civil": "Please keep this review as civil and objective as possible. Do not post any specific addresses as these will be removed. Any malicious or defamatory language may result in the review being edited or removed.",
 			"disclaimer-1": "I understand that posting a review on Rate The Landlord is public and can be viewed by anyone including the landlord in my review.",
 			"disclaimer-2": "I understand that once I post this review I cannot have it taken down unless it violates the Rate The Landlord policy and recognize that Rate The Landlord recommends posting reviews after my tenancy is over.",
-			"disclaimer-3": "I understand that Rate The Landlord is not responsible for any consequences that occur as a result my review."
+			"disclaimer-3": "I understand that Rate The Landlord is not responsible for any consequences that occur as a result my review.",
+			"local": "Local currency"
 		},
 		"modal": {
 			"success": "Review Submitted Successfully!",
