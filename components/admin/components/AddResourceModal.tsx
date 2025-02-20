@@ -64,7 +64,7 @@ const AddResourceModal = ({
 		} else if (country === 'NO') {
 			setState('Norway')
 		} else if (country === 'NZ') {
-			setState('Marlborough')
+			setState('Auckland')
 		} else {
 			setState('Alberta')
 		}
