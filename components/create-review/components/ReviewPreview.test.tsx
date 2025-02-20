@@ -60,7 +60,7 @@ describe('ReviewPreview Component', () => {
 		render(<ReviewPreview {...defaultProps} />)
 
 		expect(screen.getByTestId('ReviewPreviewRent')).toHaveTextContent(
-			'reviews.rent1500',
+			'createreview.review-form.rent: $1500',
 		)
 	})
 

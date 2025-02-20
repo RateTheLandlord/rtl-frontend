@@ -5,6 +5,7 @@ import CityComboBox from './CityComboBox'
 import CountrySelector from '@/components/ui/CountrySelector'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import { useTranslations } from 'next-intl'
+import posthog from 'posthog-js'
 
 interface IProps {
 	locationOpen: boolean
@@ -124,6 +125,7 @@ const LocationForm = ({
 							: city === null || city.length === 0 || postal.length === 0
 					}
 					onClick={() => {
+						posthog.capture('create_review_location')
 						setShowRatingForm(true)
 						setLocationOpen(false)
 						setRatingsOpen(true)
