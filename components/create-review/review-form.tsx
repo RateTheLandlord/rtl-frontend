@@ -280,7 +280,7 @@ function ReviewForm(): JSX.Element {
 		} else if (country === 'US') {
 			setProvince('Alabama')
 		} else if (country === 'NZ') {
-			setProvince('Marlborough')
+			setProvince('Auckland')
 		} else if (country === 'DE') {
 			setProvince('Baden-Württemberg')
 		} else if (country === 'IE') {
