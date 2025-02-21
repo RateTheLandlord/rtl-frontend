@@ -14,7 +14,11 @@ import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import CloseButton from '../ui/CloseButton'
 
-const ENVIRONMENT = process.env.NEXT_PUBLIC_ENVIRONMENT as string
+const REVIEW_PERIOD = process.env.REVIEW_PERIOD
+const reviewPeriodNumber =
+	isNaN(Number(REVIEW_PERIOD)) || Number(REVIEW_PERIOD) <= 0
+		? 30 // default to 30 if the value is invalid
+		: Number(REVIEW_PERIOD)
 
 interface IProps {
 	selectedReview: Review | undefined
@@ -39,7 +43,7 @@ const RemoveReviewModal = ({
 	const deleted_by = selectedReview?.deleted_by || []
 	const review = selectedReview?.review || ''
 	const { user } = useUser()
-	const delete_date = dayjs().add(ENVIRONMENT === 'production' ? 30 : 2, 'day')
+	const delete_date = dayjs().add(reviewPeriodNumber, 'day')
 
 	const date = dayjs().format('DD/MM/YYYY')
 
