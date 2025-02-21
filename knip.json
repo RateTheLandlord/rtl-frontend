@@ -1,5 +1,6 @@
 {
 	"ignore": ["migrations/*", "*.config.*", "setupTests.ts", "test-utils.tsx"],
+	"ignoreBinaries": ["eslint"],
 	"rules": {
 		"devDependencies": "off"
 	}

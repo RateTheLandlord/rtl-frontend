@@ -29,6 +29,7 @@ import {
 import Patreon from '../svg/icons/patreon'
 import LinkButtonLightLG from '../ui/link-button-light-lg'
 import { useTranslations } from 'next-intl'
+import posthog from 'posthog-js'
 
 interface IProps {
 	isOpen: boolean
@@ -88,25 +89,65 @@ function SuccessModal({ isOpen, setIsOpen }: IProps) {
 													{t('modal.support')}
 												</p>
 												<div className='mt-2 flex w-full flex-row justify-center gap-3'>
-													<EmailShareButton url='https://ratethelandlord.org'>
+													<EmailShareButton
+														onMouseDown={() =>
+															posthog.capture('user_clicked_share', {
+																share: 'email',
+															})
+														}
+														url='https://ratethelandlord.org'
+													>
 														<EmailIcon round size='40' />
 													</EmailShareButton>
-													<FacebookShareButton url='https://ratethelandlord.org'>
+													<FacebookShareButton
+														onMouseDown={() =>
+															posthog.capture('user_clicked_share', {
+																share: 'facebook',
+															})
+														}
+														url='https://ratethelandlord.org'
+													>
 														<FacebookIcon round size='40' />
 													</FacebookShareButton>
 													<PinterestShareButton
+														onMouseDown={() =>
+															posthog.capture('user_clicked_share', {
+																share: 'pinterest',
+															})
+														}
 														media='https://ratethelandlord.org/friends.webp'
 														url='https://ratethelandlord.org'
 													>
 														<PinterestIcon round size='40' />
 													</PinterestShareButton>
-													<RedditShareButton url='https://ratethelandlord.org'>
+													<RedditShareButton
+														onMouseDown={() =>
+															posthog.capture('user_clicked_share', {
+																share: 'reddit',
+															})
+														}
+														url='https://ratethelandlord.org'
+													>
 														<RedditIcon round size='40' />
 													</RedditShareButton>
-													<TumblrShareButton url='https://ratethelandlord.org'>
+													<TumblrShareButton
+														onMouseDown={() =>
+															posthog.capture('user_clicked_share', {
+																share: 'tumblr',
+															})
+														}
+														url='https://ratethelandlord.org'
+													>
 														<TumblrIcon round size='40' />
 													</TumblrShareButton>
-													<TwitterShareButton url='https://ratethelandlord.org'>
+													<TwitterShareButton
+														onMouseDown={() =>
+															posthog.capture('user_clicked_share', {
+																share: 'twitter',
+															})
+														}
+														url='https://ratethelandlord.org'
+													>
 														<TwitterIcon round size='40' />
 													</TwitterShareButton>
 												</div>
