@@ -43,7 +43,7 @@ const RemoveReviewModal = ({
 	const deleted_by = selectedReview?.deleted_by || []
 	const review = selectedReview?.review || ''
 	const { user } = useUser()
-	const delete_date = dayjs().add(reviewPeriodNumber, 'day')
+	const delete_date = dayjs().add(reviewPeriodNumber, 'day').toDate()
 
 	const date = dayjs().format('DD/MM/YYYY')
 
