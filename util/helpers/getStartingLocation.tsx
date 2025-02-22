@@ -3,16 +3,19 @@ import caProvinceLocations from '@/util/countries/ca-province-location.json'
 import usStateLocations from '@/util/countries/us-state-location.json'
 import { Options } from '../interfaces/interfaces'
 
+type ViewState = {
+	latitude: number
+	longitude: number
+	zoom: number
+}
+
+type Location = {
+	latitude: number
+	longitude: number
+}
+
 export const getStartingLocation = (
-	setViewState: ({
-		latitude,
-		longitude,
-		zoom,
-	}: {
-		latitude: number
-		longitude: number
-		zoom: number
-	}) => void,
+	setViewState: ({ latitude, longitude, zoom }: ViewState) => void,
 	country: Options,
 	state: Options,
 	affiliate: string | null,
@@ -25,7 +28,7 @@ export const getStartingLocation = (
 		})
 	} else if (state && country) {
 		if (country.value === 'CA') {
-			const location = caProvinceLocations[state.value]
+			const location = caProvinceLocations[state.value] as Location
 			if (location) {
 				setViewState({
 					latitude: location.latitude,
@@ -36,7 +39,7 @@ export const getStartingLocation = (
 				toast.error('Error getting location, using default location.')
 			}
 		} else if (country.value === 'US') {
-			const location = usStateLocations[state.value]
+			const location = usStateLocations[state.value] as Location
 			if (location) {
 				setViewState({
 					latitude: location.latitude,
@@ -47,7 +50,7 @@ export const getStartingLocation = (
 				toast.error('Error getting location, using default location.')
 			}
 		} else {
-			console.log('County not supported')
+			console.log('County not supported: ', country)
 		}
 	}
 }

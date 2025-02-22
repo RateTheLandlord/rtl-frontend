@@ -273,23 +273,31 @@ function ReviewForm(): JSX.Element {
 	}
 
 	useEffect(() => {
-		if (country === 'GB') {
-			setProvince('England')
-		} else if (country === 'AU') {
-			setProvince('Northern Territory')
-		} else if (country === 'US') {
-			setProvince('Alabama')
-		} else if (country === 'NZ') {
-			setProvince('Auckland')
-		} else if (country === 'DE') {
-			setProvince('Baden-Württemberg')
-		} else if (country === 'IE') {
-			setProvince('Dublin')
-			setPostal('')
-		} else if (country === 'NO') {
-			setProvince('Oslo')
-		} else {
-			setProvince('Alberta')
+		switch (country) {
+			case 'GB':
+				setProvince('England')
+				break
+			case 'AU':
+				setProvince('Australian Capital Territory')
+				break
+			case 'US':
+				setProvince('Alabama')
+				break
+			case 'NZ':
+				setProvince('Auckland')
+				break
+			case 'DE':
+				setProvince('Baden-Württemberg')
+				break
+			case 'IE':
+				setProvince('Carlow')
+				setPostal('')
+				break
+			case 'NO':
+				setProvince('Oslo')
+				break
+			default:
+				setProvince('Alberta')
 		}
 	}, [country])
 

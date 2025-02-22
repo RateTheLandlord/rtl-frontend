@@ -9,8 +9,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	const path = req.query.path as string
 
-	console.log(`/landlord/${encodeURIComponent(path)}`)
-
 	if (!path) {
 		return res.status(401).json({ message: 'Invalid path' })
 	}

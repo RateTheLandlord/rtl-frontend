@@ -40,7 +40,6 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 export const filterReviewWithAI = async (review: Review): Promise<IResult> => {
 	try {
 		const SYSTEM_MESSAGE = await getSystemMessage()
-		console.log(SYSTEM_MESSAGE)
 		const completion = await openai.chat.completions.create({
 			model: 'gpt-4o',
 			messages: [

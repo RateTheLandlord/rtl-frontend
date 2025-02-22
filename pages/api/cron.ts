@@ -20,7 +20,7 @@ cron.schedule('0 0 * * *', async () => {
 	const reviews = await getDeleted()
 
 	for (const review of reviews) {
-		if (readyToDelete(review.delete_date)) {
+		if (readyToDelete(dayjs(review.delete_date).format('DD/MM/YYYY'))) {
 			if (review.id) {
 				await deleteReview(review.id)
 				console.log(`Review with ID ${review.id} has been deleted.`)
