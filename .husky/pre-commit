@@ -1,3 +1,7 @@
+#!/bin/sh
+
+./check-tests.sh
 bun run test:merge
-bun run lint
+bunx lint-staged
 bun run format
+bun run knip

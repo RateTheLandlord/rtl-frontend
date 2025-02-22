@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import ResourcesInfo from '@/components/resources/resourcesInfo'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
@@ -5,9 +6,8 @@ import AdsComponent from '@/components/adsense/Adsense'
 import ResourceList from '@/components/resources/ResourceList'
 import { ResourceResponse } from '@/util/interfaces/interfaces'
 import { getResources } from '@/lib/tenant-resource/resource'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import Poster from '@/components/poster/Poster'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface IProps {
 	data: ResourceResponse
@@ -23,7 +23,7 @@ function Resources({ data }: IProps): JSX.Element {
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
-	const { t } = useTranslation('resources')
+	const t = useTranslations('resources')
 	return (
 		<div className='flex w-full justify-center'>
 			<NextSeo
@@ -57,7 +57,7 @@ function Resources({ data }: IProps): JSX.Element {
 				<Poster />
 				<ResourceList data={data} />
 				<p className='mt-8 text-center text-xl leading-8 text-gray-500'>
-					{t('resources.contribute')}
+					{t('contribute')}
 				</p>
 			</div>
 		</div>
@@ -68,26 +68,43 @@ export default Resources
 
 //Page is statically generated at build time and then revalidated at a minimum of every 30 minutes based on when the page is accessed
 export async function getStaticProps({ locale }) {
+	const resourcesMessages = (await import(
+		`@/messages/${locale}/resources.json`
+	)) as Record<string, string>
+	const alertsMessages = (await import(
+		`@/messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`@/messages/${locale}/layout.json`
+	)) as Record<string, string>
+	const filtersMessages = (await import(
+		`@/messages/${locale}/filters.json`
+	)) as Record<string, string>
 	const data = await getResources({})
 	if (data) {
 		return {
-			props:JSON.parse(JSON.stringify({ data: data,
-				...(await serverSideTranslations(locale, [
-					'filters',
-					'resources',
-					'layout'
-				  ])),
-			 }))
-			,
-			revalidate: 100,			
+			props: JSON.parse(
+				JSON.stringify({
+					data: data,
+					messages: {
+						...resourcesMessages,
+						...alertsMessages,
+						...layoutMessages,
+						...filtersMessages,
+					},
+				}),
+			),
+			revalidate: 100,
 		}
 	} else {
 		return {
 			props: {
-				...(await serverSideTranslations(locale, [
-					'resources',
-					'layout'
-				  ])),
+				messages: {
+					...resourcesMessages,
+					...alertsMessages,
+					...layoutMessages,
+					...filtersMessages,
+				},
 				data: [],
 			},
 			revalidate: 100,

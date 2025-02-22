@@ -6,7 +6,7 @@ import { useState } from 'react'
 import Button from '@/components/ui/button'
 import { useAppDispatch } from '@/redux/hooks'
 import { updateStateAndCountry } from '@/redux/query/querySlice'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
 	countryFilter: Options | null
@@ -14,7 +14,7 @@ interface IProps {
 }
 
 const Hero = ({ countryFilter, stateFilter }: IProps) => {
-	const { t } = useTranslation('reviews')
+	const t = useTranslations('reviews')
 	const [selectedCountry, setSelectedCountry] = useState<Options | null>(
 		countryFilter,
 	)
@@ -35,7 +35,7 @@ const Hero = ({ countryFilter, stateFilter }: IProps) => {
 		}
 	}
 	return (
-		<div className='m-2 w-full  max-w-7xl'>
+		<div className='m-2 w-full max-w-7xl'>
 			<div className='relative h-[850px]'>
 				<div className='mx-auto max-w-7xl rounded-md bg-white/20'>
 					<div className='relative z-10 lg:w-full lg:max-w-2xl'>
@@ -66,7 +66,7 @@ const Hero = ({ countryFilter, stateFilter }: IProps) => {
 										onClick={() => handleSubmit()}
 										size='large'
 									>
-										{t('reviews.continue')}
+										{t('continue')}
 									</Button>
 								)}
 							</div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
 	ILocationHookResponse,
 	ILocationResponse,
@@ -6,18 +6,12 @@ import {
 import { useDebounce } from './useDebounce'
 
 export const useLocation = (input: string, country: string) => {
-	const [locations, setLocations] = useState<Array<ILocationHookResponse>>([])
+	const [locations, setLocations] = useState<ILocationHookResponse[]>([])
 	const [searching, setSearching] = useState(false)
 
 	const debouncedSearchString = useDebounce(input, 500)
 
-	useEffect(() => {
-		if (debouncedSearchString) {
-			searchLocations()
-		}
-	}, [debouncedSearchString])
-
-	const searchLocations = async () => {
+	const searchLocations = useCallback(async () => {
 		setSearching(true)
 		fetch(
 			`https://nominatim.openstreetmap.org/search?q=${input}&format=json&limit=5&addressdetails=1&countrycodes=${country}`,
@@ -38,15 +32,19 @@ export const useLocation = (input: string, country: string) => {
 			.finally(() => {
 				setSearching(false)
 			})
-	}
+	}, [input, country])
+
+	useEffect(() => {
+		if (debouncedSearchString) {
+			searchLocations()
+		}
+	}, [debouncedSearchString, searchLocations])
 
 	return { searching, locations }
 }
 
-const formatData = (
-	data: Array<ILocationResponse>,
-): Array<ILocationHookResponse> => {
-	const newData: Array<ILocationHookResponse> = []
+const formatData = (data: ILocationResponse[]): ILocationHookResponse[] => {
+	const newData: ILocationHookResponse[] = []
 	for (let i = 0; i < data.length; i++) {
 		if (data[i].address.city) {
 			const existingCity = newData.some(

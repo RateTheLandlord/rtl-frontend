@@ -1,0 +1,90 @@
+{
+  "createreview": {
+    "edit": "Modifier",
+    "continue": "Continuer",
+    "review-radio": {
+      "rating": "Note",
+      "choose": "Choisir une note"
+    },
+    "review-form": {
+      "header": "Rédigez votre avis",
+      "title": "Information sur les propriétaires ou les sociétés de gestion immobilière",
+      "sub": "Veuillez vous assurer que toutes les informations correspondent à celles qui se trouvent sur votre bail ou votre contrat de location",
+      "landlord": "Nom du·de la propriétaire (ou la société de gestion immobilière) - Aucune adresse",
+      "country": "Pays",
+      "city": "Ville",
+      "state": "État / Province",
+      "region": "Pays du RU",
+      "county": "Région",
+      "zip": "ZIP / Code postal",
+      "rent": "Loyer (Facultatif)",
+      "rate-title": "Veuillez noter les catégories suivantes sur une échelle de 1 (faible) à 5 (élevé)",
+      "health": "Santé et sécurité",
+      "health_description": "Les propriétaires doivent s'assurer que le logement respecte les normes de santé et de sécurité locales, comme le maintien de détecteurs de fumée, l'élimination de la moisissure et la mise en place de traitements contre les nuisibles lorsque cela est nécessaire.",
+      "stability": "Maintien dans les lieux",
+      "stability_description": "Les propriétaires doivent respecter les ententes de location et ne pas adopter des pratiques ou des comportements susceptibles de perturber la stabilité locative des locataires, comme des augmentations de loyer abusives ou des évictions forcées.",
+      "privacy": "Vie privée des locataires",
+      "privacy_description": "Les propriétaires doivent respecter la vie privée des locataires. Par exemple, les propriétaires ne peuvent entrer dans le logement qu'avec le consentement de la personne qui y habite ou pour des raisons spécifiques mentionnées dans le bail ou le contrat de location. Les propriétaires doivent également s'abstenir de s'immiscer dans la vie personnelle de leurs locataires et ne peuvent demander des informations qui ne sont pas nécessaires à l'établissement d'un bail ou d'un contrat de location.",
+      "respect": "Respect",
+      "respect_description": "Les propriétaires doivent traiter leurs locataires avec respect et ne doivent pas adopter des comportements qui porteraient atteintes aux droits des locataires et au droit de maintien dans les lieux, comme la discrimination ou le harcèlement.",
+      "repair": "Réparation",
+      "repair_description": "Les propriétaires ont l'obligation légale de maintenir le logement dans un état sécuritaire et habitable. Les locataires doivent pouvoir bénéficier de réparations rapides effectuées par des personnes qualifiées pour assurer le bon fonctionnement des équipements essentiels, comme la plomberie et le chauffage.",
+      "review": "Ajoutez vos commentaires",
+      "submit": "Soummettre votre évaluation",
+      "reset": "Rafraichir",
+      "postal-error": "Erreur. Code postal / ZIP Invalide",
+      "limit": "Limite de caractères: {{lenght}}/2000",
+      "civil": "Veuillez garder votre avis courtois et objectif. Ne publiez aucune adresse spécifique, sans quoi celles-ci seront supprimées. Tout langage malveillant ou diffamatoire pourrait entraîner la modification ou le retrait de votre avis.",
+      "disclaimer-1": "Je comprends qu'une fois mon avis publié sur Rate the Landlord, ce-dernier sera public et pourra être consulté par n'importe qui, y compris la personne propriétaire mentionnée dans mon avis.",
+      "disclaimer-2": "Je comprends qu'une fois mon avis publié, je ne pourrai pas le retirer, sauf s'il enfreint les politiques de Rate the Landlord. Je reconnais également que Rate the Landlord recommande de publier des avis après la fin de ma location.",
+      "disclaimer-3": "Je comprends que Rate the Landlord n'est en aucun cas responsable des conséquences qui pourraient résulter de mon avis.",
+      "local": "Monnaie locale"
+    },
+    "modal": {
+      "success": "Vos avis a été soumis avec succès !",
+      "description": "Votre avis peut prendre quelques minutes à s'afficher sur le site, mais ne vous inquiétez pas nous l'avons bien reçu !",
+      "submit-another": "Soummettre un nouvel avis",
+      "go-to": "Retour aux avis",
+      "add-review": "S'il-vous-plait, ajouter un avis écrit",
+      "add-review-desc": "Nous apprécions votre enthousiasme à évaluer votre propriétaire ! Cependant, nous vous invitons à laisser un petit avis pour donner plus de contexte à votre évalation. Cet avis permettra aux autres locataires d'être mieux informé·e·s.",
+      "close": "Fermer",
+      "support": "Vous voulez supporter le site ? Partagez le sur vos réseaux sociaux !",
+      "patreon": "Vous pouvez également nous supporter sur Patreon !"
+    },
+    "spam-modal": {
+      "title": "Il semble que vous avez déjà évalué ce·cette propriétaire...",
+      "description": "Veuillez ne laisser qu'un seul avis par propriétaire afin d'assurer que ce site reste représentatif des expériences locatives. Tout avis en double ou tout spam sera supprimé. Si vous avez des questions, n'hésitez pas à nous contacter à l'adresse contact@ratethelandlord.org."
+    },
+    "hero": {
+      "title": "Aidez-nous à créer une meilleure expérience locative !",
+      "body": "Merci d'avoir évalué votre propriétaire ! Vos avis sur la maintenance, la communication et votre satisfaction générale aideront les autres locataires de votre région à prendre des décisions éclairées concernant leur choix de logement.",
+      "start": "Commencer votre avis"
+    },
+    "landlord-form": {
+      "title": "Propriétaire",
+      "body": "Entrez le nom de votre propriétaire ou de la société de gestion immobilière tel qu'il apparaît sur votre bail. Vérifiez l'orthographe avant de soumettre votre avis afin que celui-ci puisse être associé aux autres avis pour le·la même propriétaire. Ne pas inclure d'adresse dans votre avis. Toutes les adresses seront supprimées."
+    },
+    "location-form": {
+      "title": "Location"
+    },
+    "ratings-form": {
+      "title": "Évaluations"
+    },
+    "written-review": {
+      "title": "Vos commentaires",
+      "policy-1": "Veuillez respecter notre politique de modération",
+      "policy-2": "Veuillez garder les avis courtois et évitez d'inclure des informations personnelles telles que des adresses ou des numéros de téléphone.",
+      "policy-3": "Évitez de partager des détails personnels vous concernant ou concernant votre propriétaire qui ne sont pas pertinents pour décrire votre expérience locative.",
+      "policy-4": "Les commentaires inappropriés pourront être supprimés. Merci de contribuer à maintenir un communauté sécuritaire et utile !",
+      "preview-review": "Aperçu de votre avis"
+    },
+    "localStorageDetection": {
+      "title": "Il semble que vous ayez déjà évalué ce propriétaire...",
+      "description": "Veuillez ne laisser qu'un seul avis par propriétaire que vous avez eu afin que ce site puisse rester une représentation équitable des expériences de location. Tous les avis répétés ou spam seront supprimés. Si vous avez des questions, veuillez nous contacter à contact@ratethelandlord.org"
+    },
+    "DBDetection": {
+      "title": "Nous avons remarqué des critiques potentielles de spam liées à ce propriétaire.",
+      "description": "Pour protéger l'intégrité de nos avis, veuillez réessayer plus tard. Si vous avez des questions, veuillez nous contacter à contact@ratethelandlord.org"
+    }
+  }
+}

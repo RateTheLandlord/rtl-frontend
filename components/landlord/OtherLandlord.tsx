@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const OtherLandlordInfo = ({ landlord }: IProps) => {
-	const { data: landlords, error } = useSWR<Array<OtherLandlord>>(
+	const { data: landlords, error } = useSWR<OtherLandlord[]>(
 		`/api/review/get-other-landlords?landlord=${encodeURIComponent(landlord)}`,
 		fetcher,
 	)
@@ -34,10 +34,10 @@ const OtherLandlordInfo = ({ landlord }: IProps) => {
 						>
 							<div className='flex flex-col items-center justify-center'>
 								<div
-									className='col mb-4 flex w-full cursor-pointer flex-col break-words text-lg lg:mb-2 lg:items-center'
+									className='col mb-4 flex w-full cursor-pointer flex-col text-lg break-words lg:mb-2 lg:items-center'
 									data-umami-event='Reviews / Landlord Link'
 								>
-									<h6 className='text-center'>{otherLandlord.name}</h6>
+									<p className='text-center text-lg'>{otherLandlord.name}</p>
 									<p className='text-center text-sm'>
 										Read {otherLandlord.reviewcount} review(s)
 									</p>

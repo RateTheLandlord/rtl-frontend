@@ -2,7 +2,7 @@ import React from 'react'
 import { Options, SortOptions } from '@/util/interfaces/interfaces'
 import SelectList from '@/components/reviews/ui/select-list'
 import SearchBar from '@/components/reviews/ui/searchbar'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import ButtonLight from '../ui/button-light'
 import ComboBox from '@/components/reviews/ui/combobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
@@ -49,19 +49,19 @@ function ResourceFilters({
 	loading,
 	updateParams,
 }: FiltersProps): JSX.Element {
-	const { t } = useTranslation('filters')
+	const t = useTranslations('filters')
 
 	const dispatch = useAppDispatch()
-	const query = resource
-		? useAppSelector((state) => state.resourceQuery)
-		: useAppSelector((state) => state.query)
+	const resourceQuery = useAppSelector((state) => state.resourceQuery)
+	const queryState = useAppSelector((state) => state.query)
+	const query = resource ? resourceQuery : queryState
 
 	return (
 		<div data-testid='review-filters-1' className='mt-6 hidden lg:block'>
 			{/* Filters */}
 			<section aria-labelledby='filter-heading'>
 				<h2 id='filter-heading' className='sr-only'>
-					{t('filters.title')}
+					{t('title')}
 				</h2>
 
 				<div className='relative z-10 bg-white pb-4'>
@@ -83,7 +83,7 @@ function ResourceFilters({
 											state={selectedSort}
 											setState={setSelectedSort}
 											options={sortOptions}
-											name={t('filters.sort')}
+											name={t('sort')}
 										/>
 									</div>
 
@@ -94,7 +94,7 @@ function ResourceFilters({
 												dispatch(updateResourceCountry(opt))
 											}
 											options={countryOptions}
-											name={t('filters.country')}
+											name={t('country')}
 										/>
 									</div>
 									<div className='py-2'>
@@ -104,7 +104,7 @@ function ResourceFilters({
 												dispatch(updateResourceState(opt))
 											}
 											options={stateOptions}
-											name={t('filters.state')}
+											name={t('state')}
 										/>
 									</div>
 									<div className='py-2'>
@@ -114,7 +114,7 @@ function ResourceFilters({
 												dispatch(updateResourceCity(opt))
 											}
 											options={cityOptions}
-											name={t('filters.city')}
+											name={t('city')}
 										/>
 									</div>
 								</div>
@@ -123,15 +123,17 @@ function ResourceFilters({
 					</div>
 					<div className='flex w-full flex-col gap-2 border-t border-t-gray-200 py-2 lg:px-2'>
 						<button
+							aria-label='Apply Filters'
 							onClick={() => updateParams()}
 							type='submit'
-							className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm  text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${'bg-teal-600 hover:bg-teal-700'}`}
+							title='submit'
+							className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm text-white shadow-sm focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none ${'bg-teal-600 hover:bg-teal-700'}`}
 							data-testid='submit-button-1'
 						>
 							{loading ? (
 								<Spinner height='h-4' width='w-4' colour='text-white' />
 							) : (
-								t('filters.apply')
+								t('apply')
 							)}
 						</button>
 						<ButtonLight
@@ -140,7 +142,7 @@ function ResourceFilters({
 								updateParams()
 							}}
 						>
-							{t('filters.clear')}
+							{t('clear')}
 						</ButtonLight>
 					</div>
 				</div>

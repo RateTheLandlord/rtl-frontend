@@ -2,9 +2,11 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import LargeTextInput from './LargeTextInput'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('LargeTextInput Component', () => {
 	const mockProps = {
@@ -61,5 +63,23 @@ describe('LargeTextInput Component', () => {
 		// Ensure that the component has error styling
 		const textareaElement = screen.getByTestId('error-text')
 		expect(textareaElement).toHaveClass('text-red-400')
+	})
+
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<LargeTextInput
+				title={mockProps.title}
+				id={mockProps.id}
+				value={mockProps.value}
+				setValue={mockProps.setValue}
+				rows={mockProps.rows}
+				placeHolder={mockProps.placeHolder}
+				testid={mockProps.testid}
+				length={mockProps.length}
+				limitText={mockProps.limitText}
+			/>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

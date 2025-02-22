@@ -1,21 +1,7 @@
 import { Resource, ResourcesResponse } from './models/resource'
 import { createResource, updateResource } from './models/resource-data-layer'
 import sql from '../db'
-
-export type ResourceQuery = {
-	page?: number
-	limit?: string
-	search?: string
-	sort?: 'az' | 'za' | 'new' | 'old' | 'high' | 'low' | undefined
-	country?: string
-	state?: string
-	city?: string
-}
-
-export interface IResponse {
-	status: number
-	message: string
-}
+import { IResponse, ResourceQuery } from './types'
 
 export async function getResources(
 	params: ResourceQuery,
@@ -70,24 +56,26 @@ export async function getResources(
         FROM tenant_resource
         WHERE 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause}
         ORDER BY ${orderBy} ${sortOrder} LIMIT ${limitParam}
-        OFFSET ${offset}`) as Array<Resource>
+        OFFSET ${offset}`) as Resource[]
 
 	// Fetch Total Number of Resources
 	const totalResult =
 		await sql`SELECT COUNT(*) as count FROM tenant_resource WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause}`
-	const total = totalResult[0].count
+	const total = totalResult[0].count as number
 
 	//Fetch Countries
 	const countries =
 		await sql`SELECT DISTINCT country_code FROM tenant_resource;`
-	const countryList = countries.map(({ country_code }) => country_code)
+	const countryList = countries.map(
+		({ country_code }) => country_code as string,
+	)
 
 	const states = await sql`
         SELECT DISTINCT state
         FROM tenant_resource
         WHERE 1 = 1 ${countryClause};
     `
-	const stateList = states.map(({ state }) => state)
+	const stateList = states.map(({ state }) => state as string)
 
 	// Fetch cities
 	const cities = await sql`
@@ -95,7 +83,7 @@ export async function getResources(
         FROM tenant_resource
         WHERE 1 = 1 ${countryClause} ${stateClause};
     `
-	const cityList = cities.map(({ city }) => city)
+	const cityList = cities.map(({ city }) => city as string)
 
 	// Return ResourcesResponse object
 	return {
@@ -113,7 +101,7 @@ export async function create(inputResource: Resource): Promise<IResponse> {
 		const resource = await createResource(inputResource)
 		if (resource) return { status: 200, message: 'Created Resource' }
 		throw new Error()
-	} catch (e) {
+	} catch {
 		return { status: 500, message: 'Failed to create Resource' }
 	}
 }
@@ -126,7 +114,7 @@ export async function update(
 		const updated = await updateResource(id, resource)
 		if (updated) return { status: 200, message: 'Resource updated' }
 		throw new Error()
-	} catch (error) {
+	} catch {
 		return { status: 500, message: 'Failed to Update Resource' }
 	}
 }
@@ -140,7 +128,7 @@ export async function deleteResource(id: number): Promise<IResponse> {
 		`
 		if (deleteResource) return { status: 200, message: 'Deleted Resource' }
 		throw new Error()
-	} catch (error) {
+	} catch {
 		return { status: 500, message: 'Failed to Delete Resource' }
 	}
 }

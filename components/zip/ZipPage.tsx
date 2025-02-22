@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
 import { Review } from '@/util/interfaces/interfaces'
-import { IZipReviews } from '@/lib/review/review'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import AdsComponent from '../adsense/Adsense'
@@ -9,6 +8,7 @@ import InfiniteScroll from '../reviews/InfiniteScroll'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import ZipInfo from './ZipInfo'
 import { ISortOptions } from '../reviews/review'
+import { IZipReviews } from '@/lib/review/types/review'
 
 interface IProps {
 	city: string
@@ -30,46 +30,48 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 	const [isLoading, setIsLoading] = useState(false)
 
 	// Query
-	const queryParams = {
-		sort: 'new' as ISortOptions,
-		state: state,
-		country: country,
-		city: city,
-		zip: zip,
-		search: '',
-		limit: '25',
-	}
-
-	const fetchData = async () => {
-		setIsLoading(true)
-		try {
-			const moreData = await fetchReviews({ page, ...queryParams })
-
-			setReviews((prevReviews) => {
-				if (page === 1) {
-					// Initial fetch
-					return [...moreData.reviews]
-				} else {
-					// If page changed or neither page nor other query parameters changed, append new reviews
-					return [...prevReviews, ...moreData.reviews]
-				}
-			})
-
-			if (moreData.reviews.length <= 0 || reviews.length >= moreData.total) {
-				setHasMore(false)
-			} else {
-				setHasMore(true)
-			}
-		} catch (error) {
-			console.error('Error fetching reviews:', error)
-		} finally {
-			setIsLoading(false)
-		}
-	}
+	const queryParams = useMemo(
+		() => ({
+			sort: 'new' as ISortOptions,
+			state: state,
+			country: country,
+			city: city,
+			zip: zip,
+			search: '',
+			limit: '25',
+		}),
+		[state, country, city, zip],
+	)
 
 	useEffect(() => {
-		fetchData()
-	}, [queryParams, page])
+		const fetchData = async () => {
+			setIsLoading(true)
+			try {
+				const moreData = await fetchReviews({ page, ...queryParams })
+
+				setReviews((prevReviews) => {
+					if (page === 1) {
+						// Initial fetch
+						return [...moreData.reviews]
+					} else {
+						// If page changed or neither page nor other query parameters changed, append new reviews
+						return [...prevReviews, ...moreData.reviews]
+					}
+				})
+
+				if (moreData.reviews.length <= 0 || reviews.length >= moreData.total) {
+					setHasMore(false)
+				} else {
+					setHasMore(true)
+				}
+			} catch {
+				console.error('Error fetching reviews')
+			} finally {
+				setIsLoading(false)
+			}
+		}
+		fetchData().catch(() => console.error('Failed to get Zip Reviews'))
+	}, [queryParams, page, reviews.length])
 
 	// Reset hasMore when queryParams change
 	useEffect(() => {
@@ -123,11 +125,11 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 					<div className='flex lg:flex-row lg:gap-2 lg:divide-x lg:divide-gray-200'>
 						{!reviews.length ? (
 							<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
-								<h1 className='mt-4 text-3xl   text-gray-900 sm:text-5xl'>
+								<h1 className='mt-4 text-3xl text-gray-900 sm:text-5xl'>
 									No results found
 								</h1>
 								<p className='mt-6 text-base leading-7 text-gray-600'>
-									Sorry, we couldn't find any results for those filters.
+									Sorry, we couldn&apos;t find any results for those filters.
 								</p>
 							</div>
 						) : (

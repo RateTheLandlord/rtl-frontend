@@ -1,25 +1,16 @@
 import sql from '../db'
 import { Keywords } from '@/util/interfaces/interfaces'
 import { createKeyword } from './models/flagged-keywords-data-layer'
-
-export interface IResponse {
-	status: number
-	message: string
-}
-
-export interface getFlaggedKeywordsResponse {
-	keywords: Array<Keywords>
-	total: number
-}
+import { getFlaggedKeywordsResponse, IResponse } from './types'
 
 export async function getFlaggedKeywords(): Promise<getFlaggedKeywordsResponse> {
 	// Fetch Keywords
-	const keywords = await sql<Array<Keywords>>`SELECT *
+	const keywords = await sql<Keywords[]>`SELECT *
         FROM keyword_flags;`
 
 	// Fetch Total Number of Landlords
 	const totalResult = await sql`SELECT COUNT(*) as count FROM keyword_flags;`
-	const total = totalResult[0].count
+	const total = totalResult[0].count as number
 
 	// Return object
 	return {
@@ -33,7 +24,7 @@ export async function create(inputKeyword: Keywords): Promise<IResponse> {
 		const landlord = await createKeyword(inputKeyword)
 		if (landlord) return { status: 200, message: 'Created Landlord' }
 		throw new Error()
-	} catch (e) {
+	} catch {
 		return { status: 500, message: 'Failed to create Landlord' }
 	}
 }
@@ -47,7 +38,7 @@ export async function deleteKeyword(id: number): Promise<IResponse> {
 		`
 		if (deleteResource) return { status: 200, message: 'Deleted Keyword' }
 		throw new Error()
-	} catch (error) {
+	} catch {
 		return { status: 500, message: 'Failed to Delete Keyword' }
 	}
 }

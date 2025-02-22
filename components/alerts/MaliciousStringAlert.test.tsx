@@ -1,8 +1,10 @@
 /**
  * @jest-environment jsdom
  */
-import { render, fireEvent, screen } from '@testing-library/react'
+import { render, fireEvent, screen } from '@/test-utils'
 import MaliciousStringAlert from './MaliciousStringAlert'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('MaliciousStringAlert Component', () => {
 	test('renders correctly', () => {
@@ -24,11 +26,7 @@ describe('MaliciousStringAlert Component', () => {
 				setMaliciousAlertOpen={mockSetMaliciousAlertOpen}
 			/>,
 		)
-		expect(
-			screen.getByText(
-				/Warning! We've detected that a link or script in your entry. Please remove or rephrase before submitting./i,
-			),
-		).toBeInTheDocument()
+		expect(screen.getByText('alerts.maliciousString')).toBeInTheDocument()
 	})
 
 	test('has dismiss button with correct role', () => {
@@ -53,5 +51,16 @@ describe('MaliciousStringAlert Component', () => {
 		fireEvent.click(screen.getByRole('button'))
 		expect(mockSetMaliciousAlertOpen).toHaveBeenCalled()
 		expect(mockSetMaliciousAlertOpen).toHaveBeenCalledWith(expect.any(Function))
+	})
+
+	it('Should not have a11y violation', async () => {
+		const mockSetMaliciousAlertOpen = jest.fn()
+		const { container } = render(
+			<MaliciousStringAlert
+				setMaliciousAlertOpen={mockSetMaliciousAlertOpen}
+			/>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

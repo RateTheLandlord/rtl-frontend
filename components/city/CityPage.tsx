@@ -1,10 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
-import { useTranslation } from 'next-i18next'
 import { Review, SortOptions } from '@/util/interfaces/interfaces'
 import ButtonLight from '../ui/button-light'
 import { sortOptions } from '@/util/helpers/filter-options'
-import { ICityReviews } from '@/lib/review/review'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import AdsComponent from '../adsense/Adsense'
@@ -18,6 +16,8 @@ import { fetchReviews } from '@/util/helpers/fetchReviews'
 import CityInfo from './CityInfo'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import AnalyticsComponent from '../analytics/analytics'
+import { ICityReviews } from '@/lib/review/types/review'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
 	city: string
@@ -28,7 +28,7 @@ interface IProps {
 
 const CityPage = ({ city, state, country, data }: IProps) => {
 	// Localization
-	const { t } = useTranslation('reviews')
+	const t = useTranslations('reviews')
 
 	// Redux
 	const query = useAppSelector((state) => state.query)
@@ -78,36 +78,35 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 		setPage(1)
 	}
 
-	const fetchData = async () => {
-		setIsLoading(true)
-		try {
-			const moreData = await fetchReviews({ page, ...queryParams })
-
-			setReviews((prevReviews) => {
-				if (page === 1) {
-					// Initial fetch
-					return [...moreData.reviews]
-				} else {
-					// If page changed or neither page nor other query parameters changed, append new reviews
-					return [...prevReviews, ...moreData.reviews]
-				}
-			})
-
-			if (moreData.reviews.length <= 0 || reviews.length >= moreData.total) {
-				setHasMore(false)
-			} else {
-				setHasMore(true)
-			}
-		} catch (error) {
-			console.error('Error fetching reviews:', error)
-		} finally {
-			setIsLoading(false)
-		}
-	}
-
 	useEffect(() => {
-		fetchData()
-	}, [queryParams, page])
+		const fetchData = async () => {
+			setIsLoading(true)
+			try {
+				const moreData = await fetchReviews({ page, ...queryParams })
+
+				setReviews((prevReviews) => {
+					if (page === 1) {
+						// Initial fetch
+						return [...moreData.reviews]
+					} else {
+						// If page changed or neither page nor other query parameters changed, append new reviews
+						return [...prevReviews, ...moreData.reviews]
+					}
+				})
+
+				if (moreData.reviews.length <= 0 || reviews.length >= moreData.total) {
+					setHasMore(false)
+				} else {
+					setHasMore(true)
+				}
+			} catch {
+				console.error('Error fetching reviews')
+			} finally {
+				setIsLoading(false)
+			}
+		}
+		fetchData().catch(() => console.error('Failed to Fetch City Reviews'))
+	}, [queryParams, page, reviews.length])
 
 	// Reset hasMore when queryParams change
 	useEffect(() => {
@@ -148,7 +147,7 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 					/>
 				</>
 			) : null}
-			<div className='mt-3 w-full px-2 md:px-0'>
+			<div data-testid='city-page' className='mt-3 w-full px-2 md:px-0'>
 				<AdsComponent slot='1526837416' />
 				<div className='mx-auto mt-5 flex max-w-2xl flex-col gap-3 lg:max-w-7xl'>
 					<CityInfo
@@ -162,7 +161,7 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 				</div>
 				<div className='mt-2 flex w-full justify-end px-4 lg:hidden'>
 					<ButtonLight onClick={() => setMobileFiltersOpen(true)}>
-						{t('reviews.filters')}
+						{t('filters')}
 					</ButtonLight>
 				</div>
 				<div className='mx-auto max-w-2xl lg:max-w-7xl'>
@@ -173,15 +172,15 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 						className='w-full'
 					>
 						<TabList className='flex w-full justify-center gap-4 border-b p-3'>
-							<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
-								{t('reviews.reviews')}
+							<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+								{t('reviews')}
 							</Tab>
-							<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+							<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
 								<div className='flex flex-row gap-1'>
-									<p>{t('reviews.analytics')}</p>
+									<p>{t('analytics')}</p>
 									<div className='flex h-full flex-col justify-start'>
-										<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-teal-500/10'>
-											{t('reviews.beta')}
+										<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-teal-500/10 ring-inset'>
+											{t('beta')}
 										</span>
 									</div>
 								</div>
@@ -208,11 +207,12 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 									/>
 									{!reviews.length ? (
 										<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
-											<h1 className='mt-4 text-3xl   text-gray-900 sm:text-5xl'>
+											<h1 className='mt-4 text-3xl text-gray-900 sm:text-5xl'>
 												No results found
 											</h1>
 											<p className='mt-6 text-base leading-7 text-gray-600'>
-												Sorry, we couldn't find any results for those filters.
+												Sorry, we couldn&apos;t find any results for those
+												filters.
 											</p>
 										</div>
 									) : (

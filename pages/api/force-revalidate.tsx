@@ -1,14 +1,13 @@
 import { runMiddleware } from '@/util/cors'
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-const handler = async (req, res) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res)
 	const session = await getSession(req, res)
 	const user = session?.user
 
-	const path = req.query.path
-
-	console.log(`/landlord/${encodeURIComponent(path)}`)
+	const path = req.query.path as string
 
 	if (!path) {
 		return res.status(401).json({ message: 'Invalid path' })
@@ -21,7 +20,7 @@ const handler = async (req, res) => {
 	try {
 		await res.revalidate(`/landlord/${encodeURIComponent(path)}`)
 		return res.json({ revalidated: true })
-	} catch (err) {
+	} catch {
 		return res.status(500).send('Error revalidating')
 	}
 }

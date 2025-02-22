@@ -23,7 +23,7 @@ export const getStateStats = async (params: {
         FROM review
         WHERE state = ${state.toLocaleUpperCase()} AND country_code = ${country.toLocaleUpperCase()}
     `
-	const total = totalResult[0].count
+	const total = totalResult[0].count as number
 
 	const averageByCat = await sql`
         SELECT 
@@ -42,14 +42,14 @@ export const getStateStats = async (params: {
         FROM review
         WHERE state = ${state.toLocaleUpperCase()} AND country_code = ${country.toLocaleUpperCase()}
     `
-	const average = Math.round(combinedAvgResult[0].combined_avg)
+	const average = Math.round(combinedAvgResult[0].combined_avg as number)
 
 	const catAverages = {
-		avg_repair: Math.round(averageByCat[0].avg_repair),
-		avg_health: Math.round(averageByCat[0].avg_health),
-		avg_stability: Math.round(averageByCat[0].avg_stability),
-		avg_respect: Math.round(averageByCat[0].avg_respect),
-		avg_privacy: Math.round(averageByCat[0].avg_privacy),
+		avg_repair: Math.round(averageByCat[0].avg_repair as number),
+		avg_health: Math.round(averageByCat[0].avg_health as number),
+		avg_stability: Math.round(averageByCat[0].avg_stability as number),
+		avg_respect: Math.round(averageByCat[0].avg_respect as number),
+		avg_privacy: Math.round(averageByCat[0].avg_privacy as number),
 	}
 
 	return {
@@ -68,16 +68,16 @@ interface ITopCityStats {
 export const getTopCitiesStats = async (params: {
 	state: string
 	country: string
-}): Promise<Array<ITopCityStats>> => {
+}): Promise<ITopCityStats[]> => {
 	const { state, country } = params
 
 	const cities = await sql`
         SELECT city, COUNT(*) as city_count FROM review WHERE state = ${state.toLocaleUpperCase()} AND country_code = ${country.toLocaleUpperCase()} GROUP BY city ORDER BY city_count DESC LIMIT 4;
     `
 
-	const cityList = cities.map(({ city }) => city)
+	const cityList = cities.map(({ city }) => city as string)
 
-	const citiesStats: Array<ITopCityStats> = []
+	const citiesStats: ITopCityStats[] = []
 
 	for (let i = 0; i < cityList.length; i++) {
 		const totalResult = await sql`
@@ -88,7 +88,7 @@ export const getTopCitiesStats = async (params: {
 				].toLocaleUpperCase()} AND state = ${state.toLocaleUpperCase()} AND country_code = ${country.toLocaleUpperCase()};
     `
 
-		const total = totalResult[0].count
+		const total = totalResult[0].count as number
 
 		const combinedAvgResult = await sql`
         SELECT 
@@ -98,7 +98,7 @@ export const getTopCitiesStats = async (params: {
 					i
 				].toLocaleUpperCase()} AND state = ${state.toLocaleUpperCase()} AND country_code = ${country.toLocaleUpperCase()}
     `
-		const average = Math.round(combinedAvgResult[0].combined_avg)
+		const average = Math.round(combinedAvgResult[0].combined_avg as number)
 
 		citiesStats.push({
 			total,

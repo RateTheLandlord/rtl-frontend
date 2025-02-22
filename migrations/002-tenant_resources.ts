@@ -22,4 +22,3 @@ exports.up = async function (DB) {
     `
 	}
 }
-

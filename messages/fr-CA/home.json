@@ -1,0 +1,21 @@
+{
+	"home": {
+		"icon": {
+			"title": "Gardez votre communauté informée.",
+			"anonymity": "Anonymat",
+			"anon-sub": "Partagez votre expérience locative en toute confiance.",
+			"solidarity": "Solidarité",
+			"sol-sub": "Rejoignez d'autres locataires pour créer une communauté informée.",
+			"transparency": "Transparence",
+			"trans-sub": "Aidez les autres à prendre des décisions éclairées en matière de logement."
+		},
+		"home": {
+			"hero": {
+				"title": "Partagez de l'information avec d'autres locataires comme vous.",
+				"body": "Nous sommes une plateforme de communauté qui amplifie les voix des locataires afin de responsabiliser les propriétaires.",
+				"submit": "Soumettre un avis",
+				"read": "Lire les avis"
+			}
+		}
+	}
+}

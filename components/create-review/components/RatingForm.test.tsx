@@ -1,12 +1,11 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen, fireEvent } from '@testing-library/react'
+import { fireEvent, screen } from '@/test-utils'
 import RatingForm from './RatingForm'
-
-jest.mock('react-i18next', () => ({
-	useTranslation: () => ({ t: (key: string) => key }),
-}))
+import { axe, toHaveNoViolations } from 'jest-axe'
+import { render } from '@/test-utils'
+expect.extend(toHaveNoViolations)
 
 jest.mock('@/components/ui/button', () =>
 	jest.fn(({ children, ...props }) => <button {...props}>{children}</button>),
@@ -57,19 +56,19 @@ describe('RatingForm Component', () => {
 		render(<RatingForm {...defaultProps} />)
 
 		expect(
-			screen.getByText('create-review.ratings-form.title'),
+			screen.getByText('createreview.ratings-form.title'),
 		).toBeInTheDocument()
 		expect(screen.getByText('Repair')).toBeInTheDocument()
 		expect(screen.getByText('Health')).toBeInTheDocument()
 		expect(screen.getByText('Privacy')).toBeInTheDocument()
 		expect(screen.getAllByText('RatingStars')).toHaveLength(3)
-		expect(screen.getByText('create-review.edit')).toBeInTheDocument()
+		expect(screen.getByText('createreview.edit')).toBeInTheDocument()
 	})
 
 	it('should call setRatingsOpen(true) when Edit button is clicked', () => {
 		render(<RatingForm {...defaultProps} />)
 
-		fireEvent.click(screen.getByText('create-review.edit'))
+		fireEvent.click(screen.getByText('createreview.edit'))
 
 		expect(mockSetRatingsOpen).toHaveBeenCalledWith(true)
 	})
@@ -83,10 +82,18 @@ describe('RatingForm Component', () => {
 	it('should call setShowReviewForm, setRatingsOpen(false), and setReviewOpen(true) when Continue button is clicked', () => {
 		render(<RatingForm {...defaultProps} ratingsOpen={true} />)
 
-		fireEvent.click(screen.getByText('create-review.continue'))
+		fireEvent.click(screen.getByText('createreview.continue'))
 
 		expect(mockSetShowReviewForm).toHaveBeenCalledWith(true)
 		expect(mockSetRatingsOpen).toHaveBeenCalledWith(false)
 		expect(mockSetReviewOpen).toHaveBeenCalledWith(true)
+	})
+
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<RatingForm {...defaultProps} ratingsOpen={true} />,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

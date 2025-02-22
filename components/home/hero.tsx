@@ -1,17 +1,17 @@
-import { useTranslation } from 'next-i18next'
 import LinkButtonLG from '../ui/link-button-lg'
 import LinkButtonLightLG from '../ui/link-button-light-lg'
 import { HouseIcon } from '../icons/HouseIcon'
+import { useTranslations } from 'next-intl'
 
 function Hero(): JSX.Element {
-	const { t } = useTranslation('home')
+	const t = useTranslations('home')
 	return (
 		<div
 			data-testid='home-hero-1'
 			className='mx-auto flex max-w-7xl flex-col-reverse px-6 pb-4 sm:pb-8 lg:flex-row lg:items-center lg:px-8'
 		>
 			<div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0'>
-				<h1 className='mt-2 text-center text-4xl  text-teal-600 sm:text-6xl lg:text-left'>
+				<h1 className='mt-2 text-center text-4xl text-teal-600 sm:text-6xl lg:text-left'>
 					{t('home.hero.title')}
 				</h1>
 				<p className='mt-6 text-center text-lg leading-8 text-gray-600 lg:text-left'>
@@ -26,7 +26,7 @@ function Hero(): JSX.Element {
 					</LinkButtonLightLG>
 				</div>
 			</div>
-			<div className='mx-auto flex max-w-2xl lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32'>
+			<div className='mx-auto flex max-w-2xl lg:mt-0 lg:mr-0 lg:ml-10 lg:max-w-none lg:flex-none xl:ml-32'>
 				<div className='max-w-3xl flex-none sm:max-w-5xl lg:max-w-none'>
 					<HouseIcon className='h-80 w-80 md:h-[500px] md:w-[500px]' />
 				</div>

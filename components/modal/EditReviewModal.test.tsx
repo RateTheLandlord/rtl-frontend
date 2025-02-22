@@ -1,11 +1,13 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import EditReviewModal from './EditReviewModal'
 import { store } from '@/redux/store'
 import { Provider } from 'react-redux'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('EditReviewModal', () => {
 	const mockSelectedReview = {
@@ -28,6 +30,12 @@ describe('EditReviewModal', () => {
 		admin_edited: false,
 		moderation_reason: null,
 		moderator: null,
+		delete_date: null,
+		delete_reason: null,
+		deleted_by: null,
+		restore_date: null,
+		restore_reason: null,
+		restored_by: null,
 	}
 
 	test('renders EditReviewModal with selected review data', () => {
@@ -61,5 +69,22 @@ describe('EditReviewModal', () => {
 		expect(screen.getByLabelText('Review')).toHaveValue(
 			mockSelectedReview.review,
 		)
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<UserProvider>
+				<Provider store={store}>
+					<EditReviewModal
+						selectedReview={mockSelectedReview}
+						handleMutate={jest.fn()}
+						setEditReviewOpen={jest.fn()}
+						editReviewOpen={true}
+						setSelectedReview={jest.fn()}
+					/>
+				</Provider>
+			</UserProvider>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

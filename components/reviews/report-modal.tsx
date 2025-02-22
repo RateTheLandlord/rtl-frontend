@@ -1,9 +1,14 @@
 import React, { SetStateAction, useState } from 'react'
-import { Dialog } from '@headlessui/react'
+import {
+	Description,
+	Dialog,
+	DialogPanel,
+	DialogTitle,
+} from '@headlessui/react'
 import ButtonLight from '../ui/button-light'
 import Button from '../ui/button'
 import { Review } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import { useReCaptcha } from 'next-recaptcha-v3'
 
 interface IProps {
@@ -18,36 +23,37 @@ interface IReportReason {
 	reason: string
 }
 
-const reportReasons: Array<IReportReason> = [
+const reportReasons: IReportReason[] = [
 	{
 		id: 1,
 		key: 'address',
-		reason: 'report.address',
+		reason: 'address',
 	},
 	{
 		id: 3,
 		key: 'fake',
-		reason: 'report.fake',
+		reason: 'fake',
 	},
 	{
 		id: 4,
 		key: 'language',
-		reason: 'report.language',
+		reason: 'language',
 	},
 	{
 		id: 5,
 		key: 'sensitive',
-		reason: 'report.sensitive',
+		reason: 'sensitive',
 	},
 	{
 		id: 8,
 		key: 'other',
-		reason: 'report.other',
+		reason: 'other',
 	},
 ]
 
 function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
-	const { t } = useTranslation('reviews')
+	const t = useTranslations('reviews')
+	const tr = useTranslations('report')
 	const [reason, setReason] = useState<string>(reportReasons[0].key)
 	const [selectedReason, setSelectedReason] = useState<IReportReason>(
 		reportReasons[0],
@@ -108,12 +114,12 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 				data-testid='report-modal-1'
 			/>
 			<div className='fixed inset-0 flex items-center justify-center p-4'>
-				<Dialog.Panel className='w-full max-w-sm rounded-md bg-white p-10'>
+				<DialogPanel className='w-full max-w-sm rounded-md bg-white p-10'>
 					{submitError ? (
 						<div className='flex w-full flex-col items-center gap-4'>
-							<Dialog.Title className='text-red-400'>
-								{t('reviews.report.error')}
-							</Dialog.Title>
+							<DialogTitle className='text-red-400'>
+								{t('report.error')}
+							</DialogTitle>
 							<div className='flex w-full justify-end'>
 								<ButtonLight
 									onClick={() => {
@@ -123,14 +129,14 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 										setIsOpen(false)
 									}}
 								>
-									{t('reviews.report.cancel')}
+									{t('report.cancel')}
 								</ButtonLight>
 							</div>
 						</div>
 					) : null}
 					{submitSuccess ? (
 						<div className='flex w-full flex-col items-center gap-4'>
-							<Dialog.Title>{t('reviews.report.success')}</Dialog.Title>
+							<DialogTitle>{t('report.success')}</DialogTitle>
 							<div className='flex w-full justify-end'>
 								<ButtonLight
 									onClick={() => {
@@ -140,34 +146,34 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 										setIsOpen(false)
 									}}
 								>
-									{t('reviews.report.cancel')}
+									{t('report.cancel')}
 								</ButtonLight>
 							</div>
 						</div>
 					) : null}
 					{!submitError && !submitSuccess ? (
 						<>
-							<Dialog.Title className='mb-2 text-center text-xl'>
-								{t('reviews.report.report')}
-							</Dialog.Title>
-							<Dialog.Description className='text-sm'>
-								{t('reviews.report.description')}
-							</Dialog.Description>
+							<DialogTitle className='mb-2 text-center text-xl'>
+								{t('report.report')}
+							</DialogTitle>
+							<Description className='text-sm'>
+								{t('report.description')}
+							</Description>
 
 							<div className='mb-3'>
 								<label
 									htmlFor='reason'
-									className='block text-sm  leading-6 text-gray-900'
+									className='block text-sm leading-6 text-gray-900'
 								>
 									{t('report.select-reason')}
 								</label>
 								<select
 									id='reason'
 									name='reason'
-									className='mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'
+									className='mt-2 block w-full rounded-md border-0 py-1.5 pr-10 pl-3 text-gray-900 ring-1 ring-gray-300 ring-inset focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'
 									defaultValue={reason}
 									onChange={(e) => {
-										const selected: Array<IReportReason> = reportReasons.filter(
+										const selected: IReportReason[] = reportReasons.filter(
 											(reason: IReportReason) => reason.key === e.target.value,
 										)
 										setSelectedReason(selected[0])
@@ -177,7 +183,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 									{reportReasons.map((reason) => {
 										return (
 											<option key={reason.id} value={reason.key}>
-												{t(reason.reason)}
+												{tr(reason.reason)}
 											</option>
 										)
 									})}
@@ -188,9 +194,9 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 								<div className='mb-3'>
 									<label
 										htmlFor='report'
-										className='block text-sm  text-gray-700'
+										className='block text-sm text-gray-700'
 									>
-										{t('reviews.report.reason')}
+										{t('report.reason')}
 									</label>
 									<div className='mt-1'>
 										<textarea
@@ -222,18 +228,22 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 										setIsOpen(false)
 									}}
 								>
-									{t('reviews.report.cancel')}
+									{t('report.cancel')}
 								</ButtonLight>
 								<Button
-									onClick={() => handleSubmit()}
+									onClick={() => {
+										handleSubmit().catch(() =>
+											console.error('Failed To Submit Report'),
+										)
+									}}
 									disabled={reason.length >= 255}
 								>
-									{t('reviews.report.submit')}
+									{t('report.submit')}
 								</Button>
 							</div>
 						</>
 					) : null}
-				</Dialog.Panel>
+				</DialogPanel>
 			</div>
 		</Dialog>
 	)

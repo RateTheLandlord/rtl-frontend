@@ -1,9 +1,17 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { Fragment, useEffect } from 'react'
-import { Dialog, Popover, Transition } from '@headlessui/react'
+import {
+	Dialog,
+	DialogPanel,
+	PopoverGroup,
+	Transition,
+	TransitionChild,
+} from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import SearchBar from './ui/searchbar'
 import { Options, IQuery } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import ComboBox from './ui/combobox'
 import { AppDispatch } from '@/redux/store'
 import {
@@ -15,6 +23,7 @@ import {
 	updateZip,
 } from '@/redux/query/querySlice'
 import ButtonLight from '../ui/button-light'
+import Button from '../ui/button'
 
 interface FiltersProps {
 	mobileFiltersOpen: boolean
@@ -47,7 +56,7 @@ export default function MobileReviewFilters({
 	fetchDynamicFilterOptions,
 	query,
 }: FiltersProps) {
-	const { t } = useTranslation('reviews')
+	const t = useTranslations('reviews')
 
 	useEffect(() => {
 		fetchDynamicFilterOptions()
@@ -60,13 +69,13 @@ export default function MobileReviewFilters({
 	}, [countryFilter])
 
 	return (
-		<Transition.Root show={mobileFiltersOpen} as={Fragment}>
+		<Transition show={mobileFiltersOpen} as={Fragment}>
 			<Dialog
 				as='div'
 				className='relative z-40 lg:hidden'
 				onClose={setMobileFiltersOpen}
 			>
-				<Transition.Child
+				<TransitionChild
 					as={Fragment}
 					enter='transition-opacity ease-linear duration-300'
 					enterFrom='opacity-0'
@@ -75,14 +84,14 @@ export default function MobileReviewFilters({
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<div className='fixed inset-0 bg-black bg-opacity-25' />
-				</Transition.Child>
+					<div className='bg-opacity-25 fixed inset-0 bg-black' />
+				</TransitionChild>
 
 				<div
 					className='fixed inset-0 z-40 flex'
 					data-testid='mobile-review-filters-1'
 				>
-					<Transition.Child
+					<TransitionChild
 						as={Fragment}
 						enter='transition ease-in-out duration-300 transform'
 						enterFrom='translate-x-full'
@@ -91,11 +100,9 @@ export default function MobileReviewFilters({
 						leaveFrom='translate-x-0'
 						leaveTo='translate-x-full'
 					>
-						<Dialog.Panel className='relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl'>
+						<DialogPanel className='relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl'>
 							<div className='flex items-center justify-between px-4'>
-								<h2 className='text-lg  text-gray-900'>
-									{t('reviews.filters')}
-								</h2>
+								<h2 className='text-lg text-gray-900'>{t('filters')}</h2>
 								<button
 									type='button'
 									className='-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400'
@@ -108,7 +115,7 @@ export default function MobileReviewFilters({
 
 							{/* Filters */}
 							<div className='mt-4'>
-								<Popover.Group className='mx-2 flex flex-col items-center gap-2 divide-y'>
+								<PopoverGroup className='mx-2 flex flex-col items-center gap-2 divide-y'>
 									<SearchBar
 										setSearchState={(str: string) =>
 											dispatch(updateSearch(str))
@@ -120,28 +127,17 @@ export default function MobileReviewFilters({
 										state={cityFilter}
 										setState={(opt: Options) => dispatch(updateCity(opt))}
 										options={dynamicCityOptions}
-										name={t('reviews.city')}
+										name={t('city')}
 									/>
 									{zipOptions && (
 										<ComboBox
 											state={zipFilter}
 											setState={(opt: Options) => dispatch(updateZip(opt))}
 											options={dynamicZipOptions}
-											name={t('reviews.zip')}
+											name={t('zip')}
 										/>
 									)}
-									<div className='w-full pt-2'>
-										<button
-											onClick={() => {
-												updateParams()
-												setMobileFiltersOpen(false)
-											}}
-											className='w-full rounded-lg bg-teal-600 py-2 text-white'
-										>
-											Apply Filters
-										</button>
-									</div>
-									<div className='flex w-full justify-end pt-2'>
+									<div className='flex w-full justify-end gap-2 pt-2'>
 										<ButtonLight
 											onClick={() => {
 												dispatch(clearReviewFilters())
@@ -151,13 +147,21 @@ export default function MobileReviewFilters({
 										>
 											Clear Filters
 										</ButtonLight>
+										<Button
+											onClick={() => {
+												updateParams()
+												setMobileFiltersOpen(false)
+											}}
+										>
+											Apply Filters
+										</Button>
 									</div>
-								</Popover.Group>
+								</PopoverGroup>
 							</div>
-						</Dialog.Panel>
-					</Transition.Child>
+						</DialogPanel>
+					</TransitionChild>
 				</div>
 			</Dialog>
-		</Transition.Root>
+		</Transition>
 	)
 }

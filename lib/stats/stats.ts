@@ -1,12 +1,14 @@
 import dayjs from 'dayjs'
 import sql from '../db'
+import { DetailedStats, StatsQuery, TotalStats } from './types'
+import { Row, RowList } from 'postgres'
 
-type StatsQuery = {
-	startDate?: string
-	groupBy?: string
-}
+// TODO Properly Type this file
 
-export async function get({ startDate, groupBy }: StatsQuery): Promise<any> {
+export async function get({ startDate, groupBy }: StatsQuery): Promise<{
+	detailed_stats: DetailedStats[]
+	total_stats: TotalStats
+}> {
 	const DEFAULT_START = dayjs(new Date())
 		.subtract(7, 'days')
 		.format('YYYY-MM-DD')
@@ -16,12 +18,12 @@ export async function get({ startDate, groupBy }: StatsQuery): Promise<any> {
 
 	const reviewsStatistics = await getReviewStatistics(dateRange)
 	const reviewByDate = await getReviewByDate(dateRange)
-	const formattedReviews = reviewsStatistics.map((row) => ({
-		date: row.date,
-		country_codes: row.country_codes || {},
-		cities: row.cities || {},
-		state: row.states || {},
-		zip: row.zips || {},
+	const formattedReviews = reviewsStatistics.map((row: Row) => ({
+		date: row.date as string,
+		country_codes: (row.country_codes as Record<string, number>) || {},
+		cities: (row.cities as Record<string, number>) || {},
+		state: (row.states as Record<string, number>) || {},
+		zip: (row.zips as Record<string, number>) || {},
 	}))
 
 	const detailed_stats =
@@ -29,7 +31,7 @@ export async function get({ startDate, groupBy }: StatsQuery): Promise<any> {
 			? combineArrays(
 					combineObjectsByMonth(formattedReviews),
 					combineObjectsByMonth(reviewByDate),
-			  )
+				)
 			: combineArrays(formattedReviews, reviewByDate)
 
 	const total_stats = await getTotalStats()
@@ -37,7 +39,7 @@ export async function get({ startDate, groupBy }: StatsQuery): Promise<any> {
 	return { detailed_stats, total_stats }
 }
 
-export async function getReviewStatistics(dateRange: string) {
+async function getReviewStatistics(dateRange: string): Promise<RowList<Row[]>> {
 	return await sql`
 	WITH ReviewStats AS (
 	  SELECT
@@ -73,7 +75,7 @@ export async function getReviewStatistics(dateRange: string) {
   `
 }
 
-export async function getReviewByDate(dateRange: string) {
+async function getReviewByDate(dateRange: string) {
 	return await sql`
     SELECT
 		date_trunc('day', date_added) AS date,
@@ -88,7 +90,7 @@ export async function getReviewByDate(dateRange: string) {
     `
 }
 
-export function combineObjectsByMonth(objects) {
+function combineObjectsByMonth(objects) {
 	const groupedByMonth = {}
 
 	objects.forEach((obj) => {
@@ -140,7 +142,7 @@ export function combineObjectsByMonth(objects) {
 	return Object.values(groupedByMonth)
 }
 
-export function combineArrays(detailed_stats, reviewsByDate) {
+function combineArrays(detailed_stats, reviewsByDate) {
 	return detailed_stats.map((reviewStat) => {
 		const correspondingReview = reviewsByDate.find(
 			(review) =>
@@ -151,7 +153,7 @@ export function combineArrays(detailed_stats, reviewsByDate) {
 	})
 }
 
-export async function getTotalStats(): Promise<any> {
+async function getTotalStats(): Promise<TotalStats> {
 	const getReviewStats = async (
 		countryCode: string,
 	): Promise<{ total: number; states: { key: string; total: number }[] }> => {
@@ -163,7 +165,7 @@ export async function getTotalStats(): Promise<any> {
 			await sql`SELECT DISTINCT state FROM review WHERE country_code = ${countryCode}`
 		const states_list = statesResult.map(({ state }) => state)
 
-		const total_for_states: Array<{ key: string; total: number }> = []
+		const total_for_states: { key: string; total: number }[] = []
 
 		for (let i = 0; i < states_list.length; i++) {
 			const key = states_list[i]

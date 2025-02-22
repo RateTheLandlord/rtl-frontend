@@ -1,10 +1,11 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/test-utils'
 import LandlordPage from './LandlordPage'
-import { ILandlordReviews } from '@/lib/review/review'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { axe } from 'jest-axe'
+import { ILandlordReviews } from '@/lib/review/types/Queries'
 
 describe('LandlordPage', () => {
 	const landlord = 'John Doe'
@@ -31,6 +32,12 @@ describe('LandlordPage', () => {
 				date_added: new Date(),
 				moderation_reason: null,
 				moderator: null,
+				delete_date: null,
+				delete_reason: null,
+				deleted_by: null,
+				restore_date: null,
+				restore_reason: null,
+				restored_by: null,
 			},
 			// ... add more sample reviews if needed
 		],
@@ -56,5 +63,14 @@ describe('LandlordPage', () => {
 	it('renders the landlord information', () => {
 		const landlordInfo = screen.getByText(landlord)
 		expect(landlordInfo).toBeInTheDocument()
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<UserProvider>
+				<LandlordPage landlord={landlord} data={data} />
+			</UserProvider>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

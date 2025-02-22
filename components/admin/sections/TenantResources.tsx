@@ -20,7 +20,7 @@ import RemoveResourceModal from '@/components/modal/RemoveResourceModal'
 import { toast } from 'react-toastify'
 
 const TenantResources = () => {
-	const { data, error, mutate } = useSWR<ResourceResponse>(
+	const { data, error, mutate } = useSWR<ResourceResponse, unknown>(
 		['/api/tenant-resources/get-resources', { limit: '1000' }],
 		fetchWithBody,
 	)
@@ -82,7 +82,7 @@ const TenantResources = () => {
 				}
 			})
 			.then(() => {
-				mutate()
+				mutate().catch(() => console.error('Failed to Mutute Tenant Resources'))
 				setAddResourceOpen(false)
 				toast.success('Success!')
 				resetForm()
@@ -95,7 +95,7 @@ const TenantResources = () => {
 	}
 
 	const handleMutate = () => {
-		mutate()
+		mutate().catch(() => console.error('Failed to Mutute Tenant Resources'))
 	}
 	return (
 		<div className='container flex w-full flex-col justify-center'>
@@ -144,7 +144,6 @@ const TenantResources = () => {
 						/>
 					}
 					onSubmit={onSubmitNewResource}
-					buttonColour='blue'
 					selectedId={1}
 				/>
 			)}
@@ -165,7 +164,7 @@ const TenantResources = () => {
 						>
 							<div className='min-w-0'>
 								<div className='flex items-center justify-start gap-x-3'>
-									<p className='text-sm  leading-6 text-gray-900'>
+									<p className='text-sm leading-6 text-gray-900'>
 										{resource.name}
 									</p>
 
@@ -198,7 +197,7 @@ const TenantResources = () => {
 										leaveFrom='transform opacity-100 scale-100'
 										leaveTo='transform opacity-0 scale-95'
 									>
-										<MenuItems className='absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none'>
+										<MenuItems className='absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 ring-1 shadow-lg ring-gray-900/5 focus:outline-none'>
 											<MenuItem>
 												{({ active }) => (
 													<button

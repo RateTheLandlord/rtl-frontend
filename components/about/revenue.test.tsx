@@ -2,19 +2,15 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, RenderResult } from '@testing-library/react'
-import { useTranslation } from 'react-i18next'
 import Revenue from './revenue'
-
-jest.mock('react-i18next')
+import { axe, toHaveNoViolations } from 'jest-axe'
+import { render, RenderResult } from '@/test-utils'
+expect.extend(toHaveNoViolations)
 
 describe('Revenue', () => {
 	let renderResult: RenderResult
 
 	beforeEach(() => {
-		const tMock = jest.fn((key: string) => key)
-		;(useTranslation as jest.Mock).mockReturnValue({ t: tMock })
-
 		renderResult = render(<Revenue />)
 	})
 
@@ -32,5 +28,11 @@ describe('Revenue', () => {
 		// Check if the contributing paragraph is displayed correctly
 		const paragraphElement = getByText('about.revenue.info')
 		expect(paragraphElement).toBeInTheDocument()
+	})
+
+	it('Should not have a11y violation', async () => {
+		const { container } = render(<Revenue />)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

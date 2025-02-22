@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import CityPage from '@/components/city/CityPage'
 import Spinner from '@/components/ui/Spinner'
-import { ICityReviews, getCityReviews } from '@/lib/review/review'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { getCityReviews } from '@/lib/review/city'
+import { ICityQuery } from '@/lib/review/types/Queries'
+import { ICityReviews } from '@/lib/review/types/review'
 
 interface IProps {
 	city: string
@@ -72,7 +75,7 @@ const City = ({ city, state, country, data }: IProps) => {
 	)
 }
 
-export async function getStaticPaths() {
+export function getStaticPaths() {
 	return {
 		paths: [],
 		fallback: 'blocking',
@@ -80,8 +83,26 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ locale, params }) {
-	console.log(params)
-	const data = await getCityReviews(params)
+	const resourcesMessages = (await import(
+		`@/messages/${locale}/resources.json`
+	)) as Record<string, string>
+	const alertsMessages = (await import(
+		`@/messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`@/messages/${locale}/layout.json`
+	)) as Record<string, string>
+	const filtersMessages = (await import(
+		`@/messages/${locale}/filters.json`
+	)) as Record<string, string>
+	const reviewsMessages = (await import(
+		`@/messages/${locale}/reviews.json`
+	)) as Record<string, string>
+	const landlordMessages = (await import(
+		`@/messages/${locale}/landlord.json`
+	)) as Record<string, string>
+
+	const data = await getCityReviews(params as ICityQuery)
 
 	if (data.reviews.length === 0) {
 		return {
@@ -94,19 +115,22 @@ export async function getStaticProps({ locale, params }) {
 
 	// Pass post data to the page via props
 	return {
-		props: JSON.parse(JSON.stringify({
+		props: JSON.parse(
+			JSON.stringify({
 				city: params.city,
 				state: params.state,
 				country: params.country_code,
 				data: data,
-				...(await serverSideTranslations(locale, [
-					'filters',
-					'resources',
-					'layout',
-					'landlord',
-					'reviews'
-				  ])),
-			})),
+				messages: {
+					...resourcesMessages,
+					...alertsMessages,
+					...layoutMessages,
+					...reviewsMessages,
+					...filtersMessages,
+					...landlordMessages,
+				},
+			}),
+		),
 		// Re-generate the page
 		// if a request comes in after 100 seconds
 		revalidate: 100,

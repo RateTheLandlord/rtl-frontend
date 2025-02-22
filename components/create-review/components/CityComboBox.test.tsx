@@ -2,14 +2,16 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@/test-utils'
 import CityComboBox from './CityComboBox'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 interface RenderComponentProps {
 	state: string | undefined
 	setState: (state: string) => void
-	options: Array<ILocationHookResponse>
+	options: ILocationHookResponse[]
 	searching: boolean
 	error: boolean
 	errorText: string
@@ -127,5 +129,21 @@ describe('CityComboBox', () => {
 		await waitFor(() => {
 			expect(screen.getByText('Loading...')).toBeInTheDocument()
 		})
+	})
+
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<CityComboBox
+				name='City'
+				state='some state'
+				setState={handleChange}
+				options={[]}
+				searching={true}
+				error={false}
+				errorText=''
+			/>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

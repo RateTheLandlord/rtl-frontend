@@ -5,16 +5,8 @@ import { Map as MapView, Marker } from 'react-map-gl'
 import CustomMarker from './CustomMarker'
 import { getStartingLocation } from '@/util/helpers/getStartingLocation'
 import Information from './Information'
-import { IZipLocations } from '@/lib/location/location'
+import { IZipLocations } from '@/lib/location/types'
 import { useRouter } from 'next/router'
-
-export interface ILocationType {
-	longitude: number
-	latitude: number
-	id: number
-	name: string
-	value: string
-}
 
 interface MapProps {
 	countryFilter: Options | null
@@ -27,8 +19,8 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 	// Consolidate related states
 	const [formData, setFormData] = useState({
 		zipCodes: [] as Options[],
-		country: countryFilter as Options | null,
-		state: stateFilter as Options | null,
+		country: countryFilter,
+		state: stateFilter,
 		dynamicStateOptions: [] as Options[],
 		selectedPoint: null as IZipLocations | null,
 		locations: [] as IZipLocations[],
@@ -63,8 +55,8 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 				'',
 			)
 			setFormData((prevData) => ({ ...prevData, zipCodes: options.zips }))
-		} catch (error) {
-			console.error('Error fetching zip codes:', error)
+		} catch {
+			console.error('Error fetching zip codes')
 		}
 	}
 
@@ -113,20 +105,23 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 					if (!res.ok) throw new Error('Network response was not ok')
 					const data = await res.json()
 					setFormData((prevData) => ({ ...prevData, locations: data }))
-				} catch (error) {
-					console.error('Error fetching locations:', error)
+				} catch {
+					console.error('Error fetching locations')
 				}
 			}
 			getLocations()
 		}
-	}, [formData.zipCodes])
+	}, [formData.zipCodes, formData.country?.value])
 
 	const updateSelectedPoint = (point: IZipLocations | null) => {
 		setFormData((prevData) => ({ ...prevData, selectedPoint: point }))
 	}
 
 	return (
-		<div className='divide mt-2 flex flex-col gap-2 divide-teal-600 lg:flex-row'>
+		<div
+			data-testid='map-component'
+			className='divide mt-2 flex flex-col gap-2 divide-teal-600 lg:flex-row'
+		>
 			{/* Filter Options */}
 			<div className='basis-1/5'>
 				{formData.selectedPoint && (

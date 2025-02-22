@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { IQuery, Options, SortOptions } from '@/util/interfaces/interfaces'
 import SearchBar from './ui/searchbar'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import ComboBox from './ui/combobox'
 import { AppDispatch } from '@/redux/store'
 import {
@@ -16,6 +18,7 @@ import {
 import ButtonLight from '../ui/button-light'
 import Spinner from '../ui/Spinner'
 import SortList from './ui/sort-list'
+import Button from '../ui/button'
 
 //Review filters and Logic
 
@@ -58,9 +61,15 @@ function ReviewFilters({
 	fetchDynamicFilterOptions,
 	query,
 }: FiltersProps): JSX.Element {
-	const { t } = useTranslation('reviews')
-	const keyDownAction = (e) => {
-		e.key === 'Enter' || e.key === 'NumpadEnter' ? updateParams() : {}
+	const t = useTranslations('reviews')
+	interface KeyDownActionEvent extends React.KeyboardEvent<HTMLDivElement> {
+		key: string
+	}
+
+	const keyDownAction = (e: KeyDownActionEvent): void => {
+		if (e.key === 'Enter' || e.key === 'NumpadEnter') {
+			updateParams()
+		}
 	}
 
 	useEffect(() => {
@@ -77,14 +86,14 @@ function ReviewFilters({
 		dispatch(updateState(stateFilter))
 		dispatch(updateCity(cityFilter))
 		dispatch(updateZip(zipFilter))
-	}, [])
+	}, [cityFilter, dispatch, stateFilter, zipFilter])
 
 	return (
 		<div data-testid='review-filters-1' className='mt-6 hidden lg:block'>
 			{/* Filters */}
 			<section aria-labelledby='filter-heading'>
 				<h2 id='filter-heading' className='sr-only'>
-					{t('reviews.filters')}
+					{t('filters')}
 				</h2>
 
 				<div className='relative z-10 bg-white pb-4'>
@@ -109,7 +118,7 @@ function ReviewFilters({
 											state={selectedSort}
 											setState={setSelectedSort}
 											options={sortOptions}
-											name={t('reviews.sort')}
+											name={t('sort')}
 										/>
 									</div>
 
@@ -118,7 +127,7 @@ function ReviewFilters({
 											state={cityFilter}
 											setState={(opt: Options) => dispatch(updateCity(opt))}
 											options={dynamicCityOptions}
-											name={t('reviews.city')}
+											name={t('city')}
 										/>
 									</div>
 									<div className='py-2'>
@@ -127,7 +136,7 @@ function ReviewFilters({
 												state={zipFilter}
 												setState={(opt: Options) => dispatch(updateZip(opt))}
 												options={dynamicZipOptions}
-												name={t('reviews.zip')}
+												name={t('zip')}
 											/>
 										)}
 									</div>
@@ -136,27 +145,25 @@ function ReviewFilters({
 						</div>
 					</div>
 					<div className='flex w-full flex-col gap-2 border-t border-t-gray-200 py-2 lg:px-2'>
-						<button
-							onClick={() => {
-								updateParams()
-							}}
-							type='submit'
-							className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm  text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${'bg-teal-600 hover:bg-teal-700'}`}
-							data-testid='submit-button-1'
-						>
-							{loading ? (
-								<Spinner height='h-4' width='w-4' colour='text-white' />
-							) : (
-								t('reviews.update')
-							)}
-						</button>
+						{loading ? (
+							<Spinner height='h-4' width='w-4' colour='text-white' />
+						) : (
+							<Button
+								onClick={() => {
+									updateParams()
+								}}
+							>
+								{t('update')}
+							</Button>
+						)}
+
 						<ButtonLight
 							onClick={() => {
 								dispatch(clearReviewFilters())
 								updateParams()
 							}}
 						>
-							{t('reviews.clear')}
+							{t('clear')}
 						</ButtonLight>
 					</div>
 				</div>

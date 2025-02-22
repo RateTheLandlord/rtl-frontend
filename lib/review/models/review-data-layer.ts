@@ -1,7 +1,7 @@
-import { FAILED_TO_RETRIEVE_REVIEWS } from '@/lib/auth/constants'
 import { IResult } from '../helpers'
 import sql from '@/lib/db'
-import { Review, ReviewResponseStatus } from '@/lib/review/models/review'
+import { Review } from '@/util/interfaces/interfaces'
+import { ReviewResponseStatus } from '../types/Responses'
 
 /**
  * Data service layer for the reviews service of our backend.
@@ -33,36 +33,24 @@ export async function createReview(
           flagged_reason, admin_approved, admin_edited, rent)
           VALUES
           (${inputReview.landlord}, ${inputReview.country_code}, ${
-			inputReview.city
-		}, ${inputReview.state},
+						inputReview.city
+					}, ${inputReview.state},
           ${inputReview.zip}, ${inputReview.review}, ${inputReview.repair}, ${
-			inputReview.health
-		},
+						inputReview.health
+					},
           ${inputReview.stability}, ${inputReview.privacy}, ${
-			inputReview.respect
-		}, ${inputReview.flagged},
+						inputReview.respect
+					}, ${inputReview.flagged},
           ${inputReview.flagged_reason}, ${inputReview.admin_approved}, ${
-			inputReview.admin_edited
-		}, ${inputReview.rent || null})
+						inputReview.admin_edited
+					}, ${inputReview.rent || null})
           RETURNING id;
         `
 
-		return {message: "Review successfully added", success: true}
+		return { message: 'Review successfully added', success: true }
 	} catch (e) {
+		console.error('Error Creating Review')
 		throw e
-	}
-}
-
-export async function getExistingReviewsForLandlord(
-	inputReview: Review,
-): Promise<Review[]> {
-	try {
-		return await sql<Review[]>`SELECT REVIEW
-        FROM review
-        WHERE landlord = ${inputReview.landlord.toLocaleUpperCase()}
-          AND ZIP = ${inputReview.zip.toLocaleUpperCase()};`
-	} catch (e) {
-		throw new Error(FAILED_TO_RETRIEVE_REVIEWS)
 	}
 }
 
@@ -93,7 +81,13 @@ export async function updateReview(
                admin_edited   = ${review.admin_edited},
 			   rent = ${review.rent || null},
 			   moderation_reason = ${review.moderation_reason || null},
-			   moderator = ${review.moderator}
+			   moderator = ${review.moderator},
+			   delete_date = ${review.delete_date},
+			   delete_reason = ${review.delete_reason},
+			   deleted_by = ${review.deleted_by},
+			   restore_date = ${review.restore_date},
+			   restore_reason = ${review.restore_reason},
+			   restored_by = ${review.restored_by}
            WHERE id = ${id};`
 
 	return review

@@ -47,8 +47,10 @@ const AddResourceModal = ({
 	const {
 		searching,
 		locations,
-	}: { searching: boolean; locations: Array<ILocationHookResponse> } =
-		useLocation(city, country)
+	}: { searching: boolean; locations: ILocationHookResponse[] } = useLocation(
+		city,
+		country,
+	)
 
 	useEffect(() => {
 		if (country === 'GB') {
@@ -62,11 +64,11 @@ const AddResourceModal = ({
 		} else if (country === 'NO') {
 			setState('Norway')
 		} else if (country === 'NZ') {
-			setState('Marlborough')
+			setState('Auckland')
 		} else {
 			setState('Alberta')
 		}
-	}, [country])
+	}, [country, setState])
 	return (
 		<form
 			className='container w-full space-y-8 divide-y divide-gray-200'

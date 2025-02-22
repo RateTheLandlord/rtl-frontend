@@ -1,4 +1,4 @@
-import { ILocationHookResponse, Resource } from '@/util/interfaces/interfaces'
+import { Resource } from '@/util/interfaces/interfaces'
 import {
 	Dialog,
 	DialogPanel,
@@ -7,8 +7,6 @@ import {
 } from '@headlessui/react'
 import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import TextInput from '../ui/TextInput'
-import CityComboBox from '../create-review/components/CityComboBox'
-import { useLocation } from '@/util/hooks/useLocation'
 import StateSelector from '../ui/StateSelector'
 import CountrySelector from '../ui/CountrySelector'
 import LargeTextInput from '../ui/LargeTextInput'
@@ -45,11 +43,6 @@ const EditResourceModal = ({
 	)
 	const [href, setHref] = useState(selectedResource?.href || '')
 
-	const {
-		searching,
-		locations,
-	}: { searching: boolean; locations: Array<ILocationHookResponse> } =
-		useLocation(city, country)
 	const [loading, setLoading] = useState(false)
 
 	const onSubmitEditResource = () => {
@@ -103,7 +96,7 @@ const EditResourceModal = ({
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity' />
+					<div className='bg-opacity-75 fixed inset-0 bg-gray-500 transition-opacity' />
 				</TransitionChild>
 
 				<div className='fixed inset-0 z-10 overflow-y-auto'>
@@ -117,7 +110,7 @@ const EditResourceModal = ({
 							leaveFrom='opacity-100 translate-y-0 sm:scale-100'
 							leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
 						>
-							<DialogPanel className='relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
+							<DialogPanel className='relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
 								<div className='mt-1'>
 									<TextInput
 										title='Name'
@@ -151,15 +144,25 @@ const EditResourceModal = ({
 									/>
 
 									<div className='sm:col-span-2'>
-										<CityComboBox
-											name='City'
-											state={city}
-											setState={setCity}
-											options={locations}
-											searching={searching}
-											error={false}
-											errorText={'text'}
-										/>
+										<label
+											htmlFor='city'
+											className='block text-sm text-gray-700'
+										>
+											City
+										</label>
+										<div className='mt-1'>
+											<input
+												type='text'
+												name='city'
+												id='city'
+												placeholder='City'
+												value={city ? city : selectedResource?.city}
+												required
+												onChange={(e) => setCity(e.target.value)}
+												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+												data-testid='create-review-form-city-1'
+											/>
+										</div>
 									</div>
 
 									<StateSelector
@@ -184,14 +187,14 @@ const EditResourceModal = ({
 									<button
 										type='button'
 										disabled={loading}
-										className={`inline-flex w-full justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-base  text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
+										className={`inline-flex w-full justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-base text-white shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm`}
 										onClick={() => onSubmitEditResource()}
 									>
 										{loading ? <Spinner /> : 'Submit'}
 									</button>
 									<button
 										type='button'
-										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base  text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm'
+										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 shadow-sm hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm'
 										onClick={() => {
 											setSelectedResource(undefined)
 											setEditResourceOpen(false)

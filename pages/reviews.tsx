@@ -1,8 +1,7 @@
 import { NextSeo } from 'next-seo'
 import React from 'react'
 import { useRouter } from 'next/router'
-import ReviewForm from '@/components/reviews/review-form'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import ReviewForm from '@/components/reviews/read-reviews'
 
 export default function Reviews(): JSX.Element {
 	const title = 'Reviews | Rate The Landlord'
@@ -52,15 +51,30 @@ export default function Reviews(): JSX.Element {
 }
 
 export async function getStaticProps({ locale }) {
-  return {
-	props: {
-	  ...(await serverSideTranslations(locale, [
-		'reviews',
-		'filters',
-		'landlord',
-		'layout'
-	  ])),
-	  // Will be passed to the page component as props
-	},
-  }
+	const landlordMessages = (await import(
+		`@/messages/${locale}/landlord.json`
+	)) as Record<string, string>
+	const alertsMessages = (await import(
+		`@/messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`@/messages/${locale}/layout.json`
+	)) as Record<string, string>
+	const filtersMessages = (await import(
+		`@/messages/${locale}/filters.json`
+	)) as Record<string, string>
+	const reviewsMessages = (await import(
+		`@/messages/${locale}/reviews.json`
+	)) as Record<string, string>
+	return {
+		props: {
+			messages: {
+				...landlordMessages,
+				...alertsMessages,
+				...layoutMessages,
+				...filtersMessages,
+				...reviewsMessages,
+			},
+		},
+	}
 }

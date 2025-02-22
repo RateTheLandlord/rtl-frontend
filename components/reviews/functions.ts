@@ -2,9 +2,7 @@ import { capitalize, removeDuplicates } from '@/util/helpers/helper-functions'
 
 import { Options } from '@/util/interfaces/interfaces'
 
-export const getStateOptions = (
-	states: string[] | undefined,
-): Array<Options> => {
+export const getStateOptions = (states: string[] | undefined): Options[] => {
 	if (!states) return []
 	if (states.length) {
 		const allStateOptions = states.map((s, id) => {
@@ -26,9 +24,7 @@ export const getStateOptions = (
 	return []
 }
 
-export const getCityOptions = (
-	cities: string[] | undefined,
-): Array<Options> => {
+export const getCityOptions = (cities: string[] | undefined): Options[] => {
 	if (!cities) return []
 	if (cities.length) {
 		const filteredCity = cities.filter((n) => n)
@@ -50,7 +46,7 @@ export const getCityOptions = (
 	return []
 }
 
-export const getZipOptions = (zips: string[] | undefined): Array<Options> => {
+export const getZipOptions = (zips: string[] | undefined): Options[] => {
 	if (!zips) return []
 	if (zips.length) {
 		const allZipOptions = zips.map((z, id) => {

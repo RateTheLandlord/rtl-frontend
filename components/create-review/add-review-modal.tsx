@@ -1,7 +1,13 @@
 import React, { SetStateAction, Fragment } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
+import {
+	Dialog,
+	DialogPanel,
+	DialogTitle,
+	Transition,
+	TransitionChild,
+} from '@headlessui/react'
 import Button from '../ui/button'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
 	isOpen: boolean
@@ -9,11 +15,11 @@ interface IProps {
 }
 
 function AddReviewModal({ isOpen, setIsOpen }: IProps) {
-	const { t } = useTranslation('createreview')
+	const t = useTranslations('createreview')
 	return (
-		<Transition.Root show={isOpen} as={Fragment}>
+		<Transition show={isOpen} as={Fragment}>
 			<Dialog as='div' className='relative z-10' onClose={setIsOpen}>
-				<Transition.Child
+				<TransitionChild
 					as={Fragment}
 					enter='ease-out duration-300'
 					enterFrom='opacity-0'
@@ -22,12 +28,12 @@ function AddReviewModal({ isOpen, setIsOpen }: IProps) {
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity' />
-				</Transition.Child>
+					<div className='bg-opacity-75 fixed inset-0 bg-gray-500 transition-opacity' />
+				</TransitionChild>
 
 				<div className='fixed inset-0 z-10 overflow-y-auto'>
 					<div className='flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
-						<Transition.Child
+						<TransitionChild
 							as={Fragment}
 							enter='ease-out duration-300'
 							enterFrom='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
@@ -36,18 +42,18 @@ function AddReviewModal({ isOpen, setIsOpen }: IProps) {
 							leaveFrom='opacity-100 translate-y-0 sm:scale-100'
 							leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
 						>
-							<Dialog.Panel className='relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
+							<DialogPanel className='relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
 								<div>
 									<div className='mt-3 text-center sm:mt-5'>
-										<Dialog.Title
+										<DialogTitle
 											as='h3'
-											className='text-base  leading-6 text-gray-900'
+											className='text-base leading-6 text-gray-900'
 										>
-											{t('create-review.modal.add-review')}
-										</Dialog.Title>
+											{t('modal.add-review')}
+										</DialogTitle>
 										<div className='mt-2'>
 											<p className='text-sm text-gray-500'>
-												{t('create-review.modal.add-review-desc')}
+												{t('modal.add-review-desc')}
 											</p>
 										</div>
 									</div>
@@ -58,15 +64,15 @@ function AddReviewModal({ isOpen, setIsOpen }: IProps) {
 											setIsOpen(false)
 										}}
 									>
-										{t('create-review.modal.close')}
+										{t('modal.close')}
 									</Button>
 								</div>
-							</Dialog.Panel>
-						</Transition.Child>
+							</DialogPanel>
+						</TransitionChild>
 					</div>
 				</div>
 			</Dialog>
-		</Transition.Root>
+		</Transition>
 	)
 }
 

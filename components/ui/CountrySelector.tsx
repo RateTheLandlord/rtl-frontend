@@ -1,4 +1,4 @@
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import { country_codes } from '@/util/helpers/getCountryCodes'
 import countries from '@/util/countries/countries.json'
 
@@ -7,11 +7,11 @@ interface IProps {
 }
 
 const CountrySelector = ({ setValue }: IProps) => {
-	const { t } = useTranslation('createreview')
+	const t = useTranslations('createreview')
 	return (
-		<div className='sm:col-span-1'>
-			<label htmlFor='country' className='block text-sm  text-gray-700'>
-				{t('create-review.review-form.country')}
+		<div className='mx-0.5 sm:col-span-1'>
+			<label htmlFor='country' className='block text-sm text-gray-700'>
+				{t('review-form.country')}
 			</label>
 			<div className='mt-1'>
 				<select
@@ -20,22 +20,14 @@ const CountrySelector = ({ setValue }: IProps) => {
 					name='country'
 					required
 					onChange={(e) => setValue(e.target.value)}
-					className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+					className='block w-full cursor-pointer rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 				>
 					{country_codes.map((country) => {
-						if (country === 'CA') {
-							return (
-								<option key={country} value={country}>
-									{countries[country]}
-								</option>
-							)
-						} else {
-							return (
-								<option key={country} value={country}>
-									{countries[country]}
-								</option>
-							)
-						}
+						return (
+							<option className='cursor-pointer' key={country} value={country}>
+								{countries[country]}
+							</option>
+						)
 					})}
 				</select>
 			</div>

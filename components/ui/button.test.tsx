@@ -3,8 +3,10 @@
  */
 
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent } from '@/test-utils'
 import Button from './button'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('Button', () => {
 	it('renders button text correctly', () => {
@@ -34,5 +36,10 @@ describe('Button', () => {
 		const { getByTestId } = render(<Button disabled={false}>Click me</Button>)
 		const buttonElement = getByTestId('submit-button-1')
 		expect(buttonElement).toHaveClass('bg-teal-600 hover:bg-teal-700')
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(<Button>TEST</Button>)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

@@ -1,13 +1,16 @@
-import { XCircleIcon, XIcon } from '@heroicons/react/solid'
+import { XCircleIcon } from '@heroicons/react/solid'
 import { Dispatch, SetStateAction } from 'react'
-import { useTranslation } from 'next-i18next'
+import CloseButton from '../ui/CloseButton'
+import posthog from 'posthog-js'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
 	setMaliciousAlertOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const MaliciousStringAlert = ({ setMaliciousAlertOpen }: IProps) => {
-	const { t } = useTranslation('alerts')
+	const t = useTranslations('alerts')
+	posthog.capture('malicious_string_detected')
 	return (
 		<div className='rounded-md bg-orange-200 p-4' data-testid='alert-1'>
 			<div className='flex'>
@@ -15,21 +18,10 @@ const MaliciousStringAlert = ({ setMaliciousAlertOpen }: IProps) => {
 					<XCircleIcon className='h-5 w-5 text-red-600' aria-hidden='true' />
 				</div>
 				<div className='ml-3'>
-					<p className='text-sm  text-orange-700'>
-						{t('alerts.maliciousString')}
-					</p>
+					<p className='text-sm text-orange-700'>{t('maliciousString')}</p>
 				</div>
 				<div className='ml-auto pl-3'>
-					<div className='-mx-1.5 -my-1.5'>
-						<button
-							type='button'
-							onClick={() => setMaliciousAlertOpen((p) => !p)}
-							className='inline-flex rounded-md bg-orange-200 p-1.5 text-orange-600 hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2 focus:ring-offset-orange-200'
-						>
-							<span className='sr-only'>Dismiss</span>
-							<XIcon className='h-5 w-5' aria-hidden='true' />
-						</button>
-					</div>
+					<CloseButton onClick={() => setMaliciousAlertOpen((p) => !p)} />
 				</div>
 			</div>
 		</div>

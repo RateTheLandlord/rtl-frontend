@@ -13,8 +13,7 @@ interface IBody {
 const FlagReview = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res)
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const { body }: { body: IBody } = req
+	const { body } = req as { body: IBody }
 
 	const captcha = await verifyToken(body.captchaToken)
 

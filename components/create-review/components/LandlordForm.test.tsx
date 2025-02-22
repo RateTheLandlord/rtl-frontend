@@ -1,13 +1,11 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@/test-utils'
 import LandlordForm from './LandlordForm'
 import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
-
-jest.mock('react-i18next', () => ({
-	useTranslation: () => ({ t: (key: string) => key }),
-}))
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 jest.mock('@/util/hooks/useLandlordSuggestions', () => ({
 	useLandlordSuggestions: jest.fn(),
@@ -49,16 +47,16 @@ describe('LandlordForm Component', () => {
 		render(<LandlordForm {...defaultProps} />)
 
 		expect(
-			screen.getByText('create-review.landlord-form.title'),
+			screen.getByText('createreview.landlord-form.title'),
 		).toBeInTheDocument()
 		expect(screen.getByText('John Doe')).toBeInTheDocument()
-		expect(screen.getByText('create-review.edit')).toBeInTheDocument()
+		expect(screen.getByText('createreview.edit')).toBeInTheDocument()
 	})
 
 	it('should call setLandlordOpen(true) when Edit button is clicked', () => {
 		render(<LandlordForm {...defaultProps} />)
 
-		fireEvent.click(screen.getByText('create-review.edit'))
+		fireEvent.click(screen.getByText('createreview.edit'))
 
 		expect(mockSetLandlordOpen).toHaveBeenCalledWith(true)
 	})
@@ -78,7 +76,7 @@ describe('LandlordForm Component', () => {
 			/>,
 		)
 
-		fireEvent.click(screen.getByText('create-review.continue'))
+		fireEvent.click(screen.getByText('createreview.continue'))
 
 		expect(mockSetShowLocationForm).toHaveBeenCalledWith(true)
 		expect(mockSetLocationOpen).toHaveBeenCalledWith(true)
@@ -88,7 +86,15 @@ describe('LandlordForm Component', () => {
 	it('should disable Continue button if landlord is empty', () => {
 		render(<LandlordForm {...defaultProps} landlordOpen={true} landlord='' />)
 
-		const continueButton = screen.getByText('create-review.continue')
+		const continueButton = screen.getByText('createreview.continue')
 		expect(continueButton).toBeDisabled()
+	})
+
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<LandlordForm {...defaultProps} landlordOpen={true} landlord='' />,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

@@ -13,7 +13,7 @@ import InfiniteScroll from './InfiniteScroll'
 import Spinner from '../ui/Spinner'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import MobileReviewFilters from './mobile-review-filters'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import ButtonLight from '../ui/button-light'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import MapComponent from '../Map/Map'
@@ -24,7 +24,7 @@ import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { useRouter } from 'next/router'
 
-export type ReviewsResponse = {
+export interface ReviewsResponse {
 	reviews: IReview[]
 	total: number
 	countries: string[]
@@ -67,7 +67,7 @@ const Review = ({
 	setLocationOpen,
 }: ReviewProps) => {
 	// Localization
-	const { t } = useTranslation('reviews')
+	const t = useTranslations('reviews')
 
 	// Redux
 	const query = useAppSelector((state) => state.query)
@@ -123,48 +123,48 @@ const Review = ({
 		setPage(1)
 	}
 
-	const fetchData = async () => {
-		setIsLoading(true)
-		setReviewsLoading(true)
-		try {
-			const moreData = await fetchReviews({ page, ...queryParams })
-
-			setReviews((prevReviews) => {
-				if (page === 1) {
-					// Initial fetch
-					return [...moreData.reviews]
-				} else {
-					// If page changed or neither page nor other query parameters changed, append new reviews
-					return [...prevReviews, ...moreData.reviews]
-				}
-			})
-
-			if (moreData.reviews.length <= 0 || reviews.length >= moreData.total) {
-				setHasMore(false)
-			} else {
-				setHasMore(true)
-			}
-		} catch (error) {
-			console.error('Error fetching reviews:', error)
-		} finally {
-			setIsLoading(false)
-			setReviewsLoading(false)
-		}
-	}
-
 	// Reset hasMore when queryParams change
 	useEffect(() => {
 		setHasMore(true)
 	}, [queryParams])
 
 	useEffect(() => {
-		fetchData()
-	}, [queryParams, page])
+		const fetchData = async () => {
+			setIsLoading(true)
+			setReviewsLoading(true)
+			try {
+				const moreData = await fetchReviews({ page, ...queryParams })
+
+				setReviews((prevReviews) => {
+					if (page === 1) {
+						// Initial fetch
+						return [...moreData.reviews]
+					} else {
+						// If page changed or neither page nor other query parameters changed, append new reviews
+						return [...prevReviews, ...moreData.reviews]
+					}
+				})
+
+				if (moreData.reviews.length <= 0 || reviews.length >= moreData.total) {
+					setHasMore(false)
+				} else {
+					setHasMore(true)
+				}
+			} catch {
+				console.error('Error fetching reviews')
+			} finally {
+				setIsLoading(false)
+				setReviewsLoading(false)
+			}
+		}
+		fetchData().catch(() => console.error('Error Fetching Data'))
+	}, [queryParams, page, reviews.length, setIsLoading])
 
 	const [dynamicCityOptions, setDynamicCityOptions] = useState<Options[]>([])
 
 	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>([])
 
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 	const fetchDynamicFilterOptions = debounce(async () => {
 		setIsLoading(true)
 		try {
@@ -176,8 +176,8 @@ const Review = ({
 			)
 			setDynamicCityOptions(filterOptions.cities)
 			setDynamicZipOptions(filterOptions.zips)
-		} catch (error) {
-			console.error('Error fetching filter options:', error)
+		} catch {
+			console.error('Error fetching filter options')
 		} finally {
 			setIsLoading(false)
 		}
@@ -226,18 +226,16 @@ const Review = ({
 								setLocationOpen={setLocationOpen}
 							/>
 							<div className='mt-3'>
-								<h1 className='text-3xl   text-gray-900'>
-									{t('reviews.title')}
-								</h1>
+								<h1 className='text-3xl text-gray-900'>{t('title')}</h1>
 								<p className='mt-4 max-w-xl text-sm text-gray-700'>
-									{t('reviews.body')}
+									{t('body')}
 								</p>
 							</div>
 						</div>
 					</div>
 					<div className='flex w-full justify-end px-4 lg:hidden'>
 						<ButtonLight onClick={() => setMobileFiltersOpen(true)}>
-							{t('reviews.filters')}
+							{t('filters')}
 						</ButtonLight>
 					</div>
 					<div className='mx-auto max-w-2xl lg:max-w-7xl'>
@@ -248,25 +246,25 @@ const Review = ({
 							className='w-full'
 						>
 							<TabList className='flex w-full justify-center gap-4 border-b p-3'>
-								<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
-									{t('reviews.reviews')}
+								<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+									{t('reviews')}
 								</Tab>
-								<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+								<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
 									<div className='flex flex-row gap-1'>
-										<p>{t('reviews.map')}</p>
+										<p>{t('map')}</p>
 										<div className='flex h-full flex-col justify-start'>
-											<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-teal-500/10'>
-												{t('reviews.beta')}
+											<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-teal-500/10 ring-inset'>
+												{t('beta')}
 											</span>
 										</div>
 									</div>
 								</Tab>
-								<Tab className='whitespace-nowrap border-b-2 border-transparent px-1 pb-2 text-3xl font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+								<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
 									<div className='flex flex-row gap-1'>
-										<p>{t('reviews.analytics')}</p>
+										<p>{t('analytics')}</p>
 										<div className='flex h-full flex-col justify-start'>
-											<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-teal-500/10'>
-												{t('reviews.beta')}
+											<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-teal-500/10 ring-inset'>
+												{t('beta')}
 											</span>
 										</div>
 									</div>
@@ -287,6 +285,7 @@ const Review = ({
 											dynamicZipOptions={dynamicZipOptions}
 											updateParams={updateParams}
 											dispatch={dispatch}
+											// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 											fetchDynamicFilterOptions={fetchDynamicFilterOptions}
 											query={query}
 										/>
@@ -304,16 +303,18 @@ const Review = ({
 											updateParams={updateParams}
 											loading={isLoading}
 											dispatch={dispatch}
+											// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 											fetchDynamicFilterOptions={fetchDynamicFilterOptions}
 											query={query}
 										/>
 										{!reviews.length ? (
 											<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
-												<h1 className='mt-4 text-3xl   text-gray-900 sm:text-5xl'>
+												<h1 className='mt-4 text-3xl text-gray-900 sm:text-5xl'>
 													No results found
 												</h1>
 												<p className='mt-6 text-base leading-7 text-gray-600'>
-													Sorry, we couldn't find any results for those filters.
+													Sorry, we couldn&apos;t find any results for those
+													filters.
 												</p>
 											</div>
 										) : (

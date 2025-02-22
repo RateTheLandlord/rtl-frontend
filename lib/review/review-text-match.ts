@@ -1,9 +1,9 @@
-import { Review } from '@/lib/review/models/review'
+import { Review } from '@/util/interfaces/interfaces'
 import sql from '../db'
 
 /* https://www.educative.io/answers/the-levenshtein-distance-algorithm
  * uses the Levenshtein distance algorithm to compare the distance between two strings */
-export function editDistance(string1: string, string2: string): number {
+function editDistance(string1: string, string2: string): number {
 	string1 = string1.toLowerCase()
 	string2 = string2.toLowerCase()
 	const costs: number[] = []
@@ -30,7 +30,7 @@ export function editDistance(string1: string, string2: string): number {
 }
 
 // https://stackoverflow.com/questions/10473745/compare-strings-javascript-return-of-likely
-export function reviewSimilarity(review1: string, review2: string): number {
+function reviewSimilarity(review1: string, review2: string): number {
 	let longer: string = review1
 	let shorter: string = review2
 	if (review1.length < review2.length) {
@@ -48,10 +48,10 @@ export function reviewSimilarity(review1: string, review2: string): number {
 }
 
 // Loop through all the reviews retrieved from the db for this landlord and check if they are similar to the input text
-export async function checkReviewsForSimilarity(
+export function checkReviewsForSimilarity(
 	reviewsFromDbForThatUser: Review[],
 	reviewUserSubmitted: string,
-): Promise<boolean> {
+): boolean {
 	for (const review of reviewsFromDbForThatUser) {
 		const similarityScore: number = reviewSimilarity(
 			review.review,
@@ -65,19 +65,19 @@ export async function checkReviewsForSimilarity(
 }
 
 export async function checkForLandlordSpam(landlord: string): Promise<boolean> {
-	const recentReviews = await sql`
+	const recentReviews: { landlord: string }[] = await sql`
 		SELECT landlord
 		FROM recent_review
 		ORDER BY created_at DESC
 		LIMIT 25;
 	`
 
-	const occurances = recentReviews.filter(
+	const occurrences = recentReviews.filter(
 		(review) =>
 			review.landlord.toLocaleUpperCase() === landlord.toLocaleLowerCase(),
 	).length
 
-	if (occurances >= 5) {
+	if (occurrences >= 5) {
 		return true
 	}
 

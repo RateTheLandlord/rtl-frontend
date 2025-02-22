@@ -2,25 +2,10 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@/test-utils'
 import AddReviewModal from './add-review-modal'
-
-jest.mock('react-i18next', () => ({
-	useTranslation: jest.fn().mockReturnValue({
-		t: jest.fn((key) => {
-			if (key === 'create-review.modal.add-review') {
-				return 'Add Review'
-			}
-			if (key === 'create-review.modal.add-review-desc') {
-				return 'Please provide your review.'
-			}
-			if (key === 'create-review.modal.close') {
-				return 'Close'
-			}
-			return ''
-		}),
-	}),
-}))
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('AddReviewModal component', () => {
 	test('should render the modal when isOpen is true', () => {
@@ -33,11 +18,15 @@ describe('AddReviewModal component', () => {
 		expect(modalElement).toBeInTheDocument()
 
 		// Verify that the modal title and description are displayed correctly
-		expect(screen.getByText('Add Review')).toBeInTheDocument()
-		expect(screen.getByText('Please provide your review.')).toBeInTheDocument()
+		expect(
+			screen.getByText('createreview.modal.add-review'),
+		).toBeInTheDocument()
+		expect(
+			screen.getByText('createreview.modal.add-review-desc'),
+		).toBeInTheDocument()
 
 		// Verify that the close button is rendered
-		const closeButton = screen.getByText('Close')
+		const closeButton = screen.getByText('createreview.modal.close')
 		expect(closeButton).toBeInTheDocument()
 
 		// Simulate clicking the close button
@@ -60,5 +49,11 @@ describe('AddReviewModal component', () => {
 		expect(setIsOpenMock).not.toHaveBeenCalled()
 	})
 
-	// Add more tests as needed for other functionality in the component
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<AddReviewModal isOpen={true} setIsOpen={() => jest.fn()} />,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
+	})
 })

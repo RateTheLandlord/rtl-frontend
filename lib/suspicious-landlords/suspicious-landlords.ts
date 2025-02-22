@@ -4,25 +4,16 @@ import {
 	createLandlord,
 	updateLandlord,
 } from './models/suspicious-landlord-data-layer'
-
-export interface IResponse {
-	status: number
-	message: string
-}
-
-export interface GetSuspiciousLandlordResponse {
-	landlords: Array<SuspiciousLandlord>
-	total: number
-}
+import { GetSuspiciousLandlordResponse, IResponse } from './types'
 
 export async function getSuspiciousLandlords(): Promise<GetSuspiciousLandlordResponse> {
 	// Fetch Landlords
-	const landlords = await sql<Array<SuspiciousLandlord>>`SELECT *
+	const landlords = await sql<SuspiciousLandlord[]>`SELECT *
         FROM spam_landlords;`
 
 	// Fetch Total Number of Landlords
 	const totalResult = await sql`SELECT COUNT(*) as count FROM spam_landlords;`
-	const total = totalResult[0].count
+	const total = totalResult[0].count as number
 
 	// Return object
 	return {
@@ -54,7 +45,7 @@ export async function create(
 		const landlord = await createLandlord(inputLandlord)
 		if (landlord) return { status: 200, message: 'Created Landlord' }
 		throw new Error()
-	} catch (e) {
+	} catch {
 		return { status: 500, message: 'Failed to create Landlord' }
 	}
 }
@@ -67,7 +58,7 @@ export async function update(
 		const updated = await updateLandlord(id, landlord)
 		if (updated) return { status: 200, message: 'Landlord updated' }
 		throw new Error()
-	} catch (error) {
+	} catch {
 		return { status: 500, message: 'Failed to Update Landlord' }
 	}
 }
@@ -81,7 +72,7 @@ export async function deleteLandlord(id: number): Promise<IResponse> {
 		`
 		if (deleteResource) return { status: 200, message: 'Deleted Landlord' }
 		throw new Error()
-	} catch (error) {
+	} catch {
 		return { status: 500, message: 'Failed to Delete Landlord' }
 	}
 }

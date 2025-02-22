@@ -1,7 +1,7 @@
 import React from 'react'
 import { Label, Radio, RadioGroup } from '@headlessui/react'
 import { classNames } from '@/util/helpers/helper-functions'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 
 const ratings = [1, 2, 3, 4, 5]
 
@@ -14,19 +14,17 @@ interface Props {
 }
 
 function RatingsRadio({ title, rating, setRating, tooltip, testid }: Props) {
-	const { t } = useTranslation('createreview')
+	const t = useTranslations('createreview')
 
 	return (
 		<div data-testid={testid}>
-			<h2 className=' text-gray-900'>
-				{title} {t('create-review.review-radio.rating')}
+			<h2 className='text-gray-900'>
+				{title} {t('review-radio.rating')}
 			</h2>
 			<p className='text-xs text-gray-500'>{tooltip}</p>
 
 			<RadioGroup value={rating} onChange={setRating} className='mt-2'>
-				<Label className='sr-only'>
-					{t('create-review.review-radio.choose')}
-				</Label>
+				<Label className='sr-only'>{t('review-radio.choose')}</Label>
 				<div className='grid grid-cols-5'>
 					{ratings.map((option, i) => (
 						<Radio

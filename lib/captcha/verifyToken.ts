@@ -1,4 +1,5 @@
-export type CaptchaPayload = {
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+interface CaptchaPayload {
 	secret: string
 	response: string
 }
@@ -23,6 +24,7 @@ export async function verifyToken(token: string): Promise<boolean> {
 
 	const response = await req.json()
 
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 	const success: boolean = await response.success
 
 	return success

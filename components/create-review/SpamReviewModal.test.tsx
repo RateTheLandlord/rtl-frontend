@@ -2,31 +2,10 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@/test-utils'
 import SpamReviewModal from '@/components/create-review/SpamReviewModal'
-
-jest.mock('react-i18next', () => ({
-	useTranslation: jest.fn().mockReturnValue({
-		t: jest.fn((key) => {
-			if (key === 'create-review.localStorageDetection.title') {
-				return 'It appears you have reviewed this Landlord before...'
-			}
-			if (key === 'create-review.localStorageDetection.description') {
-				return "Please only leave one review per landlord you've had so that this site can remain a fair representation of rental experiences. Any repeat reviews or spam will be deleted. If you have any questions, please reach out to us at contact@ratethelandlord.org"
-			}
-			if (key === 'create-review.DBDetection.title') {
-				return 'We have noticed potential spam reviews related to this landlord.'
-			}
-			if (key === 'create-review.DBDetection.description') {
-				return 'To protect the integrity of our reviews please try again later. If you have any questions, please reach out to us at contact@ratethelandlord.org'
-			}
-			if (key === 'create-review.modal.close') {
-				return 'Close'
-			}
-			return ''
-		}),
-	}),
-}))
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 describe('Spam Review Modal component', () => {
 	test('should render the modal when isOpen is true and detectionMethod is localStorageDetection', () => {
@@ -46,16 +25,14 @@ describe('Spam Review Modal component', () => {
 
 		// Verify that the modal title and description are displayed correctly
 		expect(
-			screen.getByText('It appears you have reviewed this Landlord before...'),
+			screen.getByText('createreview.localStorageDetection.title'),
 		).toBeInTheDocument()
 		expect(
-			screen.getByText(
-				"Please only leave one review per landlord you've had so that this site can remain a fair representation of rental experiences. Any repeat reviews or spam will be deleted. If you have any questions, please reach out to us at contact@ratethelandlord.org",
-			),
+			screen.getByText('createreview.localStorageDetection.description'),
 		).toBeInTheDocument()
 
 		// Verify that the close button is rendered
-		const closeButton = screen.getByText('Close')
+		const closeButton = screen.getByText('createreview.modal.close')
 		expect(closeButton).toBeInTheDocument()
 
 		// Simulate clicking the close button
@@ -82,18 +59,14 @@ describe('Spam Review Modal component', () => {
 
 		// Verify that the modal title and description are displayed correctly
 		expect(
-			screen.getByText(
-				'We have noticed potential spam reviews related to this landlord.',
-			),
+			screen.getByText('createreview.DBDetection.title'),
 		).toBeInTheDocument()
 		expect(
-			screen.getByText(
-				'To protect the integrity of our reviews please try again later. If you have any questions, please reach out to us at contact@ratethelandlord.org',
-			),
+			screen.getByText('createreview.DBDetection.description'),
 		).toBeInTheDocument()
 
 		// Verify that the close button is rendered
-		const closeButton = screen.getByText('Close')
+		const closeButton = screen.getByText('createreview.modal.close')
 		expect(closeButton).toBeInTheDocument()
 
 		// Simulate clicking the close button
@@ -122,5 +95,15 @@ describe('Spam Review Modal component', () => {
 		expect(setIsOpenMock).not.toHaveBeenCalled()
 	})
 
-	// Add more tests as needed for other functionality in the component
+	it('Should not have a11y violation', async () => {
+		const { container } = render(
+			<SpamReviewModal
+				isOpen={true}
+				setIsOpen={() => jest.fn()}
+				detectionMethod='localStorageDetection'
+			/>,
+		)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
+	})
 })

@@ -3,16 +3,16 @@ import ReportModal from '../reviews/report-modal'
 import LandlordInfo from './LandlordInfo'
 import OtherLandlordInfo from './OtherLandlord'
 import LandlordBanner from './LandlordBanner'
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import { Review, SuspiciousLandlord } from '@/util/interfaces/interfaces'
 import Spinner from '../ui/Spinner'
 import { sortOptions } from '@/util/helpers/filter-options'
 import SortList from '../reviews/ui/sort-list'
-import { ILandlordReviews } from '@/lib/review/review'
 import ReviewComponent from '../reviews/ReviewComponent'
 import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
 import AdsComponent from '../adsense/Adsense'
+import { ILandlordReviews } from '@/lib/review/types/Queries'
 
 const filteredSortOptions = sortOptions.slice(2)
 
@@ -22,10 +22,10 @@ interface IProps {
 }
 
 const LandlordPage = ({ landlord, data }: IProps) => {
-	const { t } = useTranslation('reviews')
+	const t = useTranslations('reviews')
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
 	const [bannerOpen, setBannerOpen] = useState<boolean>(false)
-	const [sortedReviews, setSortedReviews] = useState<Array<Review>>([])
+	const [sortedReviews, setSortedReviews] = useState<Review[]>([])
 
 	const [sortState, setSortState] = useState(filteredSortOptions[0])
 
@@ -37,8 +37,6 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 		)}`,
 		fetcher,
 	)
-
-	if (!data.reviews.length) return <Spinner />
 
 	useEffect(() => {
 		if (suspiciousLandlord) {
@@ -92,6 +90,8 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 		}
 	}, [sortState, data.reviews])
 
+	if (!data.reviews.length) return <Spinner />
+
 	return (
 		<>
 			<ReportModal
@@ -115,7 +115,7 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 							state={sortState}
 							setState={setSortState}
 							options={filteredSortOptions}
-							name={t('reviews.sort')}
+							name={t('sort')}
 						/>
 					</div>
 					<div className='flex w-full flex-col gap-3'>

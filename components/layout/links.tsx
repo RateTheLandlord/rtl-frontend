@@ -5,26 +5,26 @@ import TikTok from '@/components/svg/social/tiktok'
 import Facebook from '../svg/social/facebook'
 import Patreon from '../svg/icons/patreon'
 
-export const navigation: Array<INav> = [
+export const navigation: INav[] = [
 	{
 		href: '/reviews',
-		name: 'layout.nav.reviews',
+		name: 'nav.reviews',
 	},
 	{
 		href: '/resources',
-		name: 'layout.nav.resources',
+		name: 'nav.resources',
 	},
 	{
 		href: '/about',
-		name: 'layout.nav.about',
+		name: 'nav.about',
 	},
 	{
 		href: '/support-us',
-		name: 'layout.nav.support-us',
+		name: 'nav.support-us',
 	},
 ]
 
-export const socialLinks: Array<ILinks> = [
+export const socialLinks: ILinks[] = [
 	{
 		name: 'Instagram',
 		href: 'https://www.instagram.com/ratethelandlord',

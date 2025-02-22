@@ -3,8 +3,9 @@
  */
 
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent } from '@/test-utils'
 import ButtonLight from './button-light'
+import { axe } from 'jest-axe'
 
 describe('ButtonLight', () => {
 	it('renders button text correctly', () => {
@@ -22,5 +23,10 @@ describe('ButtonLight', () => {
 		const buttonElement = getByTestId('light-button')
 		fireEvent.click(buttonElement)
 		expect(onClickMock).toHaveBeenCalled()
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(<ButtonLight>Click me</ButtonLight>)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
 	})
 })

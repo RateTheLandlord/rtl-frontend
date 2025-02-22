@@ -3,7 +3,7 @@ import sql from '@/lib/db'
 
 export async function createResource(
 	inputResource: Resource,
-): Promise<Resource> {
+): Promise<Resource | undefined> {
 	try {
 		inputResource.name = inputResource.name
 			.substring(0, 150)
@@ -19,19 +19,18 @@ export async function createResource(
 					(name, country_code, city, state, address, phone_number, description, href)
 					VALUES
 					(${inputResource.name}, ${inputResource.country_code}, ${
-			inputResource.city || ''
-		}, ${inputResource.state || ''},
+						inputResource.city || ''
+					}, ${inputResource.state || ''},
 					 ${inputResource.address || ''}, ${inputResource.phone_number || ''}, ${
-			inputResource.description
-		}, ${inputResource.href}) RETURNING id;
+							inputResource.description
+						}, ${inputResource.href}) RETURNING id;
 				`
 
 		inputResource.id = await id[0].id
 
 		return inputResource
-	} catch (e) {
-		console.log(e)
-		throw e
+	} catch {
+		console.error('Failed to create resource')
 	}
 }
 

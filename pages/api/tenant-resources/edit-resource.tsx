@@ -21,8 +21,7 @@ const EditResourceAPI = async (req: NextApiRequest, res: NextApiResponse) => {
 	const user = session?.user
 	await runMiddleware(req, res)
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const { body }: { body: IBody } = req
+	const { body } = req as { body: IBody }
 
 	if (user && user.role === 'ADMIN') {
 		const edit = await update(body.id, body)

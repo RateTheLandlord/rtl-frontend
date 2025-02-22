@@ -1,6 +1,6 @@
-import { Review } from '@/lib/review/models/review'
 import OpenAI from 'openai'
 import { getFlaggedKeywords } from '../flagged-keywords/flagged-keywords'
+import { Review } from '@/util/interfaces/interfaces'
 
 export interface IResult {
 	flagged: boolean
@@ -20,9 +20,9 @@ const getSystemMessage = async () => {
 	
 	Any reviews found in violation of this policy will be amended or removed at our discretion. We remain neutral and will not engage in factual disputes regarding the content of the reviews.
 	
-	Additionally, if the review contains any of the following keywords, it is also against the moderation policy: ${keywords.keywords.map(
-		(keyword) => keyword.keyword,
-	)}
+	Additionally, if the review contains any of the following keywords, it is also against the moderation policy: ${keywords.keywords
+		.map((keyword) => keyword.keyword)
+		.join(', ')}
 	
 	Here's how this will work:
 	- I will provide you with a single review, which may have multiple paragraphs, and may or may not contain content that is not allowed.
@@ -40,7 +40,6 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 export const filterReviewWithAI = async (review: Review): Promise<IResult> => {
 	try {
 		const SYSTEM_MESSAGE = await getSystemMessage()
-		console.log(SYSTEM_MESSAGE)
 		const completion = await openai.chat.completions.create({
 			model: 'gpt-4o',
 			messages: [
@@ -59,7 +58,7 @@ export const filterReviewWithAI = async (review: Review): Promise<IResult> => {
 		} else {
 			return { flagged: false, flagged_reason: '' }
 		}
-	} catch (e) {
-		throw e
+	} catch {
+		return { flagged: true, flagged_reason: 'ERROR IN AI CHECKING' }
 	}
 }

@@ -1,4 +1,4 @@
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl'
 import { getStates } from '@/util/countries/combineStates'
 
 interface IProps {
@@ -9,15 +9,19 @@ interface IProps {
 }
 
 const StateSelector = ({ country, value, setValue, noState }: IProps) => {
-	const { t } = useTranslation('createreview')
+	const t = useTranslations('createreview')
 	return (
-		<div className='sm:col-span-1' data-testid='state-selector'>
-			<label htmlFor='country' className='block text-sm  text-gray-700'>
+		<div className='mx-0.5 sm:col-span-1' data-testid='state-selector'>
+			<label
+				aria-label='state selector'
+				htmlFor='state'
+				className='block text-sm text-gray-700'
+			>
 				{country === 'GB'
-					? t('create-review.review-form.region')
+					? t('review-form.region')
 					: country === 'IE'
-					? t('create-review.review-form.county')
-					: t('create-review.review-form.state')}
+						? t('review-form.country')
+						: t('review-form.state')}
 			</label>
 			<div className='mt-1'>
 				<select
@@ -27,7 +31,7 @@ const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 					required
 					value={value}
 					onChange={(e) => setValue(e.target.value)}
-					className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+					className='block w-full cursor-pointer rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 				>
 					{getStates(country).map((province) => (
 						<option key={province.value} value={province.value}>

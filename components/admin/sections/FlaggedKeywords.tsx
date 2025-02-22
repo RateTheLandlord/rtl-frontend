@@ -19,7 +19,7 @@ import AddFlaggedKeywordModal from '../components/AddFlaggedKeywordModal'
 import RemoveFlaggedKeywordModal from '../components/RemoveFlaggedKeywordModal'
 
 const FlaggedKeywords = () => {
-	const { data, error, mutate } = useSWR<FlaggedKeywordsResponse>(
+	const { data, error, mutate } = useSWR<FlaggedKeywordsResponse, unknown>(
 		['/api/flagged-keywords/get-flagged-keywords', { limit: '1000' }],
 		fetchWithBody,
 	)
@@ -60,7 +60,7 @@ const FlaggedKeywords = () => {
 				}
 			})
 			.then(() => {
-				mutate()
+				mutate().catch(() => console.error('Failed to Mutute Flagged Keywords'))
 				setAddKeywordOpen(false)
 				toast.success('Success!')
 				resetForm()
@@ -73,7 +73,7 @@ const FlaggedKeywords = () => {
 	}
 
 	const handleMutate = () => {
-		mutate()
+		mutate().catch(() => console.error('Failed to Mutute Flagged Keywords'))
 	}
 	return (
 		<div className='container flex w-full flex-col justify-center'>
@@ -101,7 +101,6 @@ const FlaggedKeywords = () => {
 						/>
 					}
 					onSubmit={onSubmitNewLandlord}
-					buttonColour='blue'
 					selectedId={1}
 				/>
 			)}
@@ -120,7 +119,7 @@ const FlaggedKeywords = () => {
 						>
 							<div className='min-w-0'>
 								<div className='flex items-center justify-start gap-x-3'>
-									<p className='text-sm  leading-6 text-gray-900'>
+									<p className='text-sm leading-6 text-gray-900'>
 										{keyword.keyword}
 									</p>
 								</div>
@@ -143,7 +142,7 @@ const FlaggedKeywords = () => {
 										leaveFrom='transform opacity-100 scale-100'
 										leaveTo='transform opacity-0 scale-95'
 									>
-										<MenuItems className='absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none'>
+										<MenuItems className='absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 ring-1 shadow-lg ring-gray-900/5 focus:outline-none'>
 											<MenuItem>
 												{({ active }) => (
 													<button

@@ -1,13 +1,19 @@
 import React, { Fragment } from 'react'
-import { Dialog, Popover, Transition } from '@headlessui/react'
+import {
+	Dialog,
+	DialogPanel,
+	PopoverGroup,
+	Transition,
+	TransitionChild,
+} from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { Options } from '@/util/interfaces/interfaces'
-import { useTranslation } from 'next-i18next'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { clearFilters, updateSearch, updateZip } from '@/redux/query/querySlice'
 import ButtonLight from '../ui/button-light'
 import ComboBox from '../reviews/ui/combobox'
 import SearchBar from '../reviews/ui/searchbar'
+import { useTranslations } from 'next-intl'
 
 interface FiltersProps {
 	mobileFiltersOpen: boolean
@@ -26,15 +32,15 @@ export default function CityMobileFilters({
 }: FiltersProps) {
 	const dispatch = useAppDispatch()
 	const query = useAppSelector((state) => state.query)
-	const { t } = useTranslation('reviews')
+	const t = useTranslations('reviews')
 	return (
-		<Transition.Root show={mobileFiltersOpen} as={Fragment}>
+		<Transition show={mobileFiltersOpen} as={Fragment}>
 			<Dialog
 				as='div'
 				className='relative z-40 lg:hidden'
 				onClose={setMobileFiltersOpen}
 			>
-				<Transition.Child
+				<TransitionChild
 					as={Fragment}
 					enter='transition-opacity ease-linear duration-300'
 					enterFrom='opacity-0'
@@ -43,14 +49,14 @@ export default function CityMobileFilters({
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<div className='fixed inset-0 bg-black bg-opacity-25' />
-				</Transition.Child>
+					<div className='bg-opacity-25 fixed inset-0 bg-black' />
+				</TransitionChild>
 
 				<div
 					className='fixed inset-0 z-40 flex'
 					data-testid='mobile-review-filters-1'
 				>
-					<Transition.Child
+					<TransitionChild
 						as={Fragment}
 						enter='transition ease-in-out duration-300 transform'
 						enterFrom='translate-x-full'
@@ -59,11 +65,9 @@ export default function CityMobileFilters({
 						leaveFrom='translate-x-0'
 						leaveTo='translate-x-full'
 					>
-						<Dialog.Panel className='relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl'>
+						<DialogPanel className='relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl'>
 							<div className='flex items-center justify-between px-4'>
-								<h2 className='text-lg  text-gray-900'>
-									{t('reviews.filters')}
-								</h2>
+								<h2 className='text-lg text-gray-900'>{t('filters')}</h2>
 								<button
 									type='button'
 									className='-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400'
@@ -76,7 +80,7 @@ export default function CityMobileFilters({
 
 							{/* Filters */}
 							<div className='mt-4'>
-								<Popover.Group className='mx-2 flex flex-col items-center gap-2 divide-y'>
+								<PopoverGroup className='mx-2 flex flex-col items-center gap-2 divide-y'>
 									<SearchBar
 										setSearchState={(str: string) =>
 											dispatch(updateSearch(str))
@@ -89,7 +93,7 @@ export default function CityMobileFilters({
 											state={zipFilter}
 											setState={(opt: Options) => dispatch(updateZip(opt))}
 											options={zipOptions}
-											name={t('reviews.zip')}
+											name={t('zip')}
 										/>
 									)}
 									<div className='w-full pt-2'>
@@ -114,12 +118,12 @@ export default function CityMobileFilters({
 											Clear Filters
 										</ButtonLight>
 									</div>
-								</Popover.Group>
+								</PopoverGroup>
 							</div>
-						</Dialog.Panel>
-					</Transition.Child>
+						</DialogPanel>
+					</TransitionChild>
 				</div>
 			</Dialog>
-		</Transition.Root>
+		</Transition>
 	)
 }

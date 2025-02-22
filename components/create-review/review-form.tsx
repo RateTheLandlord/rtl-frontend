@@ -1,14 +1,10 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useEffect, useState } from 'react'
 import AddReviewModal from './add-review-modal'
 import Button from '../ui/button'
 import MaliciousStringAlert from '../alerts/MaliciousStringAlert'
 import SuccessModal from './success-modal'
 import { postcodeValidator } from 'postcode-validator'
-import { useTranslation } from 'next-i18next'
 import SpamReviewModal from '@/components/create-review/SpamReviewModal'
-import SheldonModal from '@/components/create-review/SheldonModal'
-import { sheldonReview } from '@/components/create-review/helper'
 import { useLocation } from '@/util/hooks/useLocation'
 import {
 	ILocationHookResponse,
@@ -20,14 +16,16 @@ import { Transition, TransitionChild } from '@headlessui/react'
 import ReviewPreview from './components/ReviewPreview'
 import LandlordForm from './components/LandlordForm'
 import { classNames } from '@/util/helpers/helper-functions'
-import ReviewHero from './components/ReviewHero'
-import LocationForm from './components/LocationForm'
+import ReviewHero from './components/CreateReviewHero'
+import LocationForm from './components/CreateReviewLocationForm'
 import RatingForm from './components/RatingForm'
 import WrittenReviewForm from './components/WrittenReviewForm'
 import { toast } from 'react-toastify'
+import { useTranslations } from 'next-intl'
+import posthog from 'posthog-js'
 
 function ReviewForm(): JSX.Element {
-	const { t } = useTranslation(['createreview', 'alerts'])
+	const t = useTranslations()
 
 	const [getStarted, setGetStarted] = useState(false)
 	const [landlordOpen, setLandlordOpen] = useState(false)
@@ -50,7 +48,6 @@ function ReviewForm(): JSX.Element {
 	const [spamDetectionMethod, setSpamDetectionMethod] = useState(
 		'localStorageDetection',
 	)
-	const [sheldonReviewOpen, setSheldonReviewOpen] = useState(false)
 
 	const [landlord, setLandlord] = useState<string>('')
 	const [country, setCountry] = useState<string>('AU')
@@ -62,8 +59,10 @@ function ReviewForm(): JSX.Element {
 	const {
 		searching,
 		locations,
-	}: { searching: boolean; locations: Array<ILocationHookResponse> } =
-		useLocation(city, country)
+	}: { searching: boolean; locations: ILocationHookResponse[] } = useLocation(
+		city,
+		country,
+	)
 
 	const [repair, setRepair] = useState<number>(3)
 	const [health, setHealth] = useState<number>(3)
@@ -92,8 +91,9 @@ function ReviewForm(): JSX.Element {
 	const { executeRecaptcha } = useReCaptcha()
 
 	// Check for already reviewed landlord from browser
-	const [localReviewedLandlords, setLocalReviewedLandlords] =
-		useState<Array<string> | null>(null)
+	const [localReviewedLandlords, setLocalReviewedLandlords] = useState<
+		string[] | null
+	>(null)
 
 	useEffect(() => {
 		const prevLandlords = localStorage.getItem('rtl')
@@ -106,13 +106,6 @@ function ReviewForm(): JSX.Element {
 	const checkLandlord = (str: string) => {
 		if (localReviewedLandlords) {
 			return localReviewedLandlords.indexOf(str) > -1
-		}
-		return false
-	}
-
-	const checkSheldon = () => {
-		if (/sheldon rakowsky/i.test(landlord)) {
-			return review === sheldonReview
 		}
 		return false
 	}
@@ -191,9 +184,7 @@ function ReviewForm(): JSX.Element {
 	const handleSubmit = async () => {
 		if (landlord.trim().length < 1) {
 			setLandlordValidationError(true)
-			setLandlordValidationText(
-				t('alerts.landlord-validation', { ns: 'alerts' }),
-			)
+			setLandlordValidationText(t('alerts.landlord-validation'))
 			return
 		}
 		if (checkLandlord(landlord.toLocaleUpperCase())) {
@@ -202,11 +193,7 @@ function ReviewForm(): JSX.Element {
 		}
 		if (city.trim().length < 1) {
 			setCityValidationError(true)
-			setCityValidationErrorText(t('alerts.city-validation', { ns: 'alerts' }))
-			return
-		}
-		if (checkSheldon()) {
-			setSheldonReviewOpen(true)
+			setCityValidationErrorText(t('alerts.city-validation'))
 			return
 		}
 		if (review.trim().length < 1) {
@@ -271,13 +258,13 @@ function ReviewForm(): JSX.Element {
 							}
 						})
 						.catch(() => {
-							toast.error(t('alerts.error', { ns: 'alerts' }) as string)
+							toast.error('ERROR: Please try again')
 						})
 						.finally(() => {
 							setLoading(false)
 						})
 				} else {
-					toast.error(t('alerts.error', { ns: 'alerts' }) as string)
+					toast.error('ERROR:Please try again')
 				}
 			} else {
 				setPostalError(true)
@@ -286,23 +273,31 @@ function ReviewForm(): JSX.Element {
 	}
 
 	useEffect(() => {
-		if (country === 'GB') {
-			setProvince('England')
-		} else if (country === 'AU') {
-			setProvince('Northern Territory')
-		} else if (country === 'US') {
-			setProvince('Alabama')
-		} else if (country === 'NZ') {
-			setProvince('Marlborough')
-		} else if (country === 'DE') {
-			setProvince('Baden-Württemberg')
-		} else if (country === 'IE') {
-			setProvince('Dublin')
-			setPostal('')
-		} else if (country === 'NO') {
-			setProvince('Oslo')
-		} else {
-			setProvince('Alberta')
+		switch (country) {
+			case 'GB':
+				setProvince('England')
+				break
+			case 'AU':
+				setProvince('Australian Capital Territory')
+				break
+			case 'US':
+				setProvince('Alabama')
+				break
+			case 'NZ':
+				setProvince('Auckland')
+				break
+			case 'DE':
+				setProvince('Baden-Württemberg')
+				break
+			case 'IE':
+				setProvince('Carlow')
+				setPostal('')
+				break
+			case 'NO':
+				setProvince('Oslo')
+				break
+			default:
+				setProvince('Alberta')
 		}
 	}, [country])
 
@@ -343,10 +338,6 @@ function ReviewForm(): JSX.Element {
 				isOpen={spamReviewModalOpen}
 				setIsOpen={setSpamReviewModalOpen}
 				detectionMethod={spamDetectionMethod}
-			/>
-			<SheldonModal
-				isOpen={sheldonReviewOpen}
-				setIsOpen={setSheldonReviewOpen}
 			/>
 
 			<ReviewHero
@@ -496,7 +487,7 @@ function ReviewForm(): JSX.Element {
 									/>
 								</div>
 								<label htmlFor='terms-1' className='text-sm text-gray-500'>
-									{t('create-review.review-form.disclaimer-1')}
+									{t('createreview.review-form.disclaimer-1')}
 								</label>
 							</div>
 							<div className='mb-2 flex w-full justify-start space-x-2'>
@@ -512,7 +503,7 @@ function ReviewForm(): JSX.Element {
 									/>
 								</div>
 								<label htmlFor='terms-2' className='text-sm text-gray-500'>
-									{t('create-review.review-form.disclaimer-2')}
+									{t('createreview.review-form.disclaimer-2')}
 								</label>
 							</div>
 							<div className='mb-2 flex w-full justify-start space-x-2'>
@@ -528,7 +519,7 @@ function ReviewForm(): JSX.Element {
 									/>
 								</div>
 								<label htmlFor='terms-3' className='text-sm text-gray-500'>
-									{t('create-review.review-form.disclaimer-3')}
+									{t('createreview.review-form.disclaimer-3')}
 								</label>
 							</div>
 
@@ -548,9 +539,15 @@ function ReviewForm(): JSX.Element {
 											loading ||
 											review.length > 2000
 										}
-										onClick={() => handleSubmit()}
+										onClick={() => {
+											posthog.capture('create_review_submitted')
+											handleSubmit().catch(() => {
+												posthog.capture('create_review_submit_error')
+												console.error('Error submitting Review')
+											})
+										}}
 									>
-										{t('create-review.review-form.submit')}
+										{t('createreview.review-form.submit')}
 									</Button>
 								)}
 							</div>

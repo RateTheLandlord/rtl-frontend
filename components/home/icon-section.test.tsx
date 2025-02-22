@@ -3,14 +3,23 @@
  */
 
 import React from 'react'
-import { render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect' // for expect(...).toBeInTheDocument()
-import IconSection from './icon-section' // Adjust the path based on your file structure
+import { render, screen } from '@/test-utils'
+import '@testing-library/jest-dom/extend-expect'
+import IconSection from './icon-section'
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
-test('IconSection renders correctly', () => {
-	render(<IconSection />)
+describe('IconSection', () => {
+	test('IconSection renders correctly', () => {
+		render(<IconSection />)
 
-	// Ensure the component renders
-	const section = screen.getByTestId('home-icon-section-1')
-	expect(section).toBeInTheDocument()
+		// Ensure the component renders
+		const section = screen.getByTestId('home-icon-section-1')
+		expect(section).toBeInTheDocument()
+	})
+	it('Should not have a11y violation', async () => {
+		const { container } = render(<IconSection />)
+		const result = await axe(container)
+		expect(result).toHaveNoViolations()
+	})
 })
