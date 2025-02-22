@@ -75,12 +75,12 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 						<p className='label pt-2 pr-2 pl-2'>{t('avg-landlord-as-of')}</p>
 						<p className='label pr-2 pl-2 text-center'>{label}: </p>
 						<div className='flex justify-center'>
-							<p className='label pb-2'>
+							<div className='label pb-2'>
 								<RatingStars
 									testid='AnalyticsTooltipRatingsStars'
 									value={Math.floor(Number(payload[0].value))}
 								/>
-							</p>
+							</div>
 						</div>
 					</div>
 				)
@@ -158,7 +158,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 			</div>
 			<div className='flex-1 lg:w-[100%]'>
 				<div className='hidden h-4 lg:block'></div>
-				<div className='h-128 rounded-lg border-4 border-teal-600 bg-white lg:p-4'>
+				<div className='h-158 rounded-lg border-4 border-teal-600 bg-white lg:p-4'>
 					<ResponsiveContainer width={'100%'} height={'100%'}>
 						<LineChart
 							width={600}
