@@ -35,6 +35,8 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 	const { user } = pageProps as { user: UserProfile }
 	const router = useRouter()
 
+	const timeZone = 'America/Montreal'
+
 	useEffect(() => {
 		const fetchCronStatus = async () => {
 			try {
@@ -56,6 +58,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 		<NextIntlClientProvider
 			locale={router.locale}
 			messages={pageProps.messages}
+			timeZone={timeZone}
 		>
 			<PHProvider>
 				<UserProvider user={user}>
