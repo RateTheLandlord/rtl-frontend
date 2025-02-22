@@ -33,7 +33,7 @@ const ChangeLanguage = () => {
 			>
 				<ListboxOptions
 					anchor='bottom'
-					className='ring-opacity-5 mt-1 max-h-[250px] w-[200px] overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black focus:outline-none sm:text-sm'
+					className='ring-opacity-5 mt-1 max-h-[250px] w-[200px] overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black focus:outline-none sm:text-sm'
 				>
 					{locales?.map((lang) => (
 						<ListboxOption
