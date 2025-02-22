@@ -47,7 +47,7 @@ export const getStartingLocation = (
 				toast.error('Error getting location, using default location.')
 			}
 		} else {
-			console.log('County not supported')
+			console.log('County not supported: ', country)
 		}
 	}
 }
