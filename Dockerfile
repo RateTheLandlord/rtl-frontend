@@ -1,6 +1,6 @@
 # Use the official Bun image
 # See all versions at https://hub.docker.com/r/oven/bun/tags
-FROM oven/bun:1 AS base
+FROM oven/bun:latest AS base
 
 ARG PORT=3000 # Default value if no PORT is provided
 ENV PORT=$PORT
