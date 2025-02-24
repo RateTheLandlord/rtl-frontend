@@ -43,9 +43,6 @@
 		"**/out",
 		"**/migrations/",
 		"**/util/countries",
-		".next",
-		"setupTests.ts",
-		"**/*.test.*",
-		"test-utils.tsx"
+		".next"
 	]
 }
