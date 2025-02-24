@@ -59,10 +59,14 @@ export async function getStaticProps({ locale }) {
 	const layoutMessages = (await import(
 		`@/messages/${locale}/layout.json`
 	)) as Record<string, string>
+	const alertsMessages = (await import(
+		`@/messages/${locale}/alerts.json`
+	)) as Record<string, string>
 	return {
 		props: {
 			messages: {
 				...layoutMessages,
+				...alertsMessages,
 			},
 		},
 	}
