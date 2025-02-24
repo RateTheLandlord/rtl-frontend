@@ -19,7 +19,7 @@ jobs:
       - name: Lint frontend
         run: |
           bun install
-          bun run lint
+          bun run lint:merge
 
   test-fe:
     runs-on: ubuntu-latest
@@ -55,14 +55,14 @@ jobs:
         with:
           client-id: ${{ secrets.MACHINE_IDENTITY_CLIENT_ID }}
           client-secret: ${{ secrets.MACHINE_IDENTITY_CLIENT_SECRET }}
-          env-slug: "dev"
+          env-slug: 'dev'
           project-slug: ${{ secrets.INFISICAL_PROJECT_SLUG }}
 
       - name: Build frontend
         run: |
           bun install
           bun run build
-          
+
       # Optionally, add caching to speed up the workflow on subsequent runs
       - name: Cache Bun dependencies
         uses: actions/cache@v3
