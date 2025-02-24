@@ -11,7 +11,7 @@
 		"start:debug": "NODE_OPTIONS='--inspect=0.0.0.0:9998' next dev",
 		"format": "prettier --write ./pages/**/*.{ts,tsx} ./components/**/*.{ts,tsx}",
 		"lint": "eslint . --fix --cache --ignore-pattern .next",
-		"lint:merge": "eslint . --ignore-pattern .next",
+		"lint:merge": "eslint . --cache --ignore-pattern .next",
 		"tsc": "tsc",
 		"test": "jest --watch -o",
 		"test:merge": "jest -o",
