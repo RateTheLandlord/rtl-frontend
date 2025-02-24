@@ -21,7 +21,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 COPY package*.json /app/
 
 # Install dependencies
-RUN bun install --production
+RUN bun install
 
 # Copy the rest of the app files into /app
 COPY . /app

@@ -87,7 +87,7 @@ const FlaggedReviews = () => {
 					/>
 				</>
 			) : null}
-			<div className='ring-opacity-5 container -mx-4 overflow-hidden ring-1 shadow ring-black sm:-mx-6 md:mx-0 md:rounded-lg'>
+			<div className='ring-opacity-5 container -mx-4 overflow-hidden shadow ring-1 ring-black sm:-mx-6 md:mx-0 md:rounded-lg'>
 				<table className='min-w-full divide-y divide-gray-300'>
 					<thead className='bg-gray-50'>
 						<tr>
