@@ -53,3 +53,21 @@ function Login(): JSX.Element {
 }
 
 export default withPageAuthRequired(Login)
+
+export async function getStaticProps({ locale }: { locale: string }) {
+	const alertsMessages = (await import(
+		`@/messages/${locale}/alerts.json`
+	)) as Record<string, string>
+	const layoutMessages = (await import(
+		`@/messages/${locale}/layout.json`
+	)) as Record<string, string>
+
+	return {
+		props: {
+			messages: {
+				...alertsMessages,
+				...layoutMessages,
+			},
+		},
+	}
+}

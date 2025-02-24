@@ -18,7 +18,6 @@ interface IProps {
 
 function SpamReviewModal({ isOpen, setIsOpen, detectionMethod }: IProps) {
 	const t = useTranslations('createreview')
-	posthog.capture('spam_modal_viewed')
 	return (
 		<Transition.Root show={isOpen} as={Fragment}>
 			<Dialog as='div' className='relative z-10' onClose={setIsOpen}>
@@ -65,6 +64,7 @@ function SpamReviewModal({ isOpen, setIsOpen, detectionMethod }: IProps) {
 									<Button
 										onClick={() => {
 											setIsOpen(false)
+											posthog.capture('spam_modal_viewed')
 										}}
 									>
 										{t('modal.close')}
