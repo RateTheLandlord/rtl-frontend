@@ -21,6 +21,8 @@
 		"privacy": "Confidentialité des locataires",
 		"repair": "Réparation",
 		"stability": "Stabilité résidentielle",
-		"overall": "Dans l'ensemble"
+		"overall": "Dans l'ensemble",
+		"view-other-landlords": "Voir d'autres propriétaires à",
+		"read-other-landlords": "Lire {reviewcount} avis"
 	}
 }

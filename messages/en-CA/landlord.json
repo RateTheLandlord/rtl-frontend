@@ -21,6 +21,8 @@
 		"privacy": "Tenant Privacy",
 		"repair": "Repair",
 		"stability": "Rental Stability",
-		"overall": "Overall"
+		"overall": "Overall",
+		"view-other-landlords": "View other Landlords in",
+		"read-other-landlords": "Read {reviewcount} review(s)"
 	}
 }
