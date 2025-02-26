@@ -66,5 +66,12 @@
 		"last-90": "Last 90 Days:",
 		"last-180": "Last 180 Days:",
 		"median-reported": "Median Report Rent"
+	},
+	"cities": {
+		"frequently": "Frequently Reviewed Cities in Your State/Province",
+		"name": "City Name: ",
+		"read": "Read",
+		"reviews": "{total} reviews",
+		"rating": "Avg. Rating"
 	}
 }
