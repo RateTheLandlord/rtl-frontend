@@ -112,7 +112,7 @@ function ReviewForm(): JSX.Element {
 
 	// Malicious string check
 	const detectMaliciousString = (stringToCheck: string): boolean => {
-		const maliciousPatterns = /<script>|http|\p{Extended_Pictographic}/giu
+		const maliciousPatterns = /<script>|http|\p{Extended_Pictographic}/gu
 		return maliciousPatterns.test(stringToCheck)
 	}
 
