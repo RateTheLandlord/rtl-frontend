@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import AddReviewModal from './add-review-modal'
 import Button from '../ui/button'
-import MaliciousStringAlert from '../alerts/MaliciousStringAlert'
 import SuccessModal from './success-modal'
 import { postcodeValidator } from 'postcode-validator'
 import SpamReviewModal from '@/components/create-review/SpamReviewModal'
@@ -41,7 +40,6 @@ function ReviewForm(): JSX.Element {
 
 	const [showPreview, setShowPreview] = useState(false)
 
-	const [maliciousAlertOpen, setMaliciousAlertOpen] = useState(false)
 	const [successModalOpen, setSuccessModalOpen] = useState(false)
 	const [reviewModalOpen, setReviewModalOpen] = useState(false)
 	const [spamReviewModalOpen, setSpamReviewModalOpen] = useState(false)
@@ -85,9 +83,6 @@ function ReviewForm(): JSX.Element {
 	const [cityValidationError, setCityValidationError] = useState(false)
 	const [cityValidationErrorText, setCityValidationErrorText] = useState('')
 
-	// Additional state for disabling submit
-	const [maliciousStringDetected, setMaliciousStringDetected] = useState(false)
-
 	const { executeRecaptcha } = useReCaptcha()
 
 	// Check for already reviewed landlord from browser
@@ -110,62 +105,24 @@ function ReviewForm(): JSX.Element {
 		return false
 	}
 
-	// Malicious string check
-	const detectMaliciousString = (stringToCheck: string): boolean => {
-		const maliciousPatterns = /<script>|http|\p{Extended_Pictographic}/gu
-		return maliciousPatterns.test(stringToCheck)
-	}
-
 	// Updated text change handler with malicious string check
 	const handleTextChange = (e: string, inputName: string) => {
-		const stringIsMalicious = detectMaliciousString(e)
-
 		switch (inputName) {
 			case 'landlord':
-				if (stringIsMalicious) {
-					setMaliciousStringDetected(true)
-					setMaliciousAlertOpen(true)
-				} else {
-					setLandlord(e)
-					setMaliciousStringDetected(false)
-				}
+				setLandlord(e)
 				break
 			case 'city':
-				if (stringIsMalicious) {
-					setMaliciousStringDetected(true)
-					setMaliciousAlertOpen(true)
-				} else {
-					setCity(e)
-					setMaliciousStringDetected(false)
-				}
+				setCity(e)
 				break
 			case 'postal':
-				if (stringIsMalicious) {
-					setMaliciousStringDetected(true)
-					setMaliciousAlertOpen(true)
-				} else {
-					setPostal(e)
-					setMaliciousStringDetected(false)
-					setTouchedPostal(true)
-				}
+				setPostal(e)
+				setTouchedPostal(true)
 				break
 			case 'review':
-				if (stringIsMalicious) {
-					setMaliciousStringDetected(true)
-					setMaliciousAlertOpen(true)
-				} else {
-					setReview(e)
-					setMaliciousStringDetected(false)
-				}
+				setReview(e)
 				break
 			case 'rent':
-				if (stringIsMalicious) {
-					setMaliciousStringDetected(true)
-					setMaliciousAlertOpen(true)
-				} else {
-					setRent(Number(e))
-					setMaliciousStringDetected(false)
-				}
+				setRent(Number(e))
 				break
 		}
 	}
@@ -329,9 +286,6 @@ function ReviewForm(): JSX.Element {
 			)}
 			data-testid='create-review-form-1'
 		>
-			{maliciousAlertOpen && (
-				<MaliciousStringAlert setMaliciousAlertOpen={setMaliciousAlertOpen} />
-			)}
 			<SuccessModal isOpen={successModalOpen} setIsOpen={setSuccessModalOpen} />
 			<AddReviewModal isOpen={reviewModalOpen} setIsOpen={setReviewModalOpen} />
 			<SpamReviewModal
@@ -535,7 +489,6 @@ function ReviewForm(): JSX.Element {
 											!disclaimerOne ||
 											!disclaimerTwo ||
 											!disclaimerThree ||
-											maliciousStringDetected ||
 											loading ||
 											review.length > 2000
 										}
