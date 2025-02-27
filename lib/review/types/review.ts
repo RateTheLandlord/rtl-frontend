@@ -3,7 +3,7 @@ import { Options, Review } from '@/util/interfaces/interfaces'
 export interface OtherLandlord {
 	name: string
 	avgrating: number
-	topcity: string
+	topCity: string
 	reviewcount: number
 }
 

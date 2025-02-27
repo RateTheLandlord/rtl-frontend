@@ -75,8 +75,7 @@ export async function getOtherLandlords(
 		SELECT
 			landlord as name,
 			(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS avgrating,
-			COUNT(*) as ReviewCount,
-			RANDOM()
+			COUNT(*) as ReviewCount
 		FROM review
 		WHERE city = ${topCity[0].city as string}
 		AND landlord != ${landlord.toLocaleUpperCase()}
@@ -84,7 +83,10 @@ export async function getOtherLandlords(
 		ORDER BY RANDOM()
 		LIMIT 10;
 		`
-	return otherLandlords
+	const result = otherLandlords.map((landlord) => {
+		return { ...landlord, topCity: topCity[0].city as string }
+	})
+	return result
 }
 
 export async function getLandlordSuggestions(

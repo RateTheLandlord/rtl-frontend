@@ -4,13 +4,15 @@ import Link from 'next/link'
 import RatingStars from '@/components/ui/RatingStars'
 import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
 	landlord: string
 }
 
 const OtherLandlordInfo = ({ landlord }: IProps) => {
-	const { data: landlords, error } = useSWR<OtherLandlord[]>(
+	const t = useTranslations('landlord')
+	const { data: landlords, error } = useSWR<OtherLandlord[], unknown>(
 		`/api/review/get-other-landlords?landlord=${encodeURIComponent(landlord)}`,
 		fetcher,
 	)
@@ -18,11 +20,12 @@ const OtherLandlordInfo = ({ landlord }: IProps) => {
 	if (!landlords) return <Spinner />
 
 	if (error || !landlords.length) return null
+	console.log(landlords)
 
 	return (
 		<>
 			<h3 className='mt-4 text-lg text-gray-900'>
-				View Other Landlords in {landlords[0]?.topcity}:
+				{t('view-other-landlords')} {landlords[0]?.topCity}:
 			</h3>
 			<div className='grid grid-cols-2 grid-rows-5 gap-2 lg:grid-cols-5 lg:grid-rows-2'>
 				{landlords.map((otherLandlord, index) => {
@@ -39,7 +42,9 @@ const OtherLandlordInfo = ({ landlord }: IProps) => {
 								>
 									<p className='text-center text-lg'>{otherLandlord.name}</p>
 									<p className='text-center text-sm'>
-										Read {otherLandlord.reviewcount} review(s)
+										{t('read-other-landlords', {
+											reviewcount: otherLandlord.reviewcount,
+										})}
 									</p>
 								</div>
 								<RatingStars

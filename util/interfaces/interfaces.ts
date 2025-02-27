@@ -30,7 +30,7 @@ export interface Review {
 export interface OtherLandlord {
 	name: string
 	avgrating: number
-	topcity: string
+	topCity: string
 	reviewcount: number
 }
 
