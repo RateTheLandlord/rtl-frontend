@@ -1,6 +1,7 @@
 import RatingStars from '@/components/ui/RatingStars'
 import Spinner from '@/components/ui/Spinner'
 import { fetchWithBody } from '@/util/helpers/fetcher'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import useSWR from 'swr'
 
@@ -16,6 +17,7 @@ interface IProps {
 }
 
 const CitiesTable = ({ state, country }: IProps) => {
+	const t = useTranslations('cities')
 	const { data: cities, error: cityError } = useSWR<ICities[], unknown>(
 		['/api/review/state-city-info', { state, country }],
 		fetchWithBody,
@@ -28,9 +30,7 @@ const CitiesTable = ({ state, country }: IProps) => {
 	if (cityError) console.log('Error retrieving information')
 	return (
 		<div className='w-full flex-wrap'>
-			<div className='text-center text-xs lg:text-xl'>
-				Frequently Reviewed Cities in Your State/Province
-			</div>
+			<div className='text-center text-xs lg:text-xl'>{t('frequently')}</div>
 			<div className='grid w-full gap-2 lg:grid-cols-2'>
 				{cities.map((city) => {
 					return (
@@ -43,15 +43,15 @@ const CitiesTable = ({ state, country }: IProps) => {
 						>
 							<div className='grid w-full grid-cols-3 text-sm lg:text-lg'>
 								<div className='flex-1 break-words'>
-									<div>City Name: </div>
+									<div>{t('name')}</div>
 									<div className='pl-1 lg:pl-2'>{city.city}</div>
 								</div>
 								<div className='flex-1 flex-wrap justify-center text-center break-words'>
-									<p>Read</p>
-									<p>{city.total} reviews</p>
+									<p>{t('read')}</p>
+									<p>{t('reviews', { total: city.total })}</p>
 								</div>
 								<div className='flex-1 pl-0 break-words lg:pl-20'>
-									<p className='pl-2'>Avg. Rating</p>
+									<p className='pl-2'>{t('rating')}</p>
 									<RatingStars
 										testid='CitiesTableRatingStars'
 										value={Math.floor(city.average)}

@@ -66,5 +66,12 @@
 		"last-90": "Les 90 derniers jours :",
 		"last-180": "Les 180 derniers jours :",
 		"median-reported": "Loyer médian du rapport"
+	},
+	"cities": {
+		"frequently": "Villes fréquemment examinées dans votre état/province",
+		"name": "Nom de la ville: ",
+		"read": "Lire",
+		"reviews": "{total} avis",
+		"rating": "Moy. Notation"
 	}
 }
