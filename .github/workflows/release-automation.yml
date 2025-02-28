@@ -17,30 +17,22 @@ jobs:
       - name: Determine latest version (published or pending)
         id: latest_version
         run: |
-          # Find latest tag
-          LATEST_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 || echo "v0.0.0")
+          # Find latest major.minor tag (e.g., 2.22)
+          LATEST_TAG=$(git tag --sort=-v:refname | grep -E '^[0-9]+\.[0-9]+$' | head -n 1 || echo "0.0")
 
-          # Find latest release branch
-          LATEST_BRANCH=$(git branch -r | grep -oE 'release-[0-9]+\.[0-9]+' | sort -V | tail -n 1 || echo "")
+          # Find latest patch release (e.g., 2.21.1)
+          LATEST_PATCH_TAG=$(git tag --sort=-v:refname | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 || echo "")
 
-          # Extract numeric versions
-          TAG_VERSION="${LATEST_TAG//v/}" # Remove "v" prefix
-          BRANCH_VERSION="${LATEST_BRANCH//release-/}" # Remove "release-" prefix
+          echo "Latest main release: $LATEST_TAG"
+          echo "Latest patch release: $LATEST_PATCH_TAG"
 
-          # Determine highest version
-          if [ -z "$BRANCH_VERSION" ] || [ "$(printf '%s\n%s' "$TAG_VERSION" "$BRANCH_VERSION" | sort -V | tail -n 1)" = "$TAG_VERSION" ]; then
-            BASE_VERSION=$TAG_VERSION
-          else
-            BASE_VERSION=$BRANCH_VERSION
-          fi
+          # Extract numeric version
+          IFS='.' read -r -a PARTS <<< "$LATEST_TAG"
+          MAJOR=${PARTS[0]}
+          MINOR=${PARTS[1]}
 
-          # Increment minor version
-          IFS='.' read -r -a PARTS <<< "$BASE_VERSION"
-          NEW_TAG="v${PARTS[0]}.$((PARTS[1] + 1)).0"
-
-          echo "Latest tag: $LATEST_TAG"
-          echo "Latest branch: $LATEST_BRANCH"
-          echo "New version: $NEW_TAG"
+          # Increment minor version for the next release
+          NEW_TAG="${MAJOR}.$((MINOR + 1))"
 
           echo "new_tag=$NEW_TAG" >> $GITHUB_ENV
 
@@ -53,14 +45,13 @@ jobs:
       - name: Generate changelog
         id: changelog
         run: |
-          LAST_TAG=${{ env.new_tag }}
+          LAST_TAG="${{ env.new_tag }}"
 
-          if [ "$LAST_TAG" == "v0.0.0" ]; then
-            # First release, list all commits
-            CHANGELOG=$(git log --pretty=format:"- %s (%an)")
+          # Check if LAST_TAG exists before using it in git log
+          if git rev-parse "$LAST_TAG" >/dev/null 2>&1; then
+              CHANGELOG=$(git log "$LAST_TAG"..HEAD --pretty=format:"- %s (%an)")
           else
-            # List commits since the last tag
-            CHANGELOG=$(git log $LAST_TAG..HEAD --pretty=format:"- %s (%an)")
+              CHANGELOG=$(git log --pretty=format:"- %s (%an)")
           fi
 
           echo "Changelog: $CHANGELOG"
