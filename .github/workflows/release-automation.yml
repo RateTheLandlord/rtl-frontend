@@ -54,8 +54,7 @@ jobs:
               --base production \
               --head "release-${{ env.new_tag }}" \
               --title "Release ${{ env.new_tag }}" \
-              --body "This PR merges release-${{ env.new_tag }} into production." \
-              --label "release"
+              --body "This PR merges release-${{ env.new_tag }} into production." 
           else
             echo "Pull request already exists: #$PR_EXISTS"
           fi
