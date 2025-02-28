@@ -42,6 +42,26 @@ jobs:
           git checkout -b $NEW_BRANCH origin/develop
           git push origin $NEW_BRANCH
 
+      - name: Create a pull request to production
+        run: |
+          # Check if PR already exists
+          PR_EXISTS=$(gh pr list --base production --head "release-${{ env.new_tag }}" --json number --jq '.[].number')
+
+          if [ -z "$PR_EXISTS" ]; then
+            echo "Creating pull request for release-${{ env.new_tag }} → production"
+
+            gh pr create \
+              --base production \
+              --head "release-${{ env.new_tag }}" \
+              --title "Release ${{ env.new_tag }}" \
+              --body "This PR merges release-${{ env.new_tag }} into production." \
+              --label "release"
+          else
+            echo "Pull request already exists: #$PR_EXISTS"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Generate changelog
         id: changelog
         run: |
