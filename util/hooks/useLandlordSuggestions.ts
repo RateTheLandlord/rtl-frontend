@@ -24,7 +24,7 @@ export const useLandlordSuggestions = (landlord: string) => {
 						}
 						return res.json()
 					})
-					.then((data) => {
+					.then((data: string[]) => {
 						setLandlordSuggestions(data)
 					})
 					.catch((err) => console.log(err))

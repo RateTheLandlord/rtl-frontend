@@ -24,7 +24,7 @@ const Search = () => {
 	}: { isSearching: boolean; landlordSuggestions: string[] } =
 		useLandlordSuggestions(search)
 
-	const submitCombo = (e) => {
+	const submitCombo = (e: string) => {
 		if (e) {
 			dispatch(updateSearch(e))
 			router
