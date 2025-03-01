@@ -1,16 +1,13 @@
 import useSWR from 'swr'
-import { fetchWithBody } from '@/util/helpers/fetcher'
+import { fetcher } from '@/util/helpers/fetcher'
 import Spinner from '@/components/ui/Spinner'
-import { useStatsDates } from '@/util/hooks/useStatsDates'
 import TotalStats from '../components/TotalStats'
 import { IStats } from '../types/types'
 
 const Stats = () => {
-	const [startDate, groupBy] = useStatsDates('last7')
-
 	const { data, error } = useSWR<IStats, unknown>(
-		[`/api/admin/get-stats`, { startDate, groupBy }],
-		fetchWithBody,
+		`/api/admin/get-stats`,
+		fetcher,
 	)
 
 	if (error) return <div>failed to load</div>
