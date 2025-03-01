@@ -48,7 +48,6 @@ export default tseslint.config({
 	},
 	// TODO RULES TO FIX - SET TO WARN FOR NOW
 	rules: {
-		'@typescript-eslint/no-unsafe-return': 'warn',
 		'@typescript-eslint/no-unsafe-member-access': 'warn',
 		'@typescript-eslint/no-floating-promises': 'warn',
 		'@typescript-eslint/no-unsafe-argument': 'warn',
