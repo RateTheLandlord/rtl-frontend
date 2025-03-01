@@ -68,7 +68,7 @@ describe('Search', () => {
 		waitFor(() => {
 			expect(mockDispatch).toHaveBeenCalledWith(updateSearch('test'))
 			expect(mockPush).toHaveBeenCalledWith('/landlord/test')
-		})
+		}).catch(() => console.error('Failed dispatch in test'))
 	})
 
 	it('shows not found message when no suggestions', () => {

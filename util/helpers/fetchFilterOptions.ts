@@ -21,7 +21,7 @@ export async function fetchFilterOptions(
 			throw new Error('Network response was not ok')
 		}
 
-		const data: FilterOptions = await response.json()
+		const data = (await response.json()) as FilterOptions
 		return data
 	} catch {
 		console.error('Error fetching filter options')
