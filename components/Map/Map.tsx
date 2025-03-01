@@ -105,7 +105,7 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 						}),
 					})
 					if (!res.ok) throw new Error('Network response was not ok')
-					const data = await res.json()
+					const data = (await res.json()) as IZipLocations[]
 					setFormData((prevData) => ({ ...prevData, locations: data }))
 				} catch {
 					console.error('Error fetching locations')
