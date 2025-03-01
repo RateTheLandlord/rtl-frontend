@@ -10,7 +10,7 @@ export const useLandlordSuggestions = (landlord: string) => {
 	useEffect(() => {
 		if (landlord) {
 			setIsSearching(true)
-			const fetchData = async () => {
+			const fetchData = () => {
 				fetch('/api/review/get-landlord-suggestions', {
 					method: 'POST',
 					headers: {
