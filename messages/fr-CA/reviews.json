@@ -65,7 +65,9 @@
 		"select-filter": "Sélectionner pour filtrer",
 		"last-90": "Les 90 derniers jours :",
 		"last-180": "Les 180 derniers jours :",
-		"median-reported": "Loyer médian du rapport"
+		"median-reported": "Loyer médian du rapport",
+		"close": "Fermer",
+		"select-metric": "Sélectionner une métrique pour le graphique"
 	},
 	"cities": {
 		"frequently": "Villes fréquemment examinées dans votre état/province",
