@@ -1,32 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-            
-                        <url>
-                            <loc>https://ratethelandlord.org/500</loc>
-                        </url>
-                    
-                        <url>
-                            <loc>https://ratethelandlord.org/about</loc>
-                        </url>
-                    
-                        <url>
-                            <loc>https://ratethelandlord.org/create-review</loc>
-                        </url>
-                    
-                        <url>
-                            <loc>https://ratethelandlord.org</loc>
-                        </url>
-                    
-                        <url>
-                            <loc>https://ratethelandlord.org/randomstringofchars-create-review</loc>
-                        </url>
-                    
-                        <url>
-                            <loc>https://ratethelandlord.org/randomstringofchars-reviews</loc>
-                        </url>
-                    
-                        <url>
-                            <loc>https://ratethelandlord.org/reviews</loc>
-                        </url>
-                    
-        </urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<sitemap><loc>https://ratethelandlord.org/sitemap-0.xml</loc></sitemap>
+<sitemap><loc>https://ratethelandlord.org/sitemap.xml</loc></sitemap>
+<sitemap><loc>https://ratethelandlord.org/server-sitemap.xml</loc></sitemap>
+</sitemapindex>

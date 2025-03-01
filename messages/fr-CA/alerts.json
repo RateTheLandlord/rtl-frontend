@@ -1,15 +1,14 @@
 {
-  "alerts": {
-    "maliciousString": "Attention ! Nous avons détecté un lien ou un script dans votre entrée. Veuilleuz le retirer ou le reformuler avant de soumettre.",
-    "error": "Échec : Une erreur s'est produite, veuillez réessayer.",
-    "city-validation": "Le champ 'Ville' ne peut pas être vide.",
-    "landlord-validation": "Le champ 'Propriétaire' ne peut pas être vide."
-  },
-  "cookie": {
-    "body-1": "🍪 Nous utilisons des cookies pour améliorer votre expérience de navigation et analyser le trafic du site. En cliquant sur \"Accepter\", vous consentez à l'utilisation de cookies comme indiqué dans notre politique de confidentialité. Nous ne vendons ni ne transférons vos données à des tiers. Si vous préférez refuser, seuls les cookies essentiels seront utilisés. Voir notre ",
-    "body-2": ". 🍪",
-    "privacy": "politique de confidentialité",
-    "accept": "Accepter",
-    "decline": "Déclin"
-  }
+	"alerts": {
+		"error": "Échec : Une erreur s'est produite, veuillez réessayer.",
+		"city-validation": "Le champ 'Ville' ne peut pas être vide.",
+		"landlord-validation": "Le champ 'Propriétaire' ne peut pas être vide."
+	},
+	"cookie": {
+		"body-1": "🍪 Nous utilisons des cookies pour améliorer votre expérience de navigation et analyser le trafic du site. En cliquant sur \"Accepter\", vous consentez à l'utilisation de cookies comme indiqué dans notre politique de confidentialité. Nous ne vendons ni ne transférons vos données à des tiers. Si vous préférez refuser, seuls les cookies essentiels seront utilisés. Voir notre ",
+		"body-2": ". 🍪",
+		"privacy": "politique de confidentialité",
+		"accept": "Accepter",
+		"decline": "Déclin"
+	}
 }
