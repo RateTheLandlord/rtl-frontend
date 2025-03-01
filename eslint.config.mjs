@@ -46,9 +46,4 @@ export default tseslint.config({
 			tsconfigRootDir: __dirname,
 		},
 	},
-	// TODO RULES TO FIX - SET TO WARN FOR NOW
-	rules: {
-		'@typescript-eslint/restrict-plus-operands': 'warn',
-		'@typescript-eslint/no-misused-promises': 'warn',
-	},
 })

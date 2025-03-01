@@ -64,13 +64,13 @@ const Search = () => {
 										</div>
 									) : (
 										<button
-											onClick={() =>
+											onClick={() => {
 												router
 													.push(`/create-review`)
 													.catch(() =>
 														console.error('Failed to route to create-review'),
 													)
-											}
+											}}
 											className='relative cursor-pointer px-4 py-2 text-left text-gray-700 select-none hover:bg-teal-100'
 										>
 											{t('not-found')}
