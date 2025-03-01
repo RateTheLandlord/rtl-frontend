@@ -11,7 +11,7 @@ export async function getLandlordReviews(
 
 	const reviews = await sql<Review[]>`Select *
       FROM review
-      WHERE landlord IN (${landlord}) AND (flagged = false OR (flagged = true AND admin_approved = true)) ORDER BY date_added DESC`
+      WHERE landlord IN (${landlord}) AND (flagged = false OR (flagged = true AND admin_approved = true)) AND delete_date IS NULL ORDER BY date_added DESC`
 
 	const averageByCat = await sql`
 	  SELECT 
