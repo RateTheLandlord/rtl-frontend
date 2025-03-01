@@ -62,7 +62,9 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 
 	useEffect(() => {
 		if (formData.country && formData.state) {
-			fetchZips(formData.country, formData.state)
+			fetchZips(formData.country, formData.state).catch(() =>
+				console.error('Failed to get Zips'),
+			)
 		}
 	}, [formData.country, formData.state])
 
@@ -109,7 +111,7 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 					console.error('Error fetching locations')
 				}
 			}
-			getLocations()
+			getLocations().catch(() => console.error('Failed to get Locations'))
 		}
 	}, [formData.zipCodes, formData.country?.value])
 

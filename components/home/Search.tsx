@@ -27,7 +27,9 @@ const Search = () => {
 	const submitCombo = (e) => {
 		if (e) {
 			dispatch(updateSearch(e))
-			router.push(`/landlord/${encodeURIComponent(e)}`)
+			router
+				.push(`/landlord/${encodeURIComponent(e)}`)
+				.catch(() => console.error('Failed to route to landlord'))
 		}
 	}
 	return (
@@ -62,7 +64,13 @@ const Search = () => {
 										</div>
 									) : (
 										<button
-											onClick={() => router.push(`/create-review`)}
+											onClick={() =>
+												router
+													.push(`/create-review`)
+													.catch(() =>
+														console.error('Failed to route to create-review'),
+													)
+											}
 											className='relative cursor-pointer px-4 py-2 text-left text-gray-700 select-none hover:bg-teal-100'
 										>
 											{t('not-found')}

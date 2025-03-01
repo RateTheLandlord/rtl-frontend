@@ -11,7 +11,7 @@ export const useLocation = (input: string, country: string) => {
 
 	const debouncedSearchString = useDebounce(input, 500)
 
-	const searchLocations = useCallback(async () => {
+	const searchLocations = useCallback(() => {
 		setSearching(true)
 		fetch(
 			`https://nominatim.openstreetmap.org/search?q=${input}&format=json&limit=5&addressdetails=1&countrycodes=${country}`,
@@ -23,7 +23,7 @@ export const useLocation = (input: string, country: string) => {
 				return response.json()
 			})
 			.then((data) => {
-				const formattedData = formatData(data)
+				const formattedData = formatData(data as ILocationResponse[])
 				setLocations(formattedData)
 			})
 			.catch((err) => {
