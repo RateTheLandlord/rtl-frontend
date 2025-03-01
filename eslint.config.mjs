@@ -48,7 +48,6 @@ export default tseslint.config({
 	},
 	// TODO RULES TO FIX - SET TO WARN FOR NOW
 	rules: {
-		'@typescript-eslint/await-thenable': 'warn',
 		'@typescript-eslint/restrict-plus-operands': 'warn',
 		'@typescript-eslint/no-misused-promises': 'warn',
 	},

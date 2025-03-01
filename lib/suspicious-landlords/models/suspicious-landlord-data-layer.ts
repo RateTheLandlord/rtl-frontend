@@ -16,7 +16,7 @@ export async function createLandlord(
 					(${suspiciousLandlord.landlord}, ${suspiciousLandlord.message}) RETURNING id;
 				`
 
-		suspiciousLandlord.id = await id[0].id
+		suspiciousLandlord.id = id[0].id
 
 		return suspiciousLandlord
 	} catch {
