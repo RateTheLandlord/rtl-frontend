@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import cron from 'node-cron'
 import { getDeleted, deleteReview } from '@/lib/review/review'
 import dayjs from 'dayjs'
@@ -16,7 +17,7 @@ const readyToDelete = (delete_date: string | null): boolean => {
 }
 
 // Schedule a cron job to run every day
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+
 cron.schedule('0 0 * * *', async () => {
 	const reviews = await getDeleted()
 

@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 const rateLimitMap = new Map()
 
 export default function ReviewRateLimitMiddleware(
-	handler: (req: NextApiRequest, res: NextApiResponse) => void,
+	handler: (req: NextApiRequest, res: NextApiResponse) => Promise<void>,
 ) {
 	return (req: NextApiRequest, res: NextApiResponse) => {
 		const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
