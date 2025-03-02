@@ -19,6 +19,8 @@ const WrittenReviewForm = ({
 	setShowPreview,
 }: IProps) => {
 	const t = useTranslations('createreview')
+	const isReviewOptional =
+		posthog.getFeatureFlag('written-review-optional') === 'optional'
 	return !reviewOpen ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
 			<div className='flex flex-col gap-2'>
@@ -51,10 +53,10 @@ const WrittenReviewForm = ({
 				</ol>
 			</div>
 			<LargeTextInput
-				title={t('review-form.review')}
+				title={`${t('review-form.review')} ${isReviewOptional ? t('review-form.optional') : ''}`}
 				setValue={(str: string) => handleTextChange(str, 'review')}
 				id='review'
-				placeHolder=''
+				placeHolder={isReviewOptional ? t('review-form.optional') : ''}
 				testid='create-review-form-text-1'
 				limitText={t('review-form.limit', {
 					length: review.length,
@@ -64,7 +66,7 @@ const WrittenReviewForm = ({
 			/>
 			<div className='flex w-full justify-end pt-2'>
 				<Button
-					disabled={review.length === 0}
+					disabled={isReviewOptional ? false : review.length === 0}
 					onClick={() => {
 						posthog.capture('create_review_written_review')
 						setShowPreview(true)
