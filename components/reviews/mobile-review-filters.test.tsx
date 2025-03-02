@@ -40,7 +40,10 @@ describe('MobileReviewFilters', () => {
 					dynamicZipOptions={[]}
 					updateParams={jest.fn()}
 					dispatch={store.dispatch}
-					fetchDynamicFilterOptions={jest.fn()}
+					fetchDynamicFilterOptions={Object.assign(jest.fn(), {
+						cancel: jest.fn(),
+						flush: jest.fn(),
+					})}
 					query={{
 						selectedSort: {
 							id: 1,

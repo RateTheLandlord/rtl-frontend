@@ -1,11 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
+import { NextApiRequest, NextApiResponse } from 'next'
+
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 const rateLimitMap = new Map()
 
-export default function ReviewRateLimitMiddleware(handler) {
-	return (req, res) => {
+export default function ReviewRateLimitMiddleware(
+	handler: (req: NextApiRequest, res: NextApiResponse) => Promise<void>,
+) {
+	return (req: NextApiRequest, res: NextApiResponse) => {
 		const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		const limit = 2 // Limiting requests to 5 per minute per IP
 		const windowMs = 604800000 //1 week

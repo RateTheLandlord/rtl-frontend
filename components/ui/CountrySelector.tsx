@@ -25,7 +25,7 @@ const CountrySelector = ({ setValue }: IProps) => {
 					{country_codes.map((country) => {
 						return (
 							<option className='cursor-pointer' key={country} value={country}>
-								{countries[country]}
+								{countries[country as keyof typeof countries]}
 							</option>
 						)
 					})}

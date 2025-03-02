@@ -24,7 +24,7 @@ export default function Custom500() {
 	)
 }
 
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale }: { locale: string }) {
 	const layoutMessages = (await import(
 		`@/messages/${locale}/layout.json`
 	)) as Record<string, string>

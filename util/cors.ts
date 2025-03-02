@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import Cors from 'cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 

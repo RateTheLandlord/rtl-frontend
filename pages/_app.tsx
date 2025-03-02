@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/unbound-method */
 import Layout from '@/components/layout/layout'
 import { AppProps } from 'next/app'
 import 'mapbox-gl/dist/mapbox-gl.css'

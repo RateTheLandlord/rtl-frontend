@@ -19,6 +19,7 @@ import ButtonLight from '../ui/button-light'
 import Spinner from '../ui/Spinner'
 import SortList from './ui/sort-list'
 import Button from '../ui/button'
+import { DebouncedFunc } from 'lodash'
 
 //Review filters and Logic
 
@@ -39,7 +40,7 @@ interface FiltersProps {
 	updateParams: () => void
 	loading: boolean
 	dispatch: AppDispatch
-	fetchDynamicFilterOptions: () => Promise<void>
+	fetchDynamicFilterOptions: DebouncedFunc<() => Promise<void>>
 	query: IQuery
 }
 

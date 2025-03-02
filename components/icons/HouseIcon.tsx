@@ -1,4 +1,4 @@
-export const HouseIcon = (props) => {
+export const HouseIcon = (props: React.SVGProps<SVGSVGElement>) => {
 	return (
 		<svg
 			width='564'

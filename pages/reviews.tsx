@@ -50,7 +50,7 @@ export default function Reviews(): JSX.Element {
 	)
 }
 
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale }: { locale: string }) {
 	const landlordMessages = (await import(
 		`@/messages/${locale}/landlord.json`
 	)) as Record<string, string>

@@ -7,7 +7,11 @@ import React from 'react'
 import { getMemberData, getTierData, PatreonData } from '@/util/helpers/patreon'
 import Supporters from '@/components/supportus/Supporters'
 
-export default function SupportUs({ members }): JSX.Element {
+export default function SupportUs({
+	members,
+}: {
+	members: PatreonData
+}): JSX.Element {
 	const title = 'Support Us | Rate The Landlord'
 	const desc =
 		'Share information with tenants like you and rate your landlord. We are a community platform that elevates tenant voices to promote landlord accountability. Find Landlord Reviews and Resources.'
@@ -17,8 +21,8 @@ export default function SupportUs({ members }): JSX.Element {
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
 
-	const memberData = getMemberData(members as PatreonData)
-	const tierData = getTierData(members as PatreonData)
+	const memberData = getMemberData(members)
+	const tierData = getTierData(members)
 
 	return (
 		<div>
@@ -60,7 +64,7 @@ export default function SupportUs({ members }): JSX.Element {
 }
 
 //Page is statically generated at build time and then revalidated at a minimum of every day based on when the page is accessed
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale }: { locale: string }) {
 	const supportMessages = (await import(
 		`@/messages/${locale}/support.json`
 	)) as Record<string, string>
