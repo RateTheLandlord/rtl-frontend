@@ -1,6 +1,6 @@
-import { getServerSideSitemap } from 'next-sitemap'
+import { getServerSideSitemap, ISitemapField } from 'next-sitemap'
 
-export const getServerSideProps = async (ctx) => {
+export const getServerSideProps = async (ctx: ISitemapField[]) => {
 	const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/review/landlords`)
 	const landlords = (await req.json()) as Array<string>
 	const landlordSitemaps = landlords.map((item) => ({
@@ -10,7 +10,6 @@ export const getServerSideProps = async (ctx) => {
 
 	const fields = [...landlordSitemaps]
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 	return getServerSideSitemap(ctx, fields)
 }
 

@@ -1,6 +1,7 @@
 import cron from 'node-cron'
 import { getDeleted, deleteReview } from '@/lib/review/review'
 import dayjs from 'dayjs'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 const readyToDelete = (delete_date: string | null): boolean => {
 	if (delete_date && delete_date.length > 0) {
@@ -29,7 +30,6 @@ cron.schedule('0 0 * * *', async () => {
 	}
 })
 
-export default function handler(req, res) {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
 	res.status(200).json({ message: 'Cron job API is running!' })
 }

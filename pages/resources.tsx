@@ -67,7 +67,7 @@ function Resources({ data }: IProps): JSX.Element {
 export default Resources
 
 //Page is statically generated at build time and then revalidated at a minimum of every 30 minutes based on when the page is accessed
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale }: { locale: string }) {
 	const resourcesMessages = (await import(
 		`@/messages/${locale}/resources.json`
 	)) as Record<string, string>

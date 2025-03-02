@@ -183,7 +183,7 @@ export const getStaticPaths = () => {
 	}
 }
 
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale }: { locale: string }) {
 	const alertsMessages = (await import(
 		`@/messages/${locale}/alerts.json`
 	)) as Record<string, string>
