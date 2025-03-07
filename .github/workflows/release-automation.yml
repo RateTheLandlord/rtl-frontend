@@ -40,9 +40,9 @@ jobs:
         run: |
           # Check if the release branch already exists
           if ! git show-ref --quiet refs/heads/release-${{ env.new_tag }}; then
-            echo "Creating branch release-${{ env.new_tag }} from main"
-            git checkout main
-            git pull origin main
+            echo "Creating branch release-${{ env.new_tag }} from develop"
+            git checkout develop
+            git pull origin develop
             git checkout -b release-${{ env.new_tag }}
             git push origin release-${{ env.new_tag }}
           else
