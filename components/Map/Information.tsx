@@ -5,6 +5,7 @@ import Spinner from '../ui/Spinner'
 import { Options } from '@/util/interfaces/interfaces'
 import Link from 'next/link'
 import { IZipLocations } from '@/lib/location/types'
+import { IZipStats } from '@/lib/review/types/review'
 
 interface IProps {
 	country: Options | null
@@ -13,7 +14,7 @@ interface IProps {
 }
 
 const Information = ({ selectedPoint, country, state }: IProps) => {
-	const { data: stats, error } = useSWR(
+	const { data: stats, error } = useSWR<IZipStats, unknown>(
 		[
 			'/api/review/get-zip-stats',
 			{

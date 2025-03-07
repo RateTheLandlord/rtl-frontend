@@ -24,6 +24,7 @@ import {
 } from '@/redux/query/querySlice'
 import ButtonLight from '../ui/button-light'
 import Button from '../ui/button'
+import { DebouncedFunc } from 'lodash'
 
 interface FiltersProps {
 	mobileFiltersOpen: boolean
@@ -37,7 +38,7 @@ interface FiltersProps {
 	dynamicZipOptions: Options[]
 	updateParams: () => void
 	dispatch: AppDispatch
-	fetchDynamicFilterOptions: () => Promise<void>
+	fetchDynamicFilterOptions: DebouncedFunc<() => Promise<void>>
 	query: IQuery
 }
 

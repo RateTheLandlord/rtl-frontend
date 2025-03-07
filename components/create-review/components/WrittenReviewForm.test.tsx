@@ -11,13 +11,21 @@ jest.mock('@/components/ui/button', () =>
 )
 
 jest.mock('@/components/ui/LargeTextInput', () =>
-	jest.fn(({ value, setValue }) => (
-		<textarea
-			aria-label='TEST TEXT AREA'
-			value={value}
-			onChange={(e) => setValue(e.target.value)}
-		/>
-	)),
+	jest.fn(
+		({
+			value,
+			setValue,
+		}: {
+			value: string
+			setValue: (value: string) => void
+		}) => (
+			<textarea
+				aria-label='TEST TEXT AREA'
+				value={value}
+				onChange={(e) => setValue(e.target.value)}
+			/>
+		),
+	),
 )
 
 describe('WrittenReviewForm Component', () => {

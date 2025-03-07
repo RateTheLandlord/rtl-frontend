@@ -7,11 +7,33 @@ import '@testing-library/jest-dom/extend-expect'
 import ReviewFilters from './review-filters'
 import { IQuery, Options, SortOptions } from '@/util/interfaces/interfaces'
 import { Provider } from 'react-redux'
-import { store } from '@/redux/store'
+import { AppDispatch, store } from '@/redux/store'
 import { axe, toHaveNoViolations } from 'jest-axe'
+import { DebouncedFunc } from 'lodash'
 expect.extend(toHaveNoViolations)
 
-const mockProps = {
+interface FiltersProps {
+	title?: string
+	description?: string
+	searchTitle?: string
+	selectedSort: SortOptions
+	setSelectedSort: (selectedSort: SortOptions) => void
+	sortOptions: SortOptions[]
+	countryFilter: Options | null
+	stateFilter: Options | null
+	cityFilter: Options | null
+	zipFilter: Options | null
+	dynamicCityOptions: Options[]
+	zipOptions?: Options[]
+	dynamicZipOptions: Options[]
+	updateParams: () => void
+	loading: boolean
+	dispatch: AppDispatch
+	fetchDynamicFilterOptions: DebouncedFunc<() => Promise<void>>
+	query: IQuery
+}
+
+const mockProps: FiltersProps = {
 	selectedSort: { id: 1, name: 'az', value: 'az' } as SortOptions,
 	sortOptions: [
 		{ id: 1, name: 'az', value: 'az' },
@@ -31,7 +53,10 @@ const mockProps = {
 	updateParams: jest.fn(),
 	loading: false,
 	dispatch: jest.fn(),
-	fetchDynamicFilterOptions: jest.fn(),
+	fetchDynamicFilterOptions: Object.assign(jest.fn(), {
+		cancel: jest.fn(),
+		flush: jest.fn(),
+	}),
 	query: { searchFilter: '' } as IQuery,
 }
 

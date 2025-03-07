@@ -2,13 +2,15 @@ import React, { useState } from 'react'
 import RatingStars from '@/components/ui/RatingStars'
 import posthog from 'posthog-js'
 import { AnalyticsResponse } from '@/lib/analytics/types'
+import { useTranslations } from 'next-intl'
 
 interface SidebarProps {
 	data: AnalyticsResponse
-	handleClick: (string) => void
+	handleClick: (str: string) => void
 }
 
 const Sidebar = ({ data, handleClick }: SidebarProps) => {
+	const t = useTranslations('analytics')
 	const [isOpen, setIsOpen] = useState(false)
 
 	const toggleSidebar = () => {
@@ -23,7 +25,7 @@ const Sidebar = ({ data, handleClick }: SidebarProps) => {
 				onClick={toggleSidebar}
 				className={`z-50 rounded bg-teal-600 p-3 text-white lg:hidden ${isOpen ? 'hidden' : ''}`}
 			>
-				{isOpen ? 'Close' : 'Select Metric for Graph'}
+				{isOpen ? t('close') : t('select-metric')}
 			</button>
 
 			{/* Sidebar */}
@@ -44,13 +46,15 @@ const Sidebar = ({ data, handleClick }: SidebarProps) => {
 					>
 						<div className='flex justify-center pt-2 pb-4 text-center'>
 							<div>
-								<p className='bold text-xl underline'>Average Rating</p>
-								<div className='text-center text-xs'>(Select to Filter)</div>
+								<p className='bold text-xl underline'>{t('average-rating')}</p>
+								<div className='text-center text-xs'>
+									({t('select-filter')})
+								</div>
 							</div>
 						</div>
 						<div className='grid w-full grid-cols-3 gap-2'>
 							<div className='flex h-24 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-sm'>
-								<div>Last 90 Days:</div>
+								<div>{t('last-90')}</div>
 								<div>
 									<RatingStars
 										testid='AnalyticsSidebar90DayRatingStar'
@@ -59,14 +63,14 @@ const Sidebar = ({ data, handleClick }: SidebarProps) => {
 								</div>
 							</div>
 							<div className='flex h-24 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-sm'>
-								<div>Last 180 Days:</div>
+								<div>{t('last-180')}</div>
 								<RatingStars
 									testid='AnalyticsSidebar180DayRatingStar'
 									value={Math.floor(data.avgRatingT180)}
 								/>
 							</div>
 							<div className='flex h-24 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-sm'>
-								<div>Last 365 Days:</div>
+								<div>{t('last-365')}</div>
 								<RatingStars
 									testid='AnalyticsSidebar365DayRatingStar'
 									value={Math.floor(data.avgRatingT365)}
@@ -81,13 +85,15 @@ const Sidebar = ({ data, handleClick }: SidebarProps) => {
 					>
 						<div className='flex justify-center pt-2 pb-4 text-center'>
 							<div>
-								<p className='bold text-xl underline'>Median Reported Rent</p>
-								<div className='text-center text-xs'>(Select to Filter)</div>
+								<p className='bold text-xl underline'>{t('median-reported')}</p>
+								<div className='text-center text-xs'>
+									({t('select-filter')})
+								</div>
 							</div>
 						</div>
 						<div className='grid w-full grid-cols-3 gap-2'>
 							<div className='flex h-24 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-sm'>
-								<div>Last 90 Days:</div>
+								<div>{t('last-90')}</div>
 								<div className='text-lg'>
 									$
 									{data.medianRentT90
@@ -96,7 +102,7 @@ const Sidebar = ({ data, handleClick }: SidebarProps) => {
 								</div>
 							</div>
 							<div className='flex h-24 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-sm'>
-								<div>Last 180 Days:</div>
+								<div>{t('last-180')}</div>
 								<div className='text-lg'>
 									$
 									{data.medianRentT180
@@ -105,7 +111,7 @@ const Sidebar = ({ data, handleClick }: SidebarProps) => {
 								</div>
 							</div>
 							<div className='flex h-24 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-sm'>
-								<div>Last 365 Days:</div>
+								<div>{t('last-365')}</div>
 								<div className='text-lg'>
 									$
 									{data.medianRentT365

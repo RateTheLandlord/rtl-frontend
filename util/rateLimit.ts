@@ -1,7 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
+import { NextApiRequest, NextApiResponse } from 'next'
+
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 const rateLimitMap = new Map()
 
-export default function rateLimitMiddleware(handler) {
-	return (req, res) => {
+export default function rateLimitMiddleware(
+	handler: (req: NextApiRequest, res: NextApiResponse) => Promise<void>,
+) {
+	return (req: NextApiRequest, res: NextApiResponse) => {
 		const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		const limit = 20 // Limiting requests to 5 per minute per IP
 		const windowMs = 60 * 1000 //1 minute

@@ -25,6 +25,8 @@ import posthog from 'posthog-js'
 
 function ReviewForm(): JSX.Element {
 	const t = useTranslations()
+	const isReviewOptional =
+		posthog.getFeatureFlag('written-review-optional') === 'optional'
 
 	const [getStarted, setGetStarted] = useState(false)
 	const [landlordOpen, setLandlordOpen] = useState(false)
@@ -153,7 +155,7 @@ function ReviewForm(): JSX.Element {
 			setCityValidationErrorText(t('alerts.city-validation'))
 			return
 		}
-		if (review.trim().length < 1) {
+		if (review.trim().length < 1 && !isReviewOptional) {
 			setReviewModalOpen(true)
 		} else {
 			if (

@@ -21,7 +21,7 @@ describe('LargeTextInput Component', () => {
 		limitText: 'Character Limit Exceeded',
 	}
 
-	test('renders LargeTextInput component with default values', () => {
+	test('renders LargeTextInput component', () => {
 		render(
 			<LargeTextInput
 				title={mockProps.title}
@@ -38,7 +38,6 @@ describe('LargeTextInput Component', () => {
 
 		// Ensure that the component is rendered with the provided title, value, and id
 		expect(screen.getByText(mockProps.title)).toBeInTheDocument()
-		expect(screen.getByDisplayValue(mockProps.placeHolder)).toBeInTheDocument()
 		expect(screen.getByTestId(mockProps.testid)).toBeInTheDocument()
 	})
 

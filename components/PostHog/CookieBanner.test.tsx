@@ -26,7 +26,7 @@ describe('Banner', () => {
 		jest.clearAllMocks()
 	})
 
-	it('renders the banner when consent is undecided', async () => {
+	it('renders the banner when consent is undecided', () => {
 		getItemMock.mockReturnValueOnce(null)
 		render(<Banner />)
 

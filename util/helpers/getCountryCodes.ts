@@ -15,13 +15,17 @@ export const country_codes: string[] = Object.keys(countries).filter(
 
 export const countryOptions: Options[] = country_codes.map(
 	(item: string, ind: number): Options => {
-		return { id: ind + 1, name: countries[item] as string, value: item }
+		return {
+			id: ind + 1,
+			name: countries[item as keyof typeof countries],
+			value: item,
+		}
 	},
 )
 
 export const countryName = (countryCode: string): string =>
 	countries[
-		Object.keys(countries)
-			.filter((c) => c === countryCode)
-			.toString()
+		Object.keys(countries).find(
+			(c) => c === countryCode,
+		) as keyof typeof countries
 	]

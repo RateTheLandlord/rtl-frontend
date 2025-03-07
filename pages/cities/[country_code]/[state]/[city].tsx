@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import CityPage from '@/components/city/CityPage'
 import Spinner from '@/components/ui/Spinner'
@@ -82,7 +81,13 @@ export function getStaticPaths() {
 	}
 }
 
-export async function getStaticProps({ locale, params }) {
+export async function getStaticProps({
+	locale,
+	params,
+}: {
+	locale: string
+	params: ICityQuery
+}) {
 	const resourcesMessages = (await import(
 		`@/messages/${locale}/resources.json`
 	)) as Record<string, string>
@@ -102,7 +107,7 @@ export async function getStaticProps({ locale, params }) {
 		`@/messages/${locale}/landlord.json`
 	)) as Record<string, string>
 
-	const data = await getCityReviews(params as ICityQuery)
+	const data = await getCityReviews(params)
 
 	if (data.reviews.length === 0) {
 		return {

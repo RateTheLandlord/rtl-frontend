@@ -30,9 +30,8 @@ describe('StateInfo', () => {
 	const mockSetLocationOpen = jest.fn()
 
 	beforeEach(() => {
-		;(useAppDispatch as jest.Mock)
-			.mockReturnValue(mockDispatch)(useRouter as jest.Mock)
-			.mockReturnValue({ push: mockRouterPush })
+		;(useAppDispatch as jest.Mock).mockReturnValue(mockDispatch)
+		;(useRouter as jest.Mock).mockReturnValue({ push: mockRouterPush })
 	})
 
 	it('renders state and country information correctly', () => {

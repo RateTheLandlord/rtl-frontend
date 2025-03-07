@@ -7,6 +7,7 @@ import { FlagIcon } from '@heroicons/react/solid'
 import { Review } from '@/util/interfaces/interfaces'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import { classNames } from '@/util/helpers/helper-functions'
+import posthog from 'posthog-js'
 
 interface IProps {
 	review: Review
@@ -29,6 +30,8 @@ const ReviewComponent = ({
 	const t = useTranslations('reviews')
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { user } = useUser()
+	const isReviewOptional =
+		posthog.getFeatureFlag('written-review-optional') === 'optional'
 	const date = new Date(review.date_added).toLocaleDateString()
 
 	const ratings = [
@@ -52,7 +55,7 @@ const ReviewComponent = ({
 					layoutKey='-gw-3+1f-3d+2z'
 				/>
 			) : null}
-			<div className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-8'>
+			<div className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-4'>
 				<div className='flex flex-col items-center bg-gray-50 p-2 lg:max-w-[275px] lg:min-w-[250px] lg:flex-col'>
 					<div className='flex w-full flex-row justify-between'>
 						{!landlordPage ? (
@@ -88,7 +91,7 @@ const ReviewComponent = ({
 
 					<RatingStars testid='reviewcomponentrating' value={avgRating} />
 
-					<div className='hidden flex-col text-center lg:flex'>
+					<div className='hidden flex-col text-center lg:flex lg:w-[250px]'>
 						<Link
 							href={`/cities/${encodeURIComponent(
 								review.country_code,
@@ -123,12 +126,39 @@ const ReviewComponent = ({
 						</>
 					) : null}
 				</div>
-				<div className='flex flex-col p-4 lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8'>
-					<div className='flex h-full flex-col justify-between'>
-						<div className='flex flex-row flex-wrap items-center gap-3 xl:col-span-1'>
+				<div
+					className={classNames(
+						'flex flex-col gap-3 p-4 lg:flex-row lg:pr-4',
+						isReviewOptional && review.review.length < 1 ? 'grow' : '',
+					)}
+				>
+					<div
+						className={classNames(
+							'flex h-full justify-between',
+							isReviewOptional && review.review.length < 1
+								? 'grow flex-row'
+								: 'flex-row py-4 lg:w-[200px] lg:flex-col',
+						)}
+					>
+						<div
+							className={classNames(
+								'flex flex-row flex-wrap items-center gap-3',
+								isReviewOptional && review.review.length < 1
+									? 'grow justify-between lg:flex-nowrap'
+									: 'justify-between',
+							)}
+						>
 							{ratings.map((rating) => {
 								return (
-									<div key={rating.title}>
+									<div
+										className={classNames(
+											'flex flex-col lg:items-center lg:text-center',
+											isReviewOptional && review.review.length < 1
+												? 'lg:w-[130px]'
+												: 'lg:w-full',
+										)}
+										key={rating.title}
+									>
 										<p>{rating.title}</p>
 										<RatingStars
 											testid='reviewcomponentrating2'
@@ -138,30 +168,32 @@ const ReviewComponent = ({
 								)
 							})}
 							{review.rent && (
-								<div className='flex w-full flex-col'>
-									<p className='w-full'>{`${t('rent')}${review.rent}`}</p>
+								<div className='flex w-full flex-col lg:items-center'>
+									<p>{`${t('rent')}${review.rent}`}</p>
 									<p className='text-xs'>{t('local')}</p>
 								</div>
 							)}
 						</div>
 					</div>
 
-					<div className='mt-4 flex h-full flex-col justify-between lg:mt-6 xl:col-span-2 xl:mt-0'>
-						<div>
-							<p>{t('review')}</p>
+					{isReviewOptional && review.review.length < 1 ? null : (
+						<div className='mt-4 flex h-full flex-col justify-between gap-3 lg:mt-4'>
+							<div>
+								<p>{t('review')}</p>
 
-							<p className='mt-3 space-y-6 text-sm break-words hyphens-auto text-gray-500'>
-								{review.review}
-							</p>
+								<p className='space-y-6 text-sm break-words hyphens-auto text-gray-500'>
+									{review.review}
+								</p>
+							</div>
 						</div>
-						{review.admin_edited ? (
-							<p className='text-xs text-red-400'>{`${t('edited')} ${
-								review.moderation_reason
-									? `Reason: ${review.moderation_reason}`
-									: ''
-							}`}</p>
-						) : null}
-					</div>
+					)}
+					{review.admin_edited ? (
+						<p className='text-xs text-red-400'>{`${t('edited')} ${
+							review.moderation_reason
+								? `Reason: ${review.moderation_reason}`
+								: ''
+						}`}</p>
+					) : null}
 				</div>
 			</div>
 		</div>

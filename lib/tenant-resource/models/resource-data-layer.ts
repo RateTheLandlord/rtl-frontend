@@ -26,7 +26,7 @@ export async function createResource(
 						}, ${inputResource.href}) RETURNING id;
 				`
 
-		inputResource.id = await id[0].id
+		inputResource.id = id[0].id
 
 		return inputResource
 	} catch {

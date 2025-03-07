@@ -36,6 +36,19 @@ jobs:
 
           echo "new_tag=$NEW_TAG" >> $GITHUB_ENV
 
+      - name: Create release branch if not exists
+        run: |
+          # Check if the release branch already exists
+          if ! git show-ref --quiet refs/heads/release-${{ env.new_tag }}; then
+            echo "Creating branch release-${{ env.new_tag }} from develop"
+            git checkout develop
+            git pull origin develop
+            git checkout -b release-${{ env.new_tag }}
+            git push origin release-${{ env.new_tag }}
+          else
+            echo "Branch release-${{ env.new_tag }} already exists"
+          fi
+
       - name: Create a pull request to production
         run: |
           # Authenticate with PAT

@@ -65,7 +65,9 @@
 		"select-filter": "Select to Filter",
 		"last-90": "Last 90 Days:",
 		"last-180": "Last 180 Days:",
-		"median-reported": "Median Report Rent"
+		"median-reported": "Median Report Rent",
+		"close": "Close",
+		"select-metric": "Select Metric for Graph"
 	},
 	"cities": {
 		"frequently": "Frequently Reviewed Cities in Your State/Province",
