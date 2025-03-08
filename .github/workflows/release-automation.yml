@@ -74,13 +74,19 @@ jobs:
       - name: Generate changelog
         id: changelog
         run: |
-          LAST_TAG="${{ env.new_tag }}"
+          # Find the latest and previous tags
+          LATEST_TAG=$(git tag --sort=-v:refname | grep -E '^[0-9]+\.[0-9]+(\.[0-9]+)?$' | head -n 1)
+          PREVIOUS_TAG=$(git tag --sort=-v:refname | grep -E '^[0-9]+\.[0-9]+(\.[0-9]+)?$' | head -n 2 | tail -n 1)
 
-          # Check if LAST_TAG exists before using it in git log
-          if git rev-parse "$LAST_TAG" >/dev/null 2>&1; then
-              CHANGELOG=$(git log "$LAST_TAG"..HEAD --pretty=format:"- %s (%an)")
+          echo "Latest tag: $LATEST_TAG"
+          echo "Previous tag: $PREVIOUS_TAG"
+
+          # Generate changelog between the latest and previous tag
+          if [ -n "$PREVIOUS_TAG" ]; then
+              CHANGELOG=$(git log "$PREVIOUS_TAG".."$LATEST_TAG" --pretty=format:"- %s (%an)")
           else
-              CHANGELOG=$(git log --pretty=format:"- %s (%an)")
+              # Fallback if no previous tag
+              CHANGELOG=$(git log "$LATEST_TAG" --pretty=format:"- %s (%an)")
           fi
 
           echo "Changelog: $CHANGELOG"

@@ -137,7 +137,7 @@ const ReviewComponent = ({
 							'flex h-full justify-between',
 							isReviewOptional && review.review.length < 1
 								? 'grow flex-row'
-								: 'flex-row py-4 lg:w-[200px] lg:flex-col',
+								: 'flex-row py-4 lg:max-w-[200px] lg:min-w-[200px] lg:flex-col',
 						)}
 					>
 						<div
@@ -176,24 +176,26 @@ const ReviewComponent = ({
 						</div>
 					</div>
 
-					{isReviewOptional && review.review.length < 1 ? null : (
-						<div className='mt-4 flex h-full flex-col justify-between gap-3 lg:mt-4'>
-							<div>
-								<p>{t('review')}</p>
+					<div>
+						{isReviewOptional && review.review.length < 1 ? null : (
+							<div className='flex h-full flex-col justify-between gap-3'>
+								<div>
+									<p>{t('review')}</p>
 
-								<p className='space-y-6 text-sm break-words hyphens-auto text-gray-500'>
-									{review.review}
-								</p>
+									<p className='space-y-6 text-sm break-words hyphens-auto text-gray-500'>
+										{review.review}
+									</p>
+								</div>
 							</div>
-						</div>
-					)}
-					{review.admin_edited ? (
-						<p className='text-xs text-red-400'>{`${t('edited')} ${
-							review.moderation_reason
-								? `Reason: ${review.moderation_reason}`
-								: ''
-						}`}</p>
-					) : null}
+						)}
+						{review.admin_edited ? (
+							<p className='text-xs text-red-400'>{`${t('edited')} ${
+								review.moderation_reason
+									? `Reason: ${review.moderation_reason}`
+									: ''
+							}`}</p>
+						) : null}
+					</div>
 				</div>
 			</div>
 		</div>
