@@ -1,6 +1,7 @@
 import { Review } from '@/util/interfaces/interfaces'
 import React, { Dispatch, SetStateAction } from 'react'
 import ReviewComponent from './ReviewComponent'
+import Spinner from '../ui/Spinner'
 
 interface IProps {
 	data: Review[]
@@ -8,6 +9,7 @@ interface IProps {
 	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
 	setRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
 	setEditReviewOpen: Dispatch<SetStateAction<boolean>>
+	isLoading: boolean
 }
 
 function ReviewTable({
@@ -16,6 +18,7 @@ function ReviewTable({
 	setSelectedReview,
 	setRemoveReviewOpen,
 	setEditReviewOpen,
+	isLoading,
 }: IProps): JSX.Element {
 	const handleReport = (review: Review) => {
 		setSelectedReview(review)
@@ -54,6 +57,14 @@ function ReviewTable({
 									/>
 								)
 							})}
+							{isLoading && (
+								<div
+									data-testid='loading-test'
+									className='flex w-full justify-center py-5'
+								>
+									<Spinner />
+								</div>
+							)}
 						</div>
 					</div>
 				</div>

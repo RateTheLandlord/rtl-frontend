@@ -16,7 +16,7 @@ interface IProps {
 export default function CatAverages({ averages, average, total }: IProps) {
 	const t = useTranslations('landlord')
 	return (
-		<div className='px-2 py-4 md:px-0'>
+		<div className='py-4'>
 			<div className='mx-auto max-w-7xl'>
 				<div className='grid grid-cols-3 gap-0.5 sm:mx-0 sm:rounded-2xl md:grid-cols-6'>
 					<div className='flex flex-col items-center justify-center gap-2 rounded-l-lg bg-teal-600 p-8 text-center text-white sm:p-10'>

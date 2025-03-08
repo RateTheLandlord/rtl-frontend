@@ -72,7 +72,6 @@ export const {
 	updateSearch,
 	updateState,
 	updateZip,
-	updateActiveFilters,
 	clearFilters,
 	updateStateAndCountry,
 	clearReviewFilters,
