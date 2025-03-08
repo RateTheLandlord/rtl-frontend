@@ -76,7 +76,7 @@ const LocationForm = ({
 					{t('location-form.title')}
 				</h2>
 			</div>
-			<div className='grid w-full grid-cols-2 gap-3 overflow-hidden'>
+			<div className='grid-col-1 grid w-full gap-3 overflow-hidden py-2 lg:grid-cols-2'>
 				<CountrySelector setValue={setCountry} />
 
 				<CityComboBox
