@@ -16,7 +16,6 @@ import {
 	updateZip,
 } from '@/redux/query/querySlice'
 import ButtonLight from '../ui/button-light'
-import Spinner from '../ui/Spinner'
 import SortList from './ui/sort-list'
 import Button from '../ui/button'
 import { DebouncedFunc } from 'lodash'
@@ -38,7 +37,6 @@ interface FiltersProps {
 	zipOptions?: Options[]
 	dynamicZipOptions: Options[]
 	updateParams: () => void
-	loading: boolean
 	dispatch: AppDispatch
 	fetchDynamicFilterOptions: DebouncedFunc<() => Promise<void>>
 	query: IQuery
@@ -57,7 +55,6 @@ function ReviewFilters({
 	zipOptions,
 	dynamicZipOptions,
 	updateParams,
-	loading,
 	dispatch,
 	fetchDynamicFilterOptions,
 	query,
@@ -146,17 +143,13 @@ function ReviewFilters({
 						</div>
 					</div>
 					<div className='flex w-full flex-col gap-2 border-t border-t-gray-200 py-2 lg:px-2'>
-						{loading ? (
-							<Spinner height='h-4' width='w-4' colour='text-white' />
-						) : (
-							<Button
-								onClick={() => {
-									updateParams()
-								}}
-							>
-								{t('update')}
-							</Button>
-						)}
+						<Button
+							onClick={() => {
+								updateParams()
+							}}
+						>
+							{t('update')}
+						</Button>
 
 						<ButtonLight
 							onClick={() => {

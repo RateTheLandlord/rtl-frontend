@@ -24,7 +24,11 @@ const CitiesTable = ({ state, country }: IProps) => {
 	)
 
 	if (!cities) {
-		return <Spinner />
+		return (
+			<div className='flex w-full items-center justify-center py-4'>
+				<Spinner />
+			</div>
+		)
 	}
 
 	if (cityError) console.log('Error retrieving information')
@@ -41,17 +45,17 @@ const CitiesTable = ({ state, country }: IProps) => {
 							)}/${encodeURIComponent(state)}/${encodeURIComponent(city.city)}`}
 							className='flex rounded-md border bg-teal-600/5 p-2 hover:underline'
 						>
-							<div className='grid w-full grid-cols-3 text-sm lg:text-lg'>
-								<div className='flex-1 break-words'>
+							<div className='flex w-full justify-between text-sm lg:text-lg'>
+								<div className='flex flex-col text-center break-words'>
 									<div>{t('name')}</div>
-									<div className='pl-1 lg:pl-2'>{city.city}</div>
+									<div>{city.city}</div>
 								</div>
-								<div className='flex-1 flex-wrap justify-center text-center break-words'>
+								<div className='flex flex-col text-center break-words'>
 									<p>{t('read')}</p>
 									<p>{t('reviews', { total: city.total })}</p>
 								</div>
-								<div className='flex-1 pl-0 break-words lg:pl-20'>
-									<p className='pl-2'>{t('rating')}</p>
+								<div className='flex flex-col items-center break-words'>
+									<p className='text-center'>{t('rating')}</p>
 									<RatingStars
 										testid='CitiesTableRatingStars'
 										value={Math.floor(city.average)}

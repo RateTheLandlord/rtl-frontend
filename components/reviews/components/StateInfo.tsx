@@ -28,7 +28,11 @@ const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
 	const dispatch = useAppDispatch()
 
 	if (!data) {
-		return <Spinner />
+		return (
+			<div className='flex w-full items-center justify-center py-4'>
+				<Spinner />
+			</div>
+		)
 	}
 
 	if (error) console.log('Error retrieving information')

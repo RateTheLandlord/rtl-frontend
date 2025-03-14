@@ -5,12 +5,10 @@ import {
 	SortOptions,
 	Options,
 } from '@/util/interfaces/interfaces'
-import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReportModal from '@/components/reviews/report-modal'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
-import InfiniteScroll from './InfiniteScroll'
-import Spinner from '../ui/Spinner'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import MobileReviewFilters from './mobile-review-filters'
 import { useTranslations } from 'next-intl'
@@ -23,6 +21,9 @@ import { debounce } from 'lodash'
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { useRouter } from 'next/router'
+import useScreenWidth from '@/util/hooks/useScreenWidth'
+import useInfiniteScroll from '@/util/hooks/useInfiniteScroll'
+import ReviewTable from './review-table'
 
 export interface ReviewsResponse {
 	reviews: IReview[]
@@ -54,48 +55,43 @@ export interface QueryParams {
 }
 
 interface ReviewProps {
-	isLoading: boolean
-	setIsLoading: Dispatch<SetStateAction<boolean>>
 	view: string | string[] | undefined
 	setLocationOpen: (bool: boolean) => void
 }
 
-const Review = ({
-	isLoading,
-	setIsLoading,
-	view,
-	setLocationOpen,
-}: ReviewProps) => {
+const Review = ({ view, setLocationOpen }: ReviewProps) => {
 	// Localization
 	const t = useTranslations('reviews')
+
+	const screenWidth = useScreenWidth()
+
+	const router = useRouter()
+	const { affiliate } = router.query
+
+	// State
+	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
+	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
+	const [editReviewOpen, setEditReviewOpen] = useState(false)
+	const [reportOpen, setReportOpen] = useState<boolean>(false)
+	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
+	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
+	const [selectedIndex, setSelectedIndex] = useState(0)
+
+	const [dynamicCityOptions, setDynamicCityOptions] = useState<Options[]>([])
+
+	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>([])
+
+	useEffect(() => {
+		if (view && view === 'map' && screenWidth > 1025) {
+			setSelectedIndex(1)
+		}
+	}, [view, screenWidth])
 
 	// Redux
 	const query = useAppSelector((state) => state.query)
 	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
 		query
 	const dispatch = useAppDispatch()
-
-	const router = useRouter()
-	const { affiliate } = router.query
-
-	// State
-	const [reviews, setReviews] = useState<IReview[]>([])
-	const [page, setPage] = useState<number>(1)
-	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
-	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
-	const [editReviewOpen, setEditReviewOpen] = useState(false)
-	const [hasMore, setHasMore] = useState(true) // Track if there is more content to load
-	const [reportOpen, setReportOpen] = useState<boolean>(false)
-	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
-	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
-	const [selectedIndex, setSelectedIndex] = useState(0)
-	const [reviewsLoading, setReviewsLoading] = useState(false)
-
-	useEffect(() => {
-		if (view && view === 'map') {
-			setSelectedIndex(1)
-		}
-	}, [view])
 
 	// Query
 	const [queryParams, setQueryParams] = useState({
@@ -119,53 +115,13 @@ const Review = ({
 			search: searchFilter || '',
 			limit: '25',
 		}
-		setQueryParams(params)
-		setPage(1)
+		// Only update state if the new params are different from the current ones
+		if (JSON.stringify(params) !== JSON.stringify(queryParams)) {
+			setQueryParams(params)
+		}
 	}
 
-	// Reset hasMore when queryParams change
-	useEffect(() => {
-		setHasMore(true)
-	}, [queryParams])
-
-	useEffect(() => {
-		const fetchData = async () => {
-			setIsLoading(true)
-			setReviewsLoading(true)
-			try {
-				const moreData = await fetchReviews({ page, ...queryParams })
-
-				setReviews((prevReviews) => {
-					if (page === 1) {
-						// Initial fetch
-						return [...moreData.reviews]
-					} else {
-						// If page changed or neither page nor other query parameters changed, append new reviews
-						return [...prevReviews, ...moreData.reviews]
-					}
-				})
-
-				if (moreData.reviews.length <= 0 || reviews.length >= moreData.total) {
-					setHasMore(false)
-				} else {
-					setHasMore(true)
-				}
-			} catch {
-				console.error('Error fetching reviews')
-			} finally {
-				setIsLoading(false)
-				setReviewsLoading(false)
-			}
-		}
-		fetchData().catch(() => console.error('Error Fetching Data'))
-	}, [queryParams, page, reviews.length, setIsLoading])
-
-	const [dynamicCityOptions, setDynamicCityOptions] = useState<Options[]>([])
-
-	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>([])
-
 	const fetchDynamicFilterOptions = debounce(async () => {
-		setIsLoading(true)
 		try {
 			const filterOptions = await fetchFilterOptions(
 				countryFilter?.value,
@@ -177,10 +133,14 @@ const Review = ({
 			setDynamicZipOptions(filterOptions.zips)
 		} catch {
 			console.error('Error fetching filter options')
-		} finally {
-			setIsLoading(false)
 		}
 	}, 300)
+
+	const { reviews, isLoading: isLoadingHook } = useInfiniteScroll<IReview>({
+		fetchData: fetchReviews,
+		queryParams,
+		offset: 150,
+	})
 
 	return (
 		<>
@@ -211,43 +171,38 @@ const Review = ({
 					/>
 				</>
 			) : null}
-			{reviewsLoading ? (
-				<div className='flex w-full items-center justify-center py-4'>
-					<Spinner />
+			<div className='w-full'>
+				<div className='mx-auto max-w-7xl border-b-gray-200 px-4 py-4 sm:px-6 lg:border-b lg:px-8'>
+					<StateInfo
+						country={affiliate ? 'CA' : countryFilter?.value || ''}
+						state={affiliate ? 'NOVA SCOTIA' : stateFilter?.value || ''}
+						setLocationOpen={setLocationOpen}
+					/>
+					<div className='mt-3'>
+						<h1 className='text-3xl text-gray-900'>{t('title')}</h1>
+						<p className='mt-4 max-w-xl text-sm text-gray-700'>{t('body')}</p>
+					</div>
 				</div>
-			) : (
-				<div className='w-full'>
-					<div>
-						<div className='mx-auto max-w-7xl border-b-gray-200 px-4 py-16 sm:px-6 lg:border-b lg:px-8'>
-							<StateInfo
-								country={affiliate ? 'CA' : countryFilter?.value || ''}
-								state={affiliate ? 'NOVA SCOTIA' : stateFilter?.value || ''}
-								setLocationOpen={setLocationOpen}
-							/>
-							<div className='mt-3'>
-								<h1 className='text-3xl text-gray-900'>{t('title')}</h1>
-								<p className='mt-4 max-w-xl text-sm text-gray-700'>
-									{t('body')}
-								</p>
-							</div>
-						</div>
-					</div>
-					<div className='flex w-full justify-end px-4 lg:hidden'>
-						<ButtonLight onClick={() => setMobileFiltersOpen(true)}>
-							{t('filters')}
-						</ButtonLight>
-					</div>
-					<div className='mx-auto max-w-2xl lg:max-w-7xl'>
-						<TabGroup
-							selectedIndex={selectedIndex}
-							onChange={setSelectedIndex}
-							as='div'
-							className='w-full'
-						>
-							<TabList className='flex w-full justify-center gap-4 border-b p-3'>
-								<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
-									{t('reviews')}
-								</Tab>
+			</div>
+
+			<div className='w-full'>
+				<div className='flex w-full justify-end px-4 lg:hidden'>
+					<ButtonLight onClick={() => setMobileFiltersOpen(true)}>
+						{t('filters')}
+					</ButtonLight>
+				</div>
+				<div className='mx-auto max-w-2xl lg:max-w-7xl'>
+					<TabGroup
+						selectedIndex={selectedIndex}
+						onChange={setSelectedIndex}
+						as='div'
+						className='w-full'
+					>
+						<TabList className='flex w-full justify-center gap-4 border-b p-3'>
+							<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+								{t('reviews')}
+							</Tab>
+							{screenWidth <= 1025 ? null : (
 								<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
 									<div className='flex flex-row gap-1'>
 										<p>{t('map')}</p>
@@ -258,77 +213,75 @@ const Review = ({
 										</div>
 									</div>
 								</Tab>
-								<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
-									<div className='flex flex-row gap-1'>
-										<p>{t('analytics')}</p>
-										<div className='flex h-full flex-col justify-start'>
-											<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-teal-500/10 ring-inset'>
-												{t('beta')}
-											</span>
+							)}
+							<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+								<div className='flex flex-row gap-1'>
+									<p>{t('analytics')}</p>
+									<div className='flex h-full flex-col justify-start'>
+										<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-teal-500/10 ring-inset'>
+											{t('beta')}
+										</span>
+									</div>
+								</div>
+							</Tab>
+						</TabList>
+						<TabPanels>
+							<TabPanel>
+								<div className='flex lg:flex-row lg:gap-2 lg:divide-x lg:divide-gray-200'>
+									<MobileReviewFilters
+										mobileFiltersOpen={mobileFiltersOpen}
+										setMobileFiltersOpen={setMobileFiltersOpen}
+										countryFilter={countryFilter}
+										stateFilter={stateFilter}
+										cityFilter={cityFilter}
+										zipFilter={zipFilter}
+										dynamicCityOptions={dynamicCityOptions}
+										zipOptions={dynamicZipOptions}
+										dynamicZipOptions={dynamicZipOptions}
+										updateParams={updateParams}
+										dispatch={dispatch}
+										fetchDynamicFilterOptions={fetchDynamicFilterOptions}
+										query={query}
+									/>
+									<ReviewFilters
+										selectedSort={selectedSort}
+										setSelectedSort={setSelectedSort}
+										sortOptions={sortOptions}
+										countryFilter={countryFilter}
+										stateFilter={stateFilter}
+										cityFilter={cityFilter}
+										zipFilter={zipFilter}
+										dynamicCityOptions={dynamicCityOptions}
+										zipOptions={dynamicZipOptions}
+										dynamicZipOptions={dynamicZipOptions}
+										updateParams={updateParams}
+										dispatch={dispatch}
+										fetchDynamicFilterOptions={fetchDynamicFilterOptions}
+										query={query}
+									/>
+									{!reviews.length && !isLoadingHook ? (
+										<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
+											<h1 className='mt-4 text-3xl text-gray-900 sm:text-5xl'>
+												No results found
+											</h1>
+											<p className='mt-6 text-base leading-7 text-gray-600'>
+												Sorry, we couldn&apos;t find any results for those
+												filters.
+											</p>
 										</div>
-									</div>
-								</Tab>
-							</TabList>
-							<TabPanels>
-								<TabPanel>
-									<div className='flex lg:flex-row lg:gap-2 lg:divide-x lg:divide-gray-200'>
-										<MobileReviewFilters
-											mobileFiltersOpen={mobileFiltersOpen}
-											setMobileFiltersOpen={setMobileFiltersOpen}
-											countryFilter={countryFilter}
-											stateFilter={stateFilter}
-											cityFilter={cityFilter}
-											zipFilter={zipFilter}
-											dynamicCityOptions={dynamicCityOptions}
-											zipOptions={dynamicZipOptions}
-											dynamicZipOptions={dynamicZipOptions}
-											updateParams={updateParams}
-											dispatch={dispatch}
-											fetchDynamicFilterOptions={fetchDynamicFilterOptions}
-											query={query}
+									) : (
+										<ReviewTable
+											data={reviews}
+											setReportOpen={setReportOpen}
+											setSelectedReview={setSelectedReview}
+											setRemoveReviewOpen={setRemoveReviewOpen}
+											setEditReviewOpen={setEditReviewOpen}
+											isLoading={isLoadingHook}
 										/>
-										<ReviewFilters
-											selectedSort={selectedSort}
-											setSelectedSort={setSelectedSort}
-											sortOptions={sortOptions}
-											countryFilter={countryFilter}
-											stateFilter={stateFilter}
-											cityFilter={cityFilter}
-											zipFilter={zipFilter}
-											dynamicCityOptions={dynamicCityOptions}
-											zipOptions={dynamicZipOptions}
-											dynamicZipOptions={dynamicZipOptions}
-											updateParams={updateParams}
-											loading={isLoading}
-											dispatch={dispatch}
-											fetchDynamicFilterOptions={fetchDynamicFilterOptions}
-											query={query}
-										/>
-										{!reviews.length ? (
-											<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
-												<h1 className='mt-4 text-3xl text-gray-900 sm:text-5xl'>
-													No results found
-												</h1>
-												<p className='mt-6 text-base leading-7 text-gray-600'>
-													Sorry, we couldn&apos;t find any results for those
-													filters.
-												</p>
-											</div>
-										) : (
-											<InfiniteScroll
-												data={reviews}
-												setReportOpen={setReportOpen}
-												setSelectedReview={setSelectedReview}
-												setRemoveReviewOpen={setRemoveReviewOpen}
-												setEditReviewOpen={setEditReviewOpen}
-												setPage={setPage}
-												hasMore={hasMore}
-												isLoading={isLoading}
-												setIsLoading={setIsLoading}
-											/>
-										)}
-									</div>
-								</TabPanel>
+									)}
+								</div>
+							</TabPanel>
+							{screenWidth <= 1025 ? null : (
 								<TabPanel>
 									<MapComponent
 										countryFilter={countryFilter}
@@ -345,14 +298,14 @@ const Review = ({
 										conditions.
 									</p>
 								</TabPanel>
-								<TabPanel>
-									<AnalyticsComponent queryParams={queryParams} />
-								</TabPanel>
-							</TabPanels>
-						</TabGroup>
-					</div>
+							)}
+							<TabPanel>
+								<AnalyticsComponent queryParams={queryParams} />
+							</TabPanel>
+						</TabPanels>
+					</TabGroup>
 				</div>
-			)}
+			</div>
 		</>
 	)
 }

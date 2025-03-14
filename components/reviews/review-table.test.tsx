@@ -21,6 +21,7 @@ describe('ReviewTable', () => {
 						setSelectedReview={jest.fn()}
 						setRemoveReviewOpen={jest.fn()}
 						setEditReviewOpen={jest.fn()}
+						isLoading={false}
 					/>
 				</UserProvider>
 			</Provider>,
@@ -39,6 +40,7 @@ describe('ReviewTable', () => {
 						setSelectedReview={jest.fn()}
 						setRemoveReviewOpen={jest.fn()}
 						setEditReviewOpen={jest.fn()}
+						isLoading={false}
 					/>
 				</UserProvider>
 			</Provider>,

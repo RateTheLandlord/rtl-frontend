@@ -24,7 +24,7 @@ const TextInput = ({
 	return (
 		<div
 			data-testid={testid || ''}
-			className='mx-0.5 mb-0.5 w-full sm:col-span-1'
+			className='mx-0.5 mb-0.5 w-full pr-1 sm:col-span-1'
 		>
 			<label htmlFor={id} className='block text-sm text-gray-700 sm:mt-px'>
 				{title}

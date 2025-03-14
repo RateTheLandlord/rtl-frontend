@@ -56,12 +56,7 @@ describe('Review Component', () => {
 		const { container } = render(
 			<Provider store={store}>
 				<UserProvider>
-					<Review
-						isLoading={false}
-						setIsLoading={jest.fn()}
-						view={undefined}
-						setLocationOpen={jest.fn()}
-					/>
+					<Review view={undefined} setLocationOpen={jest.fn()} />
 				</UserProvider>
 			</Provider>,
 		)

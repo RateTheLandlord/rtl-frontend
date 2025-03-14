@@ -4,9 +4,11 @@ import { StarIcon } from '@heroicons/react/solid'
 interface IProps {
 	value: number
 	testid: string
+	size?: string
 }
 
-const RatingStars = ({ value, testid }: IProps) => {
+const RatingStars = ({ value, testid, size = '5' }: IProps) => {
+	const starSize = `h-${size} w-${size}`
 	return (
 		<div className='flex items-center' data-testid={testid}>
 			{[0, 1, 2, 3, 4].map((rating) => (
@@ -14,7 +16,8 @@ const RatingStars = ({ value, testid }: IProps) => {
 					key={rating}
 					className={classNames(
 						value > rating ? 'text-yellow-400' : 'text-gray-300',
-						'h-5 w-5 flex-shrink-0',
+						'flex-shrink-0',
+						starSize,
 					)}
 					aria-hidden='true'
 				/>
