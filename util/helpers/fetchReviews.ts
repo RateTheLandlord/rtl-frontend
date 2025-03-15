@@ -2,9 +2,7 @@ import { QueryParams, ReviewsResponse } from '@/components/reviews/review'
 import { ResourceResponse } from '../interfaces/interfaces'
 import { ResourceQuery } from '@/lib/tenant-resource/types'
 
-export async function fetchReviews(
-	queryParams?: QueryParams,
-): Promise<ReviewsResponse> {
+export async function fetchReviews(queryParams?: QueryParams) {
 	const url = `/api/review/get-reviews`
 
 	try {
@@ -27,10 +25,6 @@ export async function fetchReviews(
 		return {
 			reviews: [],
 			total: 0,
-			countries: [],
-			zips: [],
-			limit: 25,
-			cities: [],
 		}
 	}
 }

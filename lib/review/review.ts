@@ -83,41 +83,10 @@ export async function getReviews(
     `
 	const total = totalResult[0].count as number
 
-	// Fetch countries
-	const countries = await sql`
-        SELECT DISTINCT country_code
-        FROM review;
-    `
-	const countryList = countries.map(
-		({ country_code }) => country_code as string,
-	)
-
-	// Fetch cities
-	const cities = await sql`
-        SELECT DISTINCT city
-        FROM review
-        WHERE 1 = 1 ${countryClause} ${stateClause};
-    `
-	const cityList = cities.map(({ city }) => city as string)
-
-	// Fetch zips
-	const zips = await sql`
-        SELECT DISTINCT zip
-        FROM review
-        WHERE 1 = 1 ${countryClause} ${stateClause} ${cityClause};
-    `
-	const zipsExtracted = zips.map(({ zip }) => zip as string)
-
-	const zipList = zipsExtracted.filter((zip) => zip.length > 0)
-
 	// Return ReviewsResponse object
 	return {
 		reviews,
 		total,
-		countries: countryList,
-		cities: cityList,
-		zips: zipList,
-		limit: limitParam,
 	}
 }
 

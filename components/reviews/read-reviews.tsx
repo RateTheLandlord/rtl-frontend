@@ -10,7 +10,6 @@ import AdsComponent from '../adsense/Adsense'
 
 function ReviewForm(): JSX.Element {
 	const [locationOpen, setLocationOpen] = useState<boolean>(true)
-	const [isLoading, setIsLoading] = useState(false)
 
 	const router = useRouter()
 	const { view, country, state } = router.query
@@ -72,12 +71,7 @@ function ReviewForm(): JSX.Element {
 				<AdsComponent slot='2009320000' />
 			</div>
 			{!locationOpen ? (
-				<Review
-					isLoading={isLoading}
-					setIsLoading={setIsLoading}
-					view={view}
-					setLocationOpen={setLocationOpen}
-				/>
+				<Review view={view} setLocationOpen={setLocationOpen} />
 			) : (
 				<Hero countryFilter={countryFilter} stateFilter={stateFilter} />
 			)}

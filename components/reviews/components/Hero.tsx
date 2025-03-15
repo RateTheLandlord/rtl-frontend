@@ -48,9 +48,9 @@ const Hero = ({ countryFilter, stateFilter }: IProps) => {
 							<polygon points='0,0 90,0 50,100 0,100' />
 						</svg>
 
-						<div className='relative px-6 py-32 sm:py-40 lg:px-8 lg:py-56 lg:pr-0'>
+						<div className='relative px-6 py-4 sm:py-40 lg:px-8 lg:py-56'>
 							<ReviewHero />
-							<div className='w-full p-8 transition-all duration-300'>
+							<div className='w-full p-4 transition-all duration-300'>
 								<LocationForm
 									selectedCountry={selectedCountry}
 									selectedState={selectedState}
@@ -74,17 +74,6 @@ const Hero = ({ countryFilter, stateFilter }: IProps) => {
 					</div>
 				</div>
 				<div>
-					{/* Mobile Image */}
-					<div className='absolute inset-0 -z-10 size-full rounded-md object-cover opacity-20 lg:hidden'>
-						<Image
-							alt=''
-							src='/review.jpg'
-							fill
-							className='rounded-md object-cover'
-							priority
-						/>
-					</div>
-
 					{/* Desktop Image */}
 					<div className='hidden lg:absolute lg:inset-y-0 lg:right-0 lg:block lg:w-1/2'>
 						<Image

@@ -1,23 +1,23 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
-import { Review, SortOptions } from '@/util/interfaces/interfaces'
+import { Review as IReview, SortOptions } from '@/util/interfaces/interfaces'
 import ButtonLight from '../ui/button-light'
 import { sortOptions } from '@/util/helpers/filter-options'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import AdsComponent from '../adsense/Adsense'
-import InfiniteScroll from '../reviews/InfiniteScroll'
 import CityFilters from './CityFilters'
 import CityMobileFilters from './CityMobileFilters'
 import { getZipOptions } from '../reviews/functions'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { updateActiveFilters } from '@/redux/query/querySlice'
+import { useAppSelector } from '@/redux/hooks'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import CityInfo from './CityInfo'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import AnalyticsComponent from '../analytics/analytics'
 import { ICityReviews } from '@/lib/review/types/review'
 import { useTranslations } from 'next-intl'
+import useInfiniteScroll from '@/util/hooks/useInfiniteScroll'
+import ReviewTable from '../reviews/review-table'
 
 interface IProps {
 	city: string
@@ -30,24 +30,18 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 	// Localization
 	const t = useTranslations('reviews')
 
-	// Redux
-	const query = useAppSelector((state) => state.query)
-	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
-		query
-
-	const dispatch = useAppDispatch()
 	// State
-	const [reviews, setReviews] = useState<Review[]>(data?.reviews || [])
-	const [page, setPage] = useState<number>(1)
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
 	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
-	const [hasMore, setHasMore] = useState(true) // Track if there is more content to load
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
-	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
-	const [isLoading, setIsLoading] = useState(false)
+	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
 	const [selectedIndex, setSelectedIndex] = useState(0)
+
+	// Redux
+	const query = useAppSelector((state) => state.query)
+	const { zipFilter, searchFilter } = query
 
 	// Query
 	const [queryParams, setQueryParams] = useState({
@@ -55,8 +49,8 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 		state: state,
 		country: country,
 		city: city,
-		zip: '',
-		search: '',
+		zip: zipFilter?.value || '',
+		search: searchFilter || '',
 		limit: '25',
 	})
 
@@ -71,53 +65,22 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 			search: searchFilter || '',
 			limit: '25',
 		}
-		dispatch(
-			updateActiveFilters([stateFilter, countryFilter, cityFilter, zipFilter]),
-		)
-		setQueryParams(params)
-		setPage(1)
+		// Only update state if the new params are different from the current ones
+		if (JSON.stringify(params) !== JSON.stringify(queryParams)) {
+			setQueryParams(params)
+		}
 	}
 
-	useEffect(() => {
-		const fetchData = async () => {
-			setIsLoading(true)
-			try {
-				const moreData = await fetchReviews({ page, ...queryParams })
-
-				setReviews((prevReviews) => {
-					if (page === 1) {
-						// Initial fetch
-						return [...moreData.reviews]
-					} else {
-						// If page changed or neither page nor other query parameters changed, append new reviews
-						return [...prevReviews, ...moreData.reviews]
-					}
-				})
-
-				if (moreData.reviews.length <= 0 || reviews.length >= moreData.total) {
-					setHasMore(false)
-				} else {
-					setHasMore(true)
-				}
-			} catch {
-				console.error('Error fetching reviews')
-			} finally {
-				setIsLoading(false)
-			}
-		}
-		fetchData().catch(() => console.error('Failed to Fetch City Reviews'))
-	}, [queryParams, page, reviews.length])
-
-	// Reset hasMore when queryParams change
-	useEffect(() => {
-		setHasMore(true)
-	}, [queryParams])
+	const { reviews, isLoading: isLoadingHook } = useInfiniteScroll<IReview>({
+		fetchData: fetchReviews,
+		queryParams,
+		offset: 150,
+	})
 
 	const zipOptions = useMemo(
 		() => getZipOptions(data?.zips ?? []),
 		[data?.zips],
 	)
-
 	return (
 		<>
 			<ReportModal
@@ -203,9 +166,9 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 										zipFilter={zipFilter}
 										zipOptions={zipOptions}
 										updateParams={updateParams}
-										loading={isLoading}
+										loading={isLoadingHook}
 									/>
-									{!reviews.length ? (
+									{!reviews.length && !isLoadingHook ? (
 										<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
 											<h1 className='mt-4 text-3xl text-gray-900 sm:text-5xl'>
 												No results found
@@ -216,16 +179,13 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 											</p>
 										</div>
 									) : (
-										<InfiniteScroll
+										<ReviewTable
 											data={reviews}
 											setReportOpen={setReportOpen}
 											setSelectedReview={setSelectedReview}
 											setRemoveReviewOpen={setRemoveReviewOpen}
 											setEditReviewOpen={setEditReviewOpen}
-											setPage={setPage}
-											hasMore={hasMore}
-											isLoading={isLoading}
-											setIsLoading={setIsLoading}
+											isLoading={isLoadingHook}
 										/>
 									)}
 								</div>
