@@ -7,7 +7,6 @@ import { FlagIcon } from '@heroicons/react/solid'
 import { Review } from '@/util/interfaces/interfaces'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import { classNames } from '@/util/helpers/helper-functions'
-import posthog from 'posthog-js'
 
 interface IProps {
 	review: Review
@@ -30,10 +29,7 @@ const ReviewComponent = ({
 	const t = useTranslations('reviews')
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { user } = useUser()
-	const isReviewOptional =
-		posthog.getFeatureFlag('written-review-optional') === 'optional'
 	const date = new Date(review.date_added).toLocaleDateString()
-
 	const ratings = [
 		{ title: t('health'), rating: review.health },
 		{ title: t('respect'), rating: review.respect },
@@ -56,7 +52,7 @@ const ReviewComponent = ({
 				/>
 			) : null}
 			<div className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-4'>
-				<div className='flex flex-col items-center bg-gray-50 p-2 lg:max-w-[275px] lg:min-w-[250px] lg:flex-col'>
+				<div className='flex flex-col items-center bg-gray-50 p-2 lg:max-w-[275px] lg:min-w-[275px] lg:flex-col'>
 					<div className='flex w-full flex-row justify-between'>
 						{!landlordPage ? (
 							<Link
@@ -129,13 +125,13 @@ const ReviewComponent = ({
 				<div
 					className={classNames(
 						'flex flex-col gap-3 p-4 lg:flex-row lg:pr-4',
-						isReviewOptional && review.review.length < 1 ? 'grow' : '',
+						review.review.length < 1 ? 'grow' : '',
 					)}
 				>
 					<div
 						className={classNames(
 							'flex h-full justify-between',
-							isReviewOptional && review.review.length < 1
+							review.review.length < 1
 								? 'grow flex-row'
 								: 'flex-row py-4 lg:max-w-[200px] lg:min-w-[200px] lg:flex-col',
 						)}
@@ -143,7 +139,7 @@ const ReviewComponent = ({
 						<div
 							className={classNames(
 								'flex flex-row flex-wrap items-center gap-3',
-								isReviewOptional && review.review.length < 1
+								review.review.length < 1
 									? 'grow justify-between lg:flex-nowrap'
 									: 'justify-between',
 							)}
@@ -153,9 +149,7 @@ const ReviewComponent = ({
 									<div
 										className={classNames(
 											'flex flex-col lg:items-center lg:text-center',
-											isReviewOptional && review.review.length < 1
-												? 'lg:w-[130px]'
-												: 'lg:w-full',
+											review.review.length < 1 ? 'lg:w-[130px]' : 'lg:w-full',
 										)}
 										key={rating.title}
 									>
@@ -177,7 +171,7 @@ const ReviewComponent = ({
 					</div>
 
 					<div>
-						{isReviewOptional && review.review.length < 1 ? null : (
+						{review.review.length < 1 ? null : (
 							<div className='flex h-full flex-col justify-between gap-3'>
 								<div>
 									<p>{t('review')}</p>
