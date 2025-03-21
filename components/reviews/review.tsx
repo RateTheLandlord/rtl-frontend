@@ -199,22 +199,20 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 						className='w-full'
 					>
 						<TabList className='flex w-full justify-center gap-4 border-b p-3'>
-							<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+							<Tab className='border-b-2 border-transparent px-1 pb-2 text-xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600 md:text-3xl'>
 								{t('reviews')}
 							</Tab>
-							{screenWidth <= 1025 ? null : (
-								<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
-									<div className='flex flex-row gap-1'>
-										<p>{t('map')}</p>
-										<div className='flex h-full flex-col justify-start'>
-											<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-teal-500/10 ring-inset'>
-												{t('beta')}
-											</span>
-										</div>
+							<Tab className='border-b-2 border-transparent px-1 pb-2 text-xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600 md:text-3xl'>
+								<div className='flex flex-row gap-1'>
+									<p>{t('map')}</p>
+									<div className='flex h-full flex-col justify-start'>
+										<span className='inline-flex items-center rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-teal-500/10 ring-inset'>
+											{t('beta')}
+										</span>
 									</div>
-								</Tab>
-							)}
-							<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+								</div>
+							</Tab>
+							<Tab className='border-b-2 border-transparent px-1 pb-2 text-xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600 md:text-3xl'>
 								<div className='flex flex-row gap-1'>
 									<p>{t('analytics')}</p>
 									<div className='flex h-full flex-col justify-start'>
@@ -281,24 +279,22 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 									)}
 								</div>
 							</TabPanel>
-							{screenWidth <= 1025 ? null : (
-								<TabPanel>
-									<MapComponent
-										countryFilter={countryFilter}
-										stateFilter={stateFilter}
-									/>
-									<p className='mt-6 text-xs leading-7 text-gray-600'>
-										This map component is currently in Beta. It is provided “as
-										is” and may contain bugs, inaccuracies, or incomplete
-										features. We are actively working to improve the
-										functionality and accuracy of this component. <br />
-										Please note: The map data may not be fully accurate or
-										up-to-date. Some features may not work as expected.
-										Performance may vary depending on your device and network
-										conditions.
-									</p>
-								</TabPanel>
-							)}
+							<TabPanel>
+								<MapComponent
+									countryFilter={countryFilter}
+									stateFilter={stateFilter}
+								/>
+								<p className='mt-6 text-xs leading-7 text-gray-600'>
+									This map component is currently in Beta. It is provided “as
+									is” and may contain bugs, inaccuracies, or incomplete
+									features. We are actively working to improve the functionality
+									and accuracy of this component. <br />
+									Please note: The map data may not be fully accurate or
+									up-to-date. Some features may not work as expected.
+									Performance may vary depending on your device and network
+									conditions.
+								</p>
+							</TabPanel>
 							<TabPanel>
 								<AnalyticsComponent queryParams={queryParams} />
 							</TabPanel>

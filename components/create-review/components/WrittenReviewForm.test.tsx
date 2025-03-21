@@ -96,13 +96,6 @@ describe('WrittenReviewForm Component', () => {
 		expect(mockSetReviewOpen).toHaveBeenCalledWith(false)
 	})
 
-	it('should disable Preview Review button when review is empty', () => {
-		render(<WrittenReviewForm {...defaultProps} reviewOpen={true} review='' />)
-
-		expect(
-			screen.getByText('createreview.written-review.preview-review'),
-		).toBeDisabled()
-	})
 	it('Should not have a11y violation', async () => {
 		const { container } = render(
 			<WrittenReviewForm {...defaultProps} reviewOpen={true} />,

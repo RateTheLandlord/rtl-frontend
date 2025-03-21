@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import AddReviewModal from './add-review-modal'
 import Button from '../ui/button'
 import SuccessModal from './success-modal'
 import { postcodeValidator } from 'postcode-validator'
@@ -25,8 +24,6 @@ import posthog from 'posthog-js'
 
 function ReviewForm(): JSX.Element {
 	const t = useTranslations()
-	const isReviewOptional =
-		posthog.getFeatureFlag('written-review-optional') === 'optional'
 
 	const [getStarted, setGetStarted] = useState(false)
 	const [landlordOpen, setLandlordOpen] = useState(false)
@@ -43,7 +40,6 @@ function ReviewForm(): JSX.Element {
 	const [showPreview, setShowPreview] = useState(false)
 
 	const [successModalOpen, setSuccessModalOpen] = useState(false)
-	const [reviewModalOpen, setReviewModalOpen] = useState(false)
 	const [spamReviewModalOpen, setSpamReviewModalOpen] = useState(false)
 	const [spamDetectionMethod, setSpamDetectionMethod] = useState(
 		'localStorageDetection',
@@ -155,79 +151,76 @@ function ReviewForm(): JSX.Element {
 			setCityValidationErrorText(t('alerts.city-validation'))
 			return
 		}
-		if (review.trim().length < 1 && !isReviewOptional) {
-			setReviewModalOpen(true)
-		} else {
-			if (
-				postcodeValidator(postal, country) ||
-				(postal.length === 0 && isIreland)
-			) {
-				setLoading(true)
-				const token = await executeRecaptcha('review_form')
-				if (token) {
-					fetch(`/api/review/submit-review`, {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
+
+		if (
+			postcodeValidator(postal, country) ||
+			(postal.length === 0 && isIreland)
+		) {
+			setLoading(true)
+			const token = await executeRecaptcha('review_form')
+			if (token) {
+				fetch(`/api/review/submit-review`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						captchaToken: token,
+						review: {
+							landlord: landlord.trim(),
+							country_code: country,
+							city: city.trim(),
+							state: province,
+							zip: postal.trim(),
+							review: review.trim(),
+							repair: repair,
+							health: health,
+							stability: stability,
+							privacy: privacy,
+							respect: respect,
+							flagged: false,
+							flagged_reason: '',
+							admin_approved: false,
+							admin_edited: false,
+							rent: rent,
 						},
-						body: JSON.stringify({
-							captchaToken: token,
-							review: {
-								landlord: landlord.trim(),
-								country_code: country,
-								city: city.trim(),
-								state: province,
-								zip: postal.trim(),
-								review: review.trim(),
-								repair: repair,
-								health: health,
-								stability: stability,
-								privacy: privacy,
-								respect: respect,
-								flagged: false,
-								flagged_reason: '',
-								admin_approved: false,
-								admin_edited: false,
-								rent: rent,
-							},
-						}),
+					}),
+				})
+					.then((result: Response) => {
+						if (!result.ok) {
+							throw new Error()
+						} else {
+							return result.json()
+						}
 					})
-						.then((result: Response) => {
-							if (!result.ok) {
-								throw new Error()
-							} else {
-								return result.json()
-							}
-						})
-						.then((data: ReviewResponseStatus) => {
-							if (!data.success) {
-								setSpamDetectionMethod('DBDetection')
-								setSpamReviewModalOpen(true)
-								throw new Error()
-							}
-						})
-						.then(() => {
-							setSuccessModalOpen(true)
-							const storageItem = localStorage.getItem('rtl')
-							if (storageItem) {
-								const newItem = `${storageItem},${landlord.toLocaleUpperCase()}`
-								localStorage.setItem('rtl', newItem)
-							} else {
-								localStorage.setItem('rtl', `${landlord.toLocaleUpperCase()}`)
-							}
-						})
-						.catch(() => {
-							toast.error('ERROR: Please try again')
-						})
-						.finally(() => {
-							setLoading(false)
-						})
-				} else {
-					toast.error('ERROR:Please try again')
-				}
+					.then((data: ReviewResponseStatus) => {
+						if (!data.success) {
+							setSpamDetectionMethod('DBDetection')
+							setSpamReviewModalOpen(true)
+							throw new Error()
+						}
+					})
+					.then(() => {
+						setSuccessModalOpen(true)
+						const storageItem = localStorage.getItem('rtl')
+						if (storageItem) {
+							const newItem = `${storageItem},${landlord.toLocaleUpperCase()}`
+							localStorage.setItem('rtl', newItem)
+						} else {
+							localStorage.setItem('rtl', `${landlord.toLocaleUpperCase()}`)
+						}
+					})
+					.catch(() => {
+						toast.error('ERROR: Please try again')
+					})
+					.finally(() => {
+						setLoading(false)
+					})
 			} else {
-				setPostalError(true)
+				toast.error('ERROR:Please try again')
 			}
+		} else {
+			setPostalError(true)
 		}
 	}
 
@@ -289,7 +282,6 @@ function ReviewForm(): JSX.Element {
 			data-testid='create-review-form-1'
 		>
 			<SuccessModal isOpen={successModalOpen} setIsOpen={setSuccessModalOpen} />
-			<AddReviewModal isOpen={reviewModalOpen} setIsOpen={setReviewModalOpen} />
 			<SpamReviewModal
 				isOpen={spamReviewModalOpen}
 				setIsOpen={setSpamReviewModalOpen}
