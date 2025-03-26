@@ -1,5 +1,6 @@
 import { runMiddleware } from '@/util/cors'
-import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import rateLimitMiddleware from '@/util/rateLimit'
+import { getSession } from '@auth0/nextjs-auth0'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -24,4 +25,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		return res.status(500).send('Error revalidating')
 	}
 }
-export default withApiAuthRequired(handler)
+export default rateLimitMiddleware(handler)
