@@ -1,20 +1,14 @@
 import { runMiddleware } from '@/util/cors'
-import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import rateLimitMiddleware from '@/util/rateLimit'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res)
-	const session = await getSession(req, res)
-	const user = session?.user
 
 	const path = req.query.path as string
 
 	if (!path) {
 		return res.status(401).json({ message: 'Invalid path' })
-	}
-
-	if (!user || user.role !== 'ADMIN') {
-		return res.status(401).json({ message: 'Invalid token' })
 	}
 
 	try {
@@ -24,4 +18,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		return res.status(500).send('Error revalidating')
 	}
 }
-export default withApiAuthRequired(handler)
+export default rateLimitMiddleware(handler)
