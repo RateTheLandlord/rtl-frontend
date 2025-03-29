@@ -9,7 +9,6 @@ const RecentReviews = () => {
 		'/api/admin/get-recent',
 		fetcher,
 	)
-	console.log(data)
 	if (error) return <div>Error Loading...</div>
 	if (!data) return <Spinner />
 	return (
