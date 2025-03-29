@@ -14,6 +14,7 @@ describe('Spam Review Modal component', () => {
 		render(
 			<SpamReviewModal
 				isOpen={true}
+				landlord=''
 				setIsOpen={setIsOpenMock}
 				detectionMethod='localStorageDetection'
 			/>,
@@ -48,6 +49,7 @@ describe('Spam Review Modal component', () => {
 		render(
 			<SpamReviewModal
 				isOpen={true}
+				landlord=''
 				setIsOpen={setIsOpenMock}
 				detectionMethod='DBDetection'
 			/>,
@@ -82,6 +84,7 @@ describe('Spam Review Modal component', () => {
 		render(
 			<SpamReviewModal
 				isOpen={false}
+				landlord=''
 				setIsOpen={setIsOpenMock}
 				detectionMethod='localStorageDetection'
 			/>,
@@ -99,6 +102,7 @@ describe('Spam Review Modal component', () => {
 		const { container } = render(
 			<SpamReviewModal
 				isOpen={true}
+				landlord=''
 				setIsOpen={() => jest.fn()}
 				detectionMethod='localStorageDetection'
 			/>,

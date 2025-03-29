@@ -149,7 +149,9 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 		)
 	}
 
-	posthog.capture('analytics_viewed')
+	posthog.capture('analytics_viewed', {
+		queryParams,
+	})
 
 	return (
 		<div className='grid w-full grid-cols-1 gap-2 bg-gray-50 lg:grid-cols-[3fr_1fr]'>

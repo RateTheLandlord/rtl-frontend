@@ -14,9 +14,15 @@ interface IProps {
 	isOpen: boolean
 	setIsOpen: React.Dispatch<SetStateAction<boolean>>
 	detectionMethod: string
+	landlord: string
 }
 
-function SpamReviewModal({ isOpen, setIsOpen, detectionMethod }: IProps) {
+function SpamReviewModal({
+	isOpen,
+	setIsOpen,
+	detectionMethod,
+	landlord,
+}: IProps) {
 	const t = useTranslations('createreview')
 	return (
 		<Transition.Root show={isOpen} as={Fragment}>
@@ -64,7 +70,9 @@ function SpamReviewModal({ isOpen, setIsOpen, detectionMethod }: IProps) {
 									<Button
 										onClick={() => {
 											setIsOpen(false)
-											posthog.capture('spam_modal_viewed')
+											posthog.capture('spam_modal_viewed', {
+												landlord,
+											})
 										}}
 									>
 										{t('modal.close')}
