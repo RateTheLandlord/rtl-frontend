@@ -1,4 +1,4 @@
-import { Review } from '@/util/interfaces/interfaces'
+import { RecentReviews, Review } from '@/util/interfaces/interfaces'
 import sql from '../db'
 
 /* https://www.educative.io/answers/the-levenshtein-distance-algorithm
@@ -94,6 +94,16 @@ export async function checkForLandlordSpam(landlord: string): Promise<boolean> {
 	}
 
 	return false
+}
+
+export async function getRecentReviews(): Promise<Array<RecentReviews>> {
+	const recentReviews: RecentReviews[] = await sql`
+		SELECT *
+		FROM recent_review
+		ORDER BY created_at DESC
+		LIMIT 25;
+	`
+	return recentReviews
 }
 
 export async function updateRecentReviews(landlord: string) {
