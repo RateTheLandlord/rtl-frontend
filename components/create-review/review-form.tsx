@@ -283,6 +283,7 @@ function ReviewForm(): JSX.Element {
 		>
 			<SuccessModal isOpen={successModalOpen} setIsOpen={setSuccessModalOpen} />
 			<SpamReviewModal
+				landlord={landlord}
 				isOpen={spamReviewModalOpen}
 				setIsOpen={setSpamReviewModalOpen}
 				detectionMethod={spamDetectionMethod}

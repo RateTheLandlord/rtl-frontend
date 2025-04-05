@@ -18,6 +18,7 @@ import { useUser } from '@auth0/nextjs-auth0/client'
 import SuspiciousLandlords from '@/components/admin/sections/SuspiciousLandlords'
 import FlaggedKeywords from '@/components/admin/sections/FlaggedKeywords'
 import CloseButton from '@/components/ui/CloseButton'
+import RecentReviews from '@/components/admin/sections/RecentReviews'
 
 const tabs = [
 	{ name: 'Flagged Reviews', component: <FlaggedReviews /> },
@@ -26,6 +27,7 @@ const tabs = [
 	{ name: 'Stats', component: <Stats /> },
 	{ name: 'Flagged Keywords', component: <FlaggedKeywords /> },
 	{ name: 'Deleted Reviews', component: <DeletedReviews /> },
+	{ name: 'Recent Reviews', component: <RecentReviews /> },
 ]
 
 function Admin(): JSX.Element {

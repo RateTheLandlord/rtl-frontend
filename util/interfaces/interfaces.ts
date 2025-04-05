@@ -162,3 +162,9 @@ export interface AnalyticsResponseInterface {
 	review_date: string
 	metric: number
 }
+
+export interface RecentReviews {
+	id: number
+	landlord: string
+	created_at: string
+}
