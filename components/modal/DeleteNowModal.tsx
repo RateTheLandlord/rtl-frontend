@@ -33,7 +33,6 @@ const DeleteNow = ({
 	const review = selectedReview?.review || ''
 
 	const onDeleteReview = () => {
-		console.log(selectedReview.id)
 		if (selectedReview) {
 			fetch('/api/review/delete-review', {
 				method: 'POST',
