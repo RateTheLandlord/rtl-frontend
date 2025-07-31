@@ -5,6 +5,7 @@ import { fetcher } from '@/util/helpers/fetcher'
 import RestoreReviewModal from '@/components/modal/RestoreReviewModal'
 import Spinner from '@/components/ui/Spinner'
 import dayjs from 'dayjs'
+import DeleteNow from '@/components/modal/DeleteNowModal'
 
 const DeletedReviews = () => {
 	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
@@ -12,6 +13,8 @@ const DeletedReviews = () => {
 	const [deletedReviews, setDeletedReviews] = useState<Array<Review>>([])
 
 	const [restoreReviewOpen, setRestoreReviewOpen] = useState(false)
+
+	const [deleteReviewOpen, setDeleteReviewOpen] = useState(false)
 
 	const {
 		data: reviews,
@@ -41,12 +44,23 @@ const DeletedReviews = () => {
 
 	return (
 		<div className='container flex w-full flex-wrap justify-center'>
-			{selectedReview ? (
+			{selectedReview && restoreReviewOpen ? (
 				<>
 					<RestoreReviewModal
 						selectedReview={selectedReview}
 						handleMutate={handleMutate}
 						setRestoreReviewOpen={setRestoreReviewOpen}
+						restoreReviewOpen={restoreReviewOpen}
+						setSelectedReview={setSelectedReview}
+					/>
+				</>
+			) : null}
+			{selectedReview && deleteReviewOpen ? (
+				<>
+					<DeleteNow
+						selectedReview={selectedReview}
+						handleMutate={handleMutate}
+						setDeleteReviewOpen={setDeleteReviewOpen}
 						restoreReviewOpen={restoreReviewOpen}
 						setSelectedReview={setSelectedReview}
 					/>
@@ -86,6 +100,12 @@ const DeletedReviews = () => {
 							>
 								Restore
 							</th>
+							<th
+								scope='col'
+								className='hidden px-3 py-3.5 text-center text-sm text-gray-900 sm:table-cell'
+							>
+								Delete Now
+							</th>
 						</tr>
 					</thead>
 					<tbody className='divide-y divide-gray-200 bg-white'>
@@ -121,6 +141,17 @@ const DeletedReviews = () => {
 										onClick={() => {
 											setSelectedReview(review)
 											setRestoreReviewOpen((p) => !p)
+										}}
+										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
+									>
+										Restore
+									</button>
+								</td>
+								<td className='py-4 pr-4 pl-3 text-center text-sm sm:pr-6'>
+									<button
+										onClick={() => {
+											setSelectedReview(review)
+											setDeleteReviewOpen((p) => !p)
 										}}
 										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
 									>
