@@ -61,7 +61,7 @@ const DeletedReviews = () => {
 						selectedReview={selectedReview}
 						handleMutate={handleMutate}
 						setDeleteReviewOpen={setDeleteReviewOpen}
-						restoreReviewOpen={restoreReviewOpen}
+						deleteReviewOpen={deleteReviewOpen}
 						setSelectedReview={setSelectedReview}
 					/>
 				</>
@@ -155,7 +155,7 @@ const DeletedReviews = () => {
 										}}
 										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
 									>
-										Restore
+										Delete Now
 									</button>
 								</td>
 							</tr>

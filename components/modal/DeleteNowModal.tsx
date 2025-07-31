@@ -11,13 +11,12 @@ import { toast } from 'react-toastify'
 import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import CloseButton from '../ui/CloseButton'
-import { deleteReview } from '@/lib/review/review'
 
 interface IProps {
 	selectedReview: Review | undefined
 	handleMutate: () => void
 	setDeleteReviewOpen: Dispatch<SetStateAction<boolean>>
-	restoreReviewOpen: boolean
+	deleteReviewOpen: boolean
 	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
 }
 
@@ -25,7 +24,7 @@ const DeleteNow = ({
 	selectedReview,
 	handleMutate,
 	setDeleteReviewOpen,
-	restoreReviewOpen,
+	deleteReviewOpen,
 	setSelectedReview,
 }: IProps) => {
 	const landlord = selectedReview?.landlord || ''
@@ -33,9 +32,16 @@ const DeleteNow = ({
 	const restored_by = selectedReview?.restored_by || []
 	const review = selectedReview?.review || ''
 
-	const onDeleteReview = async () => {
+	const onDeleteReview = () => {
+		console.log(selectedReview.id)
 		if (selectedReview) {
-			await deleteReview(selectedReview.id as number)
+			fetch('/api/review/delete-review', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ id: selectedReview.id }),
+			})
 				.then((result) => {
 					if (!result) {
 						throw new Error()
@@ -70,7 +76,7 @@ const DeleteNow = ({
 	}
 
 	return (
-		<Transition show={restoreReviewOpen} as={Fragment}>
+		<Transition show={deleteReviewOpen} as={Fragment}>
 			<Dialog as='div' className='relative z-10' onClose={setDeleteReviewOpen}>
 				<TransitionChild
 					as={Fragment}
@@ -103,7 +109,7 @@ const DeleteNow = ({
 											as='h3'
 											className='text-lg leading-6 text-gray-900'
 										>
-											Delete review now
+											Delete review now - CANNOT BE UNDONE
 										</DialogTitle>
 									</div>
 								</div>
@@ -143,7 +149,7 @@ const DeleteNow = ({
 											void onDeleteReview()
 										}}
 									>
-										Submit
+										DELETE NOW
 									</Button>
 									<ButtonLight
 										onClick={() => {
