@@ -140,7 +140,7 @@ const ReviewComponent = ({
 							className={classNames(
 								'flex flex-row flex-wrap items-center gap-3',
 								review.review.length < 1
-									? 'grow justify-between lg:flex-nowrap'
+									? 'grow justify-center lg:flex-wrap'
 									: 'justify-between',
 							)}
 						>
