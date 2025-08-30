@@ -87,7 +87,10 @@ function ReviewFilters({
 	}, [cityFilter, dispatch, stateFilter, zipFilter])
 
 	return (
-		<div data-testid='review-filters-1' className='mt-6 hidden lg:block'>
+		<div
+			data-testid='review-filters-1'
+			className='mt-6 hidden min-w-[250px] lg:block'
+		>
 			{/* Filters */}
 			<section aria-labelledby='filter-heading'>
 				<h2 id='filter-heading' className='sr-only'>
