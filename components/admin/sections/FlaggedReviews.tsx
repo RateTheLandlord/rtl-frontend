@@ -6,6 +6,7 @@ import EditReviewModal from '@/components/modal/EditReviewModal'
 import RemoveReviewModal from '@/components/modal/RemoveReviewModal'
 import Spinner from '@/components/ui/Spinner'
 import { toast } from 'react-toastify'
+import dayjs from 'dayjs'
 
 const FlaggedReviews = () => {
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
@@ -105,6 +106,12 @@ const FlaggedReviews = () => {
 							</th>
 							<th
 								scope='col'
+								className='hidden px-3 py-3.5 text-left text-sm text-gray-900 lg:table-cell'
+							>
+								Date of Review
+							</th>
+							<th
+								scope='col'
 								className='hidden px-3 py-3.5 text-left text-sm text-gray-900 sm:table-cell'
 							>
 								Review
@@ -141,6 +148,9 @@ const FlaggedReviews = () => {
 								</td>
 								<td className='hidden max-w-xs px-3 py-4 text-sm text-gray-500 lg:table-cell'>
 									{review.flagged_reason}
+								</td>
+								<td className='hidden max-w-xs px-3 py-4 text-sm text-gray-500 lg:table-cell'>
+									{dayjs(review.date_added).format('YYYY-MM-DD HH:mm:ss')}
 								</td>
 								<td className='hidden px-3 py-4 text-sm text-gray-500 sm:table-cell'>
 									{review.review}
