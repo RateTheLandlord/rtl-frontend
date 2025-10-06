@@ -3,8 +3,6 @@ import {
 	ServerIcon,
 	UserGroupIcon,
 } from '@heroicons/react/outline'
-import Patreon from '../svg/icons/patreon'
-import LinkButtonLightLG from '../ui/link-button-light-lg'
 import { useTranslations } from 'next-intl'
 import Poster from '../poster/Poster'
 
@@ -65,14 +63,6 @@ export default function Support() {
 				<div className='mx-auto max-w-2xl lg:text-center'>
 					<p className='mt-6 text-lg leading-8 text-gray-600'>{t('body-2')}</p>
 					<p className='mt-6 text-lg leading-8 text-gray-600'>{t('body-3')}</p>
-				</div>
-				<div className='mt-10 flex w-full justify-center'>
-					<LinkButtonLightLG href='https://patreon.com/RateTheLandlord?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator&utm_content=join_link'>
-						<div className='flex w-full items-center justify-center gap-2'>
-							<Patreon />
-							Patreon
-						</div>
-					</LinkButtonLightLG>
 				</div>
 			</div>
 		</div>

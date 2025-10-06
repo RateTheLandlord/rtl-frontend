@@ -48,15 +48,6 @@ describe('Support', () => {
 		).toBeInTheDocument()
 	})
 
-	it('renders the Patreon link button', () => {
-		render(<Support />)
-		expect(screen.getByText('Patreon')).toBeInTheDocument()
-		expect(screen.getByRole('link', { name: /Patreon/i })).toHaveAttribute(
-			'href',
-			'https://patreon.com/RateTheLandlord?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator&utm_content=join_link',
-		)
-	})
-
 	it('Should not have a11y violation', async () => {
 		const { container } = render(<Support />)
 		const result = await axe(container)

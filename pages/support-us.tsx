@@ -1,17 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import Support from '@/components/supportus/SupportUs'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { getMemberData, getTierData, PatreonData } from '@/util/helpers/patreon'
-import Supporters from '@/components/supportus/Supporters'
 
-export default function SupportUs({
-	members,
-}: {
-	members: PatreonData
-}): JSX.Element {
+export default function SupportUs(): JSX.Element {
 	const title = 'Support Us | Rate The Landlord'
 	const desc =
 		'Share information with tenants like you and rate your landlord. We are a community platform that elevates tenant voices to promote landlord accountability. Find Landlord Reviews and Resources.'
@@ -20,9 +12,6 @@ export default function SupportUs({
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
-
-	const memberData = getMemberData(members)
-	const tierData = getTierData(members)
 
 	return (
 		<div>
@@ -58,7 +47,6 @@ export default function SupportUs({
 				]}
 			/>
 			<Support />
-			<Supporters members={memberData} tiers={tierData} />
 		</div>
 	)
 }
@@ -75,43 +63,6 @@ export async function getStaticProps({ locale }: { locale: string }) {
 		`@/messages/${locale}/layout.json`
 	)) as Record<string, string>
 
-	const accessToken = process.env.PATREON_ACCESS_TOKEN as string
-
-	const campaignId = await fetch(
-		'https://www.patreon.com/api/oauth2/api/current_user/campaigns',
-		{
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${accessToken}`,
-			},
-		},
-	)
-		.then((res) => {
-			return res.json()
-		})
-		.then((data) => {
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-			return data.data[0].id
-		})
-		.catch((err) => console.log('Error: ', err))
-
-	const members = await fetch(
-		`https://www.patreon.com/api/oauth2/v2/campaigns/${campaignId}/members?include=currently_entitled_tiers&fields%5Bmember%5D=full_name&fields%5Btier%5D=amount_cents,created_at,discord_role_ids,edited_at,patron_count,title,url`,
-		{
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${accessToken}`,
-			},
-		},
-	)
-		.then((res) => {
-			return res.json()
-		})
-		.then((data) => {
-			return data
-		})
-		.catch((err) => console.log('Error: ', err))
-
 	return {
 		props: {
 			messages: {
@@ -119,7 +70,6 @@ export async function getStaticProps({ locale }: { locale: string }) {
 				...alertsMessages,
 				...layoutMessages,
 			},
-			members: members,
 		},
 		revalidate: 86400,
 	}
