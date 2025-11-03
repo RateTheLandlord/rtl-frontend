@@ -25,9 +25,7 @@ const ReviewComponent = ({
 	handleEdit,
 	landlordPage = false,
 }: IProps) => {
-	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const t = useTranslations('reviews')
-	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { user } = useUser()
 	const date = new Date(review.date_added).toLocaleDateString()
 	const ratings = [

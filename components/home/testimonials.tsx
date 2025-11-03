@@ -26,19 +26,19 @@ const testimonials = [
 		},
 	},
 	{
-		body: `Good. As a landlord myself I\'d like to see bad landlords held accountable. They give those of us trying to provide a good service a bad name.`,
+		body: `Good. As a landlord myself I'd like to see bad landlords held accountable. They give those of us trying to provide a good service a bad name.`,
 		author: {
 			name: 'Twitter Landlord',
 		},
 	},
 	{
-		body: `This is a much needed service. I\'m really hoping you\'ll grow to be a global service`,
+		body: `This is a much needed service. I'm really hoping you'll grow to be a global service`,
 		author: {
 			name: 'Instagram User',
 		},
 	},
 	{
-		body: `So I’m a landlord and love this page. If you\'re a landlord and have a problem with this site, you are literally the problem. It\'s incredibly fucking easy to be a good landlord.`,
+		body: `So I'm a landlord and love this page. If you're a landlord and have a problem with this site, you are literally the problem. It's incredibly fucking easy to be a good landlord.`,
 		author: {
 			name: 'Instagram Landlord',
 		},

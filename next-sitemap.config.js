@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const siteUrl = 'https://ratethelandlord.org/'
 module.exports = {
 	siteUrl,

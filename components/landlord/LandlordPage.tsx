@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { useEffect, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
 import LandlordInfo from './LandlordInfo'
