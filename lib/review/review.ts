@@ -7,14 +7,14 @@ import {
 import sql from '../db'
 import { createReview } from '@/lib/review/models/review-data-layer'
 import { updateReview } from '@/lib/review/models/review-data-layer'
-import { Review } from '@/util/interfaces/interfaces'
+import { Review, UserReview } from '@/util/interfaces/interfaces'
 import { ReviewQuery } from './types/Queries'
-import { ReviewResponseStatus, ReviewsResponse } from './types/Responses'
+import { ReviewResponseStatus, UserReviewsResponse } from './types/Responses'
 import { getExistingReviewsForLandlord } from './landlords'
 
 export async function getReviews(
 	params: ReviewQuery,
-): Promise<ReviewsResponse> {
+): Promise<UserReviewsResponse> {
 	const {
 		page: pageNumber = 1,
 		limit: limitParam = 25,
@@ -66,14 +66,24 @@ export async function getReviews(
 
 	// Fetch reviews
 	const reviews = (await sql`
-        SELECT *
-        FROM review
-        WHERE 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-		AND (flagged = false OR (flagged = true AND admin_approved = true))
-		AND delete_date IS NULL
-        ORDER BY ${orderBy} ${sortOrder} LIMIT ${limitParam}
-        OFFSET ${offset}
-    `) as Review[]
+		SELECT 
+			id, landlord, country_code, city, state, zip, review, repair, 
+			health, stability, privacy, respect, date_added, rent, moderation_reason
+		FROM review
+		WHERE 1 = 1
+			${searchClause}
+			${stateClause}
+			${countryClause}
+			${cityClause}
+			${zipClause}
+			AND (flagged = false OR (flagged = true AND admin_approved = true))
+			AND delete_date IS NULL
+		ORDER BY ${orderBy} ${sortOrder}
+		LIMIT ${limitParam}
+		OFFSET ${offset}
+		`) as UserReview[]
+
+	console.log(reviews)
 
 	// Fetch total number of reviews
 	const totalResult = await sql`
