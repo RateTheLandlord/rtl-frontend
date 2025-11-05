@@ -48,7 +48,6 @@ function ReviewForm(): JSX.Element {
 				setLocationOpen(!isLocationValid)
 			}
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [view, country, state])
 
 	useEffect(() => {
@@ -62,7 +61,6 @@ function ReviewForm(): JSX.Element {
 				{ shallow: true },
 			)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [stateFilter, countryFilter])
 
 	return (

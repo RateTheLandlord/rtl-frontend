@@ -66,7 +66,6 @@ const useInfiniteScroll = <T>({
 		loadMore().catch(() =>
 			console.error('Error with Infinite Scroll Load More'),
 		)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [queryParams])
 
 	// Scroll event listener

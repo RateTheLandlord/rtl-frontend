@@ -51,7 +51,7 @@ const WrittenReviewForm = ({
 				</ol>
 			</div>
 			<LargeTextInput
-				title={`${t('review-form.review')} t('review-form.optional')}`}
+				title={`${t('review-form.review')} ${t('review-form.optional')}`}
 				setValue={(str: string) => handleTextChange(str, 'review')}
 				id='review'
 				placeHolder={t('review-form.optional')}

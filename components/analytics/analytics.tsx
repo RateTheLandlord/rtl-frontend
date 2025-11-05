@@ -90,7 +90,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 						<p className='label pt-2 pr-2 pl-2'>{t('median-rent-as-of')}</p>
 						<p className='label pl-2 text-center'>{label}: </p>
 						<p className='label justify-center text-center text-xl'>
-							${Math.round(Number(payload[0].value) ?? 0).toLocaleString()}
+							${Math.round(Number(payload[0].value)).toLocaleString()}
 						</p>
 					</div>
 				)

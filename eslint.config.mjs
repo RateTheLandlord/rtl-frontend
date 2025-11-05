@@ -1,49 +1,39 @@
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import js from '@eslint/js'
-import { FlatCompat } from '@eslint/eslintrc'
 import tseslint from 'typescript-eslint'
+import nextPlugin from '@next/eslint-plugin-next'
 import prettierConfigRecommended from 'eslint-plugin-prettier/recommended'
-import { fixupConfigRules } from '@eslint/compat'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const compat = new FlatCompat({
-	baseDirectory: __dirname,
-	recommendedConfig: js.configs.recommended,
-	allConfig: js.configs.all,
-})
-
-const patchedConfig = fixupConfigRules([
-	...compat.extends('next/core-web-vitals'),
-])
 
 export default tseslint.config({
 	extends: [
-		patchedConfig,
+		js.configs.recommended,
 		tseslint.configs.recommendedTypeChecked,
 		prettierConfigRecommended,
 	],
+	plugins: {
+		'@next/next': nextPlugin,
+	},
+	rules: {
+		...nextPlugin.configs['core-web-vitals'].rules,
+	},
 	ignores: [
 		'node_modules/*',
 		'dist',
 		'coverage',
 		'.next/*',
+		'out/*',
 		'*.json',
 		'*.lock',
 		'*.css',
 		'*.scss',
-		'out/*',
 		'next-env.d.ts',
 		'util/countries',
-		'*.mjs',
 		'migrations/*',
-		'.next',
 	],
 	languageOptions: {
 		parserOptions: {
 			projectService: true,
-			tsconfigRootDir: __dirname,
 		},
 	},
 })
