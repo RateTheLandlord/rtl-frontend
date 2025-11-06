@@ -25,6 +25,9 @@ export interface Review {
 	restore_date: string | null
 	restore_reason: string | null
 	restored_by: Array<string> | null
+	user_code?: string
+	number_user_attempts: number
+	last_user_attempt: Date
 }
 
 export interface UserReview {
@@ -186,4 +189,15 @@ export interface RecentReviews {
 	id: number
 	landlord: string
 	created_at: string
+}
+
+export interface UserUpdatedReview {
+	landlord: string
+	review: string
+	repair: number
+	health: number
+	stability: number
+	respect: number
+	privacy: number
+	rent: number | null
 }

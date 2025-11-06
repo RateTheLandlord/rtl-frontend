@@ -1,6 +1,6 @@
 import OpenAI from 'openai'
 import { getFlaggedKeywords } from '../flagged-keywords/flagged-keywords'
-import { Review } from '@/util/interfaces/interfaces'
+import { Review, UserUpdatedReview } from '@/util/interfaces/interfaces'
 
 export interface IResult {
 	flagged: boolean
@@ -37,7 +37,9 @@ const getSystemMessage = async () => {
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
-export const filterReviewWithAI = async (review: Review): Promise<IResult> => {
+export const filterReviewWithAI = async (
+	review: Review | UserUpdatedReview,
+): Promise<IResult> => {
 	try {
 		const SYSTEM_MESSAGE = await getSystemMessage()
 		const completion = await openai.chat.completions.create({

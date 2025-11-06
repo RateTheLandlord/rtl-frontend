@@ -1,36 +1,27 @@
-import { IResult } from '../helpers'
+import { filterReviewWithAI, IResult } from '../helpers'
 import sql from '@/lib/db'
-import { Review } from '@/util/interfaces/interfaces'
-import { ReviewResponseStatus } from '../types/Responses'
-import bcrypt from 'bcrypt'
+import { Review, UserUpdatedReview } from '@/util/interfaces/interfaces'
+import {
+	Message,
+	ReviewResponseStatus,
+	UserUpdateReviewResponse,
+} from '../types/Responses'
+import { checkUserCode, createUserCode } from '../user-codes'
+import dayjs from 'dayjs'
+import isBetween from 'dayjs/plugin/isBetween'
+
+dayjs.extend(isBetween)
 
 /**
  * Data service layer for the reviews service of our backend.
  * Provides methods to create, retrieve, update or handle any other CRUD operations for reviews in the database.
  */
 
-function generateRandomString() {
-	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-	let result = ''
-	for (let i = 0; i < 12; i++) {
-		result += chars.charAt(Math.floor(Math.random() * chars.length))
-	}
-	return result
-}
-
-const SALT_ROUNDS = 10
-
-function CreateUserCode() {
-	const code = generateRandomString()
-	const hashedCode = bcrypt.hashSync(code, SALT_ROUNDS)
-	return { code, hashedCode }
-}
-
 export async function createReview(
 	inputReview: Review,
 	filterResult: IResult,
 ): Promise<ReviewResponseStatus> {
-	const { code, hashedCode } = CreateUserCode()
+	const { code, hashedCode } = createUserCode()
 	try {
 		inputReview.landlord = inputReview.landlord
 			.substring(0, 150)
@@ -114,4 +105,90 @@ export async function updateReview(
            WHERE id = ${id};`
 
 	return review
+}
+
+function isWithinLastDay(lastAttempt: Date) {
+	const currDate = new Date()
+	const yesterday = dayjs(currDate).subtract(1, 'day')
+	return dayjs(lastAttempt).isBetween(yesterday, currDate)
+}
+
+export async function userUpdateReview(
+	id: number,
+	review: UserUpdatedReview,
+	userCode: string,
+): Promise<UserUpdateReviewResponse> {
+	//Get Review Code from Review ID
+	const selectedReviews = await sql<Review[]>`
+		SELECT user_code, number_user_attempts, last_user_attempt FROM review WHERE id = ${id};
+	`
+
+	// Review not found in DB
+	if (selectedReviews.length < 1) {
+		return {
+			success: false,
+			message: Message.NOT_FOUND,
+		}
+	}
+
+	const currentReview = selectedReviews[0]
+
+	// Too Many Attempts in the last day
+	if (
+		currentReview.number_user_attempts >= 3 &&
+		isWithinLastDay(currentReview.last_user_attempt)
+	) {
+		return {
+			success: false,
+			message: Message.RATE_LIMIT,
+		}
+	}
+
+	// No user code in review
+	if (!currentReview.user_code) {
+		return {
+			success: false,
+			message: Message.NO_CODE,
+		}
+	}
+
+	//Check that code matches the review
+	const isUpdateAllowed = await checkUserCode(userCode, currentReview.user_code)
+	if (!isUpdateAllowed) {
+		await sql`UPDATE review
+           SET 	last_user_attempt = ${new Date()},
+				number_user_attempts = ${currentReview.number_user_attempts || 0 + 1},
+
+           WHERE id = ${id};`
+		return {
+			success: false,
+			message: Message.INCORRECT,
+		}
+	} else {
+		//update review data if pass
+		const filterResult: IResult = await filterReviewWithAI(review)
+		await sql`UPDATE review
+           SET landlord = ${review.landlord
+							.substring(0, 150)
+							.toLocaleUpperCase()},
+               
+               review = ${review.review},
+               repair = ${review.repair},
+               health = ${review.health},
+               stability = ${review.stability},
+               privacy = ${review.privacy},
+               respect = ${review.respect},
+               flagged = ${filterResult.flagged},
+               flagged_reason = ${filterResult.flagged_reason},
+               admin_approved = false,
+               admin_edited   = false,
+			   rent = ${review.rent || null},
+			   moderation_reason = null,
+			   moderator = null,
+           WHERE id = ${id};`
+		return {
+			success: true,
+			message: Message.SUCCESS,
+		}
+	}
 }
