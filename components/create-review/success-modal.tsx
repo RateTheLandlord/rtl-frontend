@@ -26,8 +26,6 @@ import {
 	TumblrIcon,
 	TwitterIcon,
 } from 'react-share'
-import Patreon from '../svg/icons/patreon'
-import LinkButtonLightLG from '../ui/link-button-light-lg'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
 
@@ -151,17 +149,6 @@ function SuccessModal({ isOpen, setIsOpen }: IProps) {
 														<TwitterIcon round size='40' />
 													</TwitterShareButton>
 												</div>
-											</div>
-											<div className='mt-2 flex w-full flex-col items-center justify-center'>
-												<p className='mb-2 text-sm text-gray-500'>
-													{t('modal.patreon')}
-												</p>
-												<LinkButtonLightLG href='https://patreon.com/RateTheLandlord?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator&utm_content=join_link'>
-													<div className='flex flex-row items-center gap-2'>
-														<Patreon styling='w-10 h-10' />
-														<p>Patreon</p>
-													</div>
-												</LinkButtonLightLG>
 											</div>
 										</div>
 									</div>
