@@ -1,11 +1,9 @@
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { UserUpdatedReview } from '@/util/interfaces/interfaces'
 import rateLimitMiddleware from '@/util/rateLimit'
-import { userUpdateReview } from '@/lib/review/models/user-update-review-layer'
+import { userDeleteReview } from '@/lib/review/models/user-delete-review-layer'
 
 interface Body {
-	review: UserUpdatedReview
 	id: number
 	user_code: string
 }
@@ -15,11 +13,11 @@ const UserEditReview = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	const { body } = req as { body: Body }
 
-	const { id, review, user_code } = body
-	if (!id || !review || !user_code) {
+	const { id, user_code } = body
+	if (!id || !user_code) {
 		res.status(400).json({ message: 'Missing Data' })
 	} else {
-		const result = await userUpdateReview(id, review, user_code)
+		const result = await userDeleteReview(id, user_code)
 		res.status(200).json(result)
 	}
 }

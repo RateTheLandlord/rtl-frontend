@@ -1,7 +1,7 @@
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
-import { getDeleted } from '@/lib/review/review'
+import { getDeleted } from '@/lib/review/models/admin-delete-review'
 
 const getReviews = async (req: NextApiRequest, res: NextApiResponse) => {
 	const session = await getSession(req, res)
