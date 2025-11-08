@@ -1,14 +1,16 @@
-import { Review } from '@/util/interfaces/interfaces'
+import { UserReview } from '@/util/interfaces/interfaces'
 import React, { Dispatch, SetStateAction } from 'react'
 import ReviewComponent from './ReviewComponent'
 import Spinner from '../ui/Spinner'
 
 interface IProps {
-	data: Review[]
+	data: UserReview[]
 	setReportOpen: Dispatch<SetStateAction<boolean>>
-	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
+	setSelectedReview: Dispatch<SetStateAction<UserReview | undefined>>
 	setRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
 	setEditReviewOpen: Dispatch<SetStateAction<boolean>>
+	userEditMode: boolean
+	setUserEditMode: Dispatch<SetStateAction<boolean>>
 	isLoading: boolean
 }
 
@@ -18,19 +20,21 @@ function ReviewTable({
 	setSelectedReview,
 	setRemoveReviewOpen,
 	setEditReviewOpen,
+	userEditMode,
+	setUserEditMode,
 	isLoading,
 }: IProps): JSX.Element {
-	const handleReport = (review: Review) => {
+	const handleReport = (review: UserReview) => {
 		setSelectedReview(review)
 		setReportOpen(true)
 	}
 
-	const handleDelete = (review: Review) => {
+	const handleDelete = (review: UserReview) => {
 		setSelectedReview(review)
 		setRemoveReviewOpen(true)
 	}
 
-	const handleEdit = (review: Review) => {
+	const handleEdit = (review: UserReview) => {
 		setSelectedReview(review)
 		setEditReviewOpen(true)
 	}
@@ -45,7 +49,7 @@ function ReviewTable({
 				<div data-testid='review-table-1'>
 					<div className='mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
 						<div className='mt-6 space-y-5 pb-10'>
-							{data.map((review: Review, i: number) => {
+							{data.map((review: UserReview, i: number) => {
 								return (
 									<ReviewComponent
 										key={review.id}
@@ -54,6 +58,8 @@ function ReviewTable({
 										handleReport={handleReport}
 										handleDelete={handleDelete}
 										handleEdit={handleEdit}
+										handleUserEdit={setUserEditMode}
+										userEditMode={userEditMode}
 									/>
 								)
 							})}

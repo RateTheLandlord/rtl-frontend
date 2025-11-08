@@ -3,17 +3,20 @@ import AdsComponent from '../adsense/Adsense'
 import { useTranslations } from 'next-intl'
 import RatingStars from '../ui/RatingStars'
 import ButtonLight from '../ui/button-light'
-import { FlagIcon } from '@heroicons/react/solid'
-import { Review } from '@/util/interfaces/interfaces'
+import { FlagIcon, PencilIcon } from '@heroicons/react/solid'
+import { UserReview } from '@/util/interfaces/interfaces'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import { classNames } from '@/util/helpers/helper-functions'
+import { Dispatch, SetStateAction } from 'react'
 
 interface IProps {
-	review: Review
+	review: UserReview
 	i?: number
-	handleReport: (review: Review) => void
-	handleDelete?: (review: Review) => void
-	handleEdit?: (review: Review) => void
+	handleReport: (review: UserReview) => void
+	handleDelete?: (review: UserReview) => void
+	handleEdit?: (review: UserReview) => void
+	handleUserEdit: Dispatch<SetStateAction<boolean>>
+	userEditMode: boolean
 	landlordPage?: boolean
 }
 
@@ -23,6 +26,8 @@ const ReviewComponent = ({
 	handleReport,
 	handleDelete,
 	handleEdit,
+	handleUserEdit,
+	userEditMode,
 	landlordPage = false,
 }: IProps) => {
 	const t = useTranslations('reviews')
@@ -40,6 +45,7 @@ const ReviewComponent = ({
 		totalReview += Number(ratings[i].rating)
 	}
 	const avgRating = Math.round(totalReview / ratings.length)
+
 	return (
 		<div key={review.id}>
 			{i && i % 20 === 0 && i !== 0 ? (
@@ -100,12 +106,19 @@ const ReviewComponent = ({
 							{date}
 						</p>
 					</div>
-					<div className='mt-4 flex flex-row justify-start'>
+					<div className='mt-4 flex flex-row justify-start space-x-1'>
 						<ButtonLight onClick={() => handleReport(review)}>
 							<FlagIcon className='text-red-700' width={20} />
 						</ButtonLight>
+						{review.has_user_code ? (
+							<ButtonLight onClick={() => handleUserEdit(true)}>
+								<PencilIcon className='text-black-700' width={20} />
+							</ButtonLight>
+						) : null}
 					</div>
-					{handleDelete && handleEdit && user && user.role === 'ADMIN' ? (
+					{handleDelete &&
+					handleEdit &&
+					((user && user.role === 'ADMIN') || userEditMode) ? (
 						<>
 							<div className='mt-4 w-full'>
 								<ButtonLight onClick={() => handleDelete(review)}>

@@ -1,4 +1,4 @@
-import { Review } from '@/util/interfaces/interfaces'
+import { UserReview } from '@/util/interfaces/interfaces'
 import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import countries from '@/util/countries/countries.json'
 import { country_codes } from '@/util/helpers/getCountryCodes'
@@ -16,11 +16,12 @@ import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 
 interface IProps {
-	selectedReview: Review | undefined
+	selectedReview: UserReview | undefined
 	handleMutate: () => void
 	setEditReviewOpen: Dispatch<SetStateAction<boolean>>
 	editReviewOpen: boolean
-	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
+	setSelectedReview: Dispatch<SetStateAction<UserReview | undefined>>
+	userEditMode: boolean
 }
 
 const EditReviewModal = ({
@@ -29,6 +30,7 @@ const EditReviewModal = ({
 	setEditReviewOpen,
 	editReviewOpen,
 	setSelectedReview,
+	userEditMode,
 }: IProps) => {
 	const [landlord, setLandlord] = useState<string>(
 		selectedReview?.landlord || '',
@@ -44,6 +46,7 @@ const EditReviewModal = ({
 	const [moderationReason, setModerationReason] = useState<string | null>(
 		selectedReview?.moderation_reason || null,
 	)
+	const [userCode, setUserCode] = useState<string>('')
 	const moderators = selectedReview?.moderator || []
 
 	const isIreland = country === 'IE'
@@ -56,6 +59,9 @@ const EditReviewModal = ({
 		if (typeof user?.admin_id === 'string') {
 			moderators.unshift(`${user.admin_id} on ${date}`)
 		}
+		const apiUrl = userEditMode
+			? '/api/user-update/update'
+			: '/api/review/edit-review'
 		const editedReview = {
 			...selectedReview,
 			landlord: landlord,
@@ -71,7 +77,7 @@ const EditReviewModal = ({
 			moderation_reason: moderationReason,
 			moderator: [...moderators],
 		}
-		fetch('/api/review/edit-review', {
+		fetch(apiUrl, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -280,38 +286,66 @@ const EditReviewModal = ({
 											data-testid='edit-review-modal-1'
 										/>
 									</div>
-									<div className='sm:col-span-2'>
-										<label
-											htmlFor='moderation-reason'
-											className='block text-sm text-gray-700'
-										>
-											Moderation Reason
-										</label>
-										<div className='mt-1'>
-											<input
-												type='text'
-												name='moderation-reason'
-												id='moderation-reason'
-												placeholder='Moderation Reason'
-												required
-												value={moderationReason ? moderationReason : ''}
-												onChange={(e) => setModerationReason(e.target.value)}
-												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-												data-testid='create-review-form-moderation-reason-1'
-											/>
+									{userEditMode ? (
+										<div className='sm:col-span-2'>
+											<label
+												htmlFor='user-code'
+												className='block text-sm text-gray-700'
+											>
+												User Code
+											</label>
+											<div className='mt-1'>
+												<input
+													type='text'
+													name='user-code'
+													id='user-code'
+													placeholder='Enter User Code Provided After Creating Review'
+													required
+													value={userCode ? userCode : ''}
+													onChange={(e) => setUserCode(e.target.value)}
+													className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+													data-testid='create-review-form-moderation-reason-1'
+												/>
+											</div>
 										</div>
-									</div>
-									<div className='sm:col-span-2'>
-										<label
-											htmlFor='moderators'
-											className='block text-sm text-gray-700'
-										>
-											Previous Moderators
-										</label>
-										<div className='mt-1'>
-											<p>{moderators.map((mod) => mod).join(', ')}</p>
+									) : (
+										<div>
+											<div className='sm:col-span-2'>
+												<label
+													htmlFor='moderation-reason'
+													className='block text-sm text-gray-700'
+												>
+													Moderation Reason
+												</label>
+												<div className='mt-1'>
+													<input
+														type='text'
+														name='moderation-reason'
+														id='moderation-reason'
+														placeholder='Moderation Reason'
+														required
+														value={moderationReason ? moderationReason : ''}
+														onChange={(e) =>
+															setModerationReason(e.target.value)
+														}
+														className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+														data-testid='create-review-form-moderation-reason-1'
+													/>
+												</div>
+											</div>
+											<div className='sm:col-span-2'>
+												<label
+													htmlFor='moderators'
+													className='block text-sm text-gray-700'
+												>
+													Previous Moderators
+												</label>
+												<div className='mt-1'>
+													<p>{moderators.map((mod) => mod).join(', ')}</p>
+												</div>
+											</div>
 										</div>
-									</div>
+									)}
 								</div>
 								<div className='mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse'>
 									<Button onClick={() => onSubmitEditReview()}>Submit</Button>

@@ -1,4 +1,4 @@
-import { Review } from '@/util/interfaces/interfaces'
+import { UserReview } from '@/util/interfaces/interfaces'
 import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import {
 	Dialog,
@@ -21,11 +21,11 @@ const reviewPeriodNumber =
 		: Number(REVIEW_PERIOD)
 
 interface IProps {
-	selectedReview: Review | undefined
+	selectedReview: UserReview | undefined
 	handleMutate: () => void
 	setRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
 	removeReviewOpen: boolean
-	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
+	setSelectedReview: Dispatch<SetStateAction<UserReview | undefined>>
 }
 
 const RemoveReviewModal = ({

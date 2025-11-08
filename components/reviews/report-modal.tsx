@@ -7,14 +7,14 @@ import {
 } from '@headlessui/react'
 import ButtonLight from '../ui/button-light'
 import Button from '../ui/button'
-import { Review } from '@/util/interfaces/interfaces'
+import { UserReview } from '@/util/interfaces/interfaces'
 import { useTranslations } from 'next-intl'
 import { useReCaptcha } from 'next-recaptcha-v3'
 
 interface IProps {
 	isOpen: boolean
 	setIsOpen: React.Dispatch<SetStateAction<boolean>>
-	selectedReview: Review | undefined
+	selectedReview: UserReview | undefined
 }
 
 interface IReportReason {

@@ -1,7 +1,7 @@
 import ReviewFilters from '@/components/reviews/review-filters'
 import { sortOptions } from '@/util/helpers/filter-options'
 import {
-	Review as IReview,
+	UserReview as IReview,
 	SortOptions,
 	Options,
 } from '@/util/interfaces/interfaces'
@@ -72,6 +72,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
 	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
+	const [userEditMode, setUserEditMode] = useState(false)
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
@@ -149,6 +150,11 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 				setIsOpen={setReportOpen}
 				selectedReview={selectedReview}
 			/>
+			<ReportModal
+				isOpen={reportOpen}
+				setIsOpen={setReportOpen}
+				selectedReview={selectedReview}
+			/>
 			{selectedReview ? (
 				<>
 					<EditReviewModal
@@ -159,6 +165,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 						setEditReviewOpen={setEditReviewOpen}
 						editReviewOpen={editReviewOpen}
 						setSelectedReview={setSelectedReview}
+						userEditMode={userEditMode}
 					/>
 					<RemoveReviewModal
 						selectedReview={selectedReview}
@@ -168,6 +175,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 						setRemoveReviewOpen={setRemoveReviewOpen}
 						removeReviewOpen={removeReviewOpen}
 						setSelectedReview={setSelectedReview}
+						userEditMode={userEditMode}
 					/>
 				</>
 			) : null}
@@ -274,6 +282,8 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 											setSelectedReview={setSelectedReview}
 											setRemoveReviewOpen={setRemoveReviewOpen}
 											setEditReviewOpen={setEditReviewOpen}
+											userEditMode={userEditMode}
+											setUserEditMode={setUserEditMode}
 											isLoading={isLoadingHook}
 										/>
 									)}
