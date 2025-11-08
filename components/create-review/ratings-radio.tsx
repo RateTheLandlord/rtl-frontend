@@ -34,7 +34,7 @@ function RatingsRadio({ title, rating, setRating, tooltip, testid }: Props) {
 							className={({ checked }) =>
 								classNames(
 									i === 0 ? 'rounded-l-full' : 'border-l-0',
-									i === 4 ? 'rounded-r-full' : 'border-r-1',
+									i === 4 ? 'rounded-r-full' : 'border-r',
 									checked
 										? 'border-transparent bg-teal-600 text-white hover:bg-teal-700'
 										: 'border-2 border-teal-600 bg-white text-teal-900 hover:bg-teal-50',
