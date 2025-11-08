@@ -31,3 +31,9 @@ export interface ICityQuery {
 	offset?: string
 	sort?: 'az' | 'za' | 'new' | 'old' | 'high' | 'low'
 }
+
+export interface ZipQuery {
+	zip: string
+	state: string
+	country_code: string
+}
