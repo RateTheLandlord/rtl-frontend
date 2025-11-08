@@ -59,7 +59,9 @@ export async function getReviews(
 	const reviews = (await sql`
 		SELECT 
 			id, landlord, country_code, city, state, zip, review, repair, 
-			health, stability, privacy, respect, date_added, rent, moderation_reason, has_user_code
+			health, stability, privacy, respect, date_added, admin_edited,
+			rent, moderation_reason, moderator, delete_reason, deleted_by,
+			has_user_code
 		FROM review
 		WHERE 1 = 1
 			${searchClause}

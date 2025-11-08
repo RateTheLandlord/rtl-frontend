@@ -26,6 +26,9 @@ interface IProps {
 	setRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
 	removeReviewOpen: boolean
 	setSelectedReview: Dispatch<SetStateAction<UserReview | undefined>>
+	userEditMode: boolean
+	userKey: string
+	setUserKey: Dispatch<SetStateAction<string>>
 }
 
 const RemoveReviewModal = ({
@@ -34,6 +37,9 @@ const RemoveReviewModal = ({
 	setRemoveReviewOpen,
 	removeReviewOpen,
 	setSelectedReview,
+	userEditMode,
+	userKey,
+	setUserKey,
 }: IProps) => {
 	const landlord = selectedReview?.landlord || ''
 
@@ -49,19 +55,25 @@ const RemoveReviewModal = ({
 
 	const onSubmitRemoveReview = () => {
 		deleted_by.unshift(`${user?.admin_id as string} on ${date}`)
+		const apiUrl = userEditMode
+			? '/api/user-update/delete'
+			: '/api/review/edit-review'
 		const deletedReview = {
 			...selectedReview,
 			delete_reason: deleteReason,
 			deleted_by: [...deleted_by],
 			delete_date,
 		}
+		const body = userEditMode
+			? { id: selectedReview?.id, user_code: userKey }
+			: deletedReview
 		if (selectedReview) {
-			fetch('/api/review/edit-review', {
+			fetch(apiUrl, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(deletedReview),
+				body: JSON.stringify(body),
 			})
 				.then((result) => {
 					if (!result.ok) {
@@ -153,38 +165,63 @@ const RemoveReviewModal = ({
 											Review: {review ? review : selectedReview?.review}
 										</label>
 									</div>
-									<div className='sm:col-span-2'>
-										<label
-											htmlFor='moderation-reason'
-											className='block text-sm text-gray-700'
-										>
-											Delete Reason
-										</label>
-										<div className='mt-1'>
-											<input
-												type='text'
-												name='moderation-reason'
-												id='moderation-reason'
-												placeholder='Moderation Reason'
-												required
-												value={deleteReason ? deleteReason : ''}
-												onChange={(e) => setDeleteReason(e.target.value)}
-												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-												data-testid='create-review-form-moderation-reason-1'
-											/>
+									{userEditMode ? (
+										<div className='sm:col-span-2'>
+											<label
+												htmlFor='user-code'
+												className='block text-sm text-gray-700'
+											>
+												User Code
+											</label>
+											<div className='mt-1'>
+												<input
+													type='text'
+													name='user-code'
+													id='user-code'
+													placeholder='Enter User Code Provided After Creating Review'
+													required
+													onChange={(e) => setUserKey(e.target.value)}
+													className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+													data-testid='create-review-form-moderation-reason-1'
+												/>
+											</div>
 										</div>
-									</div>
-									<div className='sm:col-span-2'>
-										<label
-											htmlFor='moderators'
-											className='block text-sm text-gray-700'
-										>
-											Previous Moderators
-										</label>
-										<div className='mt-1'>
-											<p>{deleted_by.map((mod) => mod).join(', ')}</p>
+									) : (
+										<div>
+											<div className='sm:col-span-2'>
+												<label
+													htmlFor='moderation-reason'
+													className='block text-sm text-gray-700'
+												>
+													Delete Reason
+												</label>
+												<div className='mt-1'>
+													<input
+														type='text'
+														name='moderation-reason'
+														id='moderation-reason'
+														placeholder='Moderation Reason'
+														required
+														value={deleteReason ? deleteReason : ''}
+														onChange={(e) => setDeleteReason(e.target.value)}
+														className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+														data-testid='create-review-form-moderation-reason-1'
+													/>
+												</div>
+											</div>
+											<div className='sm:col-span-2'>
+												<label
+													htmlFor='moderators'
+													className='block text-sm text-gray-700'
+												>
+													Previous Moderators
+												</label>
+												<div className='mt-1'>
+													<p>{deleted_by.map((mod) => mod).join(', ')}</p>
+												</div>
+											</div>
 										</div>
-									</div>
+									)}
 								</div>
 								<div className='mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse'>
 									<Button onClick={() => onSubmitRemoveReview()}>Submit</Button>

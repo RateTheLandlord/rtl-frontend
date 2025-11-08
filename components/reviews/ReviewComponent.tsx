@@ -7,7 +7,6 @@ import { FlagIcon, PencilIcon } from '@heroicons/react/solid'
 import { UserReview } from '@/util/interfaces/interfaces'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import { classNames } from '@/util/helpers/helper-functions'
-import { Dispatch, SetStateAction } from 'react'
 
 interface IProps {
 	review: UserReview
@@ -15,9 +14,10 @@ interface IProps {
 	handleReport: (review: UserReview) => void
 	handleDelete?: (review: UserReview) => void
 	handleEdit?: (review: UserReview) => void
-	handleUserEdit: Dispatch<SetStateAction<boolean>>
+	handleUserEdit: (review: UserReview) => void
 	userEditMode: boolean
 	landlordPage?: boolean
+	selectedReviewID?: number
 }
 
 const ReviewComponent = ({
@@ -29,6 +29,7 @@ const ReviewComponent = ({
 	handleUserEdit,
 	userEditMode,
 	landlordPage = false,
+	selectedReviewID,
 }: IProps) => {
 	const t = useTranslations('reviews')
 	const { user } = useUser()
@@ -111,14 +112,15 @@ const ReviewComponent = ({
 							<FlagIcon className='text-red-700' width={20} />
 						</ButtonLight>
 						{review.has_user_code ? (
-							<ButtonLight onClick={() => handleUserEdit(true)}>
+							<ButtonLight onClick={() => handleUserEdit(review)}>
 								<PencilIcon className='text-black-700' width={20} />
 							</ButtonLight>
 						) : null}
 					</div>
 					{handleDelete &&
 					handleEdit &&
-					((user && user.role === 'ADMIN') || userEditMode) ? (
+					((user && user.role === 'ADMIN') ||
+						(userEditMode && review.id === selectedReviewID)) ? (
 						<>
 							<div className='mt-4 w-full'>
 								<ButtonLight onClick={() => handleDelete(review)}>

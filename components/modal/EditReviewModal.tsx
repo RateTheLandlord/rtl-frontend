@@ -22,6 +22,8 @@ interface IProps {
 	editReviewOpen: boolean
 	setSelectedReview: Dispatch<SetStateAction<UserReview | undefined>>
 	userEditMode: boolean
+	userKey: string
+	setUserKey: Dispatch<SetStateAction<string>>
 }
 
 const EditReviewModal = ({
@@ -31,6 +33,8 @@ const EditReviewModal = ({
 	editReviewOpen,
 	setSelectedReview,
 	userEditMode,
+	userKey,
+	setUserKey,
 }: IProps) => {
 	const [landlord, setLandlord] = useState<string>(
 		selectedReview?.landlord || '',
@@ -46,7 +50,6 @@ const EditReviewModal = ({
 	const [moderationReason, setModerationReason] = useState<string | null>(
 		selectedReview?.moderation_reason || null,
 	)
-	const [userCode, setUserCode] = useState<string>('')
 	const moderators = selectedReview?.moderator || []
 
 	const isIreland = country === 'IE'
@@ -62,27 +65,45 @@ const EditReviewModal = ({
 		const apiUrl = userEditMode
 			? '/api/user-update/update'
 			: '/api/review/edit-review'
-		const editedReview = {
-			...selectedReview,
-			landlord: landlord,
-			country: country,
-			city: city,
-			state: province,
-			zip: postal,
-			review: review,
-			admin_edited: true,
-			admin_approved: true,
-			flagged: false,
-			rent: rent,
-			moderation_reason: moderationReason,
-			moderator: [...moderators],
-		}
+		const editedReview = userEditMode
+			? {
+					...selectedReview,
+					landlord: landlord,
+					country: country,
+					city: city,
+					state: province,
+					zip: postal,
+					review: review,
+					rent: rent,
+				}
+			: {
+					...selectedReview,
+					landlord: landlord,
+					country: country,
+					city: city,
+					state: province,
+					zip: postal,
+					review: review,
+					admin_edited: true,
+					admin_approved: true,
+					flagged: false,
+					rent: rent,
+					moderation_reason: moderationReason,
+					moderator: [...moderators],
+				}
+		const body = userKey
+			? {
+					review: editedReview,
+					id: selectedReview?.id,
+					user_code: userKey,
+				}
+			: { editedReview }
 		fetch(apiUrl, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(editedReview),
+			body: JSON.stringify(body),
 		})
 			.then((result) => {
 				if (!result.ok) {
@@ -301,8 +322,7 @@ const EditReviewModal = ({
 													id='user-code'
 													placeholder='Enter User Code Provided After Creating Review'
 													required
-													value={userCode ? userCode : ''}
-													onChange={(e) => setUserCode(e.target.value)}
+													onChange={(e) => setUserKey(e.target.value)}
 													className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 													data-testid='create-review-form-moderation-reason-1'
 												/>

@@ -77,6 +77,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
 	const [selectedIndex, setSelectedIndex] = useState(0)
+	const [userKey, setUserKey] = useState('')
 
 	const [dynamicCityOptions, setDynamicCityOptions] = useState<Options[]>([])
 
@@ -166,6 +167,8 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 						editReviewOpen={editReviewOpen}
 						setSelectedReview={setSelectedReview}
 						userEditMode={userEditMode}
+						userKey={userKey}
+						setUserKey={setUserKey}
 					/>
 					<RemoveReviewModal
 						selectedReview={selectedReview}
@@ -176,6 +179,8 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 						removeReviewOpen={removeReviewOpen}
 						setSelectedReview={setSelectedReview}
 						userEditMode={userEditMode}
+						userKey={userKey}
+						setUserKey={setUserKey}
 					/>
 				</>
 			) : null}
@@ -284,6 +289,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 											setEditReviewOpen={setEditReviewOpen}
 											userEditMode={userEditMode}
 											setUserEditMode={setUserEditMode}
+											selectedReviewID={selectedReview?.id}
 											isLoading={isLoadingHook}
 										/>
 									)}

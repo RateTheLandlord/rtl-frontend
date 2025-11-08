@@ -19,12 +19,10 @@ export async function userDeleteReview(id: number, userCode: string) {
 	}
 
 	const currentReview = selectedReviews[0]
+	const user_attempts = Number(currentReview.number_user_attempts)
 
 	// Too Many Attempts in the last day
-	if (
-		currentReview.number_user_attempts >= 3 &&
-		isWithinLastDay(currentReview.last_user_attempt)
-	) {
+	if (user_attempts >= 3 && isWithinLastDay(currentReview.last_user_attempt)) {
 		return {
 			success: false,
 			message: Message.RATE_LIMIT,
@@ -45,7 +43,7 @@ export async function userDeleteReview(id: number, userCode: string) {
 	if (!isUpdateAllowed) {
 		await sql`UPDATE review
            SET 	last_user_attempt = ${new Date()},
-				number_user_attempts = ${currentReview.number_user_attempts || 0 + 1},
+				number_user_attempts = ${user_attempts + 1 || 0 + 1},
 
            WHERE id = ${id};`
 		return {
