@@ -14,6 +14,7 @@ import { toast } from 'react-toastify'
 import { getStates } from '@/util/countries/combineStates'
 import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
+import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
 
 interface IProps {
 	selectedReview: UserReview | undefined
@@ -112,15 +113,21 @@ const EditReviewModal = ({
 					setUserKey('')
 					setUserEditMode(false)
 					throw new Error()
+				} else {
+					return result.json()
 				}
 			})
-			.then(() => {
+			.then((data: UserUpdateReviewResponse) => {
 				fetch(
 					`/api/force-revalidate?path=${encodeURIComponent(landlord)}`,
 				).catch(() => console.error('Revalidate Failed'))
 				handleMutate()
 				setEditReviewOpen(false)
-				toast.success('Success!')
+				if (data.success) {
+					toast.success('Success!')
+				} else {
+					toast.error(data.message)
+				}
 				setSelectedReview(undefined)
 				setUserKey('')
 				setUserEditMode(false)

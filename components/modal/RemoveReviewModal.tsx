@@ -13,6 +13,7 @@ import { toast } from 'react-toastify'
 import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import CloseButton from '../ui/CloseButton'
+import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
 
 const REVIEW_PERIOD = process.env.REVIEW_PERIOD
 const reviewPeriodNumber =
@@ -79,10 +80,14 @@ const RemoveReviewModal = ({
 			})
 				.then((result) => {
 					if (!result.ok) {
+						setUserKey('')
+						setUserEditMode(false)
 						throw new Error()
+					} else {
+						return result.json()
 					}
 				})
-				.then(() => {
+				.then((data: UserUpdateReviewResponse) => {
 					fetch(
 						`/api/force-revalidate?path=${encodeURIComponent(
 							selectedReview.landlord,
@@ -90,8 +95,6 @@ const RemoveReviewModal = ({
 					)
 						.then((response) => {
 							if (!response.ok) {
-								setUserKey('')
-								setUserEditMode(false)
 								throw new Error('Failed to revalidate')
 							}
 						})
@@ -101,7 +104,11 @@ const RemoveReviewModal = ({
 						})
 					handleMutate()
 					setRemoveReviewOpen(false)
-					toast.success('Success!')
+					if (data.success) {
+						toast.success('Success!')
+					} else {
+						toast.error(data.message)
+					}
 					setSelectedReview(undefined)
 					setUserKey('')
 					setUserEditMode(false)
