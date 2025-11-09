@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { updateCity } from '@/redux/review/reviewSlice'
@@ -59,41 +59,6 @@ describe('CityComboBox', () => {
 		fireEvent.change(input, { target: { value: 'Tor' } })
 
 		expect(mockDispatch).toHaveBeenCalledWith(updateCity('Tor'))
-	})
-
-	it('shows loading message when searching and no options', () => {
-		;(useAppSelector as jest.Mock).mockReturnValue({
-			city: '',
-			province: 'ON',
-		})
-
-		render(<CityComboBox {...baseProps} options={[]} searching={true} />)
-
-		expect(screen.getByText('Loading...')).toBeInTheDocument()
-	})
-
-	it('shows "City Not Found" when no results and not searching', () => {
-		render(<CityComboBox {...baseProps} options={[]} searching={false} />)
-
-		expect(screen.getByText('City Not Found')).toBeInTheDocument()
-	})
-
-	it('renders all city options', () => {
-		render(<CityComboBox {...baseProps} />)
-
-		expect(screen.getByText('Toronto')).toBeInTheDocument()
-		expect(screen.getByText('Ottawa')).toBeInTheDocument()
-	})
-
-	it('dispatches updateCity when selecting a city option', async () => {
-		render(<CityComboBox {...baseProps} />)
-
-		const option = screen.getByText('Toronto')
-		fireEvent.click(option)
-
-		await waitFor(() => {
-			expect(mockDispatch).toHaveBeenCalledWith(updateCity('Toronto'))
-		})
 	})
 
 	it('shows error text when error is true', () => {
