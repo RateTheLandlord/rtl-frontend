@@ -141,13 +141,6 @@ export interface FilterOptions {
 	zips: Options[]
 }
 
-export interface ReviewResponseStatus {
-	success: boolean
-	message: string
-	user_code: string
-	review_id: number
-}
-
 export interface SuspiciousLandlord {
 	id?: number
 	landlord: string

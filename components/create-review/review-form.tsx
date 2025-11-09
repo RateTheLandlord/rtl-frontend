@@ -4,10 +4,7 @@ import SuccessModal from './success-modal'
 import { postcodeValidator } from 'postcode-validator'
 import SpamReviewModal from '@/components/create-review/SpamReviewModal'
 import { useLocation } from '@/util/hooks/useLocation'
-import {
-	ILocationHookResponse,
-	ReviewResponseStatus,
-} from '@/util/interfaces/interfaces'
+import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import { useReCaptcha } from 'next-recaptcha-v3'
 import Spinner from '../ui/Spinner'
 import { Transition, TransitionChild } from '@headlessui/react'
@@ -25,6 +22,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Country } from '@/types/review.types'
 import { updatePostal, updateProvince } from '@/redux/review/reviewSlice'
 import CopyUserCodeModal from '../modal/CopyUserCodeModal'
+import { ReviewResponseStatus } from '@/lib/review/types/Responses'
 
 function ReviewForm(): JSX.Element {
 	const t = useTranslations()

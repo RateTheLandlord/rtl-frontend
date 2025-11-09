@@ -35,6 +35,8 @@ export async function create(
 				message:
 					'This landlord is currently under spam protection please try again later',
 				success: false,
+				user_code: '',
+				review_id: 0,
 			}
 
 		updateRecentReviews(inputReview.landlord).catch(() =>
