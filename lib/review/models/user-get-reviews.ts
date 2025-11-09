@@ -74,8 +74,6 @@ export async function getReviews(
 		OFFSET ${offset}
 		`) as UserReview[]
 
-	console.log(reviews)
-
 	// Fetch total number of reviews
 	const totalResult = await sql`
         SELECT COUNT(*) as count

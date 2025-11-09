@@ -1,29 +1,29 @@
 import Button from '@/components/ui/button'
 import LargeTextInput from '@/components/ui/LargeTextInput'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { updateReview } from '@/redux/review/reviewSlice'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
 
 interface IProps {
 	reviewOpen: boolean
-	review: string
 	setReviewOpen: (bool: boolean) => void
-	handleTextChange: (str: string, inp: string) => void
 	setShowPreview: (bool: boolean) => void
 }
 
 const WrittenReviewForm = ({
 	reviewOpen,
-	review,
 	setReviewOpen,
-	handleTextChange,
 	setShowPreview,
 }: IProps) => {
 	const t = useTranslations('createreview')
+	const { review } = useAppSelector((state) => state.review)
+	const dispatch = useAppDispatch()
 	return !reviewOpen ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
 			<div className='flex flex-col gap-2'>
 				<p className='text-xs'>{t('written-review.title')}</p>
-				<p className='text-md break-words'>{review}</p>
+				<p className='text-md wrap-break-word'>{review}</p>
 			</div>
 			<div>
 				<Button
@@ -52,7 +52,7 @@ const WrittenReviewForm = ({
 			</div>
 			<LargeTextInput
 				title={`${t('review-form.review')} ${t('review-form.optional')}`}
-				setValue={(str: string) => handleTextChange(str, 'review')}
+				setValue={(str: string) => dispatch(updateReview(str))}
 				id='review'
 				placeHolder={t('review-form.optional')}
 				testid='create-review-form-text-1'

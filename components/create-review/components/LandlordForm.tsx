@@ -3,12 +3,12 @@ import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
 import Button from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { updateLandlord } from '@/redux/review/reviewSlice'
 
 interface IProps {
 	landlordOpen: boolean
 	setLandlordOpen: (bool: boolean) => void
-	landlord: string
-	setLandlordName: (str: string) => void
 	setShowLocationForm: (bool: boolean) => void
 	setLocationOpen: (bool: boolean) => void
 	landlordValidationError: boolean
@@ -18,14 +18,15 @@ interface IProps {
 const LandlordForm = ({
 	landlordOpen,
 	setLandlordOpen,
-	landlord,
-	setLandlordName,
 	setShowLocationForm,
 	setLocationOpen,
 	landlordValidationError,
 	landlordValidationText,
 }: IProps) => {
 	const t = useTranslations('createreview')
+
+	const { landlord } = useAppSelector((state) => state.review)
+	const dispatch = useAppDispatch()
 
 	const {
 		isSearching,
@@ -61,7 +62,7 @@ const LandlordForm = ({
 			<LandlordComboBox
 				name={t('review-form.landlord')}
 				state={landlord}
-				setState={setLandlordName}
+				setState={(landlord) => dispatch(updateLandlord(landlord))}
 				suggestions={landlordSuggestions}
 				isSearching={isSearching}
 				error={landlordValidationError}

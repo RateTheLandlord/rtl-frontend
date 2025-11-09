@@ -35,6 +35,8 @@ export async function create(
 				message:
 					'This landlord is currently under spam protection please try again later',
 				success: false,
+				user_code: '',
+				review_id: 0,
 			}
 
 		updateRecentReviews(inputReview.landlord).catch(() =>
@@ -75,7 +77,7 @@ async function createReview(
 		inputReview.flagged = filterResult.flagged
 		inputReview.flagged_reason = filterResult.flagged_reason
 
-		await sql<{ id: number }[]>`
+		const id = await sql<{ id: number }[]>`
           INSERT INTO review
           (landlord, country_code, city, state, zip, review, repair, health, stability, privacy, respect, flagged,
           flagged_reason, admin_approved, admin_edited, rent, user_code)
@@ -97,6 +99,7 @@ async function createReview(
 
 		return {
 			message: 'Review successfully added',
+			review_id: id[0].id,
 			success: true,
 			user_code: code,
 		}

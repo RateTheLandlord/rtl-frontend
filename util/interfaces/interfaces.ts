@@ -1,3 +1,5 @@
+import { Country } from '@/types/review.types'
+
 export interface Review {
 	id?: number
 	landlord: string
@@ -113,7 +115,7 @@ export interface ILocationHookResponse {
 export interface Resource {
 	id: number
 	name: string
-	country_code: string
+	country_code: Country
 	city: string
 	state: string
 	address?: string
@@ -137,11 +139,6 @@ export interface FilterOptions {
 	states: Options[]
 	cities: Options[]
 	zips: Options[]
-}
-
-export interface ReviewResponseStatus {
-	success: boolean
-	message: string
 }
 
 export interface SuspiciousLandlord {
