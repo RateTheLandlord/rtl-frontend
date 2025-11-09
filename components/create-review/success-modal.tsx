@@ -26,10 +26,10 @@ import {
 	TumblrIcon,
 	TwitterIcon,
 } from 'react-share'
-import Patreon from '../svg/icons/patreon'
-import LinkButtonLightLG from '../ui/link-button-light-lg'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
+import { useAppDispatch } from '@/redux/hooks'
+import { resetReview } from '@/redux/review/reviewSlice'
 
 interface IProps {
 	isOpen: boolean
@@ -38,6 +38,7 @@ interface IProps {
 
 function SuccessModal({ isOpen, setIsOpen }: IProps) {
 	const t = useTranslations('createreview')
+	const dispatch = useAppDispatch()
 	const router = useRouter()
 	return (
 		<div data-testid='SuccessModalComponent'>
@@ -152,24 +153,13 @@ function SuccessModal({ isOpen, setIsOpen }: IProps) {
 													</TwitterShareButton>
 												</div>
 											</div>
-											<div className='mt-2 flex w-full flex-col items-center justify-center'>
-												<p className='mb-2 text-sm text-gray-500'>
-													{t('modal.patreon')}
-												</p>
-												<LinkButtonLightLG href='https://patreon.com/RateTheLandlord?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator&utm_content=join_link'>
-													<div className='flex flex-row items-center gap-2'>
-														<Patreon styling='w-10 h-10' />
-														<p>Patreon</p>
-													</div>
-												</LinkButtonLightLG>
-											</div>
 										</div>
 									</div>
 									<div className='mt-5 grid gap-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3'>
 										<ButtonLight
 											onClick={() => {
 												setIsOpen(false)
-												router.reload()
+												dispatch(resetReview())
 											}}
 										>
 											{t('modal.submit-another')}

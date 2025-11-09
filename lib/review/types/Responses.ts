@@ -16,7 +16,8 @@ export interface UserReviewsResponse {
 export interface ReviewResponseStatus {
 	success: boolean
 	message: string
-	user_code?: string
+	user_code: string
+	review_id: number
 }
 
 export interface UserUpdateReviewResponse {
