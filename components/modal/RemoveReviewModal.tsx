@@ -27,6 +27,7 @@ interface IProps {
 	removeReviewOpen: boolean
 	setSelectedReview: Dispatch<SetStateAction<UserReview | undefined>>
 	userEditMode: boolean
+	setUserEditMode: Dispatch<SetStateAction<boolean>>
 	userKey: string
 	setUserKey: Dispatch<SetStateAction<string>>
 }
@@ -38,6 +39,7 @@ const RemoveReviewModal = ({
 	removeReviewOpen,
 	setSelectedReview,
 	userEditMode,
+	setUserEditMode,
 	userKey,
 	setUserKey,
 }: IProps) => {
@@ -88,6 +90,8 @@ const RemoveReviewModal = ({
 					)
 						.then((response) => {
 							if (!response.ok) {
+								setUserKey('')
+								setUserEditMode(false)
 								throw new Error('Failed to revalidate')
 							}
 						})
@@ -99,6 +103,8 @@ const RemoveReviewModal = ({
 					setRemoveReviewOpen(false)
 					toast.success('Success!')
 					setSelectedReview(undefined)
+					setUserKey('')
+					setUserEditMode(false)
 				})
 				.catch((err) => {
 					console.log(err)

@@ -167,6 +167,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 						editReviewOpen={editReviewOpen}
 						setSelectedReview={setSelectedReview}
 						userEditMode={userEditMode}
+						setUserEditMode={setUserEditMode}
 						userKey={userKey}
 						setUserKey={setUserKey}
 					/>
@@ -179,6 +180,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 						removeReviewOpen={removeReviewOpen}
 						setSelectedReview={setSelectedReview}
 						userEditMode={userEditMode}
+						setUserEditMode={setUserEditMode}
 						userKey={userKey}
 						setUserKey={setUserKey}
 					/>

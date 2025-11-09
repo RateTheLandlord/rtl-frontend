@@ -22,6 +22,7 @@ interface IProps {
 	editReviewOpen: boolean
 	setSelectedReview: Dispatch<SetStateAction<UserReview | undefined>>
 	userEditMode: boolean
+	setUserEditMode: Dispatch<SetStateAction<boolean>>
 	userKey: string
 	setUserKey: Dispatch<SetStateAction<string>>
 }
@@ -33,6 +34,7 @@ const EditReviewModal = ({
 	editReviewOpen,
 	setSelectedReview,
 	userEditMode,
+	setUserEditMode,
 	userKey,
 	setUserKey,
 }: IProps) => {
@@ -107,6 +109,8 @@ const EditReviewModal = ({
 		})
 			.then((result) => {
 				if (!result.ok) {
+					setUserKey('')
+					setUserEditMode(false)
 					throw new Error()
 				}
 			})
@@ -118,6 +122,8 @@ const EditReviewModal = ({
 				setEditReviewOpen(false)
 				toast.success('Success!')
 				setSelectedReview(undefined)
+				setUserKey('')
+				setUserEditMode(false)
 			})
 			.catch((err) => {
 				console.log(err)
