@@ -6,6 +6,14 @@ import RatingsRadio from '../ratings-radio'
 import RatingStars from '@/components/ui/RatingStars'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	updateHealth,
+	updatePrivacy,
+	updateRepair,
+	updateRespect,
+	updateStability,
+} from '@/redux/review/reviewSlice'
 
 interface IProps {
 	ratingsOpen: boolean
@@ -14,16 +22,6 @@ interface IProps {
 		rating: number
 	}[]
 	setRatingsOpen: (bool: boolean) => void
-	repair: number
-	setRepair: (num: number) => void
-	health: number
-	setHealth: (num: number) => void
-	stability: number
-	setStability: (num: number) => void
-	privacy: number
-	setPrivacy: (num: number) => void
-	respect: number
-	setRespect: (num: number) => void
 	setShowReviewForm: (bool: boolean) => void
 	setReviewOpen: (bool: boolean) => void
 }
@@ -32,19 +30,13 @@ const RatingForm = ({
 	ratingsOpen,
 	ratings,
 	setRatingsOpen,
-	repair,
-	setRepair,
-	health,
-	setHealth,
-	stability,
-	setStability,
-	privacy,
-	setPrivacy,
-	respect,
-	setRespect,
 	setShowReviewForm,
 	setReviewOpen,
 }: IProps) => {
+	const { repair, health, stability, privacy, respect } = useAppSelector(
+		(state) => state.review,
+	)
+	const dispatch = useAppDispatch()
 	const t = useTranslations('createreview')
 	return !ratingsOpen ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
@@ -88,7 +80,7 @@ const RatingForm = ({
 				<RatingsRadio
 					title={t('review-form.repair')}
 					rating={repair}
-					setRating={setRepair}
+					setRating={(rating) => dispatch(updateRepair(rating))}
 					tooltip={t('review-form.repair_description')}
 					testid='RepairRatingsRadio-component'
 				/>
@@ -96,7 +88,7 @@ const RatingForm = ({
 				<RatingsRadio
 					title={t('review-form.health')}
 					rating={health}
-					setRating={setHealth}
+					setRating={(rating) => dispatch(updateHealth(rating))}
 					tooltip={t('review-form.health_description')}
 					testid='HealthRatingsRadio-component'
 				/>
@@ -104,7 +96,7 @@ const RatingForm = ({
 				<RatingsRadio
 					title={t('review-form.stability')}
 					rating={stability}
-					setRating={setStability}
+					setRating={(rating) => dispatch(updateStability(rating))}
 					tooltip={t('review-form.stability_description')}
 					testid='StabilityRatingsRadio-component'
 				/>
@@ -112,7 +104,7 @@ const RatingForm = ({
 				<RatingsRadio
 					title={t('review-form.privacy')}
 					rating={privacy}
-					setRating={setPrivacy}
+					setRating={(rating) => dispatch(updatePrivacy(rating))}
 					tooltip={t('review-form.privacy_description')}
 					testid='PrivacyRatingsRadio-component'
 				/>
@@ -120,7 +112,7 @@ const RatingForm = ({
 				<RatingsRadio
 					title={t('review-form.respect')}
 					rating={respect}
-					setRating={setRespect}
+					setRating={(rating) => dispatch(updateRespect(rating))}
 					tooltip={t('review-form.respect_description')}
 					testid='RespectRatingsRadio-component'
 				/>

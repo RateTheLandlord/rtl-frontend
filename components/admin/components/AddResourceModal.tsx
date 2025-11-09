@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from 'react'
+import { useEffect } from 'react'
 import CityComboBox from '@/components/create-review/components/CityComboBox'
 import { useLocation } from '@/util/hooks/useLocation'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
@@ -6,69 +6,46 @@ import TextInput from '@/components/ui/TextInput'
 import LargeTextInput from '@/components/ui/LargeTextInput'
 import CountrySelector from '@/components/ui/CountrySelector'
 import StateSelector from '@/components/ui/StateSelector'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { Country } from '@/types/review.types'
+import {
+	updateAddress,
+	updateDescription,
+	updateHref,
+	updateName,
+	updatePhone,
+	updateState,
+} from '@/redux/resource/resourceSlice'
 
-interface IProps {
-	name: string
-	setName: Dispatch<SetStateAction<string>>
-	country: string
-	setCountry: Dispatch<SetStateAction<string>>
-	city: string
-	setCity: Dispatch<SetStateAction<string>>
-	state: string
-	setState: Dispatch<SetStateAction<string>>
-	address: string
-	setAddress: Dispatch<SetStateAction<string>>
-	phone: string
-	setPhone: Dispatch<SetStateAction<string>>
-	description: string
-	setDescription: Dispatch<SetStateAction<string>>
-	href: string
-	setHref: Dispatch<SetStateAction<string>>
-}
-
-const AddResourceModal = ({
-	name,
-	setName,
-	country,
-	setCountry,
-	city,
-	setCity,
-	state,
-	setState,
-	address,
-	setAddress,
-	phone,
-	setPhone,
-	description,
-	setDescription,
-	href,
-	setHref,
-}: IProps) => {
+const AddResourceModal = () => {
+	const { name, country_code, city, address, phone_number, description, href } =
+		useAppSelector((state) => state.resource)
+	const dispatch = useAppDispatch()
 	const {
 		searching,
 		locations,
 	}: { searching: boolean; locations: ILocationHookResponse[] } = useLocation(
 		city,
-		country,
+		country_code,
 	)
 
 	useEffect(() => {
-		if (country === 'GB') {
-			setState('England')
-		} else if (country === 'AU') {
-			setState('Northern Territory')
-		} else if (country === 'US') {
-			setState('Alabama')
-		} else if (country === 'IE') {
-			setState('Dublin')
-		} else if (country === 'NO') {
-			setState('Norway')
-		} else if (country === 'NZ') {
-			setState('Auckland')
+		if (country_code === Country.GB) {
+			dispatch(updateState('England'))
+		} else if (country_code === Country.AU) {
+			dispatch(updateState('Northern Territory'))
+		} else if (country_code === Country.US) {
+			dispatch(updateState('Alabama'))
+		} else if (country_code === Country.IE) {
+			dispatch(updateState('Dublin'))
+		} else if (country_code === Country.NO) {
+			dispatch(updateState('Norway'))
+		} else if (country_code === Country.NZ) {
+			dispatch(updateState('Auckland'))
 		} else {
-			setState('Alberta')
+			dispatch(updateState('Alberta'))
 		}
-	}, [country, setState])
+	}, [country_code, dispatch])
 	return (
 		<form
 			className='container w-full space-y-8 divide-y divide-gray-200'
@@ -80,7 +57,7 @@ const AddResourceModal = ({
 						<TextInput
 							title='Name'
 							value={name}
-							setValue={setName}
+							setValue={(str) => dispatch(updateName(str))}
 							id='name'
 							placeHolder='Name'
 						/>
@@ -88,22 +65,22 @@ const AddResourceModal = ({
 						<TextInput
 							title='Address'
 							value={address}
-							setValue={setAddress}
+							setValue={(str) => dispatch(updateAddress(str))}
 							id='address'
 							placeHolder='Address '
 						/>
 
 						<TextInput
 							title='Phone Number'
-							value={phone}
-							setValue={setPhone}
+							value={phone_number}
+							setValue={(str) => dispatch(updatePhone(str))}
 							id='phone'
 							placeHolder='Phone Number'
 						/>
 						<TextInput
 							title='Link'
 							value={href}
-							setValue={setHref}
+							setValue={(str) => dispatch(updateHref(str))}
 							id='href'
 							placeHolder='Link'
 						/>
@@ -111,8 +88,7 @@ const AddResourceModal = ({
 						<div className='sm:col-span-2'>
 							<CityComboBox
 								name='City'
-								state={city}
-								setState={setCity}
+								isResource
 								options={locations}
 								searching={searching}
 								error={false}
@@ -120,18 +96,13 @@ const AddResourceModal = ({
 							/>
 						</div>
 
-						<StateSelector
-							value={state}
-							country={country}
-							setValue={setState}
-							noState={true}
-						/>
+						<StateSelector isResource noState={true} />
 
-						<CountrySelector setValue={setCountry} />
+						<CountrySelector isResource />
 
 						<LargeTextInput
 							title='Description'
-							setValue={setDescription}
+							setValue={(str: string) => dispatch(updateDescription(str))}
 							value={description}
 							id='description'
 						/>
