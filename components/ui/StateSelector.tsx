@@ -3,13 +3,17 @@ import { getStates } from '@/util/countries/combineStates'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Country } from '@/types/review.types'
 import { updateProvince } from '@/redux/review/reviewSlice'
+import { updateState as updateResourceState } from '@/redux/resource/resourceSlice'
 
 interface IProps {
 	noState?: boolean
+	isResource?: boolean
 }
 
-const StateSelector = ({ noState }: IProps) => {
+const StateSelector = ({ noState, isResource }: IProps) => {
 	const { country, province } = useAppSelector((state) => state.review)
+	const { country_code: resourceCountry, state: resourceProvince } =
+		useAppSelector((state) => state.resource)
 	const dispatch = useAppDispatch()
 	const t = useTranslations('createreview')
 	return (
@@ -19,9 +23,9 @@ const StateSelector = ({ noState }: IProps) => {
 				htmlFor='state'
 				className='block text-sm text-gray-700'
 			>
-				{country === Country.GB
+				{country === Country.GB || resourceCountry === Country.GB
 					? t('review-form.region')
-					: country === Country.IE
+					: country === Country.IE || resourceCountry === Country.IE
 						? t('review-form.country')
 						: t('review-form.state')}
 			</label>
@@ -31,8 +35,12 @@ const StateSelector = ({ noState }: IProps) => {
 					id='state'
 					name='state'
 					required
-					value={province}
-					onChange={(e) => dispatch(updateProvince(e.target.value))}
+					value={isResource ? resourceProvince : province}
+					onChange={(e) =>
+						isResource
+							? dispatch(updateResourceState(e.target.value))
+							: dispatch(updateProvince(e.target.value))
+					}
 					className='block w-full cursor-pointer rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 				>
 					{getStates(country).map((province) => (

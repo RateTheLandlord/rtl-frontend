@@ -18,6 +18,8 @@ import Modal from '@/components/modal/Modal'
 import EditResourceModal from '@/components/modal/EditResourceModal'
 import RemoveResourceModal from '@/components/modal/RemoveResourceModal'
 import { toast } from 'react-toastify'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { resetResource } from '@/redux/resource/resourceSlice'
 
 const TenantResources = () => {
 	const { data, error, mutate } = useSWR<ResourceResponse, unknown>(
@@ -25,14 +27,17 @@ const TenantResources = () => {
 		fetchWithBody,
 	)
 
-	const [name, setName] = useState<string>('')
-	const [country, setCountry] = useState<string>('CA')
-	const [city, setCity] = useState<string>('')
-	const [state, setState] = useState<string>('Alberta')
-	const [address, setAddress] = useState('')
-	const [phone, setPhone] = useState('')
-	const [description, setDescription] = useState('')
-	const [href, setHref] = useState('')
+	const {
+		name,
+		country_code,
+		city,
+		state,
+		address,
+		phone_number,
+		description,
+		href,
+	} = useAppSelector((state) => state.resource)
+	const dispatch = useAppDispatch()
 	const [loading, setLoading] = useState(false)
 
 	const [selectedResource, setSelectedResource] = useState<
@@ -46,25 +51,18 @@ const TenantResources = () => {
 	if (!data) return <Spinner />
 
 	const resetForm = () => {
-		setName('')
-		setCity('')
-		setCountry('CA')
-		setState('Alberta')
-		setAddress('')
-		setPhone('')
-		setDescription('')
-		setHref('')
+		dispatch(resetResource())
 	}
 
 	const onSubmitNewResource = () => {
 		setLoading(true)
 		const newResource = {
 			name: name,
-			country_code: country,
+			country_code,
 			city: city,
 			state: state,
 			address: address,
-			phone_number: phone,
+			phone_number,
 			description: description,
 			href: href,
 		}
@@ -123,26 +121,7 @@ const TenantResources = () => {
 					title='Add Tenant Resource'
 					open={addResourceOpen}
 					setOpen={setAddResourceOpen}
-					element={
-						<AddResourceModal
-							name={name}
-							setName={setName}
-							country={country}
-							setCountry={setCountry}
-							city={city}
-							setCity={setCity}
-							state={state}
-							setState={setState}
-							address={address}
-							setAddress={setAddress}
-							phone={phone}
-							setPhone={setPhone}
-							description={description}
-							setDescription={setDescription}
-							href={href}
-							setHref={setHref}
-						/>
-					}
+					element={<AddResourceModal />}
 					onSubmit={onSubmitNewResource}
 					selectedId={1}
 				/>

@@ -9,6 +9,7 @@ import {
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { updateCity } from '@/redux/review/reviewSlice'
+import { updateCity as updateResourceCity } from '@/redux/resource/resourceSlice'
 
 interface ComponentProps {
 	name: string
@@ -16,6 +17,7 @@ interface ComponentProps {
 	searching: boolean
 	error: boolean
 	errorText: string
+	isResource?: boolean
 }
 
 export default function CityComboBox({
@@ -24,8 +26,12 @@ export default function CityComboBox({
 	searching,
 	error,
 	errorText,
+	isResource,
 }: ComponentProps) {
 	const { city, province } = useAppSelector((state) => state.review)
+	const { city: cityResource, state } = useAppSelector(
+		(state) => state.resource,
+	)
 	const dispatch = useAppDispatch()
 	const comboboxClassName = `mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
 		error ? 'border-red-400' : ''
@@ -33,8 +39,12 @@ export default function CityComboBox({
 	return (
 		<div className='mx-0.5 sm:col-span-1'>
 			<Combobox
-				value={city}
-				onChange={(value) => dispatch(updateCity(value || ''))}
+				value={isResource ? cityResource : city}
+				onChange={(value) =>
+					isResource
+						? dispatch(updateResourceCity(value || ''))
+						: dispatch(updateCity(value || ''))
+				}
 			>
 				<div
 					data-testid='create-review-form-city-1'
@@ -58,7 +68,8 @@ export default function CityComboBox({
 						leaveTo='opacity-0'
 					>
 						<ComboboxOptions className='ring-opacity-5 absolute z-10 mt-1 flex max-h-60 w-60 flex-col overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black focus:outline-none sm:text-sm'>
-							{options.length === 0 && province !== '' ? (
+							{options.length === 0 &&
+							(isResource ? state !== '' : province !== '') ? (
 								searching ? (
 									<div className='relative cursor-default px-4 py-2 text-gray-700 select-none'>
 										Loading...
