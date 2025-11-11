@@ -3,18 +3,23 @@ import AdsComponent from '../adsense/Adsense'
 import { useTranslations } from 'next-intl'
 import RatingStars from '../ui/RatingStars'
 import ButtonLight from '../ui/button-light'
-import { FlagIcon } from '@heroicons/react/solid'
-import { Review } from '@/util/interfaces/interfaces'
+import { FlagIcon, PencilIcon } from '@heroicons/react/solid'
+import { UserReview } from '@/util/interfaces/interfaces'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import { classNames } from '@/util/helpers/helper-functions'
 
 interface IProps {
-	review: Review
+	review: UserReview
 	i?: number
-	handleReport: (review: Review) => void
-	handleDelete?: (review: Review) => void
-	handleEdit?: (review: Review) => void
+	handleReport: (review: UserReview) => void
+	handleDelete?: (review: UserReview) => void
+	handleEdit?: (review: UserReview) => void
+	handleUserEditMode: (review: UserReview) => void
+	userEditMode: boolean
+	handleUserEdit?: (review: UserReview) => void
+	handleUserDelete?: (review: UserReview) => void
 	landlordPage?: boolean
+	selectedReviewID?: number
 }
 
 const ReviewComponent = ({
@@ -23,7 +28,12 @@ const ReviewComponent = ({
 	handleReport,
 	handleDelete,
 	handleEdit,
+	handleUserEditMode,
+	userEditMode,
+	handleUserEdit,
+	handleUserDelete,
 	landlordPage = false,
+	selectedReviewID,
 }: IProps) => {
 	const t = useTranslations('reviews')
 	const { user } = useUser()
@@ -40,6 +50,7 @@ const ReviewComponent = ({
 		totalReview += Number(ratings[i].rating)
 	}
 	const avgRating = Math.round(totalReview / ratings.length)
+
 	return (
 		<div key={review.id}>
 			{i && i % 20 === 0 && i !== 0 ? (
@@ -100,20 +111,42 @@ const ReviewComponent = ({
 							{date}
 						</p>
 					</div>
-					<div className='mt-4 flex flex-row justify-start'>
+					<div className='mt-4 flex flex-row justify-start space-x-1'>
 						<ButtonLight onClick={() => handleReport(review)}>
 							<FlagIcon className='text-red-700' width={20} />
 						</ButtonLight>
+						{review.has_user_code ? (
+							<ButtonLight onClick={() => handleUserEditMode(review)}>
+								<PencilIcon className='text-black-700' width={20} />
+							</ButtonLight>
+						) : null}
 					</div>
 					{handleDelete && handleEdit && user && user.role === 'ADMIN' ? (
 						<>
 							<div className='mt-4 w-full'>
 								<ButtonLight onClick={() => handleDelete(review)}>
-									Remove Review
+									Moderator Remove Review
 								</ButtonLight>
 							</div>
 							<div className='mt-4 w-full'>
 								<ButtonLight onClick={() => handleEdit(review)}>
+									Moderator Edit Review
+								</ButtonLight>
+							</div>
+						</>
+					) : null}
+					{handleUserDelete &&
+					handleUserEdit &&
+					userEditMode &&
+					review.id === selectedReviewID ? (
+						<>
+							<div className='mt-4 w-full'>
+								<ButtonLight onClick={() => handleUserDelete(review)}>
+									Remove Review
+								</ButtonLight>
+							</div>
+							<div className='mt-4 w-full'>
+								<ButtonLight onClick={() => handleUserEdit(review)}>
 									Edit Review
 								</ButtonLight>
 							</div>

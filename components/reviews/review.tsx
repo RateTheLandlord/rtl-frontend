@@ -1,13 +1,15 @@
 import ReviewFilters from '@/components/reviews/review-filters'
 import { sortOptions } from '@/util/helpers/filter-options'
 import {
-	Review as IReview,
+	UserReview as IReview,
 	SortOptions,
 	Options,
 } from '@/util/interfaces/interfaces'
 import React, { useEffect, useState } from 'react'
 import ReportModal from '@/components/reviews/report-modal'
 import EditReviewModal from '../modal/EditReviewModal'
+import UserEditReviewModal from '../modal/UserEditReviewModal'
+import UserRemoveReviewModal from '../modal/UserRemoveReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import MobileReviewFilters from './mobile-review-filters'
@@ -72,10 +74,14 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
 	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
+	const [userEditMode, setUserEditMode] = useState(false)
+	const [userEditReviewOpen, setUserEditReviewOpen] = useState(false)
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
+	const [userRemoveReviewOpen, setUserRemoveReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
 	const [selectedIndex, setSelectedIndex] = useState(0)
+	const [userKey, setUserKey] = useState('')
 
 	const [dynamicCityOptions, setDynamicCityOptions] = useState<Options[]>([])
 
@@ -149,6 +155,39 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 				setIsOpen={setReportOpen}
 				selectedReview={selectedReview}
 			/>
+			<ReportModal
+				isOpen={reportOpen}
+				setIsOpen={setReportOpen}
+				selectedReview={selectedReview}
+			/>
+			{selectedReview && userEditMode ? (
+				<>
+					<UserEditReviewModal
+						selectedReview={selectedReview}
+						handleMutate={() => {
+							console.log('')
+						}}
+						setSelectedReview={setSelectedReview}
+						userEditReviewOpen={userEditReviewOpen}
+						setUserEditReviewOpen={setUserEditReviewOpen}
+						userKey={userKey}
+						setUserKey={setUserKey}
+						setUserEditMode={setUserEditMode}
+					/>
+					<UserRemoveReviewModal
+						selectedReview={selectedReview}
+						handleMutate={() => {
+							console.log('')
+						}}
+						setSelectedReview={setSelectedReview}
+						userRemoveReviewOpen={userRemoveReviewOpen}
+						setUserRemoveReviewOpen={setUserRemoveReviewOpen}
+						userKey={userKey}
+						setUserKey={setUserKey}
+						setUserEditMode={setUserEditMode}
+					/>
+				</>
+			) : null}
 			{selectedReview ? (
 				<>
 					<EditReviewModal
@@ -274,6 +313,11 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 											setSelectedReview={setSelectedReview}
 											setRemoveReviewOpen={setRemoveReviewOpen}
 											setEditReviewOpen={setEditReviewOpen}
+											userEditMode={userEditMode}
+											setUserEditMode={setUserEditMode}
+											setUserEditReviewOpen={setUserEditReviewOpen}
+											setUserRemoveReviewOpen={setUserRemoveReviewOpen}
+											selectedReviewID={selectedReview?.id}
 											isLoading={isLoadingHook}
 										/>
 									)}

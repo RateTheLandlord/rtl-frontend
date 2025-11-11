@@ -1,4 +1,4 @@
-import { Options, Review } from '@/util/interfaces/interfaces'
+import { Options, UserReview } from '@/util/interfaces/interfaces'
 
 export interface OtherLandlord {
 	name: string
@@ -14,7 +14,7 @@ export interface FilterOptions {
 }
 
 export interface ICityReviews {
-	reviews: Review[]
+	reviews: UserReview[]
 	average: number
 	total: number
 	catAverages: {
@@ -28,7 +28,7 @@ export interface ICityReviews {
 }
 
 export interface IZipReviews {
-	reviews: Review[]
+	reviews: UserReview[]
 	average: number
 	total: number
 	catAverages: {

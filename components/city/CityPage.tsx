@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
-import { Review as IReview, SortOptions } from '@/util/interfaces/interfaces'
+import {
+	UserReview as IReview,
+	SortOptions,
+} from '@/util/interfaces/interfaces'
 import ButtonLight from '../ui/button-light'
 import { sortOptions } from '@/util/helpers/filter-options'
 import EditReviewModal from '../modal/EditReviewModal'
