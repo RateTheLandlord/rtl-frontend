@@ -8,8 +8,6 @@ import {
 	Transition,
 	TransitionChild,
 } from '@headlessui/react'
-import { useUser } from '@auth0/nextjs-auth0/client'
-import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
 import { getStates } from '@/util/countries/combineStates'
 import Button from '../ui/button'
@@ -19,17 +17,23 @@ import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
 interface IProps {
 	selectedReview: UserReview | undefined
 	handleMutate: () => void
-	setEditReviewOpen: Dispatch<SetStateAction<boolean>>
-	editReviewOpen: boolean
 	setSelectedReview: Dispatch<SetStateAction<UserReview | undefined>>
+	userEditReviewOpen: boolean
+	setUserEditReviewOpen: Dispatch<SetStateAction<boolean>>
+	userKey: string
+	setUserKey: Dispatch<SetStateAction<string>>
+	setUserEditMode: Dispatch<SetStateAction<boolean>>
 }
 
-const EditReviewModal = ({
+const UserEditReviewModal = ({
 	selectedReview,
 	handleMutate,
-	setEditReviewOpen,
-	editReviewOpen,
 	setSelectedReview,
+	userEditReviewOpen,
+	setUserEditReviewOpen,
+	userKey,
+	setUserKey,
+	setUserEditMode,
 }: IProps) => {
 	const [landlord, setLandlord] = useState<string>(
 		selectedReview?.landlord || '',
@@ -42,22 +46,11 @@ const EditReviewModal = ({
 	const [postal, setPostal] = useState<string>(selectedReview?.zip || '')
 	const [review, setReview] = useState<string>(selectedReview?.review || '')
 	const [rent, setRent] = useState<number | null>(selectedReview?.rent || null)
-	const [moderationReason, setModerationReason] = useState<string | null>(
-		selectedReview?.moderation_reason || null,
-	)
-	const moderators = selectedReview?.moderator || []
 
 	const isIreland = country === 'IE'
 
-	const { user } = useUser()
-
-	const date = dayjs().format('DD/MM/YYYY')
-
 	const onSubmitEditReview = () => {
-		if (typeof user?.admin_id === 'string') {
-			moderators.unshift(`${user.admin_id} on ${date}`)
-		}
-		const apiUrl = '/api/review/edit-review'
+		const apiUrl = '/api/user-update/update'
 		const editedReview = {
 			...selectedReview,
 			landlord: landlord,
@@ -66,22 +59,25 @@ const EditReviewModal = ({
 			state: province,
 			zip: postal,
 			review: review,
-			admin_edited: true,
-			admin_approved: true,
-			flagged: false,
 			rent: rent,
-			moderation_reason: moderationReason,
-			moderator: [...moderators],
+		}
+		const body = {
+			review: editedReview,
+			id: selectedReview?.id,
+			user_code: userKey,
 		}
 		fetch(apiUrl, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(editedReview),
+			body: JSON.stringify(body),
 		})
 			.then((result) => {
 				if (!result.ok) {
+					setUserKey('')
+					setUserEditReviewOpen(false)
+					setUserEditMode(false)
 					throw new Error()
 				} else {
 					return result.json()
@@ -92,13 +88,15 @@ const EditReviewModal = ({
 					`/api/force-revalidate?path=${encodeURIComponent(landlord)}`,
 				).catch(() => console.error('Revalidate Failed'))
 				handleMutate()
-				setEditReviewOpen(false)
+				setUserEditReviewOpen(false)
 				if (data.success) {
 					toast.success('Success!')
 				} else {
 					toast.error(data.message)
 				}
 				setSelectedReview(undefined)
+				setUserKey('')
+				setUserEditMode(false)
 			})
 			.catch((err) => {
 				console.log(err)
@@ -107,8 +105,12 @@ const EditReviewModal = ({
 			})
 	}
 	return (
-		<Transition show={editReviewOpen} as={Fragment}>
-			<Dialog as='div' className='relative z-10' onClose={setEditReviewOpen}>
+		<Transition show={userEditReviewOpen} as={Fragment}>
+			<Dialog
+				as='div'
+				className='relative z-10'
+				onClose={setUserEditReviewOpen}
+			>
 				<TransitionChild
 					as={Fragment}
 					enter='ease-out duration-300'
@@ -290,34 +292,22 @@ const EditReviewModal = ({
 									</div>
 									<div className='sm:col-span-2'>
 										<label
-											htmlFor='moderation-reason'
+											htmlFor='user-code'
 											className='block text-sm text-gray-700'
 										>
-											Moderation Reason
+											User Code
 										</label>
 										<div className='mt-1'>
 											<input
 												type='text'
-												name='moderation-reason'
-												id='moderation-reason'
-												placeholder='Moderation Reason'
+												name='user-code'
+												id='user-code'
+												placeholder='Enter User Code Provided After Creating Review'
 												required
-												value={moderationReason ? moderationReason : ''}
-												onChange={(e) => setModerationReason(e.target.value)}
+												onChange={(e) => setUserKey(e.target.value)}
 												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 												data-testid='create-review-form-moderation-reason-1'
 											/>
-										</div>
-									</div>
-									<div className='sm:col-span-2'>
-										<label
-											htmlFor='moderators'
-											className='block text-sm text-gray-700'
-										>
-											Previous Moderators
-										</label>
-										<div className='mt-1'>
-											<p>{moderators.map((mod) => mod).join(', ')}</p>
 										</div>
 									</div>
 								</div>
@@ -326,7 +316,8 @@ const EditReviewModal = ({
 									<ButtonLight
 										onClick={() => {
 											setSelectedReview(undefined)
-											setEditReviewOpen(false)
+											setUserEditReviewOpen(false)
+											setUserEditMode(false)
 										}}
 									>
 										Cancel
@@ -341,4 +332,4 @@ const EditReviewModal = ({
 	)
 }
 
-export default EditReviewModal
+export default UserEditReviewModal

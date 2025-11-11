@@ -11,6 +11,8 @@ interface IProps {
 	setEditReviewOpen: Dispatch<SetStateAction<boolean>>
 	userEditMode: boolean
 	setUserEditMode: Dispatch<SetStateAction<boolean>>
+	setUserEditReviewOpen: Dispatch<SetStateAction<boolean>>
+	setUserRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
 	selectedReviewID: number | undefined
 	isLoading: boolean
 }
@@ -23,6 +25,8 @@ function ReviewTable({
 	setEditReviewOpen,
 	userEditMode,
 	setUserEditMode,
+	setUserEditReviewOpen,
+	setUserRemoveReviewOpen,
 	selectedReviewID,
 	isLoading,
 }: IProps): JSX.Element {
@@ -41,9 +45,19 @@ function ReviewTable({
 		setEditReviewOpen(true)
 	}
 
-	const handleUserEdit = (review: UserReview) => {
+	const handleUserEditMode = (review: UserReview) => {
 		setSelectedReview(review)
 		setUserEditMode(!userEditMode)
+	}
+
+	const handleUserEdit = (review: UserReview) => {
+		setSelectedReview(review)
+		setUserEditReviewOpen(true)
+	}
+
+	const handleUserDelete = (review: UserReview) => {
+		setSelectedReview(review)
+		setUserRemoveReviewOpen(true)
 	}
 
 	if (!data.length || !data) {
@@ -65,8 +79,10 @@ function ReviewTable({
 										handleReport={handleReport}
 										handleDelete={handleDelete}
 										handleEdit={handleEdit}
-										handleUserEdit={handleUserEdit}
+										handleUserEditMode={handleUserEditMode}
 										userEditMode={userEditMode}
+										handleUserEdit={handleUserEdit}
+										handleUserDelete={handleUserDelete}
 										selectedReviewID={selectedReviewID}
 									/>
 								)

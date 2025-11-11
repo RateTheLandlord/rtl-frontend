@@ -14,8 +14,10 @@ interface IProps {
 	handleReport: (review: UserReview) => void
 	handleDelete?: (review: UserReview) => void
 	handleEdit?: (review: UserReview) => void
-	handleUserEdit: (review: UserReview) => void
+	handleUserEditMode: (review: UserReview) => void
 	userEditMode: boolean
+	handleUserEdit?: (review: UserReview) => void
+	handleUserDelete?: (review: UserReview) => void
 	landlordPage?: boolean
 	selectedReviewID?: number
 }
@@ -26,8 +28,10 @@ const ReviewComponent = ({
 	handleReport,
 	handleDelete,
 	handleEdit,
-	handleUserEdit,
+	handleUserEditMode,
 	userEditMode,
+	handleUserEdit,
+	handleUserDelete,
 	landlordPage = false,
 	selectedReviewID,
 }: IProps) => {
@@ -112,23 +116,37 @@ const ReviewComponent = ({
 							<FlagIcon className='text-red-700' width={20} />
 						</ButtonLight>
 						{review.has_user_code ? (
-							<ButtonLight onClick={() => handleUserEdit(review)}>
+							<ButtonLight onClick={() => handleUserEditMode(review)}>
 								<PencilIcon className='text-black-700' width={20} />
 							</ButtonLight>
 						) : null}
 					</div>
-					{handleDelete &&
-					handleEdit &&
-					((user && user.role === 'ADMIN') ||
-						(userEditMode && review.id === selectedReviewID)) ? (
+					{handleDelete && handleEdit && user && user.role === 'ADMIN' ? (
 						<>
 							<div className='mt-4 w-full'>
 								<ButtonLight onClick={() => handleDelete(review)}>
-									Remove Review
+									Moderator Remove Review
 								</ButtonLight>
 							</div>
 							<div className='mt-4 w-full'>
 								<ButtonLight onClick={() => handleEdit(review)}>
+									Moderator Edit Review
+								</ButtonLight>
+							</div>
+						</>
+					) : null}
+					{handleUserDelete &&
+					handleUserEdit &&
+					userEditMode &&
+					review.id === selectedReviewID ? (
+						<>
+							<div className='mt-4 w-full'>
+								<ButtonLight onClick={() => handleUserDelete(review)}>
+									Remove Review
+								</ButtonLight>
+							</div>
+							<div className='mt-4 w-full'>
+								<ButtonLight onClick={() => handleUserEdit(review)}>
 									Edit Review
 								</ButtonLight>
 							</div>
