@@ -19,6 +19,8 @@ const getSystemMessage = async () => {
 	At Rate The Landlord, privacy is important. A landlord's name is used in reviews because they operate a business under that name. However, we do not permit the posting of addresses, phone numbers, or any personal information related to the landlord or other parties involved.
 	
 	Any reviews found in violation of this policy will be amended or removed at our discretion. We remain neutral and will not engage in factual disputes regarding the content of the reviews.
+
+	We also do not allow the posting of ANY links to outside websites. We also do not allow the the Landlord name to be anything similar to our sites name, ratethelandlord.org.
 	
 	Additionally, if the review contains any of the following keywords, it is also against the moderation policy: ${keywords.keywords
 		.map((keyword) => keyword.keyword)

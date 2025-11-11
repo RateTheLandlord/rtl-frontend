@@ -1,7 +1,6 @@
 import Search from '@/components/home/Search'
 import Hero from '@/components/home/hero'
 import IconSection from '@/components/home/icon-section'
-import Testimonials from '@/components/home/testimonials'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -17,7 +16,7 @@ export default function Home(): JSX.Element {
 	const siteName = 'RateTheLandlord.org'
 
 	return (
-		<div>
+		<div className='flex h-dvh flex-col justify-center'>
 			<NextSeo
 				title={title}
 				description={desc}
@@ -54,7 +53,6 @@ export default function Home(): JSX.Element {
 				<Search />
 			</div>
 			<IconSection />
-			<Testimonials />
 		</div>
 	)
 }
