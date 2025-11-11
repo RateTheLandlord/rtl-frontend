@@ -1,4 +1,4 @@
-import { Review } from '@/util/interfaces/interfaces'
+import { UserReview } from '@/util/interfaces/interfaces'
 
 export interface ReviewQuery {
 	page?: number
@@ -12,7 +12,7 @@ export interface ReviewQuery {
 }
 
 export interface ILandlordReviews {
-	reviews: Review[]
+	reviews: UserReview[]
 	average: number
 	total: number
 	catAverages: {

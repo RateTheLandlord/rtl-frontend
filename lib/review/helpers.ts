@@ -62,7 +62,9 @@ export const filterReviewWithAI = async (
 		} else {
 			return { flagged: false, flagged_reason: '' }
 		}
-	} catch {
+	} catch (error) {
+		// Logging
+		console.error('Error during AI checking:', error)
 		return { flagged: true, flagged_reason: 'ERROR IN AI CHECKING' }
 	}
 }
