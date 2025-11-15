@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
-import { Review as IReview } from '@/util/interfaces/interfaces'
+import { UserReview } from '@/util/interfaces/interfaces'
 import EditReviewModal from '../modal/EditReviewModal'
 import RemoveReviewModal from '../modal/RemoveReviewModal'
 import AdsComponent from '../adsense/Adsense'
@@ -10,6 +10,8 @@ import { IZipReviews } from '@/lib/review/types/review'
 import useInfiniteScroll from '@/util/hooks/useInfiniteScroll'
 import { ISortOptions } from '../reviews/review'
 import ReviewTable from '../reviews/review-table'
+import UserEditReviewModal from '../modal/UserEditReviewModal'
+import UserRemoveReviewModal from '../modal/UserRemoveReviewModal'
 
 interface IProps {
 	city: string
@@ -24,7 +26,11 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
-	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
+	const [selectedReview, setSelectedReview] = useState<UserReview | undefined>()
+	const [userEditMode, setUserEditMode] = useState(false)
+	const [userEditReviewOpen, setUserEditReviewOpen] = useState(false)
+	const [userRemoveReviewOpen, setUserRemoveReviewOpen] = useState(false)
+	const [userKey, setUserKey] = useState('')
 
 	// Query
 	const queryParams = useMemo(() => {
@@ -39,7 +45,7 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 		}
 	}, [city, state, country, zip])
 
-	const { reviews, isLoading: isLoadingHook } = useInfiniteScroll<IReview>({
+	const { reviews, isLoading: isLoadingHook } = useInfiniteScroll<UserReview>({
 		fetchData: fetchReviews,
 		queryParams,
 		offset: 150,
@@ -52,6 +58,34 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 				setIsOpen={setReportOpen}
 				selectedReview={selectedReview}
 			/>
+			{selectedReview && userEditMode ? (
+				<>
+					<UserEditReviewModal
+						selectedReview={selectedReview}
+						handleMutate={() => {
+							console.log('')
+						}}
+						setSelectedReview={setSelectedReview}
+						userEditReviewOpen={userEditReviewOpen}
+						setUserEditReviewOpen={setUserEditReviewOpen}
+						userKey={userKey}
+						setUserKey={setUserKey}
+						setUserEditMode={setUserEditMode}
+					/>
+					<UserRemoveReviewModal
+						selectedReview={selectedReview}
+						handleMutate={() => {
+							console.log('')
+						}}
+						setSelectedReview={setSelectedReview}
+						userRemoveReviewOpen={userRemoveReviewOpen}
+						setUserRemoveReviewOpen={setUserRemoveReviewOpen}
+						userKey={userKey}
+						setUserKey={setUserKey}
+						setUserEditMode={setUserEditMode}
+					/>
+				</>
+			) : null}
 			{selectedReview ? (
 				<>
 					<EditReviewModal
@@ -107,6 +141,11 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 								setRemoveReviewOpen={setRemoveReviewOpen}
 								setEditReviewOpen={setEditReviewOpen}
 								isLoading={isLoadingHook}
+								userEditMode={userEditMode}
+								setUserEditMode={setUserEditMode}
+								setUserEditReviewOpen={setUserEditReviewOpen}
+								setUserRemoveReviewOpen={setUserRemoveReviewOpen}
+								selectedReviewID={selectedReview?.id}
 							/>
 						)}
 					</div>

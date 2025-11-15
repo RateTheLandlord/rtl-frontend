@@ -1,4 +1,4 @@
-import { Review } from '@/util/interfaces/interfaces'
+import { Review, UserReview } from '@/util/interfaces/interfaces'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
@@ -10,7 +10,7 @@ import dayjs from 'dayjs'
 
 const FlaggedReviews = () => {
 	const [editReviewOpen, setEditReviewOpen] = useState(false)
-	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
+	const [selectedReview, setSelectedReview] = useState<UserReview | undefined>()
 
 	const [flaggedReviews, setFlaggedReviews] = useState<Review[]>([])
 
@@ -52,7 +52,7 @@ const FlaggedReviews = () => {
 				}
 			})
 			.then(() => {
-				mutate().catch(() => console.error('Failed to Mutute Flagged Reviews'))
+				mutate().catch(() => console.error('Failed to Mutate Flagged Reviews'))
 				toast.success('Success!')
 			})
 			.catch((err) => {
@@ -62,7 +62,7 @@ const FlaggedReviews = () => {
 	}
 
 	const handleMutate = () => {
-		mutate().catch(() => console.error('Failed to Mutute Flagged Reviews'))
+		mutate().catch(() => console.error('Failed to Mutate Flagged Reviews'))
 	}
 
 	return (

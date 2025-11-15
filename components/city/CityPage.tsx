@@ -21,6 +21,8 @@ import { ICityReviews } from '@/lib/review/types/review'
 import { useTranslations } from 'next-intl'
 import useInfiniteScroll from '@/util/hooks/useInfiniteScroll'
 import ReviewTable from '../reviews/review-table'
+import UserEditReviewModal from '../modal/UserEditReviewModal'
+import UserRemoveReviewModal from '../modal/UserRemoveReviewModal'
 
 interface IProps {
 	city: string
@@ -41,6 +43,10 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
 	const [selectedIndex, setSelectedIndex] = useState(0)
+	const [userEditMode, setUserEditMode] = useState(false)
+	const [userEditReviewOpen, setUserEditReviewOpen] = useState(false)
+	const [userRemoveReviewOpen, setUserRemoveReviewOpen] = useState(false)
+	const [userKey, setUserKey] = useState('')
 
 	// Redux
 	const query = useAppSelector((state) => state.query)
@@ -91,6 +97,34 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 				setIsOpen={setReportOpen}
 				selectedReview={selectedReview}
 			/>
+			{selectedReview && userEditMode ? (
+				<>
+					<UserEditReviewModal
+						selectedReview={selectedReview}
+						handleMutate={() => {
+							console.log('')
+						}}
+						setSelectedReview={setSelectedReview}
+						userEditReviewOpen={userEditReviewOpen}
+						setUserEditReviewOpen={setUserEditReviewOpen}
+						userKey={userKey}
+						setUserKey={setUserKey}
+						setUserEditMode={setUserEditMode}
+					/>
+					<UserRemoveReviewModal
+						selectedReview={selectedReview}
+						handleMutate={() => {
+							console.log('')
+						}}
+						setSelectedReview={setSelectedReview}
+						userRemoveReviewOpen={userRemoveReviewOpen}
+						setUserRemoveReviewOpen={setUserRemoveReviewOpen}
+						userKey={userKey}
+						setUserKey={setUserKey}
+						setUserEditMode={setUserEditMode}
+					/>
+				</>
+			) : null}
 			{selectedReview ? (
 				<>
 					<EditReviewModal
@@ -138,10 +172,10 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 						className='w-full'
 					>
 						<TabList className='flex w-full justify-center gap-4 border-b p-3'>
-							<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+							<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-selected:border-indigo-500 data-selected:text-indigo-600'>
 								{t('reviews')}
 							</Tab>
-							<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600'>
+							<Tab className='border-b-2 border-transparent px-1 pb-2 text-3xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-selected:border-indigo-500 data-selected:text-indigo-600'>
 								<div className='flex flex-row gap-1'>
 									<p>{t('analytics')}</p>
 									<div className='flex h-full flex-col justify-start'>
@@ -189,6 +223,11 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 											setRemoveReviewOpen={setRemoveReviewOpen}
 											setEditReviewOpen={setEditReviewOpen}
 											isLoading={isLoadingHook}
+											userEditMode={userEditMode}
+											setUserEditMode={setUserEditMode}
+											setUserEditReviewOpen={setUserEditReviewOpen}
+											setUserRemoveReviewOpen={setUserRemoveReviewOpen}
+											selectedReviewID={selectedReview?.id}
 										/>
 									)}
 								</div>
