@@ -16,6 +16,7 @@ jest.mock('next-intl', () => ({
 
 jest.mock('@/redux/hooks', () => ({
 	useAppDispatch: jest.fn(),
+	useAppSelector: jest.fn(),
 }))
 
 // Mock countries JSON
