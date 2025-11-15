@@ -97,5 +97,14 @@
 		"enter-code": "Entrez le code utilisateur fourni après la création de l'avis.",
 		"submit": "Soumettre",
 		"cancel": "Annuler"
+	},
+	"user-delete": {
+		"remove": "Supprimer l'avis",
+		"user-code": "Code utilisateur",
+		"submit": "Soumettre",
+		"cancel": "Annuler",
+		"enter-code": "Entrez le code utilisateur fourni après la création de l'avis",
+		"review": "Avis",
+		"landlord": "Propriétaire"
 	}
 }

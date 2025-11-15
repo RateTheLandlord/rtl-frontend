@@ -97,5 +97,14 @@
 		"enter-code": "Enter User Code provided after creating review",
 		"submit": "Submit",
 		"cancel": "Cancel"
+	},
+	"user-delete": {
+		"remove": "Remove Review",
+		"user-code": "User Code",
+		"submit": "Submit",
+		"cancel": "Cancel",
+		"enter-code": "Enter User Code Provided After Creating Review",
+		"review": "Review",
+		"landlord": "Landlord"
 	}
 }

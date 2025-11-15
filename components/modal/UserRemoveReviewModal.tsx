@@ -12,6 +12,7 @@ import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import CloseButton from '../ui/CloseButton'
 import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
 	selectedReview: UserReview | undefined
@@ -34,6 +35,7 @@ const UserRemoveReviewModal = ({
 	setUserKey,
 	setUserEditMode,
 }: IProps) => {
+	const t = useTranslations()
 	const landlord = selectedReview?.landlord || ''
 	const review = selectedReview?.review || ''
 
@@ -86,7 +88,7 @@ const UserRemoveReviewModal = ({
 				})
 				.catch((err) => {
 					console.log(err)
-					toast.error('Failure: Something went wrong, please try again.')
+					toast.error(`${t('alerts.error')}`)
 					setSelectedReview(undefined)
 				})
 		}
@@ -132,7 +134,7 @@ const UserRemoveReviewModal = ({
 											as='h3'
 											className='text-lg leading-6 text-gray-900'
 										>
-											Remove Review
+											{t('user-delete.remove')}
 										</DialogTitle>
 									</div>
 								</div>
@@ -142,7 +144,8 @@ const UserRemoveReviewModal = ({
 											htmlFor='landlord'
 											className='block text-sm text-gray-700'
 										>
-											Landlord: {landlord ? landlord : selectedReview?.landlord}
+											{t('user-delete.landlord')}:{' '}
+											{landlord ? landlord : selectedReview?.landlord}
 										</label>
 									</div>
 									<div className='sm:col-span-2'>
@@ -150,7 +153,8 @@ const UserRemoveReviewModal = ({
 											htmlFor='review'
 											className='block text-sm text-gray-700'
 										>
-											Review: {review ? review : selectedReview?.review}
+											{t('user-delete.review')}:{' '}
+											{review ? review : selectedReview?.review}
 										</label>
 									</div>
 									<div className='sm:col-span-2'>
@@ -158,14 +162,14 @@ const UserRemoveReviewModal = ({
 											htmlFor='user-code'
 											className='block text-sm text-gray-700'
 										>
-											User Code
+											{t('user-delete.user-code')}
 										</label>
 										<div className='mt-1'>
 											<input
 												type='text'
 												name='user-code'
 												id='user-code'
-												placeholder='Enter User Code Provided After Creating Review'
+												placeholder={t('user-delete.enter-code')}
 												required
 												onChange={(e) => setUserKey(e.target.value)}
 												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
@@ -175,7 +179,9 @@ const UserRemoveReviewModal = ({
 									</div>
 								</div>
 								<div className='mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse'>
-									<Button onClick={() => onSubmitRemoveReview()}>Submit</Button>
+									<Button onClick={() => onSubmitRemoveReview()}>
+										{t('user-delete.submit')}
+									</Button>
 									<ButtonLight
 										onClick={() => {
 											setSelectedReview(undefined)
@@ -183,7 +189,7 @@ const UserRemoveReviewModal = ({
 											setUserEditMode(false)
 										}}
 									>
-										Cancel
+										{t('user-delete.cancel')}
 									</ButtonLight>
 								</div>
 							</DialogPanel>

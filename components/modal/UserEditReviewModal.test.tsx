@@ -56,20 +56,22 @@ describe('UserEditReviewModal', () => {
 			</UserProvider>,
 		)
 
-		expect(screen.getByLabelText('Landlord')).toHaveValue(
+		expect(screen.getByLabelText('user-edit.landlord')).toHaveValue(
 			mockSelectedReview.landlord,
 		)
-		expect(screen.getByLabelText('Country')).toHaveValue(
+		expect(screen.getByLabelText('user-edit.country')).toHaveValue(
 			mockSelectedReview.country_code,
 		)
-		expect(screen.getByLabelText('City')).toHaveValue(mockSelectedReview.city)
-		expect(screen.getByLabelText('Province / State')).toHaveValue(
+		expect(screen.getByLabelText('user-edit.city')).toHaveValue(
+			mockSelectedReview.city,
+		)
+		expect(screen.getByLabelText('user-edit.state')).toHaveValue(
 			mockSelectedReview.state,
 		)
-		expect(screen.getByLabelText('Postal Code / ZIP')).toHaveValue(
+		expect(screen.getByLabelText('user-edit.zip')).toHaveValue(
 			mockSelectedReview.zip,
 		)
-		expect(screen.getByLabelText('Review')).toHaveValue(
+		expect(screen.getByLabelText('user-edit.review')).toHaveValue(
 			mockSelectedReview.review,
 		)
 	})
