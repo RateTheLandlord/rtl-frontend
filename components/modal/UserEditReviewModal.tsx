@@ -100,7 +100,9 @@ const UserEditReviewModal = ({
 					posthog.capture('user_code.review_edited')
 				} else {
 					setCodeError(`${t('user-code.incorrect')}`)
-					posthog.capture('user_code.incorrect_code_entry')
+					posthog.capture('user_code.incorrect_code_entry', {
+						message: data.message,
+					})
 				}
 				setUserKey('')
 			})
