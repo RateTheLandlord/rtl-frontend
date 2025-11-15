@@ -83,9 +83,11 @@
 		"faq": "Pour de plus amples renseignements, veuillez consulter notre FAQ.",
 		"button": "J'ai copié mon code",
 		"copy": "Copiez mon code d'évaluation unique",
-		"copied": "Copié!"
+		"copied": "Copié!",
+		"incorrect": "Code incorrect"
 	},
 	"user-edit": {
+		"edit": "Modifier l'avis",
 		"landlord": "Propriétaire",
 		"country": "Pays",
 		"city": "Ville",
