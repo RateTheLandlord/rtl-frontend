@@ -5,7 +5,7 @@ import LandlordInfo from './LandlordInfo'
 import OtherLandlordInfo from './OtherLandlord'
 import LandlordBanner from './LandlordBanner'
 import { useTranslations } from 'next-intl'
-import { Review, SuspiciousLandlord } from '@/util/interfaces/interfaces'
+import { SuspiciousLandlord, UserReview } from '@/util/interfaces/interfaces'
 import Spinner from '../ui/Spinner'
 import { sortOptions } from '@/util/helpers/filter-options'
 import SortList from '../reviews/ui/sort-list'
@@ -14,6 +14,8 @@ import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
 import AdsComponent from '../adsense/Adsense'
 import { ILandlordReviews } from '@/lib/review/types/Queries'
+import UserEditReviewModal from '../modal/UserEditReviewModal'
+import UserRemoveReviewModal from '../modal/UserRemoveReviewModal'
 
 const filteredSortOptions = sortOptions.slice(2)
 
@@ -26,11 +28,15 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 	const t = useTranslations('reviews')
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
 	const [bannerOpen, setBannerOpen] = useState<boolean>(false)
-	const [sortedReviews, setSortedReviews] = useState<Review[]>([])
+	const [sortedReviews, setSortedReviews] = useState<UserReview[]>([])
 
 	const [sortState, setSortState] = useState(filteredSortOptions[0])
 
-	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
+	const [selectedReview, setSelectedReview] = useState<UserReview | undefined>()
+	const [userEditMode, setUserEditMode] = useState(false)
+	const [userEditReviewOpen, setUserEditReviewOpen] = useState(false)
+	const [userRemoveReviewOpen, setUserRemoveReviewOpen] = useState(false)
+	const [userKey, setUserKey] = useState('')
 
 	const { data: suspiciousLandlord } = useSWR<SuspiciousLandlord | boolean>(
 		`/api/suspicious-landlords/get-suspicious-landlord?landlord=${encodeURIComponent(
@@ -47,9 +53,14 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 		}
 	}, [suspiciousLandlord])
 
-	const handleReport = (review: Review) => {
+	const handleReport = (review: UserReview) => {
 		setSelectedReview(review)
 		setReportOpen(true)
+	}
+
+	const handleUserEditMode = (review: UserReview) => {
+		setSelectedReview(review)
+		setUserEditMode(!userEditMode)
 	}
 
 	useEffect(() => {
@@ -95,6 +106,34 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 
 	return (
 		<>
+			{selectedReview && userEditMode ? (
+				<>
+					<UserEditReviewModal
+						selectedReview={selectedReview}
+						handleMutate={() => {
+							console.log('')
+						}}
+						setSelectedReview={setSelectedReview}
+						userEditReviewOpen={userEditReviewOpen}
+						setUserEditReviewOpen={setUserEditReviewOpen}
+						userKey={userKey}
+						setUserKey={setUserKey}
+						setUserEditMode={setUserEditMode}
+					/>
+					<UserRemoveReviewModal
+						selectedReview={selectedReview}
+						handleMutate={() => {
+							console.log('')
+						}}
+						setSelectedReview={setSelectedReview}
+						userRemoveReviewOpen={userRemoveReviewOpen}
+						setUserRemoveReviewOpen={setUserRemoveReviewOpen}
+						userKey={userKey}
+						setUserKey={setUserKey}
+						setUserEditMode={setUserEditMode}
+					/>
+				</>
+			) : null}
 			<ReportModal
 				isOpen={reportOpen}
 				setIsOpen={setReportOpen}
@@ -127,6 +166,8 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 									review={review}
 									handleReport={handleReport}
 									landlordPage={true}
+									handleUserEditMode={handleUserEditMode}
+									userEditMode={userEditMode}
 								/>
 							)
 						})}

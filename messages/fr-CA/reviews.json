@@ -75,5 +75,38 @@
 		"read": "Lire",
 		"reviews": "{total} avis",
 		"rating": "Moy. Notation"
+	},
+	"user-code": {
+		"title": "Copiez votre code unique",
+		"success": "Votre avis a bel et bien été soumis",
+		"message": "Assurez-vous de copier et d'enregistrer votre code unique. Ce code est nécessaire pour mettre à jour ou supprimer votre avis ultérieurement.",
+		"faq": "Pour de plus amples renseignements, veuillez consulter notre FAQ.",
+		"button": "J'ai copié mon code",
+		"copy": "Copiez mon code d'évaluation unique",
+		"copied": "Copié!",
+		"incorrect": "Code incorrect"
+	},
+	"user-edit": {
+		"edit": "Modifier l'avis",
+		"landlord": "Propriétaire",
+		"country": "Pays",
+		"city": "Ville",
+		"state": "État / province",
+		"zip": "Zip / code postal",
+		"rent": "Louer",
+		"review": "Examen",
+		"user-code": "Code de l'utilisateur",
+		"enter-code": "Entrez le code utilisateur fourni après la création de l'avis.",
+		"submit": "Soumettre",
+		"cancel": "Annuler"
+	},
+	"user-delete": {
+		"remove": "Supprimer l'avis",
+		"user-code": "Code utilisateur",
+		"submit": "Soumettre",
+		"cancel": "Annuler",
+		"enter-code": "Entrez le code utilisateur fourni après la création de l'avis",
+		"review": "Avis",
+		"landlord": "Propriétaire"
 	}
 }

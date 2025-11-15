@@ -5,15 +5,12 @@ import RatingStars from '../ui/RatingStars'
 import ButtonLight from '../ui/button-light'
 import { FlagIcon, PencilIcon } from '@heroicons/react/solid'
 import { UserReview } from '@/util/interfaces/interfaces'
-import { useUser } from '@auth0/nextjs-auth0/client'
 import { classNames } from '@/util/helpers/helper-functions'
 
 interface IProps {
 	review: UserReview
 	i?: number
 	handleReport: (review: UserReview) => void
-	handleDelete?: (review: UserReview) => void
-	handleEdit?: (review: UserReview) => void
 	handleUserEditMode: (review: UserReview) => void
 	userEditMode: boolean
 	handleUserEdit?: (review: UserReview) => void
@@ -26,8 +23,6 @@ const ReviewComponent = ({
 	review,
 	i,
 	handleReport,
-	handleDelete,
-	handleEdit,
 	handleUserEditMode,
 	userEditMode,
 	handleUserEdit,
@@ -35,15 +30,14 @@ const ReviewComponent = ({
 	landlordPage = false,
 	selectedReviewID,
 }: IProps) => {
-	const t = useTranslations('reviews')
-	const { user } = useUser()
+	const t = useTranslations()
 	const date = new Date(review.date_added).toLocaleDateString()
 	const ratings = [
-		{ title: t('health'), rating: review.health },
-		{ title: t('respect'), rating: review.respect },
-		{ title: t('privacy'), rating: review.privacy },
-		{ title: t('repair'), rating: review.repair },
-		{ title: t('stability'), rating: review.stability },
+		{ title: t('reviews.health'), rating: review.health },
+		{ title: t('reviews.respect'), rating: review.respect },
+		{ title: t('reviews.privacy'), rating: review.privacy },
+		{ title: t('reviews.repair'), rating: review.repair },
+		{ title: t('reviews.stability'), rating: review.stability },
 	]
 	let totalReview = 0
 	for (let i = 0; i < ratings.length; i++) {
@@ -66,10 +60,10 @@ const ReviewComponent = ({
 						{!landlordPage ? (
 							<Link
 								href={`/landlord/${encodeURIComponent(review.landlord)}`}
-								className='col mb-4 flex w-full cursor-pointer flex-col text-lg break-words hover:underline lg:mb-2 lg:items-center'
+								className='col mb-4 flex w-full cursor-pointer flex-col text-lg wrap-break-word hover:underline lg:mb-2 lg:items-center'
 							>
 								<h6 className='text-center'>{review.landlord}</h6>
-								<p className='text-center text-sm'>{t('read-all')}</p>
+								<p className='text-center text-sm'>{t('reviews.read-all')}</p>
 							</Link>
 						) : null}
 						<div
@@ -121,20 +115,7 @@ const ReviewComponent = ({
 							</ButtonLight>
 						) : null}
 					</div>
-					{handleDelete && handleEdit && user && user.role === 'ADMIN' ? (
-						<>
-							<div className='mt-4 w-full'>
-								<ButtonLight onClick={() => handleDelete(review)}>
-									Moderator Remove Review
-								</ButtonLight>
-							</div>
-							<div className='mt-4 w-full'>
-								<ButtonLight onClick={() => handleEdit(review)}>
-									Moderator Edit Review
-								</ButtonLight>
-							</div>
-						</>
-					) : null}
+
 					{handleUserDelete &&
 					handleUserEdit &&
 					userEditMode &&
@@ -142,12 +123,12 @@ const ReviewComponent = ({
 						<>
 							<div className='mt-4 w-full'>
 								<ButtonLight onClick={() => handleUserDelete(review)}>
-									Remove Review
+									{t('user-delete.remove')}
 								</ButtonLight>
 							</div>
 							<div className='mt-4 w-full'>
 								<ButtonLight onClick={() => handleUserEdit(review)}>
-									Edit Review
+									{t('user-edit.edit')}
 								</ButtonLight>
 							</div>
 						</>
@@ -194,8 +175,8 @@ const ReviewComponent = ({
 							})}
 							{review.rent && (
 								<div className='flex w-full flex-col lg:items-center'>
-									<p>{`${t('rent')}${review.rent}`}</p>
-									<p className='text-xs'>{t('local')}</p>
+									<p>{`${t('reviews.rent')}${review.rent}`}</p>
+									<p className='text-xs'>{t('reviews.local')}</p>
 								</div>
 							)}
 						</div>
@@ -205,16 +186,16 @@ const ReviewComponent = ({
 						{review.review.length < 1 ? null : (
 							<div className='flex h-full flex-col justify-between gap-3'>
 								<div>
-									<p>{t('review')}</p>
+									<p>{t('reviews.review')}</p>
 
-									<p className='space-y-6 text-sm break-words hyphens-auto text-gray-500'>
+									<p className='space-y-6 text-sm wrap-break-word hyphens-auto text-gray-500'>
 										{review.review}
 									</p>
 								</div>
 							</div>
 						)}
 						{review.admin_edited ? (
-							<p className='text-xs text-red-400'>{`${t('edited')} ${
+							<p className='text-xs text-red-400'>{`${t('reviews.edited')} ${
 								review.moderation_reason
 									? `Reason: ${review.moderation_reason}`
 									: ''

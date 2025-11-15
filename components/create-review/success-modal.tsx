@@ -28,8 +28,6 @@ import {
 } from 'react-share'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
-import { useAppDispatch } from '@/redux/hooks'
-import { resetReview } from '@/redux/review/reviewSlice'
 
 interface IProps {
 	isOpen: boolean
@@ -38,7 +36,6 @@ interface IProps {
 
 function SuccessModal({ isOpen, setIsOpen }: IProps) {
 	const t = useTranslations('createreview')
-	const dispatch = useAppDispatch()
 	const router = useRouter()
 	return (
 		<div data-testid='SuccessModalComponent'>
@@ -159,7 +156,7 @@ function SuccessModal({ isOpen, setIsOpen }: IProps) {
 										<ButtonLight
 											onClick={() => {
 												setIsOpen(false)
-												dispatch(resetReview())
+												router.reload()
 											}}
 										>
 											{t('modal.submit-another')}

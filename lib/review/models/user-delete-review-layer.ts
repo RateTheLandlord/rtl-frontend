@@ -43,8 +43,7 @@ export async function userDeleteReview(id: number, userCode: string) {
 	if (!isUpdateAllowed) {
 		await sql`UPDATE review
            SET 	last_user_attempt = ${new Date()},
-				number_user_attempts = ${user_attempts + 1 || 0 + 1},
-
+				number_user_attempts = ${user_attempts + 1 || 0 + 1}
            WHERE id = ${id};`
 		return {
 			success: false,

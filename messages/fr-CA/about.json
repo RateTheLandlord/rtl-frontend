@@ -33,7 +33,9 @@
 			"help": "Que devrais-je faire si je ne peux pas donner mon avis sur mon·ma propriétaire actuel·le, mais que j'ai besoin d'aide ?",
 			"help_description": "Nous vous suggérons de consulter notre section ressource pour plus d'information sur vos droits en tant que locataire, ainsi que de communiquer rapidement avec votre comité logement ou votre association de locataires qui pourra vous aider à naviguer votre situation.",
 			"names": "Pourquoi Rate the Landlord affiche le nom des propritaires ?",
-			"names_description": "Que ce soit pour une chaine de restaurants ou un petit commerce de quartier, un magasin grande surface ou un·e petit·e artisan·ne, il est généralement possible de donner son avis sur ces dernier·ère·s. En choisissant d'exercer une activité commerciale sous leur nom, les propriétaites se mettent dans une position où ils·elles devraient être tenu·e·s aux mêmes standards que les autres entreprises et prestataires de services, ce qui inclut d'être évalué·e·s."
+			"names_description": "Que ce soit pour une chaine de restaurants ou un petit commerce de quartier, un magasin grande surface ou un·e petit·e artisan·ne, il est généralement possible de donner son avis sur ces dernier·ère·s. En choisissant d'exercer une activité commerciale sous leur nom, les propriétaites se mettent dans une position où ils·elles devraient être tenu·e·s aux mêmes standards que les autres entreprises et prestataires de services, ce qui inclut d'être évalué·e·s.",
+			"user-code": "Qu'est-ce qu'un code d'utilisateur et comment l'utiliser?",
+			"user-code-description": "Un code d'utilisateur est généré lorsque vous soumettez un avis à Rate The Landlord. Comme nous n'avons pas de comptes utilisateurs ni ne suivons d'informations vous concernant lors de la soumission d'un avis, ce code vous permettra de modifier ou de supprimer l'avis que vous avez rédigé ultérieurement si vous le choisissez. Si vous perdez votre code d'utilisateur, il ne pourra pas être récupéré, alors conservez-le en lieu sûr!"
 		},
 		"contact": {
 			"title": "Nous contacter",

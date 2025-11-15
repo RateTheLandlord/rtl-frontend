@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl'
-import { useAppDispatch } from '@/redux/hooks'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Country } from '@/types/review.types'
 import { updateCountry } from '@/redux/review/reviewSlice'
 import { updateCountry as updateResourceCountry } from '@/redux/resource/resourceSlice'
@@ -8,6 +8,9 @@ import countries from '@/util/countries/countries.json'
 
 const CountrySelector = ({ isResource }: { isResource?: boolean }) => {
 	const dispatch = useAppDispatch()
+	const country = useAppSelector((state) =>
+		isResource ? state.resource.country_code : state.review.country,
+	)
 	const t = useTranslations('createreview')
 	return (
 		<div className='mx-0.5 sm:col-span-1'>
@@ -20,6 +23,7 @@ const CountrySelector = ({ isResource }: { isResource?: boolean }) => {
 					id='country'
 					name='country'
 					required
+					value={country}
 					onChange={(e) =>
 						isResource
 							? dispatch(

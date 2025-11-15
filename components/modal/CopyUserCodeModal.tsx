@@ -6,6 +6,7 @@ import {
 	TransitionChild,
 } from '@headlessui/react'
 import Button from '../ui/button'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
 	open: boolean
@@ -15,6 +16,7 @@ interface IProps {
 }
 
 const CopyUserCodeModal = ({ open, setOpen, setShareOpen, code }: IProps) => {
+	const t = useTranslations('user-code')
 	const [copied, setCopied] = useState(false)
 
 	const handleCopy = async () => {
@@ -60,19 +62,14 @@ const CopyUserCodeModal = ({ open, setOpen, setShareOpen, code }: IProps) => {
 											as='h3'
 											className='text-lg leading-6 text-gray-900'
 										>
-											Copy Your Unique Code
+											{t('title')}
 										</Dialog.Title>
 										<div className='my-2 flex flex-col gap-3'>
-											<p>Your review has been submitted successfully!</p>
+											<p>{t('success')}</p>
 
-											<p>
-												Be sure to{' '}
-												<strong>copy and save your unique code.</strong> This
-												code is required to update or delete your review in the
-												future.
-											</p>
+											<p>{t('message')}</p>
 
-											<p>For additional information, please visit our FAQ.</p>
+											<p>{t('faq')}</p>
 										</div>
 									</div>
 								</div>
@@ -84,7 +81,7 @@ const CopyUserCodeModal = ({ open, setOpen, setShareOpen, code }: IProps) => {
 										onClick={() => void handleCopy()}
 										className='w-1/2 flex-none cursor-pointer rounded-r-md bg-teal-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-teal-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
 									>
-										{copied ? 'Copied!' : 'Copy My Unique Review Code'}
+										{copied ? `${t('copied')}` : `${t('copy')}`}
 									</button>
 								</div>
 								<div className='mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse'>
@@ -94,7 +91,7 @@ const CopyUserCodeModal = ({ open, setOpen, setShareOpen, code }: IProps) => {
 											setShareOpen(true)
 										}}
 									>
-										I have copied my code
+										{t('button')}
 									</Button>
 								</div>
 							</DialogPanel>

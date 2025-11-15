@@ -11,6 +11,7 @@ import {
 	checkReviewsForSimilarity,
 	updateRecentReviews,
 } from '../review-text-match'
+import posthog from 'posthog-js'
 
 dayjs.extend(isBetween)
 
@@ -30,7 +31,8 @@ export async function create(
 		)
 
 		// Don't post the review to the DB if we detect spam
-		if (reviewSpamDetected || landlordSpamDetected)
+		if (reviewSpamDetected || landlordSpamDetected) {
+			posthog.capture('review_spam_detectect_BE')
 			return {
 				message:
 					'This landlord is currently under spam protection please try again later',
@@ -38,6 +40,7 @@ export async function create(
 				user_code: '',
 				review_id: 0,
 			}
+		}
 
 		updateRecentReviews(inputReview.landlord).catch(() =>
 			console.error(
@@ -96,6 +99,10 @@ async function createReview(
 					}, ${inputReview.rent || null}, ${hashedCode})
           RETURNING id;
         `
+
+		posthog.capture('review_created_BE', {
+			ai_flagged: filterResult.flagged,
+		})
 
 		return {
 			message: 'Review successfully added',

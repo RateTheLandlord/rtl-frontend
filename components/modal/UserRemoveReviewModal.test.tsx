@@ -57,7 +57,7 @@ describe('UserRemoveReviewModal', () => {
 		)
 
 		// Verify that the modal title is rendered
-		const modalTitle = screen.getByText('Remove Review')
+		const modalTitle = screen.getByText('user-delete.remove')
 		expect(modalTitle).toBeInTheDocument()
 	})
 	it('Should not have a11y violation', async () => {
