@@ -7,8 +7,6 @@ interface IProps {
 	data: UserReview[]
 	setReportOpen: Dispatch<SetStateAction<boolean>>
 	setSelectedReview: Dispatch<SetStateAction<UserReview | undefined>>
-	setRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
-	setEditReviewOpen: Dispatch<SetStateAction<boolean>>
 	userEditMode: boolean
 	setUserEditMode: Dispatch<SetStateAction<boolean>>
 	setUserEditReviewOpen: Dispatch<SetStateAction<boolean>>
@@ -21,8 +19,6 @@ function ReviewTable({
 	data,
 	setReportOpen,
 	setSelectedReview,
-	setRemoveReviewOpen,
-	setEditReviewOpen,
 	userEditMode,
 	setUserEditMode,
 	setUserEditReviewOpen,
@@ -33,16 +29,6 @@ function ReviewTable({
 	const handleReport = (review: UserReview) => {
 		setSelectedReview(review)
 		setReportOpen(true)
-	}
-
-	const handleDelete = (review: UserReview) => {
-		setSelectedReview(review)
-		setRemoveReviewOpen(true)
-	}
-
-	const handleEdit = (review: UserReview) => {
-		setSelectedReview(review)
-		setEditReviewOpen(true)
 	}
 
 	const handleUserEditMode = (review: UserReview) => {
@@ -77,8 +63,6 @@ function ReviewTable({
 										review={review}
 										i={i}
 										handleReport={handleReport}
-										handleDelete={handleDelete}
-										handleEdit={handleEdit}
 										handleUserEditMode={handleUserEditMode}
 										userEditMode={userEditMode}
 										handleUserEdit={handleUserEdit}

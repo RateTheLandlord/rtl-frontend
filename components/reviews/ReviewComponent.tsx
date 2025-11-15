@@ -5,15 +5,12 @@ import RatingStars from '../ui/RatingStars'
 import ButtonLight from '../ui/button-light'
 import { FlagIcon, PencilIcon } from '@heroicons/react/solid'
 import { UserReview } from '@/util/interfaces/interfaces'
-import { useUser } from '@auth0/nextjs-auth0/client'
 import { classNames } from '@/util/helpers/helper-functions'
 
 interface IProps {
 	review: UserReview
 	i?: number
 	handleReport: (review: UserReview) => void
-	handleDelete?: (review: UserReview) => void
-	handleEdit?: (review: UserReview) => void
 	handleUserEditMode: (review: UserReview) => void
 	userEditMode: boolean
 	handleUserEdit?: (review: UserReview) => void
@@ -26,8 +23,6 @@ const ReviewComponent = ({
 	review,
 	i,
 	handleReport,
-	handleDelete,
-	handleEdit,
 	handleUserEditMode,
 	userEditMode,
 	handleUserEdit,
@@ -36,7 +31,6 @@ const ReviewComponent = ({
 	selectedReviewID,
 }: IProps) => {
 	const t = useTranslations('reviews')
-	const { user } = useUser()
 	const date = new Date(review.date_added).toLocaleDateString()
 	const ratings = [
 		{ title: t('health'), rating: review.health },
@@ -66,7 +60,7 @@ const ReviewComponent = ({
 						{!landlordPage ? (
 							<Link
 								href={`/landlord/${encodeURIComponent(review.landlord)}`}
-								className='col mb-4 flex w-full cursor-pointer flex-col text-lg break-words hover:underline lg:mb-2 lg:items-center'
+								className='col mb-4 flex w-full cursor-pointer flex-col text-lg wrap-break-word hover:underline lg:mb-2 lg:items-center'
 							>
 								<h6 className='text-center'>{review.landlord}</h6>
 								<p className='text-center text-sm'>{t('read-all')}</p>
@@ -121,20 +115,7 @@ const ReviewComponent = ({
 							</ButtonLight>
 						) : null}
 					</div>
-					{handleDelete && handleEdit && user && user.role === 'ADMIN' ? (
-						<>
-							<div className='mt-4 w-full'>
-								<ButtonLight onClick={() => handleDelete(review)}>
-									Moderator Remove Review
-								</ButtonLight>
-							</div>
-							<div className='mt-4 w-full'>
-								<ButtonLight onClick={() => handleEdit(review)}>
-									Moderator Edit Review
-								</ButtonLight>
-							</div>
-						</>
-					) : null}
+
 					{handleUserDelete &&
 					handleUserEdit &&
 					userEditMode &&
@@ -207,7 +188,7 @@ const ReviewComponent = ({
 								<div>
 									<p>{t('review')}</p>
 
-									<p className='space-y-6 text-sm break-words hyphens-auto text-gray-500'>
+									<p className='space-y-6 text-sm wrap-break-word hyphens-auto text-gray-500'>
 										{review.review}
 									</p>
 								</div>

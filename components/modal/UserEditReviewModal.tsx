@@ -13,6 +13,7 @@ import { getStates } from '@/util/countries/combineStates'
 import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
 	selectedReview: UserReview | undefined
@@ -35,6 +36,7 @@ const UserEditReviewModal = ({
 	setUserKey,
 	setUserEditMode,
 }: IProps) => {
+	const t = useTranslations('user-edit')
 	const [landlord, setLandlord] = useState<string>(
 		selectedReview?.landlord || '',
 	)
@@ -141,7 +143,7 @@ const UserEditReviewModal = ({
 											htmlFor='landlord'
 											className='block text-sm text-gray-700'
 										>
-											Landlord
+											{t('landlord')}
 										</label>
 										<div className='mt-1'>
 											<input
@@ -149,7 +151,7 @@ const UserEditReviewModal = ({
 												name='landlord'
 												id='landlord'
 												required
-												placeholder='Landlord'
+												placeholder={t('landlord')}
 												value={landlord ? landlord : selectedReview?.landlord}
 												onChange={(e) => setLandlord(e.target.value)}
 												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
@@ -162,7 +164,7 @@ const UserEditReviewModal = ({
 											htmlFor='country'
 											className='block text-sm text-gray-700'
 										>
-											Country
+											{t('country')}
 										</label>
 										<div className='mt-1'>
 											<select
@@ -188,14 +190,14 @@ const UserEditReviewModal = ({
 											htmlFor='city'
 											className='block text-sm text-gray-700'
 										>
-											City
+											{t('city')}
 										</label>
 										<div className='mt-1'>
 											<input
 												type='text'
 												name='city'
 												id='city'
-												placeholder='city'
+												placeholder={t('city')}
 												value={city ? city : selectedReview?.city}
 												required
 												onChange={(e) => setCity(e.target.value)}
@@ -209,7 +211,7 @@ const UserEditReviewModal = ({
 											htmlFor='region'
 											className='block text-sm text-gray-700'
 										>
-											Province / State
+											{t('state')}
 										</label>
 										<div className='mt-1'>
 											<select
@@ -235,14 +237,14 @@ const UserEditReviewModal = ({
 												htmlFor='postal-code'
 												className='block text-sm text-gray-700'
 											>
-												Postal Code / ZIP
+												{t('zip')}
 											</label>
 											<div className='mt-1'>
 												<input
 													type='text'
 													name='postal-code'
 													id='postal-code'
-													placeholder='Postal Code / ZIP'
+													placeholder={t('zip')}
 													required
 													value={postal ? postal : selectedReview?.zip}
 													onChange={(e) => setPostal(e.target.value)}
@@ -257,14 +259,14 @@ const UserEditReviewModal = ({
 											htmlFor='rent'
 											className='block text-sm text-gray-700'
 										>
-											Rent
+											{t('rent')}
 										</label>
 										<div className='mt-1'>
 											<input
 												type='number'
 												name='rent'
 												id='rent'
-												placeholder='Rent'
+												placeholder={t('rent')}
 												required
 												value={rent ? rent : selectedReview?.rent || ''}
 												onChange={(e) => setRent(Number(e.target.value))}
@@ -278,7 +280,7 @@ const UserEditReviewModal = ({
 											htmlFor='review'
 											className='block text-sm text-gray-700'
 										>
-											Review
+											{t('review')}
 										</label>
 										<textarea
 											rows={4}
@@ -295,14 +297,14 @@ const UserEditReviewModal = ({
 											htmlFor='user-code'
 											className='block text-sm text-gray-700'
 										>
-											User Code
+											{t('user-code')}
 										</label>
 										<div className='mt-1'>
 											<input
 												type='text'
 												name='user-code'
 												id='user-code'
-												placeholder='Enter User Code Provided After Creating Review'
+												placeholder={t('enter-code')}
 												required
 												onChange={(e) => setUserKey(e.target.value)}
 												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
@@ -312,7 +314,9 @@ const UserEditReviewModal = ({
 									</div>
 								</div>
 								<div className='mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse'>
-									<Button onClick={() => onSubmitEditReview()}>Submit</Button>
+									<Button onClick={() => onSubmitEditReview()}>
+										{t('submit')}
+									</Button>
 									<ButtonLight
 										onClick={() => {
 											setSelectedReview(undefined)
@@ -320,7 +324,7 @@ const UserEditReviewModal = ({
 											setUserEditMode(false)
 										}}
 									>
-										Cancel
+										{t('cancel')}
 									</ButtonLight>
 								</div>
 							</DialogPanel>

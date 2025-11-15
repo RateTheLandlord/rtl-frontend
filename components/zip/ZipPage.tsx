@@ -1,8 +1,6 @@
 import { useMemo, useState } from 'react'
 import ReportModal from '../reviews/report-modal'
 import { UserReview } from '@/util/interfaces/interfaces'
-import EditReviewModal from '../modal/EditReviewModal'
-import RemoveReviewModal from '../modal/RemoveReviewModal'
 import AdsComponent from '../adsense/Adsense'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import ZipInfo from './ZipInfo'
@@ -23,9 +21,7 @@ interface IProps {
 
 const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 	// State
-	const [editReviewOpen, setEditReviewOpen] = useState(false)
 	const [reportOpen, setReportOpen] = useState<boolean>(false)
-	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
 	const [selectedReview, setSelectedReview] = useState<UserReview | undefined>()
 	const [userEditMode, setUserEditMode] = useState(false)
 	const [userEditReviewOpen, setUserEditReviewOpen] = useState(false)
@@ -86,28 +82,6 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 					/>
 				</>
 			) : null}
-			{selectedReview ? (
-				<>
-					<EditReviewModal
-						selectedReview={selectedReview}
-						handleMutate={() => {
-							console.log('')
-						}}
-						setEditReviewOpen={setEditReviewOpen}
-						editReviewOpen={editReviewOpen}
-						setSelectedReview={setSelectedReview}
-					/>
-					<RemoveReviewModal
-						selectedReview={selectedReview}
-						handleMutate={() => {
-							console.log('')
-						}}
-						setRemoveReviewOpen={setRemoveReviewOpen}
-						removeReviewOpen={removeReviewOpen}
-						setSelectedReview={setSelectedReview}
-					/>
-				</>
-			) : null}
 			<div className='w-full px-2 md:px-0'>
 				<AdsComponent slot='1526837416' />
 				<div className='mx-auto mt-5 flex max-w-2xl flex-col gap-3 lg:max-w-7xl'>
@@ -138,8 +112,6 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 								data={reviews}
 								setReportOpen={setReportOpen}
 								setSelectedReview={setSelectedReview}
-								setRemoveReviewOpen={setRemoveReviewOpen}
-								setEditReviewOpen={setEditReviewOpen}
 								isLoading={isLoadingHook}
 								userEditMode={userEditMode}
 								setUserEditMode={setUserEditMode}

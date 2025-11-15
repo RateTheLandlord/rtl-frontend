@@ -75,5 +75,27 @@
 		"read": "Read",
 		"reviews": "{total} reviews",
 		"rating": "Avg. Rating"
+	},
+	"user-code": {
+		"title": "Copy your unique code",
+		"success": "Your review has been submitted successfully",
+		"message": "Be sure to copy and save your unique code. This code is required to update or delete your review in the future.",
+		"faq": "For additional information, please visit our FAQ.",
+		"button": "I have copied my code",
+		"copy": "Copy my unique review code",
+		"copied": "Copied!"
+	},
+	"user-edit": {
+		"landlord": "Landlord",
+		"country": "Country",
+		"city": "City",
+		"state": "State / Province",
+		"zip": "ZIP / Postal Code",
+		"rent": "Rent",
+		"review": "Review",
+		"user-code": "User Code",
+		"enter-code": "Enter User Code provided after creating review",
+		"submit": "Submit",
+		"cancel": "Cancel"
 	}
 }

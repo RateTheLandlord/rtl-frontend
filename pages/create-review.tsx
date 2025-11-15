@@ -70,6 +70,9 @@ export async function getStaticProps({ locale }: { locale: string }) {
 	const filtersMessages = (await import(
 		`@/messages/${locale}/filters.json`
 	)) as Record<string, string>
+	const reviewMessages = (await import(
+		`@/messages/${locale}/reviews.json`
+	)) as Record<string, string>
 	return {
 		props: {
 			messages: {
@@ -77,6 +80,7 @@ export async function getStaticProps({ locale }: { locale: string }) {
 				...alertsMessages,
 				...layoutMessages,
 				...filtersMessages,
+				...reviewMessages,
 			},
 		},
 	}
