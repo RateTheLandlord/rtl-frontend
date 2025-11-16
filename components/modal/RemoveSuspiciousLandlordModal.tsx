@@ -1,5 +1,4 @@
-import { Keywords } from '@/util/interfaces/interfaces'
-import { Dispatch, Fragment, SetStateAction, useState } from 'react'
+import { Fragment, useState } from 'react'
 import {
 	Dialog,
 	DialogPanel,
@@ -10,32 +9,28 @@ import {
 import { toast } from 'react-toastify'
 import Spinner from '@/components/ui/Spinner'
 import CloseButton from '@/components/ui/CloseButton'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	updateRemoveSuspiciousLandlordOpen,
+	updateSelectedSuspiciousLandlord,
+} from '@/redux/modal/modalSlice'
 
-interface IProps {
-	selectedKeyword: Keywords | undefined
-	handleMutate: () => void
-	setRemoveKeywordModalOpen: Dispatch<SetStateAction<boolean>>
-	removeKeywordModalOpen: boolean
-	setSelectedKeyword: Dispatch<SetStateAction<Keywords | undefined>>
-}
-
-const RemoveFlaggedKeywordModal = ({
-	selectedKeyword,
-	handleMutate,
-	setRemoveKeywordModalOpen,
-	removeKeywordModalOpen,
-	setSelectedKeyword,
-}: IProps) => {
+const RemoveSuspiciousLandlordModal = () => {
+	const {
+		removeSuspiciousLandlordOpen,
+		selectedSuspiciousLandlord: selectedLandlord,
+	} = useAppSelector((state) => state.modal)
+	const dispatch = useAppDispatch()
 	const [loading, setLoading] = useState(false)
 	const onSubmitRemoveResource = () => {
-		if (selectedKeyword) {
+		if (selectedLandlord) {
 			setLoading(true)
-			fetch('/api/flagged-keywords/delete-flagged-keyword', {
+			fetch('/api/suspicious-landlords/delete-suspicious-landlord', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ id: selectedKeyword.id }),
+				body: JSON.stringify({ id: selectedLandlord.id }),
 			})
 				.then((result) => {
 					if (!result.ok) {
@@ -43,26 +38,25 @@ const RemoveFlaggedKeywordModal = ({
 					}
 				})
 				.then(() => {
-					handleMutate()
-					setRemoveKeywordModalOpen(false)
 					toast.success('Success!')
-					setSelectedKeyword(undefined)
+					dispatch(updateRemoveSuspiciousLandlordOpen(false))
+					dispatch(updateSelectedSuspiciousLandlord(undefined))
 				})
 				.catch((err) => {
 					console.log(err)
 					toast.error('Failure: Something went wrong, please try again.')
-					setSelectedKeyword(undefined)
+					dispatch(updateSelectedSuspiciousLandlord(undefined))
 				})
 				.finally(() => setLoading(false))
 		}
 	}
 
 	return (
-		<Transition show={removeKeywordModalOpen} as={Fragment}>
+		<Transition show={removeSuspiciousLandlordOpen} as={Fragment}>
 			<Dialog
 				as='div'
 				className='relative z-50'
-				onClose={setRemoveKeywordModalOpen}
+				onClose={() => dispatch(updateRemoveSuspiciousLandlordOpen(false))}
 			>
 				<TransitionChild
 					as={Fragment}
@@ -88,7 +82,11 @@ const RemoveFlaggedKeywordModal = ({
 							leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
 						>
 							<DialogPanel className='relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
-								<CloseButton onClick={() => setRemoveKeywordModalOpen(false)} />
+								<CloseButton
+									onClick={() =>
+										dispatch(updateRemoveSuspiciousLandlordOpen(false))
+									}
+								/>
 								<div className='sm:flex sm:items-start'>
 									<div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
 										<DialogTitle
@@ -102,8 +100,8 @@ const RemoveFlaggedKeywordModal = ({
 								<div>
 									<div className='ml-4' data-testid='remove-review-modal-1'>
 										<h2>
-											Are you sure you want to remove this keyword? This cannot
-											be undone.
+											Are you sure you want to remove this landlord&apos;s
+											message? This cannot be undone.
 										</h2>
 									</div>
 								</div>
@@ -120,8 +118,8 @@ const RemoveFlaggedKeywordModal = ({
 										type='button'
 										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 shadow-sm hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm'
 										onClick={() => {
-											setSelectedKeyword(undefined)
-											setRemoveKeywordModalOpen(false)
+											dispatch(updateRemoveSuspiciousLandlordOpen(false))
+											dispatch(updateSelectedSuspiciousLandlord(undefined))
 										}}
 									>
 										Cancel
@@ -136,4 +134,4 @@ const RemoveFlaggedKeywordModal = ({
 	)
 }
 
-export default RemoveFlaggedKeywordModal
+export default RemoveSuspiciousLandlordModal

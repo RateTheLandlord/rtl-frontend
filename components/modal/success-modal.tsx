@@ -1,4 +1,4 @@
-import React, { SetStateAction, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import {
 	Dialog,
 	DialogPanel,
@@ -28,13 +28,12 @@ import {
 } from 'react-share'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { updateSuccessModalOpen } from '@/redux/modal/modalSlice'
 
-interface IProps {
-	isOpen: boolean
-	setIsOpen: React.Dispatch<SetStateAction<boolean>>
-}
-
-function SuccessModal({ isOpen, setIsOpen }: IProps) {
+function SuccessModal() {
+	const { successModalOpen: isOpen } = useAppSelector((state) => state.modal)
+	const dispatch = useAppDispatch()
 	const t = useTranslations('createreview')
 	const router = useRouter()
 	return (
@@ -44,7 +43,7 @@ function SuccessModal({ isOpen, setIsOpen }: IProps) {
 					data-testid='success-modal-1'
 					as='div'
 					className='relative z-10'
-					onClose={setIsOpen}
+					onClose={() => dispatch(updateSuccessModalOpen(false))}
 				>
 					<TransitionChild
 						as={Fragment}
@@ -155,7 +154,7 @@ function SuccessModal({ isOpen, setIsOpen }: IProps) {
 									<div className='mt-5 grid gap-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3'>
 										<ButtonLight
 											onClick={() => {
-												setIsOpen(false)
+												dispatch(updateSuccessModalOpen(false))
 												router.reload()
 											}}
 										>
@@ -163,7 +162,7 @@ function SuccessModal({ isOpen, setIsOpen }: IProps) {
 										</ButtonLight>
 										<Button
 											onClick={() => {
-												setIsOpen(false)
+												dispatch(updateSuccessModalOpen(false))
 												router.push('/reviews').catch((err) => console.log(err))
 											}}
 										>

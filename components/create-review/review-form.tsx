@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Button from '../ui/button'
-import SuccessModal from './success-modal'
 import { postcodeValidator } from 'postcode-validator'
-import SpamReviewModal from '@/components/create-review/SpamReviewModal'
 import { useLocation } from '@/util/hooks/useLocation'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import { useReCaptcha } from 'next-recaptcha-v3'
@@ -21,8 +19,13 @@ import posthog from 'posthog-js'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Country } from '@/types/review.types'
 import { updatePostal, updateProvince } from '@/redux/review/reviewSlice'
-import CopyUserCodeModal from '../modal/CopyUserCodeModal'
 import { ReviewResponseStatus } from '@/lib/review/types/Responses'
+import {
+	updateCopyUserCodeOpen,
+	updateSpamDetectionMethod,
+	updateSpamReviewModalOpen,
+	updateUserKey,
+} from '@/redux/modal/modalSlice'
 
 function ReviewForm(): JSX.Element {
 	const t = useTranslations()
@@ -41,9 +44,9 @@ function ReviewForm(): JSX.Element {
 		respect,
 		review,
 	} = useAppSelector((state) => state.review)
+	const { userKey } = useAppSelector((state) => state.modal)
 	const dispatch = useAppDispatch()
 
-	const [userCode, setUserCode] = useState('')
 	const [reviewId, setReviewId] = useState<number | null>(null)
 
 	const isIreland = country === Country.IE
@@ -61,14 +64,6 @@ function ReviewForm(): JSX.Element {
 	const [reviewOpen, setReviewOpen] = useState(false)
 
 	const [showPreview, setShowPreview] = useState(false)
-
-	const [successModalOpen, setSuccessModalOpen] = useState(false)
-	const [codeModalOpen, setCodeModalOpen] = useState(false)
-
-	const [spamReviewModalOpen, setSpamReviewModalOpen] = useState(false)
-	const [spamDetectionMethod, setSpamDetectionMethod] = useState(
-		'localStorageDetection',
-	)
 
 	const {
 		searching,
@@ -112,11 +107,11 @@ function ReviewForm(): JSX.Element {
 				'rtl-id',
 				JSON.stringify({
 					id: reviewId,
-					userCode,
+					userCode: userKey,
 				}),
 			)
 		}
-	}, [userCode])
+	}, [userKey])
 
 	const checkLandlord = (str: string) => {
 		if (localReviewedLandlords) {
@@ -143,7 +138,11 @@ function ReviewForm(): JSX.Element {
 			return
 		}
 		if (checkLandlord(landlord.toLocaleUpperCase())) {
-			setSpamReviewModalOpen(true)
+			dispatch(updateSpamReviewModalOpen(true))
+			posthog.capture('spam_review_detected', {
+				method: 'localStorageDetection',
+				landlord,
+			})
 			return
 		}
 		if (city.trim().length < 1) {
@@ -195,16 +194,20 @@ function ReviewForm(): JSX.Element {
 					})
 					.then((data: ReviewResponseStatus) => {
 						if (!data.success) {
-							setSpamDetectionMethod('DBDetection')
-							setSpamReviewModalOpen(true)
+							dispatch(updateSpamDetectionMethod('DBDetection'))
+							dispatch(updateSpamReviewModalOpen(true))
+							posthog.capture('spam_review_detected', {
+								method: 'DBDetection',
+								landlord,
+							})
 							throw new Error()
 						} else {
-							setUserCode(data.user_code)
+							dispatch(updateUserKey(data.user_code))
 							setReviewId(data.review_id)
 						}
 					})
 					.then(() => {
-						setCodeModalOpen(true)
+						dispatch(updateCopyUserCodeOpen(true))
 						const storageItem = localStorage.getItem('rtl')
 						if (storageItem) {
 							const newItem = `${storageItem},${landlord.toLocaleUpperCase()}`
@@ -272,20 +275,6 @@ function ReviewForm(): JSX.Element {
 			)}
 			data-testid='create-review-form-1'
 		>
-			<CopyUserCodeModal
-				open={codeModalOpen}
-				setOpen={setCodeModalOpen}
-				setShareOpen={setSuccessModalOpen}
-				code={userCode}
-			/>
-			<SuccessModal isOpen={successModalOpen} setIsOpen={setSuccessModalOpen} />
-			<SpamReviewModal
-				landlord={landlord}
-				isOpen={spamReviewModalOpen}
-				setIsOpen={setSpamReviewModalOpen}
-				detectionMethod={spamDetectionMethod}
-			/>
-
 			<ReviewHero
 				setGetStarted={setGetStarted}
 				setLandlordOpen={setLandlordOpen}

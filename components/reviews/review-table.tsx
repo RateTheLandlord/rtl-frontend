@@ -1,49 +1,35 @@
 import { UserReview } from '@/util/interfaces/interfaces'
-import React, { Dispatch, SetStateAction } from 'react'
+import React from 'react'
 import ReviewComponent from './ReviewComponent'
 import Spinner from '../ui/Spinner'
+import { useAppDispatch } from '@/redux/hooks'
+import {
+	updateSelectedReview,
+	updateUserEditReviewOpen,
+	updateUserRemoveReviewOpen,
+	updateUserReportModal,
+} from '@/redux/modal/modalSlice'
 
 interface IProps {
 	data: UserReview[]
-	setReportOpen: Dispatch<SetStateAction<boolean>>
-	setSelectedReview: Dispatch<SetStateAction<UserReview | undefined>>
-	userEditMode: boolean
-	setUserEditMode: Dispatch<SetStateAction<boolean>>
-	setUserEditReviewOpen: Dispatch<SetStateAction<boolean>>
-	setUserRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
-	selectedReviewID: number | undefined
 	isLoading: boolean
 }
 
-function ReviewTable({
-	data,
-	setReportOpen,
-	setSelectedReview,
-	userEditMode,
-	setUserEditMode,
-	setUserEditReviewOpen,
-	setUserRemoveReviewOpen,
-	selectedReviewID,
-	isLoading,
-}: IProps): JSX.Element {
+function ReviewTable({ data, isLoading }: IProps): JSX.Element {
+	const dispatch = useAppDispatch()
 	const handleReport = (review: UserReview) => {
-		setSelectedReview(review)
-		setReportOpen(true)
-	}
-
-	const handleUserEditMode = (review: UserReview) => {
-		setSelectedReview(review)
-		setUserEditMode(!userEditMode)
+		dispatch(updateSelectedReview(review))
+		dispatch(updateUserReportModal(true))
 	}
 
 	const handleUserEdit = (review: UserReview) => {
-		setSelectedReview(review)
-		setUserEditReviewOpen(true)
+		dispatch(updateSelectedReview(review))
+		dispatch(updateUserEditReviewOpen(true))
 	}
 
 	const handleUserDelete = (review: UserReview) => {
-		setSelectedReview(review)
-		setUserRemoveReviewOpen(true)
+		dispatch(updateSelectedReview(review))
+		dispatch(updateUserRemoveReviewOpen(true))
 	}
 
 	if (!data.length || !data) {
@@ -63,11 +49,8 @@ function ReviewTable({
 										review={review}
 										i={i}
 										handleReport={handleReport}
-										handleUserEditMode={handleUserEditMode}
-										userEditMode={userEditMode}
 										handleUserEdit={handleUserEdit}
 										handleUserDelete={handleUserDelete}
-										selectedReviewID={selectedReviewID}
 									/>
 								)
 							})}

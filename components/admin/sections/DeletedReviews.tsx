@@ -2,25 +2,24 @@ import { Review } from '@/util/interfaces/interfaces'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
-import RestoreReviewModal from '@/components/modal/RestoreReviewModal'
 import Spinner from '@/components/ui/Spinner'
 import dayjs from 'dayjs'
-import DeleteNow from '@/components/modal/DeleteNowModal'
+import { useAppDispatch } from '@/redux/hooks'
+import {
+	updateDeleteNowOpen,
+	updateRestoreReviewOpen,
+	updateSelectedAdminReview,
+} from '@/redux/modal/modalSlice'
 
 const DeletedReviews = () => {
-	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
+	const dispatch = useAppDispatch()
 
 	const [deletedReviews, setDeletedReviews] = useState<Array<Review>>([])
 
-	const [restoreReviewOpen, setRestoreReviewOpen] = useState(false)
-
-	const [deleteReviewOpen, setDeleteReviewOpen] = useState(false)
-
-	const {
-		data: reviews,
-		error,
-		mutate,
-	} = useSWR<Array<Review>, unknown>('/api/admin/get-deleted', fetcher)
+	const { data: reviews, error } = useSWR<Array<Review>, unknown>(
+		'/api/admin/get-deleted',
+		fetcher,
+	)
 
 	useEffect(() => {
 		if (reviews) {
@@ -38,34 +37,8 @@ const DeletedReviews = () => {
 	if (error) return <div>failed to load</div>
 	if (!reviews) return <Spinner />
 
-	const handleMutate = () => {
-		mutate().catch(() => console.error('Failed to Mutate Deleted Reviews'))
-	}
-
 	return (
 		<div className='container flex w-full flex-wrap justify-center'>
-			{selectedReview && restoreReviewOpen ? (
-				<>
-					<RestoreReviewModal
-						selectedReview={selectedReview}
-						handleMutate={handleMutate}
-						setRestoreReviewOpen={setRestoreReviewOpen}
-						restoreReviewOpen={restoreReviewOpen}
-						setSelectedReview={setSelectedReview}
-					/>
-				</>
-			) : null}
-			{selectedReview && deleteReviewOpen ? (
-				<>
-					<DeleteNow
-						selectedReview={selectedReview}
-						handleMutate={handleMutate}
-						setDeleteReviewOpen={setDeleteReviewOpen}
-						deleteReviewOpen={deleteReviewOpen}
-						setSelectedReview={setSelectedReview}
-					/>
-				</>
-			) : null}
 			<div className='ring-opacity-5 container -mx-4 overflow-hidden shadow ring-1 ring-black sm:-mx-6 md:mx-0 md:rounded-lg'>
 				<table className='min-w-full divide-y divide-gray-300'>
 					<thead className='bg-gray-50'>
@@ -133,14 +106,14 @@ const DeletedReviews = () => {
 								<td className='hidden max-w-xs px-3 py-4 text-sm text-gray-500 lg:table-cell'>
 									{dayjs(review.delete_date).format('DD/MM/YYYY')}
 								</td>
-								<td className='hidden px-3 py-4 text-sm break-words hyphens-auto text-gray-500 sm:table-cell'>
+								<td className='hidden px-3 py-4 text-sm wrap-break-word hyphens-auto text-gray-500 sm:table-cell'>
 									{review.review}
 								</td>
 								<td className='py-4 pr-4 pl-3 text-center text-sm sm:pr-6'>
 									<button
 										onClick={() => {
-											setSelectedReview(review)
-											setRestoreReviewOpen((p) => !p)
+											dispatch(updateSelectedAdminReview(review))
+											dispatch(updateRestoreReviewOpen(true))
 										}}
 										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
 									>
@@ -150,8 +123,8 @@ const DeletedReviews = () => {
 								<td className='py-4 pr-4 pl-3 text-center text-sm sm:pr-6'>
 									<button
 										onClick={() => {
-											setSelectedReview(review)
-											setDeleteReviewOpen((p) => !p)
+											dispatch(updateSelectedAdminReview(review))
+											dispatch(updateDeleteNowOpen(true))
 										}}
 										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
 									>

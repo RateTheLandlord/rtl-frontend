@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { fireEvent, render, screen } from '@/test-utils'
-import SpamReviewModal from '@/components/create-review/SpamReviewModal'
+import SpamReviewModal from '@/components/modal/SpamReviewModal'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

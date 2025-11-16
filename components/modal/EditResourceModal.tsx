@@ -1,11 +1,10 @@
-import { Resource } from '@/util/interfaces/interfaces'
 import {
 	Dialog,
 	DialogPanel,
 	Transition,
 	TransitionChild,
 } from '@headlessui/react'
-import { Dispatch, Fragment, SetStateAction, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import TextInput from '../ui/TextInput'
 import StateSelector from '../ui/StateSelector'
 import CountrySelector from '../ui/CountrySelector'
@@ -22,22 +21,12 @@ import {
 	updatePhone,
 	updateResource,
 } from '@/redux/resource/resourceSlice'
+import {
+	updateEditResourceOpen,
+	updateSelectedResource,
+} from '@/redux/modal/modalSlice'
 
-interface IProps {
-	selectedResource: Resource | undefined
-	handleMutate: () => void
-	setEditResourceOpen: Dispatch<SetStateAction<boolean>>
-	editResourceOpen: boolean
-	setSelectedResource: Dispatch<SetStateAction<Resource | undefined>>
-}
-
-const EditResourceModal = ({
-	selectedResource,
-	handleMutate,
-	setEditResourceOpen,
-	editResourceOpen,
-	setSelectedResource,
-}: IProps) => {
+const EditResourceModal = () => {
 	const {
 		name,
 		country_code,
@@ -48,6 +37,9 @@ const EditResourceModal = ({
 		description,
 		href,
 	} = useAppSelector((state) => state.resource)
+	const { selectedResource, editResourceOpen } = useAppSelector(
+		(state) => state.modal,
+	)
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
@@ -84,22 +76,26 @@ const EditResourceModal = ({
 				}
 			})
 			.then(() => {
-				handleMutate()
-				setEditResourceOpen(false)
+				dispatch(updateEditResourceOpen(false))
+				dispatch(updateSelectedResource(undefined))
 				toast.success('Success!')
-				setSelectedResource(undefined)
 			})
 			.catch((err) => {
 				console.log(err)
 				toast.error('Failure: Something went wrong, please try again.')
-				setSelectedResource(undefined)
+				dispatch(updateEditResourceOpen(false))
+				dispatch(updateSelectedResource(undefined))
 			})
 			.finally(() => setLoading(false))
 	}
 
 	return (
 		<Transition show={editResourceOpen} as={Fragment}>
-			<Dialog as='div' className='relative z-50' onClose={setEditResourceOpen}>
+			<Dialog
+				as='div'
+				className='relative z-50'
+				onClose={() => dispatch(updateEditResourceOpen(false))}
+			>
 				<TransitionChild
 					as={Fragment}
 					enter='ease-out duration-300'
@@ -208,8 +204,8 @@ const EditResourceModal = ({
 										type='button'
 										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 shadow-sm hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm'
 										onClick={() => {
-											setSelectedResource(undefined)
-											setEditResourceOpen(false)
+											dispatch(updateEditResourceOpen(false))
+											dispatch(updateSelectedResource(undefined))
 										}}
 									>
 										Cancel

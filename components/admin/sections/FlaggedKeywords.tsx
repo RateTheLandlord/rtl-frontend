@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import {
 	Menu,
 	MenuButton,
@@ -12,100 +12,30 @@ import Button from '@/components/ui/button'
 import useSWR from 'swr'
 import { fetchWithBody } from '@/util/helpers/fetcher'
 import Spinner from '@/components/ui/Spinner'
-import { FlaggedKeywordsResponse, Keywords } from '@/util/interfaces/interfaces'
-import Modal from '@/components/modal/Modal'
-import { toast } from 'react-toastify'
-import AddFlaggedKeywordModal from '../components/AddFlaggedKeywordModal'
-import RemoveFlaggedKeywordModal from '../components/RemoveFlaggedKeywordModal'
+import { FlaggedKeywordsResponse } from '@/util/interfaces/interfaces'
+import { useAppDispatch } from '@/redux/hooks'
+import {
+	updateAddFlaggedKeywordOpen,
+	updateRemoveFlaggedKeywordOpen,
+	updateSelectedKeyword,
+} from '@/redux/modal/modalSlice'
 
 const FlaggedKeywords = () => {
-	const { data, error, mutate } = useSWR<FlaggedKeywordsResponse, unknown>(
+	const dispatch = useAppDispatch()
+	const { data, error } = useSWR<FlaggedKeywordsResponse, unknown>(
 		['/api/flagged-keywords/get-flagged-keywords', { limit: '1000' }],
 		fetchWithBody,
 	)
 
-	const [loading, setLoading] = useState(false)
-	const [keyword, setKeyword] = useState('')
-	const [keywordReason, setKeywordReason] = useState('')
-
-	const [selectedKeyword, setSelectedKeyword] = useState<Keywords | undefined>()
-
-	const [addKeywordOpen, setAddKeywordOpen] = useState(false)
-	const [removeKeywordOpen, setRemoveKeywordOpen] = useState(false)
 	if (error) return <div>failed to load...</div>
 	if (!data) return <Spinner />
 
-	const resetForm = () => {
-		setKeyword('')
-		setKeywordReason('')
-	}
-
-	const onSubmitNewLandlord = () => {
-		setLoading(true)
-		const newKeyword = {
-			keyword: keyword,
-			reason: keywordReason,
-		}
-
-		fetch('/api/flagged-keywords/add-flagged-keyword', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(newKeyword),
-		})
-			.then((result) => {
-				if (!result.ok) {
-					throw new Error()
-				}
-			})
-			.then(() => {
-				mutate().catch(() => console.error('Failed to Mutute Flagged Keywords'))
-				setAddKeywordOpen(false)
-				toast.success('Success!')
-				resetForm()
-			})
-			.catch((err) => {
-				console.log(err)
-				toast.error('Failure: Something went wrong, please try again.')
-			})
-			.finally(() => setLoading(false))
-	}
-
-	const handleMutate = () => {
-		mutate().catch(() => console.error('Failed to Mutute Flagged Keywords'))
-	}
 	return (
 		<div className='container flex w-full flex-col justify-center'>
-			{removeKeywordOpen && (
-				<RemoveFlaggedKeywordModal
-					selectedKeyword={selectedKeyword}
-					handleMutate={handleMutate}
-					setRemoveKeywordModalOpen={setRemoveKeywordOpen}
-					removeKeywordModalOpen={removeKeywordOpen}
-					setSelectedKeyword={setSelectedKeyword}
-				/>
-			)}
-			{addKeywordOpen && (
-				<Modal
-					loading={loading}
-					title='Add Flagged Keyword'
-					open={addKeywordOpen}
-					setOpen={setAddKeywordOpen}
-					element={
-						<AddFlaggedKeywordModal
-							keyword={keyword}
-							setKeyword={setKeyword}
-							keywordReason={keywordReason}
-							setKeywordReason={setKeywordReason}
-						/>
-					}
-					onSubmit={onSubmitNewLandlord}
-					selectedId={1}
-				/>
-			)}
 			<div className='flex w-full justify-end'>
-				<Button onClick={() => setAddKeywordOpen(true)}>Add New Keyword</Button>
+				<Button onClick={() => dispatch(updateAddFlaggedKeywordOpen(true))}>
+					Add New Keyword
+				</Button>
 			</div>
 			{data.keywords.length && (
 				<ul
@@ -147,8 +77,8 @@ const FlaggedKeywords = () => {
 												{({ active }) => (
 													<button
 														onClick={() => {
-															setRemoveKeywordOpen(true)
-															setSelectedKeyword(keyword)
+															dispatch(updateRemoveFlaggedKeywordOpen(true))
+															dispatch(updateSelectedKeyword(keyword))
 														}}
 														className={classNames(
 															active ? 'bg-gray-50' : '',

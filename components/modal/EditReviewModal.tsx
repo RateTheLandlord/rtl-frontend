@@ -1,5 +1,4 @@
-import { UserReview } from '@/util/interfaces/interfaces'
-import { Dispatch, Fragment, SetStateAction, useState } from 'react'
+import { Fragment, useState } from 'react'
 import countries from '@/util/countries/countries.json'
 import { country_codes } from '@/util/helpers/getCountryCodes'
 import {
@@ -15,22 +14,18 @@ import { getStates } from '@/util/countries/combineStates'
 import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	updateAdminEditReviewOpen,
+	updateSelectedAdminReview,
+} from '@/redux/modal/modalSlice'
 
-interface IProps {
-	selectedReview: UserReview | undefined
-	handleMutate: () => void
-	setEditReviewOpen: Dispatch<SetStateAction<boolean>>
-	editReviewOpen: boolean
-	setSelectedReview: Dispatch<SetStateAction<UserReview | undefined>>
-}
-
-const EditReviewModal = ({
-	selectedReview,
-	handleMutate,
-	setEditReviewOpen,
-	editReviewOpen,
-	setSelectedReview,
-}: IProps) => {
+const EditReviewModal = () => {
+	const {
+		selectedAdminReview: selectedReview,
+		adminEditReviewOpen: editReviewOpen,
+	} = useAppSelector((state) => state.modal)
+	const dispatch = useAppDispatch()
 	const [landlord, setLandlord] = useState<string>(
 		selectedReview?.landlord || '',
 	)
@@ -91,24 +86,28 @@ const EditReviewModal = ({
 				fetch(
 					`/api/force-revalidate?path=${encodeURIComponent(landlord)}`,
 				).catch(() => console.error('Revalidate Failed'))
-				handleMutate()
-				setEditReviewOpen(false)
+				dispatch(updateAdminEditReviewOpen(false))
 				if (data.success) {
 					toast.success('Success!')
 				} else {
 					toast.error(data.message)
 				}
-				setSelectedReview(undefined)
+				dispatch(updateSelectedAdminReview(undefined))
 			})
 			.catch((err) => {
 				console.log(err)
 				toast.error('Failure: Something went wrong, please try again.')
-				setSelectedReview(undefined)
+				dispatch(updateAdminEditReviewOpen(false))
+				dispatch(updateSelectedAdminReview(undefined))
 			})
 	}
 	return (
 		<Transition show={editReviewOpen} as={Fragment}>
-			<Dialog as='div' className='relative z-10' onClose={setEditReviewOpen}>
+			<Dialog
+				as='div'
+				className='relative z-10'
+				onClose={() => dispatch(updateAdminEditReviewOpen(false))}
+			>
 				<TransitionChild
 					as={Fragment}
 					enter='ease-out duration-300'
@@ -325,8 +324,8 @@ const EditReviewModal = ({
 									<Button onClick={() => onSubmitEditReview()}>Submit</Button>
 									<ButtonLight
 										onClick={() => {
-											setSelectedReview(undefined)
-											setEditReviewOpen(false)
+											dispatch(updateAdminEditReviewOpen(false))
+											dispatch(updateSelectedAdminReview(undefined))
 										}}
 									>
 										Cancel

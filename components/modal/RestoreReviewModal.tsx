@@ -1,5 +1,4 @@
-import { Review } from '@/util/interfaces/interfaces'
-import { Dispatch, Fragment, SetStateAction, useState } from 'react'
+import { Fragment, useState } from 'react'
 import {
 	Dialog,
 	DialogPanel,
@@ -13,22 +12,16 @@ import { toast } from 'react-toastify'
 import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import CloseButton from '../ui/CloseButton'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	updateRestoreReviewOpen,
+	updateSelectedAdminReview,
+} from '@/redux/modal/modalSlice'
 
-interface IProps {
-	selectedReview: Review | undefined
-	handleMutate: () => void
-	setRestoreReviewOpen: Dispatch<SetStateAction<boolean>>
-	restoreReviewOpen: boolean
-	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
-}
-
-const RestoreReviewModal = ({
-	selectedReview,
-	handleMutate,
-	setRestoreReviewOpen,
-	restoreReviewOpen,
-	setSelectedReview,
-}: IProps) => {
+const RestoreReviewModal = () => {
+	const { selectedAdminReview: selectedReview, restoreReviewOpen } =
+		useAppSelector((state) => state.modal)
+	const dispatch = useAppDispatch()
 	const landlord = selectedReview?.landlord || ''
 
 	const [restoreReason, setRestoreReason] = useState<string | null>(
@@ -77,22 +70,26 @@ const RestoreReviewModal = ({
 						.catch((err) => {
 							console.error(err)
 						})
-					handleMutate()
-					setRestoreReviewOpen(false)
+					dispatch(updateRestoreReviewOpen(false))
 					toast.success('Success!')
-					setSelectedReview(undefined)
+					dispatch(updateSelectedAdminReview(undefined))
 				})
 				.catch((err) => {
 					console.log(err)
 					toast.error('Failure: Something went wrong, please try again.')
-					setSelectedReview(undefined)
+					dispatch(updateRestoreReviewOpen(false))
+					dispatch(updateSelectedAdminReview(undefined))
 				})
 		}
 	}
 
 	return (
 		<Transition show={restoreReviewOpen} as={Fragment}>
-			<Dialog as='div' className='relative z-10' onClose={setRestoreReviewOpen}>
+			<Dialog
+				as='div'
+				className='relative z-10'
+				onClose={() => dispatch(updateRestoreReviewOpen(false))}
+			>
 				<TransitionChild
 					as={Fragment}
 					enter='ease-out duration-300'
@@ -117,7 +114,9 @@ const RestoreReviewModal = ({
 							leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
 						>
 							<DialogPanel className='relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
-								<CloseButton onClick={() => setRestoreReviewOpen(false)} />
+								<CloseButton
+									onClick={() => dispatch(updateRestoreReviewOpen(false))}
+								/>
 								<div className='sm:flex sm:items-start'>
 									<div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
 										<DialogTitle
@@ -184,8 +183,8 @@ const RestoreReviewModal = ({
 									</Button>
 									<ButtonLight
 										onClick={() => {
-											setSelectedReview(undefined)
-											setRestoreReviewOpen(false)
+											dispatch(updateRestoreReviewOpen(false))
+											dispatch(updateSelectedAdminReview(undefined))
 										}}
 									>
 										Cancel

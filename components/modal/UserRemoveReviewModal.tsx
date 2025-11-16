@@ -1,5 +1,4 @@
-import { UserReview } from '@/util/interfaces/interfaces'
-import { Dispatch, Fragment, SetStateAction, useState } from 'react'
+import { Fragment, useState } from 'react'
 import {
 	Dialog,
 	DialogPanel,
@@ -14,28 +13,18 @@ import CloseButton from '../ui/CloseButton'
 import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	updateSelectedReview,
+	updateUserKey,
+	updateUserRemoveReviewOpen,
+} from '@/redux/modal/modalSlice'
 
-interface IProps {
-	selectedReview: UserReview | undefined
-	handleMutate: () => void
-	setSelectedReview: Dispatch<SetStateAction<UserReview | undefined>>
-	userRemoveReviewOpen: boolean
-	setUserRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
-	userKey: string
-	setUserKey: Dispatch<SetStateAction<string>>
-	setUserEditMode: Dispatch<SetStateAction<boolean>>
-}
-
-const UserRemoveReviewModal = ({
-	selectedReview,
-	handleMutate,
-	setSelectedReview,
-	userRemoveReviewOpen,
-	setUserRemoveReviewOpen,
-	userKey,
-	setUserKey,
-	setUserEditMode,
-}: IProps) => {
+const UserRemoveReviewModal = () => {
+	const { selectedReview, userKey, userRemoveReviewOpen } = useAppSelector(
+		(state) => state.modal,
+	)
+	const dispatch = useAppDispatch()
 	const t = useTranslations()
 	const landlord = selectedReview?.landlord || ''
 	const review = selectedReview?.review || ''
@@ -55,9 +44,8 @@ const UserRemoveReviewModal = ({
 				.then((result) => {
 					console.log(result)
 					if (!result.ok) {
-						setUserKey('')
-						setUserRemoveReviewOpen(false)
-						setUserEditMode(false)
+						dispatch(updateUserKey(''))
+						dispatch(updateUserRemoveReviewOpen(false))
 						throw new Error()
 					} else {
 						return result.json()
@@ -78,14 +66,12 @@ const UserRemoveReviewModal = ({
 							.catch((err) => {
 								console.log(err)
 							})
-						handleMutate()
 						toast.success('Success!')
-						setSelectedReview(undefined)
-						setUserEditMode(false)
-						setUserRemoveReviewOpen(false)
+						dispatch(updateSelectedReview(undefined))
+						dispatch(updateUserRemoveReviewOpen(false))
 						posthog.capture('user_code.review_deleted')
 					} else {
-						setUserKey('')
+						dispatch(updateUserKey(''))
 						setCodeError(`${t('user-code.incorrect')}`)
 						posthog.capture('user_code.incorrect_code_entry', {
 							message: data.message,
@@ -95,7 +81,8 @@ const UserRemoveReviewModal = ({
 				.catch((err) => {
 					console.log(err)
 					toast.error(`${t('alerts.error')}`)
-					setSelectedReview(undefined)
+					dispatch(updateSelectedReview(undefined))
+					dispatch(updateUserRemoveReviewOpen(false))
 				})
 		}
 	}
@@ -105,7 +92,7 @@ const UserRemoveReviewModal = ({
 			<Dialog
 				as='div'
 				className='relative z-10'
-				onClose={setUserRemoveReviewOpen}
+				onClose={() => dispatch(updateUserRemoveReviewOpen(false))}
 			>
 				<TransitionChild
 					as={Fragment}
@@ -132,7 +119,9 @@ const UserRemoveReviewModal = ({
 						>
 							<DialogPanel className='relative transform gap-3 overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
 								<div className='absolute top-0 right-0 hidden pt-4 pr-4 sm:block'>
-									<CloseButton onClick={() => setUserRemoveReviewOpen(false)} />
+									<CloseButton
+										onClick={() => dispatch(updateUserRemoveReviewOpen(false))}
+									/>
 								</div>
 								<div className='sm:flex sm:items-start'>
 									<div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
@@ -177,7 +166,9 @@ const UserRemoveReviewModal = ({
 												id='user-code'
 												placeholder={t('user-delete.enter-code')}
 												required
-												onChange={(e) => setUserKey(e.target.value)}
+												onChange={(e) =>
+													dispatch(updateUserKey(e.target.value))
+												}
 												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 												data-testid='create-review-form-moderation-reason-1'
 											/>
@@ -191,9 +182,8 @@ const UserRemoveReviewModal = ({
 									</Button>
 									<ButtonLight
 										onClick={() => {
-											setSelectedReview(undefined)
-											setUserRemoveReviewOpen(false)
-											setUserEditMode(false)
+											dispatch(updateSelectedReview(undefined))
+											dispatch(updateUserRemoveReviewOpen(false))
 										}}
 									>
 										{t('user-delete.cancel')}
