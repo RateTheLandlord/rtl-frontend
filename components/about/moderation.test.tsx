@@ -18,7 +18,7 @@ test('renders moderation section with title and info paragraphs', () => {
 	const infoParagraphs = moderationSection.querySelectorAll(
 		"p[role='paragraph']",
 	)
-	expect(infoParagraphs).toHaveLength(4)
+	expect(infoParagraphs).toHaveLength(6)
 	expect(infoParagraphs[0]).toHaveTextContent('about.moderation.info-1')
 	expect(infoParagraphs[1]).toHaveTextContent('about.moderation.info-2')
 })
