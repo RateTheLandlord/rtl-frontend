@@ -16,6 +16,7 @@ import RemoveSuspiciousLandlordModal from './RemoveSuspiciousLandlordModal'
 import CopyUserCodeModal from './CopyUserCodeModal'
 import SuccessModal from './success-modal'
 import SpamReviewModal from './SpamReviewModal'
+import EditResourceModal from './EditResourceModal'
 
 const ModalProvider = ({ children }: { children: JSX.Element }) => {
 	const {
@@ -36,6 +37,7 @@ const ModalProvider = ({ children }: { children: JSX.Element }) => {
 		copyUserCodeOpen,
 		successModalOpen,
 		spamReviewModalOpen,
+		editResourceOpen,
 	} = useAppSelector((state) => state.modal)
 	return (
 		<>
@@ -56,6 +58,7 @@ const ModalProvider = ({ children }: { children: JSX.Element }) => {
 			{copyUserCodeOpen && <CopyUserCodeModal />}
 			{successModalOpen && <SuccessModal />}
 			{spamReviewModalOpen && <SpamReviewModal />}
+			{editResourceOpen && <EditResourceModal />}
 			{children}
 		</>
 	)

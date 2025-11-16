@@ -1,97 +1,127 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen } from '@/test-utils'
-import UserEditReviewModal from './UserEditReviewModal'
-import { store } from '@/redux/store'
-import { Provider } from 'react-redux'
-import { UserProvider } from '@auth0/nextjs-auth0/client'
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
-describe('UserEditReviewModal', () => {
-	const mockSelectedReview = {
-		landlord: 'John Doe',
-		country_code: 'US',
-		city: 'New York',
-		state: 'NY',
-		zip: '12345',
-		review: 'Great experience',
-		health: 4,
-		repair: 4,
-		respect: 3,
-		privacy: 2,
-		id: 123,
-		stability: 1,
-		date_added: new Date(),
-		flagged: false,
-		flagged_reason: '',
-		admin_approved: null,
-		admin_edited: false,
-		moderation_reason: null,
-		moderator: null,
-		delete_date: null,
-		delete_reason: null,
-		deleted_by: null,
-		restore_date: null,
-		restore_reason: null,
-		restored_by: null,
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { Provider } from 'react-redux'
+import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
+import UserEditReviewModal from './UserEditReviewModal'
+
+// ---- Mocks ----
+jest.mock('next-intl', () => ({
+	useTranslations: () => (key: string) => key,
+}))
+
+jest.mock('react-toastify', () => ({
+	toast: {
+		success: jest.fn(),
+		error: jest.fn(),
+	},
+}))
+
+jest.mock('posthog-js', () => ({
+	capture: jest.fn(),
+}))
+
+global.fetch = jest.fn(() =>
+	Promise.resolve({
+		ok: true,
+		json: () => Promise.resolve({ success: true }),
+	}),
+) as jest.Mock
+
+const mockStore = configureStore([thunk])
+
+const baseStore = {
+	modal: {
+		selectedReview: {
+			id: 1,
+			landlord: 'John Doe',
+			country_code: 'CA',
+			city: 'Toronto',
+			state: 'ON',
+			zip: 'M5V',
+			review: 'Nice place',
+			rent: 2000,
+		},
+		userKey: '',
+		userEditReviewOpen: true,
+	},
+}
+
+function renderModal(storeOverride = baseStore) {
+	const store = mockStore(storeOverride)
+	return {
+		store,
+		...render(
+			<Provider store={store}>
+				<UserEditReviewModal />
+			</Provider>,
+		),
 	}
+}
 
-	test('renders UserEditReviewModal with selected review data', () => {
-		render(
-			<UserProvider>
-				<Provider store={store}>
-					<UserEditReviewModal
-						selectedReview={mockSelectedReview}
-						handleMutate={jest.fn()}
-						setSelectedReview={jest.fn()}
-						userEditReviewOpen={true}
-						setUserEditReviewOpen={jest.fn()}
-						userKey={''}
-						setUserKey={jest.fn()}
-						setUserEditMode={jest.fn()}
-					/>
-				</Provider>
-			</UserProvider>,
-		)
+// ---- Tests ----
+describe('UserEditReviewModal', () => {
+	it('renders modal fields when open', () => {
+		renderModal()
 
-		expect(screen.getByLabelText('user-edit.landlord')).toHaveValue(
-			mockSelectedReview.landlord,
+		expect(screen.getByLabelText('user-edit.landlord')).toBeInTheDocument()
+		expect(screen.getByLabelText('user-edit.city')).toBeInTheDocument()
+		expect(screen.getByLabelText('user-edit.review')).toBeInTheDocument()
+		expect(screen.getByText('user-edit.submit')).toBeInTheDocument()
+	})
+
+	it('allows user to edit landlord', () => {
+		renderModal()
+
+		const landlordInput = screen.getByTestId('create-review-form-landlord-1')
+		fireEvent.change(landlordInput, { target: { value: 'New Landlord' } })
+
+		expect(landlordInput).toHaveValue('New Landlord')
+	})
+
+	it('dispatches close actions when cancel clicked', () => {
+		const { store } = renderModal()
+
+		fireEvent.click(screen.getByText('user-edit.cancel'))
+
+		const actions = store.getActions()
+		expect(actions.some((a) => a.type === 'modal/updateSelectedReview')).toBe(
+			true,
 		)
-		expect(screen.getByLabelText('user-edit.country')).toHaveValue(
-			mockSelectedReview.country_code,
+		expect(
+			actions.some((a) => a.type === 'modal/updateUserEditReviewOpen'),
+		).toBe(true)
+	})
+
+	it('updates user code when typing in code field', () => {
+		const { store } = renderModal()
+
+		const codeInput = screen.getByTestId(
+			'create-review-form-moderation-reason-1',
 		)
-		expect(screen.getByLabelText('user-edit.city')).toHaveValue(
-			mockSelectedReview.city,
-		)
-		expect(screen.getByLabelText('user-edit.state')).toHaveValue(
-			mockSelectedReview.state,
-		)
-		expect(screen.getByLabelText('user-edit.zip')).toHaveValue(
-			mockSelectedReview.zip,
-		)
-		expect(screen.getByLabelText('user-edit.review')).toHaveValue(
-			mockSelectedReview.review,
-		)
+		fireEvent.change(codeInput, { target: { value: 'abc123' } })
+
+		const actions = store.getActions()
+		expect(actions.some((a) => a.type === 'modal/updateUserKey')).toBe(true)
+	})
+
+	it('submits edited review and calls fetch', async () => {
+		renderModal()
+
+		fireEvent.click(screen.getByText('user-edit.submit'))
+
+		await waitFor(() => {
+			expect(global.fetch).toHaveBeenCalled()
+		})
 	})
 	it('Should not have a11y violation', async () => {
-		const { container } = render(
-			<UserProvider>
-				<Provider store={store}>
-					<UserEditReviewModal
-						selectedReview={mockSelectedReview}
-						handleMutate={jest.fn()}
-						setSelectedReview={jest.fn()}
-						userEditReviewOpen={true}
-						setUserEditReviewOpen={jest.fn()}
-						userKey={''}
-						setUserKey={jest.fn()}
-						setUserEditMode={jest.fn()}
-					/>
-				</Provider>
-			</UserProvider>,
-		)
+		const { container } = renderModal()
 		const result = await axe(container)
 		expect(result).toHaveNoViolations()
 	})

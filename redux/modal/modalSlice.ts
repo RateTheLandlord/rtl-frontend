@@ -150,9 +150,6 @@ const modalSlice = createSlice({
 		updateSpamDetectionMethod(state, action: PayloadAction<string>) {
 			state.spamDetectionMethod = action.payload
 		},
-		updateLandlord(state, action: PayloadAction<string>) {
-			state.landlord = action.payload
-		},
 	},
 })
 
@@ -182,6 +179,5 @@ export const {
 	updateSuccessModalOpen,
 	updateSpamReviewModalOpen,
 	updateSpamDetectionMethod,
-	updateLandlord,
 } = modalSlice.actions
 export default modalSlice.reducer

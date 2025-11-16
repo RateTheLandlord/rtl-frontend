@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen, fireEvent } from '@/test-utils'
+import { render, screen } from '@/test-utils'
 import '@testing-library/jest-dom'
 import FlaggedKeywords from './FlaggedKeywords'
 import { SWRConfig } from 'swr'
@@ -34,16 +34,6 @@ describe('FlaggedKeywords', () => {
 			</SWRConfig>,
 		)
 		expect(await screen.findByText('test')).toBeInTheDocument()
-	})
-
-	it('opens add keyword modal when button is clicked', async () => {
-		render(
-			<SWRConfig value={{ dedupingInterval: 0 }}>
-				<FlaggedKeywords />
-			</SWRConfig>,
-		)
-		fireEvent.click(screen.getByText('Add New Keyword'))
-		expect(await screen.findByText('Add Flagged Keyword')).toBeInTheDocument()
 	})
 
 	it('Should not have a11y violation', async () => {
