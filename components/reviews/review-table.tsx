@@ -13,9 +13,14 @@ import {
 interface IProps {
 	data: UserReview[]
 	isLoading: boolean
+	landlordPage?: boolean
 }
 
-function ReviewTable({ data, isLoading }: IProps): JSX.Element {
+function ReviewTable({
+	data,
+	isLoading,
+	landlordPage = false,
+}: IProps): JSX.Element {
 	const dispatch = useAppDispatch()
 	const handleReport = (review: UserReview) => {
 		dispatch(updateSelectedReview(review))
@@ -51,6 +56,7 @@ function ReviewTable({ data, isLoading }: IProps): JSX.Element {
 										handleReport={handleReport}
 										handleUserEdit={handleUserEdit}
 										handleUserDelete={handleUserDelete}
+										landlordPage={landlordPage}
 									/>
 								)
 							})}

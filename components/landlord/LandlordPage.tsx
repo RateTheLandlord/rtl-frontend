@@ -8,16 +8,11 @@ import { SuspiciousLandlord, UserReview } from '@/util/interfaces/interfaces'
 import Spinner from '../ui/Spinner'
 import { sortOptions } from '@/util/helpers/filter-options'
 import SortList from '../reviews/ui/sort-list'
-import ReviewComponent from '../reviews/ReviewComponent'
+import ReviewTable from '../reviews/review-table'
 import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
 import AdsComponent from '../adsense/Adsense'
 import { ILandlordReviews } from '@/lib/review/types/Queries'
-import { useAppDispatch } from '@/redux/hooks'
-import {
-	updateSelectedReview,
-	updateUserReportModal,
-} from '@/redux/modal/modalSlice'
 
 const filteredSortOptions = sortOptions.slice(2)
 
@@ -27,7 +22,6 @@ interface IProps {
 }
 
 const LandlordPage = ({ landlord, data }: IProps) => {
-	const dispatch = useAppDispatch()
 	const t = useTranslations('reviews')
 	const [bannerOpen, setBannerOpen] = useState<boolean>(false)
 	const [sortedReviews, setSortedReviews] = useState<UserReview[]>([])
@@ -48,11 +42,6 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 			setBannerOpen(false)
 		}
 	}, [suspiciousLandlord])
-
-	const handleReport = (review: UserReview) => {
-		dispatch(updateSelectedReview(review))
-		dispatch(updateUserReportModal(true))
-	}
 
 	useEffect(() => {
 		switch (sortState.value) {
@@ -117,18 +106,12 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 						/>
 					</div>
 					<div className='flex w-full flex-col gap-3'>
-						{sortedReviews.map((review) => {
-							return (
-								<ReviewComponent
-									key={review.id}
-									review={review}
-									handleReport={handleReport}
-									landlordPage={true}
-								/>
-							)
-						})}
+						<ReviewTable
+							data={sortedReviews}
+							isLoading={false}
+							landlordPage={true}
+						/>
 					</div>
-
 					<OtherLandlordInfo landlord={landlord} />
 				</div>
 			</div>

@@ -106,7 +106,7 @@ const ReviewComponent = ({
 							<FlagIcon className='text-red-700' width={20} />
 						</ButtonLight>
 						{review.has_user_code ? (
-							<ButtonLight onClick={() => setShowEditOptions(true)}>
+							<ButtonLight onClick={() => setShowEditOptions(!showEditOptions)}>
 								<PencilIcon className='text-black-700' width={20} />
 							</ButtonLight>
 						) : null}
