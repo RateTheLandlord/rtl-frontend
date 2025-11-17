@@ -1,5 +1,4 @@
-import { UserReview } from '@/util/interfaces/interfaces'
-import { Dispatch, Fragment, SetStateAction, useState } from 'react'
+import { Fragment, useState } from 'react'
 import {
 	Dialog,
 	DialogPanel,
@@ -14,6 +13,11 @@ import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import CloseButton from '../ui/CloseButton'
 import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	updateAdminRemoveReviewOpen,
+	updateSelectedAdminReview,
+} from '@/redux/modal/modalSlice'
 
 const REVIEW_PERIOD = process.env.REVIEW_PERIOD
 const reviewPeriodNumber =
@@ -21,21 +25,10 @@ const reviewPeriodNumber =
 		? 30 // default to 30 if the value is invalid
 		: Number(REVIEW_PERIOD)
 
-interface IProps {
-	selectedReview: UserReview | undefined
-	handleMutate: () => void
-	setRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
-	removeReviewOpen: boolean
-	setSelectedReview: Dispatch<SetStateAction<UserReview | undefined>>
-}
-
-const RemoveReviewModal = ({
-	selectedReview,
-	handleMutate,
-	setRemoveReviewOpen,
-	removeReviewOpen,
-	setSelectedReview,
-}: IProps) => {
+const RemoveReviewModal = () => {
+	const { selectedAdminReview: selectedReview, adminRemoveReviewOpen } =
+		useAppSelector((state) => state.modal)
+	const dispatch = useAppDispatch()
 	const landlord = selectedReview?.landlord || ''
 
 	const [deleteReason, setDeleteReason] = useState<string | null>(
@@ -67,7 +60,7 @@ const RemoveReviewModal = ({
 			})
 				.then((result) => {
 					if (!result.ok) {
-						setRemoveReviewOpen(false)
+						dispatch(updateAdminRemoveReviewOpen(false))
 						throw new Error()
 					} else {
 						return result.json()
@@ -88,26 +81,30 @@ const RemoveReviewModal = ({
 							console.log(err)
 							toast.error('Revalidation failed')
 						})
-					handleMutate()
-					setRemoveReviewOpen(false)
+					dispatch(updateAdminRemoveReviewOpen(false))
 					if (data.success) {
 						toast.success('Success!')
 					} else {
 						toast.error(data.message)
 					}
-					setSelectedReview(undefined)
+					dispatch(updateSelectedAdminReview(undefined))
 				})
 				.catch((err) => {
 					console.log(err)
 					toast.error('Failure: Something went wrong, please try again.')
-					setSelectedReview(undefined)
+					dispatch(updateAdminRemoveReviewOpen(false))
+					dispatch(updateSelectedAdminReview(undefined))
 				})
 		}
 	}
 
 	return (
-		<Transition show={removeReviewOpen} as={Fragment}>
-			<Dialog as='div' className='relative z-10' onClose={setRemoveReviewOpen}>
+		<Transition show={adminRemoveReviewOpen} as={Fragment}>
+			<Dialog
+				as='div'
+				className='relative z-10'
+				onClose={() => dispatch(updateAdminRemoveReviewOpen(false))}
+			>
 				<TransitionChild
 					as={Fragment}
 					enter='ease-out duration-300'
@@ -133,7 +130,9 @@ const RemoveReviewModal = ({
 						>
 							<DialogPanel className='relative transform gap-3 overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
 								<div className='absolute top-0 right-0 hidden pt-4 pr-4 sm:block'>
-									<CloseButton onClick={() => setRemoveReviewOpen(false)} />
+									<CloseButton
+										onClick={() => dispatch(updateAdminRemoveReviewOpen(false))}
+									/>
 								</div>
 								<div className='sm:flex sm:items-start'>
 									<div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
@@ -201,8 +200,8 @@ const RemoveReviewModal = ({
 									<Button onClick={() => onSubmitRemoveReview()}>Submit</Button>
 									<ButtonLight
 										onClick={() => {
-											setSelectedReview(undefined)
-											setRemoveReviewOpen(false)
+											dispatch(updateAdminRemoveReviewOpen(false))
+											dispatch(updateSelectedAdminReview(undefined))
 										}}
 									>
 										Cancel

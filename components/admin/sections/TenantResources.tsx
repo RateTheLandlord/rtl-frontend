@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import {
 	Menu,
 	MenuButton,
@@ -12,122 +12,29 @@ import Button from '@/components/ui/button'
 import useSWR from 'swr'
 import { fetchWithBody } from '@/util/helpers/fetcher'
 import Spinner from '@/components/ui/Spinner'
-import { Resource, ResourceResponse } from '@/util/interfaces/interfaces'
-import AddResourceModal from '../components/AddResourceModal'
-import Modal from '@/components/modal/Modal'
-import EditResourceModal from '@/components/modal/EditResourceModal'
-import RemoveResourceModal from '@/components/modal/RemoveResourceModal'
-import { toast } from 'react-toastify'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { resetResource } from '@/redux/resource/resourceSlice'
+import { ResourceResponse } from '@/util/interfaces/interfaces'
+import { useAppDispatch } from '@/redux/hooks'
+import {
+	updateAddResourceOpen,
+	updateEditResourceOpen,
+	updateRemoveResourceOpen,
+	updateSelectedResource,
+} from '@/redux/modal/modalSlice'
 
 const TenantResources = () => {
-	const { data, error, mutate } = useSWR<ResourceResponse, unknown>(
+	const { data, error } = useSWR<ResourceResponse, unknown>(
 		['/api/tenant-resources/get-resources', { limit: '1000' }],
 		fetchWithBody,
 	)
-
-	const {
-		name,
-		country_code,
-		city,
-		state,
-		address,
-		phone_number,
-		description,
-		href,
-	} = useAppSelector((state) => state.resource)
 	const dispatch = useAppDispatch()
-	const [loading, setLoading] = useState(false)
 
-	const [selectedResource, setSelectedResource] = useState<
-		Resource | undefined
-	>()
-
-	const [addResourceOpen, setAddResourceOpen] = useState(false)
-	const [editResourceOpen, setEditResourceOpen] = useState(false)
-	const [deleteResourceOpen, setDeleteResourceOpen] = useState(false)
 	if (error) return <div>failed to load...</div>
 	if (!data) return <Spinner />
 
-	const resetForm = () => {
-		dispatch(resetResource())
-	}
-
-	const onSubmitNewResource = () => {
-		setLoading(true)
-		const newResource = {
-			name: name,
-			country_code,
-			city: city,
-			state: state,
-			address: address,
-			phone_number,
-			description: description,
-			href: href,
-		}
-
-		fetch('/api/tenant-resources/add-resource', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(newResource),
-		})
-			.then((result) => {
-				if (!result.ok) {
-					throw new Error()
-				}
-			})
-			.then(() => {
-				mutate().catch(() => console.error('Failed to Mutute Tenant Resources'))
-				setAddResourceOpen(false)
-				toast.success('Success!')
-				resetForm()
-			})
-			.catch((err) => {
-				console.log(err)
-				toast.error('Failure: Something went wrong, please try again.')
-			})
-			.finally(() => setLoading(false))
-	}
-
-	const handleMutate = () => {
-		mutate().catch(() => console.error('Failed to Mutute Tenant Resources'))
-	}
 	return (
 		<div className='container flex w-full flex-col justify-center'>
-			{editResourceOpen && (
-				<EditResourceModal
-					selectedResource={selectedResource}
-					handleMutate={handleMutate}
-					setEditResourceOpen={setEditResourceOpen}
-					editResourceOpen={editResourceOpen}
-					setSelectedResource={setSelectedResource}
-				/>
-			)}
-			{deleteResourceOpen && (
-				<RemoveResourceModal
-					selectedResource={selectedResource}
-					handleMutate={handleMutate}
-					setRemoveResourceOpen={setDeleteResourceOpen}
-					removeResourceOpen={deleteResourceOpen}
-					setSelectedResource={setSelectedResource}
-				/>
-			)}
-			{addResourceOpen && (
-				<Modal
-					loading={loading}
-					title='Add Tenant Resource'
-					open={addResourceOpen}
-					setOpen={setAddResourceOpen}
-					element={<AddResourceModal />}
-					onSubmit={onSubmitNewResource}
-					selectedId={1}
-				/>
-			)}
 			<div className='flex w-full justify-end'>
-				<Button onClick={() => setAddResourceOpen(true)}>
+				<Button onClick={() => dispatch(updateAddResourceOpen(true))}>
 					Add New Resource
 				</Button>
 			</div>
@@ -181,8 +88,8 @@ const TenantResources = () => {
 												{({ active }) => (
 													<button
 														onClick={() => {
-															setEditResourceOpen(true)
-															setSelectedResource(resource)
+															dispatch(updateEditResourceOpen(true))
+															dispatch(updateSelectedResource(resource))
 														}}
 														className={classNames(
 															active ? 'bg-gray-50' : '',
@@ -199,8 +106,8 @@ const TenantResources = () => {
 												{({ active }) => (
 													<button
 														onClick={() => {
-															setDeleteResourceOpen(true)
-															setSelectedResource(resource)
+															dispatch(updateRemoveResourceOpen(true))
+															dispatch(updateSelectedResource(resource))
 														}}
 														className={classNames(
 															active ? 'bg-gray-50' : '',

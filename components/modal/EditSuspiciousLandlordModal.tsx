@@ -1,33 +1,27 @@
 import LargeTextInput from '@/components/ui/LargeTextInput'
 import Spinner from '@/components/ui/Spinner'
 import TextInput from '@/components/ui/TextInput'
-import { SuspiciousLandlord } from '@/util/interfaces/interfaces'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	updateEditResourceOpen,
+	updateSelectedSuspiciousLandlord,
+} from '@/redux/modal/modalSlice'
 import {
 	Dialog,
 	DialogPanel,
 	Transition,
 	TransitionChild,
 } from '@headlessui/react'
-import { Dispatch, Fragment, SetStateAction, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { toast } from 'react-toastify'
 
-interface IProps {
-	selectedSuspiciousLandlord: SuspiciousLandlord | undefined
-	handleMutate: () => void
-	setEditSuspiciousLandlordOpen: Dispatch<SetStateAction<boolean>>
-	editSuspiciousLandlordOpen: boolean
-	setSelectedSuspiciousLandlord: Dispatch<
-		SetStateAction<SuspiciousLandlord | undefined>
-	>
-}
+const EditSuspiciousLandlordModal = () => {
+	const {
+		selectedSuspiciousLandlord: selectedSuspiciousLandlord,
+		editSuspiciousLandlordOpen,
+	} = useAppSelector((state) => state.modal)
+	const dispatch = useAppDispatch()
 
-const EditSuspiciousLandlordModal = ({
-	selectedSuspiciousLandlord,
-	handleMutate,
-	setEditSuspiciousLandlordOpen,
-	editSuspiciousLandlordOpen,
-	setSelectedSuspiciousLandlord,
-}: IProps) => {
 	const [loading, setLoading] = useState(false)
 	const [landlord, setLandlord] = useState<string>(
 		selectedSuspiciousLandlord?.landlord || '',
@@ -56,15 +50,15 @@ const EditSuspiciousLandlordModal = ({
 				}
 			})
 			.then(() => {
-				handleMutate()
-				setEditSuspiciousLandlordOpen(false)
 				toast.success('Success!')
-				setSelectedSuspiciousLandlord(undefined)
+				dispatch(updateEditResourceOpen(false))
+				dispatch(updateSelectedSuspiciousLandlord(undefined))
 			})
 			.catch((err) => {
 				console.log(err)
 				toast.error('Failure: Something went wrong, please try again.')
-				setSelectedSuspiciousLandlord(undefined)
+				dispatch(updateEditResourceOpen(false))
+				dispatch(updateSelectedSuspiciousLandlord(undefined))
 			})
 			.finally(() => setLoading(false))
 	}
@@ -74,7 +68,7 @@ const EditSuspiciousLandlordModal = ({
 			<Dialog
 				as='div'
 				className='relative z-50'
-				onClose={setEditSuspiciousLandlordOpen}
+				onClose={() => dispatch(updateEditResourceOpen(false))}
 			>
 				<TransitionChild
 					as={Fragment}
@@ -133,8 +127,8 @@ const EditSuspiciousLandlordModal = ({
 										type='button'
 										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 shadow-sm hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm'
 										onClick={() => {
-											setSelectedSuspiciousLandlord(undefined)
-											setEditSuspiciousLandlordOpen(false)
+											dispatch(updateEditResourceOpen(false))
+											dispatch(updateSelectedSuspiciousLandlord(undefined))
 										}}
 									>
 										Cancel

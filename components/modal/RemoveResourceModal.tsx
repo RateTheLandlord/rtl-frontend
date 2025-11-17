@@ -1,5 +1,4 @@
-import { Resource } from '@/util/interfaces/interfaces'
-import { Dispatch, Fragment, SetStateAction, useState } from 'react'
+import { Fragment, useState } from 'react'
 import {
 	Dialog,
 	DialogPanel,
@@ -11,22 +10,17 @@ import { toast } from 'react-toastify'
 import CloseButton from '../ui/CloseButton'
 import ButtonLight from '../ui/button-light'
 import Button from '../ui/button'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	updateRemoveResourceOpen,
+	updateSelectedResource,
+} from '@/redux/modal/modalSlice'
 
-interface IProps {
-	selectedResource: Resource | undefined
-	handleMutate: () => void
-	setRemoveResourceOpen: Dispatch<SetStateAction<boolean>>
-	removeResourceOpen: boolean
-	setSelectedResource: Dispatch<SetStateAction<Resource | undefined>>
-}
-
-const RemoveResourceModal = ({
-	selectedResource,
-	handleMutate,
-	setRemoveResourceOpen,
-	removeResourceOpen,
-	setSelectedResource,
-}: IProps) => {
+const RemoveResourceModal = () => {
+	const { selectedResource, removeResourceOpen } = useAppSelector(
+		(state) => state.modal,
+	)
+	const dispatch = useAppDispatch()
 	const [loading, setLoading] = useState(false)
 	const onSubmitRemoveResource = () => {
 		if (selectedResource) {
@@ -44,15 +38,15 @@ const RemoveResourceModal = ({
 					}
 				})
 				.then(() => {
-					handleMutate()
-					setRemoveResourceOpen(false)
+					dispatch(updateRemoveResourceOpen(false))
 					toast.success('Success!')
-					setSelectedResource(undefined)
+					dispatch(updateSelectedResource(undefined))
 				})
 				.catch((err) => {
 					console.log(err)
 					toast.error('Failure: Something went wrong, please try again.')
-					setSelectedResource(undefined)
+					dispatch(updateRemoveResourceOpen(false))
+					dispatch(updateSelectedResource(undefined))
 				})
 				.finally(() => setLoading(false))
 		}
@@ -63,7 +57,7 @@ const RemoveResourceModal = ({
 			<Dialog
 				as='div'
 				className='relative z-50'
-				onClose={setRemoveResourceOpen}
+				onClose={() => dispatch(updateRemoveResourceOpen(false))}
 			>
 				<TransitionChild
 					as={Fragment}
@@ -90,7 +84,9 @@ const RemoveResourceModal = ({
 						>
 							<DialogPanel className='relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
 								<div className='absolute top-0 right-0 hidden pt-4 pr-4 sm:block'>
-									<CloseButton onClick={() => setRemoveResourceOpen(false)} />
+									<CloseButton
+										onClick={() => dispatch(updateRemoveResourceOpen(false))}
+									/>
 								</div>
 								<div className='sm:flex sm:items-start'>
 									<div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
@@ -121,8 +117,8 @@ const RemoveResourceModal = ({
 
 									<ButtonLight
 										onClick={() => {
-											setSelectedResource(undefined)
-											setRemoveResourceOpen(false)
+											dispatch(updateRemoveResourceOpen(false))
+											dispatch(updateSelectedResource(undefined))
 										}}
 									>
 										Cancel

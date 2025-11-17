@@ -1,4 +1,4 @@
-import React, { Fragment, SetStateAction } from 'react'
+import React, { Fragment } from 'react'
 import {
 	Dialog,
 	DialogPanel,
@@ -9,24 +9,24 @@ import {
 import Button from '../ui/button'
 import posthog from 'posthog-js'
 import { useTranslations } from 'next-intl'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { updateSpamReviewModalOpen } from '@/redux/modal/modalSlice'
 
-interface IProps {
-	isOpen: boolean
-	setIsOpen: React.Dispatch<SetStateAction<boolean>>
-	detectionMethod: string
-	landlord: string
-}
-
-function SpamReviewModal({
-	isOpen,
-	setIsOpen,
-	detectionMethod,
-	landlord,
-}: IProps) {
+function SpamReviewModal() {
+	const {
+		spamReviewModalOpen: isOpen,
+		spamDetectionMethod: detectionMethod,
+		landlord,
+	} = useAppSelector((state) => state.modal)
+	const dispatch = useAppDispatch()
 	const t = useTranslations('createreview')
 	return (
 		<Transition.Root show={isOpen} as={Fragment}>
-			<Dialog as='div' className='relative z-10' onClose={setIsOpen}>
+			<Dialog
+				as='div'
+				className='relative z-10'
+				onClose={() => dispatch(updateSpamReviewModalOpen(false))}
+			>
 				<TransitionChild
 					as={Fragment}
 					enter='ease-out duration-300'
@@ -69,7 +69,7 @@ function SpamReviewModal({
 								<div className='mt-5 flex w-full justify-end sm:mt-6'>
 									<Button
 										onClick={() => {
-											setIsOpen(false)
+											dispatch(updateSpamReviewModalOpen(false))
 											posthog.capture('spam_modal_viewed', {
 												landlord,
 											})

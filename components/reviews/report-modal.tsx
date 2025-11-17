@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState } from 'react'
+import React, { useState } from 'react'
 import {
 	Description,
 	Dialog,
@@ -7,15 +7,10 @@ import {
 } from '@headlessui/react'
 import ButtonLight from '../ui/button-light'
 import Button from '../ui/button'
-import { UserReview } from '@/util/interfaces/interfaces'
 import { useTranslations } from 'next-intl'
 import { useReCaptcha } from 'next-recaptcha-v3'
-
-interface IProps {
-	isOpen: boolean
-	setIsOpen: React.Dispatch<SetStateAction<boolean>>
-	selectedReview: UserReview | undefined
-}
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { updateUserReportModal } from '@/redux/modal/modalSlice'
 
 interface IReportReason {
 	id: number
@@ -51,7 +46,11 @@ const reportReasons: IReportReason[] = [
 	},
 ]
 
-function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
+function ReportModal() {
+	const { selectedReview, userReportModalOpen: isOpen } = useAppSelector(
+		(state) => state.modal,
+	)
+	const dispatch = useAppDispatch()
 	const t = useTranslations('reviews')
 	const tr = useTranslations('report')
 	const [reason, setReason] = useState<string>(reportReasons[0].key)
@@ -105,7 +104,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 				setReason(reportReasons[0].key)
 				setSubmitSuccess(false)
 				setSubmitError(false)
-				setIsOpen(false)
+				dispatch(updateUserReportModal(false))
 			}}
 		>
 			<div
@@ -126,7 +125,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 										setReason(reportReasons[0].key)
 										setSubmitSuccess(false)
 										setSubmitError(false)
-										setIsOpen(false)
+										dispatch(updateUserReportModal(false))
 									}}
 								>
 									{t('report.cancel')}
@@ -143,7 +142,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 										setReason(reportReasons[0].key)
 										setSubmitSuccess(false)
 										setSubmitError(false)
-										setIsOpen(false)
+										dispatch(updateUserReportModal(false))
 									}}
 								>
 									{t('report.cancel')}
@@ -225,7 +224,7 @@ function ReportModal({ isOpen, setIsOpen, selectedReview }: IProps) {
 									onClick={() => {
 										setSelectedReason(reportReasons[0])
 										setReason(reportReasons[0].key)
-										setIsOpen(false)
+										dispatch(updateUserReportModal(false))
 									}}
 								>
 									{t('report.cancel')}

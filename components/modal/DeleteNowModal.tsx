@@ -1,5 +1,4 @@
-import { Review } from '@/util/interfaces/interfaces'
-import { Dispatch, Fragment, SetStateAction } from 'react'
+import { Fragment } from 'react'
 import {
 	Dialog,
 	DialogPanel,
@@ -11,22 +10,17 @@ import { toast } from 'react-toastify'
 import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import CloseButton from '../ui/CloseButton'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	updateDeleteNowOpen,
+	updateSelectedAdminReview,
+} from '@/redux/modal/modalSlice'
 
-interface IProps {
-	selectedReview: Review | undefined
-	handleMutate: () => void
-	setDeleteReviewOpen: Dispatch<SetStateAction<boolean>>
-	deleteReviewOpen: boolean
-	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
-}
-
-const DeleteNow = ({
-	selectedReview,
-	handleMutate,
-	setDeleteReviewOpen,
-	deleteReviewOpen,
-	setSelectedReview,
-}: IProps) => {
+const DeleteNow = () => {
+	const { selectedAdminReview: selectedReview, deleteNowOpen } = useAppSelector(
+		(state) => state.modal,
+	)
+	const dispatch = useAppDispatch()
 	const landlord = selectedReview?.landlord || ''
 
 	const restored_by = selectedReview?.restored_by || []
@@ -60,23 +54,26 @@ const DeleteNow = ({
 						.catch((err) => {
 							console.error(err)
 						})
-					handleMutate()
-					setDeleteReviewOpen(false)
+					dispatch(updateDeleteNowOpen(false))
 					toast.success('Success!')
-					setSelectedReview(undefined)
+					dispatch(updateSelectedAdminReview(undefined))
 				})
 				.catch((err) => {
 					console.log(err)
 					toast.error('Failure: Something went wrong, please try again.')
-					setSelectedReview(undefined)
+					dispatch(updateDeleteNowOpen(false))
+					dispatch(updateSelectedAdminReview(undefined))
 				})
 		}
-		handleMutate()
 	}
 
 	return (
-		<Transition show={deleteReviewOpen} as={Fragment}>
-			<Dialog as='div' className='relative z-10' onClose={setDeleteReviewOpen}>
+		<Transition show={deleteNowOpen} as={Fragment}>
+			<Dialog
+				as='div'
+				className='relative z-10'
+				onClose={() => dispatch(updateDeleteNowOpen(false))}
+			>
 				<TransitionChild
 					as={Fragment}
 					enter='ease-out duration-300'
@@ -101,7 +98,9 @@ const DeleteNow = ({
 							leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
 						>
 							<DialogPanel className='relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6'>
-								<CloseButton onClick={() => setDeleteReviewOpen(false)} />
+								<CloseButton
+									onClick={() => dispatch(updateDeleteNowOpen(false))}
+								/>
 								<div className='sm:flex sm:items-start'>
 									<div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
 										<DialogTitle
@@ -152,8 +151,8 @@ const DeleteNow = ({
 									</Button>
 									<ButtonLight
 										onClick={() => {
-											setSelectedReview(undefined)
-											setDeleteReviewOpen(false)
+											dispatch(updateDeleteNowOpen(false))
+											dispatch(updateSelectedAdminReview(undefined))
 										}}
 									>
 										Cancel

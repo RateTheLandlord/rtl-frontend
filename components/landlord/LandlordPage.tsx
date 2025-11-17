@@ -1,6 +1,5 @@
 /* eslint-disable no-case-declarations */
 import { useEffect, useState } from 'react'
-import ReportModal from '../reviews/report-modal'
 import LandlordInfo from './LandlordInfo'
 import OtherLandlordInfo from './OtherLandlord'
 import LandlordBanner from './LandlordBanner'
@@ -9,13 +8,11 @@ import { SuspiciousLandlord, UserReview } from '@/util/interfaces/interfaces'
 import Spinner from '../ui/Spinner'
 import { sortOptions } from '@/util/helpers/filter-options'
 import SortList from '../reviews/ui/sort-list'
-import ReviewComponent from '../reviews/ReviewComponent'
+import ReviewTable from '../reviews/review-table'
 import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
 import AdsComponent from '../adsense/Adsense'
 import { ILandlordReviews } from '@/lib/review/types/Queries'
-import UserEditReviewModal from '../modal/UserEditReviewModal'
-import UserRemoveReviewModal from '../modal/UserRemoveReviewModal'
 
 const filteredSortOptions = sortOptions.slice(2)
 
@@ -26,17 +23,10 @@ interface IProps {
 
 const LandlordPage = ({ landlord, data }: IProps) => {
 	const t = useTranslations('reviews')
-	const [reportOpen, setReportOpen] = useState<boolean>(false)
 	const [bannerOpen, setBannerOpen] = useState<boolean>(false)
 	const [sortedReviews, setSortedReviews] = useState<UserReview[]>([])
 
 	const [sortState, setSortState] = useState(filteredSortOptions[0])
-
-	const [selectedReview, setSelectedReview] = useState<UserReview | undefined>()
-	const [userEditMode, setUserEditMode] = useState(false)
-	const [userEditReviewOpen, setUserEditReviewOpen] = useState(false)
-	const [userRemoveReviewOpen, setUserRemoveReviewOpen] = useState(false)
-	const [userKey, setUserKey] = useState('')
 
 	const { data: suspiciousLandlord } = useSWR<SuspiciousLandlord | boolean>(
 		`/api/suspicious-landlords/get-suspicious-landlord?landlord=${encodeURIComponent(
@@ -52,16 +42,6 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 			setBannerOpen(false)
 		}
 	}, [suspiciousLandlord])
-
-	const handleReport = (review: UserReview) => {
-		setSelectedReview(review)
-		setReportOpen(true)
-	}
-
-	const handleUserEditMode = (review: UserReview) => {
-		setSelectedReview(review)
-		setUserEditMode(!userEditMode)
-	}
 
 	useEffect(() => {
 		switch (sortState.value) {
@@ -106,39 +86,6 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 
 	return (
 		<>
-			{selectedReview && userEditMode ? (
-				<>
-					<UserEditReviewModal
-						selectedReview={selectedReview}
-						handleMutate={() => {
-							console.log('')
-						}}
-						setSelectedReview={setSelectedReview}
-						userEditReviewOpen={userEditReviewOpen}
-						setUserEditReviewOpen={setUserEditReviewOpen}
-						userKey={userKey}
-						setUserKey={setUserKey}
-						setUserEditMode={setUserEditMode}
-					/>
-					<UserRemoveReviewModal
-						selectedReview={selectedReview}
-						handleMutate={() => {
-							console.log('')
-						}}
-						setSelectedReview={setSelectedReview}
-						userRemoveReviewOpen={userRemoveReviewOpen}
-						setUserRemoveReviewOpen={setUserRemoveReviewOpen}
-						userKey={userKey}
-						setUserKey={setUserKey}
-						setUserEditMode={setUserEditMode}
-					/>
-				</>
-			) : null}
-			<ReportModal
-				isOpen={reportOpen}
-				setIsOpen={setReportOpen}
-				selectedReview={selectedReview}
-			/>
 			<div className='mt-3 flex w-full justify-center'>
 				<div className='mx-auto flex max-w-2xl flex-col gap-3 px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
 					<AdsComponent slot='1526837416' />
@@ -159,20 +106,12 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 						/>
 					</div>
 					<div className='flex w-full flex-col gap-3'>
-						{sortedReviews.map((review) => {
-							return (
-								<ReviewComponent
-									key={review.id}
-									review={review}
-									handleReport={handleReport}
-									landlordPage={true}
-									handleUserEditMode={handleUserEditMode}
-									userEditMode={userEditMode}
-								/>
-							)
-						})}
+						<ReviewTable
+							data={sortedReviews}
+							isLoading={false}
+							landlordPage={true}
+						/>
 					</div>
-
 					<OtherLandlordInfo landlord={landlord} />
 				</div>
 			</div>

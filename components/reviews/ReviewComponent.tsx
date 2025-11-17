@@ -6,32 +6,28 @@ import ButtonLight from '../ui/button-light'
 import { FlagIcon, PencilIcon } from '@heroicons/react/solid'
 import { UserReview } from '@/util/interfaces/interfaces'
 import { classNames } from '@/util/helpers/helper-functions'
+import { useState } from 'react'
 
 interface IProps {
 	review: UserReview
 	i?: number
 	handleReport: (review: UserReview) => void
-	handleUserEditMode: (review: UserReview) => void
-	userEditMode: boolean
 	handleUserEdit?: (review: UserReview) => void
 	handleUserDelete?: (review: UserReview) => void
 	landlordPage?: boolean
-	selectedReviewID?: number
 }
 
 const ReviewComponent = ({
 	review,
 	i,
 	handleReport,
-	handleUserEditMode,
-	userEditMode,
 	handleUserEdit,
 	handleUserDelete,
 	landlordPage = false,
-	selectedReviewID,
 }: IProps) => {
 	const t = useTranslations()
 	const date = new Date(review.date_added).toLocaleDateString()
+	const [showEditOptions, setShowEditOptions] = useState(false)
 	const ratings = [
 		{ title: t('reviews.health'), rating: review.health },
 		{ title: t('reviews.respect'), rating: review.respect },
@@ -110,16 +106,13 @@ const ReviewComponent = ({
 							<FlagIcon className='text-red-700' width={20} />
 						</ButtonLight>
 						{review.has_user_code ? (
-							<ButtonLight onClick={() => handleUserEditMode(review)}>
+							<ButtonLight onClick={() => setShowEditOptions(!showEditOptions)}>
 								<PencilIcon className='text-black-700' width={20} />
 							</ButtonLight>
 						) : null}
 					</div>
 
-					{handleUserDelete &&
-					handleUserEdit &&
-					userEditMode &&
-					review.id === selectedReviewID ? (
+					{handleUserDelete && handleUserEdit && showEditOptions ? (
 						<>
 							<div className='mt-4 w-full'>
 								<ButtonLight onClick={() => handleUserDelete(review)}>

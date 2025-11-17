@@ -6,9 +6,6 @@ import {
 	Options,
 } from '@/util/interfaces/interfaces'
 import React, { useEffect, useState } from 'react'
-import ReportModal from '@/components/reviews/report-modal'
-import UserEditReviewModal from '../modal/UserEditReviewModal'
-import UserRemoveReviewModal from '../modal/UserRemoveReviewModal'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import MobileReviewFilters from './mobile-review-filters'
 import { useTranslations } from 'next-intl'
@@ -71,13 +68,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 	// State
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
 	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
-	const [userEditMode, setUserEditMode] = useState(false)
-	const [userEditReviewOpen, setUserEditReviewOpen] = useState(false)
-	const [reportOpen, setReportOpen] = useState<boolean>(false)
-	const [userRemoveReviewOpen, setUserRemoveReviewOpen] = useState(false)
-	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
 	const [selectedIndex, setSelectedIndex] = useState(0)
-	const [userKey, setUserKey] = useState('')
 
 	const [dynamicCityOptions, setDynamicCityOptions] = useState<Options[]>([])
 
@@ -146,45 +137,6 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 
 	return (
 		<>
-			<ReportModal
-				isOpen={reportOpen}
-				setIsOpen={setReportOpen}
-				selectedReview={selectedReview}
-			/>
-			<ReportModal
-				isOpen={reportOpen}
-				setIsOpen={setReportOpen}
-				selectedReview={selectedReview}
-			/>
-			{selectedReview && userEditMode ? (
-				<>
-					<UserEditReviewModal
-						selectedReview={selectedReview}
-						handleMutate={() => {
-							console.log('')
-						}}
-						setSelectedReview={setSelectedReview}
-						userEditReviewOpen={userEditReviewOpen}
-						setUserEditReviewOpen={setUserEditReviewOpen}
-						userKey={userKey}
-						setUserKey={setUserKey}
-						setUserEditMode={setUserEditMode}
-					/>
-					<UserRemoveReviewModal
-						selectedReview={selectedReview}
-						handleMutate={() => {
-							console.log('')
-						}}
-						setSelectedReview={setSelectedReview}
-						userRemoveReviewOpen={userRemoveReviewOpen}
-						setUserRemoveReviewOpen={setUserRemoveReviewOpen}
-						userKey={userKey}
-						setUserKey={setUserKey}
-						setUserEditMode={setUserEditMode}
-					/>
-				</>
-			) : null}
-
 			<div className='w-full'>
 				<div className='mx-auto max-w-7xl border-b-gray-200 px-4 py-4 sm:px-6 lg:border-b lg:px-8'>
 					<StateInfo
@@ -282,17 +234,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 											</p>
 										</div>
 									) : (
-										<ReviewTable
-											data={reviews}
-											setReportOpen={setReportOpen}
-											setSelectedReview={setSelectedReview}
-											userEditMode={userEditMode}
-											setUserEditMode={setUserEditMode}
-											setUserEditReviewOpen={setUserEditReviewOpen}
-											setUserRemoveReviewOpen={setUserRemoveReviewOpen}
-											selectedReviewID={selectedReview?.id}
-											isLoading={isLoadingHook}
-										/>
+										<ReviewTable data={reviews} isLoading={isLoadingHook} />
 									)}
 								</div>
 							</TabPanel>

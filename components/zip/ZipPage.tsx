@@ -1,5 +1,4 @@
-import { useMemo, useState } from 'react'
-import ReportModal from '../reviews/report-modal'
+import { useMemo } from 'react'
 import { UserReview } from '@/util/interfaces/interfaces'
 import AdsComponent from '../adsense/Adsense'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
@@ -8,8 +7,6 @@ import { IZipReviews } from '@/lib/review/types/review'
 import useInfiniteScroll from '@/util/hooks/useInfiniteScroll'
 import { ISortOptions } from '../reviews/review'
 import ReviewTable from '../reviews/review-table'
-import UserEditReviewModal from '../modal/UserEditReviewModal'
-import UserRemoveReviewModal from '../modal/UserRemoveReviewModal'
 
 interface IProps {
 	city: string
@@ -20,14 +17,6 @@ interface IProps {
 }
 
 const ZipPage = ({ city, state, country, zip, data }: IProps) => {
-	// State
-	const [reportOpen, setReportOpen] = useState<boolean>(false)
-	const [selectedReview, setSelectedReview] = useState<UserReview | undefined>()
-	const [userEditMode, setUserEditMode] = useState(false)
-	const [userEditReviewOpen, setUserEditReviewOpen] = useState(false)
-	const [userRemoveReviewOpen, setUserRemoveReviewOpen] = useState(false)
-	const [userKey, setUserKey] = useState('')
-
 	// Query
 	const queryParams = useMemo(() => {
 		return {
@@ -49,39 +38,6 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 
 	return (
 		<>
-			<ReportModal
-				isOpen={reportOpen}
-				setIsOpen={setReportOpen}
-				selectedReview={selectedReview}
-			/>
-			{selectedReview && userEditMode ? (
-				<>
-					<UserEditReviewModal
-						selectedReview={selectedReview}
-						handleMutate={() => {
-							console.log('')
-						}}
-						setSelectedReview={setSelectedReview}
-						userEditReviewOpen={userEditReviewOpen}
-						setUserEditReviewOpen={setUserEditReviewOpen}
-						userKey={userKey}
-						setUserKey={setUserKey}
-						setUserEditMode={setUserEditMode}
-					/>
-					<UserRemoveReviewModal
-						selectedReview={selectedReview}
-						handleMutate={() => {
-							console.log('')
-						}}
-						setSelectedReview={setSelectedReview}
-						userRemoveReviewOpen={userRemoveReviewOpen}
-						setUserRemoveReviewOpen={setUserRemoveReviewOpen}
-						userKey={userKey}
-						setUserKey={setUserKey}
-						setUserEditMode={setUserEditMode}
-					/>
-				</>
-			) : null}
 			<div className='w-full px-2 md:px-0'>
 				<AdsComponent slot='1526837416' />
 				<div className='mx-auto mt-5 flex max-w-2xl flex-col gap-3 lg:max-w-7xl'>
@@ -108,17 +64,7 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 								</p>
 							</div>
 						) : (
-							<ReviewTable
-								data={reviews}
-								setReportOpen={setReportOpen}
-								setSelectedReview={setSelectedReview}
-								isLoading={isLoadingHook}
-								userEditMode={userEditMode}
-								setUserEditMode={setUserEditMode}
-								setUserEditReviewOpen={setUserEditReviewOpen}
-								setUserRemoveReviewOpen={setUserRemoveReviewOpen}
-								selectedReviewID={selectedReview?.id}
-							/>
+							<ReviewTable data={reviews} isLoading={isLoadingHook} />
 						)}
 					</div>
 				</div>

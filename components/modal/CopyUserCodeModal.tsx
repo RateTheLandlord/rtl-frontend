@@ -7,15 +7,17 @@ import {
 } from '@headlessui/react'
 import Button from '../ui/button'
 import { useTranslations } from 'next-intl'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	updateCopyUserCodeOpen,
+	updateSuccessModalOpen,
+} from '@/redux/modal/modalSlice'
 
-interface IProps {
-	open: boolean
-	setOpen: (bool: boolean) => void
-	setShareOpen: (bool: boolean) => void
-	code: string
-}
-
-const CopyUserCodeModal = ({ open, setOpen, setShareOpen, code }: IProps) => {
+const CopyUserCodeModal = () => {
+	const { copyUserCodeOpen: open, userKey: code } = useAppSelector(
+		(state) => state.modal,
+	)
+	const dispatch = useAppDispatch()
 	const t = useTranslations('user-code')
 	const [copied, setCopied] = useState(false)
 
@@ -87,8 +89,8 @@ const CopyUserCodeModal = ({ open, setOpen, setShareOpen, code }: IProps) => {
 								<div className='mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse'>
 									<Button
 										onClick={() => {
-											setOpen(false)
-											setShareOpen(true)
+											dispatch(updateCopyUserCodeOpen(false))
+											dispatch(updateSuccessModalOpen(true))
 										}}
 									>
 										{t('button')}

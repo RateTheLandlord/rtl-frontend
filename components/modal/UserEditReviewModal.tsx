@@ -1,5 +1,4 @@
-import { UserReview } from '@/util/interfaces/interfaces'
-import { Dispatch, Fragment, SetStateAction, useState } from 'react'
+import { Fragment, useState } from 'react'
 import countries from '@/util/countries/countries.json'
 import { country_codes } from '@/util/helpers/getCountryCodes'
 import {
@@ -15,28 +14,18 @@ import ButtonLight from '../ui/button-light'
 import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	updateSelectedReview,
+	updateUserEditReviewOpen,
+	updateUserKey,
+} from '@/redux/modal/modalSlice'
 
-interface IProps {
-	selectedReview: UserReview | undefined
-	handleMutate: () => void
-	setSelectedReview: Dispatch<SetStateAction<UserReview | undefined>>
-	userEditReviewOpen: boolean
-	setUserEditReviewOpen: Dispatch<SetStateAction<boolean>>
-	userKey: string
-	setUserKey: Dispatch<SetStateAction<string>>
-	setUserEditMode: Dispatch<SetStateAction<boolean>>
-}
-
-const UserEditReviewModal = ({
-	selectedReview,
-	handleMutate,
-	setSelectedReview,
-	userEditReviewOpen,
-	setUserEditReviewOpen,
-	userKey,
-	setUserKey,
-	setUserEditMode,
-}: IProps) => {
+const UserEditReviewModal = () => {
+	const { selectedReview, userKey, userEditReviewOpen } = useAppSelector(
+		(state) => state.modal,
+	)
+	const dispatch = useAppDispatch()
 	const t = useTranslations()
 	const [landlord, setLandlord] = useState<string>(
 		selectedReview?.landlord || '',
@@ -79,9 +68,8 @@ const UserEditReviewModal = ({
 		})
 			.then((result) => {
 				if (!result.ok) {
-					setUserKey('')
-					setUserEditReviewOpen(false)
-					setUserEditMode(false)
+					dispatch(updateUserKey(''))
+					dispatch(updateUserEditReviewOpen(false))
 					throw new Error()
 				} else {
 					return result.json()
@@ -93,10 +81,9 @@ const UserEditReviewModal = ({
 					fetch(
 						`/api/force-revalidate?path=${encodeURIComponent(landlord)}`,
 					).catch(() => console.error('Revalidate Failed'))
-					handleMutate()
-					setUserEditReviewOpen(false)
-					setUserEditMode(false)
-					setSelectedReview(undefined)
+
+					dispatch(updateUserEditReviewOpen(false))
+					dispatch(updateSelectedReview(undefined))
 					posthog.capture('user_code.review_edited')
 				} else {
 					setCodeError(`${t('user-code.incorrect')}`)
@@ -104,12 +91,13 @@ const UserEditReviewModal = ({
 						message: data.message,
 					})
 				}
-				setUserKey('')
+				dispatch(updateUserKey(''))
 			})
 			.catch((err) => {
 				console.log(err)
 				toast.error('Failure: Something went wrong, please try again.')
-				setSelectedReview(undefined)
+				dispatch(updateSelectedReview(undefined))
+				dispatch(updateUserEditReviewOpen(false))
 			})
 	}
 	return (
@@ -117,7 +105,7 @@ const UserEditReviewModal = ({
 			<Dialog
 				as='div'
 				className='relative z-10'
-				onClose={setUserEditReviewOpen}
+				onClose={() => dispatch(updateUserEditReviewOpen(false))}
 			>
 				<TransitionChild
 					as={Fragment}
@@ -312,7 +300,9 @@ const UserEditReviewModal = ({
 												id='user-code'
 												placeholder={t('user-edit.enter-code')}
 												required
-												onChange={(e) => setUserKey(e.target.value)}
+												onChange={(e) =>
+													dispatch(updateUserKey(e.target.value))
+												}
 												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 												data-testid='create-review-form-moderation-reason-1'
 											/>
@@ -326,9 +316,8 @@ const UserEditReviewModal = ({
 									</Button>
 									<ButtonLight
 										onClick={() => {
-											setSelectedReview(undefined)
-											setUserEditReviewOpen(false)
-											setUserEditMode(false)
+											dispatch(updateSelectedReview(undefined))
+											dispatch(updateUserEditReviewOpen(false))
 										}}
 									>
 										{t('user-edit.cancel')}
