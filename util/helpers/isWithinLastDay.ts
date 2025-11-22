@@ -5,9 +5,7 @@ import isBetween from 'dayjs/plugin/isBetween'
 dayjs.extend(isBetween)
 
 const isWithinLastDay = (lastAttempt: Date) => {
-	const currDate = new Date()
-	const yesterday = dayjs(currDate).subtract(1, 'day')
-	return dayjs(lastAttempt).isBetween(yesterday, currDate)
+	return dayjs().diff(dayjs(lastAttempt), 'hour') < 24
 }
 
 export default isWithinLastDay

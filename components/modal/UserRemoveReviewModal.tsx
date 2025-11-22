@@ -42,7 +42,6 @@ const UserRemoveReviewModal = () => {
 				body: JSON.stringify(body),
 			})
 				.then((result) => {
-					console.log(result)
 					if (!result.ok) {
 						dispatch(updateUserKey(''))
 						dispatch(updateUserRemoveReviewOpen(false))

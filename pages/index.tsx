@@ -16,7 +16,7 @@ export default function Home(): JSX.Element {
 	const siteName = 'RateTheLandlord.org'
 
 	return (
-		<div className='flex h-dvh flex-col justify-center'>
+		<div className='flex flex-col justify-center'>
 			<NextSeo
 				title={title}
 				description={desc}
