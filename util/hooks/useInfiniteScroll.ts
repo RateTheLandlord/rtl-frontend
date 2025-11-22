@@ -46,7 +46,6 @@ const useInfiniteScroll = <T>({
 
 		try {
 			const response = await fetchData({ ...queryParams, page })
-			console.log('RESPONSE: ', response)
 			setReviews((prevData) => [...prevData, ...response.reviews])
 			setPage((prevPage) => prevPage + 1)
 			setHasMore(

@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: Resource = {
 	id: 0,
-	date_added: new Date(),
+	date_added: null,
 	name: '',
 	country_code: Country.CA,
 	city: '',
