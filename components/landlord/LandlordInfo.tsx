@@ -58,7 +58,7 @@ const LandlordInfo = ({ name, data }: IProps) => {
 				</div>
 			</div>
 			<div className='mt-4 divide-gray-900/10 border-t'>
-				<Disclosure as='div' className='py-3'>
+				<Disclosure defaultOpen={true} as='div' className='py-3'>
 					{({ open }) => (
 						<>
 							<DisclosureButton className='flex w-full items-start justify-between text-left text-gray-900'>
@@ -71,7 +71,7 @@ const LandlordInfo = ({ name, data }: IProps) => {
 									)}
 								</span>
 							</DisclosureButton>
-							<DisclosurePanel as='dd' className='mt-2 pr-12 pl-4'>
+							<DisclosurePanel className='mt-2 pr-12 pl-4'>
 								<ol className='list-decimal'>
 									{keys.map((item, i) => {
 										return (
