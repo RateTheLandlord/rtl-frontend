@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import cron from 'node-cron'
-import { getDeleted, deleteReview } from '@/lib/review/review'
 import dayjs from 'dayjs'
 import { NextApiRequest, NextApiResponse } from 'next'
+import {
+	deleteReview,
+	getDeleted,
+} from '@/lib/review/models/admin-delete-review'
 
 const readyToDelete = (delete_date: string | null): boolean => {
 	if (delete_date && delete_date.length > 0) {

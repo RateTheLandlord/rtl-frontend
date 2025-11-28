@@ -1,4 +1,4 @@
-import { ZipQuery } from '@/lib/review/review'
+import { ZipQuery } from '@/lib/review/types/Queries'
 import { getZipInfo } from '@/lib/review/zip'
 import rateLimitMiddleware from '@/util/rateLimit'
 import { NextApiRequest, NextApiResponse } from 'next'

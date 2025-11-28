@@ -1,14 +1,20 @@
 import { useTranslations } from 'next-intl'
 import { getStates } from '@/util/countries/combineStates'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { Country } from '@/types/review.types'
+import { updateProvince } from '@/redux/review/reviewSlice'
+import { updateState as updateResourceState } from '@/redux/resource/resourceSlice'
 
 interface IProps {
-	country: string | undefined
-	value: string
-	setValue: (str: string) => void
 	noState?: boolean
+	isResource?: boolean
 }
 
-const StateSelector = ({ country, value, setValue, noState }: IProps) => {
+const StateSelector = ({ noState, isResource }: IProps) => {
+	const { country, province } = useAppSelector((state) => state.review)
+	const { country_code: resourceCountry, state: resourceProvince } =
+		useAppSelector((state) => state.resource)
+	const dispatch = useAppDispatch()
 	const t = useTranslations('createreview')
 	return (
 		<div className='mx-0.5 sm:col-span-1' data-testid='state-selector'>
@@ -17,9 +23,9 @@ const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 				htmlFor='state'
 				className='block text-sm text-gray-700'
 			>
-				{country === 'GB'
+				{country === Country.GB || resourceCountry === Country.GB
 					? t('review-form.region')
-					: country === 'IE'
+					: country === Country.IE || resourceCountry === Country.IE
 						? t('review-form.country')
 						: t('review-form.state')}
 			</label>
@@ -29,8 +35,12 @@ const StateSelector = ({ country, value, setValue, noState }: IProps) => {
 					id='state'
 					name='state'
 					required
-					value={value}
-					onChange={(e) => setValue(e.target.value)}
+					value={isResource ? resourceProvince : province}
+					onChange={(e) =>
+						isResource
+							? dispatch(updateResourceState(e.target.value))
+							: dispatch(updateProvince(e.target.value))
+					}
 					className='block w-full cursor-pointer rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 				>
 					{getStates(country).map((province) => (

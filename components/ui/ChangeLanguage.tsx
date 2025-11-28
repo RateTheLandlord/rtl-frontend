@@ -8,12 +8,16 @@ import {
 } from '@headlessui/react'
 import { Fragment } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
+import posthog from 'posthog-js'
 
 const ChangeLanguage = () => {
 	const router = useRouter()
 	const { locale, locales, asPath } = router
 
 	const changeLanguage = (newLocale: string) => {
+		posthog.capture('language_changed', {
+			locale: newLocale,
+		})
 		router
 			.push(asPath, asPath, { locale: newLocale })
 			.catch(() => console.error('Unable to change Locale'))

@@ -15,10 +15,12 @@
 		},
 		"moderation": {
 			"moderation": "Politique de modération",
-			"info-1": "Les locataires consultent Rate the Landlord pour y trouver des informations sur des propriétaires. Puisque ces informations sont fondés sur les avis de d'autres locataires, nous nous assurons de modérer attentivement les avis soumis afin de garantir que ces-derniers soient pertinents, appropriés et respectent la vie privée des différentes parties.",
-			"info-2": "Nous interdisons strictement la publication de menaces, de discours haineux, de propos obscènes ou discriminatoires.",
-			"info-3": "Rate the Landlord accorde une grande importance à la confidentialité. Le nom des propriétaires est utilisé parce qu'ils·elles offrent un service sous ce nom. Cependant, la publication de tout type d'information personnelle liée aux propriétaires, comme l'adresse ou le numéro de téléphone, n'est en aucun cas autoriée.",
-			"info-4": "Tout avis enfreignant cette politique sera modifié ou supprimé à notre discrétion. Il est à noter que Rate the Landlord reste neutre et n'intervient pas dans les litiges factuels concernant le contenu des avis."
+			"info-1": "Les locataires visitent Rate The Landlord pour trouver des informations sur les propriétaires potentiels à partir des avis de leurs précédents locataires. Nous modérerons soigneusement les avis soumis afin de garantir leur pertinence, leur adéquation et le respect de la vie privée des deux parties.",
+			"info-2": "Nous nous réservons le droit de supprimer ou de censurer les avis contenant un langage inapproprié, des menaces personnelles, des discours de haine, du contenu discriminatoire ou obscène.",
+			"info-3": "Nous appliquons une politique de tolérance zéro concernant les allégations de comportements criminels, de conduite abusive ou de diagnostics médicaux/psychologiques, surtout lorsqu'ils ne sont pas liés à la gestion immobilière. Cela inclut, sans s'y limiter, les accusations de vol, d'agression, de harcèlement ou de maladie mentale.",
+			"info-4": "Les avis doivent se concentrer uniquement sur les problèmes pertinents aux catégories fournies (par ex., Santé et sécurité, Réparations, etc.). Le contenu qui dépasse ces limites peut être supprimé ou modifié à notre discrétion.",
+			"info-5": "Chez Rate The Landlord, la confidentialité est importante. Le nom d'un propriétaire est utilisé dans les avis parce qu'il exploite son activité sous ce nom. Cependant, nous n'autorisons pas la publication d'adresses, de numéros de téléphone ou de toute information personnelle relative au propriétaire ou aux autres parties impliquées.",
+			"info-6": "Tout avis jugé contraire à cette politique sera modifié ou supprimé à notre discrétion. Nous restons neutres et ne nous engagerons pas dans des disputes factuelles concernant le contenu des avis"
 		},
 		"contributing": {
 			"contributing": "Vous voulez contribuez ?",
@@ -33,7 +35,9 @@
 			"help": "Que devrais-je faire si je ne peux pas donner mon avis sur mon·ma propriétaire actuel·le, mais que j'ai besoin d'aide ?",
 			"help_description": "Nous vous suggérons de consulter notre section ressource pour plus d'information sur vos droits en tant que locataire, ainsi que de communiquer rapidement avec votre comité logement ou votre association de locataires qui pourra vous aider à naviguer votre situation.",
 			"names": "Pourquoi Rate the Landlord affiche le nom des propritaires ?",
-			"names_description": "Que ce soit pour une chaine de restaurants ou un petit commerce de quartier, un magasin grande surface ou un·e petit·e artisan·ne, il est généralement possible de donner son avis sur ces dernier·ère·s. En choisissant d'exercer une activité commerciale sous leur nom, les propriétaites se mettent dans une position où ils·elles devraient être tenu·e·s aux mêmes standards que les autres entreprises et prestataires de services, ce qui inclut d'être évalué·e·s."
+			"names_description": "Que ce soit pour une chaine de restaurants ou un petit commerce de quartier, un magasin grande surface ou un·e petit·e artisan·ne, il est généralement possible de donner son avis sur ces dernier·ère·s. En choisissant d'exercer une activité commerciale sous leur nom, les propriétaites se mettent dans une position où ils·elles devraient être tenu·e·s aux mêmes standards que les autres entreprises et prestataires de services, ce qui inclut d'être évalué·e·s.",
+			"user-code": "Qu'est-ce qu'un code d'utilisateur et comment l'utiliser?",
+			"user-code-description": "Un code d'utilisateur est généré lorsque vous soumettez un avis à Rate The Landlord. Comme nous n'avons pas de comptes utilisateurs ni ne suivons d'informations vous concernant lors de la soumission d'un avis, ce code vous permettra de modifier ou de supprimer l'avis que vous avez rédigé ultérieurement si vous le choisissez. Si vous perdez votre code d'utilisateur, il ne pourra pas être récupéré, alors conservez-le en lieu sûr!"
 		},
 		"contact": {
 			"title": "Nous contacter",

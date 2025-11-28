@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 import { useEffect } from 'react'
 import { NextIntlClientProvider } from 'next-intl'
+import ModalProvider from '@/components/modal/ModalProvider'
 
 const CAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string
 const ENVIRONMENT = process.env.NEXT_PUBLIC_ENVIRONMENT as string
@@ -63,24 +64,26 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 				<UserProvider user={user}>
 					<Provider store={store}>
 						<ReCaptchaProvider reCaptchaKey={CAPTCHA_SITE_KEY} useEnterprise>
-							<Layout>
-								<>
-									<Component {...pageProps} />
-									<ToastContainer
-										position='bottom-center'
-										autoClose={5000}
-										limit={3}
-										hideProgressBar
-										newestOnTop={false}
-										closeOnClick
-										rtl={false}
-										pauseOnFocusLoss={false}
-										draggable
-										pauseOnHover={false}
-										theme='light'
-									/>
-								</>
-							</Layout>
+							<ModalProvider>
+								<Layout>
+									<>
+										<Component {...pageProps} />
+										<ToastContainer
+											position='bottom-center'
+											autoClose={5000}
+											limit={3}
+											hideProgressBar
+											newestOnTop={false}
+											closeOnClick
+											rtl={false}
+											pauseOnFocusLoss={false}
+											draggable
+											pauseOnHover={false}
+											theme='light'
+										/>
+									</>
+								</Layout>
+							</ModalProvider>
 						</ReCaptchaProvider>
 					</Provider>
 				</UserProvider>

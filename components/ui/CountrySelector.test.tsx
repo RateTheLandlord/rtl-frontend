@@ -1,40 +1,66 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react'
-import { render, screen, fireEvent } from '@/test-utils'
-import '@testing-library/jest-dom/extend-expect'
-import CountrySelector from './CountrySelector'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
+import { render, screen, fireEvent } from '@testing-library/react'
+import CountrySelector from '@/components/ui/CountrySelector'
+import { useAppDispatch } from '@/redux/hooks'
+import { updateCountry } from '@/redux/review/reviewSlice'
+import { Country } from '@/types/review.types'
 
-describe('CountrySelector Component', () => {
-	const mockProps = {
-		setValue: jest.fn(),
-	}
+// Mock hooks and translation
+jest.mock('next-intl', () => ({
+	useTranslations: () => (key: string) => key,
+}))
 
-	it('renders CountrySelector component with default values', () => {
-		render(<CountrySelector setValue={mockProps.setValue} />)
-		const selectElement = screen.getByTestId('country-selector')
+jest.mock('@/redux/hooks', () => ({
+	useAppDispatch: jest.fn(),
+	useAppSelector: jest.fn(),
+}))
 
-		// Ensure that the select element is rendered
-		expect(selectElement).toBeInTheDocument()
+// Mock countries JSON
+jest.mock('@/util/countries/countries.json', () => ({
+	CA: 'Canada',
+	US: 'United States',
+	IE: 'Ireland',
+}))
 
-		// Ensure that it contains options for country codes
+describe('CountrySelector', () => {
+	const mockDispatch = jest.fn()
+
+	beforeEach(() => {
+		jest.clearAllMocks()
+		;(useAppDispatch as jest.Mock).mockReturnValue(mockDispatch)
+	})
+
+	it('renders the country selector and label', () => {
+		render(<CountrySelector />)
+
+		// Label is rendered
+		expect(screen.getByText('review-form.country')).toBeInTheDocument()
+
+		// Select input is rendered
+		const select = screen.getByTestId('country-selector')
+		expect(select).toBeInTheDocument()
+
+		// Options render correctly
 		expect(screen.getByText('Canada')).toBeInTheDocument()
 		expect(screen.getByText('United States')).toBeInTheDocument()
-		// Add more expectations based on your data
+		expect(screen.getByText('Ireland')).toBeInTheDocument()
+	})
 
-		// Simulate a change eventr
-		fireEvent.change(selectElement, { target: { value: 'US' } })
+	it('dispatches updateCountry with the correct payload on change', () => {
+		render(<CountrySelector />)
 
-		// Ensure that the setValue function is called with the selected value
-		expect(mockProps.setValue).toHaveBeenCalledWith('US')
+		const select = screen.getByTestId('country-selector')
+		fireEvent.change(select, { target: { value: 'CA' } })
+
+		expect(mockDispatch).toHaveBeenCalledTimes(1)
+		expect(mockDispatch).toHaveBeenCalledWith(updateCountry(Country.CA))
 	})
 	it('Should not have a11y violation', async () => {
-		const { container } = render(
-			<CountrySelector setValue={mockProps.setValue} />,
-		)
+		const { container } = render(<CountrySelector />)
 		const result = await axe(container)
 		expect(result).toHaveNoViolations()
 	})

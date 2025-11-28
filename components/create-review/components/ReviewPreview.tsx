@@ -31,7 +31,6 @@ const ReviewPreview = ({
 	rent,
 	zip,
 }: IProps) => {
-	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const t = useTranslations('createreview')
 
 	const ratings = [

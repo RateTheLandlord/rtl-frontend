@@ -7,6 +7,8 @@ const Moderation = () => {
 		'moderation.info-2',
 		'moderation.info-3',
 		'moderation.info-4',
+		'moderation.info-5',
+		'moderation.info-6',
 	] as const
 
 	return (

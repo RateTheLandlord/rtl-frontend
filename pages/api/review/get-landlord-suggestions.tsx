@@ -3,7 +3,7 @@ import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export const removeSpecialChars = (input: string) => {
-	const specialCharsRegex = /[\/@#$%^*<>?\[\]{}|]/g
+	const specialCharsRegex = /[/@#$%^*<>?[\]{}|]/g
 	return input.replace(specialCharsRegex, '')
 }
 

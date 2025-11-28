@@ -1,38 +1,40 @@
-import { Review } from '@/util/interfaces/interfaces'
-import React, { Dispatch, SetStateAction } from 'react'
+import { UserReview } from '@/util/interfaces/interfaces'
+import React from 'react'
 import ReviewComponent from './ReviewComponent'
 import Spinner from '../ui/Spinner'
+import { useAppDispatch } from '@/redux/hooks'
+import {
+	updateSelectedReview,
+	updateUserEditReviewOpen,
+	updateUserRemoveReviewOpen,
+	updateUserReportModal,
+} from '@/redux/modal/modalSlice'
 
 interface IProps {
-	data: Review[]
-	setReportOpen: Dispatch<SetStateAction<boolean>>
-	setSelectedReview: Dispatch<SetStateAction<Review | undefined>>
-	setRemoveReviewOpen: Dispatch<SetStateAction<boolean>>
-	setEditReviewOpen: Dispatch<SetStateAction<boolean>>
+	data: UserReview[]
 	isLoading: boolean
+	landlordPage?: boolean
 }
 
 function ReviewTable({
 	data,
-	setReportOpen,
-	setSelectedReview,
-	setRemoveReviewOpen,
-	setEditReviewOpen,
 	isLoading,
+	landlordPage = false,
 }: IProps): JSX.Element {
-	const handleReport = (review: Review) => {
-		setSelectedReview(review)
-		setReportOpen(true)
+	const dispatch = useAppDispatch()
+	const handleReport = (review: UserReview) => {
+		dispatch(updateSelectedReview(review))
+		dispatch(updateUserReportModal(true))
 	}
 
-	const handleDelete = (review: Review) => {
-		setSelectedReview(review)
-		setRemoveReviewOpen(true)
+	const handleUserEdit = (review: UserReview) => {
+		dispatch(updateSelectedReview(review))
+		dispatch(updateUserEditReviewOpen(true))
 	}
 
-	const handleEdit = (review: Review) => {
-		setSelectedReview(review)
-		setEditReviewOpen(true)
+	const handleUserDelete = (review: UserReview) => {
+		dispatch(updateSelectedReview(review))
+		dispatch(updateUserRemoveReviewOpen(true))
 	}
 
 	if (!data.length || !data) {
@@ -45,15 +47,16 @@ function ReviewTable({
 				<div data-testid='review-table-1'>
 					<div className='mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
 						<div className='mt-6 space-y-5 pb-10'>
-							{data.map((review: Review, i: number) => {
+							{data.map((review: UserReview, i: number) => {
 								return (
 									<ReviewComponent
 										key={review.id}
 										review={review}
 										i={i}
 										handleReport={handleReport}
-										handleDelete={handleDelete}
-										handleEdit={handleEdit}
+										handleUserEdit={handleUserEdit}
+										handleUserDelete={handleUserDelete}
+										landlordPage={landlordPage}
 									/>
 								)
 							})}

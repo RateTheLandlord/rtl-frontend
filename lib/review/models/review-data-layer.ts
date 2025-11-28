@@ -1,17 +1,70 @@
-import { IResult } from '../helpers'
+import { filterReviewWithAI, IResult } from '../helpers'
 import sql from '@/lib/db'
 import { Review } from '@/util/interfaces/interfaces'
 import { ReviewResponseStatus } from '../types/Responses'
+import { createUserCode } from '../user-codes'
+import dayjs from 'dayjs'
+import isBetween from 'dayjs/plugin/isBetween'
+import { getExistingReviewsForLandlord } from '../landlords'
+import {
+	checkForLandlordSpam,
+	checkReviewsForSimilarity,
+	updateRecentReviews,
+} from '../review-text-match'
+import posthog from 'posthog-js'
 
-/**
- * Data service layer for the reviews service of our backend.
- * Provides methods to create, retrieve, update or handle any other CRUD operations for reviews in the database.
- */
+dayjs.extend(isBetween)
 
-export async function createReview(
+export async function create(
+	inputReview: Review,
+): Promise<ReviewResponseStatus> {
+	try {
+		const existingReviewsForLandlord: Review[] =
+			await getExistingReviewsForLandlord(inputReview)
+		const reviewSpamDetected: boolean = checkReviewsForSimilarity(
+			existingReviewsForLandlord,
+			inputReview.review,
+		)
+
+		const landlordSpamDetected: boolean = await checkForLandlordSpam(
+			inputReview.landlord,
+		)
+
+		// Don't post the review to the DB if we detect spam
+		if (reviewSpamDetected || landlordSpamDetected) {
+			posthog.capture('review_spam_detectect_BE')
+			return {
+				message:
+					'This landlord is currently under spam protection please try again later',
+				success: false,
+				user_code: '',
+				review_id: 0,
+			}
+		}
+
+		updateRecentReviews(inputReview.landlord).catch(() =>
+			console.error(
+				`Error Updating Recent Reviews for ${inputReview.landlord}`,
+			),
+		)
+		if (process.env.NEXT_PUBLIC_ENVIRONMENT == 'development')
+			return createReview(inputReview, {
+				flagged: false,
+				flagged_reason: 'DEV REVIEW',
+			}) // Hit data layer to create review
+
+		const filterResult: IResult = await filterReviewWithAI(inputReview)
+		return createReview(inputReview, filterResult) // Hit data layer to create review
+	} catch {
+		throw new Error()
+	}
+}
+
+async function createReview(
 	inputReview: Review,
 	filterResult: IResult,
 ): Promise<ReviewResponseStatus> {
+	const { code, hashedCode } = createUserCode()
 	try {
 		inputReview.landlord = inputReview.landlord
 			.substring(0, 150)
@@ -27,10 +80,10 @@ export async function createReview(
 		inputReview.flagged = filterResult.flagged
 		inputReview.flagged_reason = filterResult.flagged_reason
 
-		await sql<{ id: number }[]>`
+		const id = await sql<{ id: number }[]>`
           INSERT INTO review
           (landlord, country_code, city, state, zip, review, repair, health, stability, privacy, respect, flagged,
-          flagged_reason, admin_approved, admin_edited, rent)
+          flagged_reason, admin_approved, admin_edited, rent, user_code)
           VALUES
           (${inputReview.landlord}, ${inputReview.country_code}, ${
 						inputReview.city
@@ -43,52 +96,22 @@ export async function createReview(
 					}, ${inputReview.flagged},
           ${inputReview.flagged_reason}, ${inputReview.admin_approved}, ${
 						inputReview.admin_edited
-					}, ${inputReview.rent || null})
+					}, ${inputReview.rent || null}, ${hashedCode})
           RETURNING id;
         `
 
-		return { message: 'Review successfully added', success: true }
+		posthog.capture('review_created_BE', {
+			ai_flagged: filterResult.flagged,
+		})
+
+		return {
+			message: 'Review successfully added',
+			review_id: id[0].id,
+			success: true,
+			user_code: code,
+		}
 	} catch (e) {
 		console.error('Error Creating Review')
 		throw e
 	}
-}
-
-export async function updateReview(
-	id: number,
-	review: Review,
-): Promise<Review> {
-	await sql`UPDATE review
-           SET landlord = ${review.landlord
-							.substring(0, 150)
-							.toLocaleUpperCase()},
-               country_code = ${review.country_code.toLocaleUpperCase()},
-               city = ${review.city.substring(0, 150).toLocaleUpperCase()},
-               state = ${review.state.toLocaleUpperCase()},
-               zip = ${review.zip
-									.substring(0, 50)
-									.toLocaleUpperCase()
-									.replace(' ', '')},
-               review = ${review.review},
-               repair = ${review.repair},
-               health = ${review.health},
-               stability = ${review.stability},
-               privacy = ${review.privacy},
-               respect = ${review.respect},
-               flagged = ${review.flagged},
-               flagged_reason = ${review.flagged_reason},
-               admin_approved = ${review.admin_approved},
-               admin_edited   = ${review.admin_edited},
-			   rent = ${review.rent || null},
-			   moderation_reason = ${review.moderation_reason || null},
-			   moderator = ${review.moderator},
-			   delete_date = ${review.delete_date},
-			   delete_reason = ${review.delete_reason},
-			   deleted_by = ${review.deleted_by},
-			   restore_date = ${review.restore_date},
-			   restore_reason = ${review.restore_reason},
-			   restored_by = ${review.restored_by}
-           WHERE id = ${id};`
-
-	return review
 }

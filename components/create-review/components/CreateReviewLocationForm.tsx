@@ -6,51 +6,39 @@ import CountrySelector from '@/components/ui/CountrySelector'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { Country } from '@/types/review.types'
+import { updatePostal, updateRent } from '@/redux/review/reviewSlice'
 
 interface IProps {
 	locationOpen: boolean
-	city: string
-	province: string
-	country: string
-	isIreland: boolean
-	postal: string
-	rent: number | null
 	postalError: boolean | undefined
 	locations: ILocationHookResponse[]
 	searching: boolean
 	cityValidationError: boolean
 	cityValidationErrorText: string
-	setProvince: (str: string) => void
-	handleTextChange: (str: string, inp: string) => void
 	setShowRatingForm: (bool: boolean) => void
 	setRatingsOpen: (bool: boolean) => void
 	setLocationOpen: (bool: boolean) => void
-	setCountry: (str: string) => void
-	setCityName: (str: string) => void
 }
 
 const LocationForm = ({
 	locationOpen,
-	city,
-	province,
-	country,
-	isIreland,
-	postal,
-	rent,
 	setLocationOpen,
-	setCountry,
-	setCityName,
 	locations,
 	cityValidationError,
 	cityValidationErrorText,
 	searching,
-	setProvince,
-	handleTextChange,
 	postalError,
 	setRatingsOpen,
 	setShowRatingForm,
 }: IProps) => {
 	const t = useTranslations('createreview')
+	const { country, city, province, postal, rent } = useAppSelector(
+		(state) => state.review,
+	)
+	const dispatch = useAppDispatch()
+	const isIreland = country === Country.IE
 	return !locationOpen ? (
 		<div className='flex w-full flex-row items-center justify-between transition-all duration-500'>
 			<div className='flex flex-col gap-2'>
@@ -77,30 +65,24 @@ const LocationForm = ({
 				</h2>
 			</div>
 			<div className='grid-col-1 grid w-full gap-3 overflow-hidden py-2 lg:grid-cols-2'>
-				<CountrySelector setValue={setCountry} />
+				<CountrySelector />
 
 				<CityComboBox
 					name={t('review-form.city')}
-					state={city}
-					setState={setCityName}
 					options={locations}
 					searching={searching}
 					error={cityValidationError}
 					errorText={cityValidationErrorText}
 				/>
 
-				<StateSelector
-					value={province}
-					country={country}
-					setValue={setProvince}
-				/>
+				<StateSelector />
 				{isIreland ? null : (
 					<TextInput
 						id='postal-code'
 						title={t('review-form.zip')}
 						placeHolder={t('review-form.zip')}
 						value={postal}
-						setValue={(str: string) => handleTextChange(str, 'postal')}
+						setValue={(str: string) => dispatch(updatePostal(str))}
 						error={postalError}
 						errorText={t('review-form.postal-error')}
 						testid='create-review-form-postal-code-1'
@@ -113,7 +95,7 @@ const LocationForm = ({
 					title={t('review-form.rent')}
 					placeHolder={t('review-form.rent')}
 					value={rent}
-					setValue={(str: string) => handleTextChange(str, 'rent')}
+					setValue={(str: string) => dispatch(updateRent(Number(str)))}
 					testid='create-review-form-rent-1'
 				/>
 			</div>

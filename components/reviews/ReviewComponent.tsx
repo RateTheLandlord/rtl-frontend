@@ -3,17 +3,17 @@ import AdsComponent from '../adsense/Adsense'
 import { useTranslations } from 'next-intl'
 import RatingStars from '../ui/RatingStars'
 import ButtonLight from '../ui/button-light'
-import { FlagIcon } from '@heroicons/react/solid'
-import { Review } from '@/util/interfaces/interfaces'
-import { useUser } from '@auth0/nextjs-auth0/client'
+import { FlagIcon, PencilIcon } from '@heroicons/react/solid'
+import { UserReview } from '@/util/interfaces/interfaces'
 import { classNames } from '@/util/helpers/helper-functions'
+import { useState } from 'react'
 
 interface IProps {
-	review: Review
+	review: UserReview
 	i?: number
-	handleReport: (review: Review) => void
-	handleDelete?: (review: Review) => void
-	handleEdit?: (review: Review) => void
+	handleReport: (review: UserReview) => void
+	handleUserEdit?: (review: UserReview) => void
+	handleUserDelete?: (review: UserReview) => void
 	landlordPage?: boolean
 }
 
@@ -21,27 +21,26 @@ const ReviewComponent = ({
 	review,
 	i,
 	handleReport,
-	handleDelete,
-	handleEdit,
+	handleUserEdit,
+	handleUserDelete,
 	landlordPage = false,
 }: IProps) => {
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const t = useTranslations('reviews')
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { user } = useUser()
+	const t = useTranslations()
 	const date = new Date(review.date_added).toLocaleDateString()
+	const [showEditOptions, setShowEditOptions] = useState(false)
 	const ratings = [
-		{ title: t('health'), rating: review.health },
-		{ title: t('respect'), rating: review.respect },
-		{ title: t('privacy'), rating: review.privacy },
-		{ title: t('repair'), rating: review.repair },
-		{ title: t('stability'), rating: review.stability },
+		{ title: t('reviews.health'), rating: review.health },
+		{ title: t('reviews.respect'), rating: review.respect },
+		{ title: t('reviews.privacy'), rating: review.privacy },
+		{ title: t('reviews.repair'), rating: review.repair },
+		{ title: t('reviews.stability'), rating: review.stability },
 	]
 	let totalReview = 0
 	for (let i = 0; i < ratings.length; i++) {
 		totalReview += Number(ratings[i].rating)
 	}
 	const avgRating = Math.round(totalReview / ratings.length)
+
 	return (
 		<div key={review.id}>
 			{i && i % 20 === 0 && i !== 0 ? (
@@ -57,10 +56,10 @@ const ReviewComponent = ({
 						{!landlordPage ? (
 							<Link
 								href={`/landlord/${encodeURIComponent(review.landlord)}`}
-								className='col mb-4 flex w-full cursor-pointer flex-col text-lg break-words hover:underline lg:mb-2 lg:items-center'
+								className='col mb-4 flex w-full cursor-pointer flex-col text-lg wrap-break-word hover:underline lg:mb-2 lg:items-center'
 							>
 								<h6 className='text-center'>{review.landlord}</h6>
-								<p className='text-center text-sm'>{t('read-all')}</p>
+								<p className='text-center text-sm'>{t('reviews.read-all')}</p>
 							</Link>
 						) : null}
 						<div
@@ -102,21 +101,27 @@ const ReviewComponent = ({
 							{date}
 						</p>
 					</div>
-					<div className='mt-4 flex flex-row justify-start'>
+					<div className='mt-4 flex flex-row justify-start space-x-1'>
 						<ButtonLight onClick={() => handleReport(review)}>
 							<FlagIcon className='text-red-700' width={20} />
 						</ButtonLight>
+						{review.has_user_code ? (
+							<ButtonLight onClick={() => setShowEditOptions(!showEditOptions)}>
+								<PencilIcon className='text-black-700' width={20} />
+							</ButtonLight>
+						) : null}
 					</div>
-					{handleDelete && handleEdit && user && user.role === 'ADMIN' ? (
+
+					{handleUserDelete && handleUserEdit && showEditOptions ? (
 						<>
 							<div className='mt-4 w-full'>
-								<ButtonLight onClick={() => handleDelete(review)}>
-									Remove Review
+								<ButtonLight onClick={() => handleUserDelete(review)}>
+									{t('user-delete.remove')}
 								</ButtonLight>
 							</div>
 							<div className='mt-4 w-full'>
-								<ButtonLight onClick={() => handleEdit(review)}>
-									Edit Review
+								<ButtonLight onClick={() => handleUserEdit(review)}>
+									{t('user-edit.edit')}
 								</ButtonLight>
 							</div>
 						</>
@@ -163,8 +168,8 @@ const ReviewComponent = ({
 							})}
 							{review.rent && (
 								<div className='flex w-full flex-col lg:items-center'>
-									<p>{`${t('rent')}${review.rent}`}</p>
-									<p className='text-xs'>{t('local')}</p>
+									<p>{`${t('reviews.rent')}${review.rent}`}</p>
+									<p className='text-xs'>{t('reviews.local')}</p>
 								</div>
 							)}
 						</div>
@@ -174,16 +179,16 @@ const ReviewComponent = ({
 						{review.review.length < 1 ? null : (
 							<div className='flex h-full flex-col justify-between gap-3'>
 								<div>
-									<p>{t('review')}</p>
+									<p>{t('reviews.review')}</p>
 
-									<p className='space-y-6 text-sm break-words hyphens-auto text-gray-500'>
+									<p className='space-y-6 text-sm wrap-break-word hyphens-auto text-gray-500'>
 										{review.review}
 									</p>
 								</div>
 							</div>
 						)}
 						{review.admin_edited ? (
-							<p className='text-xs text-red-400'>{`${t('edited')} ${
+							<p className='text-xs text-red-400'>{`${t('reviews.edited')} ${
 								review.moderation_reason
 									? `Reason: ${review.moderation_reason}`
 									: ''

@@ -14,7 +14,6 @@ jest.mock('swr')
 const mockedUseSWR = useSWR as jest.Mock
 
 // Mock the Spinner component
-// eslint-disable-next-line react/display-name
 jest.mock('@/components/ui/Spinner', () => () => <div>Loading...</div>)
 
 const mockData: IStats = {

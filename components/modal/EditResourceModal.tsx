@@ -1,47 +1,52 @@
-import { Resource } from '@/util/interfaces/interfaces'
 import {
 	Dialog,
 	DialogPanel,
 	Transition,
 	TransitionChild,
 } from '@headlessui/react'
-import { Dispatch, Fragment, SetStateAction, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import TextInput from '../ui/TextInput'
 import StateSelector from '../ui/StateSelector'
 import CountrySelector from '../ui/CountrySelector'
 import LargeTextInput from '../ui/LargeTextInput'
 import Spinner from '../ui/Spinner'
 import { toast } from 'react-toastify'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	updateAddress,
+	updateCity,
+	updateDescription,
+	updateHref,
+	updateName,
+	updatePhone,
+	updateResource,
+} from '@/redux/resource/resourceSlice'
+import {
+	updateEditResourceOpen,
+	updateSelectedResource,
+} from '@/redux/modal/modalSlice'
 
-interface IProps {
-	selectedResource: Resource | undefined
-	handleMutate: () => void
-	setEditResourceOpen: Dispatch<SetStateAction<boolean>>
-	editResourceOpen: boolean
-	setSelectedResource: Dispatch<SetStateAction<Resource | undefined>>
-}
+const EditResourceModal = () => {
+	const {
+		name,
+		country_code,
+		city,
+		state,
+		address,
+		phone_number,
+		description,
+		href,
+	} = useAppSelector((state) => state.resource)
+	const { selectedResource, editResourceOpen } = useAppSelector(
+		(state) => state.modal,
+	)
+	const dispatch = useAppDispatch()
 
-const EditResourceModal = ({
-	selectedResource,
-	handleMutate,
-	setEditResourceOpen,
-	editResourceOpen,
-	setSelectedResource,
-}: IProps) => {
-	const [name, setName] = useState<string>(selectedResource?.name || '')
-	const [country, setCountry] = useState<string>(
-		selectedResource?.country_code || 'CA',
-	)
-	const [city, setCity] = useState<string>(selectedResource?.city || '')
-	const [state, setState] = useState<string>(
-		selectedResource?.state || 'Alberta',
-	)
-	const [address, setAddress] = useState(selectedResource?.address || '')
-	const [phone, setPhone] = useState(selectedResource?.phone_number || '')
-	const [description, setDescription] = useState(
-		selectedResource?.description || '',
-	)
-	const [href, setHref] = useState(selectedResource?.href || '')
+	useEffect(() => {
+		if (selectedResource) {
+			dispatch(updateResource(selectedResource))
+		}
+	}, [selectedResource])
 
 	const [loading, setLoading] = useState(false)
 
@@ -50,11 +55,11 @@ const EditResourceModal = ({
 		const editedResource = {
 			...selectedResource,
 			name: name,
-			country_code: country,
+			country_code,
 			city: city,
 			state: state,
 			address: address,
-			phone_number: phone,
+			phone_number,
 			description: description,
 			href: href,
 		}
@@ -71,22 +76,26 @@ const EditResourceModal = ({
 				}
 			})
 			.then(() => {
-				handleMutate()
-				setEditResourceOpen(false)
+				dispatch(updateEditResourceOpen(false))
+				dispatch(updateSelectedResource(undefined))
 				toast.success('Success!')
-				setSelectedResource(undefined)
 			})
 			.catch((err) => {
 				console.log(err)
 				toast.error('Failure: Something went wrong, please try again.')
-				setSelectedResource(undefined)
+				dispatch(updateEditResourceOpen(false))
+				dispatch(updateSelectedResource(undefined))
 			})
 			.finally(() => setLoading(false))
 	}
 
 	return (
 		<Transition show={editResourceOpen} as={Fragment}>
-			<Dialog as='div' className='relative z-50' onClose={setEditResourceOpen}>
+			<Dialog
+				as='div'
+				className='relative z-50'
+				onClose={() => dispatch(updateEditResourceOpen(false))}
+			>
 				<TransitionChild
 					as={Fragment}
 					enter='ease-out duration-300'
@@ -115,7 +124,7 @@ const EditResourceModal = ({
 									<TextInput
 										title='Name'
 										value={name ? name : selectedResource?.name}
-										setValue={setName}
+										setValue={(str: string) => dispatch(updateName(str))}
 										id='name'
 										placeHolder='Name'
 									/>
@@ -123,22 +132,26 @@ const EditResourceModal = ({
 									<TextInput
 										title='Address'
 										value={address ? address : selectedResource?.address}
-										setValue={setAddress}
+										setValue={(str: string) => dispatch(updateAddress(str))}
 										id='address'
 										placeHolder='Address '
 									/>
 
 									<TextInput
 										title='Phone Number'
-										value={phone ? phone : selectedResource?.phone_number}
-										setValue={setPhone}
+										value={
+											phone_number
+												? phone_number
+												: selectedResource?.phone_number
+										}
+										setValue={(str: string) => dispatch(updatePhone(str))}
 										id='phone'
 										placeHolder='Phone Number'
 									/>
 									<TextInput
 										title='Link'
 										value={href ? href : selectedResource?.href}
-										setValue={setHref}
+										setValue={(str: string) => dispatch(updateHref(str))}
 										id='href'
 										placeHolder='Link'
 									/>
@@ -158,25 +171,20 @@ const EditResourceModal = ({
 												placeholder='City'
 												value={city ? city : selectedResource?.city}
 												required
-												onChange={(e) => setCity(e.target.value)}
+												onChange={(e) => dispatch(updateCity(e.target.value))}
 												className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 												data-testid='create-review-form-city-1'
 											/>
 										</div>
 									</div>
 
-									<StateSelector
-										value={state}
-										country={country ? country : selectedResource?.country_code}
-										setValue={setState}
-										noState={true}
-									/>
+									<StateSelector isResource noState={true} />
 
-									<CountrySelector setValue={setCountry} />
+									<CountrySelector isResource />
 
 									<LargeTextInput
 										title='Description'
-										setValue={setDescription}
+										setValue={(str: string) => dispatch(updateDescription(str))}
 										id='description'
 										value={
 											description ? description : selectedResource?.description
@@ -196,8 +204,8 @@ const EditResourceModal = ({
 										type='button'
 										className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 shadow-sm hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm'
 										onClick={() => {
-											setSelectedResource(undefined)
-											setEditResourceOpen(false)
+											dispatch(updateEditResourceOpen(false))
+											dispatch(updateSelectedResource(undefined))
 										}}
 									>
 										Cancel

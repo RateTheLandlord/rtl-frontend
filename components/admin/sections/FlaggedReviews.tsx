@@ -2,19 +2,20 @@ import { Review } from '@/util/interfaces/interfaces'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
-import EditReviewModal from '@/components/modal/EditReviewModal'
-import RemoveReviewModal from '@/components/modal/RemoveReviewModal'
 import Spinner from '@/components/ui/Spinner'
 import { toast } from 'react-toastify'
 import dayjs from 'dayjs'
+import { useAppDispatch } from '@/redux/hooks'
+import {
+	updateAdminEditReviewOpen,
+	updateAdminRemoveReviewOpen,
+	updateSelectedAdminReview,
+} from '@/redux/modal/modalSlice'
 
 const FlaggedReviews = () => {
-	const [editReviewOpen, setEditReviewOpen] = useState(false)
-	const [selectedReview, setSelectedReview] = useState<Review | undefined>()
+	const dispatch = useAppDispatch()
 
 	const [flaggedReviews, setFlaggedReviews] = useState<Review[]>([])
-
-	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
 
 	const {
 		data: reviews,
@@ -52,7 +53,7 @@ const FlaggedReviews = () => {
 				}
 			})
 			.then(() => {
-				mutate().catch(() => console.error('Failed to Mutute Flagged Reviews'))
+				mutate().catch(() => console.error('Failed to Mutate Flagged Reviews'))
 				toast.success('Success!')
 			})
 			.catch((err) => {
@@ -61,33 +62,11 @@ const FlaggedReviews = () => {
 			})
 	}
 
-	const handleMutate = () => {
-		mutate().catch(() => console.error('Failed to Mutute Flagged Reviews'))
-	}
-
 	return (
 		<div
 			data-testid='flagged-reviews'
 			className='container flex w-full flex-wrap justify-center'
 		>
-			{selectedReview ? (
-				<>
-					<EditReviewModal
-						selectedReview={selectedReview}
-						handleMutate={handleMutate}
-						setEditReviewOpen={setEditReviewOpen}
-						editReviewOpen={editReviewOpen}
-						setSelectedReview={setSelectedReview}
-					/>
-					<RemoveReviewModal
-						selectedReview={selectedReview}
-						handleMutate={handleMutate}
-						setRemoveReviewOpen={setRemoveReviewOpen}
-						removeReviewOpen={removeReviewOpen}
-						setSelectedReview={setSelectedReview}
-					/>
-				</>
-			) : null}
 			<div className='ring-opacity-5 container -mx-4 overflow-hidden shadow ring-1 ring-black sm:-mx-6 md:mx-0 md:rounded-lg'>
 				<table className='min-w-full divide-y divide-gray-300'>
 					<thead className='bg-gray-50'>
@@ -168,8 +147,8 @@ const FlaggedReviews = () => {
 								<td className='py-4 pr-4 pl-3 text-center text-sm sm:pr-6'>
 									<button
 										onClick={() => {
-											setSelectedReview(review)
-											setEditReviewOpen(true)
+											dispatch(updateSelectedAdminReview(review))
+											dispatch(updateAdminEditReviewOpen(true))
 										}}
 										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
 									>
@@ -179,8 +158,8 @@ const FlaggedReviews = () => {
 								<td className='py-4 pr-4 pl-3 text-center text-sm sm:pr-6'>
 									<button
 										onClick={() => {
-											setSelectedReview(review)
-											setRemoveReviewOpen((p) => !p)
+											dispatch(updateSelectedAdminReview(review))
+											dispatch(updateAdminRemoveReviewOpen(true))
 										}}
 										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
 									>

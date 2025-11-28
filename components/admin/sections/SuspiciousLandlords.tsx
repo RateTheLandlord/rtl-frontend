@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import {
 	Menu,
 	MenuButton,
@@ -12,124 +12,32 @@ import Button from '@/components/ui/button'
 import useSWR from 'swr'
 import { fetchWithBody } from '@/util/helpers/fetcher'
 import Spinner from '@/components/ui/Spinner'
+import { SuspiciousLandlordResponse } from '@/util/interfaces/interfaces'
+import { useAppDispatch } from '@/redux/hooks'
 import {
-	SuspiciousLandlord,
-	SuspiciousLandlordResponse,
-} from '@/util/interfaces/interfaces'
-import Modal from '@/components/modal/Modal'
-import { toast } from 'react-toastify'
-import AddSuspiciousLandlordModal from '../components/AddSuspiciousLandlordModal'
-import EditSuspiciousLandlordModal from '../components/EditSuspiciousLandlordModal'
-import RemoveSuspiciousLandlord from '../components/RemoveSuspiciousLandlordModal'
+	updateAddSuspiciousLandlordOpen,
+	updateEditSuspiciousLandlordOpen,
+	updateRemoveSuspiciousLandlordOpen,
+	updateSelectedSuspiciousLandlord,
+} from '@/redux/modal/modalSlice'
 
 const SuspiciousLandlords = () => {
-	const { data, error, mutate } = useSWR<SuspiciousLandlordResponse, unknown>(
+	const dispatch = useAppDispatch()
+	const { data, error } = useSWR<SuspiciousLandlordResponse, unknown>(
 		['/api/suspicious-landlords/get-landlords', { limit: '1000' }],
 		fetchWithBody,
 	)
 
-	const [loading, setLoading] = useState(false)
-	const [landlord, setLandlord] = useState('')
-	const [message, setMessage] = useState('')
-
-	const [selectedSuspiciousLandlord, setSelectedSuspiciousLandlord] = useState<
-		SuspiciousLandlord | undefined
-	>()
-
-	const [addSuspiciousLandlordOpen, setAddSuspiciousLandlordOpen] =
-		useState(false)
-	const [editSuspiciousLandlordOpen, setEditSuspiciousLandlordOpen] =
-		useState(false)
-	const [removeSuspiciousLandlordOpen, setRemoveSuspiciousLandlordOpen] =
-		useState(false)
 	if (error) return <div>failed to load...</div>
 	if (!data) return <Spinner />
 
-	const resetForm = () => {
-		setLandlord('')
-		setMessage('')
-	}
-
-	const onSubmitNewLandlord = () => {
-		setLoading(true)
-		const newLandlord = {
-			landlord: landlord,
-			message: message,
-		}
-
-		fetch('/api/suspicious-landlords/add-suspicious-landlord', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(newLandlord),
-		})
-			.then((result) => {
-				if (!result.ok) {
-					throw new Error()
-				}
-			})
-			.then(() => {
-				mutate().catch(() =>
-					console.error('Failed to Mutute Suspicious Landlords'),
-				)
-				setAddSuspiciousLandlordOpen(false)
-				toast.success('Success!')
-				resetForm()
-			})
-			.catch((err) => {
-				console.log(err)
-				toast.error('Failure: Something went wrong, please try again.')
-			})
-			.finally(() => setLoading(false))
-	}
-
-	const handleMutate = () => {
-		mutate().catch(() => console.error('Failed to Mutute Suspicious Landlords'))
-	}
 	return (
 		<div
 			data-testid='suspicious-landlords'
 			className='container flex w-full flex-col justify-center'
 		>
-			{editSuspiciousLandlordOpen && (
-				<EditSuspiciousLandlordModal
-					selectedSuspiciousLandlord={selectedSuspiciousLandlord}
-					handleMutate={handleMutate}
-					setEditSuspiciousLandlordOpen={setEditSuspiciousLandlordOpen}
-					setSelectedSuspiciousLandlord={setSelectedSuspiciousLandlord}
-					editSuspiciousLandlordOpen={editSuspiciousLandlordOpen}
-				/>
-			)}
-			{removeSuspiciousLandlordOpen && (
-				<RemoveSuspiciousLandlord
-					selectedLandlord={selectedSuspiciousLandlord}
-					handleMutate={handleMutate}
-					setRemoveSuspiciousLandlordOpen={setRemoveSuspiciousLandlordOpen}
-					removeSuspiciousLandlordOpen={removeSuspiciousLandlordOpen}
-					setSelectedSuspiciousLandlord={setSelectedSuspiciousLandlord}
-				/>
-			)}
-			{addSuspiciousLandlordOpen && (
-				<Modal
-					loading={loading}
-					title='Add Suspicious Landlord'
-					open={addSuspiciousLandlordOpen}
-					setOpen={setAddSuspiciousLandlordOpen}
-					element={
-						<AddSuspiciousLandlordModal
-							landlord={landlord}
-							setLandlord={setLandlord}
-							message={message}
-							setMessage={setMessage}
-						/>
-					}
-					onSubmit={onSubmitNewLandlord}
-					selectedId={1}
-				/>
-			)}
 			<div className='flex w-full justify-end'>
-				<Button onClick={() => setAddSuspiciousLandlordOpen(true)}>
+				<Button onClick={() => dispatch(updateAddSuspiciousLandlordOpen(true))}>
 					Add New Landlord
 				</Button>
 			</div>
@@ -173,8 +81,10 @@ const SuspiciousLandlords = () => {
 												{({ active }) => (
 													<button
 														onClick={() => {
-															setEditSuspiciousLandlordOpen(true)
-															setSelectedSuspiciousLandlord(landlord)
+															dispatch(updateEditSuspiciousLandlordOpen(true))
+															dispatch(
+																updateSelectedSuspiciousLandlord(landlord),
+															)
 														}}
 														className={classNames(
 															active ? 'bg-gray-50' : '',
@@ -193,8 +103,10 @@ const SuspiciousLandlords = () => {
 												{({ active }) => (
 													<button
 														onClick={() => {
-															setRemoveSuspiciousLandlordOpen(true)
-															setSelectedSuspiciousLandlord(landlord)
+															dispatch(updateRemoveSuspiciousLandlordOpen(true))
+															dispatch(
+																updateSelectedSuspiciousLandlord(landlord),
+															)
 														}}
 														className={classNames(
 															active ? 'bg-gray-50' : '',

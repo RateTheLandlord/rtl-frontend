@@ -10,7 +10,7 @@ function Hero(): JSX.Element {
 			data-testid='home-hero-1'
 			className='mx-auto flex max-w-7xl flex-col-reverse px-6 pb-4 sm:pb-8 lg:flex-row lg:items-center lg:px-8'
 		>
-			<div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0'>
+			<div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:shrink-0'>
 				<h1 className='mt-2 text-center text-4xl text-teal-600 sm:text-6xl lg:text-left'>
 					{t('home.hero.title')}
 				</h1>

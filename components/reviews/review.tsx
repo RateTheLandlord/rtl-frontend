@@ -1,14 +1,11 @@
 import ReviewFilters from '@/components/reviews/review-filters'
 import { sortOptions } from '@/util/helpers/filter-options'
 import {
-	Review as IReview,
+	UserReview as IReview,
 	SortOptions,
 	Options,
 } from '@/util/interfaces/interfaces'
 import React, { useEffect, useState } from 'react'
-import ReportModal from '@/components/reviews/report-modal'
-import EditReviewModal from '../modal/EditReviewModal'
-import RemoveReviewModal from '../modal/RemoveReviewModal'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import MobileReviewFilters from './mobile-review-filters'
 import { useTranslations } from 'next-intl'
@@ -71,10 +68,6 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 	// State
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
 	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
-	const [editReviewOpen, setEditReviewOpen] = useState(false)
-	const [reportOpen, setReportOpen] = useState<boolean>(false)
-	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
-	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
 	const [selectedIndex, setSelectedIndex] = useState(0)
 
 	const [dynamicCityOptions, setDynamicCityOptions] = useState<Options[]>([])
@@ -144,33 +137,6 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 
 	return (
 		<>
-			<ReportModal
-				isOpen={reportOpen}
-				setIsOpen={setReportOpen}
-				selectedReview={selectedReview}
-			/>
-			{selectedReview ? (
-				<>
-					<EditReviewModal
-						selectedReview={selectedReview}
-						handleMutate={() => {
-							console.log('')
-						}}
-						setEditReviewOpen={setEditReviewOpen}
-						editReviewOpen={editReviewOpen}
-						setSelectedReview={setSelectedReview}
-					/>
-					<RemoveReviewModal
-						selectedReview={selectedReview}
-						handleMutate={() => {
-							console.log('')
-						}}
-						setRemoveReviewOpen={setRemoveReviewOpen}
-						removeReviewOpen={removeReviewOpen}
-						setSelectedReview={setSelectedReview}
-					/>
-				</>
-			) : null}
 			<div className='w-full'>
 				<div className='mx-auto max-w-7xl border-b-gray-200 px-4 py-4 sm:px-6 lg:border-b lg:px-8'>
 					<StateInfo
@@ -199,10 +165,10 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 						className='w-full'
 					>
 						<TabList className='flex w-full justify-center gap-4 border-b p-3'>
-							<Tab className='border-b-2 border-transparent px-1 pb-2 text-xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600 md:text-3xl'>
+							<Tab className='border-b-2 border-transparent px-1 pb-2 text-xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-selected:border-indigo-500 data-selected:text-indigo-600 md:text-3xl'>
 								{t('reviews')}
 							</Tab>
-							<Tab className='border-b-2 border-transparent px-1 pb-2 text-xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600 md:text-3xl'>
+							<Tab className='border-b-2 border-transparent px-1 pb-2 text-xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-selected:border-indigo-500 data-selected:text-indigo-600 md:text-3xl'>
 								<div className='flex flex-row gap-1'>
 									<p>{t('map')}</p>
 									<div className='flex h-full flex-col justify-start'>
@@ -212,7 +178,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 									</div>
 								</div>
 							</Tab>
-							<Tab className='border-b-2 border-transparent px-1 pb-2 text-xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-600 md:text-3xl'>
+							<Tab className='border-b-2 border-transparent px-1 pb-2 text-xl font-medium whitespace-nowrap text-gray-500 hover:border-gray-300 hover:text-gray-700 focus:outline-none data-selected:border-indigo-500 data-selected:text-indigo-600 md:text-3xl'>
 								<div className='flex flex-row gap-1'>
 									<p>{t('analytics')}</p>
 									<div className='flex h-full flex-col justify-start'>
@@ -268,14 +234,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 											</p>
 										</div>
 									) : (
-										<ReviewTable
-											data={reviews}
-											setReportOpen={setReportOpen}
-											setSelectedReview={setSelectedReview}
-											setRemoveReviewOpen={setRemoveReviewOpen}
-											setEditReviewOpen={setEditReviewOpen}
-											isLoading={isLoadingHook}
-										/>
+										<ReviewTable data={reviews} isLoading={isLoadingHook} />
 									)}
 								</div>
 							</TabPanel>

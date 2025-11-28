@@ -1,12 +1,16 @@
 import { useTranslations } from 'next-intl'
-import { country_codes } from '@/util/helpers/getCountryCodes'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { Country } from '@/types/review.types'
+import { updateCountry } from '@/redux/review/reviewSlice'
+import { updateCountry as updateResourceCountry } from '@/redux/resource/resourceSlice'
+
 import countries from '@/util/countries/countries.json'
 
-interface IProps {
-	setValue: (str: string) => void
-}
-
-const CountrySelector = ({ setValue }: IProps) => {
+const CountrySelector = ({ isResource }: { isResource?: boolean }) => {
+	const dispatch = useAppDispatch()
+	const country = useAppSelector((state) =>
+		isResource ? state.resource.country_code : state.review.country,
+	)
 	const t = useTranslations('createreview')
 	return (
 		<div className='mx-0.5 sm:col-span-1'>
@@ -19,16 +23,27 @@ const CountrySelector = ({ setValue }: IProps) => {
 					id='country'
 					name='country'
 					required
-					onChange={(e) => setValue(e.target.value)}
+					value={country}
+					onChange={(e) =>
+						isResource
+							? dispatch(
+									updateResourceCountry(
+										Country[e.target.value as keyof typeof Country],
+									),
+								)
+							: dispatch(
+									updateCountry(
+										Country[e.target.value as keyof typeof Country],
+									),
+								)
+					}
 					className='block w-full cursor-pointer rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 				>
-					{country_codes.map((country) => {
-						return (
-							<option className='cursor-pointer' key={country} value={country}>
-								{countries[country as keyof typeof countries]}
-							</option>
-						)
-					})}
+					{Object.keys(Country).map((country) => (
+						<option className='cursor-pointer' key={country} value={country}>
+							{countries[country as keyof typeof countries]}
+						</option>
+					))}
 				</select>
 			</div>
 		</div>

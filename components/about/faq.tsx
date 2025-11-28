@@ -6,6 +6,10 @@ const Faq = () => {
 	const t = useTranslations('about')
 	const faqs = [
 		{
+			question: t('faq.user-code'),
+			answer: t('faq.user-code-description'),
+		},
+		{
 			question: t('faq.anonymous'),
 			answer: t('faq.anonymous_description'),
 		},

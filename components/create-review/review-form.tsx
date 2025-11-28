@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Button from '../ui/button'
-import SuccessModal from './success-modal'
 import { postcodeValidator } from 'postcode-validator'
-import SpamReviewModal from '@/components/create-review/SpamReviewModal'
 import { useLocation } from '@/util/hooks/useLocation'
-import {
-	ILocationHookResponse,
-	ReviewResponseStatus,
-} from '@/util/interfaces/interfaces'
+import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import { useReCaptcha } from 'next-recaptcha-v3'
 import Spinner from '../ui/Spinner'
 import { Transition, TransitionChild } from '@headlessui/react'
@@ -21,9 +16,40 @@ import WrittenReviewForm from './components/WrittenReviewForm'
 import { toast } from 'react-toastify'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { Country } from '@/types/review.types'
+import { updatePostal, updateProvince } from '@/redux/review/reviewSlice'
+import { ReviewResponseStatus } from '@/lib/review/types/Responses'
+import {
+	updateCopyUserCodeOpen,
+	updateSpamDetectionMethod,
+	updateSpamReviewModalOpen,
+	updateUserKey,
+} from '@/redux/modal/modalSlice'
 
 function ReviewForm(): JSX.Element {
 	const t = useTranslations()
+
+	const {
+		landlord,
+		country,
+		city,
+		province,
+		postal,
+		rent,
+		repair,
+		health,
+		stability,
+		privacy,
+		respect,
+		review,
+	} = useAppSelector((state) => state.review)
+	const { userKey } = useAppSelector((state) => state.modal)
+	const dispatch = useAppDispatch()
+
+	const [reviewId, setReviewId] = useState<number | null>(null)
+
+	const isIreland = country === Country.IE
 
 	const [getStarted, setGetStarted] = useState(false)
 	const [landlordOpen, setLandlordOpen] = useState(false)
@@ -39,19 +65,6 @@ function ReviewForm(): JSX.Element {
 
 	const [showPreview, setShowPreview] = useState(false)
 
-	const [successModalOpen, setSuccessModalOpen] = useState(false)
-	const [spamReviewModalOpen, setSpamReviewModalOpen] = useState(false)
-	const [spamDetectionMethod, setSpamDetectionMethod] = useState(
-		'localStorageDetection',
-	)
-
-	const [landlord, setLandlord] = useState<string>('')
-	const [country, setCountry] = useState<string>('AU')
-	const [city, setCity] = useState<string>('')
-	const [province, setProvince] = useState<string>('Alberta')
-	const [postal, setPostal] = useState<string>('')
-	const [rent, setRent] = useState<number | null>(null)
-
 	const {
 		searching,
 		locations,
@@ -60,20 +73,12 @@ function ReviewForm(): JSX.Element {
 		country,
 	)
 
-	const [repair, setRepair] = useState<number>(3)
-	const [health, setHealth] = useState<number>(3)
-	const [stability, setStability] = useState<number>(3)
-	const [privacy, setPrivacy] = useState<number>(3)
-	const [respect, setRespect] = useState<number>(3)
-	const [review, setReview] = useState<string>('')
-
 	const [disclaimerOne, setDisclaimerOne] = useState(false)
 	const [disclaimerTwo, setDisclaimerTwo] = useState(false)
 	const [disclaimerThree, setDisclaimerThree] = useState(false)
 	const [loading, setLoading] = useState<boolean>(false)
 
 	const [postalError, setPostalError] = useState(false)
-	const [touchedPostal, setTouchedPostal] = useState(false)
 
 	const [landlordValidationError, setLandlordValidationError] = useState(false)
 	const [landlordValidationText, setLandlordValidationText] = useState('')
@@ -96,6 +101,18 @@ function ReviewForm(): JSX.Element {
 		}
 	}, [])
 
+	useEffect(() => {
+		if (reviewId) {
+			localStorage.setItem(
+				'rtl-id',
+				JSON.stringify({
+					id: reviewId,
+					userCode: userKey,
+				}),
+			)
+		}
+	}, [userKey])
+
 	const checkLandlord = (str: string) => {
 		if (localReviewedLandlords) {
 			return localReviewedLandlords.indexOf(str) > -1
@@ -103,30 +120,8 @@ function ReviewForm(): JSX.Element {
 		return false
 	}
 
-	// Updated text change handler with malicious string check
-	const handleTextChange = (e: string, inputName: string) => {
-		switch (inputName) {
-			case 'landlord':
-				setLandlord(e)
-				break
-			case 'city':
-				setCity(e)
-				break
-			case 'postal':
-				setPostal(e)
-				setTouchedPostal(true)
-				break
-			case 'review':
-				setReview(e)
-				break
-			case 'rent':
-				setRent(Number(e))
-				break
-		}
-	}
-
 	useEffect(() => {
-		if (touchedPostal) {
+		if (postal) {
 			if (postcodeValidator(postal, country)) {
 				setPostalError(false)
 				setLoading(false)
@@ -134,7 +129,7 @@ function ReviewForm(): JSX.Element {
 				setPostalError(true)
 			}
 		}
-	}, [postal, country, touchedPostal])
+	}, [postal, country])
 
 	const handleSubmit = async () => {
 		if (landlord.trim().length < 1) {
@@ -143,7 +138,11 @@ function ReviewForm(): JSX.Element {
 			return
 		}
 		if (checkLandlord(landlord.toLocaleUpperCase())) {
-			setSpamReviewModalOpen(true)
+			dispatch(updateSpamReviewModalOpen(true))
+			posthog.capture('spam_review_detected', {
+				method: 'localStorageDetection',
+				landlord,
+			})
 			return
 		}
 		if (city.trim().length < 1) {
@@ -195,13 +194,20 @@ function ReviewForm(): JSX.Element {
 					})
 					.then((data: ReviewResponseStatus) => {
 						if (!data.success) {
-							setSpamDetectionMethod('DBDetection')
-							setSpamReviewModalOpen(true)
+							dispatch(updateSpamDetectionMethod('DBDetection'))
+							dispatch(updateSpamReviewModalOpen(true))
+							posthog.capture('spam_review_detected', {
+								method: 'DBDetection',
+								landlord,
+							})
 							throw new Error()
+						} else {
+							dispatch(updateUserKey(data.user_code))
+							setReviewId(data.review_id)
 						}
 					})
 					.then(() => {
-						setSuccessModalOpen(true)
+						dispatch(updateCopyUserCodeOpen(true))
 						const storageItem = localStorage.getItem('rtl')
 						if (storageItem) {
 							const newItem = `${storageItem},${landlord.toLocaleUpperCase()}`
@@ -226,44 +232,32 @@ function ReviewForm(): JSX.Element {
 
 	useEffect(() => {
 		switch (country) {
-			case 'GB':
-				setProvince('England')
+			case Country.GB:
+				dispatch(updateProvince('England'))
 				break
-			case 'AU':
-				setProvince('Australian Capital Territory')
+			case Country.AU:
+				dispatch(updateProvince('Australian Capital Territory'))
 				break
-			case 'US':
-				setProvince('Alabama')
+			case Country.US:
+				dispatch(updateProvince('Alabama'))
 				break
-			case 'NZ':
-				setProvince('Auckland')
+			case Country.NZ:
+				dispatch(updateProvince('Auckland'))
 				break
-			case 'DE':
-				setProvince('Baden-Württemberg')
+			case Country.DE:
+				dispatch(updateProvince('Baden-Württemberg'))
 				break
-			case 'IE':
-				setProvince('Carlow')
-				setPostal('')
+			case Country.IE:
+				dispatch(updateProvince('Carlow'))
+				dispatch(updatePostal(''))
 				break
-			case 'NO':
-				setProvince('Oslo')
+			case Country.NO:
+				dispatch(updateProvince('Oslo'))
 				break
 			default:
-				setProvince('Alberta')
+				dispatch(updateProvince('Alberta'))
 		}
 	}, [country])
-
-	const setLandlordName = (landlordName: string) => {
-		setLandlordValidationError(false)
-		setLandlord(landlordName)
-	}
-
-	const setCityName = (cityName: string) => {
-		setCityValidationError(false)
-		setCity(cityName)
-	}
-
-	const isIreland = country === 'IE'
 
 	const ratings = [
 		{ title: 'Health and Safety', rating: health },
@@ -281,14 +275,6 @@ function ReviewForm(): JSX.Element {
 			)}
 			data-testid='create-review-form-1'
 		>
-			<SuccessModal isOpen={successModalOpen} setIsOpen={setSuccessModalOpen} />
-			<SpamReviewModal
-				landlord={landlord}
-				isOpen={spamReviewModalOpen}
-				setIsOpen={setSpamReviewModalOpen}
-				detectionMethod={spamDetectionMethod}
-			/>
-
 			<ReviewHero
 				setGetStarted={setGetStarted}
 				setLandlordOpen={setLandlordOpen}
@@ -306,8 +292,6 @@ function ReviewForm(): JSX.Element {
 						<LandlordForm
 							landlordOpen={landlordOpen}
 							setLandlordOpen={setLandlordOpen}
-							landlord={landlord}
-							setLandlordName={setLandlordName}
 							setShowLocationForm={setShowLocationForm}
 							setLocationOpen={setLocationOpen}
 							landlordValidationError={landlordValidationError}
@@ -327,21 +311,11 @@ function ReviewForm(): JSX.Element {
 					<div className='w-full border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
 						<LocationForm
 							locationOpen={locationOpen}
-							city={city}
-							province={province}
-							country={country}
-							isIreland={isIreland}
-							postal={postal}
-							rent={rent}
 							setLocationOpen={setLocationOpen}
-							setCountry={setCountry}
-							setCityName={setCityName}
 							locations={locations}
 							searching={searching}
 							cityValidationError={cityValidationError}
 							cityValidationErrorText={cityValidationErrorText}
-							setProvince={setProvince}
-							handleTextChange={handleTextChange}
 							postalError={postalError}
 							setShowRatingForm={setShowRatingForm}
 							setRatingsOpen={setRatingsOpen}
@@ -362,16 +336,6 @@ function ReviewForm(): JSX.Element {
 							ratingsOpen={ratingsOpen}
 							setRatingsOpen={setRatingsOpen}
 							ratings={ratings}
-							repair={repair}
-							setRepair={setRepair}
-							health={health}
-							setHealth={setHealth}
-							stability={stability}
-							setStability={setStability}
-							privacy={privacy}
-							setPrivacy={setPrivacy}
-							respect={respect}
-							setRespect={setRespect}
 							setShowReviewForm={setShowReviewForm}
 							setReviewOpen={setReviewOpen}
 						/>
@@ -388,10 +352,8 @@ function ReviewForm(): JSX.Element {
 				>
 					<div className='w-full overflow-hidden border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
 						<WrittenReviewForm
-							review={review}
 							reviewOpen={reviewOpen}
 							setReviewOpen={setReviewOpen}
-							handleTextChange={handleTextChange}
 							setShowPreview={setShowPreview}
 						/>
 					</div>

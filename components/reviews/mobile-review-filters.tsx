@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { Fragment, useEffect } from 'react'
 import {
 	Dialog,

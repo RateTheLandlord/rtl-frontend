@@ -1,5 +1,5 @@
 import { verifyToken } from '@/lib/captcha/verifyToken'
-import { create } from '@/lib/review/review'
+import { create } from '@/lib/review/models/review-data-layer'
 import { Review } from '@/util/interfaces/interfaces'
 import ReviewRateLimitMiddleware from '@/util/reviewRateLimit'
 import { NextApiRequest, NextApiResponse } from 'next'

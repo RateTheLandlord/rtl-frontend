@@ -1,8 +1,5 @@
-import { useMemo, useState } from 'react'
-import ReportModal from '../reviews/report-modal'
-import { Review as IReview } from '@/util/interfaces/interfaces'
-import EditReviewModal from '../modal/EditReviewModal'
-import RemoveReviewModal from '../modal/RemoveReviewModal'
+import { useMemo } from 'react'
+import { UserReview } from '@/util/interfaces/interfaces'
 import AdsComponent from '../adsense/Adsense'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import ZipInfo from './ZipInfo'
@@ -20,12 +17,6 @@ interface IProps {
 }
 
 const ZipPage = ({ city, state, country, zip, data }: IProps) => {
-	// State
-	const [editReviewOpen, setEditReviewOpen] = useState(false)
-	const [reportOpen, setReportOpen] = useState<boolean>(false)
-	const [removeReviewOpen, setRemoveReviewOpen] = useState(false)
-	const [selectedReview, setSelectedReview] = useState<IReview | undefined>()
-
 	// Query
 	const queryParams = useMemo(() => {
 		return {
@@ -39,7 +30,7 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 		}
 	}, [city, state, country, zip])
 
-	const { reviews, isLoading: isLoadingHook } = useInfiniteScroll<IReview>({
+	const { reviews, isLoading: isLoadingHook } = useInfiniteScroll<UserReview>({
 		fetchData: fetchReviews,
 		queryParams,
 		offset: 150,
@@ -47,33 +38,6 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 
 	return (
 		<>
-			<ReportModal
-				isOpen={reportOpen}
-				setIsOpen={setReportOpen}
-				selectedReview={selectedReview}
-			/>
-			{selectedReview ? (
-				<>
-					<EditReviewModal
-						selectedReview={selectedReview}
-						handleMutate={() => {
-							console.log('')
-						}}
-						setEditReviewOpen={setEditReviewOpen}
-						editReviewOpen={editReviewOpen}
-						setSelectedReview={setSelectedReview}
-					/>
-					<RemoveReviewModal
-						selectedReview={selectedReview}
-						handleMutate={() => {
-							console.log('')
-						}}
-						setRemoveReviewOpen={setRemoveReviewOpen}
-						removeReviewOpen={removeReviewOpen}
-						setSelectedReview={setSelectedReview}
-					/>
-				</>
-			) : null}
 			<div className='w-full px-2 md:px-0'>
 				<AdsComponent slot='1526837416' />
 				<div className='mx-auto mt-5 flex max-w-2xl flex-col gap-3 lg:max-w-7xl'>
@@ -100,14 +64,7 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 								</p>
 							</div>
 						) : (
-							<ReviewTable
-								data={reviews}
-								setReportOpen={setReportOpen}
-								setSelectedReview={setSelectedReview}
-								setRemoveReviewOpen={setRemoveReviewOpen}
-								setEditReviewOpen={setEditReviewOpen}
-								isLoading={isLoadingHook}
-							/>
+							<ReviewTable data={reviews} isLoading={isLoadingHook} />
 						)}
 					</div>
 				</div>
