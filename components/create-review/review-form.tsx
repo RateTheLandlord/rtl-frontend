@@ -450,9 +450,13 @@ function ReviewForm(): JSX.Element {
 											review.length > 2000
 										}
 										onClick={() => {
-											posthog.capture('create_review_submitted')
+											posthog.capture('create_review_submitted', {
+												landlord,
+											})
 											handleSubmit().catch(() => {
-												posthog.capture('create_review_submit_error')
+												posthog.capture('create_review_submit_error', {
+													landlord,
+												})
 												console.error('Error submitting Review')
 											})
 										}}
