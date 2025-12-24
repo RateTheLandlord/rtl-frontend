@@ -40,7 +40,9 @@ const EditReviewModal = () => {
 	const [moderationReason, setModerationReason] = useState<string | null>(
 		selectedReview?.moderation_reason || null,
 	)
-	const moderators = selectedReview?.moderator || []
+	const moderators = selectedReview?.moderator
+		? [...selectedReview.moderator]
+		: []
 
 	const isIreland = country === 'IE'
 
