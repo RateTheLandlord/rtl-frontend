@@ -68,11 +68,14 @@ const UserRemoveReviewModal = () => {
 						toast.success('Success!')
 						dispatch(updateSelectedReview(undefined))
 						dispatch(updateUserRemoveReviewOpen(false))
-						posthog.capture('user_code.review_deleted')
+						posthog.capture('user_code.review_deleted', {
+							landlord: selectedReview.landlord,
+						})
 					} else {
 						dispatch(updateUserKey(''))
 						setCodeError(`${t('user-code.incorrect')}`)
 						posthog.capture('user_code.incorrect_code_entry', {
+							landlord: selectedReview.landlord,
 							message: data.message,
 						})
 					}
