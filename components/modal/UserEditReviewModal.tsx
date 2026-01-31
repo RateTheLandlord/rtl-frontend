@@ -84,10 +84,13 @@ const UserEditReviewModal = () => {
 
 					dispatch(updateUserEditReviewOpen(false))
 					dispatch(updateSelectedReview(undefined))
-					posthog.capture('user_code.review_edited')
+					posthog.capture('user_code.review_edited', {
+						landlord: selectedReview?.landlord,
+					})
 				} else {
 					setCodeError(`${t('user-code.incorrect')}`)
 					posthog.capture('user_code.incorrect_code_entry', {
+						landlord: selectedReview?.landlord,
 						message: data.message,
 					})
 				}
