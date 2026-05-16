@@ -1,16 +1,10 @@
-import AboutUs from '@/components/about/aboutUs'
-import Contact from '@/components/about/contact'
-import Contributing from '@/components/about/contributing'
-import Moderation from '@/components/about/moderation'
-import Privacy from '@/components/about/privacy'
+import Faq from '@/components/about/faq'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import React from 'react'
-import Revenue from '@/components/about/revenue'
-import Poster from '@/components/poster/Poster'
 
-function About(): JSX.Element {
-	const title = 'About | Rate The Landlord'
+function FrequentlyAskedQuestions(): JSX.Element {
+	const title = 'Frequently Asked Questions | Rate The Landlord'
 	const desc =
 		'Share information with tenants like you. We are a community platform that elevates tenant voices to promote landlord accountability.'
 
@@ -53,19 +47,13 @@ function About(): JSX.Element {
 				]}
 			/>
 			<div className='container mt-5 flex flex-col items-center gap-4 px-2'>
-				<AboutUs />
-				<Poster />
-				<Privacy />
-				<Moderation />
-				<Revenue />
-				<Contributing />
-				<Contact />
+				<Faq />
 			</div>
 		</div>
 	)
 }
 
-export default About
+export default FrequentlyAskedQuestions
 
 export async function getStaticProps({ locale }: { locale: string }) {
 	const aboutMessages = (await import(

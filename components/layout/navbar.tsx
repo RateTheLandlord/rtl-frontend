@@ -27,6 +27,8 @@ export default function Navbar(): JSX.Element {
 			setActiveTab('/create-review')
 		} else if (urlString.includes('resources')) {
 			setActiveTab('/resources')
+		} else if (urlString.includes('faq')) {
+			setActiveTab('/faq')
 		} else if (urlString.includes('admin')) {
 			setActiveTab('/admin')
 		} else {
