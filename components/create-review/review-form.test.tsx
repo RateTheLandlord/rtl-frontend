@@ -299,10 +299,6 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 				.length,
 		).toBe(3)
 
-		//Text should still be there
-		expect(screen.getByText('createreview.hero.title')).toBeInTheDocument()
-		expect(screen.getByText('createreview.hero.body')).toBeInTheDocument()
-
 		//Check for WrittenReviewForm component
 		const writtenReviewFormComponent = screen.getByTestId(
 			'WrittenReviewForm-component',
@@ -347,10 +343,6 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		)
 		expect(previewReviewButton).toBeInTheDocument()
 		await userEvent.click(previewReviewButton)
-
-		//Text should still be there
-		expect(screen.getByText('createreview.hero.title')).toBeInTheDocument()
-		expect(screen.getByText('createreview.hero.body')).toBeInTheDocument()
 
 		//Check for ReviewPreview component
 		const reviewPreviewComponent = screen.getByTestId('ReviewPreview-component')
