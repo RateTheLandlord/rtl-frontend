@@ -15,8 +15,8 @@ export const navigation: INav[] = [
 		name: 'nav.about',
 	},
 	{
-		href: '/support-us',
-		name: 'nav.support-us',
+		href: '/faq',
+		name: 'nav.faq',
 	},
 ]
 

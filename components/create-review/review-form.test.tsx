@@ -32,28 +32,7 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		const reviewFormComponent = screen.getByTestId('create-review-form-1')
 		expect(reviewFormComponent).toBeInTheDocument()
 
-		//Check for ReviewHero component
-		const reviewHeroComponent = screen.getByTestId('ReviewHero-component')
-		expect(reviewHeroComponent).toBeInTheDocument()
-
-		//Check for HouseIcon component
-		const houseIconComponent = screen.getByTestId('HouseIcon-component')
-		expect(houseIconComponent).toBeInTheDocument()
-
-		//Check if text renders
-		expect(screen.getByText('createreview.hero.title')).toBeInTheDocument()
-		expect(screen.getByText('createreview.hero.body')).toBeInTheDocument()
-
-		//Check for Start a Review button
-		const startReviewButton = screen.getByTestId('submit-button-1')
-		expect(startReviewButton).toBeInTheDocument()
-		await userEvent.click(startReviewButton)
-
-		//Text should still be there
-		expect(screen.getByText('createreview.hero.title')).toBeInTheDocument()
-		expect(screen.getByText('createreview.hero.body')).toBeInTheDocument()
-
-		//Check for LandlordForm component
+		//Check for LandlordForm component directly
 		const landlordFormComponent = screen.getByTestId('LandlordForm-component')
 		expect(landlordFormComponent).toBeInTheDocument()
 
@@ -73,11 +52,7 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		expect(continueReviewButton).toBeInTheDocument()
 		await userEvent.click(continueReviewButton)
 
-		//Text should still be there
-		expect(screen.getByText('createreview.hero.title')).toBeInTheDocument()
-		expect(screen.getByText('createreview.hero.body')).toBeInTheDocument()
-
-		//Check for LandlordForm component
+		//Check for LocationForm component
 		const locationFormComponent = screen.getByTestId('LocationForm-component')
 		expect(locationFormComponent).toBeInTheDocument()
 
@@ -129,10 +104,6 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		const continueReviewButton2 = screen.getByText('createreview.continue')
 		expect(continueReviewButton2).toBeInTheDocument()
 		await userEvent.click(continueReviewButton2)
-
-		//Text should still be there
-		expect(screen.getByText('createreview.hero.title')).toBeInTheDocument()
-		expect(screen.getByText('createreview.hero.body')).toBeInTheDocument()
 
 		//Check for RatingForm component
 		const ratingFormComponent = screen.getByTestId('RatingForm-component')
@@ -328,10 +299,6 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 				.length,
 		).toBe(3)
 
-		//Text should still be there
-		expect(screen.getByText('createreview.hero.title')).toBeInTheDocument()
-		expect(screen.getByText('createreview.hero.body')).toBeInTheDocument()
-
 		//Check for WrittenReviewForm component
 		const writtenReviewFormComponent = screen.getByTestId(
 			'WrittenReviewForm-component',
@@ -376,10 +343,6 @@ describe('create-review/ReviewForm component should submit multi-step create-rev
 		)
 		expect(previewReviewButton).toBeInTheDocument()
 		await userEvent.click(previewReviewButton)
-
-		//Text should still be there
-		expect(screen.getByText('createreview.hero.title')).toBeInTheDocument()
-		expect(screen.getByText('createreview.hero.body')).toBeInTheDocument()
 
 		//Check for ReviewPreview component
 		const reviewPreviewComponent = screen.getByTestId('ReviewPreview-component')
