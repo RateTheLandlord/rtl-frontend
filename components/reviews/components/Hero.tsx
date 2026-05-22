@@ -78,7 +78,7 @@ const Hero = ({ countryFilter, stateFilter }: IProps) => {
 					<div className='hidden lg:absolute lg:inset-y-0 lg:right-0 lg:block lg:w-1/2'>
 						<Image
 							alt=''
-							src='/option_3.webp'
+							src='/option_3_flipped.jpg'
 							fill
 							sizes='(min-width: 1024px) 50vw, 100vw'
 							className='rounded-r-lg object-cover'
