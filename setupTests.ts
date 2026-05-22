@@ -1,12 +1,28 @@
+import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import '@testing-library/jest-dom'
 import { toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
-global.ResizeObserver = jest.fn().mockImplementation(() => ({
-	observe: jest.fn(),
-	unobserve: jest.fn(),
-	disconnect: jest.fn(),
+class MockResizeObserver implements ResizeObserver {
+	constructor() {}
+	observe = jest.fn()
+	unobserve = jest.fn()
+	disconnect = jest.fn()
+	takeRecords = jest.fn().mockReturnValue([])
+}
+
+global.ResizeObserver = MockResizeObserver as typeof ResizeObserver
+
+jest.mock('@auth0/nextjs-auth0/client', () => ({
+	__esModule: true,
+	UserProvider: ({ children }: { children: React.ReactNode }) =>
+		React.createElement(React.Fragment, null, children),
+	useUser: () => ({
+		user: null,
+		error: undefined,
+		isLoading: false,
+	}),
 }))
 
 jest.mock('next-recaptcha-v3', () => ({

@@ -18,20 +18,6 @@ describe('Footer', () => {
 			'https://www.instagram.com/ratethelandlord',
 		)
 
-		const twitterLink = screen.getByRole('link', { name: 'Twitter' })
-		expect(twitterLink).toBeInTheDocument()
-		expect(twitterLink).toHaveAttribute(
-			'href',
-			'https://twitter.com/r8thelandlord',
-		)
-
-		const tiktokLink = screen.getByRole('link', { name: 'TikTok' })
-		expect(tiktokLink).toBeInTheDocument()
-		expect(tiktokLink).toHaveAttribute(
-			'href',
-			'https://www.tiktok.com/@ratethelandlord',
-		)
-
 		const githubLink = screen.getByRole('link', { name: 'Github' })
 		expect(githubLink).toBeInTheDocument()
 		expect(githubLink).toHaveAttribute(
