@@ -78,10 +78,10 @@ const Hero = ({ countryFilter, stateFilter }: IProps) => {
 					<div className='hidden lg:absolute lg:inset-y-0 lg:right-0 lg:block lg:w-1/2'>
 						<Image
 							alt=''
-							src='/review.jpg'
-							width={640}
-							height={960}
-							className='rounded-r-md object-cover'
+							src='/option_3.webp'
+							fill
+							sizes='(min-width: 1024px) 50vw, 100vw'
+							className='rounded-r-lg object-cover'
 						/>
 					</div>
 				</div>

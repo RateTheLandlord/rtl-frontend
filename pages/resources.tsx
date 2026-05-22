@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import ResourcesInfo from '@/components/resources/resourcesInfo'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import AdsComponent from '@/components/adsense/Adsense'
@@ -7,7 +6,6 @@ import ResourceList from '@/components/resources/ResourceList'
 import { ResourceResponse } from '@/util/interfaces/interfaces'
 import { getResources } from '@/lib/tenant-resource/resource'
 import { useTranslations } from 'next-intl'
-import Poster from '@/components/poster/Poster'
 
 interface IProps {
 	data: ResourceResponse
@@ -53,8 +51,6 @@ function Resources({ data }: IProps): JSX.Element {
 			/>
 			<div className='container mt-5 flex flex-col items-center gap-4 px-2'>
 				<AdsComponent slot='9611751505' />
-				<ResourcesInfo />
-				<Poster />
 				<ResourceList data={data} />
 				<p className='mt-8 text-center text-xl leading-8 text-gray-500'>
 					{t('contribute')}

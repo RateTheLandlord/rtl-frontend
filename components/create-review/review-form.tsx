@@ -51,8 +51,8 @@ function ReviewForm(): JSX.Element {
 
 	const isIreland = country === Country.IE
 
-	const [getStarted, setGetStarted] = useState(false)
-	const [landlordOpen, setLandlordOpen] = useState(false)
+	const [getStarted, setGetStarted] = useState(true)
+	const [landlordOpen, setLandlordOpen] = useState(true)
 
 	const [showLocationForm, setShowLocationForm] = useState(false)
 	const [locationOpen, setLocationOpen] = useState(false)
