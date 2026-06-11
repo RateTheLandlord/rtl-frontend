@@ -19,7 +19,7 @@ const ReviewHero = ({ getStarted, setGetStarted, setLandlordOpen }: IProps) => {
 			)}
 			data-testid='ReviewHero-component'
 		>
-			<div className='mt-2 flex flex-col items-center justify-center gap-4 rounded-3xl bg-gray-100 p-4'>
+			<div className='bg-background mt-2 flex flex-col items-center justify-center gap-4 rounded-3xl p-4'>
 				{getStarted ? null : (
 					<div className='mx-auto flex max-w-2xl lg:max-w-none lg:flex-none'>
 						<div className='max-w-3xl flex-none sm:max-w-5xl lg:max-w-none'>

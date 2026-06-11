@@ -17,6 +17,7 @@ export default {
 			colors: {
 				primary: 'rgb(var(--color-primary) / <alpha-value>)',
 				'primary-hover': 'rgb(var(--color-primary-hover) / <alpha-value>)',
+				background: 'rgb(var(--color-background) / <alpha-value>)',
 			},
 			height: {
 				128: '41rem', // Adds a custom height of 32rem (512px)

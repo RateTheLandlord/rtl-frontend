@@ -111,7 +111,7 @@ export default function Navbar(): JSX.Element {
 								</div>
 							</div>
 							<div className='flex items-center lg:hidden'>
-								<DisclosureButton className='inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-teal-500 focus:outline-none focus:ring-inset'>
+								<DisclosureButton className='hover:bg-background inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-teal-500 focus:outline-none focus:ring-inset'>
 									<span className='sr-only'>{t('nav.open')}</span>
 									{open ? (
 										<XIcon className='block h-6 w-6' aria-hidden='true' />

@@ -65,12 +65,14 @@
 	/* RGB components for primary color (used by Tailwind with opacity): */
 	--color-primary: 126 152 96;
 	--color-primary-hover: 99 124 84;
+	--color-background: 239 238 234;
 }
 
 /* Optional dark theme override (example) */
 [data-theme="dark"] {
 	--color-primary: 111 127 87;
 	--color-primary-hover: 99 124 84;
+	--color-background: 239 238 234;
 }
 
 @layer components {
@@ -83,6 +85,12 @@
 	}
 	.hover\:bg-primary-hover:hover {
 		background-color: rgb(var(--color-primary-hover));
+	}
+	.bg-background {
+		background-color: rgb(var(--color-background));
+	}
+	.hover\:bg-background:hover {
+		background-color: rgb(var(--color-background));
 	}
 	.text-primary {
 		color: rgb(var(--color-primary));
