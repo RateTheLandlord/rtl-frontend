@@ -29,7 +29,7 @@ describe('Button', () => {
 	it('renders with disabled styles when disabled prop is true', () => {
 		const { getByTestId } = render(<Button disabled>Click me</Button>)
 		const buttonElement = getByTestId('submit-button-1')
-		expect(buttonElement).toHaveClass('bg-teal-200')
+		expect(buttonElement).toHaveClass('bg-primary/20')
 	})
 
 	it('renders with enabled styles when disabled prop is false', () => {

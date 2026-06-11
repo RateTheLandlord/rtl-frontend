@@ -55,7 +55,7 @@ export default function Navbar(): JSX.Element {
 										<div
 											className={`${
 												activeTab === link.href
-													? 'border-b-2 border-teal-500'
+													? 'border-primary border-b-2'
 													: ''
 											} inline-flex items-center px-1 pt-1 text-sm text-gray-900`}
 											key={link.href}
@@ -67,7 +67,7 @@ export default function Navbar(): JSX.Element {
 										<div
 											className={`${
 												activeTab === '/admin'
-													? 'border-b-2 border-teal-500'
+													? 'border-primary border-b-2'
 													: ''
 											} inline-flex items-center px-1 pt-1 text-sm text-gray-900`}
 										>
@@ -93,7 +93,7 @@ export default function Navbar(): JSX.Element {
 									<ChangeLanguage />
 								</div>
 								<div className='hidden lg:ml-6 lg:flex lg:space-x-8'>
-									<div className='bg-primary hover:bg-primary-hover inline-flex cursor-pointer items-center rounded-md border border-transparent text-sm text-white shadow-sm focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none'>
+									<div className='bg-primary hover:bg-primary-hover focus:ring-primary inline-flex cursor-pointer items-center rounded-md border border-transparent text-sm text-white shadow-sm focus:ring-2 focus:ring-offset-2 focus:outline-none'>
 										<Link href='/create-review'>
 											<p className='px-4 py-2'>{t('nav.submit')}</p>
 										</Link>
