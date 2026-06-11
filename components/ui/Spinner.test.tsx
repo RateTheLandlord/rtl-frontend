@@ -12,7 +12,7 @@ describe('Spinner component', () => {
 		const { container } = render(<Spinner />)
 		const spinner = container.querySelector('div[role="status"]')
 		expect(spinner).toBeInTheDocument()
-		expect(spinner).toHaveClass('h-8 w-8 text-teal-600')
+		expect(spinner).toHaveClass('h-8 w-8 text-[#7e9860]')
 	})
 
 	it('renders correctly with custom height and width', () => {

@@ -43,7 +43,7 @@ function Admin(): JSX.Element {
 				<h1 className='text-center'>Not Logged In</h1>
 				<Link
 					href='/login'
-					className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm text-white shadow-sm hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none'
+					className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-[#7e9860] px-4 py-2 text-sm text-white shadow-sm hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none'
 				>
 					Go To Login
 				</Link>

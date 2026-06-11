@@ -93,7 +93,7 @@ export default function Navbar(): JSX.Element {
 									<ChangeLanguage />
 								</div>
 								<div className='hidden lg:ml-6 lg:flex lg:space-x-8'>
-									<div className='inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 text-sm text-white shadow-sm hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none'>
+									<div className='inline-flex cursor-pointer items-center rounded-md border border-transparent bg-[#7e9860] text-sm text-white shadow-sm hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none'>
 										<Link href='/create-review'>
 											<p className='px-4 py-2'>{t('nav.submit')}</p>
 										</Link>

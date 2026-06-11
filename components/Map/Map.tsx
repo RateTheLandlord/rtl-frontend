@@ -122,7 +122,7 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 	return (
 		<div
 			data-testid='map-component'
-			className='divide mt-2 flex flex-col gap-2 divide-teal-600 lg:flex-row'
+			className='divide mt-2 flex flex-col gap-2 divide-[#7e9860] lg:flex-row'
 		>
 			{/* Filter Options */}
 			<div className='basis-1/5'>

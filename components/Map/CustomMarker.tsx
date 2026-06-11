@@ -24,7 +24,7 @@ const CustomMarker = ({
 						: 'h-4 w-4 bg-teal-200'
 				}`}
 			/>
-			<span className='relative block h-2 w-2 rounded-full bg-teal-600' />
+			<span className='relative block h-2 w-2 rounded-full bg-[#7e9860]' />
 		</span>
 	)
 }

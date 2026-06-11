@@ -127,7 +127,7 @@ function ResourceFilters({
 							onClick={() => updateParams()}
 							type='submit'
 							title='submit'
-							className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm text-white shadow-sm focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none ${'bg-teal-600 hover:bg-teal-700'}`}
+							className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm text-white shadow-sm focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none ${'bg-[#7e9860] hover:bg-teal-700'}`}
 							data-testid='submit-button-1'
 						>
 							{loading ? (

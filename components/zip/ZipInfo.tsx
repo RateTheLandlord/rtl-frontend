@@ -58,7 +58,7 @@ const ZipInfo = ({ state, country, average, total, averages, zip }: IProps) => {
 
 					<div>
 						<Link href='/create-review'>
-							<p className='mt-2 inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm text-white shadow-sm hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none'>
+							<p className='mt-2 inline-flex cursor-pointer items-center rounded-md border border-transparent bg-[#7e9860] px-4 py-2 text-sm text-white shadow-sm hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none'>
 								{t('submit')}
 							</p>
 						</Link>

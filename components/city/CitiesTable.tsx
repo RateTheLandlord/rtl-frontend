@@ -43,7 +43,7 @@ const CitiesTable = ({ state, country }: IProps) => {
 							href={`/cities/${encodeURIComponent(
 								country,
 							)}/${encodeURIComponent(state)}/${encodeURIComponent(city.city)}`}
-							className='flex rounded-md border bg-teal-600/5 p-2 hover:underline'
+							className='flex rounded-md border bg-[#7e9860]/5 p-2 hover:underline'
 						>
 							<div className='flex w-full justify-between text-sm lg:text-lg'>
 								<div className='flex flex-col text-center break-words'>

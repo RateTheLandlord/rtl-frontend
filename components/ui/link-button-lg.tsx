@@ -8,7 +8,7 @@ interface IProps {
 export default function LinkButtonLG({ children, href }: IProps) {
 	return (
 		<div
-			className='cursor-pointer rounded-md border border-teal-600 bg-teal-600 hover:bg-teal-500'
+			className='cursor-pointer rounded-md border border-[#7e9860] bg-[#7e9860] hover:bg-teal-500'
 			data-testid='home-hero-submit-btn-1'
 		>
 			<Link href={href}>

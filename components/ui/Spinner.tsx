@@ -9,7 +9,7 @@ interface IProps {
 const Spinner = ({
 	height = 'h-8',
 	width = 'w-8',
-	colour = 'text-teal-600',
+	colour = 'text-[#7e9860]',
 }: IProps) => {
 	return (
 		<div

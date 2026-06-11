@@ -21,7 +21,7 @@ export default function CatAverages({ averages, average, total }: IProps) {
 		<div className='py-4'>
 			<div className='mx-auto max-w-7xl'>
 				<div className='grid grid-cols-1 gap-0.5 sm:mx-0 sm:rounded-2xl md:grid-cols-6'>
-					<div className='flex flex-col items-center justify-center gap-2 rounded-lg bg-teal-600 p-4 text-center text-white md:col-span-1 md:rounded-r-none md:p-10'>
+					<div className='flex flex-col items-center justify-center gap-2 rounded-lg bg-[#7e9860] p-4 text-center text-white md:col-span-1 md:rounded-r-none md:p-10'>
 						<p className='text-center'>{t('overall')}</p>
 						<RatingStars
 							size={width < 1025 ? '4' : '5'}
@@ -31,7 +31,7 @@ export default function CatAverages({ averages, average, total }: IProps) {
 
 						<p className='sr-only'>{t('average', { average: average })}</p>
 					</div>
-					<div className='flex w-full items-center justify-between rounded-lg bg-teal-600/5 p-1.5 md:flex-col md:justify-center md:gap-2 md:rounded-none md:p-10'>
+					<div className='flex w-full items-center justify-between rounded-lg bg-[#7e9860]/5 p-1.5 md:flex-col md:justify-center md:gap-2 md:rounded-none md:p-10'>
 						<p className='text-center'>{t('stability')}</p>
 						<RatingStars
 							size={width < 1025 ? '4' : '5'}
@@ -40,7 +40,7 @@ export default function CatAverages({ averages, average, total }: IProps) {
 						/>
 					</div>
 
-					<div className='flex w-full items-center justify-between rounded-lg bg-teal-600/5 p-1 md:flex-col md:justify-center md:gap-2 md:rounded-none md:p-10'>
+					<div className='flex w-full items-center justify-between rounded-lg bg-[#7e9860]/5 p-1 md:flex-col md:justify-center md:gap-2 md:rounded-none md:p-10'>
 						<p className='text-center'>{t('respect')}</p>
 						<RatingStars
 							size={width < 1025 ? '4' : '5'}
@@ -48,7 +48,7 @@ export default function CatAverages({ averages, average, total }: IProps) {
 							value={averages.avg_respect}
 						/>
 					</div>
-					<div className='flex w-full items-center justify-between rounded-lg bg-teal-600/5 p-1 md:flex-col md:justify-center md:gap-2 md:rounded-none md:p-10'>
+					<div className='flex w-full items-center justify-between rounded-lg bg-[#7e9860]/5 p-1 md:flex-col md:justify-center md:gap-2 md:rounded-none md:p-10'>
 						<p className='text-center'>{t('health')}</p>
 						<RatingStars
 							size={width < 1025 ? '4' : '5'}
@@ -56,7 +56,7 @@ export default function CatAverages({ averages, average, total }: IProps) {
 							value={averages.avg_health}
 						/>
 					</div>
-					<div className='flex w-full items-center justify-between rounded-lg bg-teal-600/5 p-1 md:flex-col md:justify-center md:gap-2 md:rounded-none md:p-10'>
+					<div className='flex w-full items-center justify-between rounded-lg bg-[#7e9860]/5 p-1 md:flex-col md:justify-center md:gap-2 md:rounded-none md:p-10'>
 						<p className='text-center'>{t('privacy')}</p>
 						<RatingStars
 							size={width < 1025 ? '4' : '5'}
@@ -64,7 +64,7 @@ export default function CatAverages({ averages, average, total }: IProps) {
 							value={averages.avg_privacy}
 						/>
 					</div>
-					<div className='flex w-full items-center justify-between rounded-lg bg-teal-600/5 p-1 md:flex-col md:justify-center md:gap-2 md:rounded-l-none md:p-10'>
+					<div className='flex w-full items-center justify-between rounded-lg bg-[#7e9860]/5 p-1 md:flex-col md:justify-center md:gap-2 md:rounded-l-none md:p-10'>
 						<p className='text-center'>{t('repair')}</p>
 						<RatingStars
 							size={width < 1025 ? '4' : '5'}
