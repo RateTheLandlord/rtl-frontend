@@ -81,7 +81,7 @@ const CopyUserCodeModal = () => {
 									</div>
 									<button
 										onClick={() => void handleCopy()}
-										className='w-1/2 flex-none cursor-pointer rounded-r-md bg-[#7e9860] px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-teal-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7e9860]'
+										className='bg-primary focus-visible:outline-primary hover:bg-primary-hover w-1/2 flex-none cursor-pointer rounded-r-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2'
 									>
 										{copied ? `${t('copied')}` : `${t('copy')}`}
 									</button>

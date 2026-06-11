@@ -102,7 +102,7 @@ export default function CityMobileFilters({
 												updateParams()
 												setMobileFiltersOpen(false)
 											}}
-											className='w-full rounded-lg bg-[#7e9860] py-2 text-white'
+											className='bg-primary w-full rounded-lg py-2 text-white'
 										>
 											Apply Filters
 										</button>

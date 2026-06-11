@@ -45,7 +45,7 @@ export default function ComboBox({
 			<div className='relative w-full pt-2 lg:px-2 lg:pt-2'>
 				<div className='focus-visible:ring-opacity-75 relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm'>
 					<ComboboxInput
-						className='focus-visible:ring-opacity-75 relative w-full cursor-default rounded-lg border border-[#7e9860] bg-white py-2 pr-10 pl-3 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-lg'
+						className='focus-visible:ring-opacity-75 border-primary relative w-full cursor-default rounded-lg border bg-white py-2 pr-10 pl-3 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-lg'
 						displayValue={(state: Options) => state?.name}
 						placeholder={`Search ${name}`}
 						onChange={(event) => setQuery(event.target.value)}

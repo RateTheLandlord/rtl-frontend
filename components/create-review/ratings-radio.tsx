@@ -36,8 +36,8 @@ function RatingsRadio({ title, rating, setRating, tooltip, testid }: Props) {
 									i === 0 ? 'rounded-l-full' : 'border-l-0',
 									i === 4 ? 'rounded-r-full' : 'border-r',
 									checked
-										? 'border-transparent bg-[#7e9860] text-white hover:bg-teal-700'
-										: 'border-2 border-[#7e9860] bg-white text-teal-900 hover:bg-teal-50',
+										? 'bg-primary hover:bg-primary-hover border-transparent text-white'
+										: 'border-primary border-2 bg-white text-teal-900 hover:bg-teal-50',
 									'flex cursor-pointer items-center justify-center border px-3 py-4 text-sm uppercase sm:flex-1',
 								)
 							}

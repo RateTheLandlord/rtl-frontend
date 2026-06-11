@@ -60,3 +60,44 @@
 		src: url('/components/fonts/Montserrat-Regular.ttf') format('truetype');
 	}
 }
+
+:root {
+	/* RGB components for primary color (used by Tailwind with opacity): */
+	--color-primary: 126 152 96;
+	--color-primary-hover: 99 124 84;
+}
+
+/* Optional dark theme override (example) */
+[data-theme="dark"] {
+	--color-primary: 111 127 87;
+	--color-primary-hover: 99 124 84;
+}
+
+@layer components {
+	/* Fallback utility classes for primary color tokens */
+	.bg-primary {
+		background-color: rgb(var(--color-primary));
+	}
+	.bg-primary-hover {
+		background-color: rgb(var(--color-primary-hover));
+	}
+	.hover\:bg-primary-hover:hover {
+		background-color: rgb(var(--color-primary-hover));
+	}
+	.text-primary {
+		color: rgb(var(--color-primary));
+	}
+	.border-primary {
+		border-color: rgb(var(--color-primary));
+	}
+	.divide-primary > :not([hidden]) ~ :not([hidden]) {
+		--tw-divide-opacity: 1;
+		border-color: rgb(var(--color-primary));
+	}
+	.bg-primary\/5 {
+		background-color: rgb(var(--color-primary) / 0.05);
+	}
+	.focus-visible\:outline-primary:focus-visible {
+		outline-color: rgb(var(--color-primary));
+	}
+}

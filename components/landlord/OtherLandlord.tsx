@@ -32,7 +32,7 @@ const OtherLandlordInfo = ({ landlord }: IProps) => {
 						<Link
 							key={index}
 							href={`/landlord/${encodeURIComponent(otherLandlord.name)}`}
-							className='flex items-center justify-center rounded-md border bg-[#7e9860]/5 p-2 hover:underline'
+							className='bg-primary/5 flex items-center justify-center rounded-md border p-2 hover:underline'
 						>
 							<div className='flex flex-col items-center justify-center'>
 								<div
