@@ -288,7 +288,7 @@ function ReviewForm(): JSX.Element {
 					leaveFrom='transform scale-100 opacity-100 max-h-96'
 					leaveTo='transform scale-95 opacity-0 max-h-0'
 				>
-					<div className='flex w-full flex-col gap-3 border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
+					<div className='border-b-primary flex w-full flex-col gap-3 border-b-2 p-4 transition-all duration-500'>
 						<LandlordForm
 							landlordOpen={landlordOpen}
 							setLandlordOpen={setLandlordOpen}
@@ -308,7 +308,7 @@ function ReviewForm(): JSX.Element {
 					leaveFrom='transform scale-100 opacity-100 max-h-96'
 					leaveTo='transform scale-95 opacity-0 max-h-0'
 				>
-					<div className='w-full border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
+					<div className='border-b-primary w-full border-b-2 p-4 transition-all duration-500'>
 						<LocationForm
 							locationOpen={locationOpen}
 							setLocationOpen={setLocationOpen}
@@ -331,7 +331,7 @@ function ReviewForm(): JSX.Element {
 					leaveFrom='transform scale-100 opacity-100 max-h-96'
 					leaveTo='transform scale-95 opacity-0 max-h-0'
 				>
-					<div className='w-full overflow-hidden border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
+					<div className='border-b-primary w-full overflow-hidden border-b-2 p-4 transition-all duration-500'>
 						<RatingForm
 							ratingsOpen={ratingsOpen}
 							setRatingsOpen={setRatingsOpen}
@@ -350,7 +350,7 @@ function ReviewForm(): JSX.Element {
 					leaveFrom='transform scale-100 opacity-100 max-h-96'
 					leaveTo='transform scale-95 opacity-0 max-h-0'
 				>
-					<div className='w-full overflow-hidden border-b-2 border-b-teal-600 p-4 transition-all duration-500'>
+					<div className='border-b-primary w-full overflow-hidden border-b-2 p-4 transition-all duration-500'>
 						<WrittenReviewForm
 							reviewOpen={reviewOpen}
 							setReviewOpen={setReviewOpen}
@@ -367,7 +367,7 @@ function ReviewForm(): JSX.Element {
 					leaveFrom='transform scale-100 opacity-100 max-h-96'
 					leaveTo='transform scale-95 opacity-0 max-h-0'
 				>
-					<div className='w-full overflow-hidden border-b-2 border-b-teal-600 p-4 py-4 transition-all duration-500'>
+					<div className='border-b-primary w-full overflow-hidden border-b-2 p-4 py-4 transition-all duration-500'>
 						<div className='flex w-full justify-center'>
 							<ReviewPreview
 								rent={rent}

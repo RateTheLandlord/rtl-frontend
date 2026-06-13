@@ -126,7 +126,7 @@ export default function ResourceMobileFilters({
 												updateParams()
 												setMobileFiltersOpen(false)
 											}}
-											className='w-full rounded-lg bg-teal-600 py-2 text-white'
+											className='bg-primary w-full rounded-lg py-2 text-white'
 										>
 											{t('apply')}
 										</button>
