@@ -33,12 +33,11 @@ const RestoreReviewModal = () => {
 	const date = dayjs().format('DD/MM/YYYY')
 
 	const onSubmitRestoreReview = () => {
-		restored_by.unshift(`${user?.admin_id as string} on ${date}`)
 		const restoredReview = {
 			...selectedReview,
 			restore_date: date,
 			restore_reason: restoreReason,
-			restored_by: [...restored_by],
+			restored_by: [`${user?.admin_id as string} on ${date}`, ...restored_by],
 			delete_date: null,
 			delete_reason: null,
 			deleted_by: null,

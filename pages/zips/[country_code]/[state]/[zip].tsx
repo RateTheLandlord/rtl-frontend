@@ -7,6 +7,7 @@ import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import { IZipReviews } from '@/lib/review/types/review'
 import { getZipReviews } from '@/lib/review/zip'
+import { readLocaleFile } from '@/util/readLocalFile'
 
 interface IProps {
 	city: string
@@ -95,27 +96,16 @@ export async function getStaticProps({
 	locale: string
 	params: { city: string; state: string; country_code: string; zip: string }
 }) {
-	const alertsMessages = (await import(
-		`@/messages/${locale}/alerts.json`
-	)) as Record<string, string>
-	const layoutMessages = (await import(
-		`@/messages/${locale}/layout.json`
-	)) as Record<string, string>
-	const resourcesMessages = (await import(
-		`@/messages/${locale}/resources.json`
-	)) as Record<string, string>
-	const filtersMessages = (await import(
-		`@/messages/${locale}/filters.json`
-	)) as Record<string, string>
-	const landlordMessages = (await import(
-		`@/messages/${locale}/landlord.json`
-	)) as Record<string, string>
-	const reviewsMessages = (await import(
-		`@/messages/${locale}/reviews.json`
-	)) as Record<string, string>
+	const alertsMessages = readLocaleFile('alerts', locale)
+	const layoutMessages = readLocaleFile('layout', locale)
+	const resourcesMessages = readLocaleFile('resources', locale)
+	const filtersMessages = readLocaleFile('filters', locale)
+	const landlordMessages = readLocaleFile('landlord', locale)
+	const reviewsMessages = readLocaleFile('reviews', locale)
+
 	const data = await getZipReviews(params)
 
-	if (data.reviews.length === 0) {
+	if (!data || data.reviews.length === 0) {
 		return {
 			redirect: {
 				permanent: false,
@@ -126,23 +116,22 @@ export async function getStaticProps({
 
 	// Pass post data to the page via props
 	return {
-		props: JSON.parse(
-			JSON.stringify({
-				city: params.city,
-				state: params.state,
-				country: params.country_code,
-				data: data,
-				zip: params.zip,
-				messages: {
-					...alertsMessages,
-					...layoutMessages,
-					...filtersMessages,
-					...resourcesMessages,
-					...landlordMessages,
-					...reviewsMessages,
-				},
-			}),
-		),
+		props: {
+			city: params.city,
+			state: params.state,
+			country: params.country_code,
+			zip: params.zip,
+			data: JSON.parse(JSON.stringify(data)),
+			messages: {
+				...alertsMessages,
+				...layoutMessages,
+				...filtersMessages,
+				...resourcesMessages,
+				...landlordMessages,
+				...reviewsMessages,
+			},
+		},
+
 		// Re-generate the page
 		// if a request comes in after 100 seconds
 		revalidate: 100,
