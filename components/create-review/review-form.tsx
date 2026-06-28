@@ -5,11 +5,8 @@ import { useLocation } from '@/util/hooks/useLocation'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
 import { useReCaptcha } from 'next-recaptcha-v3'
 import Spinner from '../ui/Spinner'
-import { Transition, TransitionChild } from '@headlessui/react'
-import ReviewPreview from './components/ReviewPreview'
 import LandlordForm from './components/LandlordForm'
 import { classNames } from '@/util/helpers/helper-functions'
-import ReviewHero from './components/CreateReviewHero'
 import LocationForm from './components/CreateReviewLocationForm'
 import RatingForm from './components/RatingForm'
 import WrittenReviewForm from './components/WrittenReviewForm'
@@ -51,20 +48,6 @@ function ReviewForm(): JSX.Element {
 
 	const isIreland = country === Country.IE
 
-	const [getStarted, setGetStarted] = useState(true)
-	const [landlordOpen, setLandlordOpen] = useState(true)
-
-	const [showLocationForm, setShowLocationForm] = useState(false)
-	const [locationOpen, setLocationOpen] = useState(false)
-
-	const [showRatingForm, setShowRatingForm] = useState(false)
-	const [ratingsOpen, setRatingsOpen] = useState(false)
-
-	const [showReviewForm, setShowReviewForm] = useState(false)
-	const [reviewOpen, setReviewOpen] = useState(false)
-
-	const [showPreview, setShowPreview] = useState(false)
-
 	const {
 		searching,
 		locations,
@@ -73,9 +56,6 @@ function ReviewForm(): JSX.Element {
 		country,
 	)
 
-	const [disclaimerOne, setDisclaimerOne] = useState(false)
-	const [disclaimerTwo, setDisclaimerTwo] = useState(false)
-	const [disclaimerThree, setDisclaimerThree] = useState(false)
 	const [loading, setLoading] = useState<boolean>(false)
 
 	const [postalError, setPostalError] = useState(false)
@@ -259,218 +239,70 @@ function ReviewForm(): JSX.Element {
 		}
 	}, [country])
 
-	const ratings = [
-		{ title: 'Health and Safety', rating: health },
-		{ title: 'Respect', rating: respect },
-		{ title: 'Privacy', rating: privacy },
-		{ title: 'Repair', rating: repair },
-		{ title: 'Rental Stability', rating: stability },
-	]
-
 	return (
 		<div
 			className={classNames(
-				'container flex w-full flex-col items-center justify-center px-4 sm:px-0',
-				getStarted ? '' : 'lg:h-full',
+				'container flex w-full flex-col items-center justify-center rounded-3xl px-2 sm:px-0 lg:h-full',
 			)}
 			data-testid='create-review-form-1'
 		>
-			<ReviewHero
-				setGetStarted={setGetStarted}
-				setLandlordOpen={setLandlordOpen}
-				getStarted={getStarted}
-			/>
+			<div className='bg-background w-full rounded-3xl px-2 pb-8 shadow-lg sm:px-0 sm:pb-12'>
+				<div className='w-full px-3 py-1 pt-4 sm:px-6 sm:pt-6'>
+					<LandlordForm
+						landlordValidationError={landlordValidationError}
+						landlordValidationText={landlordValidationText}
+					/>
+				</div>
 
-			<Transition show={getStarted}>
-				<TransitionChild
-					enterFrom='transform scale-95 opacity-0 max-h-0'
-					enterTo='transform scale-100 opacity-100 max-h-96'
-					leaveFrom='transform scale-100 opacity-100 max-h-96'
-					leaveTo='transform scale-95 opacity-0 max-h-0'
-				>
-					<div className='border-b-primary flex w-full flex-col gap-3 border-b-2 p-4 transition-all duration-500'>
-						<LandlordForm
-							landlordOpen={landlordOpen}
-							setLandlordOpen={setLandlordOpen}
-							setShowLocationForm={setShowLocationForm}
-							setLocationOpen={setLocationOpen}
-							landlordValidationError={landlordValidationError}
-							landlordValidationText={landlordValidationText}
-						/>
-					</div>
-				</TransitionChild>
-			</Transition>
+				<div className='w-full px-3 py-1 sm:px-6'>
+					<LocationForm
+						locations={locations}
+						searching={searching}
+						cityValidationError={cityValidationError}
+						cityValidationErrorText={cityValidationErrorText}
+						postalError={postalError}
+					/>
+				</div>
 
-			<Transition show={showLocationForm}>
-				<TransitionChild
-					enterFrom='transform scale-95 opacity-0 max-h-0'
-					enterTo='transform scale-100 opacity-100 max-h-96'
-					leaveFrom='transform scale-100 opacity-100 max-h-96'
-					leaveTo='transform scale-95 opacity-0 max-h-0'
-				>
-					<div className='border-b-primary w-full border-b-2 p-4 transition-all duration-500'>
-						<LocationForm
-							locationOpen={locationOpen}
-							setLocationOpen={setLocationOpen}
-							locations={locations}
-							searching={searching}
-							cityValidationError={cityValidationError}
-							cityValidationErrorText={cityValidationErrorText}
-							postalError={postalError}
-							setShowRatingForm={setShowRatingForm}
-							setRatingsOpen={setRatingsOpen}
-						/>
-					</div>
-				</TransitionChild>
-			</Transition>
+				<div className='w-full overflow-hidden px-3 py-1 sm:px-6'>
+					<RatingForm />
+				</div>
 
-			<Transition show={showRatingForm}>
-				<TransitionChild
-					enterFrom='transform scale-95 opacity-0 max-h-0'
-					enterTo='transform scale-100 opacity-100 max-h-96'
-					leaveFrom='transform scale-100 opacity-100 max-h-96'
-					leaveTo='transform scale-95 opacity-0 max-h-0'
-				>
-					<div className='border-b-primary w-full overflow-hidden border-b-2 p-4 transition-all duration-500'>
-						<RatingForm
-							ratingsOpen={ratingsOpen}
-							setRatingsOpen={setRatingsOpen}
-							ratings={ratings}
-							setShowReviewForm={setShowReviewForm}
-							setReviewOpen={setReviewOpen}
-						/>
-					</div>
-				</TransitionChild>
-			</Transition>
+				<div className='w-full overflow-hidden px-3 py-1 sm:px-6'>
+					<WrittenReviewForm />
+				</div>
+			</div>
 
-			<Transition show={showReviewForm}>
-				<TransitionChild
-					enterFrom='transform scale-95 opacity-0 max-h-0'
-					enterTo='transform scale-100 opacity-100 max-h-96'
-					leaveFrom='transform scale-100 opacity-100 max-h-96'
-					leaveTo='transform scale-95 opacity-0 max-h-0'
-				>
-					<div className='border-b-primary w-full overflow-hidden border-b-2 p-4 transition-all duration-500'>
-						<WrittenReviewForm
-							reviewOpen={reviewOpen}
-							setReviewOpen={setReviewOpen}
-							setShowPreview={setShowPreview}
-						/>
-					</div>
-				</TransitionChild>
-			</Transition>
-
-			<Transition show={showPreview}>
-				<TransitionChild
-					enterFrom='transform scale-95 opacity-0 max-h-0'
-					enterTo='transform scale-100 opacity-100 max-h-96'
-					leaveFrom='transform scale-100 opacity-100 max-h-96'
-					leaveTo='transform scale-95 opacity-0 max-h-0'
-				>
-					<div className='border-b-primary w-full overflow-hidden border-b-2 p-4 py-4 transition-all duration-500'>
-						<div className='flex w-full justify-center'>
-							<ReviewPreview
-								rent={rent}
-								review={review}
-								health={health}
-								respect={respect}
-								privacy={privacy}
-								repair={repair}
-								stability={stability}
-								landlord={landlord}
-								city={city}
-								state={province}
-								country_code={country}
-								zip={postal}
-							/>
-						</div>
-						<div className='w-full py-5'>
-							<div className='mb-2 flex w-full justify-start space-x-2'>
-								<div className='flex h-5 items-center'>
-									<input
-										id='terms-1'
-										data-testid='terms-1-input'
-										name='terms-1'
-										type='checkbox'
-										checked={disclaimerOne}
-										onChange={() => setDisclaimerOne((p) => !p)}
-										className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
-									/>
-								</div>
-								<label htmlFor='terms-1' className='text-sm text-gray-500'>
-									{t('createreview.review-form.disclaimer-1')}
-								</label>
-							</div>
-							<div className='mb-2 flex w-full justify-start space-x-2'>
-								<div className='flex h-5 items-center'>
-									<input
-										id='terms-2'
-										data-testid='terms-2-input'
-										name='terms-2'
-										type='checkbox'
-										checked={disclaimerTwo}
-										onChange={() => setDisclaimerTwo((p) => !p)}
-										className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
-									/>
-								</div>
-								<label htmlFor='terms-2' className='text-sm text-gray-500'>
-									{t('createreview.review-form.disclaimer-2')}
-								</label>
-							</div>
-							<div className='mb-2 flex w-full justify-start space-x-2'>
-								<div className='flex h-5 items-center'>
-									<input
-										id='terms-3'
-										data-testid='terms-3-input'
-										name='terms-3'
-										type='checkbox'
-										checked={disclaimerThree}
-										onChange={() => setDisclaimerThree((p) => !p)}
-										className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
-									/>
-								</div>
-								<label htmlFor='terms-3' className='text-sm text-gray-500'>
-									{t('createreview.review-form.disclaimer-3')}
-								</label>
-							</div>
-
-							<div
-								className='flex justify-center gap-5 pt-5 sm:gap-3'
-								data-testid='create-review-form-submit-button-1'
+			<div className='border-b-primary w-full overflow-hidden border-b-2 p-4 py-2'>
+				<div className='w-full py-5'>
+					<div
+						className='flex justify-center gap-5 pt-3 sm:gap-3'
+						data-testid='create-review-form-submit-button-1'
+					>
+						{loading ? (
+							<Spinner />
+						) : (
+							<Button
+								disabled={loading || review.length > 2000}
+								onClick={() => {
+									posthog.capture('create_review_submitted', {
+										landlord,
+									})
+									handleSubmit().catch(() => {
+										posthog.capture('create_review_submit_error', {
+											landlord,
+										})
+										console.error('Error submitting Review')
+									})
+								}}
 							>
-								{loading ? (
-									<Spinner />
-								) : (
-									<Button
-										disabled={
-											!disclaimerOne ||
-											!disclaimerTwo ||
-											!disclaimerThree ||
-											loading ||
-											review.length > 2000
-										}
-										onClick={() => {
-											posthog.capture('create_review_submitted', {
-												landlord,
-											})
-											handleSubmit().catch(() => {
-												posthog.capture('create_review_submit_error', {
-													landlord,
-												})
-												console.error('Error submitting Review')
-											})
-										}}
-									>
-										{t('createreview.review-form.submit')}
-									</Button>
-								)}
-							</div>
-						</div>
+								{t('createreview.review-form.submit')}
+							</Button>
+						)}
 					</div>
-				</TransitionChild>
-			</Transition>
+				</div>
+			</div>
 		</div>
 	)
 }
-
 export default ReviewForm

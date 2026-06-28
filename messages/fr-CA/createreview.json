@@ -17,7 +17,7 @@
 			"region": "Pays du RU",
 			"county": "Région",
 			"zip": "ZIP / Code postal",
-			"rent": "Loyer (Facultatif)",
+			"rent": "Prix de location (optionnel)",
 			"rate-title": "Veuillez noter les catégories suivantes sur une échelle de 1 (faible) à 5 (élevé)",
 			"health": "Santé et sécurité",
 			"health_description": "Les propriétaires doivent s'assurer que le logement respecte les normes de santé et de sécurité locales, comme le maintien de détecteurs de fumée, l'élimination de la moisissure et la mise en place de traitements contre les nuisibles lorsque cela est nécessaire.",
@@ -27,9 +27,9 @@
 			"privacy_description": "Les propriétaires doivent respecter la vie privée des locataires. Par exemple, les propriétaires ne peuvent entrer dans le logement qu'avec le consentement de la personne qui y habite ou pour des raisons spécifiques mentionnées dans le bail ou le contrat de location. Les propriétaires doivent également s'abstenir de s'immiscer dans la vie personnelle de leurs locataires et ne peuvent demander des informations qui ne sont pas nécessaires à l'établissement d'un bail ou d'un contrat de location.",
 			"respect": "Respect",
 			"respect_description": "Les propriétaires doivent traiter leurs locataires avec respect et ne doivent pas adopter des comportements qui porteraient atteintes aux droits des locataires et au droit de maintien dans les lieux, comme la discrimination ou le harcèlement.",
-			"repair": "Réparation",
+			"repair": "Réparations",
 			"repair_description": "Les propriétaires ont l'obligation légale de maintenir le logement dans un état sécuritaire et habitable. Les locataires doivent pouvoir bénéficier de réparations rapides effectuées par des personnes qualifiées pour assurer le bon fonctionnement des équipements essentiels, comme la plomberie et le chauffage.",
-			"review": "Ajoutez vos commentaires",
+			"review": "Commentaires",
 			"submit": "Soummettre votre évaluation",
 			"reset": "Rafraichir",
 			"postal-error": "Erreur. Code postal / ZIP Invalide",
@@ -62,8 +62,8 @@
 			"start": "Commencer votre avis"
 		},
 		"landlord-form": {
-			"title": "Propriétaire",
-			"body": "Entrez le nom de votre propriétaire ou de la société de gestion immobilière tel qu'il apparaît sur votre bail. Vérifiez l'orthographe avant de soumettre votre avis afin que celui-ci puisse être associé aux autres avis pour le·la même propriétaire. Ne pas inclure d'adresse dans votre avis. Toutes les adresses seront supprimées."
+			"title": "Nom du propriétaire",
+			"body": "Noms et noms d'entreprise seulement. Pas d'adresses postales."
 		},
 		"location-form": {
 			"title": "Location"
@@ -72,8 +72,8 @@
 			"title": "Évaluations"
 		},
 		"written-review": {
-			"title": "Vos commentaires",
-			"policy-1": "Veuillez respecter notre politique de modération",
+			"title": "Merci de garder les avis civils",
+			"policy-1": "Aucune adresse, numéro de téléphone ou information personnelle concernant le propriétaire. Le contenu qui enfreint notre politique de modération sera supprimé ou expurgé.",
 			"policy-2": "Veuillez garder les avis courtois et évitez d'inclure des informations personnelles telles que des adresses ou des numéros de téléphone.",
 			"policy-3": "Évitez de partager des détails personnels vous concernant ou concernant votre propriétaire qui ne sont pas pertinents pour décrire votre expérience locative.",
 			"policy-4": "Les commentaires inappropriés pourront être supprimés. Merci de contribuer à maintenir un communauté sécuritaire et utile !",

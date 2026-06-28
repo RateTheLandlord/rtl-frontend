@@ -77,9 +77,9 @@
 		"rating": "Moy. Notation"
 	},
 	"user-code": {
-		"title": "Copiez votre code unique",
-		"success": "Votre avis a bel et bien été soumis",
-		"message": "Assurez-vous de copier et d'enregistrer votre code unique. Ce code est nécessaire pour mettre à jour ou supprimer votre avis ultérieurement.",
+		"title": "Veuillez enregistrer ce code !",
+		"success": "Votre avis a maintenant été soumis et devrait bientôt apparaître sur notre site !",
+		"message": "Si jamais vous souhaitez modifier ou supprimer votre critique, vous aurez besoin de ce code pour le faire.",
 		"faq": "Pour de plus amples renseignements, veuillez consulter notre FAQ.",
 		"button": "J'ai copié mon code",
 		"copy": "Copiez mon code d'évaluation unique",

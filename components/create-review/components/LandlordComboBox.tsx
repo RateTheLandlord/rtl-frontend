@@ -26,7 +26,7 @@ export default function LandlordComboBox({
 	error,
 	errorText,
 }: ComponentProps) {
-	const comboInputClassName = `mt-1 block p-2 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
+	const comboInputClassName = `mt-1 bg-white block p-2 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
 		error ? 'border-red-400' : ''
 	}`
 	return (
@@ -35,9 +35,6 @@ export default function LandlordComboBox({
 				data-testid='create-review-form-landlord-1'
 				className='relative w-full pt-2 lg:pt-0'
 			>
-				<label htmlFor='landlord' className='block text-sm text-gray-700'>
-					{name}
-				</label>
 				<ComboboxInput
 					data-testid='LandlordComboBox-component'
 					className={comboInputClassName}
@@ -52,7 +49,7 @@ export default function LandlordComboBox({
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<ComboboxOptions className='ring-opacity-5 absolute z-10 mt-1 flex max-h-60 w-60 flex-col overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black focus:outline-none sm:text-sm'>
+					<ComboboxOptions className='ring-opacity-5 absolute z-10 mt-1 flex max-h-60 w-full flex-col overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black focus:outline-none sm:text-sm'>
 						{suggestions.length === 0 && state !== '' ? (
 							isSearching ? (
 								<div className='relative cursor-default px-4 py-2 text-gray-700 select-none'>

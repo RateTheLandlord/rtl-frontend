@@ -17,7 +17,7 @@
 			"region": "UK Country",
 			"county": "County",
 			"zip": "ZIP / Postal Code",
-			"rent": "Rent Amount (Optional)",
+			"rent": "Rental Price (Optional)",
 			"rate-title": "Please rate the following on a scale from 1 (worst) to 5 (best)",
 			"health": "Health and Safety",
 			"health_description": "Landlords must ensure that the rental property complies with local health and safety standards, such as maintaining smoke detectors, removing mold, and employing pest control when necessary.",
@@ -27,9 +27,9 @@
 			"privacy_description": "Landlords must respect their tenants' privacy, and may only enter the rental property with the tenant's consent or for specific reasons outlined in the rental agreement. Landlords should also refrain from probing into the personal lives of their tenants or asking for information that is not necessary to form a professional rental agreement.",
 			"respect": "Respect",
 			"respect_description": "Landlords must treat their tenants with respect, and must not engage in behavior that would violate the tenant's rights, such as discrimination or harassment.",
-			"repair": "Repair",
+			"repair": "Repairs",
 			"repair_description": "Landlords have a legal obligation to keep the rental property in a safe and habitable condition. Tenants should receive timely repairs by trained professionals to keep their vital systems like plumbing and heating in order.",
-			"review": "Written Review",
+			"review": "Comments",
 			"submit": "Submit Review",
 			"reset": "Reset",
 			"postal-error": "Error. Postal Code / ZIP Invalid",
@@ -62,8 +62,8 @@
 			"start": "Start a Review"
 		},
 		"landlord-form": {
-			"title": "Landlord",
-			"body": "Enter the name of your landlord or property management company as it appears on your lease. Double-check the spelling before you submit so your review can be matched with other reviews for this landlord. Do not include the full address, all addresses will be removed."
+			"title": "Landlord Name",
+			"body": "Names and business names only. No street addresses."
 		},
 		"location-form": {
 			"title": "Location"
@@ -72,8 +72,8 @@
 			"title": "Ratings"
 		},
 		"written-review": {
-			"title": "Written Review",
-			"policy-1": "Please follow our moderation policy",
+			"title": "Please Keep Reviews Civil",
+			"policy-1": "No addresses, phone numbers, or personal information about the landlord. Content that violates our Moderation Policy will be removed or redacted.",
 			"policy-2": "Keep reviews civil and avoid including personal information such as addresses or phone numbers.",
 			"policy-3": "Avoid sharing personal details about yourself or your landlord that are not relevant to your rental experience.",
 			"policy-4": "Inappropriate content may be removed. Thank you for maintaining a safe and helpful community!",

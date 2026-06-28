@@ -8,6 +8,7 @@ interface IProps {
 	testid?: string
 	length?: number
 	limitText?: string
+	backgroundColor?: string
 }
 
 const LargeTextInput = ({
@@ -20,10 +21,11 @@ const LargeTextInput = ({
 	testid = '',
 	length,
 	limitText,
+	backgroundColor,
 }: IProps) => {
 	return (
 		<div className='w-full'>
-			<label htmlFor={id} className='mt-2 block text-sm text-gray-700'>
+			<label htmlFor={id} className='text-primary-700 mt-2 block text-sm'>
 				{title}
 			</label>
 			<div className='mt-1'>
@@ -35,6 +37,7 @@ const LargeTextInput = ({
 					className='block w-full rounded-md border-gray-300 p-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 					placeholder={placeHolder}
 					data-testid={testid}
+					style={{ backgroundColor: backgroundColor || 'inherit' }}
 				/>
 				{limitText && value && length && (
 					<div className='flex w-full justify-end'>

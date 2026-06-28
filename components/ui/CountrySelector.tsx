@@ -14,7 +14,7 @@ const CountrySelector = ({ isResource }: { isResource?: boolean }) => {
 	const t = useTranslations('createreview')
 	return (
 		<div className='mx-0.5 sm:col-span-1'>
-			<label htmlFor='country' className='block text-sm text-gray-700'>
+			<label htmlFor='country' className='text-primary-600 block text-sm'>
 				{t('review-form.country')}
 			</label>
 			<div className='mt-1'>
@@ -37,7 +37,7 @@ const CountrySelector = ({ isResource }: { isResource?: boolean }) => {
 									),
 								)
 					}
-					className='block w-full cursor-pointer rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+					className='block w-full cursor-pointer rounded-md border-gray-300 bg-white p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 				>
 					{Object.keys(Country).map((country) => (
 						<option className='cursor-pointer' key={country} value={country}>

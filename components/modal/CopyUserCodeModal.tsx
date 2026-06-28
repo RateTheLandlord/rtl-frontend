@@ -67,11 +67,9 @@ const CopyUserCodeModal = () => {
 											{t('title')}
 										</Dialog.Title>
 										<div className='my-2 flex flex-col gap-3'>
-											<p>{t('success')}</p>
-
 											<p>{t('message')}</p>
 
-											<p>{t('faq')}</p>
+											<p>{t('success')}</p>
 										</div>
 									</div>
 								</div>
