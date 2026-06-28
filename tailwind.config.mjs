@@ -1,7 +1,9 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-/* eslint-disable no-undef */
+import typography from '@tailwindcss/typography'
+import forms from '@tailwindcss/forms'
+import aspectRatio from '@tailwindcss/aspect-ratio'
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
 	content: [
 		'./app/**/*.{js,ts,jsx,tsx,mdx}',
 		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -12,6 +14,11 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			colors: {
+				primary: 'rgb(var(--color-primary) / <alpha-value>)',
+				'primary-hover': 'rgb(var(--color-primary-hover) / <alpha-value>)',
+				background: 'rgb(var(--color-background) / <alpha-value>)',
+			},
 			height: {
 				128: '41rem', // Adds a custom height of 32rem (512px)
 			},
@@ -32,9 +39,5 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [
-		require('@tailwindcss/typography'),
-		require('@tailwindcss/forms'),
-		require('@tailwindcss/aspect-ratio'),
-	],
+	plugins: [typography, forms, aspectRatio],
 }

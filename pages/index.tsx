@@ -48,7 +48,7 @@ export default function Home(): JSX.Element {
 					},
 				]}
 			/>
-			<div className='mx-2 mt-4 rounded-3xl bg-gray-100 pb-4'>
+			<div className='bg-background mx-2 mt-4 rounded-3xl pb-4'>
 				<Hero />
 				<Search />
 			</div>

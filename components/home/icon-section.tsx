@@ -18,7 +18,7 @@ export default function IconSection() {
 							<div className='text-center sm:flex sm:text-left lg:block lg:text-center'>
 								<div className='flex justify-center sm:shrink-0'>
 									<div className='flow-root'>
-										<Privacy styling='className="w-16 h-16 mx-auto text-teal-600' />
+										<Privacy styling='className="w-16 h-16 mx-auto text-primary' />
 									</div>
 								</div>
 								<div className='mt-3 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0'>
@@ -33,7 +33,7 @@ export default function IconSection() {
 							<div className='text-center sm:flex sm:text-left lg:block lg:text-center'>
 								<div className='sm:shrink-0'>
 									<div className='flow-root'>
-										<Solidarity styling='className="w-16 h-16 mx-auto text-teal-600' />
+										<Solidarity styling='className="w-16 h-16 mx-auto text-primary' />
 									</div>
 								</div>
 								<div className='mt-3 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0'>
@@ -48,7 +48,7 @@ export default function IconSection() {
 							<div className='text-center sm:flex sm:text-left lg:block lg:text-center'>
 								<div className='sm:shrink-0'>
 									<div className='flow-root'>
-										<Transparency styling='className="w-16 h-16 mx-auto text-teal-600' />
+										<Transparency styling='className="w-16 h-16 mx-auto text-primary' />
 									</div>
 								</div>
 								<div className='mt-3 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0'>

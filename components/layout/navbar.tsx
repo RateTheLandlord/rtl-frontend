@@ -55,7 +55,7 @@ export default function Navbar(): JSX.Element {
 										<div
 											className={`${
 												activeTab === link.href
-													? 'border-b-2 border-teal-500'
+													? 'border-primary border-b-2'
 													: ''
 											} inline-flex items-center px-1 pt-1 text-sm text-gray-900`}
 											key={link.href}
@@ -67,7 +67,7 @@ export default function Navbar(): JSX.Element {
 										<div
 											className={`${
 												activeTab === '/admin'
-													? 'border-b-2 border-teal-500'
+													? 'border-primary border-b-2'
 													: ''
 											} inline-flex items-center px-1 pt-1 text-sm text-gray-900`}
 										>
@@ -93,7 +93,7 @@ export default function Navbar(): JSX.Element {
 									<ChangeLanguage />
 								</div>
 								<div className='hidden lg:ml-6 lg:flex lg:space-x-8'>
-									<div className='inline-flex cursor-pointer items-center rounded-md border border-transparent bg-teal-600 text-sm text-white shadow-sm hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none'>
+									<div className='bg-primary hover:bg-primary-hover focus:ring-primary inline-flex cursor-pointer items-center rounded-md border border-transparent text-sm text-white shadow-sm focus:ring-2 focus:ring-offset-2 focus:outline-none'>
 										<Link href='/create-review'>
 											<p className='px-4 py-2'>{t('nav.submit')}</p>
 										</Link>
@@ -111,7 +111,7 @@ export default function Navbar(): JSX.Element {
 								</div>
 							</div>
 							<div className='flex items-center lg:hidden'>
-								<DisclosureButton className='inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-teal-500 focus:outline-none focus:ring-inset'>
+								<DisclosureButton className='hover:bg-background inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-teal-500 focus:outline-none focus:ring-inset'>
 									<span className='sr-only'>{t('nav.open')}</span>
 									{open ? (
 										<XIcon className='block h-6 w-6' aria-hidden='true' />

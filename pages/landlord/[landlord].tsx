@@ -5,6 +5,7 @@ import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import { getLandlordReviews } from '@/lib/review/landlords'
 import { ILandlordReviews } from '@/lib/review/types/Queries'
+import { readLocaleFile } from '@/util/readLocalFile'
 
 interface IProps {
 	landlord: string
@@ -78,21 +79,11 @@ export async function getStaticProps({
 	locale: string
 	params: { landlord: string }
 }) {
-	const landlordMessages = (await import(
-		`@/messages/${locale}/landlord.json`
-	)) as Record<string, string>
-	const alertsMessages = (await import(
-		`@/messages/${locale}/alerts.json`
-	)) as Record<string, string>
-	const layoutMessages = (await import(
-		`@/messages/${locale}/layout.json`
-	)) as Record<string, string>
-	const filtersMessages = (await import(
-		`@/messages/${locale}/filters.json`
-	)) as Record<string, string>
-	const reviewsMessages = (await import(
-		`@/messages/${locale}/reviews.json`
-	)) as Record<string, string>
+	const landlordMessages = readLocaleFile('landlord', locale)
+	const alertsMessages = readLocaleFile('alerts', locale)
+	const layoutMessages = readLocaleFile('layout', locale)
+	const filtersMessages = readLocaleFile('filters', locale)
+	const reviewsMessages = readLocaleFile('reviews', locale)
 
 	const data = await getLandlordReviews(params.landlord)
 
@@ -105,23 +96,20 @@ export async function getStaticProps({
 		}
 	}
 
-	// Pass post data to the page via props
 	return {
-		props: JSON.parse(
-			JSON.stringify({
-				landlord: params.landlord,
-				data: data,
-				messages: {
-					...alertsMessages,
-					...layoutMessages,
-					...filtersMessages,
-					...landlordMessages,
-					...reviewsMessages,
-				},
-			}),
-		),
-		// Re-generate the page
-		// if a request comes in after 100 seconds
+		props: {
+			landlord: params.landlord,
+			// Strip undefined properties cleanly without JSON.stringify overhead if possible,
+			// or keep it if your database returns complex Date objects.
+			data: JSON.parse(JSON.stringify(data)),
+			messages: {
+				...alertsMessages,
+				...layoutMessages,
+				...filtersMessages,
+				...landlordMessages,
+				...reviewsMessages,
+			},
+		},
 		revalidate: 100,
 	}
 }

@@ -71,7 +71,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 		if (active && payload && payload.length) {
 			if (dataKey === 'trailing_combined_avg') {
 				return (
-					<div className='custom-tooltip rounded-lg border-4 border-teal-600 bg-gray-100'>
+					<div className='custom-tooltip border-primary rounded-lg border-4 bg-gray-100'>
 						<p className='label pt-2 pr-2 pl-2'>{t('avg-landlord-as-of')}</p>
 						<p className='label pr-2 pl-2 text-center'>{label}: </p>
 						<div className='flex justify-center'>
@@ -86,7 +86,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 				)
 			} else {
 				return (
-					<div className='custom-tooltip rounded-lg border-4 border-teal-600 bg-gray-100'>
+					<div className='custom-tooltip border-primary rounded-lg border-4 bg-gray-100'>
 						<p className='label pt-2 pr-2 pl-2'>{t('median-rent-as-of')}</p>
 						<p className='label pl-2 text-center'>{label}: </p>
 						<p className='label justify-center text-center text-xl'>
@@ -160,7 +160,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 			</div>
 			<div className='flex-1 lg:w-[100%]'>
 				<div className='hidden h-4 lg:block'></div>
-				<div className='h-158 rounded-lg border-4 border-teal-600 bg-white lg:p-4'>
+				<div className='border-primary h-158 rounded-lg border-4 bg-white lg:p-4'>
 					<ResponsiveContainer width={'100%'} height={'100%'}>
 						<LineChart
 							width={600}
@@ -207,7 +207,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 			<div className='hidden lg:block lg:flex-1'>
 				<div className='h-5'></div>
 				<div
-					className='h-[47%] rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
+					className='border-primary h-[47%] rounded-lg border-4 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
 					onClick={() => handleClick('rating')}
 				>
 					<div className='flex justify-center pt-2 pb-4 text-center'>
@@ -217,7 +217,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 						</div>
 					</div>
 					<div className='grid w-full grid-rows-3 gap-2'>
-						<div className='flex h-16 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
+						<div className='border-primary bg-primary/5 flex h-16 flex-col items-center justify-center rounded-lg border text-lg'>
 							<div>{t('last-90')}</div>
 							<div>
 								<RatingStars
@@ -226,14 +226,14 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 								/>
 							</div>
 						</div>
-						<div className='flex flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
+						<div className='border-primary bg-primary/5 flex flex-col items-center justify-center rounded-lg border text-lg'>
 							<div>{t('last-180')}</div>
 							<RatingStars
 								testid='Analytics180DayRatingStar'
 								value={Math.floor(data.avgRatingT180)}
 							/>
 						</div>
-						<div className='flex flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
+						<div className='border-primary bg-primary/5 flex flex-col items-center justify-center rounded-lg border text-lg'>
 							<div>{t('last-365')}</div>
 							<RatingStars
 								testid='Analytics365DayRatingStar'
@@ -244,7 +244,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 				</div>
 				<div className='h-2'></div>
 				<div
-					className='h-[47%] rounded-lg border-4 border-teal-600 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
+					className='border-primary h-[47%] rounded-lg border-4 bg-white p-4 hover:cursor-pointer hover:opacity-70 hover:shadow-lg'
 					onClick={() => handleClick('median')}
 				>
 					<div className='flex justify-center pt-2 pb-4 text-center'>
@@ -254,7 +254,7 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 						</div>
 					</div>
 					<div className='grid w-full grid-rows-3 gap-2'>
-						<div className='flex h-16 flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
+						<div className='border-primary bg-primary/5 flex h-16 flex-col items-center justify-center rounded-lg border text-lg'>
 							<div>{t('last-90')}</div>
 							<div>
 								$
@@ -263,13 +263,13 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 									.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
 							</div>
 						</div>
-						<div className='flex flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
+						<div className='border-primary bg-primary/5 flex flex-col items-center justify-center rounded-lg border text-lg'>
 							<div>{t('last-180')}</div>$
 							{data.medianRentT180
 								.toString()
 								.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
 						</div>
-						<div className='flex flex-col items-center justify-center rounded-lg border border-teal-600 bg-teal-600/5 text-lg'>
+						<div className='border-primary bg-primary/5 flex flex-col items-center justify-center rounded-lg border text-lg'>
 							<div>{t('last-365')}</div>$
 							{data.medianRentT365
 								.toString()
