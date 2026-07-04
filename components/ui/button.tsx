@@ -21,7 +21,9 @@ function Button({
 			type='submit'
 			className={classNames(
 				'focus:ring-primary inline-flex cursor-pointer justify-center rounded-md border border-transparent text-white shadow-sm focus:ring-2 focus:ring-offset-2 focus:outline-none',
-				disabled ? 'bg-primary/20' : 'bg-primary hover:bg-primary-hover',
+				disabled
+					? 'bg-primary/5 text-primary-900 cursor-not-allowed'
+					: 'bg-primary hover:bg-primary-hover',
 				size === 'small' ? 'px-4 py-2 text-sm' : '',
 				size === 'medium' ? 'text-2xl' : '',
 				size === 'large' ? 'px-8 py-4 text-3xl' : '',

@@ -77,9 +77,9 @@
 		"rating": "Avg. Rating"
 	},
 	"user-code": {
-		"title": "Copy your unique code",
-		"success": "Your review has been submitted successfully",
-		"message": "Be sure to copy and save your unique code. This code is required to update or delete your review in the future.",
+		"title": "Please save this code!",
+		"success": "Your review has now been submitted and should appear on our site soon!",
+		"message": "If you ever wish to edit or delete your review, you will need this code to do so.",
 		"faq": "For additional information, please visit our FAQ.",
 		"button": "I have copied my code",
 		"copy": "Copy my unique review code",

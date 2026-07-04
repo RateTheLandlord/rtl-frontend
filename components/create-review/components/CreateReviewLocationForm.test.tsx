@@ -7,7 +7,7 @@ import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { updatePostal, updateRent } from '@/redux/review/reviewSlice'
+import { updatePostal } from '@/redux/review/reviewSlice'
 import { useTranslations } from 'next-intl'
 import { Country } from '@/types/review.types'
 import LocationForm from './CreateReviewLocationForm'
@@ -22,7 +22,6 @@ jest.mock('@/redux/review/reviewSlice', () => ({
 		type: 'updatePostal',
 		payload: str,
 	})),
-	updateRent: jest.fn((num: number) => ({ type: 'updateRent', payload: num })),
 }))
 jest.mock('posthog-js', () => ({
 	capture: jest.fn(),
@@ -71,24 +70,17 @@ jest.mock('./CityComboBox', () => () => <div>CityComboBox</div>)
 // ─── Test Suite ───────────────────────────────────────────
 describe('LocationForm', () => {
 	const mockDispatch = jest.fn()
-	const mockSetLocationOpen = jest.fn()
-	const mockSetShowRatingForm = jest.fn()
-	const mockSetRatingsOpen = jest.fn()
 	const mockT = jest.fn((key: string, vars?: string[]) => {
 		if (key === 'review-form.limit') return `Limit: ${vars?.length || 0}`
 		return key
 	})
 
 	const baseProps = {
-		locationOpen: true,
 		postalError: false,
 		locations: [],
 		searching: false,
 		cityValidationError: false,
 		cityValidationErrorText: '',
-		setShowRatingForm: mockSetShowRatingForm,
-		setRatingsOpen: mockSetRatingsOpen,
-		setLocationOpen: mockSetLocationOpen,
 	}
 
 	beforeEach(() => {
@@ -104,31 +96,15 @@ describe('LocationForm', () => {
 		;(useTranslations as jest.Mock).mockReturnValue(mockT)
 	})
 
-	// ─── Collapsed (locationOpen=false) ─────────────────────────────
-	it('renders collapsed view when locationOpen is false', () => {
-		render(<LocationForm {...baseProps} locationOpen={false} />)
-
-		expect(screen.getByText('location-form.title')).toBeInTheDocument()
-		expect(
-			screen.getByText('Toronto, ON, CA, M5H2N2 - $1200'),
-		).toBeInTheDocument()
-		expect(screen.getByText('edit')).toBeInTheDocument()
-	})
-
-	it('calls setLocationOpen(true) when edit clicked', () => {
-		render(<LocationForm {...baseProps} locationOpen={false} />)
-
-		fireEvent.click(screen.getByText('edit'))
-		expect(mockSetLocationOpen).toHaveBeenCalledWith(true)
-	})
-
-	// ─── Expanded (locationOpen=true) ─────────────────────────────
-	it('renders full location form when open', () => {
+	it('renders the location form fields', () => {
 		render(<LocationForm {...baseProps} />)
 		expect(screen.getByTestId('LocationForm-component')).toBeInTheDocument()
-		expect(screen.getByText('CityComboBox')).toBeInTheDocument()
-		expect(screen.getByText('StateSelector')).toBeInTheDocument()
 		expect(screen.getByText('CountrySelector')).toBeInTheDocument()
+		expect(screen.getByText('StateSelector')).toBeInTheDocument()
+		expect(screen.getByText('CityComboBox')).toBeInTheDocument()
+		expect(
+			screen.getByTestId('create-review-form-postal-code-1'),
+		).toBeInTheDocument()
 	})
 
 	it('dispatches updatePostal when postal input changes', () => {
@@ -140,36 +116,6 @@ describe('LocationForm', () => {
 		expect(mockDispatch).toHaveBeenCalledWith(updatePostal('A1A1A1'))
 	})
 
-	it('dispatches updateRent when rent input changes', () => {
-		render(<LocationForm {...baseProps} />)
-
-		const rentInput = screen.getByTestId('create-review-form-rent-1')
-		fireEvent.change(rentInput, { target: { value: '1500' } })
-
-		expect(mockDispatch).toHaveBeenCalledWith(updateRent(1500))
-	})
-
-	it('disables continue button when city or postal are missing', () => {
-		;(useAppSelector as jest.Mock).mockReturnValue({
-			country: Country.CA,
-			city: '',
-			province: 'ON',
-			postal: '',
-			rent: '',
-		})
-
-		render(<LocationForm {...baseProps} />)
-
-		const button = screen.getByText('continue')
-		expect(button).toBeDisabled()
-	})
-
-	it('enables continue button when valid city and postal', () => {
-		render(<LocationForm {...baseProps} />)
-		const button = screen.getByText('continue')
-		expect(button).not.toBeDisabled()
-	})
-
 	// ─── Ireland Case ─────────────────────────────
 	it('does not render postal input when country is Ireland', () => {
 		;(useAppSelector as jest.Mock).mockReturnValue({
@@ -177,7 +123,6 @@ describe('LocationForm', () => {
 			city: 'Dublin',
 			province: '',
 			postal: '',
-			rent: '',
 		})
 
 		render(<LocationForm {...baseProps} />)
@@ -186,9 +131,7 @@ describe('LocationForm', () => {
 		).not.toBeInTheDocument()
 	})
 	it('Should not have a11y violation', async () => {
-		const { container } = render(
-			<LocationForm {...baseProps} locationOpen={true} />,
-		)
+		const { container } = render(<LocationForm {...baseProps} />)
 		const result = await axe(container)
 		expect(result).toHaveNoViolations()
 	})

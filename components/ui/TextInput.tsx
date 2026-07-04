@@ -8,6 +8,8 @@ interface IProps {
 	errorText?: string
 	testid?: string
 	type?: string
+	width?: string
+	backgroundColor?: string
 }
 
 const TextInput = ({
@@ -20,6 +22,8 @@ const TextInput = ({
 	errorText,
 	testid,
 	type = 'text',
+	width,
+	backgroundColor,
 }: IProps) => {
 	return (
 		<div
@@ -39,7 +43,11 @@ const TextInput = ({
 						id={id}
 						value={value || ''}
 						placeholder={placeHolder}
-						data-testid={testid + 'input' || ''}
+						data-testid={testid ? `${testid}input` : ''}
+						style={{
+							...(width ? { width } : {}),
+							...(backgroundColor ? { backgroundColor } : {}),
+						}}
 						className={`block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
 							error ? 'border-red-400' : ''
 						}`}

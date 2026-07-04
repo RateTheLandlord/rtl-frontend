@@ -23,6 +23,34 @@ jest.mock('@/util/hooks/useLandlordSuggestions', () => ({
 	useLandlordSuggestions: jest.fn(),
 }))
 
+interface LandlordComboBoxProps {
+	setState: (landlord: string) => void
+	suggestions: string[]
+	isSearching: boolean
+	error: boolean
+	errorText: string
+}
+
+jest.mock('./LandlordComboBox', () => ({
+	__esModule: true,
+	default: ({
+		setState,
+		suggestions,
+		isSearching,
+		error,
+		errorText,
+	}: LandlordComboBoxProps) => (
+		<div data-testid='LandlordComboBox'>
+			<button type='button' onClick={() => setState('New Landlord')}>
+				Change Landlord
+			</button>
+			<div>{suggestions.join(', ')}</div>
+			<div>{isSearching ? 'Searching' : 'Idle'}</div>
+			<div>{error ? errorText : 'No error'}</div>
+		</div>
+	),
+}))
+
 jest.mock('posthog-js', () => ({
 	capture: jest.fn(),
 }))
@@ -30,9 +58,6 @@ jest.mock('posthog-js', () => ({
 // 🧪 Test suite
 describe('LandlordForm', () => {
 	const mockDispatch = jest.fn()
-	const mockSetLandlordOpen = jest.fn()
-	const mockSetShowLocationForm = jest.fn()
-	const mockSetLocationOpen = jest.fn()
 
 	beforeEach(() => {
 		jest.clearAllMocks()
@@ -47,73 +72,37 @@ describe('LandlordForm', () => {
 		)
 	})
 
-	it('renders collapsed view when landlordOpen is false', () => {
+	it('renders the landlord form fields', () => {
 		render(
 			<LandlordForm
-				landlordOpen={false}
 				landlordValidationError={false}
 				landlordValidationText=''
-				setLandlordOpen={mockSetLandlordOpen}
-				setShowLocationForm={mockSetShowLocationForm}
-				setLocationOpen={mockSetLocationOpen}
-			/>,
-		)
-
-		expect(screen.getByText('landlord-form.title')).toBeInTheDocument()
-		expect(screen.getByText('John Doe')).toBeInTheDocument()
-
-		const editButton = screen.getByText('edit')
-		fireEvent.click(editButton)
-		expect(mockSetLandlordOpen).toHaveBeenCalledWith(true)
-	})
-
-	it('renders expanded view when landlordOpen is true', () => {
-		render(
-			<LandlordForm
-				landlordOpen={true}
-				landlordValidationError={false}
-				landlordValidationText=''
-				setLandlordOpen={mockSetLandlordOpen}
-				setShowLocationForm={mockSetShowLocationForm}
-				setLocationOpen={mockSetLocationOpen}
 			/>,
 		)
 
 		expect(screen.getByTestId('LandlordForm-component')).toBeInTheDocument()
 		expect(screen.getByText('landlord-form.title')).toBeInTheDocument()
 		expect(screen.getByText('landlord-form.body')).toBeInTheDocument()
-		expect(screen.getByText('continue')).toBeInTheDocument()
+		expect(screen.getByTestId('LandlordComboBox')).toBeInTheDocument()
 	})
 
-	it('dispatches updateLandlord when LandlordComboBox changes', () => {
+	it('dispatches updateLandlord when the combobox setState is triggered', () => {
 		render(
 			<LandlordForm
-				landlordOpen={true}
 				landlordValidationError={false}
 				landlordValidationText=''
-				setLandlordOpen={mockSetLandlordOpen}
-				setShowLocationForm={mockSetShowLocationForm}
-				setLocationOpen={mockSetLocationOpen}
 			/>,
 		)
 
-		// simulate LandlordComboBox's internal setState call
-		const mockNewLandlord = 'New Landlord'
-		const setStateProp = updateLandlord(mockNewLandlord)
-		mockDispatch(setStateProp)
-
-		expect(mockDispatch).toHaveBeenCalledWith(updateLandlord(mockNewLandlord))
+		fireEvent.click(screen.getByText('Change Landlord'))
+		expect(mockDispatch).toHaveBeenCalledWith(updateLandlord('New Landlord'))
 	})
 
 	it('Should not have a11y violation', async () => {
 		const { container } = render(
 			<LandlordForm
-				landlordOpen={true}
 				landlordValidationError={false}
 				landlordValidationText=''
-				setLandlordOpen={mockSetLandlordOpen}
-				setShowLocationForm={mockSetShowLocationForm}
-				setLocationOpen={mockSetLocationOpen}
 			/>,
 		)
 		const result = await axe(container)

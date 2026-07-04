@@ -42,29 +42,31 @@ jest.mock(
 			</button>
 		),
 )
-jest.mock(
-	'@/components/ui/LargeTextInput',
-	() =>
-		(props: {
-			testid: string
-			value: string
-			placeHolder: string
-			setValue: (str: string) => void
-		}) => (
+jest.mock('@/components/ui/LargeTextInput', () => ({
+	__esModule: true,
+	default: (props: {
+		title: string
+		testid: string
+		value: string
+		placeHolder: string
+		setValue: (str: string) => void
+	}) => (
+		<div>
+			<label htmlFor={props.testid}>{props.title}</label>
 			<textarea
+				id={props.testid}
 				data-testid={props.testid}
 				value={props.value}
 				placeholder={props.placeHolder}
 				onChange={(e) => props.setValue(e.target.value)}
 			/>
-		),
-)
+		</div>
+	),
+}))
 
 // ─── Test Suite ───────────────────────────────────────────
 describe('WrittenReviewForm', () => {
 	const mockDispatch = jest.fn()
-	const mockSetReviewOpen = jest.fn()
-	const mockSetShowPreview = jest.fn()
 	const mockT = jest.fn((key: string, vars?: string[]) => {
 		if (key === 'review-form.limit') return `Limit: ${vars?.length || 0}`
 		return key
@@ -79,59 +81,19 @@ describe('WrittenReviewForm', () => {
 		;(useTranslations as jest.Mock).mockReturnValue(mockT)
 	})
 
-	it('renders collapsed view when reviewOpen is false', () => {
-		render(
-			<WrittenReviewForm
-				reviewOpen={false}
-				setReviewOpen={mockSetReviewOpen}
-				setShowPreview={mockSetShowPreview}
-			/>,
-		)
-
-		expect(screen.getByText('written-review.title')).toBeInTheDocument()
-		expect(screen.getByText('Good landlord overall.')).toBeInTheDocument()
-		expect(screen.getByText('edit')).toBeInTheDocument()
-	})
-
-	it('calls setReviewOpen(true) when edit button clicked', () => {
-		render(
-			<WrittenReviewForm
-				reviewOpen={false}
-				setReviewOpen={mockSetReviewOpen}
-				setShowPreview={mockSetShowPreview}
-			/>,
-		)
-
-		fireEvent.click(screen.getByText('edit'))
-		expect(mockSetReviewOpen).toHaveBeenCalledWith(true)
-	})
-
-	it('renders full form when reviewOpen is true', () => {
-		render(
-			<WrittenReviewForm
-				reviewOpen={true}
-				setReviewOpen={mockSetReviewOpen}
-				setShowPreview={mockSetShowPreview}
-			/>,
-		)
+	it('renders the review textarea and guidance text', () => {
+		render(<WrittenReviewForm />)
 
 		expect(
 			screen.getByTestId('WrittenReviewForm-component'),
 		).toBeInTheDocument()
 		expect(screen.getByTestId('create-review-form-text-1')).toBeInTheDocument()
-		expect(
-			screen.getByText('written-review.preview-review'),
-		).toBeInTheDocument()
+		expect(screen.getByText('written-review.title')).toBeInTheDocument()
+		expect(screen.getByText('written-review.policy-1')).toBeInTheDocument()
 	})
 
 	it('dispatches updateReview when typing in textarea', () => {
-		render(
-			<WrittenReviewForm
-				reviewOpen={true}
-				setReviewOpen={mockSetReviewOpen}
-				setShowPreview={mockSetShowPreview}
-			/>,
-		)
+		render(<WrittenReviewForm />)
 
 		const textarea = screen.getByTestId('create-review-form-text-1')
 		fireEvent.change(textarea, { target: { value: 'Updated review' } })
@@ -140,13 +102,7 @@ describe('WrittenReviewForm', () => {
 	})
 
 	it('Should not have a11y violation', async () => {
-		const { container } = render(
-			<WrittenReviewForm
-				reviewOpen={true}
-				setReviewOpen={mockSetReviewOpen}
-				setShowPreview={mockSetShowPreview}
-			/>,
-		)
+		const { container } = render(<WrittenReviewForm />)
 		const result = await axe(container)
 		expect(result).toHaveNoViolations()
 	})

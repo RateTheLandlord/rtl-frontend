@@ -76,6 +76,26 @@ describe('TextInput Component', () => {
 		expect(inputElement).toHaveClass('border-red-400')
 	})
 
+	test('allows configuring input width and background color', () => {
+		render(
+			<TextInput
+				title={mockProps.title}
+				value={mockProps.value}
+				setValue={mockProps.setValue}
+				id={mockProps.id}
+				placeHolder={mockProps.placeHolder}
+				width='200px'
+				backgroundColor='#f3f4f6'
+			/>,
+		)
+
+		const inputElement = screen.getByPlaceholderText(mockProps.placeHolder)
+		expect(inputElement).toHaveStyle({
+			width: '200px',
+			backgroundColor: '#f3f4f6',
+		})
+	})
+
 	it('Should not have a11y violation', async () => {
 		const { container } = render(<TextInput {...mockProps} />)
 		const result = await axe(container)
