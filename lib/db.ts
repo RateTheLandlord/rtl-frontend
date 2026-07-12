@@ -6,7 +6,7 @@ const globalForPostgres = globalThis as unknown as {
 	sql: postgres.Sql | undefined
 }
 
-export const sql =
+const sql =
 	globalForPostgres.sql ??
 	postgres(process.env.DATABASE_URL as string, {
 		max: isProd ? 17 : 5,

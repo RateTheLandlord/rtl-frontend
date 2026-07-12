@@ -26,7 +26,7 @@ const StateSelector = ({ noState, isResource }: IProps) => {
 				{country === Country.GB || resourceCountry === Country.GB
 					? t('review-form.region')
 					: country === Country.IE || resourceCountry === Country.IE
-						? t('review-form.country')
+						? t('review-form.county')
 						: t('review-form.state')}
 			</label>
 			<div className='mt-1'>
