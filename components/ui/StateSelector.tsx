@@ -21,12 +21,12 @@ const StateSelector = ({ noState, isResource }: IProps) => {
 			<label
 				aria-label='state selector'
 				htmlFor='state'
-				className='block text-sm text-gray-700'
+				className='text-primary-600 block text-sm'
 			>
 				{country === Country.GB || resourceCountry === Country.GB
 					? t('review-form.region')
 					: country === Country.IE || resourceCountry === Country.IE
-						? t('review-form.country')
+						? t('review-form.county')
 						: t('review-form.state')}
 			</label>
 			<div className='mt-1'>
@@ -41,7 +41,7 @@ const StateSelector = ({ noState, isResource }: IProps) => {
 							? dispatch(updateResourceState(e.target.value))
 							: dispatch(updateProvince(e.target.value))
 					}
-					className='block w-full cursor-pointer rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+					className='block w-full cursor-pointer rounded-md border-gray-300 bg-white p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 				>
 					{getStates(country).map((province) => (
 						<option key={province.value} value={province.value}>

@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import ComboBox from '../ui/locationCombobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
 import { getStates } from '@/util/countries/combineStates'
+import { Country } from '@/types/review.types'
 
 interface LocationProps {
 	selectedCountry: Options | null
@@ -19,6 +20,7 @@ const LocationForm = ({
 	setSelectedState,
 }: LocationProps) => {
 	const t = useTranslations('reviews')
+	const isIreland = selectedCountry?.value === Country.IE
 
 	return (
 		<>
@@ -40,14 +42,14 @@ const LocationForm = ({
 					{!selectedCountry ? null : (
 						<>
 							<h2 className='border-b text-center text-lg leading-10 font-semibold text-gray-900 sm:text-lg md:text-xl lg:text-left lg:text-2xl xl:text-2xl'>
-								{t('select_state')}
+								{isIreland ? t('select_county') : t('select_state')}
 							</h2>
 							<ComboBox
 								testid='location-state-test'
 								state={selectedState}
 								setState={(opt: Options) => setSelectedState(opt)}
 								options={getStates(selectedCountry.value)}
-								name={t('state')}
+								name={isIreland ? t('county') : t('state')}
 							/>
 						</>
 					)}

@@ -6,6 +6,7 @@
 		"sort": "Sort By",
 		"country": "Country",
 		"state": "State / Province",
+		"county": "County",
 		"city": "City",
 		"health": "Health and Safety",
 		"respect": "Respect",
@@ -34,6 +35,7 @@
 		"continue": "Continue",
 		"select_country": "Please select a Country",
 		"select_state": "Please select a State/Province",
+		"select_county": "Please select a County",
 		"hero_header": "See Reviews of Landlords in Your Community",
 		"hero_body": "Help us get you started by entering in the location information of the area you are interested in below. If you cannot find your location help your community by submitting a review!",
 		"update": "Update Filters",
@@ -77,9 +79,9 @@
 		"rating": "Avg. Rating"
 	},
 	"user-code": {
-		"title": "Copy your unique code",
-		"success": "Your review has been submitted successfully",
-		"message": "Be sure to copy and save your unique code. This code is required to update or delete your review in the future.",
+		"title": "Please save this code!",
+		"success": "Your review has now been submitted and should appear on our site soon!",
+		"message": "If you ever wish to edit or delete your review, you will need this code to do so.",
 		"faq": "For additional information, please visit our FAQ.",
 		"button": "I have copied my code",
 		"copy": "Copy my unique review code",

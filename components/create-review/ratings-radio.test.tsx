@@ -13,7 +13,7 @@ describe('RatingsRadio component', () => {
 	const rating = 3
 	const tooltip = 'Tooltip text'
 	test('should handle rating changes correctly', () => {
-		const { getByText } = render(
+		const { getByRole } = render(
 			<RatingsRadio
 				title={title}
 				rating={rating}
@@ -23,7 +23,7 @@ describe('RatingsRadio component', () => {
 			/>,
 		)
 
-		fireEvent.click(getByText('4'))
+		fireEvent.click(getByRole('radio', { name: /4/ }))
 
 		expect(setRatingMock).toHaveBeenCalledWith(4)
 	})

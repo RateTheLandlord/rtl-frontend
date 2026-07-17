@@ -52,15 +52,15 @@ describe('LandlordComboBox', () => {
 			errorText: '',
 		})
 
-		const labelElement = screen.getByText(
-			'Landlord Name (or Property Management Company) - No Addresses',
-		)
 		const inputElement = screen.getByPlaceholderText(
 			'Landlord Name (or Property Management Company) - No Addresses',
 		)
 
-		expect(labelElement).toBeInTheDocument()
 		expect(inputElement).toBeInTheDocument()
+		expect(inputElement).toHaveAttribute(
+			'placeholder',
+			'Landlord Name (or Property Management Company) - No Addresses',
+		)
 	})
 
 	test('shows dropdown options when name matches and selects the first option on Enter', async () => {

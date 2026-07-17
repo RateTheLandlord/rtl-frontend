@@ -17,24 +17,28 @@ const AdsComponent = ({
 }: IProps) => {
 	if (isProd) {
 		return (
-			<div className='mx-auto max-w-2xl px-4 pt-4 sm:px-6 lg:max-w-7xl lg:px-8'>
-				<AdSense.Google
-					client='ca-pub-1233437669445756'
-					slot={slot}
-					style={{ display: 'block' }}
-					format={format}
-					layout={layout}
-					layoutKey={layoutKey}
-					responsive='true'
-					className='adsbygoogle h-[100px] w-full md:h-[90px]'
-				/>
+			<div className='w-full overflow-hidden px-4 pt-4 sm:px-6 lg:px-8'>
+				<div className='mx-auto w-full max-w-[320px] sm:max-w-[468px] lg:max-w-[728px]'>
+					<AdSense.Google
+						client='ca-pub-1233437669445756'
+						slot={slot}
+						style={{ display: 'block', maxWidth: '100%' }}
+						format={format}
+						layout={layout}
+						layoutKey={layoutKey}
+						responsive='true'
+						className='adsbygoogle mx-auto block h-[100px] w-full max-w-full overflow-hidden md:h-[90px]'
+					/>
+				</div>
 			</div>
 		)
 	} else {
 		// For development environment, don't render the ad unit
 		return (
-			<div className='mx-auto h-[100px] w-full max-w-2xl bg-red-500 px-4 pt-4 sm:px-6 md:h-[90px] lg:max-w-7xl lg:px-8'>
-				AD
+			<div className='w-full overflow-hidden px-4 pt-4 sm:px-6 lg:px-8'>
+				<div className='mx-auto flex h-[100px] w-full max-w-2xl items-center justify-center rounded bg-red-500 md:h-[90px] lg:max-w-7xl'>
+					AD
+				</div>
 			</div>
 		)
 	}

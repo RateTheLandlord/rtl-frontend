@@ -6,6 +6,7 @@
 		"sort": "Classer par",
 		"country": "Pays",
 		"state": "État / Province",
+		"county": "Comté",
 		"city": "Ville",
 		"health": "Santé et sécurité",
 		"respect": "Respect",
@@ -34,6 +35,7 @@
 		"continue": "Continuer",
 		"select_country": "Veuillez sélectionner un pays",
 		"select_state": "Veuillez sélectionner un état/province",
+		"select_county": "Veuillez sélectionner un comté",
 		"hero_header": "Consultez les avis sur les propriétaires de votre communauté",
 		"hero_body": "Aidez-nous à vous guider en saisissant les informations de localisation de la zone qui vous intéresse ci-dessous. Si vous ne trouvez pas votre emplacement, soutenez votre communauté en soumettant un avis!",
 		"update": "Rafraîchir les filtres",
@@ -77,9 +79,9 @@
 		"rating": "Moy. Notation"
 	},
 	"user-code": {
-		"title": "Copiez votre code unique",
-		"success": "Votre avis a bel et bien été soumis",
-		"message": "Assurez-vous de copier et d'enregistrer votre code unique. Ce code est nécessaire pour mettre à jour ou supprimer votre avis ultérieurement.",
+		"title": "Veuillez enregistrer ce code !",
+		"success": "Votre avis a maintenant été soumis et devrait bientôt apparaître sur notre site !",
+		"message": "Si jamais vous souhaitez modifier ou supprimer votre critique, vous aurez besoin de ce code pour le faire.",
 		"faq": "Pour de plus amples renseignements, veuillez consulter notre FAQ.",
 		"button": "J'ai copié mon code",
 		"copy": "Copiez mon code d'évaluation unique",

@@ -33,7 +33,7 @@ export default function CityComboBox({
 		(state) => state.resource,
 	)
 	const dispatch = useAppDispatch()
-	const comboboxClassName = `mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
+	const comboboxClassName = `mt-1 p-2 block w-full bg-white rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
 		error ? 'border-red-400' : ''
 	}`
 	return (
@@ -50,7 +50,7 @@ export default function CityComboBox({
 					data-testid='create-review-form-city-1'
 					className='relative w-full'
 				>
-					<label htmlFor='city' className='block text-sm text-gray-700'>
+					<label htmlFor='city' className='text-primary-600 block text-sm'>
 						{name}
 					</label>
 					<ComboboxInput
