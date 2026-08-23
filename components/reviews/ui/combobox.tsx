@@ -116,9 +116,7 @@ function VirtualizedList({ items }: { items: Options[] }) {
 						{({ selected }) => (
 							<span
 								className={`block truncate ${
-									selected
-										? 'font-montserrat-medium'
-										: 'font-montserrat-regular'
+									selected ? 'font-inclusive font-medium' : 'font-inclusive'
 								}`}
 							>
 								{items?.[virtualRow.index].name}

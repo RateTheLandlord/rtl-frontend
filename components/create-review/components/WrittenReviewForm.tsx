@@ -23,11 +23,11 @@ const WrittenReviewForm = () => {
 					value={review}
 					backgroundColor='white'
 				/>
-				<div>
+				<div className='flex flex-col justify-end'>
 					<h2 className='text-primary-900 mt-1 text-base leading-7 font-semibold'>
 						{t('written-review.title')}
 					</h2>
-					<p className='text-primary-600 mt-1 w-full text-sm leading-6 lg:w-2/3'>
+					<p className='text-primary-600 w-full text-sm leading-6 lg:w-2/3'>
 						{t('written-review.policy-1')}
 					</p>
 				</div>
