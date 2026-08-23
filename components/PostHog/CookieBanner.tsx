@@ -46,7 +46,7 @@ export default function Banner() {
 	return (
 		<div>
 			{consentGiven === 'undecided' && (
-				<div className='font-montserrat-regular pointer-events-none fixed inset-x-0 bottom-0 px-6 pb-6'>
+				<div className='font-inclusive pointer-events-none fixed inset-x-0 bottom-0 px-6 pb-6'>
 					<div className='pointer-events-auto ml-auto max-w-xl rounded-xl bg-white p-6 shadow-lg ring-1 ring-gray-900/10'>
 						<p className='text-sm leading-6 text-gray-900'>
 							{t('body-1')}
@@ -60,7 +60,7 @@ export default function Banner() {
 						</p>
 						<div className='mt-4 flex items-center gap-x-5'>
 							<button
-								className='font-montserrat-medium rounded-md bg-gray-900 px-3 py-2 text-sm text-white shadow-sm hover:bg-gray-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900'
+								className='font-inclusive rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900'
 								type='button'
 								onClick={handleAcceptCookies}
 							>
@@ -68,7 +68,7 @@ export default function Banner() {
 							</button>
 							<span> </span>
 							<button
-								className='font-montserrat-medium text-sm leading-6 text-gray-900'
+								className='font-inclusive text-sm leading-6 font-medium text-gray-900'
 								type='button'
 								onClick={handleDeclineCookies}
 							>

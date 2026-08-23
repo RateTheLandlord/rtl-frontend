@@ -37,7 +37,7 @@ export default function Navbar(): JSX.Element {
 	}, [router])
 
 	return (
-		<Disclosure as='nav' className='font-montserrat-regular bg-white shadow'>
+		<Disclosure as='nav' className='font-inclusive bg-white shadow'>
 			{({ open }) => (
 				<>
 					<div

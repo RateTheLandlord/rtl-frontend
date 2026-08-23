@@ -1,30 +1,27 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @layer base {
 	@font-face {
-		font-family: 'Montserrat-Regular', sans-serif;
+		font-family: 'Inclusive Sans';
 		font-weight: 400;
-		src: url('/components/fonts/Montserrat-Regular.ttf') format('truetype');
+		src: url('/components/fonts/InclusiveSans-Regular.ttf') format('truetype');
 	}
+
 	@font-face {
-		font-family: 'Montserrat-Medium', sans-serif;
+		font-family: 'Inclusive Sans';
 		font-weight: 500;
-		src: url('/components/fonts/Montserrat-Medium.ttf') format('truetype');
+		src: url('/components/fonts/InclusiveSans-Medium.ttf') format('truetype');
 	}
+
 	@font-face {
-		font-family: 'Montserrat-Bold', sans-serif;
-		font-weight: 600;
-		src: url('/components/fonts/Montserrat-Bold.ttf') format('truetype');
-	}
-	@font-face {
-		font-family: 'Montserrat-Extra-Bold', sans-serif;
+		font-family: 'Inclusive Sans';
 		font-weight: 800;
-		src: url('/components/fonts/Montserrat-ExtraBold.ttf') format('truetype');
+		src: url('/components/fonts/InclusiveSans-SemiBold.ttf') format('truetype');
 	}
+
 	html {
-		font-family: 'Montserrat-Regular', sans-serif;
+		font-family: 'Inclusive Sans', sans-serif;
 		font-weight: 400;
-		src: url('/components/fonts/Montserrat-Regular.ttf') format('truetype');
 	}
 
 	p,
@@ -34,33 +31,28 @@
 	dt,
 	dd,
 	dl {
-		font-family: 'Montserrat-Regular', sans-serif;
+		font-family: 'Inclusive Sans', sans-serif;
 		font-weight: 400;
-		src: url('/components/fonts/Montserrat-Regular.ttf') format('truetype');
 	}
 
 	h1 {
-		font-family: 'Montserrat-Extra-Bold', sans-serif;
+		font-family: 'Inclusive Sans', sans-serif;
 		font-weight: 800;
-		src: url('/components/fonts/Montserrat-ExtraBold.ttf') format('truetype');
 	}
 
 	h2,
 	h3 {
-		font-family: 'Montserrat-Bold', sans-serif;
-		font-weight: 600;
-		src: url('/components/fonts/Montserrat-Bold.ttf') format('truetype');
+		font-family: 'Inclusive Sans', sans-serif;
+		font-weight: q500;
 	}
 
 	h4,
 	h5,
 	h6 {
-		font-family: 'Montserrat-Regular', sans-serif;
+		font-family: 'Inclusive Sans', sans-serif;
 		font-weight: 400;
-		src: url('/components/fonts/Montserrat-Regular.ttf') format('truetype');
 	}
 }
-
 :root {
 	/* RGB components for primary color (used by Tailwind with opacity): */
 	--color-primary: 126 152 96;
@@ -69,7 +61,7 @@
 }
 
 /* Optional dark theme override (example) */
-[data-theme="dark"] {
+[data-theme='dark'] {
 	--color-primary: 111 127 87;
 	--color-primary-hover: 99 124 84;
 	--color-background: 239 238 234;
