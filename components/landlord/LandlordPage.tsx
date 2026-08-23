@@ -38,6 +38,7 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 	useEffect(() => {
 		if (suspiciousLandlord) {
 			setBannerOpen(true)
+			setSortState(filteredSortOptions[1])
 		} else {
 			setBannerOpen(false)
 		}
