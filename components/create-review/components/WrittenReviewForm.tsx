@@ -19,7 +19,7 @@ const WrittenReviewForm = () => {
 					limitText={t('review-form.limit', {
 						length: review.length,
 					})}
-					length={2000}
+					length={1000}
 					value={review}
 					backgroundColor='white'
 				/>
