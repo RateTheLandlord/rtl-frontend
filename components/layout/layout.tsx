@@ -8,7 +8,7 @@ function Layout({ children }: { children: JSX.Element }): JSX.Element {
 		<>
 			<Navbar />
 			<div
-				className='font-montserrat-regular flex min-h-screen justify-center'
+				className='font-inclusive flex min-h-screen justify-center'
 				data-testid='layout-1'
 			>
 				{children}

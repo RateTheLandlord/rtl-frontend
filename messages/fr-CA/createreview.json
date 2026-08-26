@@ -33,7 +33,7 @@
 			"submit": "Soummettre votre évaluation",
 			"reset": "Rafraichir",
 			"postal-error": "Erreur. Code postal / ZIP Invalide",
-			"limit": "Limite de caractères: {{lenght}}/2000",
+			"limit": "Limite de caractères: {{length}}/1000",
 			"civil": "Veuillez garder votre avis courtois et objectif. Ne publiez aucune adresse spécifique, sans quoi celles-ci seront supprimées. Tout langage malveillant ou diffamatoire pourrait entraîner la modification ou le retrait de votre avis.",
 			"disclaimer-1": "Je comprends qu'une fois mon avis publié sur Rate the Landlord, ce-dernier sera public et pourra être consulté par n'importe qui, y compris la personne propriétaire mentionnée dans mon avis.",
 			"disclaimer-2": "Je comprends qu'une fois mon avis publié, je ne pourrai pas le retirer, sauf s'il enfreint les politiques de Rate the Landlord. Je reconnais également que Rate the Landlord recommande de publier des avis après la fin de ma location.",

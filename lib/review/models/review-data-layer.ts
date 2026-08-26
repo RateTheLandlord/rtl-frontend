@@ -69,16 +69,24 @@ async function createReview(
 		inputReview.landlord = inputReview.landlord
 			.substring(0, 150)
 			.toLocaleUpperCase()
-		inputReview.country_code = inputReview.country_code.toLocaleUpperCase()
-		inputReview.city = inputReview.city.substring(0, 150).toLocaleUpperCase()
-		inputReview.state = inputReview.state.toLocaleUpperCase()
+			.trim()
+		inputReview.country_code = inputReview.country_code
+			.toLocaleUpperCase()
+			.trim()
+		inputReview.city = inputReview.city
+			.substring(0, 150)
+			.toLocaleUpperCase()
+			.trim()
+		inputReview.state = inputReview.state.toLocaleUpperCase().trim()
 		inputReview.zip = inputReview.zip
 			.substring(0, 50)
 			.toLocaleUpperCase()
 			.replace(' ', '')
+			.trim()
 		inputReview.admin_approved = null
 		inputReview.flagged = filterResult.flagged
 		inputReview.flagged_reason = filterResult.flagged_reason
+		inputReview.review = inputReview.review.trim().substring(0, 1000)
 
 		const id = await sql<{ id: number }[]>`
           INSERT INTO review

@@ -25,9 +25,7 @@ export default function IconSection() {
 									<h3 className='text-2xl text-gray-900'>
 										{t('icon.anonymity')}
 									</h3>
-									<p className='mt-2 text-sm text-gray-900'>
-										{t('icon.anon-sub')}
-									</p>
+									<p className='mt-2 text-gray-900'>{t('icon.anon-sub')}</p>
 								</div>
 							</div>
 							<div className='text-center sm:flex sm:text-left lg:block lg:text-center'>
@@ -40,9 +38,7 @@ export default function IconSection() {
 									<h3 className='text-2xl text-gray-900'>
 										{t('icon.solidarity')}
 									</h3>
-									<p className='mt-2 text-sm text-gray-900'>
-										{t('icon.sol-sub')}
-									</p>
+									<p className='mt-2 text-gray-900'>{t('icon.sol-sub')}</p>
 								</div>
 							</div>
 							<div className='text-center sm:flex sm:text-left lg:block lg:text-center'>
@@ -55,9 +51,7 @@ export default function IconSection() {
 									<h3 className='text-2xl text-gray-900'>
 										{t('icon.transparency')}
 									</h3>
-									<p className='mt-2 text-sm text-gray-900'>
-										{t('icon.trans-sub')}
-									</p>
+									<p className='mt-2 text-gray-900'>{t('icon.trans-sub')}</p>
 								</div>
 							</div>
 						</div>
