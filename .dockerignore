@@ -22,3 +22,5 @@ CODE_OF_CONDUCT.md
 npm-debug.log
 npm-debug.log.*
 *.test.*
+.env.*
+.env
