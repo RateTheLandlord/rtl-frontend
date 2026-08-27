@@ -27,7 +27,7 @@ function Resources({ data }: IProps): JSX.Element {
 
 	if (!data?.resources) return <Spinner />
 
-	if (data?.resources.length === 0) return <div>Error Loading Landlord</div>
+	if (data?.resources.length === 0) return <div>Error Loading Resources</div>
 	return (
 		<div className='flex w-full justify-center'>
 			<NextSeo
@@ -78,16 +78,10 @@ export async function getStaticProps({ locale }: { locale: string }) {
 
 	if (!data || data.resources.length === 0) {
 		return {
-			props: {
-				messages: {
-					...resourcesMessages,
-					...alertsMessages,
-					...layoutMessages,
-					...filtersMessages,
-				},
-				data: [],
+			redirect: {
+				permanent: false,
+				destination: '/404',
 			},
-			revalidate: 100,
 		}
 	}
 
