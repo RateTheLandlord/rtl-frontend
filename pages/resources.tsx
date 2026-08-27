@@ -68,7 +68,7 @@ function Resources({ data }: IProps): JSX.Element {
 
 export default Resources
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export async function getServerSideProps({ locale }: { locale: string }) {
 	const resourcesMessages = readLocaleFile('resources', locale)
 	const alertsMessages = readLocaleFile('alerts', locale)
 	const layoutMessages = readLocaleFile('layout', locale)
@@ -86,17 +86,15 @@ export async function getStaticProps({ locale }: { locale: string }) {
 	}
 
 	return {
-		props: JSON.parse(
-			JSON.stringify({
-				data: data,
-				messages: {
-					...resourcesMessages,
-					...alertsMessages,
-					...layoutMessages,
-					...filtersMessages,
-				},
-			}),
-		),
+		props: {
+			data: JSON.parse(JSON.stringify(data)),
+			messages: {
+				...resourcesMessages,
+				...alertsMessages,
+				...layoutMessages,
+				...filtersMessages,
+			},
+		},
 		revalidate: 100,
 	}
 }
