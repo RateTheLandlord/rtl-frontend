@@ -7,6 +7,7 @@ import { ResourceResponse } from '@/util/interfaces/interfaces'
 import { getResources } from '@/lib/tenant-resource/resource'
 import { useTranslations } from 'next-intl'
 import { readLocaleFile } from '@/util/readLocalFile'
+import Spinner from '@/components/ui/Spinner'
 
 interface IProps {
 	data: ResourceResponse
@@ -23,6 +24,10 @@ function Resources({ data }: IProps): JSX.Element {
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
 	const t = useTranslations('resources')
+
+	if (!data?.resources) return <Spinner />
+
+	if (data?.resources.length === 0) return <div>Error Loading Landlord</div>
 	return (
 		<div className='flex w-full justify-center'>
 			<NextSeo
@@ -71,7 +76,7 @@ export async function getStaticProps({ locale }: { locale: string }) {
 
 	const data = await getResources({})
 
-	if (!data) {
+	if (!data || data.resources.length === 0) {
 		return {
 			props: {
 				messages: {
