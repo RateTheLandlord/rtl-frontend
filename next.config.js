@@ -10,6 +10,7 @@ const securityHeaders = [
 	},
 ]
 const nextConfig = {
+	output: 'standalone',
 	headers() {
 		return [
 			{

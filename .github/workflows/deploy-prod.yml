@@ -5,6 +5,9 @@ on:
     branches:
       - production # Trigger on pushes to the production branch
 
+permissions:
+  contents: read
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -12,34 +15,25 @@ jobs:
     steps:
       # Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Create .env file
-        uses: Infisical/secrets-action@v1.0.7
+      # Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v4
         with:
-          client-id: ${{ secrets.MACHINE_IDENTITY_CLIENT_ID }}
-          client-secret: ${{ secrets.MACHINE_IDENTITY_CLIENT_SECRET }}
-          env-slug: 'prod'
-          project-slug: ${{ secrets.INFISICAL_PROJECT_SLUG }}
-          export-type: 'file'
-          file-output-path: '/.env'
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Log in to the DigitalOcean Container Registry
-      - name: Log in to DigitalOcean Container Registry
-        uses: docker/login-action@v2
+      # Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      # Build and push
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v7
         with:
-          registry: registry.digitalocean.com
-          username: ${{ secrets.DO_USERNAME }}
-          password: ${{ secrets.DO_API_TOKEN }}
-
-      # Build the Docker image
-      - name: Build Docker image
-        run: |
-          docker build -t registry.digitalocean.com/rtl-container/rtl-application:${{ github.sha }} .
-          docker tag registry.digitalocean.com/rtl-container/rtl-application:${{ github.sha }} registry.digitalocean.com/rtl-container/rtl-application:latest
-
-      # Push the Docker image
-      - name: Push Docker image
-        run: |
-          docker push registry.digitalocean.com/rtl-container/rtl-application:${{ github.sha }}
-          docker push registry.digitalocean.com/rtl-container/rtl-application:latest
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/rtl-application:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/rtl-application:latest

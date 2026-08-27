@@ -1,38 +1,47 @@
-# Use the official Bun image
-# See all versions at https://hub.docker.com/r/oven/bun/tags
-FROM oven/bun:latest AS base
+# Dependencies
+FROM oven/bun:1 AS deps
 
-ARG PORT=3000 # Default value if no PORT is provided
-ENV PORT=$PORT
-
-# Set working directory
-WORKDIR /usr/src/app
-
-# Create app directory
-RUN mkdir -p /app
-
-# Set /app as the working directory
 WORKDIR /app
 
-# Disable telemetry
+COPY package.json bun.lock ./
+
+RUN bun install --frozen-lockfile
+
+
+# Build
+FROM oven/bun:1 AS builder
+
+WORKDIR /app
+
+COPY --from=deps /app/node_modules ./node_modules
+
+COPY . .
+
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Copy package.json and package-lock.json
-COPY package*.json /app/
-
-# Install dependencies
-RUN bun install
-
-# Copy the rest of the app files into /app
-COPY . /app
-
-# Set environment variables
-
-# Build the Next.js app
 RUN bun run build
 
-# Expose the app port
-EXPOSE ${PORT}
 
-# Start the app
-CMD ["bun", "run", "start"]
+# Production
+FROM oven/bun:1 AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+
+RUN groupadd --system --gid 1001 nodejs \
+  && useradd --system --uid 1001 --gid nodejs nextjs
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+
+USER nextjs
+
+EXPOSE 3000
+
+CMD ["bun", "server.js"]
