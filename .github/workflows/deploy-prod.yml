@@ -10,8 +10,7 @@ permissions:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    environment: ${{ vars.ENVIRONMENT_PRODUCTION }}
-
+    environment: Production
     steps:
       # Checkout the repository
       - name: Checkout code
