@@ -1,4 +1,4 @@
-name: Build and Push Develop Docker Image
+name: Build Develop Branch Image
 
 on:
   push:
@@ -11,6 +11,7 @@ permissions:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    environment: ${{ vars.ENVIRONMENT_DEVELOPMENT }}
 
     steps:
       # Checkout the repository
@@ -37,3 +38,11 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/rtl-application:${{ github.sha }}
             ${{ secrets.DOCKERHUB_USERNAME }}/rtl-application:dev
+          build-args: |
+            NEXT_PUBLIC_CAPTCHA_SITE_KEY=${{ vars.NEXT_PUBLIC_CAPTCHA_SITE_KEY }}
+            NEXT_PUBLIC_ENVIRONMENT=${{ vars.NEXT_PUBLIC_ENVIRONMENT }}
+            NEXT_PUBLIC_GMAPS_TOKEN=${{ vars.NEXT_PUBLIC_GMAPS_TOKEN }}
+            NEXT_PUBLIC_MAPBOX_TOKEN=${{ vars.NEXT_PUBLIC_MAPBOX_TOKEN }}
+            NEXT_PUBLIC_ORIGIN_URL=${{ vars.NEXT_PUBLIC_ORIGIN_URL }}
+            NEXT_PUBLIC_POSTHOG_HOST=${{ vars.NEXT_PUBLIC_POSTHOG_HOST }}
+            NEXT_PUBLIC_POSTHOG_KEY=${{ vars.NEXT_PUBLIC_POSTHOG_KEY }}
