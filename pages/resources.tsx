@@ -78,10 +78,7 @@ export async function getServerSideProps({ locale }: { locale: string }) {
 
 	if (!data || data.resources.length === 0) {
 		return {
-			redirect: {
-				permanent: false,
-				destination: '/404',
-			},
+			notFound: true,
 		}
 	}
 
@@ -95,6 +92,5 @@ export async function getServerSideProps({ locale }: { locale: string }) {
 				...filtersMessages,
 			},
 		},
-		revalidate: 100,
 	}
 }
