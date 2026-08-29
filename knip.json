@@ -1,6 +1,6 @@
 {
 	"ignore": ["migrations/*", "*.config.*", "setupTests.ts", "test-utils.tsx"],
-	"ignoreDependencies": ["sharp", "husky"],
+	"ignoreDependencies": ["sharp", "husky", "jose"],
 	"ignoreBinaries": ["eslint"],
 	"rules": {
 		"devDependencies": "off"

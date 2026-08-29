@@ -59,4 +59,4 @@ USER nextjs
 
 EXPOSE 3000
 
-CMD ["bun", "server.js"]
+CMD ["node", "server.js"]
