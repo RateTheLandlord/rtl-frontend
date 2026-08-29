@@ -102,6 +102,9 @@
       },
     },
   },
+  "trustedDependencies": [
+    "bcrypt",
+  ],
   "overrides": {
     "eslint": "^9.39.1",
   },

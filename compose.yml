@@ -1,0 +1,18 @@
+services:
+  prod-ratethelandlord-docker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    networks:
+      - internal
+      - default
+    restart: always
+
+networks:
+  default:
+  internal:
+    internal: true

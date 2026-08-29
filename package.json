@@ -124,5 +124,8 @@
 	},
 	"lint-staged": {
 		"*.tsx": "eslint"
-	}
+	},
+	"trustedDependencies": [
+		"bcrypt"
+	]
 }

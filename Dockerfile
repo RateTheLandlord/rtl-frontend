@@ -1,3 +1,4 @@
+
 # Dependencies
 FROM node:20-slim AS deps
 
@@ -7,6 +8,9 @@ COPY package.json bun.lock ./
 
 RUN npm install -g bun
 RUN bun install --frozen-lockfile
+
+# Make absolutely sure native dependencies are built for Linux/Node
+RUN bunx --bun node-gyp rebuild --directory node_modules/bcrypt || true
 
 
 # Build
@@ -58,4 +62,3 @@ USER nextjs
 EXPOSE 3000
 
 CMD ["node", "server.js"]
-
