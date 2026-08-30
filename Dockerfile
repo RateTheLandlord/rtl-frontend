@@ -1,4 +1,3 @@
-
 # Dependencies
 FROM node:20-slim AS deps
 
@@ -8,9 +7,6 @@ COPY package.json bun.lock ./
 
 RUN npm install -g bun
 RUN bun install --frozen-lockfile
-
-# Make absolutely sure native dependencies are built for Linux/Node
-RUN bunx --bun node-gyp rebuild --directory node_modules/bcrypt || true
 
 
 # Build
@@ -40,6 +36,12 @@ ENV NEXT_PUBLIC_POSTHOG_KEY=$NEXT_PUBLIC_POSTHOG_KEY
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build
+
+# Next.js standalone tracing does not include bcrypt's native binary.
+# The production target is Linux x64/glibc.
+RUN mkdir -p .next/standalone/node_modules/bcrypt/prebuilds/linux-x64 \
+  && cp node_modules/bcrypt/prebuilds/linux-x64/bcrypt.glibc.node \
+  .next/standalone/node_modules/bcrypt/prebuilds/linux-x64/
 
 
 # Production

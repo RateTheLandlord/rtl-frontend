@@ -11,6 +11,11 @@ const securityHeaders = [
 ]
 const nextConfig = {
 	output: 'standalone',
+	experimental: {
+		outputFileTracingIncludes: {
+			'/': ['./node_modules/bcrypt/prebuilds/linux-x64/bcrypt.glibc.node'],
+		},
+	},
 	headers() {
 		return [
 			{
