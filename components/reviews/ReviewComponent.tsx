@@ -41,6 +41,8 @@ const ReviewComponent = ({
 	}
 	const avgRating = Math.round(totalReview / ratings.length)
 
+	const hideWrittenReview = !review.review || review.review.length <= 1
+
 	return (
 		<div key={review.id}>
 			{i && i % 20 === 0 && i !== 0 ? (
@@ -130,13 +132,13 @@ const ReviewComponent = ({
 				<div
 					className={classNames(
 						'flex flex-col gap-3 p-4 lg:flex-row lg:pr-4',
-						review.review.length < 1 ? 'grow' : '',
+						hideWrittenReview ? 'grow' : '',
 					)}
 				>
 					<div
 						className={classNames(
 							'flex h-full justify-between',
-							review.review.length < 1
+							hideWrittenReview
 								? 'grow flex-row'
 								: 'flex-row py-4 lg:max-w-[200px] lg:min-w-[200px] lg:flex-col',
 						)}
@@ -144,7 +146,7 @@ const ReviewComponent = ({
 						<div
 							className={classNames(
 								'flex flex-row flex-wrap items-center gap-3',
-								review.review.length < 1
+								hideWrittenReview
 									? 'grow justify-center lg:flex-wrap'
 									: 'justify-between',
 							)}
@@ -154,7 +156,7 @@ const ReviewComponent = ({
 									<div
 										className={classNames(
 											'flex flex-col lg:items-center lg:text-center',
-											review.review.length < 1 ? 'lg:w-[130px]' : 'lg:w-full',
+											hideWrittenReview ? 'lg:w-[130px]' : 'lg:w-full',
 										)}
 										key={rating.title}
 									>
@@ -176,7 +178,7 @@ const ReviewComponent = ({
 					</div>
 
 					<div>
-						{review.review.length < 1 ? null : (
+						{hideWrittenReview ? null : (
 							<div className='flex h-full flex-col justify-between gap-3'>
 								<div>
 									<p>{t('reviews.review')}</p>

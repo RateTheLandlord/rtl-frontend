@@ -87,7 +87,7 @@ export async function getStaticProps({
 
 	const data = await getLandlordReviews(params.landlord)
 
-	if (!data || data.reviews.length === 0) {
+	if (!data || (data.reviews && data.reviews.length === 0)) {
 		return {
 			redirect: {
 				permanent: false,
