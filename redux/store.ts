@@ -4,6 +4,7 @@ import resourceQueryReducer from './resourceQuery/resourceQuerySlice'
 import reviewReducer from './review/reviewSlice'
 import resourceReducer from './resource/resourceSlice'
 import modalReducer from './modal/modalSlice'
+import landlordReducer from './landlord/landlordSlice'
 
 export const store = configureStore({
 	reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
 		review: reviewReducer,
 		resource: resourceReducer,
 		modal: modalReducer,
+		landlord: landlordReducer,
 	},
 })
 

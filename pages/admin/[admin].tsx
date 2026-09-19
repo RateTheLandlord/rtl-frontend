@@ -19,6 +19,7 @@ import SuspiciousLandlords from '@/components/admin/sections/SuspiciousLandlords
 import FlaggedKeywords from '@/components/admin/sections/FlaggedKeywords'
 import CloseButton from '@/components/ui/CloseButton'
 import RecentReviews from '@/components/admin/sections/RecentReviews'
+import MergeDuplicateLandlords from '@/components/admin/sections/MergeDuplicateLandlords'
 
 const tabs = [
 	{ name: 'Flagged Reviews', component: <FlaggedReviews /> },
@@ -28,6 +29,7 @@ const tabs = [
 	{ name: 'Flagged Keywords', component: <FlaggedKeywords /> },
 	{ name: 'Deleted Reviews', component: <DeletedReviews /> },
 	{ name: 'Recent Reviews', component: <RecentReviews /> },
+	{ name: 'Merge Landlords', component: <MergeDuplicateLandlords /> },
 ]
 
 function Admin(): JSX.Element {
@@ -192,11 +194,16 @@ export async function getStaticProps({ locale }: { locale: string }) {
 	const layoutMessages = (await import(
 		`@/messages/${locale}/layout.json`
 	)) as Record<string, string>
+	const reviewsMessages = (await import(
+		`@/messages/${locale}/createreview.json`
+	)) as Record<string, string>
+
 	return {
 		props: {
 			messages: {
 				...alertsMessages,
 				...layoutMessages,
+				...reviewsMessages,
 			},
 		},
 	}

@@ -34,6 +34,7 @@ type InitialState = {
 	spamReviewModalOpen: boolean
 	spamDetectionMethod: string
 	landlord: string
+	mergeLandlordModalOpen: boolean
 }
 
 const initialState: InitialState = {
@@ -63,6 +64,7 @@ const initialState: InitialState = {
 	spamReviewModalOpen: false,
 	spamDetectionMethod: 'localStorageDetection',
 	landlord: '',
+	mergeLandlordModalOpen: false,
 }
 
 const modalSlice = createSlice({
@@ -150,6 +152,9 @@ const modalSlice = createSlice({
 		updateSpamDetectionMethod(state, action: PayloadAction<string>) {
 			state.spamDetectionMethod = action.payload
 		},
+		updateMergeLandlordModalOpen(state, action: PayloadAction<boolean>) {
+			state.mergeLandlordModalOpen = action.payload
+		},
 	},
 })
 
@@ -179,5 +184,6 @@ export const {
 	updateSuccessModalOpen,
 	updateSpamReviewModalOpen,
 	updateSpamDetectionMethod,
+	updateMergeLandlordModalOpen,
 } = modalSlice.actions
 export default modalSlice.reducer

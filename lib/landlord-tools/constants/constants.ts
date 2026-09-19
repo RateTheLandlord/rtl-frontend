@@ -1,0 +1,76 @@
+export const SELECT_QUERY_STRING = `
+  SELECT
+    id,
+    landlord,
+    city,
+    country_code
+  FROM review
+`
+
+export const IGNORE_WORDS = new Set([
+	'property',
+	'properties',
+	'management',
+	'managed',
+	'group',
+	'holdings',
+	'company',
+	'companies',
+	'corp',
+	'corporation',
+	'inc',
+	'incorporated',
+	'ltd',
+	'limited',
+	'llc',
+	'of',
+	'the',
+	'at',
+	'and',
+	'investments',
+	'living',
+	'american',
+	'communities',
+	'capital',
+	'park',
+	'rental',
+	'equity',
+	'family',
+	'york',
+	'first',
+	'maple',
+	'king',
+	'real',
+	'estate',
+	'village',
+	'university',
+])
+
+export const LOCATION_WORDS = new Set([
+	'road',
+	'rd',
+	'street',
+	'st',
+	'avenue',
+	'ave',
+	'drive',
+	'dr',
+	'boulevard',
+	'blvd',
+	'lane',
+	'ln',
+	'court',
+	'ct',
+	'place',
+	'pl',
+	'parkway',
+	'pkwy',
+	'highway',
+	'hwy',
+])
+
+export const WORD_MATCH_THRESHOLD = 0.88
+export const OVERALL_MATCH_THRESHOLD = 0.9
+export const MIN_FUZZY_WORD_LENGTH = 4
+export const MIN_DISPLAY_SCORE = 0.72
+export const MAX_RESULTS_PER_COUNTRY = 100
