@@ -21,7 +21,7 @@ const AboutUs = () => {
 					return (
 						<p
 							key={i}
-							className='mt-8 text-center text-xl leading-8 text-gray-500'
+							className='mt-8 text-left text-xl leading-8 text-gray-500'
 						>
 							{t(item)}
 						</p>
