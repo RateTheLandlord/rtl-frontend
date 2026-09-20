@@ -1,9 +1,10 @@
+import AdsComponent from '@/components/adsense/Adsense'
 import Search from '@/components/home/Search'
 import Hero from '@/components/home/hero'
 import IconSection from '@/components/home/icon-section'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function Home(): JSX.Element {
 	const title = 'Rate The Landlord'
@@ -14,6 +15,18 @@ export default function Home(): JSX.Element {
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
 	const twitterHandle = '@r8thelandlord'
 	const siteName = 'RateTheLandlord.org'
+
+	const [showAd, setShowAd] = useState(false)
+
+	useEffect(() => {
+		const hasVisited = localStorage.getItem('not-first-visit')
+
+		if (hasVisited) {
+			setShowAd(true)
+		} else {
+			localStorage.setItem('not-first-visit', 'true')
+		}
+	}, [])
 
 	return (
 		<div className='flex flex-col justify-center'>
@@ -48,6 +61,7 @@ export default function Home(): JSX.Element {
 					},
 				]}
 			/>
+			{showAd && <AdsComponent slot='1526837416' />}
 			<div className='bg-background mx-2 mt-4 rounded-3xl pb-4'>
 				<Hero />
 				<Search />
