@@ -1,3 +1,5 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
 	loadDatabaseIndexes,
 	normalizeCountry,
@@ -17,13 +19,13 @@ export type MergePayload = {
 	namesToMerge: string[]
 }
 
-export type MergeResult = {
+type MergeResult = {
 	success: boolean
 	rowsUpdated: number
 	message?: string
 }
 
-export type AuditRow = {
+type AuditRow = {
 	timestamp_utc: string
 	id: string | number
 	country_code: string

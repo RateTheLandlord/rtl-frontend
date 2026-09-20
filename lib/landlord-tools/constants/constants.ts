@@ -1,12 +1,3 @@
-export const SELECT_QUERY_STRING = `
-  SELECT
-    id,
-    landlord,
-    city,
-    country_code
-  FROM review
-`
-
 export const IGNORE_WORDS = new Set([
 	'property',
 	'properties',

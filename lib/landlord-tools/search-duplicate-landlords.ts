@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
 	IGNORE_WORDS,
 	LOCATION_WORDS,

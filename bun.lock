@@ -66,6 +66,7 @@
         "@types/nprogress": "^0.2.3",
         "@types/react": "^18.3.26",
         "@types/redux-mock-store": "^1.5.0",
+        "@types/unidecode": "^1.1.0",
         "@typescript-eslint/eslint-plugin": "^5.62.0",
         "@typescript-eslint/parser": "^5.62.0",
         "autoprefixer": "^10.4.21",
@@ -609,6 +610,8 @@
     "@types/testing-library__jest-dom": ["@types/testing-library__jest-dom@5.14.9", "", { "dependencies": { "@types/jest": "*" } }, "sha512-FSYhIjFlfOpGSRyVoMBMuS3ws5ehFQODymf3vlI7U1K8c7PHwWwFY7VREfmsuzHSOnoKs/9/Y983ayOs7eRzqw=="],
 
     "@types/tough-cookie": ["@types/tough-cookie@4.0.5", "", {}, "sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA=="],
+
+    "@types/unidecode": ["@types/unidecode@1.1.0", "", {}, "sha512-NTIsFsTe9WRek39/8DDj7KiQ0nU33DHMrKwNHcD1rKlUvn4N0Rc4Di8q/Xavs8bsDZmBa4MMtQA8+HNgwfxC/A=="],
 
     "@types/use-sync-external-store": ["@types/use-sync-external-store@0.0.3", "", {}, "sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA=="],
 
