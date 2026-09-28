@@ -3,9 +3,11 @@
 [![Website](https://img.shields.io/badge/website-ratethelandlord.org-blue)](https://ratethelandlord.org)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE.md)
 
-The frontend for **RateTheLandlord.org**, a community-driven platform where renters can share and discover reviews of landlords.
+The frontend for **RateTheLandlord.org**, a community-driven platform where
+renters can share and discover reviews of landlords.
 
-The application is built with **Next.js, React, TypeScript, Tailwind CSS, Redux Toolkit, Auth0, PostgreSQL, and Bun**.
+The application is built with **Next.js, React, TypeScript, Tailwind CSS, Redux
+Toolkit, Auth0, PostgreSQL, and Bun**.
 
 ## Table of Contents
 
@@ -48,26 +50,26 @@ The application is built with **Next.js, React, TypeScript, Tailwind CSS, Redux 
 
 ## Tech Stack
 
-| Area | Technology |
-| --- | --- |
-| Framework | Next.js 14 |
-| UI | React 18 |
-| Language | TypeScript |
-| Styling | Tailwind CSS 4 |
-| State management | Redux Toolkit / React Redux |
-| Authentication | Auth0 |
-| Database | PostgreSQL |
-| Package manager | Bun |
-| Testing | Jest + React Testing Library |
-| Accessibility testing | jest-axe |
-| Maps | Mapbox GL / react-map-gl |
-| Internationalization | next-intl |
-| Analytics | PostHog |
-| CAPTCHA | Google reCAPTCHA |
-| Formatting | Prettier |
-| Linting | ESLint |
-| Git hooks | Husky |
-| Production | Docker + Next.js standalone output |
+| Area                  | Technology                         |
+| --------------------- | ---------------------------------- |
+| Framework             | Next.js 14                         |
+| UI                    | React 18                           |
+| Language              | TypeScript                         |
+| Styling               | Tailwind CSS 4                     |
+| State management      | Redux Toolkit / React Redux        |
+| Authentication        | Auth0                              |
+| Database              | PostgreSQL                         |
+| Package manager       | Bun                                |
+| Testing               | Jest + React Testing Library       |
+| Accessibility testing | jest-axe                           |
+| Maps                  | Mapbox GL / react-map-gl           |
+| Internationalization  | next-intl                          |
+| Analytics             | PostHog                            |
+| CAPTCHA               | Google reCAPTCHA                   |
+| Formatting            | Prettier                           |
+| Linting               | ESLint                             |
+| Git hooks             | Husky                              |
+| Production            | Docker + Next.js standalone output |
 
 ## Project Structure
 
@@ -104,7 +106,8 @@ For local development, install:
 - A Google reCAPTCHA configuration if you need to submit reviews locally
 - A Mapbox token if you need map functionality
 
-The Docker image currently uses Node.js 20 and installs Bun inside the build image.
+The Docker image currently uses Node.js 20 and installs Bun inside the build
+image.
 
 ## Local Development
 
@@ -123,7 +126,8 @@ Copy the example environment file:
 cp .env.example .env
 ```
 
-Update the values for your local environment. See [Environment Variables](#environment-variables).
+Update the values for your local environment. See
+[Environment Variables](#environment-variables).
 
 For normal development, use:
 
@@ -159,21 +163,22 @@ Next.js will automatically reload the application as files are changed.
 
 ## Environment Variables
 
-The repository includes an `.env.example` containing the variables expected by the application.
+The repository includes an `.env.example` containing the variables expected by
+the application.
 
 ### Application
 
-| Variable | Purpose |
-| --- | --- |
+| Variable                  | Purpose                                                    |
+| ------------------------- | ---------------------------------------------------------- |
 | `NEXT_PUBLIC_ENVIRONMENT` | Current environment, such as `development` or `production` |
-| `PORT` | Port used by the application |
-| `ORIGIN_URL` | Server-side application origin |
-| `NEXT_PUBLIC_ORIGIN_URL` | Public application origin |
+| `PORT`                    | Port used by the application                               |
+| `ORIGIN_URL`              | Server-side application origin                             |
+| `NEXT_PUBLIC_ORIGIN_URL`  | Public application origin                                  |
 
 ### Database
 
-| Variable | Purpose |
-| --- | --- |
+| Variable       | Purpose                      |
+| -------------- | ---------------------------- |
 | `DATABASE_URL` | PostgreSQL connection string |
 
 Example:
@@ -184,38 +189,39 @@ DATABASE_URL="postgresql://username:password@localhost:5432/database"
 
 ### CAPTCHA
 
-| Variable | Purpose |
-| --- | --- |
-| `NEXT_PUBLIC_CAPTCHA_SITE_KEY` | Public reCAPTCHA site key |
-| `CAPTCHA_SECRET_KEY` | Server-side reCAPTCHA secret |
+| Variable                       | Purpose                      |
+| ------------------------------ | ---------------------------- |
+| `NEXT_PUBLIC_CAPTCHA_SITE_KEY` | Public reCAPTCHA site key    |
+| `CAPTCHA_SECRET_KEY`           | Server-side reCAPTCHA secret |
 
 ### Auth0
 
-| Variable | Purpose |
-| --- | --- |
-| `AUTH0_ISSUER_BASE_URL` | Auth0 tenant URL |
-| `AUTH0_CLIENT_ID` | Auth0 application client ID |
-| `AUTH0_CLIENT_SECRET` | Auth0 application client secret |
-| `AUTH0_BASE_URL` | Base URL of the application |
-| `AUTH0_SECRET` | Secret used by Auth0 session handling |
+| Variable                | Purpose                               |
+| ----------------------- | ------------------------------------- |
+| `AUTH0_ISSUER_BASE_URL` | Auth0 tenant URL                      |
+| `AUTH0_CLIENT_ID`       | Auth0 application client ID           |
+| `AUTH0_CLIENT_SECRET`   | Auth0 application client secret       |
+| `AUTH0_BASE_URL`        | Base URL of the application           |
+| `AUTH0_SECRET`          | Secret used by Auth0 session handling |
 
 ### External Services
 
-| Variable | Purpose |
-| --- | --- |
-| `OPENAI_API_KEY` | OpenAI API access |
-| `NEXT_PUBLIC_GMAPS_TOKEN` | Google Maps functionality |
-| `NEXT_PUBLIC_MAPBOX_TOKEN` | Mapbox functionality |
-| `NEXT_PUBLIC_POSTHOG_HOST` | PostHog host |
-| `NEXT_PUBLIC_POSTHOG_KEY` | PostHog project key |
+| Variable                   | Purpose                   |
+| -------------------------- | ------------------------- |
+| `OPENAI_API_KEY`           | OpenAI API access         |
+| `NEXT_PUBLIC_GMAPS_TOKEN`  | Google Maps functionality |
+| `NEXT_PUBLIC_MAPBOX_TOKEN` | Mapbox functionality      |
+| `NEXT_PUBLIC_POSTHOG_HOST` | PostHog host              |
+| `NEXT_PUBLIC_POSTHOG_KEY`  | PostHog project key       |
 
 ### Review Configuration
 
-| Variable | Purpose |
-| --- | --- |
+| Variable        | Purpose                                  |
+| --------------- | ---------------------------------------- |
 | `REVIEW_PERIOD` | Review-related application configuration |
 
-> **Security:** Never commit real secrets, database passwords, API keys, Auth0 secrets, or CAPTCHA secrets to the repository.
+> **Security:** Never commit real secrets, database passwords, API keys, Auth0
+> secrets, or CAPTCHA secrets to the repository.
 
 ## Database
 
@@ -236,25 +242,27 @@ When setting up a new development database:
 3. Run the migration SQL files in order.
 4. Start the frontend.
 
-The frontend repository contains database-related server functionality, so a working PostgreSQL connection is required for features that access application data.
+The frontend repository contains database-related server functionality, so a
+working PostgreSQL connection is required for features that access application
+data.
 
 ## Available Scripts
 
 Run these commands with Bun:
 
-| Command | Description |
-| --- | --- |
-| `bun dev` | Start the Next.js development server |
-| `bun build` | Create a production Next.js build |
-| `bun start` | Start the production server |
-| `bun start:debug` | Start Next.js with the Node inspector enabled |
-| `bun lint` | Run ESLint and automatically fix supported issues |
-| `bun lint:merge` | Run ESLint without automatically fixing files |
-| `bun format` | Format frontend TypeScript/TSX files with Prettier |
-| `bun tsc` | Run the TypeScript compiler |
-| `bun test` | Run Jest in watch mode |
-| `bun test:merge` | Run Jest for merge/CI-style validation |
-| `bun knip` | Check for unused production files, exports, and dependencies |
+| Command           | Description                                                  |
+| ----------------- | ------------------------------------------------------------ |
+| `bun dev`         | Start the Next.js development server                         |
+| `bun build`       | Create a production Next.js build                            |
+| `bun start`       | Start the production server                                  |
+| `bun start:debug` | Start Next.js with the Node inspector enabled                |
+| `bun lint`        | Run ESLint and automatically fix supported issues            |
+| `bun lint:merge`  | Run ESLint without automatically fixing files                |
+| `bun format`      | Format frontend TypeScript/TSX files with Prettier           |
+| `bun tsc`         | Run the TypeScript compiler                                  |
+| `bun test`        | Run Jest in watch mode                                       |
+| `bun test:merge`  | Run Jest for merge/CI-style validation                       |
+| `bun knip`        | Check for unused production files, exports, and dependencies |
 
 The build also runs `next-sitemap` after a successful Next.js build.
 
@@ -284,7 +292,8 @@ bun test
 
 Components can include accessibility assertions using `jest-axe`.
 
-When adding or significantly changing UI components, include appropriate tests for:
+When adding or significantly changing UI components, include appropriate tests
+for:
 
 - Rendering
 - User interactions
@@ -321,21 +330,27 @@ bun tsc
 
 ### Pre-commit Hooks
 
-Husky is configured for Git hooks, and `lint-staged` runs ESLint against staged TSX files.
+Husky is configured for Git hooks, and `lint-staged` runs ESLint against staged
+TSX files.
 
-After installing dependencies, Husky is initialized through the `prepare` script.
+After installing dependencies, Husky is initialized through the `prepare`
+script.
 
-If a commit is rejected, run the relevant checks manually and fix the reported issues before committing.
+If a commit is rejected, run the relevant checks manually and fix the reported
+issues before committing.
 
 ## Authentication
 
 Authentication is handled through Auth0 using `@auth0/nextjs-auth0`.
 
-For local authenticated/admin development, configure the Auth0 environment variables in `.env`.
+For local authenticated/admin development, configure the Auth0 environment
+variables in `.env`.
 
-Administrative functionality expects an Auth0 role claim. The project currently uses the `ADMIN` role for administrator access.
+Administrative functionality expects an Auth0 role claim. The project currently
+uses the `ADMIN` role for administrator access.
 
-The Auth0 configuration must expose the user's role as a custom claim during login.
+The Auth0 configuration must expose the user's role as a custom claim during
+login.
 
 Do not commit Auth0 credentials or secrets.
 
@@ -348,7 +363,8 @@ To test review submission locally:
 1. Create/configure a reCAPTCHA application.
 2. Add the public site key to `NEXT_PUBLIC_CAPTCHA_SITE_KEY`.
 3. Add the server secret to `CAPTCHA_SECRET_KEY`.
-4. Configure your local development hostname as required by the CAPTCHA provider.
+4. Configure your local development hostname as required by the CAPTCHA
+   provider.
 
 Example:
 
@@ -372,9 +388,11 @@ Translation messages are stored in:
 messages/
 ```
 
-Next.js is configured with `next-intl` and the application's locale configuration.
+Next.js is configured with `next-intl` and the application's locale
+configuration.
 
-When adding user-facing text, use the project's existing internationalization system rather than hard-coding text directly into components.
+When adding user-facing text, use the project's existing internationalization
+system rather than hard-coding text directly into components.
 
 ## Docker
 
@@ -428,7 +446,8 @@ bun start
 
 The build generates the Next.js production output and then runs `next-sitemap`.
 
-The project also includes explicit handling for the Linux x64 `bcrypt` native binary in its standalone Docker build.
+The project also includes explicit handling for the Linux x64 `bcrypt` native
+binary in its standalone Docker build.
 
 ## Contributing
 
@@ -446,20 +465,11 @@ The current development workflow is:
 6. Open a pull request targeting `develop`.
 7. Address review and CI feedback.
 
-The `main` branch is used for production releases; day-to-day feature development should target `develop`.
-
-## Related Projects
-
-- **RateTheLandlord:** https://github.com/RateTheLandlord/RateTheLandlord
-- **Frontend:** https://github.com/RateTheLandlord/rtl-frontend
-- **Backend:** https://github.com/RateTheLandlord/rtl-backend
-- **Website:** https://ratethelandlord.org
-
 ## Community
 
-- Website: https://ratethelandlord.org
-- Email: contact@ratethelandlord.org
-- GitHub: https://github.com/RateTheLandlord
+- Website: <https://ratethelandlord.org>
+- Email: <contact@ratethelandlord.org>
+- GitHub: <https://github.com/RateTheLandlord>
 
 ## License
 
