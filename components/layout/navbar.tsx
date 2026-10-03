@@ -1,5 +1,5 @@
 import { Disclosure, DisclosureButton } from '@headlessui/react'
-import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Logo from '../svg/logo/logo'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
@@ -114,9 +114,9 @@ export default function Navbar(): JSX.Element {
 								<DisclosureButton className='hover:bg-background inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-teal-500 focus:outline-none focus:ring-inset'>
 									<span className='sr-only'>{t('nav.open')}</span>
 									{open ? (
-										<XIcon className='block h-6 w-6' aria-hidden='true' />
+										<XMarkIcon className='block h-6 w-6' aria-hidden='true' />
 									) : (
-										<MenuIcon className='block h-6 w-6' aria-hidden='true' />
+										<Bars3Icon className='block h-6 w-6' aria-hidden='true' />
 									)}
 								</DisclosureButton>
 							</div>

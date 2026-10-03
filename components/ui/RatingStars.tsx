@@ -1,5 +1,5 @@
 import { classNames } from '@/util/helpers/helper-functions'
-import { StarIcon } from '@heroicons/react/solid'
+import { StarIcon } from '@heroicons/react/24/solid'
 
 interface IProps {
 	value: number

@@ -1,5 +1,5 @@
 import { Disclosure, DisclosurePanel } from '@headlessui/react'
-import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/solid'
+import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { useTranslations } from 'next-intl'
 
 const Faq = () => {
@@ -45,15 +45,9 @@ const Faq = () => {
 												</span>
 												<span className='ml-6 flex h-7 items-center'>
 													{open ? (
-														<MinusSmIcon
-															className='h-6 w-6'
-															aria-hidden='true'
-														/>
+														<MinusIcon className='h-6 w-6' aria-hidden='true' />
 													) : (
-														<PlusSmIcon
-															className='h-6 w-6'
-															aria-hidden='true'
-														/>
+														<PlusIcon className='h-6 w-6' aria-hidden='true' />
 													)}
 												</span>
 											</Disclosure.Button>

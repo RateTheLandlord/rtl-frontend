@@ -1,6 +1,6 @@
 import React from 'react'
 import { Label, Radio, RadioGroup } from '@headlessui/react'
-import { StarIcon } from '@heroicons/react/solid'
+import { StarIcon } from '@heroicons/react/24/solid'
 import { classNames } from '@/util/helpers/helper-functions'
 import { useTranslations } from 'next-intl'
 
