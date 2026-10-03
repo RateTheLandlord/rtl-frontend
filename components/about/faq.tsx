@@ -1,5 +1,5 @@
 import { Disclosure, DisclosurePanel } from '@headlessui/react'
-import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/solid'
+import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/24/solid'
 import { useTranslations } from 'next-intl'
 
 const Faq = () => {

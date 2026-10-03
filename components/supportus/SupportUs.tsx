@@ -2,7 +2,7 @@ import {
 	CloudUploadIcon,
 	ServerIcon,
 	UserGroupIcon,
-} from '@heroicons/react/outline'
+} from '@heroicons/react/24/outline'
 import { useTranslations } from 'next-intl'
 import Poster from '../poster/Poster'
 

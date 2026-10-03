@@ -7,7 +7,7 @@ import {
 	Transition,
 } from '@headlessui/react'
 import { classNames } from '@/util/helpers/helper-functions'
-import { MenuAlt3Icon } from '@heroicons/react/solid'
+import { MenuAlt3Icon } from '@heroicons/react/24/solid'
 import Button from '@/components/ui/button'
 import useSWR from 'swr'
 import { fetchWithBody } from '@/util/helpers/fetcher'

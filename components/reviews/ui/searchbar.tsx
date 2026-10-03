@@ -1,4 +1,4 @@
-import { XIcon } from '@heroicons/react/solid'
+import { XMarkIcon } from '@heroicons/react/24/solid'
 import React from 'react'
 import { useTranslations } from 'next-intl'
 
@@ -36,7 +36,7 @@ export default function SearchBar({
 						className='absolute inset-y-0 right-0 flex items-center pr-3 text-gray-800'
 						onClick={() => setSearchState('')}
 					>
-						<XIcon width={18} />
+						<XMarkIcon width={18} />
 					</button>
 				) : null}
 			</div>

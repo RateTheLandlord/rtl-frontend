@@ -1,4 +1,4 @@
-import { XIcon } from '@heroicons/react/solid'
+import { XMarkIcon } from '@heroicons/react/24/solid'
 interface IProps {
 	onClick: () => void
 }
@@ -11,7 +11,7 @@ const CloseButton = ({ onClick }: IProps) => {
 				onClick={onClick}
 			>
 				<span className='sr-only'>Close</span>
-				<XIcon className='h-6 w-6' aria-hidden='true' />
+				<XMarkIcon className='h-6 w-6' aria-hidden='true' />
 			</button>
 		</div>
 	)

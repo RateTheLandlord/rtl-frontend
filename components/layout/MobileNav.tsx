@@ -15,7 +15,6 @@ const MobileNav = ({ navigation, activeTab }: IProps) => {
 				{navigation.map((link) => (
 					<Link key={link.href} href={link.href}>
 						<DisclosureButton
-							as='a'
 							className={`bg-primary/5 text-primary block cursor-pointer py-2 pr-4 pl-3 text-base ${
 								activeTab === link.href
 									? 'border-primary bg-primary/5 border-l-4'
@@ -28,7 +27,6 @@ const MobileNav = ({ navigation, activeTab }: IProps) => {
 				))}
 				<Link href='/create-review'>
 					<DisclosureButton
-						as='a'
 						className={`block cursor-pointer py-2 pr-4 pl-3 text-base text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 ${
 							activeTab === '/create-review' ? 'border-primary border-l-4' : ''
 						}`}

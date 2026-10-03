@@ -1,5 +1,5 @@
 import React, { Fragment, useRef, useState } from 'react'
-import { SelectorIcon } from '@heroicons/react/solid'
+import { ChevronUpDownIcon } from '@heroicons/react/24/solid'
 import {
 	Combobox,
 	ComboboxButton,
@@ -48,7 +48,7 @@ export default function ComboBox({
 						aria-label='Select Input'
 						className='absolute inset-y-0 right-0 flex items-center pr-2'
 					>
-						<SelectorIcon
+						<ChevronUpDownIcon
 							className='h-5 w-5 text-gray-400'
 							aria-hidden='true'
 						/>

@@ -7,7 +7,7 @@ import {
 	Transition,
 } from '@headlessui/react'
 import { Fragment } from 'react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import posthog from 'posthog-js'
 
 const ChangeLanguage = () => {

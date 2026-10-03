@@ -11,7 +11,7 @@ import {
 	Transition,
 	TransitionChild,
 } from '@headlessui/react'
-import { MenuIcon } from '@heroicons/react/outline'
+import { MenuIcon } from '@heroicons/react/24/outline'
 import TenantResources from '@/components/admin/sections/TenantResources'
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import { useUser } from '@auth0/nextjs-auth0/client'

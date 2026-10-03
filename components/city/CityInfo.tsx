@@ -1,4 +1,4 @@
-import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/solid'
+import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import {
 	Disclosure,
