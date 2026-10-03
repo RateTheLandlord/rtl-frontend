@@ -24,12 +24,13 @@ const nextConfig: NextConfig = {
 		'/*': ['./node_modules/bcrypt/prebuilds/linux-x64/bcrypt.glibc.node'],
 	},
 
-	headers: async () => [
+	headers: () => [
 		{
 			source: '/:path*',
 			headers: securityHeaders,
 		},
 	],
+
 	i18n: {
 		locales: ['en-CA', 'fr-CA'],
 		defaultLocale: 'en-CA',
