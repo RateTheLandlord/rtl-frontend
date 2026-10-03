@@ -19,6 +19,8 @@ import SpamReviewModal from './SpamReviewModal'
 import EditResourceModal from './EditResourceModal'
 import MergeLandlordsModal from './MergeLandlordsModal'
 
+import type { JSX } from 'react'
+
 const ModalProvider = ({ children }: { children: JSX.Element }) => {
 	const {
 		userRemoveReviewOpen,

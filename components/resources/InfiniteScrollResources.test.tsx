@@ -7,6 +7,7 @@ import '@testing-library/jest-dom/extend-expect'
 import InfiniteScroll from './InfiniteScrollResources'
 import { Resource } from '@/util/interfaces/interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
+import { Country } from '@/types/review.types'
 expect.extend(toHaveNoViolations)
 
 const mockData: Resource[] = [
@@ -16,7 +17,7 @@ const mockData: Resource[] = [
 		href: '#',
 		city: 'City 1',
 		state: 'State 1',
-		country_code: 'US',
+		country_code: Country.US,
 		address: 'Address 1',
 		phone_number: '123-456-7890',
 		description: 'Description 1',
@@ -28,7 +29,7 @@ const mockData: Resource[] = [
 		href: '#',
 		city: 'City 2',
 		state: 'State 2',
-		country_code: 'CA',
+		country_code: Country.CA,
 		address: 'Address 2',
 		phone_number: '987-654-3210',
 		description: 'Description 2',

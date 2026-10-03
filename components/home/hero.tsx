@@ -3,6 +3,8 @@ import LinkButtonLightLG from '../ui/link-button-light-lg'
 import { HouseIcon } from '../icons/HouseIcon'
 import { useTranslations } from 'next-intl'
 
+import type { JSX } from 'react'
+
 function Hero(): JSX.Element {
 	const t = useTranslations('home')
 	return (

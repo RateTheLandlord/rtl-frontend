@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import React, { useEffect } from 'react'
+import React, { useEffect, type JSX } from 'react'
 import { IQuery, Options, SortOptions } from '@/util/interfaces/interfaces'
 import SearchBar from './ui/searchbar'
 import { useTranslations } from 'next-intl'

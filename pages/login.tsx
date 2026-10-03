@@ -2,7 +2,7 @@ import Logo from '@/components/svg/logo/logo'
 import { NextSeo } from 'next-seo'
 import Head from 'next/head'
 import Link from 'next/link'
-import React from 'react'
+import React, { type JSX } from 'react'
 import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import { useRouter } from 'next/router'
 

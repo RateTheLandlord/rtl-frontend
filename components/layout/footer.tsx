@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { type JSX } from 'react'
 import { useTranslations } from 'next-intl'
 import { socialLinks } from './links'
 import Github from '../svg/social/github'

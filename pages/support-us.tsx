@@ -1,7 +1,7 @@
 import Support from '@/components/supportus/SupportUs'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { type JSX } from 'react'
 
 export default function SupportUs(): JSX.Element {
 	const title = 'Support Us | Rate The Landlord'

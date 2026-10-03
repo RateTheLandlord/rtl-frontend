@@ -4,7 +4,7 @@
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
-import React from 'react'
+import React, { type JSX } from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import WrittenReviewForm from './WrittenReviewForm'

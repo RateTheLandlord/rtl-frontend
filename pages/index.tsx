@@ -4,7 +4,7 @@ import Hero from '@/components/home/hero'
 import IconSection from '@/components/home/icon-section'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { type JSX } from 'react'
 
 export default function Home(): JSX.Element {
 	const title = 'Rate The Landlord'

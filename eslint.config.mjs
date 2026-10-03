@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import js from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import nextPlugin from '@next/eslint-plugin-next'

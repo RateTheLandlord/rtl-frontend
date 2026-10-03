@@ -1,5 +1,4 @@
-import AdSense from 'react-adsense'
-
+import { Adsense } from '@ctrl/react-adsense'
 const isProd = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production'
 
 interface IProps {
@@ -19,7 +18,7 @@ const AdsComponent = ({
 		return (
 			<div className='w-full overflow-hidden px-4 pt-4 sm:px-6 lg:px-8'>
 				<div className='mx-auto w-full max-w-[320px] sm:max-w-[468px] lg:max-w-[728px]'>
-					<AdSense.Google
+					<Adsense
 						client='ca-pub-1233437669445756'
 						slot={slot}
 						style={{ display: 'block', maxWidth: '100%' }}

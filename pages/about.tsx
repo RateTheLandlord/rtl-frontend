@@ -5,7 +5,7 @@ import Moderation from '@/components/about/moderation'
 import Privacy from '@/components/about/privacy'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { type JSX } from 'react'
 import Revenue from '@/components/about/revenue'
 import Poster from '@/components/poster/Poster'
 

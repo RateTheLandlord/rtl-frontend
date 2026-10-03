@@ -13,11 +13,11 @@
 		"noEmit": true,
 		"esModuleInterop": true,
 		"module": "esnext",
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"noImplicitAny": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
-		"jsx": "preserve",
+		"jsx": "react-jsx",
 		"incremental": true,
 		"plugins": [
 			{
@@ -31,7 +31,7 @@
 		"**/*.tsx",
 		"**/*.js",
 		"next-i18next.config.js",
-		"next.config.js",
+		"next.config.ts",
 		"tailwind.config.mjs",
 		"postcss.config.mjs",
 		"prettier.config.mjs",

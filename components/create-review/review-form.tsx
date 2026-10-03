@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, type JSX } from 'react'
 import Button from '../ui/button'
 import { postcodeValidator } from 'postcode-validator'
 import { useLocation } from '@/util/hooks/useLocation'

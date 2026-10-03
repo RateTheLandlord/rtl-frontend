@@ -1,5 +1,5 @@
 import { classNames } from '@/util/helpers/helper-functions'
-import React from 'react'
+import React, { type JSX } from 'react'
 
 interface IProps {
 	children: string

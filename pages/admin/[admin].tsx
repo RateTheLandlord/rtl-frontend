@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, type JSX } from 'react'
 import { ITabs } from '@/components/admin/types/types'
 import FlaggedReviews from '@/components/admin/sections/FlaggedReviews'
 import DeletedReviews from '@/components/admin/sections/DeletedReviews'

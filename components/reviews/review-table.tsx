@@ -1,5 +1,5 @@
 import { UserReview } from '@/util/interfaces/interfaces'
-import React from 'react'
+import React, { type JSX } from 'react'
 import ReviewComponent from './ReviewComponent'
 import Spinner from '../ui/Spinner'
 import { useAppDispatch } from '@/redux/hooks'
