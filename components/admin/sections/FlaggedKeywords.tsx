@@ -7,7 +7,7 @@ import {
 	Transition,
 } from '@headlessui/react'
 import { classNames } from '@/util/helpers/helper-functions'
-import { MenuAlt3Icon } from '@heroicons/react/24/solid'
+import { Bars3Icon } from '@heroicons/react/24/solid'
 import Button from '@/components/ui/button'
 import useSWR from 'swr'
 import { fetchWithBody } from '@/util/helpers/fetcher'
@@ -61,7 +61,7 @@ const FlaggedKeywords = () => {
 								<Menu as='div' className='relative flex-none'>
 									<MenuButton className='-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900'>
 										<span className='sr-only'>Open options</span>
-										<MenuAlt3Icon className='h-5 w-5' aria-hidden='true' />
+										<Bars3Icon className='h-5 w-5' aria-hidden='true' />
 									</MenuButton>
 									<Transition
 										as={Fragment}

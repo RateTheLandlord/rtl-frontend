@@ -11,7 +11,7 @@ import {
 	Transition,
 	TransitionChild,
 } from '@headlessui/react'
-import { MenuIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon } from '@heroicons/react/24/outline'
 import TenantResources from '@/components/admin/sections/TenantResources'
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import { useUser } from '@auth0/nextjs-auth0/client'
@@ -164,7 +164,7 @@ function Admin(): JSX.Element {
 					onClick={() => setSidebarOpen(true)}
 				>
 					<span className='sr-only'>Open sidebar</span>
-					<MenuIcon className='h-6 w-6' aria-hidden='true' />
+					<Bars3Icon className='h-6 w-6' aria-hidden='true' />
 				</button>
 				<div className='flex-1 text-sm leading-6 text-gray-900'>Dashboard</div>
 			</div>
