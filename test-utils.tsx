@@ -70,7 +70,7 @@ const AllProviders = ({ children, messages }: AllProvidersProps) => {
 
 // Custom render function that allows passing `messages` for translations
 const customRender = (
-	ui: React.ReactElement,
+	ui: React.ReactElement<unknown>,
 	{ messages, ...options }: { messages?: Messages } = {},
 ) =>
 	render(ui, {

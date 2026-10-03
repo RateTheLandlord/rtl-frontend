@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 export interface ITabs {
 	name: string
 	component: JSX.Element

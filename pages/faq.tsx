@@ -1,7 +1,7 @@
 import Faq from '@/components/about/faq'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { type JSX } from 'react'
 
 function FrequentlyAskedQuestions(): JSX.Element {
 	const title = 'Frequently Asked Questions | Rate The Landlord'

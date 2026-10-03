@@ -1,5 +1,7 @@
 import { Country } from '@/types/review.types'
 
+import type { JSX } from 'react'
+
 export interface Review {
 	id?: number
 	landlord: string

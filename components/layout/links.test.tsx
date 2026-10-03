@@ -26,7 +26,7 @@ describe('links exports', () => {
 		})
 
 		expect(React.isValidElement(socialLinks[0].icon)).toBe(true)
-		const iconElement = socialLinks[0].icon as React.ReactElement
+		const iconElement = socialLinks[0].icon as React.ReactElement<unknown>
 		expect(iconElement.type).toBe(Instagram)
 	})
 

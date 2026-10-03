@@ -9,19 +9,8 @@ import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
 describe('StateSelector Component', () => {
-	const mockProps = {
-		country: 'CA', // Replace with your desired country code
-		setValue: jest.fn(),
-	}
-
 	test('renders StateSelector component for Canada', () => {
-		render(
-			<StateSelector
-				country={mockProps.country}
-				setValue={mockProps.setValue}
-				value=''
-			/>,
-		)
+		render(<StateSelector />)
 		const selectElement = screen.getByTestId('state-selector')
 
 		// Ensure that the select element is rendered
@@ -29,13 +18,7 @@ describe('StateSelector Component', () => {
 	})
 
 	it('Should not have a11y violation', async () => {
-		const { container } = render(
-			<StateSelector
-				country={mockProps.country}
-				setValue={mockProps.setValue}
-				value=''
-			/>,
-		)
+		const { container } = render(<StateSelector />)
 		const result = await axe(container)
 		expect(result).toHaveNoViolations()
 	})

@@ -15,14 +15,7 @@ describe('ReviewTable', () => {
 		render(
 			<Provider store={store}>
 				<UserProvider>
-					<ReviewTable
-						data={[]}
-						setReportOpen={jest.fn()}
-						setSelectedReview={jest.fn()}
-						setRemoveReviewOpen={jest.fn()}
-						setEditReviewOpen={jest.fn()}
-						isLoading={false}
-					/>
+					<ReviewTable data={[]} isLoading={false} />
 				</UserProvider>
 			</Provider>,
 		)
@@ -34,14 +27,7 @@ describe('ReviewTable', () => {
 		const { container } = render(
 			<Provider store={store}>
 				<UserProvider>
-					<ReviewTable
-						data={[]}
-						setReportOpen={jest.fn()}
-						setSelectedReview={jest.fn()}
-						setRemoveReviewOpen={jest.fn()}
-						setEditReviewOpen={jest.fn()}
-						isLoading={false}
-					/>
+					<ReviewTable data={[]} isLoading={false} />
 				</UserProvider>
 			</Provider>,
 		)

@@ -1,5 +1,5 @@
 import { NextSeo } from 'next-seo'
-import React from 'react'
+import React, { type JSX } from 'react'
 import { useRouter } from 'next/router'
 import ReviewForm from '@/components/reviews/read-reviews'
 

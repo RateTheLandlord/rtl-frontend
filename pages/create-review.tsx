@@ -1,7 +1,7 @@
 import ReviewForm from '@/components/create-review/review-form'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { type JSX } from 'react'
 
 function CreateReview(): JSX.Element {
 	const title = 'Create Review | Rate The Landlord'

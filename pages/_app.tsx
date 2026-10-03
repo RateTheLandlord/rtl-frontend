@@ -13,7 +13,7 @@ import { Router, useRouter } from 'next/router'
 import 'nprogress/nprogress.css'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
-import { useEffect } from 'react'
+import { useEffect, type JSX } from 'react'
 import { NextIntlClientProvider } from 'next-intl'
 import ModalProvider from '@/components/modal/ModalProvider'
 

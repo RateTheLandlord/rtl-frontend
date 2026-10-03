@@ -1,6 +1,6 @@
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { type JSX } from 'react'
 import Terms from '@/components/terms/Terms'
 
 function TermsAndConditions(): JSX.Element {

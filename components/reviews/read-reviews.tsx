@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, type JSX } from 'react'
 import Review from './review'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { useRouter } from 'next/router'

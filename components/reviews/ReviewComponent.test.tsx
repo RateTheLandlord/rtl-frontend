@@ -36,6 +36,8 @@ const review: Review = {
 	rent: 2000,
 	moderation_reason: null,
 	moderator: null,
+	number_user_attempts: 0,
+	last_user_attempt: new Date(),
 }
 
 describe('ReviewComponent', () => {
@@ -63,8 +65,8 @@ describe('ReviewComponent', () => {
 			<ReviewComponent
 				review={review}
 				handleReport={jest.fn()}
-				handleDelete={jest.fn()}
-				handleEdit={jest.fn()}
+				handleUserDelete={jest.fn()}
+				handleUserEdit={jest.fn()}
 			/>,
 		)
 		const result = await axe(container)

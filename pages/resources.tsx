@@ -9,6 +9,8 @@ import { useTranslations } from 'next-intl'
 import { readLocaleFile } from '@/util/readLocalFile'
 import Spinner from '@/components/ui/Spinner'
 
+import type { JSX } from 'react'
+
 interface IProps {
 	data: ResourceResponse
 }

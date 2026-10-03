@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { type JSX } from 'react'
 import Footer from './footer'
 import Navbar from './navbar'
 import Banner from '../PostHog/CookieBanner'

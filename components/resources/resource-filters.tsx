@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { type JSX } from 'react'
 import { Options, SortOptions } from '@/util/interfaces/interfaces'
 import SelectList from '@/components/reviews/ui/select-list'
 import SearchBar from '@/components/reviews/ui/searchbar'

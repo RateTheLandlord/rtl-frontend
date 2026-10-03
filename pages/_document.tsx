@@ -1,5 +1,7 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 
+import type { JSX } from 'react'
+
 const isProd = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' || false
 
 export default class MyDocument extends Document {
