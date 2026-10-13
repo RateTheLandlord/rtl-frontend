@@ -16,7 +16,7 @@ export const useLandlordSuggestions = (landlord: string) => {
 					headers: {
 						'Content-Type': 'application/json',
 					},
-					body: JSON.stringify({ input: landlord }),
+					body: JSON.stringify({ input: debouncedSearchString }),
 				})
 					.then((res) => {
 						if (!res.ok) {
@@ -32,7 +32,7 @@ export const useLandlordSuggestions = (landlord: string) => {
 			}
 			void fetchData()
 		}
-	}, [debouncedSearchString, landlord])
+	}, [debouncedSearchString])
 
 	return { isSearching, landlordSuggestions }
 }
