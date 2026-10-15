@@ -1,4 +1,4 @@
-# Rate The Landlord — Frontend
+# Rate The Landlord
 
 [![Website](https://img.shields.io/badge/website-ratethelandlord.org-blue)](https://ratethelandlord.org)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE.md)
