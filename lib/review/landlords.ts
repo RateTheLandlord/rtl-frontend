@@ -9,53 +9,58 @@ export async function getLandlordReviews(
 ): Promise<ILandlordReviews> {
 	landlord = decodeURIComponent(landlord)
 
-	const reviews = await sql<Review[]>`Select *
-      FROM review
-      WHERE landlord IN (${landlord.toLocaleUpperCase()}) AND (flagged = false OR (flagged = true AND admin_approved = true)) AND delete_date IS NULL ORDER BY date_added DESC`
+	const normalizedLandlord = landlord.toLocaleUpperCase()
 
-	const averageByCat = await sql`
-	  SELECT 
-		  AVG(repair) AS avg_repair,
-		  AVG(health) AS avg_health,
-		  AVG(stability) AS avg_stability,
-		  AVG(privacy) AS avg_privacy,
-		  AVG(respect) AS avg_respect
-	  FROM review
-	  WHERE landlord = ${landlord.toLocaleUpperCase()};
-  `
+	const reviews = await sql<Review[]>`
+		SELECT *
+		FROM review
+		WHERE landlord = ${normalizedLandlord}
+			AND (
+				flagged = false
+				OR (flagged = true AND admin_approved = true)
+			)
+			AND delete_date IS NULL
+		ORDER BY date_added DESC
+	`
 
-	const combinedAvgResult = await sql`
-        SELECT 
-            (AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS combined_avg
-        FROM review
-        WHERE landlord = ${landlord.toLocaleUpperCase()};
-    `
+	const stats = await sql`
+		SELECT
+			COUNT(*) AS count,
+			AVG(repair) AS avg_repair,
+			AVG(health) AS avg_health,
+			AVG(stability) AS avg_stability,
+			AVG(privacy) AS avg_privacy,
+			AVG(respect) AS avg_respect,
+			(
+				AVG(repair) +
+				AVG(health) +
+				AVG(stability) +
+				AVG(privacy) +
+				AVG(respect)
+			) / 5 AS combined_avg
+		FROM review
+		WHERE landlord = ${normalizedLandlord}
+	`
 
-	const totalResult = await sql`
-        SELECT COUNT(*) as count
-        FROM review
-        WHERE landlord = ${landlord.toLocaleUpperCase()};
-    `
-	const total = totalResult[0].count as number
+	const total = stats[0].count as number
 
-	const combinedAvg = Math.round(combinedAvgResult[0].combined_avg as number)
+	const combinedAvg = Math.round(stats[0].combined_avg as number)
 
 	const catAverages = {
-		avg_repair: Math.round(averageByCat[0].avg_repair as number),
-		avg_health: Math.round(averageByCat[0].avg_health as number),
-		avg_stability: Math.round(averageByCat[0].avg_stability as number),
-		avg_respect: Math.round(averageByCat[0].avg_respect as number),
-		avg_privacy: Math.round(averageByCat[0].avg_privacy as number),
+		avg_repair: Math.round(stats[0].avg_repair as number),
+		avg_health: Math.round(stats[0].avg_health as number),
+		avg_stability: Math.round(stats[0].avg_stability as number),
+		avg_respect: Math.round(stats[0].avg_respect as number),
+		avg_privacy: Math.round(stats[0].avg_privacy as number),
 	}
 
 	return {
-		reviews: reviews,
+		reviews,
 		average: combinedAvg,
-		total: total,
-		catAverages: catAverages,
+		total,
+		catAverages,
 	}
 }
-
 export async function getOtherLandlords(
 	landlord: string,
 ): Promise<OtherLandlord[]> {
