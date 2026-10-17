@@ -16,40 +16,38 @@ export const getStateStats = async (params: {
 	state: string
 	country: string
 }): Promise<IStateStats> => {
-	const { country, state } = params
+	const state = params.state.toLocaleUpperCase()
+	const country = params.country.toLocaleUpperCase()
 
-	const totalResult = await sql`
-        SELECT COUNT(*) as count
-        FROM review
-        WHERE state = ${state.toLocaleUpperCase()} AND country_code = ${country.toLocaleUpperCase()}
-    `
-	const total = totalResult[0].count as number
+	const stats = await sql`
+		SELECT
+			COUNT(*) AS count,
+			AVG(repair) AS avg_repair,
+			AVG(health) AS avg_health,
+			AVG(stability) AS avg_stability,
+			AVG(privacy) AS avg_privacy,
+			AVG(respect) AS avg_respect,
+			(
+				AVG(repair) +
+				AVG(health) +
+				AVG(stability) +
+				AVG(privacy) +
+				AVG(respect)
+			) / 5 AS combined_avg
+		FROM review
+		WHERE state = ${state}
+			AND country_code = ${country}
+	`
 
-	const averageByCat = await sql`
-        SELECT 
-            AVG(repair) AS avg_repair,
-            AVG(health) AS avg_health,
-            AVG(stability) AS avg_stability,
-            AVG(privacy) AS avg_privacy,
-            AVG(respect) AS avg_respect
-        FROM review
-        WHERE state = ${state.toLocaleUpperCase()} AND country_code = ${country.toLocaleUpperCase()}
-    `
-
-	const combinedAvgResult = await sql`
-        SELECT 
-            (AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS combined_avg
-        FROM review
-        WHERE state = ${state.toLocaleUpperCase()} AND country_code = ${country.toLocaleUpperCase()}
-    `
-	const average = Math.round(combinedAvgResult[0].combined_avg as number)
+	const total = stats[0].count as number
+	const average = Math.round(stats[0].combined_avg as number)
 
 	const catAverages = {
-		avg_repair: Math.round(averageByCat[0].avg_repair as number),
-		avg_health: Math.round(averageByCat[0].avg_health as number),
-		avg_stability: Math.round(averageByCat[0].avg_stability as number),
-		avg_respect: Math.round(averageByCat[0].avg_respect as number),
-		avg_privacy: Math.round(averageByCat[0].avg_privacy as number),
+		avg_repair: Math.round(stats[0].avg_repair as number),
+		avg_health: Math.round(stats[0].avg_health as number),
+		avg_stability: Math.round(stats[0].avg_stability as number),
+		avg_privacy: Math.round(stats[0].avg_privacy as number),
+		avg_respect: Math.round(stats[0].avg_respect as number),
 	}
 
 	return {
@@ -58,7 +56,6 @@ export const getStateStats = async (params: {
 		catAverages,
 	}
 }
-
 interface ITopCityStats {
 	total: number
 	average: number
@@ -69,42 +66,31 @@ export const getTopCitiesStats = async (params: {
 	state: string
 	country: string
 }): Promise<ITopCityStats[]> => {
-	const { state, country } = params
+	const state = params.state.toLocaleUpperCase()
+	const country = params.country.toLocaleUpperCase()
 
 	const cities = await sql`
-        SELECT city, COUNT(*) as city_count FROM review WHERE state = ${state.toLocaleUpperCase()} AND country_code = ${country.toLocaleUpperCase()} GROUP BY city ORDER BY city_count DESC LIMIT 4;
-    `
+		SELECT
+			city,
+			COUNT(*) AS count,
+			(
+				AVG(repair) +
+				AVG(health) +
+				AVG(stability) +
+				AVG(privacy) +
+				AVG(respect)
+			) / 5 AS combined_avg
+		FROM review
+		WHERE state = ${state}
+			AND country_code = ${country}
+		GROUP BY city
+		ORDER BY COUNT(*) DESC
+		LIMIT 4
+	`
 
-	const cityList = cities.map(({ city }) => city as string)
-
-	const citiesStats: ITopCityStats[] = []
-
-	for (let i = 0; i < cityList.length; i++) {
-		const totalResult = await sql`
-        SELECT COUNT(*) as count
-        FROM review
-        WHERE city = ${cityList[
-					i
-				].toLocaleUpperCase()} AND state = ${state.toLocaleUpperCase()} AND country_code = ${country.toLocaleUpperCase()};
-    `
-
-		const total = totalResult[0].count as number
-
-		const combinedAvgResult = await sql`
-        SELECT 
-            (AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS combined_avg
-        FROM review
-        WHERE city = ${cityList[
-					i
-				].toLocaleUpperCase()} AND state = ${state.toLocaleUpperCase()} AND country_code = ${country.toLocaleUpperCase()}
-    `
-		const average = Math.round(combinedAvgResult[0].combined_avg as number)
-
-		citiesStats.push({
-			total,
-			average,
-			city: cityList[i],
-		})
-	}
-	return citiesStats
+	return cities.map((row) => ({
+		city: row.city as string,
+		total: row.count as number,
+		average: Math.round(row.combined_avg as number),
+	}))
 }
