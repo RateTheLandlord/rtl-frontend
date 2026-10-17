@@ -10,48 +10,54 @@ export async function get(): Promise<{
 }
 
 async function getTotalStats(): Promise<TotalStats> {
-	const getReviewStats = async (
-		countryCode: string,
-	): Promise<{ total: number; states: { key: string; total: number }[] }> => {
-		const totalResult =
-			await sql`SELECT COUNT(*) as count FROM review WHERE country_code = ${countryCode}`
-		const total_reviews = totalResult[0].count as number
+	const rows = await sql`
+		SELECT
+			country_code,
+			state,
+			COUNT(*) AS count,
+			GROUPING(country_code, state) AS grouping_level
+		FROM review
+		GROUP BY GROUPING SETS (
+			(),
+			(country_code),
+			(country_code, state)
+		)
+	`
 
-		const statesResult =
-			await sql`SELECT DISTINCT state FROM review WHERE country_code = ${countryCode}`
-		const states_list = statesResult.map(({ state }) => state as string)
+	let totalReviews = 0
+	const countryStats: CountryStats = {}
 
-		const total_for_states: { key: string; total: number }[] = []
+	for (const row of rows) {
+		const count = row.count as number
+		const groupingLevel = Number(row.grouping_level)
 
-		for (let i = 0; i < states_list.length; i++) {
-			const key = states_list[i]
-			const total =
-				await sql`SELECT COUNT(*) as count FROM review WHERE state = ${states_list[i]}`
-			total_for_states.push({
-				key: key,
-				total: total[0].count as number,
-			})
+		if (groupingLevel === 3) {
+			totalReviews = count
+			continue
 		}
 
-		return { total: total_reviews, states: total_for_states }
+		const countryCode = String(row.country_code)
+
+		if (!countryStats[countryCode]) {
+			countryStats[countryCode] = {
+				total: 0,
+				states: [],
+			}
+		}
+
+		if (groupingLevel === 1) {
+			countryStats[countryCode].total = count
+			continue
+		}
+
+		countryStats[countryCode].states.push({
+			key: row.state as string,
+			total: count,
+		})
 	}
 
-	const distinctCountryCodes =
-		await sql`SELECT DISTINCT country_code FROM review`
-
-	const countryStatsPromises = distinctCountryCodes.map(
-		async ({ country_code }) => {
-			return {
-				[country_code]: await getReviewStats(country_code as string),
-			}
-		},
-	)
-
-	const countryStats = await Promise.all(countryStatsPromises)
-
 	return {
-		total_reviews: (await sql`SELECT COUNT(*) as count FROM review`)[0]
-			.count as number,
-		countryStats: Object.assign({}, ...countryStats) as CountryStats,
+		total_reviews: totalReviews,
+		countryStats,
 	}
 }

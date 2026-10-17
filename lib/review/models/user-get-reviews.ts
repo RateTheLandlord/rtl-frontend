@@ -20,6 +20,7 @@ export async function getReviews(
 	const offset = (pageNumber - 1) * limitParam
 
 	let orderBy = sql`id`
+
 	if (sort === 'az' || sort === 'za') {
 		orderBy = sql`landlord`
 	} else if (sort === 'new' || sort === 'old') {
@@ -33,34 +34,48 @@ export async function getReviews(
 
 	const searchClause =
 		search && search.length > 0
-			? sql`AND (landlord ILIKE
-              ${'%' + search + '%'}
-              )`
+			? sql`AND landlord ILIKE ${'%' + search + '%'}`
 			: sql``
 
-	const stateClause = state
-		? sql`AND state =
-    ${state.toUpperCase()}`
-		: sql``
+	const stateClause = state ? sql`AND state = ${state.toUpperCase()}` : sql``
+
 	const countryClause = country
-		? sql`AND country_code =
-            ${country.toUpperCase()}`
-		: sql``
-	const cityClause = city
-		? sql`AND city =
-    ${city.toUpperCase()}`
-		: sql``
-	const zipClause = zip
-		? sql`AND zip =
-    ${zip.toUpperCase()}`
+		? sql`AND country_code = ${country.toUpperCase()}`
 		: sql``
 
-	// Fetch reviews
+	const cityClause = city ? sql`AND city = ${city.toUpperCase()}` : sql``
+
+	const zipClause = zip ? sql`AND zip = ${zip.toUpperCase()}` : sql``
+
+	const visibilityClause = sql`
+		AND (
+			flagged = false
+			OR (flagged = true AND admin_approved = true)
+		)
+		AND delete_date IS NULL
+	`
+
 	const reviews = (await sql`
-		SELECT 
-			id, landlord, country_code, city, state, zip, review, repair, 
-			health, stability, privacy, respect, date_added, admin_edited,
-			rent, moderation_reason, moderator, delete_reason, deleted_by,
+		SELECT
+			id,
+			landlord,
+			country_code,
+			city,
+			state,
+			zip,
+			review,
+			repair,
+			health,
+			stability,
+			privacy,
+			respect,
+			date_added,
+			admin_edited,
+			rent,
+			moderation_reason,
+			moderator,
+			delete_reason,
+			deleted_by,
 			has_user_code
 		FROM review
 		WHERE 1 = 1
@@ -69,22 +84,26 @@ export async function getReviews(
 			${countryClause}
 			${cityClause}
 			${zipClause}
-			AND (flagged = false OR (flagged = true AND admin_approved = true))
-			AND delete_date IS NULL
+			${visibilityClause}
 		ORDER BY ${orderBy} ${sortOrder}
 		LIMIT ${limitParam}
 		OFFSET ${offset}
-		`) as UserReview[]
+	`) as UserReview[]
 
-	// Fetch total number of reviews
 	const totalResult = await sql`
-        SELECT COUNT(*) as count
-        FROM review
-        WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-    `
+		SELECT COUNT(*) AS count
+		FROM review
+		WHERE 1 = 1
+			${searchClause}
+			${stateClause}
+			${countryClause}
+			${cityClause}
+			${zipClause}
+			${visibilityClause}
+	`
+
 	const total = totalResult[0].count as number
 
-	// Return ReviewsResponse object
 	return {
 		reviews,
 		total,
