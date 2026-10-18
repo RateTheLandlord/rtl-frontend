@@ -1,17 +1,13 @@
-import TextInput from '@/components/ui/TextInput'
 import LargeTextInput from '@/components/ui/LargeTextInput'
-import { useState } from 'react'
-import { useAppDispatch } from '@/redux/hooks'
-
-import { updateAddFlaggedKeywordOpen } from '@/redux/modal/modalSlice'
-import { toast } from 'react-toastify'
 import Spinner from '@/components/ui/Spinner'
+import TextInput from '@/components/ui/TextInput'
 import Button from '@/components/ui/button'
 import ButtonLight from '@/components/ui/button-light'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
 import ModalShell from './ModalShell'
 
-const AddFlaggedKeywordModal = () => {
-	const dispatch = useAppDispatch()
+const AddFlaggedKeywordModal = ({ onClose }: { onClose: () => void }) => {
 	const [keyword, setKeyword] = useState('')
 	const [keywordReason, setKeywordReason] = useState('')
 	const [loading, setLoading] = useState(false)
@@ -41,7 +37,7 @@ const AddFlaggedKeywordModal = () => {
 				}
 			})
 			.then(() => {
-				dispatch(updateAddFlaggedKeywordOpen(false))
+				onClose()
 				toast.success('Success!')
 				resetForm()
 			})
@@ -53,10 +49,7 @@ const AddFlaggedKeywordModal = () => {
 	}
 
 	return (
-		<ModalShell
-			title='Add Flagged Keyword'
-			onClose={() => dispatch(updateAddFlaggedKeywordOpen(false))}
-		>
+		<ModalShell title='Add Flagged Keyword' onClose={onClose}>
 			<>
 				<form
 					className='container w-full space-y-8 divide-y divide-gray-200'
@@ -91,11 +84,7 @@ const AddFlaggedKeywordModal = () => {
 							Submit
 						</Button>
 					)}
-					<ButtonLight
-						onClick={() => dispatch(updateAddFlaggedKeywordOpen(false))}
-					>
-						Cancel
-					</ButtonLight>
+					<ButtonLight onClick={onClose}>Cancel</ButtonLight>
 				</div>
 			</>
 		</ModalShell>

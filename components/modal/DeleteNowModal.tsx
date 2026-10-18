@@ -1,18 +1,16 @@
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import {
-	updateDeleteNowOpen,
-	updateSelectedAdminReview,
-} from '@/redux/modal/modalSlice'
+import { Review } from '@/util/interfaces/interfaces'
 import { toast } from 'react-toastify'
 import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import ModalShell from './ModalShell'
 
-const DeleteNow = () => {
-	const { selectedAdminReview: selectedReview } = useAppSelector(
-		(state) => state.modal,
-	)
-	const dispatch = useAppDispatch()
+const DeleteNow = ({
+	onClose,
+	selectedReview,
+}: {
+	onClose: () => void
+	selectedReview: Review
+}) => {
 	const landlord = selectedReview?.landlord || ''
 
 	const restored_by = selectedReview?.restored_by || []
@@ -46,24 +44,19 @@ const DeleteNow = () => {
 						.catch((err) => {
 							console.error(err)
 						})
-					dispatch(updateDeleteNowOpen(false))
 					toast.success('Success!')
-					dispatch(updateSelectedAdminReview(undefined))
+					onClose()
 				})
 				.catch((err) => {
 					console.log(err)
 					toast.error('Failure: Something went wrong, please try again.')
-					dispatch(updateDeleteNowOpen(false))
-					dispatch(updateSelectedAdminReview(undefined))
+					onClose()
 				})
 		}
 	}
 
 	return (
-		<ModalShell
-			title='Delete review now - CANNOT BE UNDONE'
-			onClose={() => dispatch(updateDeleteNowOpen(false))}
-		>
+		<ModalShell title='Delete review now - CANNOT BE UNDONE' onClose={onClose}>
 			<>
 				<div className='mt-1'>
 					<div className='sm:col-span-3'>
@@ -94,14 +87,7 @@ const DeleteNow = () => {
 					>
 						DELETE NOW
 					</Button>
-					<ButtonLight
-						onClick={() => {
-							dispatch(updateDeleteNowOpen(false))
-							dispatch(updateSelectedAdminReview(undefined))
-						}}
-					>
-						Cancel
-					</ButtonLight>
+					<ButtonLight onClick={onClose}>Cancel</ButtonLight>
 				</div>
 			</>
 		</ModalShell>

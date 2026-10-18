@@ -15,13 +15,13 @@ import Spinner from '@/components/ui/Spinner'
 import { ResourceResponse } from '@/util/interfaces/interfaces'
 import { useAppDispatch } from '@/redux/hooks'
 import {
-	updateAddResourceOpen,
-	updateEditResourceOpen,
 	updateRemoveResourceOpen,
 	updateSelectedResource,
 } from '@/redux/modal/modalSlice'
+import { useModal } from '@/components/modal/ModalContext'
 
 const TenantResources = () => {
+	const { openModal } = useModal()
 	const { data, error } = useSWR<ResourceResponse, unknown>(
 		['/api/tenant-resources/get-resources', { limit: '1000' }],
 		fetchWithBody,
@@ -34,7 +34,7 @@ const TenantResources = () => {
 	return (
 		<div className='container flex w-full flex-col justify-center'>
 			<div className='flex w-full justify-end'>
-				<Button onClick={() => dispatch(updateAddResourceOpen(true))}>
+				<Button onClick={() => openModal('addResource', {})}>
 					Add New Resource
 				</Button>
 			</div>
@@ -88,8 +88,9 @@ const TenantResources = () => {
 												{({ active }) => (
 													<button
 														onClick={() => {
-															dispatch(updateEditResourceOpen(true))
-															dispatch(updateSelectedResource(resource))
+															openModal('editResource', {
+																selectedResource: resource,
+															})
 														}}
 														className={classNames(
 															active ? 'bg-gray-50' : '',

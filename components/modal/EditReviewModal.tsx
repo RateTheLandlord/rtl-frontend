@@ -1,12 +1,8 @@
 import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import {
-	updateAdminEditReviewOpen,
-	updateSelectedAdminReview,
-} from '@/redux/modal/modalSlice'
 import { getStates } from '@/util/countries/combineStates'
 import countries from '@/util/countries/countries.json'
 import { country_codes } from '@/util/helpers/getCountryCodes'
+import { Review } from '@/util/interfaces/interfaces'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import dayjs from 'dayjs'
 import { useState } from 'react'
@@ -15,11 +11,13 @@ import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import ModalShell from './ModalShell'
 
-const EditReviewModal = () => {
-	const { selectedAdminReview: selectedReview } = useAppSelector(
-		(state) => state.modal,
-	)
-	const dispatch = useAppDispatch()
+const EditReviewModal = ({
+	onClose,
+	selectedReview,
+}: {
+	onClose: () => void
+	selectedReview: Review
+}) => {
 	const [landlord, setLandlord] = useState<string>(
 		selectedReview?.landlord || '',
 	)
@@ -82,26 +80,21 @@ const EditReviewModal = () => {
 				fetch(
 					`/api/force-revalidate?path=${encodeURIComponent(landlord)}`,
 				).catch(() => console.error('Revalidate Failed'))
-				dispatch(updateAdminEditReviewOpen(false))
 				if (data.success) {
 					toast.success('Success!')
 				} else {
 					toast.error(data.message)
 				}
-				dispatch(updateSelectedAdminReview(undefined))
+				onClose()
 			})
 			.catch((err) => {
 				console.log(err)
 				toast.error('Failure: Something went wrong, please try again.')
-				dispatch(updateAdminEditReviewOpen(false))
-				dispatch(updateSelectedAdminReview(undefined))
+				onClose()
 			})
 	}
 	return (
-		<ModalShell
-			title='Edit Review'
-			onClose={() => dispatch(updateAdminEditReviewOpen(false))}
-		>
+		<ModalShell title='Edit Review' onClose={onClose}>
 			<>
 				<div className='mt-1'>
 					<div className='sm:col-span-3'>
@@ -274,8 +267,7 @@ const EditReviewModal = () => {
 					<Button onClick={() => onSubmitEditReview()}>Submit</Button>
 					<ButtonLight
 						onClick={() => {
-							dispatch(updateAdminEditReviewOpen(false))
-							dispatch(updateSelectedAdminReview(undefined))
+							onClose()
 						}}
 					>
 						Cancel

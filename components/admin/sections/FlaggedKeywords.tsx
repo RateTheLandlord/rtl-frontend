@@ -15,12 +15,13 @@ import Spinner from '@/components/ui/Spinner'
 import { FlaggedKeywordsResponse } from '@/util/interfaces/interfaces'
 import { useAppDispatch } from '@/redux/hooks'
 import {
-	updateAddFlaggedKeywordOpen,
 	updateRemoveFlaggedKeywordOpen,
 	updateSelectedKeyword,
 } from '@/redux/modal/modalSlice'
+import { useModal } from '@/components/modal/ModalContext'
 
 const FlaggedKeywords = () => {
+	const { openModal } = useModal()
 	const dispatch = useAppDispatch()
 	const { data, error } = useSWR<FlaggedKeywordsResponse, unknown>(
 		['/api/flagged-keywords/get-flagged-keywords', { limit: '1000' }],
@@ -33,7 +34,7 @@ const FlaggedKeywords = () => {
 	return (
 		<div className='container flex w-full flex-col justify-center'>
 			<div className='flex w-full justify-end'>
-				<Button onClick={() => dispatch(updateAddFlaggedKeywordOpen(true))}>
+				<Button onClick={() => openModal('addFlaggedKeyword', {})}>
 					Add New Keyword
 				</Button>
 			</div>

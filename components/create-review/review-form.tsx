@@ -1,28 +1,23 @@
-import React, { useEffect, useState, type JSX } from 'react'
-import Button from '../ui/button'
-import { postcodeValidator } from 'postcode-validator'
+import { ReviewResponseStatus } from '@/lib/review/types/Responses'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { updatePostal, updateProvince } from '@/redux/review/reviewSlice'
+import { Country } from '@/types/review.types'
+import { classNames } from '@/util/helpers/helper-functions'
 import { useLocation } from '@/util/hooks/useLocation'
 import { ILocationHookResponse } from '@/util/interfaces/interfaces'
+import { useTranslations } from 'next-intl'
 import { useReCaptcha } from 'next-recaptcha-v3'
+import { postcodeValidator } from 'postcode-validator'
+import posthog from 'posthog-js'
+import { useEffect, useState, type JSX } from 'react'
+import { toast } from 'react-toastify'
+import { useModal } from '../modal/ModalContext'
+import Button from '../ui/button'
 import Spinner from '../ui/Spinner'
-import LandlordForm from './components/LandlordForm'
-import { classNames } from '@/util/helpers/helper-functions'
 import LocationForm from './components/CreateReviewLocationForm'
+import LandlordForm from './components/LandlordForm'
 import RatingForm from './components/RatingForm'
 import WrittenReviewForm from './components/WrittenReviewForm'
-import { toast } from 'react-toastify'
-import { useTranslations } from 'next-intl'
-import posthog from 'posthog-js'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { Country } from '@/types/review.types'
-import { updatePostal, updateProvince } from '@/redux/review/reviewSlice'
-import { ReviewResponseStatus } from '@/lib/review/types/Responses'
-import {
-	updateCopyUserCodeOpen,
-	updateSpamDetectionMethod,
-	updateSpamReviewModalOpen,
-	updateUserKey,
-} from '@/redux/modal/modalSlice'
 
 function ReviewForm(): JSX.Element {
 	const t = useTranslations()
@@ -41,6 +36,7 @@ function ReviewForm(): JSX.Element {
 		respect,
 		review,
 	} = useAppSelector((state) => state.review)
+	const { openModal } = useModal()
 	const { userKey } = useAppSelector((state) => state.modal)
 	const dispatch = useAppDispatch()
 
@@ -67,6 +63,18 @@ function ReviewForm(): JSX.Element {
 	const [cityValidationErrorText, setCityValidationErrorText] = useState('')
 
 	const { executeRecaptcha } = useReCaptcha()
+
+	const handleSpamDetected = (detectionMethod: string) => {
+		posthog.capture('spam_review_detected', {
+			method: detectionMethod,
+			landlord,
+		})
+
+		openModal('spamReview', {
+			landlord,
+			detectionMethod,
+		})
+	}
 
 	// Check for already reviewed landlord from browser
 	const [localReviewedLandlords, setLocalReviewedLandlords] = useState<
@@ -118,11 +126,7 @@ function ReviewForm(): JSX.Element {
 			return
 		}
 		if (checkLandlord(landlord.toLocaleUpperCase())) {
-			dispatch(updateSpamReviewModalOpen(true))
-			posthog.capture('spam_review_detected', {
-				method: 'localStorageDetection',
-				landlord,
-			})
+			handleSpamDetected('localStorageDetection')
 			return
 		}
 		if (city.trim().length < 1) {
@@ -174,20 +178,14 @@ function ReviewForm(): JSX.Element {
 					})
 					.then((data: ReviewResponseStatus) => {
 						if (!data.success) {
-							dispatch(updateSpamDetectionMethod('DBDetection'))
-							dispatch(updateSpamReviewModalOpen(true))
-							posthog.capture('spam_review_detected', {
-								method: 'DBDetection',
-								landlord,
-							})
+							handleSpamDetected('DBDetection')
 							throw new Error()
 						} else {
-							dispatch(updateUserKey(data.user_code))
+							openModal('copyUserCode', { code: data.user_code })
 							setReviewId(data.review_id)
 						}
 					})
 					.then(() => {
-						dispatch(updateCopyUserCodeOpen(true))
 						const storageItem = localStorage.getItem('rtl')
 						if (storageItem) {
 							const newItem = `${storageItem},${landlord.toLocaleUpperCase()}`

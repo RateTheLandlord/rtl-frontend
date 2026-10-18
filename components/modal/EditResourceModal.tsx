@@ -1,8 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import {
-	updateEditResourceOpen,
-	updateSelectedResource,
-} from '@/redux/modal/modalSlice'
+import { updateEditResourceOpen } from '@/redux/modal/modalSlice'
 import {
 	updateAddress,
 	updateCity,
@@ -12,6 +9,7 @@ import {
 	updatePhone,
 	updateResource,
 } from '@/redux/resource/resourceSlice'
+import { Resource } from '@/util/interfaces/interfaces'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CountrySelector from '../ui/CountrySelector'
@@ -21,7 +19,13 @@ import StateSelector from '../ui/StateSelector'
 import TextInput from '../ui/TextInput'
 import ModalShell from './ModalShell'
 
-const EditResourceModal = () => {
+const EditResourceModal = ({
+	onClose,
+	selectedResource,
+}: {
+	onClose: () => void
+	selectedResource: Resource
+}) => {
 	const {
 		name,
 		country_code,
@@ -32,7 +36,6 @@ const EditResourceModal = () => {
 		description,
 		href,
 	} = useAppSelector((state) => state.resource)
-	const { selectedResource } = useAppSelector((state) => state.modal)
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
@@ -69,15 +72,13 @@ const EditResourceModal = () => {
 				}
 			})
 			.then(() => {
-				dispatch(updateEditResourceOpen(false))
-				dispatch(updateSelectedResource(undefined))
+				onClose()
 				toast.success('Success!')
 			})
 			.catch((err) => {
 				console.log(err)
 				toast.error('Failure: Something went wrong, please try again.')
-				dispatch(updateEditResourceOpen(false))
-				dispatch(updateSelectedResource(undefined))
+				onClose()
 			})
 			.finally(() => setLoading(false))
 	}
@@ -163,8 +164,7 @@ const EditResourceModal = () => {
 						type='button'
 						className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 shadow-sm hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm'
 						onClick={() => {
-							dispatch(updateEditResourceOpen(false))
-							dispatch(updateSelectedResource(undefined))
+							onClose()
 						}}
 					>
 						Cancel

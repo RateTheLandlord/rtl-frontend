@@ -4,7 +4,6 @@ import LargeTextInput from '@/components/ui/LargeTextInput'
 import StateSelector from '@/components/ui/StateSelector'
 import TextInput from '@/components/ui/TextInput'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { updateAddResourceOpen } from '@/redux/modal/modalSlice'
 import {
 	resetResource,
 	updateAddress,
@@ -24,7 +23,7 @@ import ButtonLight from '../ui/button-light'
 import Spinner from '../ui/Spinner'
 import ModalShell from './ModalShell'
 
-const AddResourceModal = () => {
+const AddResourceModal = ({ onClose }: { onClose: () => void }) => {
 	const {
 		name,
 		country_code,
@@ -90,7 +89,7 @@ const AddResourceModal = () => {
 				}
 			})
 			.then(() => {
-				dispatch(updateAddResourceOpen(false))
+				onClose()
 				toast.success('Success!')
 				dispatch(resetResource())
 			})
@@ -101,10 +100,7 @@ const AddResourceModal = () => {
 			.finally(() => setLoading(false))
 	}
 	return (
-		<ModalShell
-			title='Add Resource'
-			onClose={() => dispatch(updateAddResourceOpen(false))}
-		>
+		<ModalShell title='Add Resource' onClose={onClose}>
 			<>
 				<form
 					className='container w-full space-y-8 divide-y divide-gray-200'
@@ -177,9 +173,7 @@ const AddResourceModal = () => {
 							Submit
 						</Button>
 					)}
-					<ButtonLight onClick={() => dispatch(updateAddResourceOpen(false))}>
-						Cancel
-					</ButtonLight>
+					<ButtonLight onClick={onClose}>Cancel</ButtonLight>
 				</div>
 			</>
 		</ModalShell>

@@ -1,16 +1,17 @@
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import {
-	updateCopyUserCodeOpen,
-	updateSuccessModalOpen,
-} from '@/redux/modal/modalSlice'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import Button from '../ui/button'
+import { useModal } from './ModalContext'
 import ModalShell from './ModalShell'
 
-const CopyUserCodeModal = () => {
-	const { userKey: code } = useAppSelector((state) => state.modal)
-	const dispatch = useAppDispatch()
+const CopyUserCodeModal = ({
+	onClose,
+	code,
+}: {
+	onClose: () => void
+	code: string
+}) => {
+	const { openModal } = useModal()
 	const t = useTranslations('user-code')
 	const [copied, setCopied] = useState(false)
 
@@ -28,8 +29,8 @@ const CopyUserCodeModal = () => {
 		<ModalShell
 			title={t('title')}
 			onClose={() => {
-				dispatch(updateCopyUserCodeOpen(false))
-				dispatch(updateSuccessModalOpen(true))
+				onClose()
+				openModal('success', {})
 			}}
 		>
 			<>
@@ -54,8 +55,8 @@ const CopyUserCodeModal = () => {
 				<div className='mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse'>
 					<Button
 						onClick={() => {
-							dispatch(updateCopyUserCodeOpen(false))
-							dispatch(updateSuccessModalOpen(true))
+							onClose()
+							openModal('success', {})
 						}}
 					>
 						{t('button')}

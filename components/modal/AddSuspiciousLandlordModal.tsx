@@ -3,14 +3,11 @@ import Spinner from '@/components/ui/Spinner'
 import TextInput from '@/components/ui/TextInput'
 import Button from '@/components/ui/button'
 import ButtonLight from '@/components/ui/button-light'
-import { useAppDispatch } from '@/redux/hooks'
-import { updateAddSuspiciousLandlordOpen } from '@/redux/modal/modalSlice'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import ModalShell from './ModalShell'
 
-const AddSuspiciousLandlordModal = () => {
-	const dispatch = useAppDispatch()
+const AddSuspiciousLandlordModal = ({ onClose }: { onClose: () => void }) => {
 	const [loading, setLoading] = useState(false)
 	const [landlord, setLandlord] = useState('')
 	const [message, setMessage] = useState('')
@@ -40,7 +37,7 @@ const AddSuspiciousLandlordModal = () => {
 				}
 			})
 			.then(() => {
-				dispatch(updateAddSuspiciousLandlordOpen(false))
+				onClose()
 				toast.success('Success!')
 				resetForm()
 			})
@@ -51,10 +48,7 @@ const AddSuspiciousLandlordModal = () => {
 			.finally(() => setLoading(false))
 	}
 	return (
-		<ModalShell
-			title='Add Suspicious Landlord'
-			onClose={() => dispatch(updateAddSuspiciousLandlordOpen(false))}
-		>
+		<ModalShell title='Add Suspicious Landlord' onClose={onClose}>
 			<>
 				<form
 					className='container w-full space-y-8 divide-y divide-gray-200'
@@ -89,11 +83,7 @@ const AddSuspiciousLandlordModal = () => {
 							Submit
 						</Button>
 					)}
-					<ButtonLight
-						onClick={() => dispatch(updateAddSuspiciousLandlordOpen(false))}
-					>
-						Cancel
-					</ButtonLight>
+					<ButtonLight onClick={onClose}>Cancel</ButtonLight>
 				</div>
 			</>
 		</ModalShell>
