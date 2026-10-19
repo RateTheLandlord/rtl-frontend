@@ -1,16 +1,11 @@
-import React, { useState } from 'react'
-import {
-	Description,
-	Dialog,
-	DialogPanel,
-	DialogTitle,
-} from '@headlessui/react'
-import ButtonLight from '../ui/button-light'
-import Button from '../ui/button'
+import { UserReview } from '@/util/interfaces/interfaces'
+import { Description, DialogTitle } from '@headlessui/react'
 import { useTranslations } from 'next-intl'
 import { useReCaptcha } from 'next-recaptcha-v3'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { updateUserReportModal } from '@/redux/modal/modalSlice'
+import { useState } from 'react'
+import ModalShell from '../modal/ModalShell'
+import Button from '../ui/button'
+import ButtonLight from '../ui/button-light'
 
 interface IReportReason {
 	id: number
@@ -46,11 +41,13 @@ const reportReasons: IReportReason[] = [
 	},
 ]
 
-function ReportModal() {
-	const { selectedReview, userReportModalOpen: isOpen } = useAppSelector(
-		(state) => state.modal,
-	)
-	const dispatch = useAppDispatch()
+function ReportModal({
+	onClose,
+	selectedReview,
+}: {
+	onClose: () => void
+	selectedReview: UserReview
+}) {
 	const t = useTranslations('reviews')
 	const tr = useTranslations('report')
 	const [reason, setReason] = useState<string>(reportReasons[0].key)
@@ -97,154 +94,109 @@ function ReportModal() {
 	}
 
 	return (
-		<Dialog
-			className='relative z-50'
-			open={isOpen}
-			onClose={() => {
-				setReason(reportReasons[0].key)
-				setSubmitSuccess(false)
-				setSubmitError(false)
-				dispatch(updateUserReportModal(false))
-			}}
-		>
-			<div
-				className='fixed inset-0 bg-black/30'
-				aria-hidden='true'
-				data-testid='report-modal-1'
-			/>
-			<div className='fixed inset-0 flex items-center justify-center p-4'>
-				<DialogPanel className='w-full max-w-sm rounded-md bg-white p-10'>
-					{submitError ? (
-						<div className='flex w-full flex-col items-center gap-4'>
-							<DialogTitle className='text-red-400'>
-								{t('report.error')}
-							</DialogTitle>
-							<div className='flex w-full justify-end'>
-								<ButtonLight
-									onClick={() => {
-										setReason(reportReasons[0].key)
-										setSubmitSuccess(false)
-										setSubmitError(false)
-										dispatch(updateUserReportModal(false))
-									}}
-								>
-									{t('report.cancel')}
-								</ButtonLight>
-							</div>
+		<ModalShell title={t('report.report')} onClose={onClose}>
+			<>
+				{submitError ? (
+					<div className='flex w-full flex-col items-center gap-4'>
+						<DialogTitle className='text-red-400'>
+							{t('report.error')}
+						</DialogTitle>
+						<div className='flex w-full justify-end'>
+							<ButtonLight onClick={onClose}>{t('report.cancel')}</ButtonLight>
 						</div>
-					) : null}
-					{submitSuccess ? (
-						<div className='flex w-full flex-col items-center gap-4'>
-							<DialogTitle>{t('report.success')}</DialogTitle>
-							<div className='flex w-full justify-end'>
-								<ButtonLight
-									onClick={() => {
-										setReason(reportReasons[0].key)
-										setSubmitSuccess(false)
-										setSubmitError(false)
-										dispatch(updateUserReportModal(false))
-									}}
-								>
-									{t('report.cancel')}
-								</ButtonLight>
-							</div>
+					</div>
+				) : null}
+				{submitSuccess ? (
+					<div className='flex w-full flex-col items-center gap-4'>
+						<DialogTitle>{t('report.success')}</DialogTitle>
+						<div className='flex w-full justify-end'>
+							<ButtonLight onClick={onClose}>{t('report.cancel')}</ButtonLight>
 						</div>
-					) : null}
-					{!submitError && !submitSuccess ? (
-						<>
-							<DialogTitle className='mb-2 text-center text-xl'>
-								{t('report.report')}
-							</DialogTitle>
-							<Description className='text-sm'>
-								{t('report.description')}
-							</Description>
+					</div>
+				) : null}
+				{!submitError && !submitSuccess ? (
+					<>
+						<DialogTitle className='mb-2 text-center text-xl'>
+							{t('report.report')}
+						</DialogTitle>
+						<Description className='text-sm'>
+							{t('report.description')}
+						</Description>
 
+						<div className='mb-3'>
+							<label
+								htmlFor='reason'
+								className='block text-sm leading-6 text-gray-900'
+							>
+								{t('report.select-reason')}
+							</label>
+							<select
+								id='reason'
+								name='reason'
+								className='mt-2 block w-full rounded-md border-0 py-1.5 pr-10 pl-3 text-gray-900 ring-1 ring-gray-300 ring-inset focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'
+								defaultValue={reason}
+								onChange={(e) => {
+									const selected: IReportReason[] = reportReasons.filter(
+										(reason: IReportReason) => reason.key === e.target.value,
+									)
+									setSelectedReason(selected[0])
+									setReason(selected[0].key)
+								}}
+							>
+								{reportReasons.map((reason) => {
+									return (
+										<option key={reason.id} value={reason.key}>
+											{tr(reason.reason)}
+										</option>
+									)
+								})}
+							</select>
+						</div>
+
+						{selectedReason.key === 'other' ? (
 							<div className='mb-3'>
-								<label
-									htmlFor='reason'
-									className='block text-sm leading-6 text-gray-900'
-								>
-									{t('report.select-reason')}
+								<label htmlFor='report' className='block text-sm text-gray-700'>
+									{t('report.reason')}
 								</label>
-								<select
-									id='reason'
-									name='reason'
-									className='mt-2 block w-full rounded-md border-0 py-1.5 pr-10 pl-3 text-gray-900 ring-1 ring-gray-300 ring-inset focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'
-									defaultValue={reason}
-									onChange={(e) => {
-										const selected: IReportReason[] = reportReasons.filter(
-											(reason: IReportReason) => reason.key === e.target.value,
-										)
-										setSelectedReason(selected[0])
-										setReason(selected[0].key)
-									}}
-								>
-									{reportReasons.map((reason) => {
-										return (
-											<option key={reason.id} value={reason.key}>
-												{tr(reason.reason)}
-											</option>
-										)
-									})}
-								</select>
-							</div>
-
-							{selectedReason.key === 'other' ? (
-								<div className='mb-3'>
-									<label
-										htmlFor='report'
-										className='block text-sm text-gray-700'
+								<div className='mt-1'>
+									<textarea
+										rows={4}
+										name='report'
+										id='report'
+										onChange={(e) =>
+											setReason(`${selectedReason.key}: ${e.target.value}`)
+										}
+										className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+										placeholder='Write your reasoning here...'
+									/>
+									<p
+										className={`text-xs ${
+											reason.length >= 255 ? 'text-red-400' : 'text-black'
+										}`}
 									>
-										{t('report.reason')}
-									</label>
-									<div className='mt-1'>
-										<textarea
-											rows={4}
-											name='report'
-											id='report'
-											onChange={(e) =>
-												setReason(`${selectedReason.key}: ${e.target.value}`)
-											}
-											className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-											placeholder='Write your reasoning here...'
-										/>
-										<p
-											className={`text-xs ${
-												reason.length >= 255 ? 'text-red-400' : 'text-black'
-											}`}
-										>
-											{t('report.limit', { total: reason.length - 5 })}
-										</p>
-									</div>
+										{t('report.limit', { total: reason.length - 5 })}
+									</p>
 								</div>
-							) : null}
-
-							<div className='flex flex-row justify-center gap-5 sm:gap-3'>
-								<ButtonLight
-									onClick={() => {
-										setSelectedReason(reportReasons[0])
-										setReason(reportReasons[0].key)
-										dispatch(updateUserReportModal(false))
-									}}
-								>
-									{t('report.cancel')}
-								</ButtonLight>
-								<Button
-									onClick={() => {
-										handleSubmit().catch(() =>
-											console.error('Failed To Submit Report'),
-										)
-									}}
-									disabled={reason.length >= 255}
-								>
-									{t('report.submit')}
-								</Button>
 							</div>
-						</>
-					) : null}
-				</DialogPanel>
-			</div>
-		</Dialog>
+						) : null}
+
+						<div className='flex flex-row justify-center gap-5 sm:gap-3'>
+							<ButtonLight onClick={onClose}>{t('report.cancel')}</ButtonLight>
+							<Button
+								onClick={() => {
+									handleSubmit().catch(() =>
+										console.error('Failed To Submit Report'),
+									)
+								}}
+								disabled={reason.length >= 255}
+							>
+								{t('report.submit')}
+							</Button>
+						</div>
+					</>
+				) : null}
+			</>
+		</ModalShell>
 	)
 }
 

@@ -37,7 +37,6 @@ function ReviewForm(): JSX.Element {
 		review,
 	} = useAppSelector((state) => state.review)
 	const { openModal } = useModal()
-	const { userKey } = useAppSelector((state) => state.modal)
 	const dispatch = useAppDispatch()
 
 	const [reviewId, setReviewId] = useState<number | null>(null)
@@ -89,8 +88,8 @@ function ReviewForm(): JSX.Element {
 		}
 	}, [])
 
-	useEffect(() => {
-		if (reviewId) {
+	const setUserKeyStorage = (userKey: string) => {
+		if (reviewId && userKey) {
 			localStorage.setItem(
 				'rtl-id',
 				JSON.stringify({
@@ -99,7 +98,7 @@ function ReviewForm(): JSX.Element {
 				}),
 			)
 		}
-	}, [userKey])
+	}
 
 	const checkLandlord = (str: string) => {
 		if (localReviewedLandlords) {
@@ -182,6 +181,7 @@ function ReviewForm(): JSX.Element {
 							throw new Error()
 						} else {
 							openModal('copyUserCode', { code: data.user_code })
+							setUserKeyStorage(data.user_code)
 							setReviewId(data.review_id)
 						}
 					})

@@ -1,11 +1,7 @@
 import { useModal } from '@/components/modal/ModalContext'
 import Button from '@/components/ui/button'
 import Spinner from '@/components/ui/Spinner'
-import { useAppDispatch } from '@/redux/hooks'
-import {
-	updateRemoveSuspiciousLandlordOpen,
-	updateSelectedSuspiciousLandlord,
-} from '@/redux/modal/modalSlice'
+
 import { fetchWithBody } from '@/util/helpers/fetcher'
 import { classNames } from '@/util/helpers/helper-functions'
 import { SuspiciousLandlordResponse } from '@/util/interfaces/interfaces'
@@ -22,7 +18,6 @@ import useSWR from 'swr'
 
 const SuspiciousLandlords = () => {
 	const { openModal } = useModal()
-	const dispatch = useAppDispatch()
 	const { data, error } = useSWR<SuspiciousLandlordResponse, unknown>(
 		['/api/suspicious-landlords/get-landlords', { limit: '1000' }],
 		fetchWithBody,
@@ -102,10 +97,9 @@ const SuspiciousLandlords = () => {
 												{({ active }) => (
 													<button
 														onClick={() => {
-															dispatch(updateRemoveSuspiciousLandlordOpen(true))
-															dispatch(
-																updateSelectedSuspiciousLandlord(landlord),
-															)
+															openModal('removeSuspiciousLandlord', {
+																selectedSuspiciousLandlord: landlord,
+															})
 														}}
 														className={classNames(
 															active ? 'bg-gray-50' : '',

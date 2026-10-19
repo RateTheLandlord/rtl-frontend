@@ -1,28 +1,26 @@
 import Spinner from '@/components/ui/Spinner'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import {
-	updateRemoveSuspiciousLandlordOpen,
-	updateSelectedSuspiciousLandlord,
-} from '@/redux/modal/modalSlice'
+import { SuspiciousLandlord } from '@/util/interfaces/interfaces'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import ModalShell from './ModalShell'
 
-const RemoveSuspiciousLandlordModal = () => {
-	const { selectedSuspiciousLandlord: selectedLandlord } = useAppSelector(
-		(state) => state.modal,
-	)
-	const dispatch = useAppDispatch()
+const RemoveSuspiciousLandlordModal = ({
+	onClose,
+	selectedSuspiciousLandlord,
+}: {
+	onClose: () => void
+	selectedSuspiciousLandlord: SuspiciousLandlord
+}) => {
 	const [loading, setLoading] = useState(false)
 	const onSubmitRemoveResource = () => {
-		if (selectedLandlord) {
+		if (selectedSuspiciousLandlord) {
 			setLoading(true)
 			fetch('/api/suspicious-landlords/delete-suspicious-landlord', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ id: selectedLandlord.id }),
+				body: JSON.stringify({ id: selectedSuspiciousLandlord.id }),
 			})
 				.then((result) => {
 					if (!result.ok) {
@@ -31,23 +29,19 @@ const RemoveSuspiciousLandlordModal = () => {
 				})
 				.then(() => {
 					toast.success('Success!')
-					dispatch(updateRemoveSuspiciousLandlordOpen(false))
-					dispatch(updateSelectedSuspiciousLandlord(undefined))
+					onClose()
 				})
 				.catch((err) => {
 					console.log(err)
 					toast.error('Failure: Something went wrong, please try again.')
-					dispatch(updateSelectedSuspiciousLandlord(undefined))
+					onClose()
 				})
 				.finally(() => setLoading(false))
 		}
 	}
 
 	return (
-		<ModalShell
-			title='Remove Suspicious Landlord'
-			onClose={() => dispatch(updateRemoveSuspiciousLandlordOpen(false))}
-		>
+		<ModalShell title='Remove Suspicious Landlord' onClose={onClose}>
 			<>
 				<div>
 					<div className='ml-4' data-testid='remove-review-modal-1'>
@@ -69,10 +63,7 @@ const RemoveSuspiciousLandlordModal = () => {
 					<button
 						type='button'
 						className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 shadow-sm hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm'
-						onClick={() => {
-							dispatch(updateRemoveSuspiciousLandlordOpen(false))
-							dispatch(updateSelectedSuspiciousLandlord(undefined))
-						}}
+						onClick={onClose}
 					>
 						Cancel
 					</button>

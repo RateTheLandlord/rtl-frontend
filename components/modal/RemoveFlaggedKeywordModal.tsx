@@ -1,18 +1,16 @@
-import CloseButton from '@/components/ui/CloseButton'
 import Spinner from '@/components/ui/Spinner'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import {
-	updateRemoveFlaggedKeywordOpen,
-	updateSelectedKeyword,
-} from '@/redux/modal/modalSlice'
-import { DialogTitle } from '@headlessui/react'
+import { Keywords } from '@/util/interfaces/interfaces'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import ModalShell from './ModalShell'
 
-const RemoveFlaggedKeywordModal = () => {
-	const { selectedKeyword } = useAppSelector((state) => state.modal)
-	const dispatch = useAppDispatch()
+const RemoveFlaggedKeywordModal = ({
+	onClose,
+	selectedKeyword,
+}: {
+	onClose: () => void
+	selectedKeyword: Keywords
+}) => {
 	const [loading, setLoading] = useState(false)
 	const onSubmitRemoveResource = () => {
 		if (selectedKeyword) {
@@ -31,34 +29,20 @@ const RemoveFlaggedKeywordModal = () => {
 				})
 				.then(() => {
 					toast.success('Success!')
-					dispatch(updateRemoveFlaggedKeywordOpen(false))
-					dispatch(updateSelectedKeyword(undefined))
+					onClose()
 				})
 				.catch((err) => {
 					console.log(err)
 					toast.error('Failure: Something went wrong, please try again.')
-					dispatch(updateSelectedKeyword(undefined))
+					onClose()
 				})
 				.finally(() => setLoading(false))
 		}
 	}
 
 	return (
-		<ModalShell
-			title='Remove Flagged Keyword'
-			onClose={() => dispatch(updateRemoveFlaggedKeywordOpen(false))}
-		>
+		<ModalShell title='Remove Flagged Keyword' onClose={onClose}>
 			<>
-				<CloseButton
-					onClick={() => dispatch(updateRemoveFlaggedKeywordOpen(false))}
-				/>
-				<div className='sm:flex sm:items-start'>
-					<div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
-						<DialogTitle as='h3' className='text-lg leading-6 text-gray-900'>
-							Remove Landlord
-						</DialogTitle>
-					</div>
-				</div>
 				<div>
 					<div className='ml-4' data-testid='remove-review-modal-1'>
 						<h2>
@@ -79,10 +63,7 @@ const RemoveFlaggedKeywordModal = () => {
 					<button
 						type='button'
 						className='mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 shadow-sm hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm'
-						onClick={() => {
-							dispatch(updateRemoveFlaggedKeywordOpen(false))
-							dispatch(updateSelectedKeyword(undefined))
-						}}
+						onClick={onClose}
 					>
 						Cancel
 					</button>

@@ -13,16 +13,10 @@ import useSWR from 'swr'
 import { fetchWithBody } from '@/util/helpers/fetcher'
 import Spinner from '@/components/ui/Spinner'
 import { FlaggedKeywordsResponse } from '@/util/interfaces/interfaces'
-import { useAppDispatch } from '@/redux/hooks'
-import {
-	updateRemoveFlaggedKeywordOpen,
-	updateSelectedKeyword,
-} from '@/redux/modal/modalSlice'
 import { useModal } from '@/components/modal/ModalContext'
 
 const FlaggedKeywords = () => {
 	const { openModal } = useModal()
-	const dispatch = useAppDispatch()
 	const { data, error } = useSWR<FlaggedKeywordsResponse, unknown>(
 		['/api/flagged-keywords/get-flagged-keywords', { limit: '1000' }],
 		fetchWithBody,
@@ -78,8 +72,9 @@ const FlaggedKeywords = () => {
 												{({ active }) => (
 													<button
 														onClick={() => {
-															dispatch(updateRemoveFlaggedKeywordOpen(true))
-															dispatch(updateSelectedKeyword(keyword))
+															openModal('removeFlaggedKeyword', {
+																selectedKeyword: keyword,
+															})
 														}}
 														className={classNames(
 															active ? 'bg-gray-50' : '',

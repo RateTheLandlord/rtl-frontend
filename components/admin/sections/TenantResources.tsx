@@ -13,11 +13,7 @@ import useSWR from 'swr'
 import { fetchWithBody } from '@/util/helpers/fetcher'
 import Spinner from '@/components/ui/Spinner'
 import { ResourceResponse } from '@/util/interfaces/interfaces'
-import { useAppDispatch } from '@/redux/hooks'
-import {
-	updateRemoveResourceOpen,
-	updateSelectedResource,
-} from '@/redux/modal/modalSlice'
+
 import { useModal } from '@/components/modal/ModalContext'
 
 const TenantResources = () => {
@@ -26,7 +22,6 @@ const TenantResources = () => {
 		['/api/tenant-resources/get-resources', { limit: '1000' }],
 		fetchWithBody,
 	)
-	const dispatch = useAppDispatch()
 
 	if (error) return <div>failed to load...</div>
 	if (!data) return <Spinner />
@@ -107,8 +102,9 @@ const TenantResources = () => {
 												{({ active }) => (
 													<button
 														onClick={() => {
-															dispatch(updateRemoveResourceOpen(true))
-															dispatch(updateSelectedResource(resource))
+															openModal('removeResource', {
+																selectedResource: resource,
+															})
 														}}
 														className={classNames(
 															active ? 'bg-gray-50' : '',

@@ -1,8 +1,4 @@
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import {
-	updateRestoreReviewOpen,
-	updateSelectedAdminReview,
-} from '@/redux/modal/modalSlice'
+import { Review } from '@/util/interfaces/interfaces'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import dayjs from 'dayjs'
 import { useState } from 'react'
@@ -11,11 +7,13 @@ import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import ModalShell from './ModalShell'
 
-const RestoreReviewModal = () => {
-	const { selectedAdminReview: selectedReview } = useAppSelector(
-		(state) => state.modal,
-	)
-	const dispatch = useAppDispatch()
+const RestoreReviewModal = ({
+	onClose,
+	selectedReview,
+}: {
+	onClose: () => void
+	selectedReview: Review
+}) => {
 	const landlord = selectedReview?.landlord || ''
 
 	const [restoreReason, setRestoreReason] = useState<string | null>(
@@ -63,24 +61,19 @@ const RestoreReviewModal = () => {
 						.catch((err) => {
 							console.error(err)
 						})
-					dispatch(updateRestoreReviewOpen(false))
 					toast.success('Success!')
-					dispatch(updateSelectedAdminReview(undefined))
+					onClose()
 				})
 				.catch((err) => {
 					console.log(err)
 					toast.error('Failure: Something went wrong, please try again.')
-					dispatch(updateRestoreReviewOpen(false))
-					dispatch(updateSelectedAdminReview(undefined))
+					onClose()
 				})
 		}
 	}
 
 	return (
-		<ModalShell
-			title='Restore Review'
-			onClose={() => dispatch(updateRestoreReviewOpen(false))}
-		>
+		<ModalShell title='Restore Review' onClose={onClose}>
 			<>
 				<div className='mt-1'>
 					<div className='sm:col-span-3'>
@@ -125,14 +118,7 @@ const RestoreReviewModal = () => {
 				</div>
 				<div className='mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse'>
 					<Button onClick={() => onSubmitRestoreReview()}>Submit</Button>
-					<ButtonLight
-						onClick={() => {
-							dispatch(updateRestoreReviewOpen(false))
-							dispatch(updateSelectedAdminReview(undefined))
-						}}
-					>
-						Cancel
-					</ButtonLight>
+					<ButtonLight onClick={onClose}>Cancel</ButtonLight>
 				</div>
 			</>
 		</ModalShell>

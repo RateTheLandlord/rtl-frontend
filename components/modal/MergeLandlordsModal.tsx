@@ -1,12 +1,9 @@
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { Candidate } from '@/lib/landlord-tools/types/types'
+import { useAppDispatch } from '@/redux/hooks'
 import {
 	resetLandlords,
 	updateLandlordName,
 } from '@/redux/landlord/landlordSlice'
-import {
-	updateDeleteNowOpen,
-	updateMergeLandlordModalOpen,
-} from '@/redux/modal/modalSlice'
 import { DialogTitle } from '@headlessui/react'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -22,13 +19,20 @@ type FetchResponse = {
 	message?: string
 }
 
-const MergeLandlordsModal = () => {
-	const { selectedLandlords, landlordName } = useAppSelector(
-		(state) => state.landlord,
-	)
-	const { country } = useAppSelector((state) => state.review)
-	const dispatch = useAppDispatch()
+type MergeLandlordProps = {
+	onClose: () => void
+	landlordName: string
+	selectedLandlords: Candidate[]
+	country: string
+}
 
+const MergeLandlordsModal = ({
+	onClose,
+	landlordName,
+	selectedLandlords,
+	country,
+}: MergeLandlordProps) => {
+	const dispatch = useAppDispatch()
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const onSubmit = () => {
@@ -52,14 +56,14 @@ const MergeLandlordsModal = () => {
 			})
 			.then((data: FetchResponse) => {
 				if (data.success) {
-					dispatch(updateMergeLandlordModalOpen(false))
+					onClose()
 					toast.success(`Success! ${data.rowsUpdated} reviews updated`)
 				} else {
 					throw new Error(data.message)
 				}
 			})
 			.catch((err) => {
-				dispatch(updateMergeLandlordModalOpen(false))
+				onClose()
 				toast.error(`${err}`)
 			})
 			.finally(() => {
@@ -71,7 +75,7 @@ const MergeLandlordsModal = () => {
 	return (
 		<ModalShell
 			title='Merge Selected Landlord - Review Carefully'
-			onClose={() => dispatch(updateDeleteNowOpen(false))}
+			onClose={onClose}
 		>
 			<>
 				<div className='sm:flex sm:items-start'>
@@ -120,13 +124,7 @@ const MergeLandlordsModal = () => {
 						<Button disabled={isLoading} onClick={() => onSubmit()}>
 							{`Merge ${selectedLandlords.length}`}
 						</Button>
-						<ButtonLight
-							onClick={() => {
-								dispatch(updateMergeLandlordModalOpen(false))
-							}}
-						>
-							Cancel
-						</ButtonLight>
+						<ButtonLight onClick={onClose}>Cancel</ButtonLight>
 					</div>
 				)}
 			</>

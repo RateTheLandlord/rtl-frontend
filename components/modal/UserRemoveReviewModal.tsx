@@ -1,10 +1,5 @@
 import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import {
-	updateSelectedReview,
-	updateUserKey,
-	updateUserRemoveReviewOpen,
-} from '@/redux/modal/modalSlice'
+import { UserReview } from '@/util/interfaces/interfaces'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
 import { useState } from 'react'
@@ -13,17 +8,24 @@ import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import ModalShell from './ModalShell'
 
-const UserRemoveReviewModal = () => {
-	const { selectedReview, userKey } = useAppSelector((state) => state.modal)
-	const dispatch = useAppDispatch()
+const UserRemoveReviewModal = ({
+	onClose,
+	selectedReview,
+	userKey,
+}: {
+	onClose: () => void
+	selectedReview: UserReview
+	userKey: string
+}) => {
 	const t = useTranslations()
 	const landlord = selectedReview?.landlord || ''
 	const review = selectedReview?.review || ''
 	const [codeError, setCodeError] = useState('')
+	const [userCode, setUserCode] = useState(userKey)
 
 	const onSubmitRemoveReview = () => {
 		const apiUrl = '/api/user-update/delete'
-		const body = { id: selectedReview?.id, user_code: userKey }
+		const body = { id: selectedReview?.id, user_code: userCode }
 		if (selectedReview) {
 			fetch(apiUrl, {
 				method: 'POST',
@@ -34,8 +36,7 @@ const UserRemoveReviewModal = () => {
 			})
 				.then((result) => {
 					if (!result.ok) {
-						dispatch(updateUserKey(''))
-						dispatch(updateUserRemoveReviewOpen(false))
+						onClose()
 						throw new Error()
 					} else {
 						return result.json()
@@ -57,13 +58,12 @@ const UserRemoveReviewModal = () => {
 								console.log(err)
 							})
 						toast.success('Success!')
-						dispatch(updateSelectedReview(undefined))
-						dispatch(updateUserRemoveReviewOpen(false))
+						onClose()
 						posthog.capture('user_code.review_deleted', {
 							landlord: selectedReview.landlord,
 						})
 					} else {
-						dispatch(updateUserKey(''))
+						setUserCode('')
 						setCodeError(`${t('user-code.incorrect')}`)
 						posthog.capture('user_code.incorrect_code_entry', {
 							landlord: selectedReview.landlord,
@@ -74,17 +74,13 @@ const UserRemoveReviewModal = () => {
 				.catch((err) => {
 					console.log(err)
 					toast.error(`${t('alerts.error')}`)
-					dispatch(updateSelectedReview(undefined))
-					dispatch(updateUserRemoveReviewOpen(false))
+					onClose()
 				})
 		}
 	}
 
 	return (
-		<ModalShell
-			title={t('user-delete.remove')}
-			onClose={() => dispatch(updateUserRemoveReviewOpen(false))}
-		>
+		<ModalShell title={t('user-delete.remove')} onClose={onClose}>
 			<>
 				<div className='mt-1'>
 					<div className='sm:col-span-3'>
@@ -110,7 +106,7 @@ const UserRemoveReviewModal = () => {
 								id='user-code'
 								placeholder={t('user-delete.enter-code')}
 								required
-								onChange={(e) => dispatch(updateUserKey(e.target.value))}
+								onChange={(e) => setUserCode(e.target.value)}
 								className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 								data-testid='create-review-form-moderation-reason-1'
 							/>
@@ -122,14 +118,7 @@ const UserRemoveReviewModal = () => {
 					<Button onClick={() => onSubmitRemoveReview()}>
 						{t('user-delete.submit')}
 					</Button>
-					<ButtonLight
-						onClick={() => {
-							dispatch(updateSelectedReview(undefined))
-							dispatch(updateUserRemoveReviewOpen(false))
-						}}
-					>
-						{t('user-delete.cancel')}
-					</ButtonLight>
+					<ButtonLight onClick={onClose}>{t('user-delete.cancel')}</ButtonLight>
 				</div>
 			</>
 		</ModalShell>

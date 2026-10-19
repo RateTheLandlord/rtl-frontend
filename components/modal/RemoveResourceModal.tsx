@@ -1,8 +1,4 @@
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import {
-	updateRemoveResourceOpen,
-	updateSelectedResource,
-} from '@/redux/modal/modalSlice'
+import { Resource } from '@/util/interfaces/interfaces'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import Spinner from '../ui/Spinner'
@@ -10,9 +6,13 @@ import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import ModalShell from './ModalShell'
 
-const RemoveResourceModal = () => {
-	const { selectedResource } = useAppSelector((state) => state.modal)
-	const dispatch = useAppDispatch()
+const RemoveResourceModal = ({
+	onClose,
+	selectedResource,
+}: {
+	onClose: () => void
+	selectedResource: Resource
+}) => {
 	const [loading, setLoading] = useState(false)
 	const onSubmitRemoveResource = () => {
 		if (selectedResource) {
@@ -30,25 +30,20 @@ const RemoveResourceModal = () => {
 					}
 				})
 				.then(() => {
-					dispatch(updateRemoveResourceOpen(false))
 					toast.success('Success!')
-					dispatch(updateSelectedResource(undefined))
+					onClose()
 				})
 				.catch((err) => {
 					console.log(err)
 					toast.error('Failure: Something went wrong, please try again.')
-					dispatch(updateRemoveResourceOpen(false))
-					dispatch(updateSelectedResource(undefined))
+					onClose()
 				})
 				.finally(() => setLoading(false))
 		}
 	}
 
 	return (
-		<ModalShell
-			title='Remove Resource'
-			onClose={() => dispatch(updateRemoveResourceOpen(false))}
-		>
+		<ModalShell title='Remove Resource' onClose={onClose}>
 			<>
 				<div>
 					<div className='ml-4' data-testid='remove-review-modal-1'>
@@ -65,14 +60,7 @@ const RemoveResourceModal = () => {
 						<Button onClick={() => onSubmitRemoveResource()}>Remove</Button>
 					)}
 
-					<ButtonLight
-						onClick={() => {
-							dispatch(updateRemoveResourceOpen(false))
-							dispatch(updateSelectedResource(undefined))
-						}}
-					>
-						Cancel
-					</ButtonLight>
+					<ButtonLight onClick={onClose}>Cancel</ButtonLight>
 				</div>
 			</>
 		</ModalShell>

@@ -1,16 +1,12 @@
 import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import {
-	updateAdminRemoveReviewOpen,
-	updateSelectedAdminReview,
-} from '@/redux/modal/modalSlice'
-import { useUser } from '@auth0/nextjs-auth0/client'
+import { Review } from '@/util/interfaces/interfaces'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
 import ModalShell from './ModalShell'
+import { useUser } from '@auth0/nextjs-auth0/client'
 
 const REVIEW_PERIOD = process.env.REVIEW_PERIOD
 const reviewPeriodNumber =
@@ -18,11 +14,13 @@ const reviewPeriodNumber =
 		? 30 // default to 30 if the value is invalid
 		: Number(REVIEW_PERIOD)
 
-const RemoveReviewModal = () => {
-	const { selectedAdminReview: selectedReview } = useAppSelector(
-		(state) => state.modal,
-	)
-	const dispatch = useAppDispatch()
+const RemoveReviewModal = ({
+	onClose,
+	selectedReview,
+}: {
+	onClose: () => void
+	selectedReview: Review
+}) => {
 	const landlord = selectedReview?.landlord || ''
 
 	const [deleteReason, setDeleteReason] = useState<string | null>(
@@ -54,7 +52,7 @@ const RemoveReviewModal = () => {
 			})
 				.then((result) => {
 					if (!result.ok) {
-						dispatch(updateAdminRemoveReviewOpen(false))
+						onClose()
 						throw new Error()
 					} else {
 						return result.json()
@@ -75,28 +73,23 @@ const RemoveReviewModal = () => {
 							console.log(err)
 							toast.error('Revalidation failed')
 						})
-					dispatch(updateAdminRemoveReviewOpen(false))
+					onClose()
 					if (data.success) {
 						toast.success('Success!')
 					} else {
 						toast.error(data.message)
 					}
-					dispatch(updateSelectedAdminReview(undefined))
 				})
 				.catch((err) => {
 					console.log(err)
 					toast.error('Failure: Something went wrong, please try again.')
-					dispatch(updateAdminRemoveReviewOpen(false))
-					dispatch(updateSelectedAdminReview(undefined))
+					onClose()
 				})
 		}
 	}
 
 	return (
-		<ModalShell
-			title='Remove Review'
-			onClose={() => dispatch(updateAdminRemoveReviewOpen(false))}
-		>
+		<ModalShell title='Remove Review' onClose={onClose}>
 			<>
 				<div className='mt-1'>
 					<div className='sm:col-span-3'>
@@ -146,14 +139,7 @@ const RemoveReviewModal = () => {
 				</div>
 				<div className='mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse'>
 					<Button onClick={() => onSubmitRemoveReview()}>Submit</Button>
-					<ButtonLight
-						onClick={() => {
-							dispatch(updateAdminRemoveReviewOpen(false))
-							dispatch(updateSelectedAdminReview(undefined))
-						}}
-					>
-						Cancel
-					</ButtonLight>
+					<ButtonLight onClick={onClose}>Cancel</ButtonLight>
 				</div>
 			</>
 		</ModalShell>

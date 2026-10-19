@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { updateEditResourceOpen } from '@/redux/modal/modalSlice'
 import {
 	updateAddress,
 	updateCity,
@@ -84,10 +83,7 @@ const EditResourceModal = ({
 	}
 
 	return (
-		<ModalShell
-			title='Edit Resource'
-			onClose={() => dispatch(updateEditResourceOpen(false))}
-		>
+		<ModalShell title='Edit Resource' onClose={onClose}>
 			<>
 				<div className='mt-1'>
 					<TextInput

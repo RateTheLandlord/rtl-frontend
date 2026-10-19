@@ -1,15 +1,15 @@
 import Button from '@/components/ui/button'
 import Spinner from '@/components/ui/Spinner'
 import TextInput from '@/components/ui/TextInput'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import LandlordCard from '../components/LandlordCard'
 import CountrySelector from '@/components/ui/CountrySelector'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { updateMergeLandlordModalOpen } from '@/redux/modal/modalSlice'
 import {
 	updateAllLandlords,
 	updateLandlordName,
 } from '@/redux/landlord/landlordSlice'
+import { useModal } from '@/components/modal/ModalContext'
 
 export type Candidate = {
 	country: string
@@ -20,6 +20,7 @@ export type Candidate = {
 }
 
 const MergeDuplicateLandlords = () => {
+	const { openModal } = useModal()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const { country } = useAppSelector((state) => state.review)
@@ -91,7 +92,13 @@ const MergeDuplicateLandlords = () => {
 					<div className='flex w-full justify-end'>
 						<Button
 							disabled={selectedLandlords.length === 0}
-							onClick={() => dispatch(updateMergeLandlordModalOpen(true))}
+							onClick={() =>
+								openModal('mergeLandlords', {
+									selectedLandlords,
+									landlordName: landlord,
+									country,
+								})
+							}
 						>{`Merge ${selectedLandlords.length} Landlords`}</Button>
 					</div>
 				</div>

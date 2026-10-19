@@ -1,25 +1,26 @@
-import { useState } from 'react'
 import countries from '@/util/countries/countries.json'
 import { country_codes } from '@/util/helpers/getCountryCodes'
+import { useState } from 'react'
 
-import { toast } from 'react-toastify'
-import { getStates } from '@/util/countries/combineStates'
-import Button from '../ui/button'
-import ButtonLight from '../ui/button-light'
 import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
+import { getStates } from '@/util/countries/combineStates'
+import { UserReview } from '@/util/interfaces/interfaces'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import {
-	updateSelectedReview,
-	updateUserEditReviewOpen,
-	updateUserKey,
-} from '@/redux/modal/modalSlice'
+import { toast } from 'react-toastify'
+import Button from '../ui/button'
+import ButtonLight from '../ui/button-light'
 import ModalShell from './ModalShell'
 
-const UserEditReviewModal = () => {
-	const { selectedReview, userKey } = useAppSelector((state) => state.modal)
-	const dispatch = useAppDispatch()
+const UserEditReviewModal = ({
+	onClose,
+	selectedReview,
+	userKey,
+}: {
+	onClose: () => void
+	selectedReview: UserReview
+	userKey: string
+}) => {
 	const t = useTranslations()
 	const [landlord, setLandlord] = useState<string>(
 		selectedReview?.landlord || '',
@@ -33,6 +34,7 @@ const UserEditReviewModal = () => {
 	const [review, setReview] = useState<string>(selectedReview?.review || '')
 	const [rent, setRent] = useState<number | null>(selectedReview?.rent || null)
 	const [codeError, setCodeError] = useState('')
+	const [userCode, setUserCode] = useState(userKey)
 
 	const isIreland = country === 'IE'
 
@@ -51,7 +53,7 @@ const UserEditReviewModal = () => {
 		const body = {
 			review: editedReview,
 			id: selectedReview?.id,
-			user_code: userKey,
+			user_code: userCode,
 		}
 		fetch(apiUrl, {
 			method: 'POST',
@@ -62,8 +64,7 @@ const UserEditReviewModal = () => {
 		})
 			.then((result) => {
 				if (!result.ok) {
-					dispatch(updateUserKey(''))
-					dispatch(updateUserEditReviewOpen(false))
+					onClose()
 					throw new Error()
 				} else {
 					return result.json()
@@ -76,8 +77,7 @@ const UserEditReviewModal = () => {
 						`/api/force-revalidate?path=${encodeURIComponent(landlord)}`,
 					).catch(() => console.error('Revalidate Failed'))
 
-					dispatch(updateUserEditReviewOpen(false))
-					dispatch(updateSelectedReview(undefined))
+					onClose()
 					posthog.capture('user_code.review_edited', {
 						landlord: selectedReview?.landlord,
 					})
@@ -88,20 +88,16 @@ const UserEditReviewModal = () => {
 						message: data.message,
 					})
 				}
-				dispatch(updateUserKey(''))
+				onClose()
 			})
 			.catch((err) => {
 				console.log(err)
 				toast.error('Failure: Something went wrong, please try again.')
-				dispatch(updateSelectedReview(undefined))
-				dispatch(updateUserEditReviewOpen(false))
+				onClose()
 			})
 	}
 	return (
-		<ModalShell
-			title={t('user-edit.edit')}
-			onClose={() => dispatch(updateUserEditReviewOpen(false))}
-		>
+		<ModalShell title={t('user-edit.edit')} onClose={onClose}>
 			<>
 				<div className='mt-1'>
 					<div className='sm:col-span-3'>
@@ -177,6 +173,7 @@ const UserEditReviewModal = () => {
 								className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 							>
 								<option>{province}</option>
+
 								{getStates(country).map((province) => (
 									<option key={province.value} value={province.value}>
 										{province.name}
@@ -251,7 +248,7 @@ const UserEditReviewModal = () => {
 								id='user-code'
 								placeholder={t('user-edit.enter-code')}
 								required
-								onChange={(e) => dispatch(updateUserKey(e.target.value))}
+								onChange={(e) => setUserCode(e.target.value)}
 								className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 								data-testid='create-review-form-moderation-reason-1'
 							/>
@@ -263,14 +260,7 @@ const UserEditReviewModal = () => {
 					<Button onClick={() => onSubmitEditReview()}>
 						{t('user-edit.submit')}
 					</Button>
-					<ButtonLight
-						onClick={() => {
-							dispatch(updateSelectedReview(undefined))
-							dispatch(updateUserEditReviewOpen(false))
-						}}
-					>
-						{t('user-edit.cancel')}
-					</ButtonLight>
+					<ButtonLight onClick={onClose}>{t('user-edit.cancel')}</ButtonLight>
 				</div>
 			</>
 		</ModalShell>

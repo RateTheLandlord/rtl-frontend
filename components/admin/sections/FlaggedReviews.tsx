@@ -1,10 +1,5 @@
 import { useModal } from '@/components/modal/ModalContext'
 import Spinner from '@/components/ui/Spinner'
-import { useAppDispatch } from '@/redux/hooks'
-import {
-	updateAdminRemoveReviewOpen,
-	updateSelectedAdminReview,
-} from '@/redux/modal/modalSlice'
 import { fetcher } from '@/util/helpers/fetcher'
 import { Review } from '@/util/interfaces/interfaces'
 import dayjs from 'dayjs'
@@ -14,7 +9,6 @@ import useSWR from 'swr'
 
 const FlaggedReviews = () => {
 	const { openModal } = useModal()
-	const dispatch = useAppDispatch()
 
 	const [flaggedReviews, setFlaggedReviews] = useState<Review[]>([])
 
@@ -158,8 +152,9 @@ const FlaggedReviews = () => {
 								<td className='py-4 pr-4 pl-3 text-center text-sm sm:pr-6'>
 									<button
 										onClick={() => {
-											dispatch(updateSelectedAdminReview(review))
-											dispatch(updateAdminRemoveReviewOpen(true))
+											openModal('adminRemoveReview', {
+												selectedReview: review,
+											})
 										}}
 										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
 									>
