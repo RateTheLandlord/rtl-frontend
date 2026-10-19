@@ -7,6 +7,7 @@ import ZipPage from './ZipPage'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
 import { IZipReviews } from '@/lib/review/types/review'
+import ModalProvider from '../modal/ModalProvider'
 expect.extend(toHaveNoViolations)
 
 jest.mock('@/util/helpers/fetchReviews')
@@ -85,13 +86,15 @@ describe('ZipPage', () => {
 	it('Should not have a11y violation', async () => {
 		const { container } = render(
 			<UserProvider>
-				<ZipPage
-					city='Test City'
-					state='Test State'
-					country='Test Country'
-					zip='12345'
-					data={mockData}
-				/>
+				<ModalProvider>
+					<ZipPage
+						city='Test City'
+						state='Test State'
+						country='Test Country'
+						zip='12345'
+						data={mockData}
+					/>
+				</ModalProvider>
 			</UserProvider>,
 		)
 		const result = await axe(container)

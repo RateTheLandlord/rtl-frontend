@@ -25,12 +25,14 @@ function ReviewTable({
 	const handleUserEdit = (review: UserReview) => {
 		openModal('userEditReview', {
 			selectedReview: review,
+			userKey: '',
 		})
 	}
 
 	const handleUserDelete = (review: UserReview) => {
 		openModal('userRemoveReview', {
 			selectedReview: review,
+			userKey: '',
 		})
 	}
 

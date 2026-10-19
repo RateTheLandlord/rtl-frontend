@@ -12,7 +12,6 @@ import type { Candidate } from '@/components/admin/sections/MergeDuplicateLandlo
 
 import UserRemoveReviewModal from './UserRemoveReviewModal'
 import UserEditReviewModal from './UserEditReviewModal'
-import ReportModal from '@/components/reviews/report-modal'
 import RestoreReviewModal from './RestoreReviewModal'
 import DeleteNowModal from './DeleteNowModal'
 import RemoveReviewModal from './RemoveReviewModal'
@@ -29,6 +28,7 @@ import SuccessModal from './success-modal'
 import SpamReviewModal from './SpamReviewModal'
 import EditResourceModal from './EditResourceModal'
 import MergeLandlordsModal from './MergeLandlordsModal'
+import ReportModal from './report-modal'
 
 export type ModalControls = {
 	onClose: () => void

@@ -1,7 +1,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react'
 import { render } from '@/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import Review from './review'
@@ -9,6 +8,7 @@ import { axe, toHaveNoViolations } from 'jest-axe'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
+import ModalProvider from '../modal/ModalProvider'
 expect.extend(toHaveNoViolations)
 
 jest.mock('@/util/helpers/fetchReviews', () => ({
@@ -56,7 +56,9 @@ describe('Review Component', () => {
 		const { container } = render(
 			<Provider store={store}>
 				<UserProvider>
-					<Review view={undefined} setLocationOpen={jest.fn()} />
+					<ModalProvider>
+						<Review view={undefined} setLocationOpen={jest.fn()} />
+					</ModalProvider>
 				</UserProvider>
 			</Provider>,
 		)
