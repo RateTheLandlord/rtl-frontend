@@ -4,15 +4,10 @@ import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
 import Spinner from '@/components/ui/Spinner'
 import dayjs from 'dayjs'
-import { useAppDispatch } from '@/redux/hooks'
-import {
-	updateDeleteNowOpen,
-	updateRestoreReviewOpen,
-	updateSelectedAdminReview,
-} from '@/redux/modal/modalSlice'
+import { useModal } from '@/components/modal/ModalContext'
 
 const DeletedReviews = () => {
-	const dispatch = useAppDispatch()
+	const { openModal } = useModal()
 
 	const [deletedReviews, setDeletedReviews] = useState<Array<Review>>([])
 
@@ -112,8 +107,9 @@ const DeletedReviews = () => {
 								<td className='py-4 pr-4 pl-3 text-center text-sm sm:pr-6'>
 									<button
 										onClick={() => {
-											dispatch(updateSelectedAdminReview(review))
-											dispatch(updateRestoreReviewOpen(true))
+											openModal('restoreReview', {
+												selectedReview: review,
+											})
 										}}
 										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
 									>
@@ -123,8 +119,7 @@ const DeletedReviews = () => {
 								<td className='py-4 pr-4 pl-3 text-center text-sm sm:pr-6'>
 									<button
 										onClick={() => {
-											dispatch(updateSelectedAdminReview(review))
-											dispatch(updateDeleteNowOpen(true))
+											openModal('deleteNow', { selectedReview: review })
 										}}
 										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
 									>

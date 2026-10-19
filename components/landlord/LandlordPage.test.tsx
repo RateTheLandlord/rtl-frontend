@@ -6,6 +6,7 @@ import LandlordPage from './LandlordPage'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
 import { axe } from 'jest-axe'
 import { ILandlordReviews } from '@/lib/review/types/Queries'
+import ModalProvider from '../modal/ModalProvider'
 
 describe('LandlordPage', () => {
 	const landlord = 'John Doe'
@@ -48,7 +49,9 @@ describe('LandlordPage', () => {
 	beforeEach(() => {
 		render(
 			<UserProvider>
-				<LandlordPage landlord={landlord} data={data} />
+				<ModalProvider>
+					<LandlordPage landlord={landlord} data={data} />
+				</ModalProvider>
 			</UserProvider>,
 		)
 	})
@@ -60,7 +63,9 @@ describe('LandlordPage', () => {
 	it('Should not have a11y violation', async () => {
 		const { container } = render(
 			<UserProvider>
-				<LandlordPage landlord={landlord} data={data} />
+				<ModalProvider>
+					<LandlordPage landlord={landlord} data={data} />
+				</ModalProvider>
 			</UserProvider>,
 		)
 		const result = await axe(container)

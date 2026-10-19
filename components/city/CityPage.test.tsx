@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { axe } from 'jest-axe'
 import { ICityReviews } from '@/lib/review/types/review'
+import ModalProvider from '../modal/ModalProvider'
 
 const mockData: ICityReviews = {
 	reviews: [],
@@ -27,12 +28,14 @@ describe('CityPage', () => {
 	it('should render', () => {
 		render(
 			<Provider store={store}>
-				<CityPage
-					city='Test City'
-					state='Test State'
-					country='Test Country'
-					data={mockData}
-				/>
+				<ModalProvider>
+					<CityPage
+						city='Test City'
+						state='Test State'
+						country='Test Country'
+						data={mockData}
+					/>
+				</ModalProvider>
 			</Provider>,
 		)
 
@@ -42,12 +45,14 @@ describe('CityPage', () => {
 	it('Should not have a11y violation', async () => {
 		const { container } = render(
 			<Provider store={store}>
-				<CityPage
-					city='Test City'
-					state='Test State'
-					country='Test Country'
-					data={mockData}
-				/>
+				<ModalProvider>
+					<CityPage
+						city='Test City'
+						state='Test State'
+						country='Test Country'
+						data={mockData}
+					/>
+				</ModalProvider>
 			</Provider>,
 		)
 		const result = await axe(container)

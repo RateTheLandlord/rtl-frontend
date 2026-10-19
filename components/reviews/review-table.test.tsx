@@ -1,13 +1,13 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react'
 import { render, screen } from '@/test-utils'
 import ReviewTable from './review-table'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
 import { axe, toHaveNoViolations } from 'jest-axe'
+import ModalProvider from '../modal/ModalProvider'
 expect.extend(toHaveNoViolations)
 
 describe('ReviewTable', () => {
@@ -15,7 +15,9 @@ describe('ReviewTable', () => {
 		render(
 			<Provider store={store}>
 				<UserProvider>
-					<ReviewTable data={[]} isLoading={false} />
+					<ModalProvider>
+						<ReviewTable data={[]} isLoading={false} />
+					</ModalProvider>
 				</UserProvider>
 			</Provider>,
 		)
@@ -27,7 +29,9 @@ describe('ReviewTable', () => {
 		const { container } = render(
 			<Provider store={store}>
 				<UserProvider>
-					<ReviewTable data={[]} isLoading={false} />
+					<ModalProvider>
+						<ReviewTable data={[]} isLoading={false} />
+					</ModalProvider>
 				</UserProvider>
 			</Provider>,
 		)

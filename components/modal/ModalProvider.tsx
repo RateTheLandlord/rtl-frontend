@@ -1,71 +1,62 @@
-import { useAppSelector } from '@/redux/hooks'
-import UserRemoveReviewModal from './UserRemoveReviewModal'
-import ReportModal from '../reviews/report-modal'
-import UserEditReviewModal from './UserEditReviewModal'
-import RestoreReviewModal from './RestoreReviewModal'
-import DeleteNow from './DeleteNowModal'
-import RemoveReviewModal from './RemoveReviewModal'
-import EditReviewModal from './EditReviewModal'
-import RemoveResourceModal from './RemoveResourceModal'
-import AddResourceModal from './AddResourceModal'
-import AddFlaggedKeywordModal from './AddFlaggedKeywordModal'
-import RemoveFlaggedKeywordModal from './RemoveFlaggedKeywordModal'
-import AddSuspiciousLandlordModal from './AddSuspiciousLandlordModal'
-import EditSuspiciousLandlordModal from './EditSuspiciousLandlordModal'
-import RemoveSuspiciousLandlordModal from './RemoveSuspiciousLandlordModal'
-import CopyUserCodeModal from './CopyUserCodeModal'
-import SuccessModal from './success-modal'
-import SpamReviewModal from './SpamReviewModal'
-import EditResourceModal from './EditResourceModal'
-import MergeLandlordsModal from './MergeLandlordsModal'
+import {
+	useCallback,
+	useState,
+	type ComponentType,
+	type ReactNode,
+} from 'react'
 
-import type { JSX } from 'react'
+import { ModalContext } from './ModalContext'
+import {
+	modalRegistry,
+	type ModalControls,
+	type ModalPropsMap,
+	type ModalRequest,
+	type ModalType,
+} from './modalRegistry'
 
-const ModalProvider = ({ children }: { children: JSX.Element }) => {
-	const {
-		userRemoveReviewOpen,
-		userReportModalOpen,
-		userEditReviewOpen,
-		restoreReviewOpen,
-		deleteNowOpen,
-		adminRemoveReviewOpen,
-		adminEditReviewOpen,
-		removeResourceOpen,
-		addResourceOpen,
-		addFlaggedKeywordOpen,
-		removedFlaggedKeywordOpen,
-		addSuspiciousLandlordOpen,
-		editSuspiciousLandlordOpen,
-		removeSuspiciousLandlordOpen,
-		copyUserCodeOpen,
-		successModalOpen,
-		spamReviewModalOpen,
-		editResourceOpen,
-		mergeLandlordModalOpen,
-	} = useAppSelector((state) => state.modal)
+type ModalProviderProps = {
+	children: ReactNode
+}
+
+type RenderableModalProps = ModalPropsMap[ModalType] & ModalControls
+
+const ModalProvider = ({ children }: ModalProviderProps) => {
+	const [activeModal, setActiveModal] = useState<ModalRequest | null>(null)
+
+	const openModal = useCallback(
+		<T extends ModalType>(type: T, props: ModalPropsMap[T]) => {
+			setActiveModal({
+				type,
+				props,
+			} as ModalRequest)
+		},
+		[],
+	)
+
+	const closeModal = useCallback(() => {
+		setActiveModal(null)
+	}, [])
+
+	const contextValue = {
+		openModal,
+		closeModal,
+	}
+
+	const ActiveModal: ComponentType<RenderableModalProps> | null = activeModal
+		? (modalRegistry[activeModal.type] as ComponentType<RenderableModalProps>)
+		: null
+
 	return (
-		<>
-			{userRemoveReviewOpen && <UserRemoveReviewModal />}
-			{userEditReviewOpen && <UserEditReviewModal />}
-			{userReportModalOpen && <ReportModal />}
-			{restoreReviewOpen && <RestoreReviewModal />}
-			{deleteNowOpen && <DeleteNow />}
-			{adminRemoveReviewOpen && <RemoveReviewModal />}
-			{adminEditReviewOpen && <EditReviewModal />}
-			{removeResourceOpen && <RemoveResourceModal />}
-			{addResourceOpen && <AddResourceModal />}
-			{addFlaggedKeywordOpen && <AddFlaggedKeywordModal />}
-			{removedFlaggedKeywordOpen && <RemoveFlaggedKeywordModal />}
-			{addSuspiciousLandlordOpen && <AddSuspiciousLandlordModal />}
-			{editSuspiciousLandlordOpen && <EditSuspiciousLandlordModal />}
-			{removeSuspiciousLandlordOpen && <RemoveSuspiciousLandlordModal />}
-			{copyUserCodeOpen && <CopyUserCodeModal />}
-			{successModalOpen && <SuccessModal />}
-			{spamReviewModalOpen && <SpamReviewModal />}
-			{editResourceOpen && <EditResourceModal />}
-			{mergeLandlordModalOpen && <MergeLandlordsModal />}
+		<ModalContext.Provider value={contextValue}>
 			{children}
-		</>
+
+			{ActiveModal && activeModal && (
+				<ActiveModal
+					{...(activeModal.props as RenderableModalProps)}
+					onClose={closeModal}
+				/>
+			)}
+		</ModalContext.Provider>
 	)
 }
 

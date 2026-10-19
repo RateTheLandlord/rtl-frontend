@@ -1,4 +1,10 @@
-import { Fragment } from 'react'
+import { useModal } from '@/components/modal/ModalContext'
+import Button from '@/components/ui/button'
+import Spinner from '@/components/ui/Spinner'
+
+import { fetchWithBody } from '@/util/helpers/fetcher'
+import { classNames } from '@/util/helpers/helper-functions'
+import { SuspiciousLandlordResponse } from '@/util/interfaces/interfaces'
 import {
 	Menu,
 	MenuButton,
@@ -6,23 +12,12 @@ import {
 	MenuItems,
 	Transition,
 } from '@headlessui/react'
-import { classNames } from '@/util/helpers/helper-functions'
 import { Bars3Icon } from '@heroicons/react/24/solid'
-import Button from '@/components/ui/button'
+import { Fragment } from 'react'
 import useSWR from 'swr'
-import { fetchWithBody } from '@/util/helpers/fetcher'
-import Spinner from '@/components/ui/Spinner'
-import { SuspiciousLandlordResponse } from '@/util/interfaces/interfaces'
-import { useAppDispatch } from '@/redux/hooks'
-import {
-	updateAddSuspiciousLandlordOpen,
-	updateEditSuspiciousLandlordOpen,
-	updateRemoveSuspiciousLandlordOpen,
-	updateSelectedSuspiciousLandlord,
-} from '@/redux/modal/modalSlice'
 
 const SuspiciousLandlords = () => {
-	const dispatch = useAppDispatch()
+	const { openModal } = useModal()
 	const { data, error } = useSWR<SuspiciousLandlordResponse, unknown>(
 		['/api/suspicious-landlords/get-landlords', { limit: '1000' }],
 		fetchWithBody,
@@ -37,7 +32,7 @@ const SuspiciousLandlords = () => {
 			className='container flex w-full flex-col justify-center'
 		>
 			<div className='flex w-full justify-end'>
-				<Button onClick={() => dispatch(updateAddSuspiciousLandlordOpen(true))}>
+				<Button onClick={() => openModal('addSuspiciousLandlord', {})}>
 					Add New Landlord
 				</Button>
 			</div>
@@ -81,10 +76,9 @@ const SuspiciousLandlords = () => {
 												{({ active }) => (
 													<button
 														onClick={() => {
-															dispatch(updateEditSuspiciousLandlordOpen(true))
-															dispatch(
-																updateSelectedSuspiciousLandlord(landlord),
-															)
+															openModal('editSuspiciousLandlord', {
+																selectedSuspiciousLandlord: landlord,
+															})
 														}}
 														className={classNames(
 															active ? 'bg-gray-50' : '',
@@ -103,10 +97,9 @@ const SuspiciousLandlords = () => {
 												{({ active }) => (
 													<button
 														onClick={() => {
-															dispatch(updateRemoveSuspiciousLandlordOpen(true))
-															dispatch(
-																updateSelectedSuspiciousLandlord(landlord),
-															)
+															openModal('removeSuspiciousLandlord', {
+																selectedSuspiciousLandlord: landlord,
+															})
 														}}
 														className={classNames(
 															active ? 'bg-gray-50' : '',

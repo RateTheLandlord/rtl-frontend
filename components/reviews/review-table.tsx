@@ -1,14 +1,8 @@
 import { UserReview } from '@/util/interfaces/interfaces'
-import React, { type JSX } from 'react'
+import { type JSX } from 'react'
 import ReviewComponent from './ReviewComponent'
 import Spinner from '../ui/Spinner'
-import { useAppDispatch } from '@/redux/hooks'
-import {
-	updateSelectedReview,
-	updateUserEditReviewOpen,
-	updateUserRemoveReviewOpen,
-	updateUserReportModal,
-} from '@/redux/modal/modalSlice'
+import { useModal } from '../modal/ModalContext'
 
 interface IProps {
 	data: UserReview[]
@@ -21,20 +15,25 @@ function ReviewTable({
 	isLoading,
 	landlordPage = false,
 }: IProps): JSX.Element {
-	const dispatch = useAppDispatch()
+	const { openModal } = useModal()
 	const handleReport = (review: UserReview) => {
-		dispatch(updateSelectedReview(review))
-		dispatch(updateUserReportModal(true))
+		openModal('report', {
+			selectedReview: review,
+		})
 	}
 
 	const handleUserEdit = (review: UserReview) => {
-		dispatch(updateSelectedReview(review))
-		dispatch(updateUserEditReviewOpen(true))
+		openModal('userEditReview', {
+			selectedReview: review,
+			userKey: '',
+		})
 	}
 
 	const handleUserDelete = (review: UserReview) => {
-		dispatch(updateSelectedReview(review))
-		dispatch(updateUserRemoveReviewOpen(true))
+		openModal('userRemoveReview', {
+			selectedReview: review,
+			userKey: '',
+		})
 	}
 
 	if (!data.length || !data) {
