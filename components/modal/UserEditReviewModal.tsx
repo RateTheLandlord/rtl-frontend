@@ -1,6 +1,6 @@
 import countries from '@/util/countries/countries.json'
 import { country_codes } from '@/util/helpers/getCountryCodes'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
 import { getStates } from '@/util/countries/combineStates'
@@ -15,11 +15,9 @@ import ModalShell from './ModalShell'
 const UserEditReviewModal = ({
 	onClose,
 	selectedReview,
-	userKey,
 }: {
 	onClose: () => void
 	selectedReview: UserReview
-	userKey: string
 }) => {
 	const t = useTranslations()
 	const [landlord, setLandlord] = useState<string>(
@@ -34,7 +32,16 @@ const UserEditReviewModal = ({
 	const [review, setReview] = useState<string>(selectedReview?.review || '')
 	const [rent, setRent] = useState<number | null>(selectedReview?.rent || null)
 	const [codeError, setCodeError] = useState('')
-	const [userCode, setUserCode] = useState(userKey)
+	const [userCode, setUserCode] = useState('')
+
+	const checkLocalStorageUserKey = () => {
+		const key = localStorage.getItem(`rtl:${selectedReview.id}`)
+		if (key) setUserCode(key)
+	}
+
+	useEffect(() => {
+		checkLocalStorageUserKey()
+	}, [])
 
 	const isIreland = country === 'IE'
 
@@ -248,6 +255,7 @@ const UserEditReviewModal = ({
 								id='user-code'
 								placeholder={t('user-edit.enter-code')}
 								required
+								value={userCode}
 								onChange={(e) => setUserCode(e.target.value)}
 								className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 								data-testid='create-review-form-moderation-reason-1'

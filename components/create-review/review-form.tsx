@@ -39,8 +39,6 @@ function ReviewForm(): JSX.Element {
 	const { openModal } = useModal()
 	const dispatch = useAppDispatch()
 
-	const [reviewId, setReviewId] = useState<number | null>(null)
-
 	const isIreland = country === Country.IE
 
 	const {
@@ -80,6 +78,8 @@ function ReviewForm(): JSX.Element {
 		string[] | null
 	>(null)
 
+	console.log(localReviewedLandlords)
+
 	useEffect(() => {
 		const prevLandlords = localStorage.getItem('rtl')
 		if (prevLandlords) {
@@ -88,21 +88,15 @@ function ReviewForm(): JSX.Element {
 		}
 	}, [])
 
-	const setUserKeyStorage = (userKey: string) => {
-		if (reviewId && userKey) {
-			localStorage.setItem(
-				'rtl-id',
-				JSON.stringify({
-					id: reviewId,
-					userCode: userKey,
-				}),
-			)
+	const setUserKeyStorage = (userKey: string, id: number) => {
+		if (id && userKey) {
+			localStorage.setItem(`rtl:${id}`, userKey)
 		}
 	}
 
 	const checkLandlord = (str: string) => {
 		if (localReviewedLandlords) {
-			return localReviewedLandlords.indexOf(str) > -1
+			return localReviewedLandlords.indexOf(str.trim()) > -1
 		}
 		return false
 	}
@@ -124,7 +118,7 @@ function ReviewForm(): JSX.Element {
 			setLandlordValidationText(t('alerts.landlord-validation'))
 			return
 		}
-		if (checkLandlord(landlord.toLocaleUpperCase())) {
+		if (checkLandlord(landlord.toLocaleUpperCase().trim())) {
 			handleSpamDetected('localStorageDetection')
 			return
 		}
@@ -181,17 +175,19 @@ function ReviewForm(): JSX.Element {
 							throw new Error()
 						} else {
 							openModal('copyUserCode', { code: data.user_code })
-							setUserKeyStorage(data.user_code)
-							setReviewId(data.review_id)
+							setUserKeyStorage(data.user_code, data.review_id)
 						}
 					})
 					.then(() => {
 						const storageItem = localStorage.getItem('rtl')
 						if (storageItem) {
-							const newItem = `${storageItem},${landlord.toLocaleUpperCase()}`
+							const newItem = `${storageItem},${landlord.toLocaleUpperCase().trim()}`
 							localStorage.setItem('rtl', newItem)
 						} else {
-							localStorage.setItem('rtl', `${landlord.toLocaleUpperCase()}`)
+							localStorage.setItem(
+								'rtl',
+								`${landlord.toLocaleUpperCase().trim()}`,
+							)
 						}
 					})
 					.catch(() => {
