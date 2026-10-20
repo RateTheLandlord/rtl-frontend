@@ -8,12 +8,7 @@ interface IProps {
 	layoutKey?: string
 }
 
-const AdsComponent = ({
-	slot,
-	format = 'horizontal,auto',
-	layout = '',
-	layoutKey = '',
-}: IProps) => {
+const AdsComponent = ({ slot }: IProps) => {
 	if (isProd) {
 		return (
 			<div className='w-full overflow-hidden px-4 pt-4 sm:px-6 lg:px-8'>
@@ -21,12 +16,8 @@ const AdsComponent = ({
 					<Adsense
 						client='ca-pub-1233437669445756'
 						slot={slot}
-						style={{ display: 'block', maxWidth: '100%' }}
-						format={format}
-						layout={layout}
-						layoutKey={layoutKey}
-						responsive='true'
-						className='adsbygoogle mx-auto block h-[100px] w-full max-w-full overflow-hidden md:h-[90px]'
+						style={{ display: 'block' }}
+						format='fluid'
 					/>
 				</div>
 			</div>
