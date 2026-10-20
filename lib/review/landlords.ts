@@ -94,16 +94,35 @@ export async function getOtherLandlords(
 	return result
 }
 
+export type LandlordSuggestion = {
+	landlord: string
+	state: string
+	country_code: string
+}
+
 export async function getLandlordSuggestions(
 	landlord: string,
-): Promise<string[]> {
+): Promise<LandlordSuggestion[]> {
 	if (!landlord) return []
-	const suggestions = await sql`
-    SELECT DISTINCT landlord FROM review WHERE landlord LIKE ${
-			'%' + landlord.toLocaleUpperCase() + '%'
-		} LIMIT 10
+	const suggestions = await sql<LandlordSuggestion[]>`
+    SELECT DISTINCT landlord, state, country_code FROM review WHERE landlord LIKE ${
+			'%' + landlord.toLocaleUpperCase().trim() + '%'
+		} AND (
+			flagged = false
+			OR (flagged = true AND admin_approved = true)
+		)
+		AND delete_date IS NULL
+     ORDER BY landlord ASC
+      LIMIT 10
     `
-	return suggestions.map(({ landlord }) => landlord as string)
+
+	return suggestions.map((suggestion) => {
+		return {
+			landlord: suggestion.landlord,
+			state: suggestion.state,
+			country_code: suggestion.country_code,
+		}
+	})
 }
 
 export async function getLandlords(): Promise<string[]> {

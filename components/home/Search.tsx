@@ -18,10 +18,7 @@ const Search = () => {
 	const router = useRouter()
 	const [search, setSearch] = useState('')
 
-	const {
-		isSearching,
-		landlordSuggestions: suggestions,
-	}: { isSearching: boolean; landlordSuggestions: string[] } =
+	const { isSearching, landlordSuggestions: suggestions } =
 		useLandlordSuggestions(search)
 
 	const submitCombo = (e: string) => {
@@ -71,7 +68,7 @@ const Search = () => {
 														console.error('Failed to route to create-review'),
 													)
 											}}
-											className='relative cursor-pointer px-4 py-2 text-left text-gray-700 select-none hover:bg-teal-100'
+											className='hover:bg-primary relative cursor-pointer px-4 py-2 text-left text-gray-700 select-none'
 										>
 											{t('not-found')}
 										</button>
@@ -79,15 +76,16 @@ const Search = () => {
 								) : (
 									suggestions.map((landlord) => (
 										<ComboboxOption
-											key={landlord}
+											key={landlord.landlord}
 											className={({ active }) =>
-												`cursor-pointer rounded-md p-2 text-left empty:invisible hover:bg-teal-100 ${
-													active ? 'bg-teal-200' : ''
+												`cursor-pointer rounded-md p-2 text-left font-bold empty:invisible ${
+													active ? 'bg-primary text-white' : ''
 												}`
 											}
 											value={landlord}
 										>
-											{landlord}
+											{landlord.landlord}{' '}
+											<span className='text-xs font-light'>{` - ${landlord.state}, ${landlord.country_code}`}</span>
 										</ComboboxOption>
 									))
 								)}
