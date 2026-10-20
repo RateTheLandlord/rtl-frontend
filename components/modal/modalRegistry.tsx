@@ -43,11 +43,9 @@ export type ModalControls = {
 export type ModalPropsMap = {
 	userRemoveReview: {
 		selectedReview: UserReview
-		userKey: string
 	}
 	userEditReview: {
 		selectedReview: UserReview
-		userKey: string
 	}
 	report: {
 		selectedReview: UserReview

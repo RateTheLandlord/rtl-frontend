@@ -2,7 +2,7 @@ import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
 import { UserReview } from '@/util/interfaces/interfaces'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '../ui/button'
 import ButtonLight from '../ui/button-light'
@@ -11,17 +11,24 @@ import ModalShell from './ModalShell'
 const UserRemoveReviewModal = ({
 	onClose,
 	selectedReview,
-	userKey,
 }: {
 	onClose: () => void
 	selectedReview: UserReview
-	userKey: string
 }) => {
 	const t = useTranslations()
 	const landlord = selectedReview?.landlord || ''
 	const review = selectedReview?.review || ''
 	const [codeError, setCodeError] = useState('')
-	const [userCode, setUserCode] = useState(userKey)
+	const [userCode, setUserCode] = useState('')
+
+	const checkLocalStorageUserKey = () => {
+		const key = localStorage.getItem(`rtl:${selectedReview.id}`)
+		if (key) setUserCode(key)
+	}
+
+	useEffect(() => {
+		checkLocalStorageUserKey()
+	}, [])
 
 	const onSubmitRemoveReview = () => {
 		const apiUrl = '/api/user-update/delete'
@@ -106,6 +113,7 @@ const UserRemoveReviewModal = ({
 								id='user-code'
 								placeholder={t('user-delete.enter-code')}
 								required
+								value={userCode}
 								onChange={(e) => setUserCode(e.target.value)}
 								className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 								data-testid='create-review-form-moderation-reason-1'
