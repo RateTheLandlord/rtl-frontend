@@ -9,8 +9,11 @@ export async function getDeleted(): Promise<Review[]> {
 }
 
 export async function deleteReview(id: number): Promise<boolean> {
-	await sql`DELETE
-				FROM review
-				WHERE ID = ${id};`
-	return true
+	const deleted = await sql<{ id: number }[]>`
+		DELETE FROM review
+		WHERE id = ${id}
+		RETURNING id;
+	`
+
+	return deleted.length > 0
 }

@@ -1,23 +1,42 @@
-import { runMiddleware } from '@/util/cors'
-import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
-import { Review } from '@/util/interfaces/interfaces'
 import { updateReview } from '@/lib/review/models/admin-update-review'
+import { runMiddleware } from '@/util/cors'
+import type { NextApiRequest, NextApiResponse } from 'next'
+import type { Review } from '@/util/interfaces/interfaces'
 
 const EditReview = async (req: NextApiRequest, res: NextApiResponse) => {
-	const session = await getSession(req, res)
-	const user = session?.user
-	await runMiddleware(req, res)
+	try {
+		await runMiddleware(req, res)
 
-	const { body } = req as { body: Review }
+		if (req.method !== 'POST') {
+			res.setHeader('Allow', 'POST')
+			return res.status(405).json({ error: 'METHOD_NOT_ALLOWED' })
+		}
 
-	const id = body.id
+		const session = await getSession(req, res)
 
-	if (user && user.role === 'ADMIN') {
-		const reviews = await updateReview(id || 0, body)
-		res.status(200).json(reviews)
-	} else {
-		res.status(401).json({ error: 'UNAUTHORIZED' })
+		if (session?.user?.role !== 'ADMIN') {
+			return res.status(403).json({ error: 'FORBIDDEN' })
+		}
+
+		const body = req.body as Partial<Review> | null
+
+		if (
+			!body ||
+			typeof body !== 'object' ||
+			!Number.isSafeInteger(body.id) ||
+			typeof body.id !== 'number' ||
+			body.id <= 0
+		) {
+			return res.status(400).json({ error: 'INVALID_REQUEST_BODY' })
+		}
+
+		const updatedReview = await updateReview(body.id, body as Review)
+
+		return res.status(200).json(updatedReview)
+	} catch (error) {
+		console.error('Failed to edit review:', error)
+		return res.status(500).json({ error: 'INTERNAL_SERVER_ERROR' })
 	}
 }
 

@@ -1,31 +1,38 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-interface CaptchaPayload {
-	secret: string
-	response: string
-}
-
 const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify'
 
+interface CaptchaResponse {
+	success: boolean
+}
+
 export async function verifyToken(token: string): Promise<boolean> {
-	const data: CaptchaPayload = {
-		secret: process.env.CAPTCHA_SECRET_KEY as string,
-		response: token,
+	const secret = process.env.CAPTCHA_SECRET_KEY
+
+	if (!secret || typeof token !== 'string' || token.trim().length === 0) {
+		return false
 	}
 
-	const req = await fetch(
-		`${VERIFY_URL}?secret=${data.secret}&response=${token}`,
-		{
+	try {
+		const body = new URLSearchParams({
+			secret,
+			response: token,
+		})
+
+		const response = await fetch(VERIFY_URL, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
 			},
-		},
-	)
+			body: body.toString(),
+			signal: AbortSignal.timeout(5000),
+		})
 
-	const response = await req.json()
+		if (!response.ok) {
+			return false
+		}
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-	const success: boolean = await response.success
-
-	return success
+		const result = (await response.json()) as CaptchaResponse
+		return result.success === true
+	} catch {
+		return false
+	}
 }
