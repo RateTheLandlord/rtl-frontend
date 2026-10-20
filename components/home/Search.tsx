@@ -82,7 +82,7 @@ const Search = () => {
 													active ? 'bg-primary text-white' : ''
 												}`
 											}
-											value={landlord}
+											value={landlord.landlord}
 										>
 											{landlord.landlord}{' '}
 											<span className='text-xs font-light'>{` - ${landlord.state}, ${landlord.country_code}`}</span>

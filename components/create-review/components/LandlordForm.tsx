@@ -18,11 +18,7 @@ const LandlordForm = ({
 	const { landlord } = useAppSelector((state) => state.review)
 	const dispatch = useAppDispatch()
 
-	const {
-		isSearching,
-		landlordSuggestions,
-	}: { isSearching: boolean; landlordSuggestions: string[] } =
-		useLandlordSuggestions(landlord)
+	const { isSearching, landlordSuggestions } = useLandlordSuggestions(landlord)
 	return (
 		<div data-testid='LandlordForm-component'>
 			<div>

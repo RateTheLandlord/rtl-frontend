@@ -6,12 +6,13 @@ import {
 	ComboboxOptions,
 	Transition,
 } from '@headlessui/react'
+import { LandlordSuggestion } from '@/lib/review/landlords'
 
 interface ComponentProps {
 	name: string
 	state: string | undefined
 	setState: (state: string) => void
-	suggestions: string[]
+	suggestions: LandlordSuggestion[]
 	isSearching: boolean
 	error: boolean
 	errorText: string
@@ -59,15 +60,16 @@ export default function LandlordComboBox({
 						) : (
 							suggestions.map((landlord) => (
 								<ComboboxOption
-									key={landlord}
+									key={landlord.landlord}
 									className={({ active }) =>
-										`cursor-pointer rounded-md p-2 text-left hover:bg-teal-100 ${
-											active ? 'bg-teal-200' : ''
+										`cursor-pointer rounded-md p-2 text-left font-bold empty:invisible ${
+											active ? 'bg-primary text-white' : ''
 										}`
 									}
-									value={landlord}
+									value={landlord.landlord}
 								>
-									{landlord}
+									{landlord.landlord}{' '}
+									<span className='text-xs font-light'>{` - ${landlord.state}, ${landlord.country_code}`}</span>
 								</ComboboxOption>
 							))
 						)}
