@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useDebounce } from './useDebounce'
+import { LandlordSuggestion } from '@/lib/review/landlords'
 
 export const useLandlordSuggestions = (landlord: string) => {
-	const [landlordSuggestions, setLandlordSuggestions] = useState<string[]>([])
+	const [landlordSuggestions, setLandlordSuggestions] = useState<
+		LandlordSuggestion[]
+	>([])
 	const [isSearching, setIsSearching] = useState(false)
 
 	const debouncedSearchString = useDebounce(landlord, 500)
@@ -24,7 +27,7 @@ export const useLandlordSuggestions = (landlord: string) => {
 						}
 						return res.json()
 					})
-					.then((data: string[]) => {
+					.then((data: LandlordSuggestion[]) => {
 						setLandlordSuggestions(data)
 					})
 					.catch((err) => console.log(err))
