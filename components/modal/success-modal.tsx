@@ -20,8 +20,11 @@ import {
 	TwitterIcon,
 } from 'react-share'
 import ModalShell from './ModalShell'
+import { useAppDispatch } from '@/redux/hooks'
+import { resetReview } from '@/redux/review/reviewSlice'
 
 function SuccessModal({ onClose }: { onClose: () => void }) {
+	const dispatch = useAppDispatch()
 	const t = useTranslations('createreview')
 	const router = useRouter()
 
@@ -97,9 +100,10 @@ function SuccessModal({ onClose }: { onClose: () => void }) {
 					</div>
 				</div>
 			</div>
-			<div className='mt-5 grid gap-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3'>
+			<div className='mt-5 flex w-full justify-center'>
 				<Button
 					onClick={() => {
+						dispatch(resetReview())
 						onClose()
 						router.push('/reviews').catch((err) => console.log(err))
 					}}
