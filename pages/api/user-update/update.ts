@@ -22,11 +22,11 @@ const isValidReview = (value: unknown): value is UserUpdatedReview => {
 	}
 
 	const ratings = [
-		value.repair,
-		value.health,
-		value.stability,
-		value.privacy,
-		value.respect,
+		Number(value.repair),
+		Number(value.health),
+		Number(value.stability),
+		Number(value.privacy),
+		Number(value.respect),
 	]
 
 	if (
