@@ -190,11 +190,16 @@ const ReviewComponent = ({
 							</div>
 						)}
 						{review.admin_edited ? (
-							<p className='text-xs text-red-400'>{`${t('reviews.edited')} ${
-								review.moderation_reason
-									? `Reason: ${review.moderation_reason}`
-									: ''
-							}`}</p>
+							<p className='text-xs text-red-400'>
+								{' '}
+								{t.rich('reviews.moderated', {
+									link: (chunks) => (
+										<Link href='/about#moderation' className='underline'>
+											{chunks}
+										</Link>
+									),
+								})}
+							</p>
 						) : null}
 					</div>
 				</div>

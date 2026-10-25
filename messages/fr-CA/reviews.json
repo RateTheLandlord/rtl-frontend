@@ -18,7 +18,7 @@
 		"faq": "Que signifient ces évaluations ?",
 		"zip": "ZIP / Code postal",
 		"report-review": "SIGNALER",
-		"edited": "*Modifié par l'Admin après révision.",
+		"moderated": "Certaines parties de cet avis ont enfreint notre <link>politique de modération</link>",
 		"report": {
 			"error": "Erreur, veuillez réessayer",
 			"success": "Avis reçu!",
