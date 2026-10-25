@@ -71,6 +71,9 @@ const reviewSlice = createSlice({
 		updateReview(state, action: PayloadAction<string>) {
 			state.review = action.payload
 		},
+		resetReview() {
+			return initialState
+		},
 	},
 })
 
@@ -87,5 +90,6 @@ export const {
 	updateRespect,
 	updateReview,
 	updateStability,
+	resetReview,
 } = reviewSlice.actions
 export default reviewSlice.reducer
