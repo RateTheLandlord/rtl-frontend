@@ -49,7 +49,7 @@ export default function Home(): JSX.Element {
 					},
 				]}
 			/>
-			<AdsComponent slot='1526837416' />
+			<AdsComponent slot='2964662882' />
 			<div className='bg-background mx-2 mt-4 rounded-3xl pb-4'>
 				<Hero />
 				<Search />
