@@ -34,7 +34,7 @@ jobs:
           context: .
           push: true
           cache-from: type=gha
-          cache-to: type=gha,mode-max
+          cache-to: type=gha,mode=max
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/rtl-application:${{ github.sha }}
             ${{ secrets.DOCKERHUB_USERNAME }}/rtl-application:latest
