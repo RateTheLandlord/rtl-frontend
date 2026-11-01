@@ -1,12 +1,13 @@
 version: 2
 
 updates:
-  # Application dependencies managed by Bun.
   - package-ecosystem: bun
     directory: /
     schedule:
       interval: weekly
       day: monday
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 10
     groups:
       bun-minor-and-patch:
@@ -16,12 +17,13 @@ updates:
           - minor
           - patch
 
-  # Versions of GitHub Actions used by workflows.
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
       day: monday
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 10
     groups:
       github-actions-minor-and-patch:
@@ -31,12 +33,13 @@ updates:
           - minor
           - patch
 
-  # Base images referenced by the Dockerfile.
   - package-ecosystem: docker
     directory: /
     schedule:
       interval: weekly
       day: monday
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 5
     groups:
       docker-minor-and-patch:
