@@ -99,7 +99,7 @@
 		"i18next-resources-for-ts": "1.5.0",
 		"jest": "^30.5.2",
 		"jest-axe": "^9.0.0",
-		"jest-environment-jsdom": "^29.7.0",
+		"jest-environment-jsdom": "^30.5.2",
 		"knip": "^5.67.1",
 		"ley": "^0.8.1",
 		"lint-staged": "^15.5.2",
