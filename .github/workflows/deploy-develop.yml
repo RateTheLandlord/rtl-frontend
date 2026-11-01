@@ -3,33 +3,37 @@ name: Build Develop Branch Image
 on:
   push:
     branches:
-      - develop # Trigger on pushes to the develop branch
+      - develop
 
 permissions:
   contents: read
 
+# If several commits are pushed quickly, let the newest development
+# build finish rather than allowing older builds to overwrite the dev tag.
+concurrency:
+  group: deploy-develop-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-push:
+    name: Build and publish development image
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     environment: Development
 
     steps:
-      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Set up Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
-      # Build and push
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
         with:
