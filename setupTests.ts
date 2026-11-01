@@ -12,7 +12,7 @@ class MockResizeObserver implements ResizeObserver {
 	takeRecords = jest.fn().mockReturnValue([])
 }
 
-global.ResizeObserver = MockResizeObserver as typeof ResizeObserver
+global.ResizeObserver = MockResizeObserver
 
 jest.mock('@auth0/nextjs-auth0/client', () => ({
 	__esModule: true,

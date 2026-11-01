@@ -32,13 +32,7 @@ export interface ReviewsResponse {
 }
 
 export type ISortOptions =
-	| 'az'
-	| 'za'
-	| 'new'
-	| 'old'
-	| 'high'
-	| 'low'
-	| undefined
+	'az' | 'za' | 'new' | 'old' | 'high' | 'low' | undefined
 
 export interface QueryParams {
 	page: number

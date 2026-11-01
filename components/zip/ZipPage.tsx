@@ -5,7 +5,6 @@ import { fetchReviews } from '@/util/helpers/fetchReviews'
 import ZipInfo from './ZipInfo'
 import { IZipReviews } from '@/lib/review/types/review'
 import useInfiniteScroll from '@/util/hooks/useInfiniteScroll'
-import { ISortOptions } from '../reviews/review'
 import ReviewTable from '../reviews/review-table'
 
 interface IProps {
@@ -20,7 +19,7 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 	// Query
 	const queryParams = useMemo(() => {
 		return {
-			sort: 'new' as ISortOptions,
+			sort: 'new',
 			state: state,
 			country: country,
 			city: city,

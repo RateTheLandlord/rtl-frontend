@@ -34,17 +34,17 @@ interface FiltersProps {
 }
 
 const mockProps: FiltersProps = {
-	selectedSort: { id: 1, name: 'az', value: 'az' } as SortOptions,
+	selectedSort: { id: 1, name: 'az', value: 'az' },
 	sortOptions: [
 		{ id: 1, name: 'az', value: 'az' },
 		{ id: 2, name: 'za', value: 'za' },
 	] as SortOptions[],
 	setSelectedSort: jest.fn(),
 	searchTitle: 'Search Reviews',
-	countryFilter: { id: 1, name: 'USA', value: 'usa' } as Options,
-	stateFilter: { id: 1, name: 'California', value: 'ca' } as Options,
-	cityFilter: { id: 1, name: 'Los Angeles', value: 'la' } as Options,
-	zipFilter: { id: 1, name: '90001', value: '90001' } as Options,
+	countryFilter: { id: 1, name: 'USA', value: 'usa' },
+	stateFilter: { id: 1, name: 'California', value: 'ca' },
+	cityFilter: { id: 1, name: 'Los Angeles', value: 'la' },
+	zipFilter: { id: 1, name: '90001', value: '90001' },
 	dynamicCityOptions: [
 		{ id: 1, name: 'Los Angeles', value: 'la' },
 	] as Options[],
