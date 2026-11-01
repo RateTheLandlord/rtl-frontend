@@ -6,7 +6,7 @@
       "name": "rate-the-landlord",
       "dependencies": {
         "@auth0/nextjs-auth0": "^3.8.0",
-        "@ctrl/react-adsense": "^2.1.0",
+        "@ctrl/react-adsense": "^3.0.0",
         "@headlessui/react": "2.2.0",
         "@heroicons/react": "^2.1.5",
         "@reduxjs/toolkit": "^2.9.0",
@@ -192,7 +192,7 @@
 
     "@corex/deepmerge": ["@corex/deepmerge@4.0.43", "", {}, "sha512-N8uEMrMPL0cu/bdboEWpQYb/0i2K5Qn8eCsxzOmxSggJbbQte7ljMRoXm917AbntqTGOzdTu+vP3KOOzoC70HQ=="],
 
-    "@ctrl/react-adsense": ["@ctrl/react-adsense@2.1.0", "", { "dependencies": { "tslib": "^2.8.1" } }, "sha512-au+OAi/33hE5RUZ/rUN760O+SfDF0bb1tofMHeeEpudR3RLQFN3MtliwJn6aktlqoZTovQuEW+ZXLo42ED2IAw=="],
+    "@ctrl/react-adsense": ["@ctrl/react-adsense@3.0.0", "", { "peerDependencies": { "react": ">=19.3", "react-dom": ">=19.3" } }, "sha512-vpsSctsBBMC3LmUysyrufwWsKupH0KQ+nse/mW9RsCIXXAAJFDoJvGcO1gCA9jhaAfFDmaZGaowqghNDZ/IqmA=="],
 
     "@eloqnt/config": ["@eloqnt/config@0.1.1", "", {}, "sha512-YRDigSaiJEzKDfzTth5kG+L/PKfB3mo8h7yNzpXExPfvQmcD05WoZT57PdhJE0jI+Vva6eb0OCU8hnHHgdME3g=="],
 
