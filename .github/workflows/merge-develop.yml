@@ -4,54 +4,34 @@ on:
   pull_request:
     branches: ['develop']
 
+permissions:
+  contents: read
+
 jobs:
-  lint-fe:
+  validate:
+    name: Lint, test, type-check, and build
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [22.x]
     steps:
-      - uses: actions/checkout@v3
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-      - name: Lint frontend
-        run: |
-          bun install
-          bun run lint:merge
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  test-fe:
-    runs-on: ubuntu-latest
-    needs: [lint-fe]
-
-    strategy:
-      matrix:
-        node-version: [22.x]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-      - name: Test frontend
-        run: |
-          bun install
-          bun run test:merge
-
-  build-fe:
-    runs-on: ubuntu-latest
-    needs: [lint-fe, test-fe]
-
-    strategy:
-      matrix:
-        node-version: [22.x]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: oven-sh/setup-bun@v2
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
-      - name: Build frontend
-        run: |
-          bun install
-          bun run build
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Lint
+        run: bun run lint:merge
+
+      - name: Test
+        run: bun run test:merge
+
+      - name: Type-check
+        run: bun run tsc
+
+      - name: Build
+        run: bun run build
