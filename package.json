@@ -93,7 +93,7 @@
 		"eslint-plugin-promise": "^6.6.0",
 		"eslint-plugin-react": "^7.37.5",
 		"eslint-plugin-unused-imports": "^4.4.1",
-		"globals": "^15.15.0",
+		"globals": "^17.13.0",
 		"globby": "^13.2.2",
 		"husky": "^9.1.7",
 		"i18next-resources-for-ts": "1.5.0",
