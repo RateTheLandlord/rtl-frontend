@@ -74,7 +74,7 @@
 		"@types/jest-axe": "^3.5.9",
 		"@types/lodash": "^4.17.27",
 		"@types/mapbox-gl": "^3.5.0",
-		"@types/node": "^22.19.0",
+		"@types/node": "^26.6.5",
 		"@types/node-cron": "^3.0.11",
 		"@types/nprogress": "^0.2.3",
 		"@types/react": "19.3.0",
