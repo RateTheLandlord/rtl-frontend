@@ -21,8 +21,8 @@ import Spinner from '../ui/Spinner'
 
 interface FiltersProps {
 	searchTitle?: string
-	selectedSort: SortOptions
-	setSelectedSort: (selectedSort: SortOptions) => void
+	selectedSort: SortOptions | null
+	setSelectedSort: (selectedSort: SortOptions | null) => void
 	sortOptions: SortOptions[]
 	countryFilter: Options | null
 	stateFilter: Options | null
@@ -90,7 +90,7 @@ function ResourceFilters({
 									<div className='py-2'>
 										<SelectList
 											state={countryFilter}
-											setState={(opt: Options) =>
+											setState={(opt: Options | null) =>
 												dispatch(updateResourceCountry(opt))
 											}
 											options={countryOptions}
@@ -100,7 +100,7 @@ function ResourceFilters({
 									<div className='py-2'>
 										<ComboBox
 											state={stateFilter}
-											setState={(opt: Options) =>
+											setState={(opt: Options | null) =>
 												dispatch(updateResourceState(opt))
 											}
 											options={stateOptions}
@@ -110,7 +110,7 @@ function ResourceFilters({
 									<div className='py-2'>
 										<ComboBox
 											state={cityFilter}
-											setState={(opt: Options) =>
+											setState={(opt: Options | null) =>
 												dispatch(updateResourceCity(opt))
 											}
 											options={cityOptions}

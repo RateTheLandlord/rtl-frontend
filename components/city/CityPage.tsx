@@ -32,7 +32,9 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 
 	// State
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
-	const [selectedSort, setSelectedSort] = useState<SortOptions>(sortOptions[2])
+	const [selectedSort, setSelectedSort] = useState<SortOptions | null>(
+		sortOptions[2],
+	)
 	const [selectedIndex, setSelectedIndex] = useState(0)
 
 	// Redux
@@ -41,7 +43,7 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 
 	// Query
 	const [queryParams, setQueryParams] = useState({
-		sort: selectedSort.value,
+		sort: selectedSort?.value,
 		state: state,
 		country: country,
 		city: city,
@@ -53,7 +55,7 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 	// Filtering and Infinite Loading
 	const updateParams = () => {
 		const params = {
-			sort: selectedSort.value,
+			sort: selectedSort?.value,
 			state: state,
 			country: country,
 			city: city,

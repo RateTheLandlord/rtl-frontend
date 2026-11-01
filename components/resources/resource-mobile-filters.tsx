@@ -97,7 +97,7 @@ export default function ResourceMobileFilters({
 
 									<MobileSelectList
 										state={countryFilter}
-										setState={(opt: Options) =>
+										setState={(opt: Options | null) =>
 											dispatch(updateResourceCountry(opt))
 										}
 										options={countryOptions}
@@ -105,7 +105,7 @@ export default function ResourceMobileFilters({
 									/>
 									<ComboBox
 										state={stateFilter}
-										setState={(opt: Options) =>
+										setState={(opt: Options | null) =>
 											dispatch(updateResourceState(opt))
 										}
 										options={stateOptions}
@@ -113,7 +113,7 @@ export default function ResourceMobileFilters({
 									/>
 									<ComboBox
 										state={cityFilter}
-										setState={(opt: Options) =>
+										setState={(opt: Options | null) =>
 											dispatch(updateResourceCity(opt))
 										}
 										options={cityOptions}

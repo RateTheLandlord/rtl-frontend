@@ -13,7 +13,7 @@ import { useTranslations } from 'next-intl'
 interface ComponentProps {
 	name: string
 	state: SortOptions | null
-	setState: (state: SortOptions) => void
+	setState: (state: SortOptions | null) => void
 	options: SortOptions[]
 }
 

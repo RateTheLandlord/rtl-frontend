@@ -6,6 +6,7 @@ import ZipInfo from './ZipInfo'
 import { IZipReviews } from '@/lib/review/types/review'
 import useInfiniteScroll from '@/util/hooks/useInfiniteScroll'
 import ReviewTable from '../reviews/review-table'
+import { ISortOptions } from '../reviews/review'
 
 interface IProps {
 	city: string
@@ -16,14 +17,21 @@ interface IProps {
 }
 
 const ZipPage = ({ city, state, country, zip, data }: IProps) => {
-	// Query
-	const queryParams = useMemo(() => {
+	const queryParams = useMemo<{
+		sort: ISortOptions
+		state: string
+		country: string
+		city: string
+		zip: string
+		search: string
+		limit: string
+	}>(() => {
 		return {
 			sort: 'new',
-			state: state,
-			country: country,
-			city: city,
-			zip: zip,
+			state,
+			country,
+			city,
+			zip,
 			search: '',
 			limit: '25',
 		}
@@ -34,7 +42,6 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 		queryParams,
 		offset: 150,
 	})
-
 	return (
 		<>
 			<div className='w-full px-2 md:px-0'>

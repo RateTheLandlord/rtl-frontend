@@ -4,7 +4,11 @@ import LandlordInfo from './LandlordInfo'
 import OtherLandlordInfo from './OtherLandlord'
 import LandlordBanner from './LandlordBanner'
 import { useTranslations } from 'next-intl'
-import { SuspiciousLandlord, UserReview } from '@/util/interfaces/interfaces'
+import {
+	SortOptions,
+	SuspiciousLandlord,
+	UserReview,
+} from '@/util/interfaces/interfaces'
 import Spinner from '../ui/Spinner'
 import { sortOptions } from '@/util/helpers/filter-options'
 import SortList from '../reviews/ui/sort-list'
@@ -26,7 +30,9 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 	const [bannerOpen, setBannerOpen] = useState<boolean>(false)
 	const [sortedReviews, setSortedReviews] = useState<UserReview[]>([])
 
-	const [sortState, setSortState] = useState(filteredSortOptions[0])
+	const [sortState, setSortState] = useState<SortOptions | null>(
+		filteredSortOptions[0],
+	)
 
 	const { data: suspiciousLandlord } = useSWR<SuspiciousLandlord | boolean>(
 		`/api/suspicious-landlords/get-suspicious-landlord?landlord=${encodeURIComponent(
@@ -45,7 +51,7 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 	}, [suspiciousLandlord])
 
 	useEffect(() => {
-		switch (sortState.value) {
+		switch (sortState?.value) {
 			case 'new':
 				const sortedOld = data.reviews.sort(
 					(a, b) => Number(b.id) - Number(a.id),

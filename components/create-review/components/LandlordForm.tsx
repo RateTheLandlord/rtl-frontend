@@ -33,7 +33,7 @@ const LandlordForm = ({
 				<LandlordComboBox
 					name={t('review-form.landlord')}
 					state={landlord}
-					setState={(landlord) => dispatch(updateLandlord(landlord))}
+					setState={(landlord) => dispatch(updateLandlord(landlord || ''))}
 					suggestions={landlordSuggestions}
 					isSearching={isSearching}
 					error={landlordValidationError}

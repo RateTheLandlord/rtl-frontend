@@ -9,8 +9,8 @@ import { Country } from '@/types/review.types'
 interface LocationProps {
 	selectedCountry: Options | null
 	selectedState: Options | null
-	setSelectedCountry: (opt: Options) => void
-	setSelectedState: (opt: Options) => void
+	setSelectedCountry: (opt: Options | null) => void
+	setSelectedState: (opt: Options | null) => void
 }
 
 const LocationForm = ({
@@ -32,7 +32,7 @@ const LocationForm = ({
 					<ComboBox
 						testid='location-country-test'
 						state={selectedCountry}
-						setState={(opt: Options) => setSelectedCountry(opt)}
+						setState={(opt: Options | null) => setSelectedCountry(opt)}
 						options={countryOptions}
 						name={t('country')}
 					/>
@@ -47,7 +47,7 @@ const LocationForm = ({
 							<ComboBox
 								testid='location-state-test'
 								state={selectedState}
-								setState={(opt: Options) => setSelectedState(opt)}
+								setState={(opt: Options | null) => setSelectedState(opt)}
 								options={getStates(selectedCountry.value)}
 								name={isIreland ? t('county') : t('state')}
 							/>

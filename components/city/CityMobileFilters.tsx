@@ -91,7 +91,9 @@ export default function CityMobileFilters({
 									{zipOptions && (
 										<ComboBox
 											state={zipFilter}
-											setState={(opt: Options) => dispatch(updateZip(opt))}
+											setState={(opt: Options | null) =>
+												dispatch(updateZip(opt))
+											}
 											options={zipOptions}
 											name={t('zip')}
 										/>

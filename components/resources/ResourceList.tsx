@@ -25,7 +25,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 	const query = useAppSelector((state) => state.resourceQuery)
 	const { countryFilter, stateFilter, cityFilter, searchFilter } = query
 	const dispatch = useAppDispatch()
-	const [selectedSort, setSelectedSort] = useState<SortOptions>(
+	const [selectedSort, setSelectedSort] = useState<SortOptions | null>(
 		resourceSortOptions[2],
 	)
 
@@ -38,7 +38,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 
 	// Query
 	const [queryParams, setQueryParams] = useState({
-		sort: selectedSort.value,
+		sort: selectedSort?.value,
 		state: '',
 		country: '',
 		city: '',
@@ -49,7 +49,7 @@ export default function ResourceList({ data }: { data: ResourceResponse }) {
 	// Filtering and Infinite Loading
 	const updateParams = () => {
 		const params = {
-			sort: selectedSort.value,
+			sort: selectedSort?.value,
 			state: stateFilter?.value || '',
 			country: countryFilter?.value || '',
 			city: cityFilter?.value || '',
