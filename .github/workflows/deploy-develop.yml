@@ -8,8 +8,7 @@ on:
 permissions:
   contents: read
 
-# If several commits are pushed quickly, let the newest development
-# build finish rather than allowing older builds to overwrite the dev tag.
+# Only the newest development build should publish the mutable dev tag.
 concurrency:
   group: deploy-develop-${{ github.ref }}
   cancel-in-progress: true
