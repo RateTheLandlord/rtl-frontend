@@ -28,7 +28,7 @@ const AdsComponent = ({ slot, format, layout }: IProps) => {
 		// For development environment, don't render the ad unit
 		return (
 			<div className='w-full overflow-hidden px-4 pt-4 sm:px-6 lg:px-8'>
-				<div className='mx-auto flex h-[100px] w-full max-w-2xl items-center justify-center rounded bg-red-500 md:h-[90px] lg:max-w-7xl'>
+				<div className='mx-auto w-full max-w-[320px] bg-red-500 sm:max-w-[468px] lg:max-w-[728px]'>
 					AD
 				</div>
 			</div>
