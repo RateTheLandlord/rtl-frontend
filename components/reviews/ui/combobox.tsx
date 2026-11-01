@@ -14,7 +14,7 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 interface ComponentProps {
 	name: string
 	state: Options | null
-	setState: (state: Options) => void
+	setState: (state: Options | null) => void
 	options: Options[]
 }
 

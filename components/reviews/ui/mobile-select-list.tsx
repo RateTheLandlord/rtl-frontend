@@ -6,7 +6,7 @@ import { Options } from '@/util/interfaces/interfaces'
 interface ComponentProps {
 	name: string
 	state: Options | null
-	setState: (state: Options) => void
+	setState: (state: Options | null) => void
 	options: Options[]
 }
 

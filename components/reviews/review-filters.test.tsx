@@ -16,9 +16,9 @@ interface FiltersProps {
 	title?: string
 	description?: string
 	searchTitle?: string
-	selectedSort: SortOptions
-	setSelectedSort: (selectedSort: SortOptions) => void
-	sortOptions: SortOptions[]
+	selectedSort: SortOptions | null
+	setSelectedSort: (selectedSort: SortOptions | null) => void
+	sortOptions: SortOptions[] | null
 	countryFilter: Options | null
 	stateFilter: Options | null
 	cityFilter: Options | null
@@ -34,17 +34,17 @@ interface FiltersProps {
 }
 
 const mockProps: FiltersProps = {
-	selectedSort: { id: 1, name: 'az', value: 'az' } as SortOptions,
+	selectedSort: { id: 1, name: 'az', value: 'az' },
 	sortOptions: [
 		{ id: 1, name: 'az', value: 'az' },
 		{ id: 2, name: 'za', value: 'za' },
 	] as SortOptions[],
 	setSelectedSort: jest.fn(),
 	searchTitle: 'Search Reviews',
-	countryFilter: { id: 1, name: 'USA', value: 'usa' } as Options,
-	stateFilter: { id: 1, name: 'California', value: 'ca' } as Options,
-	cityFilter: { id: 1, name: 'Los Angeles', value: 'la' } as Options,
-	zipFilter: { id: 1, name: '90001', value: '90001' } as Options,
+	countryFilter: { id: 1, name: 'USA', value: 'usa' },
+	stateFilter: { id: 1, name: 'California', value: 'ca' },
+	cityFilter: { id: 1, name: 'Los Angeles', value: 'la' },
+	zipFilter: { id: 1, name: '90001', value: '90001' },
 	dynamicCityOptions: [
 		{ id: 1, name: 'Los Angeles', value: 'la' },
 	] as Options[],
@@ -64,7 +64,10 @@ describe('ReviewFilters Component', () => {
 	it('renders without crashing', () => {
 		render(
 			<Provider store={store}>
-				<ReviewFilters {...mockProps} />
+				<ReviewFilters
+					{...mockProps}
+					sortOptions={mockProps.sortOptions ?? []}
+				/>
 			</Provider>,
 		)
 		expect(screen.getByTestId('review-filters-1')).toBeInTheDocument()
@@ -73,7 +76,10 @@ describe('ReviewFilters Component', () => {
 	it('calls dispatch and updateParams on submit button click', () => {
 		render(
 			<Provider store={store}>
-				<ReviewFilters {...mockProps} />
+				<ReviewFilters
+					{...mockProps}
+					sortOptions={mockProps.sortOptions ?? []}
+				/>
 			</Provider>,
 		)
 		fireEvent.click(screen.getByTestId('submit-button-1'))
@@ -83,7 +89,10 @@ describe('ReviewFilters Component', () => {
 	it('calls dispatch and updateParams on clear button click', () => {
 		render(
 			<Provider store={store}>
-				<ReviewFilters {...mockProps} />
+				<ReviewFilters
+					{...mockProps}
+					sortOptions={mockProps.sortOptions ?? []}
+				/>
 			</Provider>,
 		)
 		fireEvent.click(screen.getByText('reviews.clear'))
@@ -93,7 +102,10 @@ describe('ReviewFilters Component', () => {
 	it('Should not have a11y violation', async () => {
 		const { container } = render(
 			<Provider store={store}>
-				<ReviewFilters {...mockProps} />
+				<ReviewFilters
+					{...mockProps}
+					sortOptions={mockProps.sortOptions ?? []}
+				/>
 			</Provider>,
 		)
 		const result = await axe(container)

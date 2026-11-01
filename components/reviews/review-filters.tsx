@@ -25,8 +25,8 @@ interface FiltersProps {
 	title?: string
 	description?: string
 	searchTitle?: string
-	selectedSort: SortOptions
-	setSelectedSort: (selectedSort: SortOptions) => void
+	selectedSort: SortOptions | null
+	setSelectedSort: (selectedSort: SortOptions | null) => void
 	sortOptions: SortOptions[]
 	countryFilter: Options | null
 	stateFilter: Options | null
@@ -125,7 +125,9 @@ function ReviewFilters({
 									<div className='py-2'>
 										<ComboBox
 											state={cityFilter}
-											setState={(opt: Options) => dispatch(updateCity(opt))}
+											setState={(opt: Options | null) =>
+												dispatch(updateCity(opt))
+											}
 											options={dynamicCityOptions}
 											name={t('city')}
 										/>
@@ -134,7 +136,9 @@ function ReviewFilters({
 										{zipOptions && (
 											<ComboBox
 												state={zipFilter}
-												setState={(opt: Options) => dispatch(updateZip(opt))}
+												setState={(opt: Options | null) =>
+													dispatch(updateZip(opt))
+												}
 												options={dynamicZipOptions}
 												name={t('zip')}
 											/>

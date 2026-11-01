@@ -125,14 +125,18 @@ export default function MobileReviewFilters({
 
 									<ComboBox
 										state={cityFilter}
-										setState={(opt: Options) => dispatch(updateCity(opt))}
+										setState={(opt: Options | null) =>
+											dispatch(updateCity(opt))
+										}
 										options={dynamicCityOptions}
 										name={t('city')}
 									/>
 									{zipOptions && (
 										<ComboBox
 											state={zipFilter}
-											setState={(opt: Options) => dispatch(updateZip(opt))}
+											setState={(opt: Options | null) =>
+												dispatch(updateZip(opt))
+											}
 											options={dynamicZipOptions}
 											name={t('zip')}
 										/>

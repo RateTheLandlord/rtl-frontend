@@ -15,8 +15,8 @@ interface FiltersProps {
 	title?: string
 	description?: string
 	searchTitle?: string
-	selectedSort: SortOptions
-	setSelectedSort: (selectedSort: SortOptions) => void
+	selectedSort: SortOptions | null
+	setSelectedSort: (selectedSort: SortOptions | null) => void
 	sortOptions: SortOptions[]
 	zipFilter: Options | null
 	zipOptions?: Options[]
@@ -74,7 +74,9 @@ function CityFilters({
 										{zipOptions && (
 											<ComboBox
 												state={zipFilter}
-												setState={(opt: Options) => dispatch(updateZip(opt))}
+												setState={(opt: Options | null) =>
+													dispatch(updateZip(opt))
+												}
 												options={zipOptions}
 												name={t('zip')}
 											/>

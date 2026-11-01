@@ -11,7 +11,7 @@ import { LandlordSuggestion } from '@/lib/review/landlords'
 interface ComponentProps {
 	name: string
 	state: string | undefined
-	setState: (state: string) => void
+	setState: (state: string | null) => void
 	suggestions: LandlordSuggestion[]
 	isSearching: boolean
 	error: boolean

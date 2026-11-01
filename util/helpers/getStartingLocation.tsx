@@ -9,11 +9,6 @@ type ViewState = {
 	zoom: number
 }
 
-type Location = {
-	latitude: number
-	longitude: number
-}
-
 export const getStartingLocation = (
 	setViewState: ({ latitude, longitude, zoom }: ViewState) => void,
 	country: Options,
@@ -28,9 +23,8 @@ export const getStartingLocation = (
 		})
 	} else if (state && country) {
 		if (country.value === 'CA') {
-			const location = caProvinceLocations[
-				state.value as keyof typeof caProvinceLocations
-			] as Location
+			const location =
+				caProvinceLocations[state.value as keyof typeof caProvinceLocations]
 			if (location) {
 				setViewState({
 					latitude: location.latitude,
@@ -41,9 +35,8 @@ export const getStartingLocation = (
 				toast.error('Error getting location, using default location.')
 			}
 		} else if (country.value === 'US') {
-			const location = usStateLocations[
-				state.value as keyof typeof usStateLocations
-			] as Location
+			const location =
+				usStateLocations[state.value as keyof typeof usStateLocations]
 			if (location) {
 				setViewState({
 					latitude: location.latitude,
