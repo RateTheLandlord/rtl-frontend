@@ -48,7 +48,7 @@
 		"react-redux": "^9.2.0",
 		"react-share": "^5.2.2",
 		"react-toastify": "^11.1.0",
-		"recharts": "^2.15.4",
+		"recharts": "^3.10.1",
 		"redux": "^5.0.0",
 		"sharp": "^0.35.4",
 		"swr": "^2.5.1",
