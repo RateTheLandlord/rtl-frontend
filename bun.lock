@@ -21,7 +21,7 @@
         "next": "16.4.3",
         "next-intl": "^4.14.9",
         "next-recaptcha-v3": "^1.5.3",
-        "next-seo": "^6.8.0",
+        "next-seo": "^7.3.0",
         "next-sitemap": "^4.2.3",
         "node-cron": "^4.6.0",
         "nprogress": "^0.2.0",
@@ -1566,7 +1566,7 @@
 
     "next-router-mock": ["next-router-mock@0.9.13", "", { "peerDependencies": { "next": ">=10.0.0", "react": ">=17.0.0" } }, "sha512-906n2RRaE6Y28PfYJbaz5XZeJ6Tw8Xz1S6E31GGwZ0sXB6/XjldD1/2azn1ZmBmRk5PQRkzjg+n+RHZe5xQzWA=="],
 
-    "next-seo": ["next-seo@6.8.0", "", { "peerDependencies": { "next": "^8.1.1-canary.54 || >=9.0.0", "react": ">=16.0.0", "react-dom": ">=16.0.0" } }, "sha512-zcxaV67PFXCSf8e6SXxbxPaOTgc8St/esxfsYXfQXMM24UESUVSXFm7f2A9HMkAwa0Gqn4s64HxYZAGfdF4Vhg=="],
+    "next-seo": ["next-seo@7.3.0", "", { "peerDependencies": { "next": ">=13.4.0", "react": ">=18.2.0" } }, "sha512-j8tO4dZRBcl2jQjVSXVQmnkUHRE3czl+0Bu4Oeo3Ttwfj8yQOS6k4Esd+tPOMCZ0KhTUwQoWnGGGPBoHcCHyqg=="],
 
     "next-sitemap": ["next-sitemap@4.2.3", "", { "dependencies": { "@corex/deepmerge": "^4.0.43", "@next/env": "^13.4.3", "fast-glob": "^3.2.12", "minimist": "^1.2.8" }, "peerDependencies": { "next": "*" }, "bin": { "next-sitemap": "bin/next-sitemap.mjs", "next-sitemap-cjs": "bin/next-sitemap.cjs" } }, "sha512-vjdCxeDuWDzldhCnyFCQipw5bfpl4HmZA7uoo3GAaYGjGgfL4Cxb1CiztPuWGmS+auYs7/8OekRS8C2cjdAsjQ=="],
 
