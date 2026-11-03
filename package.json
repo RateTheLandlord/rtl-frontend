@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
-		"dev": "bun next dev",
+		"dev": "bun next dev --webpack",
 		"prebuild": "next telemetry disable",
 		"build": "next build",
 		"postbuild": "next-sitemap",

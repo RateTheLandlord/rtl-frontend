@@ -1,6 +1,6 @@
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { Options } from '@/util/interfaces/interfaces'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Map as MapView, Marker } from 'react-map-gl/mapbox'
 import CustomMarker from './CustomMarker'
 import { getStartingLocation } from '@/util/helpers/getStartingLocation'
@@ -13,176 +13,223 @@ interface MapProps {
 	stateFilter: Options | null
 }
 
+const CANADA: Options = {
+	id: 2,
+	name: 'Canada',
+	value: 'CA',
+}
+
+const NOVA_SCOTIA: Options = {
+	id: 7,
+	name: 'Nova Scotia',
+	value: 'NOVA SCOTIA',
+}
+
 const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 	const router = useRouter()
 	const { affiliate } = router.query
-	// Consolidate related states
-	const [formData, setFormData] = useState({
-		zipCodes: [] as Options[],
-		country: countryFilter,
-		state: stateFilter,
-		dynamicStateOptions: [] as Options[],
-		selectedPoint: null as IZipLocations | null,
-		locations: [] as IZipLocations[],
-		currAffiliate: null as string | null,
-		prevCountry: null as Options | null,
-	})
 
-	// Default location is Toronto, Ontario, Canada
+	const isStfxAffiliate = affiliate === 'stfx'
+
+	const [country, setCountry] = useState<Options | null>(countryFilter)
+	const [state, setState] = useState<Options | null>(stateFilter)
+	const [zipCodes, setZipCodes] = useState<Options[]>([])
+	const [locations, setLocations] = useState<IZipLocations[]>([])
+	const [selectedPoint, setSelectedPoint] = useState<IZipLocations | null>(null)
+	const [currAffiliate, setCurrAffiliate] = useState<string | null>(null)
+
 	const [viewState, setViewState] = useState({
 		longitude: -79.382,
 		latitude: 43.654,
 		zoom: 10,
 	})
 
-	useEffect(() => {
-		if (formData.country && formData.state) {
-			getStartingLocation(
-				setViewState,
-				formData.country,
-				formData.state,
-				formData.currAffiliate,
-			)
-		}
-	}, [formData.country, formData.state, formData.currAffiliate])
+	// Track asynchronous requests to prevent stale responses.
+	const zipRequestRef = useRef(0)
+	const locationRequestRef = useRef(0)
 
-	const fetchZips = async (country: Options, state: Options) => {
-		try {
-			const options = await fetchFilterOptions(
-				country.value,
-				state.value,
-				'',
-				'',
-			)
-			setFormData((prevData) => ({ ...prevData, zipCodes: options.zips }))
-		} catch {
-			console.error('Error fetching zip codes')
-		}
-	}
-
+	// Synchronize filters with parent props unless an affiliate overrides them.
 	useEffect(() => {
-		if (formData.country && formData.state) {
-			fetchZips(formData.country, formData.state).catch(() =>
-				console.error('Failed to get Zips'),
-			)
-		}
-	}, [formData.country, formData.state])
+		if (!router.isReady) return
 
-	useEffect(() => {
-		if (!formData.currAffiliate) {
-			setFormData((prevData) => ({
-				...prevData,
-				selectedPoint: null,
-			}))
+		if (isStfxAffiliate) {
+			setCountry(CANADA)
+			setState(NOVA_SCOTIA)
+			setCurrAffiliate('stfx')
+		} else {
+			setCountry(countryFilter)
+			setState(stateFilter)
+			setCurrAffiliate(null)
 		}
-	}, [formData.currAffiliate])
 
+		setSelectedPoint(null)
+	}, [router.isReady, isStfxAffiliate, countryFilter, stateFilter])
+
+	// Update the map's starting location when the filters or affiliate change.
 	useEffect(() => {
-		if (router.isReady && affiliate === 'stfx') {
-			setFormData({
-				zipCodes: [],
-				country: { id: 2, name: 'Canada', value: 'CA' },
-				state: { id: 7, name: 'Nova Scotia', value: 'NOVA SCOTIA' },
-				dynamicStateOptions: [],
-				selectedPoint: null,
-				locations: [],
-				currAffiliate: 'stfx',
-				prevCountry: { id: 2, name: 'Canada', value: 'CA' },
-			})
+		if (country && state) {
+			getStartingLocation(setViewState, country, state, currAffiliate)
 		}
-	}, [affiliate, router.isReady])
+	}, [country, state, currAffiliate])
 
+	// Fetch ZIP codes whenever the country or state changes.
 	useEffect(() => {
-		if (formData.zipCodes.length > 0) {
-			const getLocations = async () => {
-				try {
-					const res = await fetch('/api/location/get-location', {
-						method: 'POST',
-						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify({
-							zipCodes: formData.zipCodes,
-							country_code: formData.country?.value,
-						}),
-					})
-					if (!res.ok) throw new Error('Network response was not ok')
-					const data = (await res.json()) as IZipLocations[]
-					setFormData((prevData) => ({ ...prevData, locations: data }))
-				} catch {
-					console.error('Error fetching locations')
+		const requestId = ++zipRequestRef.current
+
+		setZipCodes([])
+		setLocations([])
+		setSelectedPoint(null)
+
+		if (!country || !state) return
+
+		const loadZips = async () => {
+			try {
+				const options = await fetchFilterOptions(
+					country.value,
+					state.value,
+					'',
+					'',
+				)
+
+				if (requestId !== zipRequestRef.current) return
+
+				setZipCodes(options.zips)
+			} catch (error) {
+				if (requestId === zipRequestRef.current) {
+					console.error('Error fetching ZIP codes:', error)
 				}
 			}
-			getLocations().catch(() => console.error('Failed to get Locations'))
 		}
-	}, [formData.zipCodes, formData.country?.value])
 
-	const updateSelectedPoint = (point: IZipLocations | null) => {
-		setFormData((prevData) => ({ ...prevData, selectedPoint: point }))
-	}
+		void loadZips()
+
+		return () => {
+			zipRequestRef.current++
+		}
+	}, [country, state])
+
+	// Fetch map locations whenever the ZIP codes change.
+	useEffect(() => {
+		const requestId = ++locationRequestRef.current
+
+		setLocations([])
+
+		if (!zipCodes.length || !country) return
+
+		const loadLocations = async () => {
+			try {
+				const response = await fetch('/api/location/get-location', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						zipCodes,
+						country_code: country.value,
+					}),
+				})
+
+				if (!response.ok) {
+					throw new Error(`Failed to fetch locations: ${response.status}`)
+				}
+
+				const data = (await response.json()) as IZipLocations[]
+
+				if (requestId !== locationRequestRef.current) return
+
+				setLocations(data)
+			} catch (error) {
+				if (requestId === locationRequestRef.current) {
+					console.error('Error fetching locations:', error)
+				}
+			}
+		}
+
+		void loadLocations()
+
+		return () => {
+			locationRequestRef.current++
+		}
+	}, [zipCodes, country])
+
+	const updateSelectedPoint = useCallback((point: IZipLocations | null) => {
+		setSelectedPoint(point)
+	}, [])
+
+	const isSupportedCountry =
+		country?.name === 'Canada' || country?.name === 'United States'
 
 	return (
 		<div
 			data-testid='map-component'
 			className='divide divide-primary mt-2 flex flex-col gap-2 lg:flex-row'
 		>
-			{/* Filter Options */}
+			{/* Selected location information */}
 			<div className='basis-1/5'>
-				{formData.selectedPoint && (
+				{selectedPoint && (
 					<Information
-						selectedPoint={formData.selectedPoint}
-						country={formData.country}
-						state={formData.state}
+						selectedPoint={selectedPoint}
+						country={country}
+						state={state}
 					/>
 				)}
 			</div>
 
-			{/* Fallback if Country Selected is not Canada or the USA */}
-			{formData.country &&
-				formData.country.name !== 'Canada' &&
-				formData.country.name !== 'United States' && (
-					<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
-						<h1 className='mt-4 text-2xl text-gray-900 sm:text-5xl'>
-							Not Available
-						</h1>
-						<p className='mt-6 text-base leading-7 text-gray-600'>
-							Sorry, this country is not available for maps yet. Check back
-							soon!
-						</p>
-					</div>
-				)}
+			{/* Unsupported country fallback */}
+			{country && !isSupportedCountry && (
+				<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
+					<h1 className='mt-4 text-2xl text-gray-900 sm:text-5xl'>
+						Not Available
+					</h1>
+					<p className='mt-6 text-base leading-7 text-gray-600'>
+						Sorry, this country is not available for maps yet. Check back soon!
+					</p>
+				</div>
+			)}
 
-			{/* Map View */}
-			{formData.state &&
-				formData.country &&
-				(formData.country.name === 'Canada' ||
-					formData.country.name === 'United States') && (
-					<MapView
-						{...viewState}
-						reuseMaps
-						mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
-						style={{ width: '100%', aspectRatio: '1 / 1' }}
-						mapStyle='mapbox://styles/mapbox/streets-v9'
-						onMove={(evt) => setViewState(evt.viewState)}
-					>
-						{formData.locations.map(
-							(location) =>
-								location?.latitude &&
-								location.longitude && (
-									<Marker
-										key={location.zip}
-										longitude={Number(location.longitude)}
-										latitude={Number(location.latitude)}
-										anchor='bottom'
-									>
-										<CustomMarker
-											selectedPoint={formData.selectedPoint}
-											setSelectedPoint={updateSelectedPoint}
-											location={location}
-										/>
-									</Marker>
-								),
-						)}
-					</MapView>
-				)}
+			{/* Map */}
+			{country && state && isSupportedCountry && (
+				<MapView
+					{...viewState}
+					reuseMaps
+					mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
+					style={{
+						width: '100%',
+						aspectRatio: '1 / 1',
+					}}
+					mapStyle='mapbox://styles/mapbox/streets-v12'
+					onMove={(evt) => setViewState(evt.viewState)}
+				>
+					{locations.map((location) => {
+						const latitude = Number(location.latitude)
+						const longitude = Number(location.longitude)
+
+						if (
+							location.latitude == null ||
+							location.longitude == null ||
+							!Number.isFinite(latitude) ||
+							!Number.isFinite(longitude)
+						) {
+							return null
+						}
+
+						return (
+							<Marker
+								key={location.zip}
+								longitude={longitude}
+								latitude={latitude}
+								anchor='bottom'
+							>
+								<CustomMarker
+									selectedPoint={selectedPoint}
+									setSelectedPoint={updateSelectedPoint}
+									location={location}
+								/>
+							</Marker>
+						)
+					})}
+				</MapView>
+			)}
 		</div>
 	)
 }
