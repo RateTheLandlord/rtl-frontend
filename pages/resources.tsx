@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { NextSeo } from 'next-seo'
-import { useRouter } from 'next/router'
 import AdsComponent from '@/components/adsense/Adsense'
 import ResourceList from '@/components/resources/ResourceList'
-import { ResourceResponse } from '@/util/interfaces/interfaces'
-import { getResources } from '@/lib/tenant-resource/resource'
-import { useTranslations } from 'next-intl'
-import { readLocaleFile } from '@/util/readLocalFile'
 import Spinner from '@/components/ui/Spinner'
-
+import { getResources } from '@/lib/tenant-resource/resource'
+import { ResourceResponse } from '@/util/interfaces/interfaces'
+import { readLocaleFile } from '@/util/readLocalFile'
+import { useTranslations } from 'next-intl'
+import { useRouter } from 'next/router'
+import SEO from '@/components/seo/SEO'
 import type { JSX } from 'react'
 
 interface IProps {
@@ -23,8 +22,6 @@ function Resources({ data }: IProps): JSX.Element {
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
-	const twitterHandle = '@r8thelandlord'
-	const siteName = 'RateTheLandlord.org'
 	const t = useTranslations('resources')
 
 	if (!data?.resources) return <Spinner />
@@ -32,31 +29,17 @@ function Resources({ data }: IProps): JSX.Element {
 	if (data?.resources.length === 0) return <div>Error Loading Resources</div>
 	return (
 		<div className='flex w-full justify-center'>
-			<NextSeo
+			<SEO
 				title={title}
 				description={desc}
 				canonical={pageURL}
 				openGraph={{
 					type: 'website',
-					locale: 'en_CA', //  Default is en_US
 					url: pageURL,
 					title,
 					description: desc,
-
-					site_name: siteName,
 				}}
-				twitter={{
-					handle: twitterHandle,
-					site: twitterHandle,
-					cardType: 'summary_large_image',
-				}}
-				additionalLinkTags={[
-					{
-						rel: 'icon',
-						href: `${siteURL}/favicon.ico`,
-					},
-				]}
-			/>
+			/>{' '}
 			<div className='container mt-5 flex flex-col items-center gap-4 px-2'>
 				<AdsComponent slot='9611751505' />
 				<ResourceList data={data} />

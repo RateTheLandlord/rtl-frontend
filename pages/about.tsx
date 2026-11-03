@@ -3,11 +3,11 @@ import Contact from '@/components/about/contact'
 import Contributing from '@/components/about/contributing'
 import Moderation from '@/components/about/moderation'
 import Privacy from '@/components/about/privacy'
-import { NextSeo } from 'next-seo'
-import { useRouter } from 'next/router'
-import React, { type JSX } from 'react'
 import Revenue from '@/components/about/revenue'
 import Poster from '@/components/poster/Poster'
+import SEO from '@/components/seo/SEO'
+import { useRouter } from 'next/router'
+import { type JSX } from 'react'
 
 function About(): JSX.Element {
 	const title = 'About | Rate The Landlord'
@@ -17,40 +17,18 @@ function About(): JSX.Element {
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
-	const twitterHandle = '@r8thelandlord'
-	const siteName = 'RateTheLandlord.org'
 	return (
 		<div className='flex w-full justify-center'>
-			<NextSeo
+			<SEO
 				title={title}
 				description={desc}
 				canonical={pageURL}
 				openGraph={{
 					type: 'website',
-					locale: 'en_CA', //  Default is en_US
 					url: pageURL,
 					title,
 					description: desc,
-
-					site_name: siteName,
 				}}
-				twitter={{
-					handle: twitterHandle,
-					site: twitterHandle,
-					cardType: 'summary_large_image',
-				}}
-				additionalMetaTags={[
-					{
-						property: 'author',
-						content: title,
-					},
-				]}
-				additionalLinkTags={[
-					{
-						rel: 'icon',
-						href: `${siteURL}/favicon.ico`,
-					},
-				]}
 			/>
 			<div className='container mt-5 flex flex-col items-center gap-4 px-2'>
 				<AboutUs />

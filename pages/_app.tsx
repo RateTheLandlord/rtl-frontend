@@ -1,21 +1,24 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import Layout from '@/components/layout/layout'
-import { AppProps } from 'next/app'
-import 'mapbox-gl/dist/mapbox-gl.css'
-import '../styles/global.css'
-import { Provider } from 'react-redux'
-import { store } from '@/redux/store'
-import { ReCaptchaProvider } from 'next-recaptcha-v3'
-import { UserProfile, UserProvider } from '@auth0/nextjs-auth0/client'
-import { PHProvider } from '@/components/PostHog/PHProvider'
-import nProgress from 'nprogress'
-import { Router, useRouter } from 'next/router'
-import 'nprogress/nprogress.css'
-import 'react-toastify/dist/ReactToastify.css'
-import { ToastContainer } from 'react-toastify'
-import { useEffect, type JSX } from 'react'
-import { NextIntlClientProvider } from 'next-intl'
 import ModalProvider from '@/components/modal/ModalProvider'
+import { PHProvider } from '@/components/PostHog/PHProvider'
+import { store } from '@/redux/store'
+import { UserProfile, UserProvider } from '@auth0/nextjs-auth0/client'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import { NextIntlClientProvider } from 'next-intl'
+import { ReCaptchaProvider } from 'next-recaptcha-v3'
+import { generateDefaultSeo } from 'next-seo/pages'
+import { AppProps } from 'next/app'
+import Head from 'next/head'
+import { Router, useRouter } from 'next/router'
+import nProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+import { useEffect, type JSX } from 'react'
+import { Provider } from 'react-redux'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import '../styles/global.css'
+import { seoConfig } from '@/lib/seo/confit'
 
 const CAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string
 const ENVIRONMENT = process.env.NEXT_PUBLIC_ENVIRONMENT as string
@@ -60,6 +63,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 			messages={pageProps.messages}
 			timeZone={timeZone}
 		>
+			<Head>{generateDefaultSeo(seoConfig)}</Head>
 			<PHProvider>
 				<UserProvider user={user}>
 					<Provider store={store}>
