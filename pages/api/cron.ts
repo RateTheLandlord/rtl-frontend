@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import cron from 'node-cron'
 import dayjs from 'dayjs'
 import { NextApiRequest, NextApiResponse } from 'next'
