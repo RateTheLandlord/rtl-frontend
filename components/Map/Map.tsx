@@ -1,7 +1,7 @@
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { Options } from '@/util/interfaces/interfaces'
 import { useEffect, useState } from 'react'
-import { Map as MapView, Marker } from 'react-map-gl'
+import { Map as MapView, Marker } from 'react-map-gl/mapbox'
 import CustomMarker from './CustomMarker'
 import { getStartingLocation } from '@/util/helpers/getStartingLocation'
 import Information from './Information'

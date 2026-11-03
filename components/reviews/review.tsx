@@ -1,25 +1,25 @@
 import ReviewFilters from '@/components/reviews/review-filters'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
+import { fetchReviews } from '@/util/helpers/fetchReviews'
 import { sortOptions } from '@/util/helpers/filter-options'
+import useInfiniteScroll from '@/util/hooks/useInfiniteScroll'
+import useScreenWidth from '@/util/hooks/useScreenWidth'
 import {
 	UserReview as IReview,
-	SortOptions,
 	Options,
+	SortOptions,
 } from '@/util/interfaces/interfaces'
-import React, { useEffect, useState } from 'react'
-import { fetchReviews } from '@/util/helpers/fetchReviews'
-import MobileReviewFilters from './mobile-review-filters'
-import { useTranslations } from 'next-intl'
-import ButtonLight from '../ui/button-light'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
+import { debounce } from 'lodash'
+import { useTranslations } from 'next-intl'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import MapComponent from '../Map/Map'
 import AnalyticsComponent from '../analytics/analytics'
+import ButtonLight from '../ui/button-light'
 import StateInfo from './components/StateInfo'
-import { debounce } from 'lodash'
-import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { useRouter } from 'next/router'
-import useScreenWidth from '@/util/hooks/useScreenWidth'
-import useInfiniteScroll from '@/util/hooks/useInfiniteScroll'
+import MobileReviewFilters from './mobile-review-filters'
 import ReviewTable from './review-table'
 
 export interface ReviewsResponse {
