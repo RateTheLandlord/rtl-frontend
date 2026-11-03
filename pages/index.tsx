@@ -2,9 +2,9 @@ import AdsComponent from '@/components/adsense/Adsense'
 import Search from '@/components/home/Search'
 import Hero from '@/components/home/hero'
 import IconSection from '@/components/home/icon-section'
-import { NextSeo } from 'next-seo'
+import SEO from '@/components/seo/SEO'
 import { useRouter } from 'next/router'
-import React, { type JSX } from 'react'
+import { type JSX } from 'react'
 
 export default function Home(): JSX.Element {
 	const title = 'Rate The Landlord'
@@ -13,42 +13,20 @@ export default function Home(): JSX.Element {
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
-	const twitterHandle = '@r8thelandlord'
-	const siteName = 'RateTheLandlord.org'
 
 	return (
 		<div className='flex flex-col justify-center'>
-			<NextSeo
+			<SEO
 				title={title}
 				description={desc}
 				canonical={pageURL}
 				openGraph={{
 					type: 'website',
-					locale: 'en_CA',
 					url: pageURL,
 					title,
 					description: desc,
-
-					site_name: siteName,
 				}}
-				twitter={{
-					handle: twitterHandle,
-					site: twitterHandle,
-					cardType: 'summary_large_image',
-				}}
-				additionalMetaTags={[
-					{
-						property: 'author',
-						content: title,
-					},
-				]}
-				additionalLinkTags={[
-					{
-						rel: 'icon',
-						href: `${siteURL}/favicon.ico`,
-					},
-				]}
-			/>
+			/>{' '}
 			<AdsComponent slot='2964662882' />
 			<div className='bg-background mx-2 mt-4 rounded-3xl pb-4'>
 				<Hero />
