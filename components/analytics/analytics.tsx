@@ -79,22 +79,32 @@ const AnalyticsComponent = ({ queryParams }: AnalyticProps) => {
 	const chartLabel = isMedianSelected ? t('median-reported') : t('avg-landlord')
 
 	const handleClick = (metric: string) => {
-		setSelectedMetric(metric === 'median' ? 'median' : 'rating')
-	}
+		const selected = metric === 'median' ? 'median' : 'rating'
 
+		if (selected === selectedMetric) return
+
+		posthog.capture('reviews_analytics_metric_selected', {
+			metric: selected,
+		})
+
+		setSelectedMetric(selected)
+	}
 	useEffect(() => {
 		if (error || chartDataError) {
-			posthog.capture('analytics_data_error')
-		}
-	}, [error, chartDataError])
-
-	useEffect(() => {
-		if (data) {
-			posthog.capture('analytics_viewed', {
-				queryParams,
+			posthog.capture('reviews_analytics_load_error', {
+				main_request_failed: Boolean(error),
+				chart_request_failed: Boolean(chartDataError),
 			})
 		}
-	}, [data, queryParams])
+	}, [error, chartDataError])
+	useEffect(() => {
+		if (data && chartData) {
+			posthog.capture('reviews_analytics_loaded', {
+				has_rating_data: (chartData.avgRatingChartData?.length ?? 0) > 0,
+				has_rent_data: (chartData.medianChartData?.length ?? 0) > 0,
+			})
+		}
+	}, [data, chartData])
 
 	const CustomTooltip = ({ active, payload, label }: TooltipContentProps) => {
 		const value = Number(payload?.[0]?.value)
