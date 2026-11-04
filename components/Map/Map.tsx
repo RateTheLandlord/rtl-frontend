@@ -1,12 +1,13 @@
+import { IZipLocations } from '@/lib/location/types'
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
+import { getStartingLocation } from '@/util/helpers/getStartingLocation'
 import { Options } from '@/util/interfaces/interfaces'
+import { useRouter } from 'next/router'
+import posthog from 'posthog-js'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Map as MapView, Marker } from 'react-map-gl/mapbox'
 import CustomMarker from './CustomMarker'
-import { getStartingLocation } from '@/util/helpers/getStartingLocation'
 import Information from './Information'
-import { IZipLocations } from '@/lib/location/types'
-import { useRouter } from 'next/router'
 
 interface MapProps {
 	countryFilter: Options | null
@@ -136,6 +137,10 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 				const data = (await response.json()) as IZipLocations[]
 
 				if (requestId !== locationRequestRef.current) return
+
+				posthog.capture('reviews_map_loaded', {
+					marker_count: data.length,
+				})
 
 				setLocations(data)
 			} catch (error) {
