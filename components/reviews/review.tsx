@@ -14,6 +14,7 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import { debounce } from 'lodash'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/router'
+import posthog from 'posthog-js'
 import { useEffect, useState } from 'react'
 import MapComponent from '../Map/Map'
 import AnalyticsComponent from '../analytics/analytics'
@@ -75,6 +76,22 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 			setSelectedIndex(1)
 		}
 	}, [view, screenWidth])
+
+	useEffect(() => {
+		if (selectedIndex === 1) {
+			posthog.capture('reviews_map_viewed', {
+				source: 'reviews',
+				tab: 'map',
+			})
+		}
+
+		if (selectedIndex === 2) {
+			posthog.capture('reviews_analytics_viewed', {
+				source: 'reviews',
+				tab: 'analytics',
+			})
+		}
+	}, [selectedIndex])
 
 	// Redux
 	const query = useAppSelector((state) => state.query)

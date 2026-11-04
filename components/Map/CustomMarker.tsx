@@ -1,4 +1,5 @@
 import { IZipLocations } from '@/lib/location/types'
+import posthog from 'posthog-js'
 
 interface IProps {
 	location: IZipLocations | null
@@ -13,7 +14,13 @@ const CustomMarker = ({
 }: IProps) => {
 	return (
 		<span
-			onClick={() => setSelectedPoint(location)}
+			onClick={() => {
+				posthog.capture('reviews_map_marker_clicked', {
+					source: 'reviews_map',
+				})
+
+				setSelectedPoint(location)
+			}}
 			aria-hidden='true'
 			className='relative z-50 flex h-5 w-5 flex-shrink-0 cursor-pointer items-center justify-center'
 		>
