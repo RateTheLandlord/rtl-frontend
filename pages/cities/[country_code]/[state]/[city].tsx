@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import CityPage from '@/components/city/CityPage'
+import SEO from '@/components/seo/SEO'
 import Spinner from '@/components/ui/Spinner'
-import { toTitleCase } from '@/util/helpers/toTitleCase'
-import { NextSeo } from 'next-seo'
-import { useRouter } from 'next/router'
 import { getCityReviews } from '@/lib/review/city'
 import { ICityQuery } from '@/lib/review/types/Queries'
 import { ICityReviews } from '@/lib/review/types/review'
+import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { readLocaleFile } from '@/util/readLocalFile'
+import { useRouter } from 'next/router'
 
 interface IProps {
 	city: string
@@ -30,8 +30,6 @@ const City = ({ city, state, country, data }: IProps) => {
 	const siteURL = 'https://ratethelandlord.org'
 	const pathName = useRouter().pathname
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
-	const twitterHandle = '@r8thelandlord'
-	const siteName = 'RateTheLandlord.org'
 
 	if (!data?.reviews) return <Spinner />
 
@@ -39,37 +37,17 @@ const City = ({ city, state, country, data }: IProps) => {
 
 	return (
 		<>
-			<NextSeo
+			<SEO
 				title={title}
 				description={desc}
 				canonical={pageURL}
 				openGraph={{
 					type: 'website',
-					locale: 'en_CA',
 					url: pageURL,
 					title,
 					description: desc,
-
-					site_name: siteName,
 				}}
-				twitter={{
-					handle: twitterHandle,
-					site: twitterHandle,
-					cardType: 'summary_large_image',
-				}}
-				additionalMetaTags={[
-					{
-						property: 'author',
-						content: title,
-					},
-				]}
-				additionalLinkTags={[
-					{
-						rel: 'icon',
-						href: `${siteURL}/favicon.ico`,
-					},
-				]}
-			/>
+			/>{' '}
 			<CityPage city={city} state={state} country={country} data={data} />
 		</>
 	)

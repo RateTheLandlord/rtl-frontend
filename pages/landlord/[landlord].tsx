@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import LandlordPage from '@/components/landlord/LandlordPage'
+import SEO from '@/components/seo/SEO'
 import Spinner from '@/components/ui/Spinner'
-import { NextSeo } from 'next-seo'
-import { useRouter } from 'next/router'
 import { getLandlordReviews } from '@/lib/review/landlords'
 import { ILandlordReviews } from '@/lib/review/types/Queries'
 import { readLocaleFile } from '@/util/readLocalFile'
+import { useRouter } from 'next/router'
 
 interface IProps {
 	landlord: string
@@ -24,42 +24,20 @@ const Landlord = ({ landlord, data }: IProps) => {
 	const desc = `Reviews for ${landlord}. Read ${data.total} reviews and rental experiences for ${landlord}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
 	const siteURL = 'https://ratethelandlord.org'
 	const pageURL = pathName === '/' ? siteURL : siteURL + pathName
-	const twitterHandle = '@r8thelandlord'
-	const siteName = 'RateTheLandlord.org'
 
 	return (
 		<>
-			<NextSeo
+			<SEO
 				title={title}
 				description={desc}
 				canonical={pageURL}
 				openGraph={{
 					type: 'website',
-					locale: 'en_CA',
 					url: pageURL,
 					title,
 					description: desc,
-
-					site_name: siteName,
 				}}
-				twitter={{
-					handle: twitterHandle,
-					site: twitterHandle,
-					cardType: 'summary_large_image',
-				}}
-				additionalMetaTags={[
-					{
-						property: 'author',
-						content: title,
-					},
-				]}
-				additionalLinkTags={[
-					{
-						rel: 'icon',
-						href: `${siteURL}/favicon.ico`,
-					},
-				]}
-			/>
+			/>{' '}
 			<LandlordPage landlord={landlord} data={data} />
 		</>
 	)

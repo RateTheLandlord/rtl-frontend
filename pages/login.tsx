@@ -1,10 +1,9 @@
 import Logo from '@/components/svg/logo/logo'
-import { NextSeo } from 'next-seo'
+import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { type JSX } from 'react'
-import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import { useRouter } from 'next/router'
+import { type JSX } from 'react'
 
 function Login(): JSX.Element {
 	const router = useRouter()
@@ -17,7 +16,6 @@ function Login(): JSX.Element {
 	}
 	return (
 		<div>
-			<NextSeo noindex={true} />
 			<Head>
 				<title>Rate The Landlord</title>
 			</Head>
