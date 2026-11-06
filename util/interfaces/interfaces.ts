@@ -32,6 +32,7 @@ export interface Review {
 	user_code?: string
 	number_user_attempts: number
 	last_user_attempt: Date
+	suspicious_reason: string | null
 }
 
 export interface UserReview {
@@ -55,6 +56,7 @@ export interface UserReview {
 	delete_reason: string | null
 	deleted_by: Array<string> | null
 	has_user_code?: boolean
+	suspicious_reason: string | null
 }
 
 export interface OtherLandlord {

@@ -7,6 +7,8 @@ import { FlagIcon, PencilIcon } from '@heroicons/react/24/solid'
 import { UserReview } from '@/util/interfaces/interfaces'
 import { classNames } from '@/util/helpers/helper-functions'
 import { useState } from 'react'
+import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
+import Tooltip from '../ui/Tooltip'
 
 interface IProps {
 	review: UserReview
@@ -42,6 +44,8 @@ const ReviewComponent = ({
 	const avgRating = Math.round(totalReview / ratings.length)
 
 	const hideWrittenReview = !review.review || review.review.length <= 1
+
+	const isSuspicious = review.suspicious_reason !== null
 
 	return (
 		<div key={review.id}>
@@ -127,8 +131,7 @@ const ReviewComponent = ({
 				</div>
 				<div
 					className={classNames(
-						'flex flex-col gap-3 p-4 lg:flex-row lg:pr-4',
-						hideWrittenReview ? 'grow' : '',
+						'flex w-full grow flex-col gap-3 p-4 lg:flex-row lg:pr-4',
 					)}
 				>
 					<div
@@ -172,31 +175,40 @@ const ReviewComponent = ({
 							)}
 						</div>
 					</div>
-
-					<div>
-						{hideWrittenReview ? null : (
-							<div className='flex h-full flex-col justify-between gap-3'>
-								<div>
+					<div className='flex grow flex-row justify-between'>
+						<div className='grow'>
+							{hideWrittenReview ? null : (
+								<div className='flex h-full w-full flex-col gap-3'>
 									<p>{t('reviews.review')}</p>
 
 									<p className='space-y-6 text-sm wrap-break-word hyphens-auto text-gray-500'>
 										{review.review}
 									</p>
 								</div>
+							)}
+							{review.admin_edited ? (
+								<p className='text-xs text-red-400'>
+									{' '}
+									{t.rich('reviews.moderated', {
+										link: (chunks) => (
+											<Link href='/about#moderation' className='underline'>
+												{chunks}
+											</Link>
+										),
+									})}
+								</p>
+							) : null}
+						</div>
+						{isSuspicious && (
+							<div>
+								<Tooltip
+									text='This review has been flagged as suspicious. Please see the FAQ for more details'
+									position='left'
+								>
+									<ExclamationCircleIcon className='h-6 w-6' />
+								</Tooltip>
 							</div>
 						)}
-						{review.admin_edited ? (
-							<p className='text-xs text-red-400'>
-								{' '}
-								{t.rich('reviews.moderated', {
-									link: (chunks) => (
-										<Link href='/about#moderation' className='underline'>
-											{chunks}
-										</Link>
-									),
-								})}
-							</p>
-						) : null}
 					</div>
 				</div>
 			</div>
