@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { UserReview } from '@/util/interfaces/interfaces'
-import AdsComponent from '../adsense/Adsense'
+import AdsComponent, { AD_UNITS } from '../adsense/Adsense'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import ZipInfo from './ZipInfo'
 import { IZipReviews } from '@/lib/review/types/review'
@@ -45,7 +45,7 @@ const ZipPage = ({ city, state, country, zip, data }: IProps) => {
 	return (
 		<>
 			<div className='w-full px-2 md:px-0'>
-				<AdsComponent slot='1526837416' />
+				<AdsComponent slot={AD_UNITS.ZIP} />
 				<div className='mx-auto mt-5 flex max-w-2xl flex-col gap-3 lg:max-w-7xl'>
 					<ZipInfo
 						city={city}

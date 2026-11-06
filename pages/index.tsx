@@ -1,4 +1,4 @@
-import AdsComponent from '@/components/adsense/Adsense'
+import AdsComponent, { AD_UNITS } from '@/components/adsense/Adsense'
 import Search from '@/components/home/Search'
 import Hero from '@/components/home/hero'
 import IconSection from '@/components/home/icon-section'
@@ -27,7 +27,7 @@ export default function Home(): JSX.Element {
 					description: desc,
 				}}
 			/>{' '}
-			<AdsComponent slot='2964662882' />
+			<AdsComponent slot={AD_UNITS.HOMEPAGE} />
 			<div className='bg-background mx-2 mt-4 rounded-3xl pb-4'>
 				<Hero />
 				<Search />
