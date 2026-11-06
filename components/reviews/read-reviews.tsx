@@ -6,7 +6,7 @@ import Hero from './components/Hero'
 import { updateStateAndCountry } from '@/redux/query/querySlice'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
 import { getStates } from '@/util/countries/combineStates'
-import AdsComponent from '../adsense/Adsense'
+import AdsComponent, { AD_UNITS } from '../adsense/Adsense'
 
 function ReviewForm(): JSX.Element {
 	const [locationOpen, setLocationOpen] = useState<boolean>(true)
@@ -66,7 +66,7 @@ function ReviewForm(): JSX.Element {
 	return (
 		<div className='m-2 w-full max-w-7xl'>
 			<div className='w-full'>
-				<AdsComponent slot='2009320000' />
+				<AdsComponent slot={AD_UNITS.REVIEWS} />
 			</div>
 			{!locationOpen ? (
 				<Review view={view} setLocationOpen={setLocationOpen} />

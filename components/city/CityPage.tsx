@@ -5,7 +5,7 @@ import {
 } from '@/util/interfaces/interfaces'
 import ButtonLight from '../ui/button-light'
 import { sortOptions } from '@/util/helpers/filter-options'
-import AdsComponent from '../adsense/Adsense'
+import AdsComponent, { AD_UNITS } from '../adsense/Adsense'
 import CityFilters from './CityFilters'
 import CityMobileFilters from './CityMobileFilters'
 import { getZipOptions } from '../reviews/functions'
@@ -81,7 +81,7 @@ const CityPage = ({ city, state, country, data }: IProps) => {
 	)
 	return (
 		<div data-testid='city-page' className='mt-3 w-full px-2 md:px-0'>
-			<AdsComponent slot='1526837416' />
+			<AdsComponent slot={AD_UNITS.CITIES} />
 			<div className='mx-auto mt-5 flex max-w-2xl flex-col gap-3 lg:max-w-7xl'>
 				<CityInfo
 					city={city}
