@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import AdsComponent from '@/components/adsense/Adsense'
+import AdsComponent, { AD_UNITS } from '@/components/adsense/Adsense'
 import ResourceList from '@/components/resources/ResourceList'
 import Spinner from '@/components/ui/Spinner'
 import { getResources } from '@/lib/tenant-resource/resource'
@@ -41,7 +41,7 @@ function Resources({ data }: IProps): JSX.Element {
 				}}
 			/>{' '}
 			<div className='container mt-5 flex flex-col items-center gap-4 px-2'>
-				<AdsComponent slot='9611751505' />
+				<AdsComponent slot={AD_UNITS.RESOURCES} />
 				<ResourceList data={data} />
 				<p className='mt-8 text-center text-xl leading-8 text-gray-500'>
 					{t('contribute')}

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import AdsComponent from '../adsense/Adsense'
+import AdsComponent, { AD_UNITS } from '../adsense/Adsense'
 import { useTranslations } from 'next-intl'
 import RatingStars from '../ui/RatingStars'
 import ButtonLight from '../ui/button-light'
@@ -10,7 +10,7 @@ import { useState } from 'react'
 
 interface IProps {
 	review: UserReview
-	i?: number
+	i: number
 	handleReport: (review: UserReview) => void
 	handleUserEdit?: (review: UserReview) => void
 	handleUserDelete?: (review: UserReview) => void
@@ -45,9 +45,11 @@ const ReviewComponent = ({
 
 	return (
 		<div key={review.id}>
-			{i && i % 20 === 0 && i !== 0 ? (
-				<AdsComponent slot='3829259014' format='fluid' layout='in-article' />
-			) : null}
+			<div>
+				{i > 0 && i % 20 === 0 && (
+					<AdsComponent slot={AD_UNITS.REVIEW_FEED} layout='in-feed' />
+				)}
+			</div>
 			<div className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-4'>
 				<div className='flex flex-col items-center bg-gray-50 p-2 lg:max-w-[275px] lg:min-w-[275px] lg:flex-col'>
 					<div className='flex w-full flex-row justify-between'>
