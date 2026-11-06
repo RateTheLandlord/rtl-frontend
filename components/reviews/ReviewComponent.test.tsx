@@ -64,6 +64,7 @@ describe('ReviewComponent', () => {
 		const { container } = render(
 			<ReviewComponent
 				review={review}
+				i={1}
 				handleReport={jest.fn()}
 				handleUserDelete={jest.fn()}
 				handleUserEdit={jest.fn()}
