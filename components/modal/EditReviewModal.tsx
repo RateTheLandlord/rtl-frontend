@@ -29,6 +29,9 @@ const EditReviewModal = ({
 	const [postal, setPostal] = useState<string>(selectedReview?.zip || '')
 	const [review, setReview] = useState<string>(selectedReview?.review || '')
 	const [rent, setRent] = useState<number | null>(selectedReview?.rent || null)
+	const [suspiciousReason, setSuspiciousReason] = useState<string | null>(
+		selectedReview.suspicious_reason,
+	)
 	const [moderationReason, setModerationReason] = useState<string | null>(
 		selectedReview?.moderation_reason || null,
 	)
@@ -61,6 +64,7 @@ const EditReviewModal = ({
 			rent: rent,
 			moderation_reason: moderationReason?.trim(),
 			moderator: [...moderators],
+			suspicious_reason: suspiciousReason,
 		}
 		fetch(apiUrl, {
 			method: 'POST',
@@ -251,6 +255,27 @@ const EditReviewModal = ({
 								onChange={(e) => setModerationReason(e.target.value)}
 								className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 								data-testid='create-review-form-moderation-reason-1'
+							/>
+						</div>
+					</div>
+					<div className='sm:col-span-2'>
+						<label
+							htmlFor='suspicious-reason'
+							className='block text-sm text-gray-700'
+						>
+							Suspicious Reason
+						</label>
+						<div className='mt-1'>
+							<input
+								type='text'
+								name='suspicious-reason'
+								id='suspicious-reason'
+								placeholder='Suspicious Reason'
+								required
+								value={suspiciousReason ? suspiciousReason : ''}
+								onChange={(e) => setSuspiciousReason(e.target.value)}
+								className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+								data-testid='create-review-form-suspcicious-reason-1'
 							/>
 						</div>
 					</div>
