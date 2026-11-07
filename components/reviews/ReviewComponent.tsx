@@ -46,7 +46,9 @@ const ReviewComponent = ({
 	return (
 		<div key={review.id}>
 			<div>
-				{i > 0 && i % 20 === 0 && <AdsComponent slot={AD_UNITS.REVIEW_FEED} />}
+				{i > 0 && i % 20 === 0 && (
+					<AdsComponent slot={AD_UNITS.REVIEW_FEED} type='in-feed' />
+				)}
 			</div>
 			<div className='flex flex-col rounded-lg border border-gray-100 shadow lg:flex-row lg:gap-x-4'>
 				<div className='flex flex-col items-center bg-gray-50 p-2 lg:max-w-[275px] lg:min-w-[275px] lg:flex-col'>
