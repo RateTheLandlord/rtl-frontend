@@ -30,7 +30,7 @@ const EditReviewModal = ({
 	const [review, setReview] = useState<string>(selectedReview?.review || '')
 	const [rent, setRent] = useState<number | null>(selectedReview?.rent || null)
 	const [suspiciousReason, setSuspiciousReason] = useState<string | null>(
-		selectedReview.suspicious_reason,
+		selectedReview?.suspicious_reason,
 	)
 	const [moderationReason, setModerationReason] = useState<string | null>(
 		selectedReview?.moderation_reason || null,

@@ -25,6 +25,10 @@ const Faq = () => {
 			question: t('faq.names'),
 			answer: t('faq.names_description'),
 		},
+		{
+			question: t('faq.suspicious-reason'),
+			answer: t('faq.suspicious-reason-description'),
+		},
 	]
 	return (
 		<div className='w-full bg-white' data-testid='about-faq-1'>

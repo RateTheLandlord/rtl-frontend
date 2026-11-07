@@ -1,14 +1,15 @@
-import Link from 'next/link'
-import AdsComponent, { AD_UNITS } from '../adsense/Adsense'
-import { useTranslations } from 'next-intl'
-import RatingStars from '../ui/RatingStars'
-import ButtonLight from '../ui/button-light'
-import { FlagIcon, PencilIcon } from '@heroicons/react/24/solid'
-import { UserReview } from '@/util/interfaces/interfaces'
 import { classNames } from '@/util/helpers/helper-functions'
-import { useState } from 'react'
+import { UserReview } from '@/util/interfaces/interfaces'
+import { useUser } from '@auth0/nextjs-auth0/client'
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
+import { FlagIcon, PencilIcon } from '@heroicons/react/24/solid'
+import { useTranslations } from 'next-intl'
+import Link from 'next/link'
+import { useState } from 'react'
+import AdsComponent, { AD_UNITS } from '../adsense/Adsense'
+import RatingStars from '../ui/RatingStars'
 import Tooltip from '../ui/Tooltip'
+import ButtonLight from '../ui/button-light'
 
 interface IProps {
 	review: UserReview
@@ -27,6 +28,7 @@ const ReviewComponent = ({
 	handleUserDelete,
 	landlordPage = false,
 }: IProps) => {
+	const { user } = useUser()
 	const t = useTranslations()
 	const date = new Date(review.date_added).toLocaleDateString()
 	const [showEditOptions, setShowEditOptions] = useState(false)
@@ -107,7 +109,7 @@ const ReviewComponent = ({
 						<ButtonLight onClick={() => handleReport(review)}>
 							<FlagIcon className='text-red-700' width={20} />
 						</ButtonLight>
-						{review.has_user_code ? (
+						{review.has_user_code || user?.role === 'ADMIN' ? (
 							<ButtonLight onClick={() => setShowEditOptions(!showEditOptions)}>
 								<PencilIcon className='text-black-700' width={20} />
 							</ButtonLight>
@@ -188,24 +190,29 @@ const ReviewComponent = ({
 							)}
 							{review.admin_edited ? (
 								<p className='text-xs text-red-400'>
-									{' '}
-									{t.rich('reviews.moderated', {
-										link: (chunks) => (
-											<Link href='/about#moderation' className='underline'>
-												{chunks}
-											</Link>
-										),
-									})}
+									{user?.role === 'ADMIN'
+										? review.moderation_reason
+										: t.rich('reviews.moderated', {
+												link: (chunks) => (
+													<Link href='/about#moderation' className='underline'>
+														{chunks}
+													</Link>
+												),
+											})}
 								</p>
 							) : null}
 						</div>
 						{isSuspicious && (
 							<div>
 								<Tooltip
-									text='This review has been flagged as suspicious. Please see the FAQ for more details'
+									text={
+										user?.role === 'ADMIN'
+											? review.suspicious_reason
+											: t('reviews.suspicious')
+									}
 									position='left'
 								>
-									<ExclamationCircleIcon className='h-6 w-6' />
+									<ExclamationCircleIcon className='h-6 w-6 text-orange-600' />
 								</Tooltip>
 							</div>
 						)}
