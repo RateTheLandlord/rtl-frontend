@@ -32,6 +32,7 @@ describe('LandlordPage', () => {
 				moderator: null,
 				delete_reason: null,
 				deleted_by: null,
+				suspicious_reason: null,
 			},
 			// ... add more sample reviews if needed
 		],

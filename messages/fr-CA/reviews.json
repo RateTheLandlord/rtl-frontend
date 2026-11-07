@@ -19,6 +19,7 @@
 		"zip": "ZIP / Code postal",
 		"report-review": "SIGNALER",
 		"moderated": "Certaines parties de cet avis ont enfreint notre <link>politique de modération</link>",
+		"suspicious": "Cet avis a été signalé comme suspect. Veuillez consulter la FAQ pour plus de détails",
 		"report": {
 			"error": "Erreur, veuillez réessayer",
 			"success": "Avis reçu!",

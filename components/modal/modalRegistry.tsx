@@ -29,6 +29,7 @@ import SpamReviewModal from './SpamReviewModal'
 import EditResourceModal from './EditResourceModal'
 import MergeLandlordsModal from './MergeLandlordsModal'
 import ReportModal from './report-modal'
+import SuspiciousReviewModal from './SuspiciousReviewModal'
 
 export type ModalControls = {
 	onClose: () => void
@@ -60,6 +61,9 @@ export type ModalPropsMap = {
 		selectedReview: Review
 	}
 	adminEditReview: {
+		selectedReview: Review
+	}
+	suspiciousReview: {
 		selectedReview: Review
 	}
 	removeResource: {
@@ -121,6 +125,7 @@ export const modalRegistry = {
 	spamReview: SpamReviewModal,
 	editResource: EditResourceModal,
 	mergeLandlords: MergeLandlordsModal,
+	suspiciousReview: SuspiciousReviewModal,
 } satisfies ModalRegistry
 
 /**

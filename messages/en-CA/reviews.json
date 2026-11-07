@@ -19,6 +19,7 @@
 		"zip": "ZIP / Postal Code",
 		"report-review": "REPORT",
 		"moderated": "Portions of this review violated our <link>Moderation Policy</link>",
+		"suspicious": "This review has been flagged as suspicious. Please see the FAQ for more details",
 		"report": {
 			"error": "Error, please try again",
 			"success": "Report Received!",

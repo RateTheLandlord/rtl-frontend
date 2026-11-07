@@ -152,6 +152,17 @@ const FlaggedReviews = () => {
 								<td className='py-4 pr-4 pl-3 text-center text-sm sm:pr-6'>
 									<button
 										onClick={() => {
+											openModal('suspiciousReview', { selectedReview: review })
+										}}
+										className='cursor-pointer text-indigo-600 hover:text-indigo-900'
+									>
+										Suspicious
+									</button>
+								</td>
+
+								<td className='py-4 pr-4 pl-3 text-center text-sm sm:pr-6'>
+									<button
+										onClick={() => {
 											openModal('adminRemoveReview', {
 												selectedReview: review,
 											})

@@ -93,7 +93,8 @@ export async function getReviews(
 			moderator,
 			delete_reason,
 			deleted_by,
-			has_user_code
+			has_user_code,
+      suspicious_reason
 		FROM review
 		${filters}
 		ORDER BY
