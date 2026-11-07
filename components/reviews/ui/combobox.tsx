@@ -18,6 +18,11 @@ interface ComponentProps {
 	options: Options[]
 }
 
+interface VirtualizedListProps {
+	items: Options[]
+	scrollElementRef: React.RefObject<HTMLDivElement | null>
+}
+
 export default function ComboBox({
 	state,
 	setState,
@@ -25,6 +30,8 @@ export default function ComboBox({
 	name,
 }: ComponentProps) {
 	const [query, setQuery] = useState('')
+	const scrollElementRef = useRef<HTMLDivElement>(null)
+
 	const filterOptions =
 		query === ''
 			? options
@@ -34,16 +41,18 @@ export default function ComboBox({
 						.replace(/\s+/g, '')
 						.includes(query.toLowerCase().replace(/\s+/g, '')),
 				)
+
 	return (
 		<Combobox value={state} onChange={setState}>
 			<div className='relative w-full pt-2 lg:px-2 lg:pt-0'>
 				<div className='focus-visible:ring-opacity-75 relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm'>
 					<ComboboxInput
 						className='focus-visible:ring-opacity-75 relative w-full cursor-default rounded-lg bg-white py-2 pr-10 pl-3 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'
-						displayValue={(state: Options) => state?.name}
+						displayValue={(selected: Options | null) => selected?.name ?? ''}
 						placeholder={name}
 						onChange={(event) => setQuery(event.target.value)}
 					/>
+
 					<ComboboxButton
 						aria-label='Select Input'
 						className='absolute inset-y-0 right-0 flex items-center pr-2'
@@ -54,19 +63,26 @@ export default function ComboBox({
 						/>
 					</ComboboxButton>
 				</div>
+
 				<Transition
 					as={Fragment}
 					leave='transition ease-in duration-100'
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<ComboboxOptions className='ring-opacity-5 absolute z-10 mt-1 max-h-60 w-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black focus:outline-none sm:text-sm'>
+					<ComboboxOptions
+						ref={scrollElementRef}
+						className='ring-opacity-5 absolute z-10 mt-1 max-h-60 w-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black focus:outline-none sm:text-sm'
+					>
 						{filterOptions.length === 0 && query !== '' ? (
 							<div className='relative cursor-default px-4 py-2 text-gray-700 select-none'>
 								Nothing found.
 							</div>
 						) : (
-							<VirtualizedList items={filterOptions ?? []} />
+							<VirtualizedList
+								items={filterOptions}
+								scrollElementRef={scrollElementRef}
+							/>
 						)}
 					</ComboboxOptions>
 				</Transition>
@@ -75,29 +91,30 @@ export default function ComboBox({
 	)
 }
 
-function VirtualizedList({ items }: { items: Options[] }) {
-	const parentRef = useRef<HTMLDivElement>(null)
-
+function VirtualizedList({ items, scrollElementRef }: VirtualizedListProps) {
 	const rowVirtualizer = useVirtualizer({
-		count: items?.length,
-		getScrollElement: () => parentRef.current,
+		count: items.length,
+		getScrollElement: () => scrollElementRef.current,
 		estimateSize: () => 35,
 		overscan: 5,
 	})
 
 	return (
-		<div ref={parentRef}>
-			<div
-				style={{
-					height: `${rowVirtualizer.getTotalSize()}px`,
-					width: '100%',
-					position: 'relative',
-				}}
-			>
-				{rowVirtualizer.getVirtualItems().map((virtualRow) => (
+		<div
+			style={{
+				height: `${rowVirtualizer.getTotalSize()}px`,
+				width: '100%',
+				position: 'relative',
+			}}
+		>
+			{rowVirtualizer.getVirtualItems().map((virtualRow) => {
+				const option = items[virtualRow.index]
+
+				return (
 					<ComboboxOption
 						aria-label='Select Option'
-						key={virtualRow.index}
+						key={option.value}
+						value={option}
 						style={{
 							position: 'absolute',
 							top: 0,
@@ -111,7 +128,6 @@ function VirtualizedList({ items }: { items: Options[] }) {
 								active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
 							}`
 						}
-						value={items?.[virtualRow.index]}
 					>
 						{({ selected }) => (
 							<span
@@ -119,12 +135,12 @@ function VirtualizedList({ items }: { items: Options[] }) {
 									selected ? 'font-inclusive font-medium' : 'font-inclusive'
 								}`}
 							>
-								{items?.[virtualRow.index].name}
+								{option.name}
 							</span>
 						)}
 					</ComboboxOption>
-				))}
-			</div>
+				)
+			})}
 		</div>
 	)
 }

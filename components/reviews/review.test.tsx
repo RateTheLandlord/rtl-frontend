@@ -41,7 +41,12 @@ jest.mock('@/util/helpers/fetchReviews', () => ({
 }))
 
 jest.mock('@/util/helpers/fetchFilterOptions', () => ({
-	fetchFilterOptions: jest.fn(),
+	fetchFilterOptions: jest.fn().mockResolvedValue({
+		countries: [],
+		states: [],
+		cities: [],
+		zips: [],
+	}),
 }))
 
 jest.mock('../Map/Map', () => {

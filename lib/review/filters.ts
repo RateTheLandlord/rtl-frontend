@@ -8,86 +8,97 @@ export async function filterOptions(
 	state?: string,
 	city?: string,
 ): Promise<FilterOptions> {
-	const stateClause = state
-		? sql`AND state =
-    ${state.toUpperCase()}`
-		: sql``
+	const stateClause = state ? sql`AND state = ${state.toUpperCase()}` : sql``
+
 	const countryClause = country
-		? sql`AND country_code =
-            ${country.toUpperCase()}`
-		: sql``
-	const cityClause = city
-		? sql`AND city =
-    ${city.toUpperCase()}`
+		? sql`AND country_code = ${country.toUpperCase()}`
 		: sql``
 
-	// Fetch countries
-	const countries = await sql`
-        SELECT DISTINCT country_code
-        FROM review;
-    `
-	const countryList = countries.map(
-		({ country_code }) => country_code as Options,
-	)
+	const cityClause = city ? sql`AND city = ${city.toUpperCase()}` : sql``
 
-	// Fetch cities
-	const cities = await sql`
-        SELECT DISTINCT city
-        FROM review
-        WHERE 1 = 1 ${countryClause} ${stateClause};
-    `
-	const cityList = cities.map(({ city }) => city as string)
+	const [countries, cities, zips] = await Promise.all([
+		sql`
+			SELECT DISTINCT country_code
+			FROM review
+			WHERE country_code IS NOT NULL;
+		`,
+		sql`
+			SELECT DISTINCT city
+			FROM review
+			WHERE city IS NOT NULL
+			${countryClause}
+			${stateClause};
+		`,
+		sql`
+			SELECT DISTINCT zip
+			FROM review
+			WHERE zip IS NOT NULL
+			${countryClause}
+			${stateClause}
+			${cityClause};
+		`,
+	])
 
-	// Fetch zips
-	const zips = await sql`
-        SELECT DISTINCT zip
-        FROM review
-        WHERE 1 = 1 ${countryClause} ${stateClause} ${cityClause};
-    `
-	const zipsExtracted = zips.map(({ zip }) => zip as string)
+	const countryList: Options[] = countries
+		.map(({ country_code }, index) => {
+			const value = String(country_code).trim().toUpperCase()
 
-	const zipList = zipsExtracted.filter((zip) => zip.length > 0)
+			return {
+				id: index + 1,
+				name: value,
+				value,
+			}
+		})
+		.filter((option) => option.value.length > 0)
 
-	const filteredCity = cityList.filter((n) => n)
+	const filteredCity = cities
+		.map(({ city }) => city as string)
+		.filter((city) => typeof city === 'string' && city.trim().length > 0)
+
 	const allCityOptions = [
 		...new Map(
-			filteredCity
-				.map((c: string, id: number) => {
-					const city = c.toLowerCase().trim()
-					return {
-						id: id + 1,
-						name: city.split(' ').map(capitalize).join(' '),
-						value: c.toLowerCase().trim(),
-					}
-				})
-				.map((city) => [city.value, city]),
+			filteredCity.map((city, index) => {
+				const value = city.toLowerCase().trim()
+
+				return [
+					value,
+					{
+						id: index + 1,
+						name: value.split(' ').map(capitalize).join(' '),
+						value,
+					},
+				]
+			}),
 		).values(),
 	]
 
-	allCityOptions.sort((a: Options, b: Options): number =>
-		a.name.localeCompare(b.name),
-	)
+	allCityOptions.sort((a, b) => a.name.localeCompare(b.name))
+
+	const zipList = zips
+		.map(({ zip }) => zip as string | null)
+		.filter(
+			(zip): zip is string => typeof zip === 'string' && zip.trim().length > 0,
+		)
 
 	const seenZips = new Set<string>()
-	const allZipOptions = zipList.reduce(
-		(acc, z, id) => {
-			const zip = z.toUpperCase().replace(/\s+/g, '')
-			if (!seenZips.has(zip)) {
-				seenZips.add(zip)
-				acc.push({
-					id: id + 1,
-					name: zip,
-					value: zip,
-				})
-			}
-			return acc
-		},
-		[] as { id: number; name: string; value: string }[],
-	)
 
-	allZipOptions.sort((a: Options, b: Options): number =>
-		a.name.localeCompare(b.name),
-	)
+	const allZipOptions = zipList.reduce((acc, value, index) => {
+		const zip = value.toUpperCase().replace(/\s+/g, '')
+
+		if (!seenZips.has(zip)) {
+			seenZips.add(zip)
+
+			acc.push({
+				id: index + 1,
+				name: zip,
+				value: zip,
+			})
+		}
+
+		return acc
+	}, [] as Options[])
+
+	allZipOptions.sort((a, b) => a.name.localeCompare(b.name))
 
 	return {
 		countries: countryList,
