@@ -281,6 +281,16 @@ function ReviewForm(): JSX.Element {
 								onClick={() => {
 									posthog.capture('create_review_submitted', {
 										landlord,
+										country,
+										city,
+										province,
+										postal,
+										rent,
+										repair,
+										health,
+										stability,
+										privacy,
+										respect,
 									})
 									handleSubmit().catch(() => {
 										posthog.capture('create_review_submit_error', {
