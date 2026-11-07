@@ -9,6 +9,7 @@ export enum AD_UNITS {
 	RESOURCES = '9611751505',
 	REVIEW_FEED = '3829259014',
 	ZIP = '4252935656',
+	LANDLORD = '7870561123',
 }
 
 type AdType = 'display' | 'in-feed'
