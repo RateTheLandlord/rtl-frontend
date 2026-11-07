@@ -20,6 +20,8 @@
 		"report-review": "REPORT",
 		"moderated": "Portions of this review violated our <link>Moderation Policy</link>",
 		"suspicious": "This review has been flagged as suspicious. Please see the FAQ for more details",
+		"show-suspicious": "Show suspicious reviews",
+		"hide-suspicious": "Hide suspicious reviews",
 		"report": {
 			"error": "Error, please try again",
 			"success": "Report Received!",

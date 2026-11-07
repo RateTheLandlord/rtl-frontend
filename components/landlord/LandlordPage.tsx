@@ -17,6 +17,7 @@ import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
 import AdsComponent, { AD_UNITS } from '../adsense/Adsense'
 import { ILandlordReviews } from '@/lib/review/types/Queries'
+import Button from '../ui/button'
 
 const filteredSortOptions = sortOptions.slice(2)
 
@@ -29,6 +30,7 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 	const t = useTranslations('reviews')
 	const [bannerOpen, setBannerOpen] = useState<boolean>(false)
 	const [sortedReviews, setSortedReviews] = useState<UserReview[]>([])
+	const [showSuspiciousReviews, setShowSuspiciousReviews] = useState(false)
 
 	const [sortState, setSortState] = useState<SortOptions | null>(
 		filteredSortOptions[0],
@@ -91,6 +93,10 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 
 	if (!data.reviews.length) return <Spinner />
 
+	const filteredReviews = sortedReviews.filter(
+		(review) => review.suspicious_reason === null,
+	)
+
 	return (
 		<>
 			<div className='mt-3 flex w-full justify-center'>
@@ -104,17 +110,28 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 						false
 					)}
 					<LandlordInfo name={landlord} data={data} />
-					<div className='flex w-full justify-start py-2'>
+					<div className='flex w-full justify-between py-2'>
 						<SortList
 							state={sortState}
 							setState={setSortState}
 							options={filteredSortOptions}
 							name={t('sort')}
 						/>
+						{filteredReviews.length > 0 && (
+							<Button onClick={() => setShowSuspiciousReviews((p) => !p)}>
+								{showSuspiciousReviews
+									? t('hide-suspicious')
+									: t('show-suspicious')}
+							</Button>
+						)}
 					</div>
 					<div className='flex w-full flex-col gap-3'>
 						<ReviewTable
-							data={sortedReviews}
+							data={
+								showSuspiciousReviews || filteredReviews.length <= 0
+									? sortedReviews
+									: filteredReviews
+							}
 							isLoading={false}
 							landlordPage={true}
 						/>
