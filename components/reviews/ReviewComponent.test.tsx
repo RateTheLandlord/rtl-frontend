@@ -38,6 +38,7 @@ const review: Review = {
 	moderator: null,
 	number_user_attempts: 0,
 	last_user_attempt: new Date(),
+	suspicious_reason: null,
 }
 
 describe('ReviewComponent', () => {
