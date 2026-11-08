@@ -100,7 +100,7 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 	return (
 		<>
 			<div className='mt-3 flex w-full justify-center'>
-				<div className='mx-auto flex max-w-2xl flex-col gap-3 px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
+				<div className='mx-auto flex max-w-full flex-col gap-3 px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
 					<AdsComponent slot={AD_UNITS.LANDLORD} />
 					{bannerOpen ? (
 						<LandlordBanner
