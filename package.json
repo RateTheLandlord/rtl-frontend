@@ -57,7 +57,7 @@
 	"devDependencies": {
 		"@eslint/compat": "^2.1.1",
 		"@eslint/eslintrc": "^3.3.7",
-		"@eslint/js": "^9.39.1",
+		"@eslint/js": "^10.0.1",
 		"@jest/globals": "^30.5.2",
 		"@next/eslint-plugin-next": "16.4.3",
 		"@tailwindcss/aspect-ratio": "^0.4.2",
