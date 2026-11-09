@@ -100,7 +100,7 @@
 		"jest": "^30.5.2",
 		"jest-axe": "^9.0.0",
 		"jest-environment-jsdom": "^30.5.2",
-		"knip": "^5.67.1",
+		"knip": "^6.44.1",
 		"ley": "^0.8.1",
 		"lint-staged": "^15.5.2",
 		"next-router-mock": "^0.9.13",
