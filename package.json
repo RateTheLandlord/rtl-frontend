@@ -64,7 +64,7 @@
 		"@tailwindcss/forms": "^0.5.11",
 		"@tailwindcss/line-clamp": "^0.4.4",
 		"@tailwindcss/typography": "^0.5.20",
-		"@testing-library/jest-dom": "^5.17.0",
+		"@testing-library/jest-dom": "^7.0.1",
 		"@testing-library/react": "^16.3.3",
 		"@testing-library/user-event": "^14.6.8",
 		"@types/bcrypt": "^6.0.0",
