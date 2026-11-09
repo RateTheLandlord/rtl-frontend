@@ -103,7 +103,7 @@
 		"knip": "^6.44.1",
 		"ley": "^0.8.1",
 		"lint-staged": "^15.5.2",
-		"next-router-mock": "^0.9.13",
+		"next-router-mock": "^1.0.5",
 		"postcss": "^8.5.32",
 		"prettier": "^3.9.10",
 		"prettier-plugin-tailwindcss": "^0.8.1",

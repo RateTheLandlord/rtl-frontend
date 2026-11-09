@@ -90,7 +90,7 @@
         "knip": "^6.44.1",
         "ley": "^0.8.1",
         "lint-staged": "^15.5.2",
-        "next-router-mock": "^0.9.13",
+        "next-router-mock": "^1.0.5",
         "postcss": "^8.5.32",
         "prettier": "^3.9.10",
         "prettier-plugin-tailwindcss": "^0.8.1",
@@ -1608,7 +1608,7 @@
 
     "next-recaptcha-v3": ["next-recaptcha-v3@1.5.3", "", { "peerDependencies": { "next": "^13 || ^14 || ^15 || ^16", "react": "^18 || ^19" } }, "sha512-Osnt1gj0+Mor8rc42NCzpteQrrSbcxskGLOeWLU/T0xdXtJE90y/gFyp87/yN1goIMI+gXs5f0PMymMa29nuLA=="],
 
-    "next-router-mock": ["next-router-mock@0.9.13", "", { "peerDependencies": { "next": ">=10.0.0", "react": ">=17.0.0" } }, "sha512-906n2RRaE6Y28PfYJbaz5XZeJ6Tw8Xz1S6E31GGwZ0sXB6/XjldD1/2azn1ZmBmRk5PQRkzjg+n+RHZe5xQzWA=="],
+    "next-router-mock": ["next-router-mock@1.0.5", "", { "peerDependencies": { "next": ">=10.0.0", "react": ">=17.0.0" } }, "sha512-mEndN1KdRlofR1Hf+FvfHogabpx1SQ8cbXYENCm3SA1W5Bj3UlaIW814DA6vg5gmPF6tBw5E1rX2JY4ogN9aaQ=="],
 
     "next-seo": ["next-seo@7.3.0", "", { "peerDependencies": { "next": ">=13.4.0", "react": ">=18.2.0" } }, "sha512-j8tO4dZRBcl2jQjVSXVQmnkUHRE3czl+0Bu4Oeo3Ttwfj8yQOS6k4Esd+tPOMCZ0KhTUwQoWnGGGPBoHcCHyqg=="],
 
