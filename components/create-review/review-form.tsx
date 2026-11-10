@@ -78,8 +78,6 @@ function ReviewForm(): JSX.Element {
 		string[] | null
 	>(null)
 
-	console.log(localReviewedLandlords)
-
 	useEffect(() => {
 		const prevLandlords = localStorage.getItem('rtl')
 		if (prevLandlords) {

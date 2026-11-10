@@ -91,7 +91,7 @@ async function createReview(
 		const id = await sql<{ id: number }[]>`
           INSERT INTO review
           (landlord, country_code, city, state, zip, review, repair, health, stability, privacy, respect, flagged,
-          flagged_reason, admin_approved, admin_edited, rent, user_code, suspicious_reason)
+          flagged_reason, admin_approved, admin_edited, rent, user_code)
           VALUES
           (${inputReview.landlord}, ${inputReview.country_code}, ${
 						inputReview.city
@@ -104,7 +104,7 @@ async function createReview(
 					}, ${inputReview.flagged},
           ${inputReview.flagged_reason}, ${inputReview.admin_approved}, ${
 						inputReview.admin_edited
-					}, ${inputReview.rent || null}, ${hashedCode}), ${inputReview.suspicious_reason})
+					}, ${inputReview.rent || null}, ${hashedCode})
           RETURNING id;
         `
 
