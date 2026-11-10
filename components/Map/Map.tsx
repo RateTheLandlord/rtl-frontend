@@ -85,12 +85,7 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 
 		const loadZips = async () => {
 			try {
-				const options = await fetchFilterOptions(
-					country.value,
-					state.value,
-					'',
-					'',
-				)
+				const options = await fetchFilterOptions(country.value, state.value, '')
 
 				if (requestId !== zipRequestRef.current) return
 
