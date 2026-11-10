@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { render } from '@/test-utils'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import CustomMarker from './CustomMarker'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { IZipLocations } from '@/lib/location/types'

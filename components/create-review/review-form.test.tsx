@@ -1,7 +1,6 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react'
 import { render, screen, within } from '@/test-utils'
 import userEvent from '@testing-library/user-event'
 import ReviewForm from './review-form'
@@ -11,6 +10,14 @@ expect.extend(toHaveNoViolations)
 // Mocking useRouter hook
 jest.mock('next/router', () => ({
 	useRouter: jest.fn(),
+}))
+
+const mockOpenModal = jest.fn()
+
+jest.mock('@/components/modal/ModalContext', () => ({
+	useModal: () => ({
+		openModal: mockOpenModal,
+	}),
 }))
 
 // Mocking fetch globally for the test

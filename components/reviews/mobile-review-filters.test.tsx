@@ -3,87 +3,74 @@
  */
 import React from 'react'
 import { render, screen, fireEvent } from '@/test-utils'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import MobileReviewFilters from './mobile-review-filters'
-import { Provider } from 'react-redux'
-import configureStore from 'redux-mock-store'
 import { axe, toHaveNoViolations } from 'jest-axe'
+
 expect.extend(toHaveNoViolations)
 
-const mockStore = configureStore([])
-
 describe('MobileReviewFilters', () => {
-	let store: ReturnType<typeof mockStore>
-	let setMobileFiltersOpen: jest.Mock
+	const setMobileFiltersOpen = jest.fn()
+	const onApply = jest.fn()
+	const onClear = jest.fn()
+	const onSearchChange = jest.fn()
+	const onCityChange = jest.fn()
+	const onZipChange = jest.fn()
 
-	beforeEach(() => {
-		store = mockStore({
-			query: {
-				searchFilter: '',
-			},
-		})
-		setMobileFiltersOpen = jest.fn()
-	})
-
-	const renderComponent = (props = {}) => {
-		return render(
-			<Provider store={store}>
-				<MobileReviewFilters
-					mobileFiltersOpen={true}
-					setMobileFiltersOpen={setMobileFiltersOpen}
-					countryFilter={null}
-					stateFilter={null}
-					cityFilter={null}
-					zipFilter={null}
-					dynamicCityOptions={[]}
-					dynamicZipOptions={[]}
-					updateParams={jest.fn()}
-					dispatch={store.dispatch}
-					fetchDynamicFilterOptions={Object.assign(jest.fn(), {
-						cancel: jest.fn(),
-						flush: jest.fn(),
-					})}
-					query={{
-						selectedSort: {
-							id: 1,
-							name: 'test',
-							value: 'az',
-						},
-						countryFilter: null,
-						stateFilter: null,
-						cityFilter: null,
-						zipFilter: null,
-						activeFilters: null,
-						searchFilter: '',
-					}}
-					{...props}
-				/>
-			</Provider>,
-		)
+	const mockProps = {
+		mobileFiltersOpen: true,
+		setMobileFiltersOpen,
+		cityFilter: null,
+		zipFilter: null,
+		dynamicCityOptions: [],
+		dynamicZipOptions: [],
+		searchFilter: '',
+		onSearchChange,
+		onCityChange,
+		onZipChange,
+		onApply,
+		onClear,
 	}
 
-	it('should render the component', () => {
-		renderComponent()
+	beforeEach(() => {
+		jest.clearAllMocks()
+	})
+
+	it('renders the component', () => {
+		render(<MobileReviewFilters {...mockProps} />)
+
 		expect(screen.getByTestId('mobile-review-filters-1')).toBeInTheDocument()
 	})
 
-	it('should call setMobileFiltersOpen when close button is clicked', () => {
-		renderComponent()
+	it('calls setMobileFiltersOpen when the close button is clicked', () => {
+		render(<MobileReviewFilters {...mockProps} />)
+
 		fireEvent.click(screen.getByRole('button', { name: /close menu/i }))
+
 		expect(setMobileFiltersOpen).toHaveBeenCalledWith(false)
 	})
 
-	it('should call updateParams and setMobileFiltersOpen when Apply Filters button is clicked', () => {
-		const updateParams = jest.fn()
-		renderComponent({ updateParams })
-		fireEvent.click(screen.getByText(/apply filters/i))
-		expect(updateParams).toHaveBeenCalled()
-		expect(setMobileFiltersOpen).toHaveBeenCalledWith(false)
+	it('calls onApply when Apply Filters is clicked', () => {
+		render(<MobileReviewFilters {...mockProps} />)
+
+		fireEvent.click(screen.getByText('reviews.update'))
+
+		expect(onApply).toHaveBeenCalled()
 	})
 
-	it('Should not have a11y violation', async () => {
-		const { container } = renderComponent()
+	it('calls onClear when Clear Filters is clicked', () => {
+		render(<MobileReviewFilters {...mockProps} />)
+
+		fireEvent.click(screen.getByText('reviews.clear'))
+
+		expect(onClear).toHaveBeenCalled()
+	})
+
+	it('has no accessibility violations', async () => {
+		const { container } = render(<MobileReviewFilters {...mockProps} />)
+
 		const result = await axe(container)
+
 		expect(result).toHaveNoViolations()
 	})
 })

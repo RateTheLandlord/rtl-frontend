@@ -1,5 +1,11 @@
 import ReviewFilters from '@/components/reviews/review-filters'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	clearReviewFilters,
+	updateCity,
+	updateSearch,
+	updateZip,
+} from '@/redux/query/querySlice'
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import { sortOptions } from '@/util/helpers/filter-options'
@@ -11,11 +17,10 @@ import {
 	SortOptions,
 } from '@/util/interfaces/interfaces'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
-import { debounce } from 'lodash'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/router'
 import posthog from 'posthog-js'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import MapComponent from '../Map/Map'
 import AnalyticsComponent from '../analytics/analytics'
 import ButtonLight from '../ui/button-light'
@@ -46,33 +51,99 @@ export interface QueryParams {
 	limit: string
 }
 
+type ReviewQueryParams = Omit<QueryParams, 'page'>
+type FilterSource = 'desktop' | 'mobile'
+
 interface ReviewProps {
 	view: string | string[] | undefined
 	setLocationOpen: (bool: boolean) => void
 }
 
+const buildQueryParams = (
+	filters: {
+		stateFilter: Options | null
+		countryFilter: Options | null
+		cityFilter: Options | null
+		zipFilter: Options | null
+		searchFilter: string | undefined
+	},
+	sort: SortOptions | null,
+): ReviewQueryParams => ({
+	sort: sort?.value,
+	state: filters.stateFilter?.value || '',
+	country: filters.countryFilter?.value || '',
+	city: filters.cityFilter?.value || '',
+	zip: filters.zipFilter?.value || '',
+	search: filters.searchFilter || '',
+	limit: '25',
+})
+
 const Review = ({ view, setLocationOpen }: ReviewProps) => {
-	// Localization
 	const t = useTranslations('reviews')
-
 	const screenWidth = useScreenWidth()
-
 	const router = useRouter()
 	const { affiliate } = router.query
 
-	// State
-	const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false)
+	const dispatch = useAppDispatch()
+	const query = useAppSelector((state) => state.query)
+
+	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
+		query
+
+	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 	const [selectedSort, setSelectedSort] = useState<SortOptions | null>(
 		sortOptions[2],
 	)
 	const [selectedIndex, setSelectedIndex] = useState(0)
 
 	const [dynamicCityOptions, setDynamicCityOptions] = useState<Options[]>([])
-
 	const [dynamicZipOptions, setDynamicZipOptions] = useState<Options[]>([])
 
+	const initialQueryParams = buildQueryParams(query, sortOptions[2])
+
+	const [queryParams, setQueryParams] =
+		useState<ReviewQueryParams>(initialQueryParams)
+
+	const lastAppliedParams = useRef<ReviewQueryParams>(initialQueryParams)
+
+	// Fetch dynamic filter options in one place.
+	// ZIP is intentionally not a dependency: the endpoint uses country, state
+	// and city to determine the available city and ZIP options.
 	useEffect(() => {
-		if (view && view === 'map' && screenWidth > 1025) {
+		const controller = new AbortController()
+
+		const timeout = window.setTimeout(() => {
+			const fetchOptions = async () => {
+				try {
+					const filterOptions = await fetchFilterOptions(
+						countryFilter?.value,
+						stateFilter?.value,
+						cityFilter?.value,
+						controller.signal,
+					)
+
+					if (!controller.signal.aborted) {
+						setDynamicCityOptions(filterOptions.cities)
+						setDynamicZipOptions(filterOptions.zips)
+					}
+				} catch (error) {
+					if (!controller.signal.aborted) {
+						console.error('Error fetching filter options:', error)
+					}
+				}
+			}
+
+			void fetchOptions()
+		}, 300)
+
+		return () => {
+			window.clearTimeout(timeout)
+			controller.abort()
+		}
+	}, [countryFilter?.value, stateFilter?.value, cityFilter?.value])
+
+	useEffect(() => {
+		if (view === 'map' && screenWidth > 1025) {
 			setSelectedIndex(1)
 		}
 	}, [view, screenWidth])
@@ -93,60 +164,88 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 		}
 	}, [selectedIndex])
 
-	// Redux
-	const query = useAppSelector((state) => state.query)
-	const { countryFilter, stateFilter, cityFilter, zipFilter, searchFilter } =
-		query
-	const dispatch = useAppDispatch()
-
-	// Query
-	const [queryParams, setQueryParams] = useState({
-		sort: selectedSort?.value,
-		state: stateFilter?.value || '',
-		country: countryFilter?.value || '',
-		city: cityFilter?.value || '',
-		zip: zipFilter?.value || '',
-		search: searchFilter || '',
-		limit: '25',
-	})
-
-	// Filtering and Infinite Loading
-	const updateParams = () => {
-		const params = {
-			sort: selectedSort?.value,
-			state: stateFilter?.value || '',
-			country: countryFilter?.value || '',
-			city: cityFilter?.value || '',
-			zip: zipFilter?.value || '',
-			search: searchFilter || '',
-			limit: '25',
-		}
-		// Only update state if the new params are different from the current ones
-		if (JSON.stringify(params) !== JSON.stringify(queryParams)) {
-			setQueryParams(params)
-		}
-	}
-
-	const fetchDynamicFilterOptions = debounce(async () => {
-		try {
-			const filterOptions = await fetchFilterOptions(
-				countryFilter?.value,
-				stateFilter?.value,
-				cityFilter?.value,
-				zipFilter?.value,
-			)
-			setDynamicCityOptions(filterOptions.cities)
-			setDynamicZipOptions(filterOptions.zips)
-		} catch {
-			console.error('Error fetching filter options')
-		}
-	}, 300)
-
 	const { reviews, isLoading: isLoadingHook } = useInfiniteScroll<IReview>({
 		fetchData: fetchReviews,
 		queryParams,
 		offset: 150,
 	})
+
+	const handleApplyFilters = (source: FilterSource) => {
+		const nextParams = buildQueryParams(query, selectedSort)
+		const previousParams = lastAppliedParams.current
+
+		const filtersChanged =
+			nextParams.city !== previousParams.city ||
+			nextParams.zip !== previousParams.zip
+
+		const searchChanged = nextParams.search !== previousParams.search
+		const sortChanged = nextParams.sort !== previousParams.sort
+
+		if (filtersChanged) {
+			const filterTypes = [
+				nextParams.city !== previousParams.city ? 'city' : null,
+				nextParams.zip !== previousParams.zip ? 'zip' : null,
+			].filter(Boolean)
+
+			posthog.capture('reviews_filter_applied', {
+				source,
+				filter_types: filterTypes,
+				active_filter_count: [nextParams.city, nextParams.zip].filter(Boolean)
+					.length,
+			})
+		}
+
+		if (searchChanged && nextParams.search) {
+			posthog.capture('reviews_search_performed', {
+				source,
+				search_type: 'reviews',
+			})
+		}
+
+		if (sortChanged) {
+			posthog.capture('reviews_sort_changed', {
+				source,
+				sort_option: nextParams.sort,
+			})
+		}
+
+		lastAppliedParams.current = nextParams
+		setQueryParams(nextParams)
+	}
+
+	const handleClearFilters = (source: FilterSource) => {
+		const previousParams = lastAppliedParams.current
+
+		const clearedTypes = [
+			previousParams.city ? 'city' : null,
+			previousParams.zip ? 'zip' : null,
+			previousParams.search ? 'search' : null,
+			previousParams.sort !== sortOptions[2].value ? 'sort' : null,
+		].filter(Boolean)
+
+		if (clearedTypes.length > 0) {
+			posthog.capture('reviews_filter_cleared', {
+				source,
+				filter_types: clearedTypes,
+			})
+		}
+
+		dispatch(clearReviewFilters())
+		setSelectedSort(sortOptions[2])
+
+		const clearedParams: ReviewQueryParams = {
+			sort: sortOptions[2].value,
+			state: stateFilter?.value || '',
+			country: countryFilter?.value || '',
+			city: '',
+			zip: '',
+			search: '',
+			limit: '25',
+		}
+
+		lastAppliedParams.current = clearedParams
+		setQueryParams(clearedParams)
+	}
 
 	return (
 		<>
@@ -170,6 +269,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 						{t('filters')}
 					</ButtonLight>
 				</div>
+
 				<div className='mx-auto max-w-2xl lg:max-w-7xl'>
 					<TabGroup
 						selectedIndex={selectedIndex}
@@ -202,40 +302,47 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 								</div>
 							</Tab>
 						</TabList>
+
 						<TabPanels>
 							<TabPanel>
 								<div className='flex lg:flex-row lg:gap-2 lg:divide-x lg:divide-gray-200'>
 									<MobileReviewFilters
 										mobileFiltersOpen={mobileFiltersOpen}
 										setMobileFiltersOpen={setMobileFiltersOpen}
-										countryFilter={countryFilter}
-										stateFilter={stateFilter}
 										cityFilter={cityFilter}
 										zipFilter={zipFilter}
 										dynamicCityOptions={dynamicCityOptions}
-										zipOptions={dynamicZipOptions}
 										dynamicZipOptions={dynamicZipOptions}
-										updateParams={updateParams}
-										dispatch={dispatch}
-										fetchDynamicFilterOptions={fetchDynamicFilterOptions}
-										query={query}
+										searchFilter={searchFilter || ''}
+										onSearchChange={(value) => dispatch(updateSearch(value))}
+										onCityChange={(value) => dispatch(updateCity(value))}
+										onZipChange={(value) => dispatch(updateZip(value))}
+										onApply={() => {
+											handleApplyFilters('mobile')
+											setMobileFiltersOpen(false)
+										}}
+										onClear={() => {
+											handleClearFilters('mobile')
+											setMobileFiltersOpen(false)
+										}}
 									/>
+
 									<ReviewFilters
 										selectedSort={selectedSort}
 										setSelectedSort={setSelectedSort}
 										sortOptions={sortOptions}
-										countryFilter={countryFilter}
-										stateFilter={stateFilter}
 										cityFilter={cityFilter}
 										zipFilter={zipFilter}
 										dynamicCityOptions={dynamicCityOptions}
-										zipOptions={dynamicZipOptions}
 										dynamicZipOptions={dynamicZipOptions}
-										updateParams={updateParams}
-										dispatch={dispatch}
-										fetchDynamicFilterOptions={fetchDynamicFilterOptions}
-										query={query}
+										searchFilter={searchFilter || ''}
+										onSearchChange={(value) => dispatch(updateSearch(value))}
+										onCityChange={(value) => dispatch(updateCity(value))}
+										onZipChange={(value) => dispatch(updateZip(value))}
+										onApply={() => handleApplyFilters('desktop')}
+										onClear={() => handleClearFilters('desktop')}
 									/>
+
 									{!reviews.length && !isLoadingHook ? (
 										<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
 											<h1 className='mt-4 text-3xl text-gray-900 sm:text-5xl'>
@@ -251,6 +358,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 									)}
 								</div>
 							</TabPanel>
+
 							<TabPanel>
 								<MapComponent
 									countryFilter={countryFilter}
@@ -267,6 +375,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 									conditions.
 								</p>
 							</TabPanel>
+
 							<TabPanel>
 								<AnalyticsComponent queryParams={queryParams} />
 							</TabPanel>

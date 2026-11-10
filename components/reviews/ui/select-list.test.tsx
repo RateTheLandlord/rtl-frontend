@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { render, screen, fireEvent } from '@/test-utils'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import SelectList from './select-list'
 import { Options } from '@/util/interfaces/interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'

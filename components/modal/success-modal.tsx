@@ -20,13 +20,14 @@ import {
 	TwitterIcon,
 } from 'react-share'
 import ModalShell from './ModalShell'
-import { useAppDispatch } from '@/redux/hooks'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { resetReview } from '@/redux/review/reviewSlice'
 
 function SuccessModal({ onClose }: { onClose: () => void }) {
 	const dispatch = useAppDispatch()
 	const t = useTranslations('createreview')
 	const router = useRouter()
+	const { country, province } = useAppSelector((state) => state.review)
 
 	return (
 		<ModalShell title={t('modal.success')} onClose={onClose}>
@@ -105,7 +106,9 @@ function SuccessModal({ onClose }: { onClose: () => void }) {
 					onClick={() => {
 						dispatch(resetReview())
 						onClose()
-						router.push('/reviews').catch((err) => console.log(err))
+						router
+							.push(`/reviews?country=${country}&state=${province}`)
+							.catch((err) => console.log(err))
 					}}
 				>
 					{t('modal.go-to')}

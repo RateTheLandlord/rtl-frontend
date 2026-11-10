@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { render, screen } from '@/test-utils'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import useSWR from 'swr'
 import Stats from './Stats'
 import { IStats } from '../types/types'

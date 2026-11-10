@@ -4,7 +4,7 @@
 
 import React from 'react'
 import { render, screen } from '@/test-utils'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import IconSection from './icon-section'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)

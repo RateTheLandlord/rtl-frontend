@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import {
 	Dialog,
 	DialogPanel,
@@ -9,64 +8,42 @@ import {
 } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import SearchBar from './ui/searchbar'
-import { Options, IQuery } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/interfaces'
 import { useTranslations } from 'next-intl'
 import ComboBox from './ui/combobox'
-import { AppDispatch } from '@/redux/store'
-import {
-	clearFilters,
-	clearReviewFilters,
-	updateCity,
-	updateCountry,
-	updateSearch,
-	updateZip,
-} from '@/redux/query/querySlice'
 import ButtonLight from '../ui/button-light'
 import Button from '../ui/button'
-import { DebouncedFunc } from 'lodash'
 
 interface FiltersProps {
 	mobileFiltersOpen: boolean
 	setMobileFiltersOpen: (bool: boolean) => void
-	countryFilter: Options | null
-	stateFilter: Options | null
 	cityFilter: Options | null
 	zipFilter: Options | null
 	dynamicCityOptions: Options[]
-	zipOptions?: Options[]
 	dynamicZipOptions: Options[]
-	updateParams: () => void
-	dispatch: AppDispatch
-	fetchDynamicFilterOptions: DebouncedFunc<() => Promise<void>>
-	query: IQuery
+	searchFilter: string
+	onSearchChange: (value: string) => void
+	onCityChange: (value: Options | null) => void
+	onZipChange: (value: Options | null) => void
+	onApply: () => void
+	onClear: () => void
 }
 
 export default function MobileReviewFilters({
 	mobileFiltersOpen,
 	setMobileFiltersOpen,
-	countryFilter,
-	stateFilter,
 	cityFilter,
 	zipFilter,
 	dynamicCityOptions,
-	zipOptions,
 	dynamicZipOptions,
-	updateParams,
-	dispatch,
-	fetchDynamicFilterOptions,
-	query,
+	searchFilter,
+	onSearchChange,
+	onCityChange,
+	onZipChange,
+	onApply,
+	onClear,
 }: FiltersProps) {
 	const t = useTranslations('reviews')
-
-	useEffect(() => {
-		fetchDynamicFilterOptions()
-	}, [stateFilter, cityFilter])
-
-	useEffect(() => {
-		dispatch(clearFilters())
-		dispatch(updateCountry(countryFilter))
-		fetchDynamicFilterOptions()
-	}, [countryFilter])
 
 	return (
 		<Transition show={mobileFiltersOpen} as={Fragment}>
@@ -113,52 +90,30 @@ export default function MobileReviewFilters({
 								</button>
 							</div>
 
-							{/* Filters */}
 							<div className='mt-4'>
 								<PopoverGroup className='mx-2 flex flex-col items-center gap-2 divide-y'>
 									<SearchBar
-										setSearchState={(str: string) =>
-											dispatch(updateSearch(str))
-										}
-										value={query.searchFilter}
+										setSearchState={onSearchChange}
+										value={searchFilter}
 									/>
 
 									<ComboBox
 										state={cityFilter}
-										setState={(opt: Options | null) =>
-											dispatch(updateCity(opt))
-										}
+										setState={onCityChange}
 										options={dynamicCityOptions}
 										name={t('city')}
 									/>
-									{zipOptions && (
-										<ComboBox
-											state={zipFilter}
-											setState={(opt: Options | null) =>
-												dispatch(updateZip(opt))
-											}
-											options={dynamicZipOptions}
-											name={t('zip')}
-										/>
-									)}
+
+									<ComboBox
+										state={zipFilter}
+										setState={onZipChange}
+										options={dynamicZipOptions}
+										name={t('zip')}
+									/>
+
 									<div className='flex w-full justify-end gap-2 pt-2'>
-										<ButtonLight
-											onClick={() => {
-												dispatch(clearReviewFilters())
-												setMobileFiltersOpen(false)
-												updateParams()
-											}}
-										>
-											Clear Filters
-										</ButtonLight>
-										<Button
-											onClick={() => {
-												updateParams()
-												setMobileFiltersOpen(false)
-											}}
-										>
-											Apply Filters
-										</Button>
+										<ButtonLight onClick={onClear}>{t('clear')}</ButtonLight>
+										<Button onClick={onApply}>{t('update')}</Button>
 									</div>
 								</PopoverGroup>
 							</div>

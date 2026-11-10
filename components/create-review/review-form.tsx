@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl'
 import { useReCaptcha } from 'next-recaptcha-v3'
 import { postcodeValidator } from 'postcode-validator'
 import posthog from 'posthog-js'
-import { useEffect, useState, type JSX } from 'react'
+import { useEffect, useRef, useState, type JSX } from 'react'
 import { toast } from 'react-toastify'
 import { useModal } from '../modal/ModalContext'
 import Button from '../ui/button'
@@ -64,13 +64,20 @@ function ReviewForm(): JSX.Element {
 	const handleSpamDetected = (detectionMethod: string) => {
 		posthog.capture('spam_review_detected', {
 			method: detectionMethod,
-			landlord,
 		})
 
 		openModal('spamReview', {
 			landlord,
 			detectionMethod,
 		})
+	}
+	const hasTrackedStart = useRef(false)
+
+	const handleFormChange = () => {
+		if (!hasTrackedStart.current) {
+			hasTrackedStart.current = true
+			posthog.capture('create_review_started')
+		}
 	}
 
 	// Check for already reviewed landlord from browser
@@ -116,10 +123,12 @@ function ReviewForm(): JSX.Element {
 			setLandlordValidationText(t('alerts.landlord-validation'))
 			return
 		}
+
 		if (checkLandlord(landlord.toLocaleUpperCase().trim())) {
 			handleSpamDetected('localStorageDetection')
 			return
 		}
+
 		if (city.trim().length < 1) {
 			setCityValidationError(true)
 			setCityValidationErrorText(t('alerts.city-validation'))
@@ -127,78 +136,90 @@ function ReviewForm(): JSX.Element {
 		}
 
 		if (
-			postcodeValidator(postal, country) ||
-			(postal.length === 0 && isIreland)
+			!postcodeValidator(postal, country) &&
+			!(postal.length === 0 && isIreland)
 		) {
-			setLoading(true)
-			const token = await executeRecaptcha('review_form')
-			if (token) {
-				fetch(`/api/review/submit-review`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						captchaToken: token,
-						review: {
-							landlord: landlord.trim(),
-							country_code: country,
-							city: city.trim(),
-							state: province,
-							zip: postal.trim(),
-							review: review.trim(),
-							repair: repair,
-							health: health,
-							stability: stability,
-							privacy: privacy,
-							respect: respect,
-							flagged: false,
-							flagged_reason: '',
-							admin_approved: false,
-							admin_edited: false,
-							rent: rent,
-						},
-					}),
-				})
-					.then((result: Response) => {
-						if (!result.ok) {
-							throw new Error()
-						} else {
-							return result.json()
-						}
-					})
-					.then((data: ReviewResponseStatus) => {
-						if (!data.success) {
-							handleSpamDetected('DBDetection')
-							throw new Error()
-						} else {
-							openModal('copyUserCode', { code: data.user_code })
-							setUserKeyStorage(data.user_code, data.review_id)
-						}
-					})
-					.then(() => {
-						const storageItem = localStorage.getItem('rtl')
-						if (storageItem) {
-							const newItem = `${storageItem},${landlord.toLocaleUpperCase().trim()}`
-							localStorage.setItem('rtl', newItem)
-						} else {
-							localStorage.setItem(
-								'rtl',
-								`${landlord.toLocaleUpperCase().trim()}`,
-							)
-						}
-					})
-					.catch(() => {
-						toast.error('ERROR: Please try again')
-					})
-					.finally(() => {
-						setLoading(false)
-					})
-			} else {
-				toast.error('ERROR:Please try again')
-			}
-		} else {
 			setPostalError(true)
+			return
+		}
+
+		posthog.capture('create_review_submission_attempted')
+
+		setLoading(true)
+
+		try {
+			const token = await executeRecaptcha('review_form')
+
+			if (!token) {
+				posthog.capture('create_review_submission_failed', {
+					stage: 'recaptcha',
+				})
+				toast.error('ERROR: Please try again')
+				return
+			}
+
+			const result = await fetch('/api/review/submit-review', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					captchaToken: token,
+					review: {
+						landlord: landlord.trim(),
+						country_code: country,
+						city: city.trim(),
+						state: province,
+						zip: postal.trim(),
+						review: review.trim(),
+						repair,
+						health,
+						stability,
+						privacy,
+						respect,
+						flagged: false,
+						flagged_reason: '',
+						admin_approved: false,
+						admin_edited: false,
+						rent,
+					},
+				}),
+			})
+
+			if (!result.ok) {
+				throw new Error('Review submission request failed')
+			}
+
+			const data: ReviewResponseStatus =
+				(await result.json()) as ReviewResponseStatus
+
+			if (!data.success) {
+				handleSpamDetected('DBDetection')
+				return
+			}
+
+			posthog.capture('create_review_submission_succeeded')
+
+			openModal('copyUserCode', { code: data.user_code })
+			setUserKeyStorage(data.user_code, data.review_id)
+
+			const storageItem = localStorage.getItem('rtl')
+			const reviewedLandlord = landlord.toLocaleUpperCase().trim()
+
+			if (storageItem) {
+				localStorage.setItem('rtl', `${storageItem},${reviewedLandlord}`)
+			} else {
+				localStorage.setItem('rtl', reviewedLandlord)
+			}
+		} catch (error) {
+			posthog.capture('create_review_submission_failed', {
+				stage: 'submission',
+			})
+
+			toast.error('ERROR: Please try again')
+			console.error('Error submitting Review:', error)
+		} finally {
+			setLoading(false)
 		}
 	}
 
@@ -237,6 +258,7 @@ function ReviewForm(): JSX.Element {
 				'container flex w-full flex-col items-center justify-center rounded-3xl px-2 sm:px-0 lg:h-full',
 			)}
 			data-testid='create-review-form-1'
+			onChangeCapture={handleFormChange}
 		>
 			<div className='bg-background w-full rounded-3xl px-2 pb-8 shadow-lg sm:px-0 sm:pb-12'>
 				<div className='w-full px-3 py-1 pt-4 sm:px-6 sm:pt-6'>
@@ -279,6 +301,16 @@ function ReviewForm(): JSX.Element {
 								onClick={() => {
 									posthog.capture('create_review_submitted', {
 										landlord,
+										country,
+										city,
+										province,
+										postal,
+										rent,
+										repair,
+										health,
+										stability,
+										privacy,
+										respect,
 									})
 									handleSubmit().catch(() => {
 										posthog.capture('create_review_submit_error', {

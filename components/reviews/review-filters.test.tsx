@@ -3,112 +3,77 @@
  */
 import React from 'react'
 import { render, screen, fireEvent } from '@/test-utils'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import ReviewFilters from './review-filters'
-import { IQuery, Options, SortOptions } from '@/util/interfaces/interfaces'
-import { Provider } from 'react-redux'
-import { AppDispatch, store } from '@/redux/store'
+import { Options, SortOptions } from '@/util/interfaces/interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
-import { DebouncedFunc } from 'lodash'
+
 expect.extend(toHaveNoViolations)
 
-interface FiltersProps {
-	title?: string
-	description?: string
-	searchTitle?: string
-	selectedSort: SortOptions | null
-	setSelectedSort: (selectedSort: SortOptions | null) => void
-	sortOptions: SortOptions[] | null
-	countryFilter: Options | null
-	stateFilter: Options | null
-	cityFilter: Options | null
-	zipFilter: Options | null
-	dynamicCityOptions: Options[]
-	zipOptions?: Options[]
-	dynamicZipOptions: Options[]
-	updateParams: () => void
-	loading: boolean
-	dispatch: AppDispatch
-	fetchDynamicFilterOptions: DebouncedFunc<() => Promise<void>>
-	query: IQuery
-}
-
-const mockProps: FiltersProps = {
-	selectedSort: { id: 1, name: 'az', value: 'az' },
+const mockProps = {
+	selectedSort: { id: 1, name: 'az', value: 'az' } as SortOptions,
 	sortOptions: [
 		{ id: 1, name: 'az', value: 'az' },
 		{ id: 2, name: 'za', value: 'za' },
 	] as SortOptions[],
 	setSelectedSort: jest.fn(),
 	searchTitle: 'Search Reviews',
-	countryFilter: { id: 1, name: 'USA', value: 'usa' },
-	stateFilter: { id: 1, name: 'California', value: 'ca' },
 	cityFilter: { id: 1, name: 'Los Angeles', value: 'la' },
 	zipFilter: { id: 1, name: '90001', value: '90001' },
 	dynamicCityOptions: [
 		{ id: 1, name: 'Los Angeles', value: 'la' },
 	] as Options[],
-	zipOptions: [{ id: 1, name: '90001', value: '90001' }] as Options[],
 	dynamicZipOptions: [{ id: 1, name: '90001', value: '90001' }] as Options[],
-	updateParams: jest.fn(),
-	loading: false,
-	dispatch: jest.fn(),
-	fetchDynamicFilterOptions: Object.assign(jest.fn(), {
-		cancel: jest.fn(),
-		flush: jest.fn(),
-	}),
-	query: { searchFilter: '' } as IQuery,
+	searchFilter: '',
+	onSearchChange: jest.fn(),
+	onCityChange: jest.fn(),
+	onZipChange: jest.fn(),
+	onApply: jest.fn(),
+	onClear: jest.fn(),
 }
 
 describe('ReviewFilters Component', () => {
+	beforeEach(() => {
+		jest.clearAllMocks()
+	})
+
 	it('renders without crashing', () => {
-		render(
-			<Provider store={store}>
-				<ReviewFilters
-					{...mockProps}
-					sortOptions={mockProps.sortOptions ?? []}
-				/>
-			</Provider>,
-		)
+		render(<ReviewFilters {...mockProps} />)
+
 		expect(screen.getByTestId('review-filters-1')).toBeInTheDocument()
 	})
 
-	it('calls dispatch and updateParams on submit button click', () => {
-		render(
-			<Provider store={store}>
-				<ReviewFilters
-					{...mockProps}
-					sortOptions={mockProps.sortOptions ?? []}
-				/>
-			</Provider>,
-		)
+	it('calls onApply when the update button is clicked', () => {
+		render(<ReviewFilters {...mockProps} />)
+
 		fireEvent.click(screen.getByTestId('submit-button-1'))
-		expect(mockProps.updateParams).toHaveBeenCalled()
+
+		expect(mockProps.onApply).toHaveBeenCalled()
 	})
 
-	it('calls dispatch and updateParams on clear button click', () => {
-		render(
-			<Provider store={store}>
-				<ReviewFilters
-					{...mockProps}
-					sortOptions={mockProps.sortOptions ?? []}
-				/>
-			</Provider>,
-		)
+	it('calls onClear when the clear button is clicked', () => {
+		render(<ReviewFilters {...mockProps} />)
+
 		fireEvent.click(screen.getByText('reviews.clear'))
-		expect(mockProps.dispatch).toHaveBeenCalled()
-		expect(mockProps.updateParams).toHaveBeenCalled()
+
+		expect(mockProps.onClear).toHaveBeenCalled()
 	})
-	it('Should not have a11y violation', async () => {
-		const { container } = render(
-			<Provider store={store}>
-				<ReviewFilters
-					{...mockProps}
-					sortOptions={mockProps.sortOptions ?? []}
-				/>
-			</Provider>,
-		)
+
+	it('calls onSearchChange when the search input changes', () => {
+		render(<ReviewFilters {...mockProps} />)
+
+		fireEvent.change(screen.getByRole('textbox'), {
+			target: { value: 'test search' },
+		})
+
+		expect(mockProps.onSearchChange).toHaveBeenCalledWith('test search')
+	})
+
+	it('has no accessibility violations', async () => {
+		const { container } = render(<ReviewFilters {...mockProps} />)
+
 		const result = await axe(container)
+
 		expect(result).toHaveNoViolations()
 	})
 })

@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import { useRouter } from 'next/router'
 import { useAppDispatch } from '@/redux/hooks'
 import { updateSearch } from '@/redux/query/querySlice'

@@ -4,9 +4,9 @@ export async function fetchFilterOptions(
 	country?: string,
 	state?: string,
 	city?: string,
-	zip?: string,
+	signal?: AbortSignal,
 ): Promise<FilterOptions> {
-	const url = `/api/review/get-filter-options`
+	const url = '/api/review/get-filter-options'
 
 	try {
 		const response = await fetch(url, {
@@ -14,17 +14,27 @@ export async function fetchFilterOptions(
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ country, state, city, zip }),
+			body: JSON.stringify({ country, state, city }),
+			signal,
 		})
 
 		if (!response.ok) {
-			throw new Error('Network response was not ok')
+			throw new Error(`Filter options request failed: ${response.status}`)
 		}
 
-		const data = (await response.json()) as FilterOptions
-		return data
-	} catch {
-		console.error('Error fetching filter options')
-		return { countries: [], states: [], cities: [], zips: [] }
+		return (await response.json()) as FilterOptions
+	} catch (error) {
+		if (error instanceof Error && error.name === 'AbortError') {
+			throw error
+		}
+
+		console.error('Error fetching filter options:', error)
+
+		return {
+			countries: [],
+			states: [],
+			cities: [],
+			zips: [],
+		}
 	}
 }
