@@ -29,7 +29,7 @@ export async function getLocations(
 			}[] = await sql`
 						SELECT *
 						FROM ca_location
-						WHERE zip = ANY(${sql.array([zipCodeValues])});
+						WHERE zip = ANY(${[zipCodeValues]});
 					`
 
 			// Transform the result to match the IZipLocations type
@@ -51,7 +51,7 @@ export async function getLocations(
 			}[] = await sql`
 					SELECT *
 					FROM us_location
-					WHERE zip = ANY(${sql.array([zipCodeValues])});
+					WHERE zip = ANY(${[zipCodeValues]});
 				`
 
 			// Transform the result to match the IZipLocations type
