@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { render, screen } from '@/test-utils'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import StateInfo from './StateInfo'
 import { useAppDispatch } from '@/redux/hooks'
 import { useRouter } from 'next/router'

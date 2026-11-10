@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { render, screen, fireEvent } from '@/test-utils'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import TotalStats from './TotalStats'
 import { ICountryStats } from '../types/types'
 import { axe } from 'jest-axe'

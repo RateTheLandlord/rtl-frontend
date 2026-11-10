@@ -4,7 +4,7 @@
 
 import React from 'react'
 import { render, screen } from '@/test-utils'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import LocationForm from './LocationForm'
 import { Options } from '@/util/interfaces/interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
