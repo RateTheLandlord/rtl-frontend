@@ -112,24 +112,28 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 	useEffect(() => {
 		const controller = new AbortController()
 
-		const timeout = window.setTimeout(async () => {
-			try {
-				const filterOptions = await fetchFilterOptions(
-					countryFilter?.value,
-					stateFilter?.value,
-					cityFilter?.value,
-					controller.signal,
-				)
+		const timeout = window.setTimeout(() => {
+			const fetchOptions = async () => {
+				try {
+					const filterOptions = await fetchFilterOptions(
+						countryFilter?.value,
+						stateFilter?.value,
+						cityFilter?.value,
+						controller.signal,
+					)
 
-				if (!controller.signal.aborted) {
-					setDynamicCityOptions(filterOptions.cities)
-					setDynamicZipOptions(filterOptions.zips)
-				}
-			} catch (error) {
-				if (!controller.signal.aborted) {
-					console.error('Error fetching filter options:', error)
+					if (!controller.signal.aborted) {
+						setDynamicCityOptions(filterOptions.cities)
+						setDynamicZipOptions(filterOptions.zips)
+					}
+				} catch (error) {
+					if (!controller.signal.aborted) {
+						console.error('Error fetching filter options:', error)
+					}
 				}
 			}
+
+			void fetchOptions()
 		}, 300)
 
 		return () => {

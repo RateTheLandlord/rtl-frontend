@@ -18,8 +18,8 @@ const mockProps = {
 	] as SortOptions[],
 	setSelectedSort: jest.fn(),
 	searchTitle: 'Search Reviews',
-	cityFilter: { id: 1, name: 'Los Angeles', value: 'la' } as Options,
-	zipFilter: { id: 1, name: '90001', value: '90001' } as Options,
+	cityFilter: { id: 1, name: 'Los Angeles', value: 'la' },
+	zipFilter: { id: 1, name: '90001', value: '90001' },
 	dynamicCityOptions: [
 		{ id: 1, name: 'Los Angeles', value: 'la' },
 	] as Options[],
