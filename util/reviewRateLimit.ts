@@ -2,6 +2,8 @@
 
 import { NextApiRequest, NextApiResponse } from 'next'
 
+const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production'
+
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 const rateLimitMap = new Map()
 
@@ -10,7 +12,7 @@ export default function ReviewRateLimitMiddleware(
 ) {
 	return (req: NextApiRequest, res: NextApiResponse) => {
 		const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
-		const limit = 2 // Limiting requests to 5 per minute per IP
+		const limit = isProduction ? 2 : 1000 // Limiting requests to 5 per minute per IP
 		const windowMs = 604800000 //1 week
 
 		if (!rateLimitMap.has(ip)) {
