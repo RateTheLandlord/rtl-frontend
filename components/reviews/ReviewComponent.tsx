@@ -126,7 +126,12 @@ const ReviewComponent = ({
 					{handleUserDelete && handleUserEdit && showEditOptions ? (
 						<>
 							<div className='mt-4 w-full'>
-								<ButtonLight onClick={() => handleUserDelete(review)}>
+								<ButtonLight
+									onClick={() => handleUserDelete(review)}
+									testid={`review-delete-${review.id}`}
+									type='button'
+									label={t('user-edit.remove')}
+								>
 									{t('user-delete.remove')}
 								</ButtonLight>
 							</div>
