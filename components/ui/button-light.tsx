@@ -4,7 +4,7 @@ interface IProps {
 	children: string | JSX.Element
 	onClick?: () => void
 	label?: string
-	type?: string
+	type?: 'reset' | 'submit' | 'button' | undefined
 	testid?: string
 }
 function ButtonLight({
