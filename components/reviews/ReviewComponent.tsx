@@ -50,7 +50,7 @@ const ReviewComponent = ({
 	const isSuspicious = review.suspicious_reason !== null
 
 	return (
-		<div key={review.id}>
+		<div key={review.id} data-testid={`review-${review.id}`}>
 			<div>
 				{i > 0 && i % 20 === 0 && (
 					<AdsComponent slot={AD_UNITS.REVIEW_FEED} type='in-feed' />
@@ -112,7 +112,10 @@ const ReviewComponent = ({
 							<FlagIcon className='text-red-700' width={20} />
 						</ButtonLight>
 						{review.has_user_code || user?.role === 'ADMIN' ? (
-							<ButtonLight onClick={() => setShowEditOptions(!showEditOptions)}>
+							<ButtonLight
+								onClick={() => setShowEditOptions(!showEditOptions)}
+								data-testid={`review-edit-toggle-${review.id}`}
+							>
 								<PencilIcon className='text-black-700' width={20} />
 							</ButtonLight>
 						) : null}
@@ -126,7 +129,10 @@ const ReviewComponent = ({
 								</ButtonLight>
 							</div>
 							<div className='mt-4 w-full'>
-								<ButtonLight onClick={() => handleUserEdit(review)}>
+								<ButtonLight
+									onClick={() => handleUserEdit(review)}
+									data-testid={`review-edit-${review.id}`}
+								>
 									{t('user-edit.edit')}
 								</ButtonLight>
 							</div>
