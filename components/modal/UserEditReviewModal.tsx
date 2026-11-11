@@ -30,7 +30,9 @@ const UserEditReviewModal = ({
 	const [province, setProvince] = useState<string>(selectedReview?.state || '')
 	const [postal, setPostal] = useState<string>(selectedReview?.zip || '')
 	const [review, setReview] = useState<string>(selectedReview?.review || '')
-	const [rent, setRent] = useState<number | null>(selectedReview?.rent || null)
+	const [rent, setRent] = useState<number | null>(
+		selectedReview?.rent != null ? Number(selectedReview.rent) : null,
+	)
 	const [codeError, setCodeError] = useState('')
 	const [userCode, setUserCode] = useState('')
 
@@ -55,7 +57,7 @@ const UserEditReviewModal = ({
 			state: province,
 			zip: postal,
 			review: review,
-			rent: rent,
+			rent: rent !== null ? Number(rent) : null,
 		}
 		const body = {
 			review: editedReview,
