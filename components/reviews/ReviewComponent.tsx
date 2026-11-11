@@ -114,7 +114,9 @@ const ReviewComponent = ({
 						{review.has_user_code || user?.role === 'ADMIN' ? (
 							<ButtonLight
 								onClick={() => setShowEditOptions(!showEditOptions)}
-								data-testid={`review-edit-toggle-${review.id}`}
+								testid={`review-edit-toggle-${review.id}`}
+								label='Edit Menu'
+								type='button'
 							>
 								<PencilIcon className='text-black-700' width={20} />
 							</ButtonLight>
@@ -131,7 +133,9 @@ const ReviewComponent = ({
 							<div className='mt-4 w-full'>
 								<ButtonLight
 									onClick={() => handleUserEdit(review)}
-									data-testid={`review-edit-${review.id}`}
+									testid={`review-edit-${review.id}`}
+									type='button'
+									label={t('user-edit.edit')}
 								>
 									{t('user-edit.edit')}
 								</ButtonLight>
