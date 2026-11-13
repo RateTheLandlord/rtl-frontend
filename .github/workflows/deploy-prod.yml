@@ -18,7 +18,7 @@ jobs:
     name: Build and publish production image
     if: github.event.release.prerelease == false
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 90
     environment: Production
 
     steps:
@@ -33,6 +33,133 @@ jobs:
             echo "::error::Release $RELEASE_TAG is not the latest stable release ($latest_tag)."
             exit 1
           fi
+
+      - name: Run E2E release gate
+        env:
+          GH_TOKEN: ${{ secrets.E2E_REPO_TOKEN }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          REQUEST_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::E2E_REPO_TOKEN is not configured."
+            exit 1
+          fi
+
+          payload="$(jq -n --arg request_id "$REQUEST_ID" --arg tag "$RELEASE_TAG" '{
+            event_type: "release_gate",
+            client_payload: {
+              request_id: $request_id,
+              release_tag: $tag
+            }
+          }')"
+
+          curl --fail-with-body --silent --show-error \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/RateTheLandlord/rtl-e2e-tests/dispatches \
+            -d "$payload"
+
+          expected_title="Playwright E2E - $REQUEST_ID"
+          echo "Waiting for E2E run: $expected_title"
+
+          for attempt in $(seq 1 360); do
+            run_id="$(gh api "repos/RateTheLandlord/rtl-e2e-tests/actions/runs?event=repository_dispatch&per_page=100" \
+              --jq --arg title "$expected_title" \
+              '[.workflow_runs[] | select(.display_title == $title)] | first | .id // empty')"
+
+            if [ -n "$run_id" ]; then
+              run_state="$(gh api "repos/RateTheLandlord/rtl-e2e-tests/actions/runs/$run_id" \
+                --jq '[.status, (.conclusion // "")] | @tsv')"
+
+              status="${run_state%%        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/rtl-application:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/rtl-application:${{ github.event.release.tag_name }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/rtl-application:latest
+          sbom: true
+          provenance: mode=max
+          build-args: |
+            NEXT_PUBLIC_CAPTCHA_SITE_KEY=${{ vars.NEXT_PUBLIC_CAPTCHA_SITE_KEY }}
+            NEXT_PUBLIC_ENVIRONMENT=${{ vars.NEXT_PUBLIC_ENVIRONMENT }}
+            NEXT_PUBLIC_MAPBOX_TOKEN=${{ vars.NEXT_PUBLIC_MAPBOX_TOKEN }}
+            NEXT_PUBLIC_ORIGIN_URL=${{ vars.NEXT_PUBLIC_ORIGIN_URL }}
+            NEXT_PUBLIC_POSTHOG_HOST=${{ vars.NEXT_PUBLIC_POSTHOG_HOST }}
+            NEXT_PUBLIC_POSTHOG_KEY=${{ vars.NEXT_PUBLIC_POSTHOG_KEY }}
+\t'*}"
+              conclusion="${run_state#*        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/rtl-application:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/rtl-application:${{ github.event.release.tag_name }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/rtl-application:latest
+          sbom: true
+          provenance: mode=max
+          build-args: |
+            NEXT_PUBLIC_CAPTCHA_SITE_KEY=${{ vars.NEXT_PUBLIC_CAPTCHA_SITE_KEY }}
+            NEXT_PUBLIC_ENVIRONMENT=${{ vars.NEXT_PUBLIC_ENVIRONMENT }}
+            NEXT_PUBLIC_MAPBOX_TOKEN=${{ vars.NEXT_PUBLIC_MAPBOX_TOKEN }}
+            NEXT_PUBLIC_ORIGIN_URL=${{ vars.NEXT_PUBLIC_ORIGIN_URL }}
+            NEXT_PUBLIC_POSTHOG_HOST=${{ vars.NEXT_PUBLIC_POSTHOG_HOST }}
+            NEXT_PUBLIC_POSTHOG_KEY=${{ vars.NEXT_PUBLIC_POSTHOG_KEY }}
+\t'}"
+
+              if [ "$status" = "completed" ]; then
+                if [ "$conclusion" = "success" ]; then
+                  echo "E2E release gate passed (run $run_id)."
+                  exit 0
+                fi
+
+                echo "::error::E2E release gate finished with conclusion: $conclusion (run $run_id)."
+                exit 1
+              fi
+            fi
+
+            sleep 10
+          done
+
+          echo "::error::Timed out waiting for the E2E release gate."
+          exit 1
 
       - name: Checkout release tag
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
