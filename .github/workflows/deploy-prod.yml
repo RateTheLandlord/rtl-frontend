@@ -66,9 +66,8 @@ jobs:
 
           for attempt in $(seq 1 360); do
             run_id="$(gh api "repos/RateTheLandlord/rtl-e2e-tests/actions/runs?event=repository_dispatch&per_page=100" \
-              --jq --arg title "$expected_title" \
-              '[.workflow_runs[] | select(.display_title == $title)] | first | .id // empty')"
-
+              | jq -r --arg title "$expected_title" \
+                '[.workflow_runs[] | select(.display_title == $title)] | first | .id // empty')"
             if [ -n "$run_id" ]; then
               run_state="$(gh api "repos/RateTheLandlord/rtl-e2e-tests/actions/runs/$run_id" \
                 --jq '[.status, (.conclusion // "")] | @tsv')"
