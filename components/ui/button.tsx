@@ -1,11 +1,13 @@
 import { classNames } from '@/util/helpers/helper-functions'
-import React, { type JSX } from 'react'
+import { type JSX } from 'react'
 
 interface IProps {
 	children: string
 	disabled?: boolean
 	onClick?: () => void
 	size?: 'small' | 'medium' | 'large'
+	label?: string
+	testid?: string
 }
 
 function Button({
@@ -13,10 +15,12 @@ function Button({
 	disabled = false,
 	onClick,
 	size = 'small',
+	label = 'Submit Button',
+	testid = 'submit-button-1',
 }: IProps): JSX.Element {
 	return (
 		<button
-			aria-label='Submit Button'
+			aria-label={label}
 			onClick={onClick}
 			type='submit'
 			className={classNames(
@@ -29,7 +33,7 @@ function Button({
 				size === 'large' ? 'px-8 py-4 text-3xl' : '',
 			)}
 			disabled={disabled}
-			data-testid='submit-button-1'
+			data-testid={testid}
 		>
 			{children}
 		</button>

@@ -108,7 +108,11 @@ const ReviewComponent = ({
 						</p>
 					</div>
 					<div className='mt-4 flex flex-row justify-start space-x-1'>
-						<ButtonLight onClick={() => handleReport(review)}>
+						<ButtonLight
+							onClick={() => handleReport(review)}
+							data-testid={`review-flag-${review.id}`}
+							label='Report review'
+						>
 							<FlagIcon className='text-red-700' width={20} />
 						</ButtonLight>
 						{review.has_user_code || user?.role === 'ADMIN' ? (

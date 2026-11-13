@@ -61,8 +61,15 @@ function ReportModal({
 
 	const handleSubmit = async () => {
 		if (selectedReview) {
+			console.log('Starting report submission')
+
 			const token = await executeRecaptcha('report_modal')
+
+			console.log('reCAPTCHA token received:', Boolean(token))
+
 			if (token) {
+				console.log('Sending flag request')
+
 				fetch(`/api/review/flag-review`, {
 					method: 'POST',
 					headers: {
@@ -76,23 +83,24 @@ function ReportModal({
 				})
 					.then((result: Response) => {
 						if (!result.ok) {
-							throw new Error()
-						} else {
-							return result.json()
+							throw new Error(`Flag request failed: ${result.status}`)
 						}
+
+						return result.json()
 					})
 					.then(() => {
 						setSubmitSuccess(true)
 					})
-					.catch(() => {
-						setSubmitError(false)
+					.catch((error) => {
+						console.error('Flag submission failed:', error)
+						setSubmitError(true)
 					})
 			} else {
+				console.error('reCAPTCHA did not return a token')
 				setSubmitError(true)
 			}
 		}
 	}
-
 	return (
 		<ModalShell title={t('report.report')} onClose={onClose}>
 			<>
@@ -181,14 +189,18 @@ function ReportModal({
 						) : null}
 
 						<div className='flex flex-row justify-center gap-5 sm:gap-3'>
-							<ButtonLight onClick={onClose}>{t('report.cancel')}</ButtonLight>
+							<ButtonLight onClick={onClose} label={t('report.cancel')}>
+								{t('report.cancel')}
+							</ButtonLight>
 							<Button
+								testid='report-submit-button'
 								onClick={() => {
 									handleSubmit().catch(() =>
 										console.error('Failed To Submit Report'),
 									)
 								}}
 								disabled={reason.length >= 255}
+								label={t('report.submit')}
 							>
 								{t('report.submit')}
 							</Button>
