@@ -6,7 +6,7 @@ import path from 'path'
 import { render } from '@testing-library/react'
 import { ReactNode } from 'react'
 import { Provider } from 'react-redux'
-import { store } from './redux/store'
+import { store } from '@/redux/store'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
 import { NextIntlClientProvider } from 'next-intl'
 
