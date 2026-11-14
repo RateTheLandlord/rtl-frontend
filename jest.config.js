@@ -18,7 +18,16 @@ module.exports = {
 	},
 	moduleNameMapper: {
 		// "@/*": ["./*"]
-		'^@/(.*)$': ['<rootDir>/$1'],
+		'^@/(.*)
+	},
+	transformIgnorePatterns: [
+		`/node_modules/(?!(next-recaptcha-v3|next-intl|use-intl|intl-messageformat|@formatjs|@floating-ui)/)`,
+	],
+	globals: {
+		fetch: global.fetch,
+	},
+}
+: ['<rootDir>/src/$1', '<rootDir>/$1'],
 	},
 	transformIgnorePatterns: [
 		`/node_modules/(?!(next-recaptcha-v3|next-intl|use-intl|intl-messageformat|@formatjs|@floating-ui)/)`,

@@ -26,7 +26,7 @@ export default tseslint.config({
 		'*.css',
 		'*.scss',
 		'next-env.d.ts',
-		'util/countries',
+		'src/util/countries',
 		'migrations/*',
 	],
 	languageOptions: {

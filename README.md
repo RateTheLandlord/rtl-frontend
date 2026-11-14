@@ -80,22 +80,22 @@ The application uses the Pages Router. New development should follow the existin
 
 ### Repository structure
 
-The main areas of the repository include:
-
 ```text
 .
-├── .github/           # GitHub workflows and configuration
-├── .husky/            # Git hooks
-├── components/        # Reusable React components
-├── lib/               # Shared libraries and application helpers
+├── .github/           # GitHub workflows and repository automation
+├── docs/              # Architecture and project documentation
+├── migrations/        # Ordered database migrations
 ├── messages/          # Localization messages
-├── migrations/        # Database migration SQL
-├── pages/             # Pages Router pages and API routes
+├── pages/             # Next.js Pages Router pages and API routes
 ├── public/            # Static assets
-├── redux/             # Redux store and state slices
-├── styles/            # Global styles
-├── types/             # Shared TypeScript types
-├── util/              # Utility functions
+├── scripts/           # Project maintenance scripts
+├── src/               # Application source code
+│   ├── components/    # UI, grouped by feature and shared purpose
+│   ├── lib/            # Domain logic and application services
+│   ├── redux/          # Redux store and state slices
+│   ├── styles/         # Global styles
+│   ├── types/          # Shared TypeScript types
+│   └── util/           # Utilities, hooks, and location data
 ├── Dockerfile         # Production container image
 ├── compose.yml        # Docker Compose configuration
 ├── next.config.ts     # Next.js configuration
@@ -103,8 +103,7 @@ The main areas of the repository include:
 └── bun.lock           # Bun dependency lockfile
 ```
 
-Some implementation details may evolve. Refer to the repository itself for the definitive file layout.
-
+The `pages/` directory is intentionally kept at the repository root because Next.js uses it for file-system routing. Route files should stay thin and delegate application work to `src/`. See [docs/architecture.md](docs/architecture.md) for directory responsibilities and placement rules.
 ## Prerequisites
 
 For local development, you will need:
