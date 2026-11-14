@@ -88,7 +88,6 @@ The application uses the Pages Router. New development should follow the existin
 ├── messages/          # Localization messages
 ├── pages/             # Next.js Pages Router pages and API routes
 ├── public/            # Static assets
-├── scripts/           # Project maintenance scripts
 ├── src/               # Application source code
 │   ├── components/    # UI, grouped by feature and shared purpose
 │   ├── lib/            # Domain logic and application services

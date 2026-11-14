@@ -9,7 +9,6 @@ RateTheLandlord is a single full-stack Next.js application. The Pages Router rem
 - `migrations/`: Ordered database schema/data migrations. Keep these at the root so database tooling and operational workflows can find them consistently.
 - `messages/`: Translation resources consumed by the existing internationalization setup.
 - `public/`: Static assets served directly by Next.js.
-- `scripts/`: Developer and maintenance scripts.
 - `docs/`: Project and architecture documentation.
 
 ## Source directories
