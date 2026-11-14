@@ -58,3 +58,31 @@ The root-level `pages/` directory is intentional and must not be moved under `sr
 ## Scope of this migration
 
 This change establishes a clear source-code boundary while preserving existing module names and internal folder relationships. It deliberately does not rename domains, rewrite business logic, change API behavior, migrate routing systems, or redesign the database layer. Those changes should be made incrementally with tests and dependency boundaries reviewed independently.
+
+
+## Naming conventions
+
+Use consistent casing for application source files and directories:
+
+| Item | Convention | Example |
+|---|---|---|
+| React components | PascalCase | `ReviewComponent.tsx` |
+| Component tests | Match the component filename | `ReviewComponent.test.tsx` |
+| Hooks | camelCase | `useInfiniteScroll.ts` |
+| Utilities, services, and helpers | camelCase | `fetchReviews.ts` |
+| Type-only modules | PascalCase | `ReviewTypes.ts` |
+| Source directories | camelCase | `createReview/`, `postHog/` |
+
+Use descriptive names; avoid abbreviations unless they are established project or technology names (for example, `SEO`, `Map`, or `PH`).
+
+### Names that must remain stable
+
+Do not blindly rename files or directories whose names are part of an external contract:
+
+- Pages Router files and folders define public page and API URLs. Preserve their current paths unless a route migration includes redirects and compatibility coverage.
+- Files under `public/` are served by URL. Preserve paths referenced by HTML, CSS, metadata, sitemap/robots conventions, external integrations, or existing links.
+- Localization message filenames are namespaces consumed by the i18n setup. Rename them only alongside every namespace reference and test.
+- Database migration filenames and their numeric ordering are part of migration discovery and execution.
+- Framework and tool configuration filenames must retain the names expected by their tools.
+
+When renaming an application source module, update every static and dynamic import, test mock, alias, and documentation reference in the same change. Treat case-only renames carefully because they can be missed on case-insensitive development filesystems.

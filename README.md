@@ -102,7 +102,7 @@ The application uses the Pages Router. New development should follow the existin
 └── bun.lock           # Bun dependency lockfile
 ```
 
-The `pages/` directory is intentionally kept at the repository root because Next.js uses it for file-system routing. Route files should stay thin and delegate application work to `src/`. See [docs/architecture.md](docs/architecture.md) for directory responsibilities and placement rules.
+The `pages/` directory is intentionally kept at the repository root because Next.js uses it for file-system routing. Route files should stay thin and delegate application work to `src/`. See [docs/architecture.md](docs/architecture.md) for directory responsibilities, placement rules, and naming conventions.
 ## Prerequisites
 
 For local development, you will need:
