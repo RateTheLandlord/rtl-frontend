@@ -64,6 +64,10 @@ function ReviewForm(): JSX.Element {
 	const handleSpamDetected = (detectionMethod: string) => {
 		posthog.capture('spam_review_detected', {
 			method: detectionMethod,
+			landlord,
+			state: province,
+			country,
+			city,
 		})
 
 		openModal('spamReview', {
@@ -117,7 +121,7 @@ function ReviewForm(): JSX.Element {
 		}
 	}, [postal, country])
 
-	const handleSubmit = async () => {
+	const handleSubmit = () => {
 		if (landlord.trim().length < 1) {
 			setLandlordValidationError(true)
 			setLandlordValidationText(t('alerts.landlord-validation'))
@@ -143,16 +147,29 @@ function ReviewForm(): JSX.Element {
 			return
 		}
 
-		posthog.capture('create_review_submission_attempted')
+		posthog.capture('create_review_submission_attempted', {
+			landlord,
+			country,
+			state: province,
+			city,
+		})
 
 		setLoading(true)
 
+		void submitReview()
+	}
+
+	const submitReview = async () => {
 		try {
 			const token = await executeRecaptcha('review_form')
 
 			if (!token) {
 				posthog.capture('create_review_submission_failed', {
 					stage: 'recaptcha',
+					landlord,
+					country,
+					state: province,
+					city,
 				})
 				toast.error('ERROR: Please try again')
 				return
@@ -198,7 +215,12 @@ function ReviewForm(): JSX.Element {
 				return
 			}
 
-			posthog.capture('create_review_submission_succeeded')
+			posthog.capture('create_review_submission_succeeded', {
+				landlord,
+				country,
+				state: province,
+				city,
+			})
 
 			openModal('copyUserCode', { code: data.user_code })
 			setUserKeyStorage(data.user_code, data.review_id)
@@ -214,15 +236,18 @@ function ReviewForm(): JSX.Element {
 		} catch (error) {
 			posthog.capture('create_review_submission_failed', {
 				stage: 'submission',
+				error,
+				landlord,
+				country,
+				state: province,
+				city,
 			})
 
 			toast.error('ERROR: Please try again')
-			console.error('Error submitting Review:', error)
 		} finally {
 			setLoading(false)
 		}
 	}
-
 	useEffect(() => {
 		switch (country) {
 			case Country.GB:
@@ -298,27 +323,7 @@ function ReviewForm(): JSX.Element {
 						) : (
 							<Button
 								disabled={loading || review.length > 2000}
-								onClick={() => {
-									posthog.capture('create_review_submitted', {
-										landlord,
-										country,
-										city,
-										province,
-										postal,
-										rent,
-										repair,
-										health,
-										stability,
-										privacy,
-										respect,
-									})
-									handleSubmit().catch(() => {
-										posthog.capture('create_review_submit_error', {
-											landlord,
-										})
-										console.error('Error submitting Review')
-									})
-								}}
+								onClick={handleSubmit}
 							>
 								{t('createreview.review-form.submit')}
 							</Button>
