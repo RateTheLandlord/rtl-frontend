@@ -1,3 +1,5 @@
+'use client'
+
 import { sortOptions } from '@/util/helpers/filterOptions'
 import {
 	Resource,
