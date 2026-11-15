@@ -4,7 +4,7 @@
 
 import React from 'react'
 import { render } from '@testing-library/react'
-import Logo from './logo'
+import Logo from './Logo'
 import { axe, toHaveNoViolations } from 'jest-axe'
 
 expect.extend(toHaveNoViolations)

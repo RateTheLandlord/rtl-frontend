@@ -1,4 +1,4 @@
-import ReviewForm from '@/components/reviews/read-reviews'
+import ReviewForm from '@/components/reviews/ReadReviews'
 import SEO from '@/components/seo/SEO'
 import { useRouter } from 'next/router'
 import { type JSX } from 'react'

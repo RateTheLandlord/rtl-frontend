@@ -5,7 +5,7 @@ import React from 'react'
 import { render } from '@/test-utils'
 import { Disclosure } from '@headlessui/react'
 import MobileNav from './MobileNav'
-import { INav } from '@/util/interfaces/interfaces'
+import { INav } from '@/util/interfaces/Interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

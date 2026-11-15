@@ -1,4 +1,4 @@
-import { Keywords } from '@/util/interfaces/interfaces'
+import { Keywords } from '@/util/interfaces/Interfaces'
 
 export interface IResponse {
 	status: number

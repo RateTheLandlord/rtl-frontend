@@ -1,4 +1,4 @@
-import CityComboBox from '@/components/create-review/components/CityComboBox'
+import CityComboBox from '@/components/createReview/components/CityComboBox'
 import CountrySelector from '@/components/ui/CountrySelector'
 import LargeTextInput from '@/components/ui/LargeTextInput'
 import StateSelector from '@/components/ui/StateSelector'
@@ -13,13 +13,13 @@ import {
 	updatePhone,
 	updateState,
 } from '@/redux/resource/resourceSlice'
-import { Country } from '@/types/review.types'
+import { Country } from '@/types/ReviewTypes'
 import { useLocation } from '@/util/hooks/useLocation'
-import { ILocationHookResponse } from '@/util/interfaces/interfaces'
+import { ILocationHookResponse } from '@/util/interfaces/Interfaces'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '../ui/button'
-import ButtonLight from '../ui/button-light'
+import Button from '../ui/Button'
+import ButtonLight from '../ui/ButtonLight'
 import Spinner from '../ui/Spinner'
 import ModalShell from './ModalShell'
 

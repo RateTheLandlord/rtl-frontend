@@ -1,4 +1,4 @@
-import { OtherLandlord } from '@/util/interfaces/interfaces'
+import { OtherLandlord } from '@/util/interfaces/Interfaces'
 import Spinner from '../ui/Spinner'
 import Link from 'next/link'
 import RatingStars from '@/components/ui/RatingStars'

@@ -6,7 +6,7 @@ import type {
 	Review,
 	SuspiciousLandlord,
 	UserReview,
-} from '@/util/interfaces/interfaces'
+} from '@/util/interfaces/Interfaces'
 
 import type { Candidate } from '@/components/admin/sections/MergeDuplicateLandlords'
 
@@ -24,11 +24,11 @@ import AddSuspiciousLandlordModal from './AddSuspiciousLandlordModal'
 import EditSuspiciousLandlordModal from './EditSuspiciousLandlordModal'
 import RemoveSuspiciousLandlordModal from './RemoveSuspiciousLandlordModal'
 import CopyUserCodeModal from './CopyUserCodeModal'
-import SuccessModal from './success-modal'
+import SuccessModal from './SuccessModal'
 import SpamReviewModal from './SpamReviewModal'
 import EditResourceModal from './EditResourceModal'
 import MergeLandlordsModal from './MergeLandlordsModal'
-import ReportModal from './report-modal'
+import ReportModal from './ReportModal'
 import SuspiciousReviewModal from './SuspiciousReviewModal'
 
 export type ModalControls = {

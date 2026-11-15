@@ -1,7 +1,7 @@
 import { runMiddleware } from '@/util/cors'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import rateLimitMiddleware from '@/util/rateLimit'
-import { userDeleteReview } from '@/lib/review/models/user-delete-review-layer'
+import { userDeleteReview } from '@/lib/review/models/userDeleteReviewLayer'
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
 	typeof value === 'object' && value !== null && !Array.isArray(value)

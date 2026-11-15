@@ -1,10 +1,10 @@
 import sql from '../db'
-import { SuspiciousLandlord } from '@/util/interfaces/interfaces'
+import { SuspiciousLandlord } from '@/util/interfaces/Interfaces'
 import {
 	createLandlord,
 	updateLandlord,
-} from './models/suspicious-landlord-data-layer'
-import { GetSuspiciousLandlordResponse, IResponse } from './types'
+} from './models/suspiciousLandlordDataLayer'
+import { GetSuspiciousLandlordResponse, IResponse } from './Types'
 
 export async function getSuspiciousLandlords(): Promise<GetSuspiciousLandlordResponse> {
 	// Fetch Landlords

@@ -1,7 +1,7 @@
-import { Review } from '@/util/interfaces/interfaces'
+import { Review } from '@/util/interfaces/Interfaces'
 import { toast } from 'react-toastify'
-import Button from '../ui/button'
-import ButtonLight from '../ui/button-light'
+import Button from '../ui/Button'
+import ButtonLight from '../ui/ButtonLight'
 import ModalShell from './ModalShell'
 
 const DeleteNow = ({

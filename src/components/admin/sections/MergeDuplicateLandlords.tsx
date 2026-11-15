@@ -1,4 +1,4 @@
-import Button from '@/components/ui/button'
+import Button from '@/components/ui/Button'
 import Spinner from '@/components/ui/Spinner'
 import TextInput from '@/components/ui/TextInput'
 import { useState } from 'react'

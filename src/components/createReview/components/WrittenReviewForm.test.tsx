@@ -30,7 +30,7 @@ jest.mock('next-intl', () => ({
 	useTranslations: jest.fn(),
 }))
 jest.mock(
-	'@/components/ui/button',
+	'@/components/ui/Button',
 	() =>
 		(props: {
 			onClick: () => void

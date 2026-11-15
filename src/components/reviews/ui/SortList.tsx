@@ -7,7 +7,7 @@ import {
 	ListboxOptions,
 	Transition,
 } from '@headlessui/react'
-import { SortOptions } from '@/util/interfaces/interfaces'
+import { SortOptions } from '@/util/interfaces/Interfaces'
 import { useTranslations } from 'next-intl'
 
 interface ComponentProps {

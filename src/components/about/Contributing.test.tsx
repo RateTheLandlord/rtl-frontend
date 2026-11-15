@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { RenderResult } from '@/test-utils'
-import Contributing from './contributing'
+import Contributing from './Contributing'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { render } from '@/test-utils'
 expect.extend(toHaveNoViolations)

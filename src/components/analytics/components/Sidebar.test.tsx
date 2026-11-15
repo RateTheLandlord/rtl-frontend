@@ -4,7 +4,7 @@
 import React from 'react'
 import { render } from '@/test-utils'
 import { axe, toHaveNoViolations } from 'jest-axe'
-import Sidebar from './sidebar'
+import Sidebar from './Sidebar'
 import { AnalyticsResponse } from '@/lib/analytics/types'
 expect.extend(toHaveNoViolations)
 

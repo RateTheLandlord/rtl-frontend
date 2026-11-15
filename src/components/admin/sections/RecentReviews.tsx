@@ -1,6 +1,6 @@
 import Spinner from '@/components/ui/Spinner'
 import { fetcher } from '@/util/helpers/fetcher'
-import { RecentReviews as IRecentReviews } from '@/util/interfaces/interfaces'
+import { RecentReviews as IRecentReviews } from '@/util/interfaces/Interfaces'
 import dayjs from 'dayjs'
 import useSWR from 'swr'
 

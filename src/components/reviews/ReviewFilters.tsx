@@ -1,11 +1,11 @@
 import React, { type JSX, type KeyboardEvent } from 'react'
-import { Options, SortOptions } from '@/util/interfaces/interfaces'
-import SearchBar from './ui/searchbar'
+import { Options, SortOptions } from '@/util/interfaces/Interfaces'
+import SearchBar from './ui/Searchbar'
 import { useTranslations } from 'next-intl'
-import ComboBox from './ui/combobox'
-import ButtonLight from '../ui/button-light'
-import SortList from './ui/sort-list'
-import Button from '../ui/button'
+import ComboBox from './ui/Combobox'
+import ButtonLight from '../ui/ButtonLight'
+import SortList from './ui/SortList'
+import Button from '../ui/Button'
 
 interface FiltersProps {
 	selectedSort: SortOptions | null

@@ -1,4 +1,4 @@
-import { Country } from '@/types/review.types'
+import { Country } from '@/types/ReviewTypes'
 
 import type { JSX } from 'react'
 

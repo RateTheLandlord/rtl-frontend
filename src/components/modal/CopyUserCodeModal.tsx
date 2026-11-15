@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
-import Button from '../ui/button'
+import Button from '../ui/Button'
 import { useModal } from './ModalContext'
 import ModalShell from './ModalShell'
 

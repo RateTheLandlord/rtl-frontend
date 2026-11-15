@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 import { render, screen } from '@/test-utils'
-import Hero from '@/components/home/hero'
-import IconSection from '@/components/home/icon-section'
+import Hero from '@/components/home/Hero'
+import IconSection from '@/components/home/IconSection'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

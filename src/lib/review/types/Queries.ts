@@ -1,4 +1,4 @@
-import { UserReview } from '@/util/interfaces/interfaces'
+import { UserReview } from '@/util/interfaces/Interfaces'
 
 export interface ReviewQuery {
 	page?: number

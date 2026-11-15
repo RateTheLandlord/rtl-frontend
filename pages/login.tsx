@@ -1,4 +1,4 @@
-import Logo from '@/components/svg/logo/logo'
+import Logo from '@/components/svg/logo/Logo'
 import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import Head from 'next/head'
 import Link from 'next/link'

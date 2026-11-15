@@ -1,8 +1,8 @@
-import { Review, UserUpdatedReview } from '@/util/interfaces/interfaces'
+import { Review, UserUpdatedReview } from '@/util/interfaces/Interfaces'
 import { Message, UserUpdateReviewResponse } from '../types/Responses'
 import sql from '@/lib/db'
 import isWithinLastDay from '@/util/helpers/isWithinLastDay'
-import { checkUserCode } from '../user-codes'
+import { checkUserCode } from '../userCodes'
 import { filterReviewWithAI, IResult } from '../helpers'
 
 export async function userUpdateReview(

@@ -4,7 +4,7 @@
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 import { render, screen, fireEvent } from '@testing-library/react'
-import LandlordForm from '@/components/create-review/components/LandlordForm'
+import LandlordForm from '@/components/createReview/components/LandlordForm'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
 import { updateLandlord } from '@/redux/review/reviewSlice'

@@ -1,4 +1,4 @@
-import { Options, UserReview } from '@/util/interfaces/interfaces'
+import { Options, UserReview } from '@/util/interfaces/Interfaces'
 
 export interface OtherLandlord {
 	name: string

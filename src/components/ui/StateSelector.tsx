@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl'
 import { getStates } from '@/util/countries/combineStates'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { Country } from '@/types/review.types'
+import { Country } from '@/types/ReviewTypes'
 import { updateProvince } from '@/redux/review/reviewSlice'
 import { updateState as updateResourceState } from '@/redux/resource/resourceSlice'
 

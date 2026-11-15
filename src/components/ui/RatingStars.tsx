@@ -1,4 +1,4 @@
-import { classNames } from '@/util/helpers/helper-functions'
+import { classNames } from '@/util/helpers/helperFunctions'
 import { StarIcon } from '@heroicons/react/24/solid'
 
 interface IProps {

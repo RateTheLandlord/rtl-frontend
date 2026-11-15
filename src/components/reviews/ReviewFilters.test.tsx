@@ -4,8 +4,8 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@/test-utils'
 import '@testing-library/jest-dom'
-import ReviewFilters from './review-filters'
-import { Options, SortOptions } from '@/util/interfaces/interfaces'
+import ReviewFilters from './ReviewFilters'
+import { Options, SortOptions } from '@/util/interfaces/Interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
 
 expect.extend(toHaveNoViolations)

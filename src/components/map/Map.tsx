@@ -1,7 +1,7 @@
 import { IZipLocations } from '@/lib/location/types'
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { getStartingLocation } from '@/util/helpers/getStartingLocation'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/Interfaces'
 import { useRouter } from 'next/router'
 import posthog from 'posthog-js'
 import { useCallback, useEffect, useRef, useState } from 'react'

@@ -1,7 +1,7 @@
-import { Review } from '@/util/interfaces/interfaces'
+import { Review } from '@/util/interfaces/Interfaces'
 import sql from '../db'
 import { ILandlordReviews } from './types/Queries'
-import { OtherLandlord } from './types/review'
+import { OtherLandlord } from './types/Review'
 import { FAILED_TO_RETRIEVE_REVIEWS } from '../auth/constants'
 
 export async function getLandlordReviews(

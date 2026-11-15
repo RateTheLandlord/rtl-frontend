@@ -1,4 +1,4 @@
-import { classNames } from '@/util/helpers/helper-functions'
+import { classNames } from '@/util/helpers/helperFunctions'
 
 interface IProps {
 	height?: string

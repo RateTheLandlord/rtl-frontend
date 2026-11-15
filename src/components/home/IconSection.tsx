@@ -1,8 +1,8 @@
 import React from 'react'
 import { useTranslations } from 'next-intl'
-import Privacy from '../svg/icons/privacy'
+import Privacy from '../svg/icons/Privacy'
 import Solidarity from '../svg/icons/Solidarity'
-import Transparency from '../svg/icons/transparency'
+import Transparency from '../svg/icons/Transparency'
 
 export default function IconSection() {
 	const t = useTranslations('home')

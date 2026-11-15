@@ -1,6 +1,6 @@
-import { capitalize, removeDuplicates } from '@/util/helpers/helper-functions'
+import { capitalize, removeDuplicates } from '@/util/helpers/helperFunctions'
 
-import { Options } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/Interfaces'
 
 export const getStateOptions = (states: string[] | undefined): Options[] => {
 	if (!states) return []

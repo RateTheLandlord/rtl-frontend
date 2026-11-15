@@ -1,4 +1,4 @@
-import { AnalyticsResponseInterface } from '@/util/interfaces/interfaces'
+import { AnalyticsResponseInterface } from '@/util/interfaces/Interfaces'
 export interface ReviewQuery {
 	page?: number
 	limit?: number

@@ -1,8 +1,8 @@
 import sql from '@/lib/db'
-import { Review } from '@/util/interfaces/interfaces'
+import { Review } from '@/util/interfaces/Interfaces'
 import { Message } from '../types/Responses'
 import isWithinLastDay from '@/util/helpers/isWithinLastDay'
-import { checkUserCode } from '../user-codes'
+import { checkUserCode } from '../userCodes'
 
 export async function userDeleteReview(id: number, userCode: string) {
 	//Get Review Code from Review ID

@@ -4,7 +4,7 @@
 import { render, screen } from '@/test-utils'
 import '@testing-library/jest-dom'
 import Hero from './Hero'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/Interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

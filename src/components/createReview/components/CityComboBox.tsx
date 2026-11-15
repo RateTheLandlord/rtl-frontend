@@ -6,7 +6,7 @@ import {
 	ComboboxOptions,
 	Transition,
 } from '@headlessui/react'
-import { ILocationHookResponse } from '@/util/interfaces/interfaces'
+import { ILocationHookResponse } from '@/util/interfaces/Interfaces'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { updateCity } from '@/redux/review/reviewSlice'
 import { updateCity as updateResourceCity } from '@/redux/resource/resourceSlice'

@@ -6,11 +6,11 @@ import {
 	Transition,
 	TransitionChild,
 } from '@headlessui/react'
-import MobileSelectList from '@/components/reviews/ui/mobile-select-list'
-import SearchBar from '@/components/reviews/ui/searchbar'
-import { Options } from '@/util/interfaces/interfaces'
+import MobileSelectList from '@/components/reviews/ui/MobileSelectList'
+import SearchBar from '@/components/reviews/ui/Searchbar'
+import { Options } from '@/util/interfaces/Interfaces'
 import { useTranslations } from 'next-intl'
-import ComboBox from '@/components/reviews/ui/combobox'
+import ComboBox from '@/components/reviews/ui/Combobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import {
@@ -20,7 +20,7 @@ import {
 	updateResourceSearch,
 	updateResourceState,
 } from '@/redux/resourceQuery/resourceQuerySlice'
-import ButtonLight from '../ui/button-light'
+import ButtonLight from '../ui/ButtonLight'
 import CloseButton from '../ui/CloseButton'
 
 interface FiltersProps {

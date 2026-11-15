@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { render, screen } from '@/test-utils'
-import AboutUs from './aboutUs'
+import AboutUs from './AboutUs'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

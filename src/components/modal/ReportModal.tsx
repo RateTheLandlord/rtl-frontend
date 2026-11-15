@@ -1,11 +1,11 @@
-import { UserReview } from '@/util/interfaces/interfaces'
+import { UserReview } from '@/util/interfaces/Interfaces'
 import { Description, DialogTitle } from '@headlessui/react'
 import { useTranslations } from 'next-intl'
 import { useReCaptcha } from 'next-recaptcha-v3'
 import { useState } from 'react'
-import ModalShell from '../modal/ModalShell'
-import Button from '../ui/button'
-import ButtonLight from '../ui/button-light'
+import ModalShell from './ModalShell'
+import Button from '../ui/Button'
+import ButtonLight from '../ui/ButtonLight'
 
 interface IReportReason {
 	id: number

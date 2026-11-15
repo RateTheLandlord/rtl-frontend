@@ -1,6 +1,6 @@
 import { getLocations } from '@/lib/location/location'
 import { runMiddleware } from '@/util/cors'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/Interfaces'
 import rateLimitMiddleware from '@/util/rateLimit'
 import { NextApiRequest, NextApiResponse } from 'next'
 

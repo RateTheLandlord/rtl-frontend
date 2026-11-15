@@ -1,10 +1,10 @@
 import React from 'react'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/Interfaces'
 import { useTranslations } from 'next-intl'
-import ComboBox from '../ui/locationCombobox'
+import ComboBox from '../ui/LocationCombobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
 import { getStates } from '@/util/countries/combineStates'
-import { Country } from '@/types/review.types'
+import { Country } from '@/types/ReviewTypes'
 
 interface LocationProps {
 	selectedCountry: Options | null

@@ -12,7 +12,7 @@ import {
 	type ModalPropsMap,
 	type ModalRequest,
 	type ModalType,
-} from './modalRegistry'
+} from './ModalRegistry'
 
 type ModalProviderProps = {
 	children: ReactNode

@@ -1,5 +1,5 @@
-import LinkButtonLG from '../ui/link-button-lg'
-import LinkButtonLightLG from '../ui/link-button-light-lg'
+import LinkButtonLG from '../ui/LinkButtonLg'
+import LinkButtonLightLG from '../ui/LinkButtonLightLg'
 import { HouseIcon } from '../icons/HouseIcon'
 import { useTranslations } from 'next-intl'
 

@@ -4,7 +4,7 @@ import {
 	AnalyticsResponse,
 } from '@/lib/analytics/types'
 import { fetchWithBody } from '@/util/helpers/fetcher'
-import { AnalyticsResponseInterface } from '@/util/interfaces/interfaces'
+import { AnalyticsResponseInterface } from '@/util/interfaces/Interfaces'
 import { useTranslations } from 'next-intl'
 import posthog from 'posthog-js'
 import { useEffect, useState } from 'react'
@@ -19,9 +19,9 @@ import {
 } from 'recharts'
 import type { TooltipContentProps } from 'recharts'
 import useSWR from 'swr'
-import { ISortOptions } from '../reviews/review'
+import { ISortOptions } from '../reviews/Review'
 import RatingStars from '../ui/RatingStars'
-import Sidebar from './components/sidebar'
+import Sidebar from './components/Sidebar'
 
 interface QueryParams {
 	sort: ISortOptions

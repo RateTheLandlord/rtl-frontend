@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import StateStats from '../components/StateStats'
-import { ICountryStats } from '../types/types'
+import StateStats from './StateStats'
+import { ICountryStats } from '../types/Types'
 
 const TotalStats = ({ data }: { data: ICountryStats }) => {
 	const [country, setCountry] = useState<string | null>(null)

@@ -7,7 +7,7 @@ import '@testing-library/jest-dom'
 import Information from './Information'
 import useSWR from 'swr'
 import { IZipLocations } from '@/lib/location/types'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/Interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

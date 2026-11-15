@@ -3,8 +3,8 @@
 import {
 	loadDatabaseIndexes,
 	normalizeCountry,
-} from '../landlord-tools/utils/utils'
-import { DatabaseRow } from '../landlord-tools/types/types'
+} from '../landlordTools/utils/utils'
+import { DatabaseRow } from '../landlordTools/types/Types'
 import sql from '../db'
 
 // Standard tagged template type interface matching `postgres` / `@vercel/postgres` drivers

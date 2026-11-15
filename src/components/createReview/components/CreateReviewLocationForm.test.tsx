@@ -9,7 +9,7 @@ import '@testing-library/jest-dom'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { updatePostal } from '@/redux/review/reviewSlice'
 import { useTranslations } from 'next-intl'
-import { Country } from '@/types/review.types'
+import { Country } from '@/types/ReviewTypes'
 import LocationForm from './CreateReviewLocationForm'
 
 // ─── Mocks ───────────────────────────────────────────────
@@ -32,7 +32,7 @@ jest.mock('next-intl', () => ({
 
 // Mock all child components to isolate form logic
 jest.mock(
-	'@/components/ui/button',
+	'@/components/ui/Button',
 	() =>
 		(props: {
 			onClick: () => void

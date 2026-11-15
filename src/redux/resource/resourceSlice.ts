@@ -1,5 +1,5 @@
-import { Country } from '@/types/review.types'
-import { Resource } from '@/util/interfaces/interfaces'
+import { Country } from '@/types/ReviewTypes'
+import { Resource } from '@/util/interfaces/Interfaces'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: Resource = {

@@ -5,12 +5,12 @@ import React from 'react'
 import { render } from '@/test-utils'
 import '@testing-library/jest-dom'
 import { Provider } from 'react-redux'
-import ReviewForm from './read-reviews'
+import ReviewForm from './ReadReviews'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { store } from '@/redux/store'
 expect.extend(toHaveNoViolations)
 
-jest.mock('./review', () => {
+jest.mock('./Review', () => {
 	return {
 		__esModule: true,
 		default: () => <div>Review</div>,

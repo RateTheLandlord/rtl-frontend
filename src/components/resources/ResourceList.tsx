@@ -1,18 +1,18 @@
-import { sortOptions } from '@/util/helpers/filter-options'
+import { sortOptions } from '@/util/helpers/filterOptions'
 import {
 	Resource,
 	ResourceResponse,
 	SortOptions,
-} from '@/util/interfaces/interfaces'
+} from '@/util/interfaces/Interfaces'
 import { useEffect, useMemo, useState } from 'react'
 import { getCityOptions, getStateOptions } from '../reviews/functions'
 import InfiniteScroll from './InfiniteScrollResources'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import ResourceFilters from './resource-filters'
+import ResourceFilters from './ResourceFilters'
 import { updateResourceActiveFilters } from '@/redux/resourceQuery/resourceQuerySlice'
 import { fetchResources } from '@/util/helpers/fetchReviews'
-import ResourceMobileFilters from './resource-mobile-filters'
-import ButtonLight from '../ui/button-light'
+import ResourceMobileFilters from './ResourceMobileFilters'
+import ButtonLight from '../ui/ButtonLight'
 import { useTranslations } from 'next-intl'
 
 const resourceSortOptions: SortOptions[] = sortOptions.filter((r) => r.id < 5)

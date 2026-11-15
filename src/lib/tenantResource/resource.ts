@@ -1,7 +1,7 @@
 import { Resource, ResourcesResponse } from './models/resource'
-import { createResource, updateResource } from './models/resource-data-layer'
+import { createResource, updateResource } from './models/resourceDataLayer'
 import sql from '../db'
-import { IResponse, ResourceQuery } from './types'
+import { IResponse, ResourceQuery } from './Types'
 
 export async function getResources(
 	params: ResourceQuery,

@@ -1,4 +1,4 @@
-import { getFlaggedKeywords } from '@/lib/flagged-keywords/flagged-keywords'
+import { getFlaggedKeywords } from '@/lib/flaggedKeywords/flaggedKeywords'
 import rateLimitMiddleware from '@/util/rateLimit'
 import { NextApiRequest, NextApiResponse } from 'next'
 

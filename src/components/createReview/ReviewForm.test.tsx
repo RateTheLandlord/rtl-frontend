@@ -3,7 +3,7 @@
  */
 import { render, screen, within } from '@/test-utils'
 import userEvent from '@testing-library/user-event'
-import ReviewForm from './review-form'
+import ReviewForm from './ReviewForm'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

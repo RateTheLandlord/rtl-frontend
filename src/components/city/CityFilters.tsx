@@ -1,12 +1,12 @@
 import React, { type JSX } from 'react'
-import { Options, SortOptions } from '@/util/interfaces/interfaces'
+import { Options, SortOptions } from '@/util/interfaces/Interfaces'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { clearFilters, updateSearch, updateZip } from '@/redux/query/querySlice'
-import ButtonLight from '../ui/button-light'
+import ButtonLight from '../ui/ButtonLight'
 import Spinner from '../ui/Spinner'
-import SearchBar from '../reviews/ui/searchbar'
-import SortList from '../reviews/ui/sort-list'
-import ComboBox from '../reviews/ui/combobox'
+import SearchBar from '../reviews/ui/Searchbar'
+import SortList from '../reviews/ui/SortList'
+import ComboBox from '../reviews/ui/Combobox'
 import { useTranslations } from 'next-intl'
 
 //Review filters and Logic

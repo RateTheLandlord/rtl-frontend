@@ -6,7 +6,7 @@ import React from 'react'
 import { render, screen } from '@/test-utils'
 import '@testing-library/jest-dom'
 import { axe, toHaveNoViolations } from 'jest-axe'
-import { SuspiciousLandlord } from '@/util/interfaces/interfaces'
+import { SuspiciousLandlord } from '@/util/interfaces/Interfaces'
 import LandlordBanner from './LandlordBanner'
 expect.extend(toHaveNoViolations)
 

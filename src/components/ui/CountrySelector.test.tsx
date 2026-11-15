@@ -7,7 +7,7 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import CountrySelector from '@/components/ui/CountrySelector'
 import { useAppDispatch } from '@/redux/hooks'
 import { updateCountry } from '@/redux/review/reviewSlice'
-import { Country } from '@/types/review.types'
+import { Country } from '@/types/ReviewTypes'
 
 // Mock hooks and translation
 jest.mock('next-intl', () => ({

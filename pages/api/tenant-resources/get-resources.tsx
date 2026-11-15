@@ -1,5 +1,5 @@
-import { getResources } from '@/lib/tenant-resource/resource'
-import { ResourceQuery } from '@/lib/tenant-resource/types'
+import { getResources } from '@/lib/tenantResource/resource'
+import { ResourceQuery } from '@/lib/tenantResource/Types'
 import rateLimitMiddleware from '@/util/rateLimit'
 import { NextApiRequest, NextApiResponse } from 'next'
 

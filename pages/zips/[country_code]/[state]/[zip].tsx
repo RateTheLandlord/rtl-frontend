@@ -3,7 +3,7 @@
 import SEO from '@/components/seo/SEO'
 import Spinner from '@/components/ui/Spinner'
 import ZipPage from '@/components/zip/ZipPage'
-import { IZipReviews } from '@/lib/review/types/review'
+import { IZipReviews } from '@/lib/review/types/Review'
 import { getZipReviews } from '@/lib/review/zip'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { readLocaleFile } from '@/util/readLocalFile'

@@ -7,7 +7,7 @@ import {
 	MIN_DISPLAY_SCORE,
 	MAX_RESULTS_PER_COUNTRY,
 } from './constants/constants'
-import { MatchBlock, DatabaseRow, Candidate } from './types/types'
+import { MatchBlock, DatabaseRow, Candidate } from './types/Types'
 import {
 	normalizeCountry,
 	loadDatabaseIndexes,

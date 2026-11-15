@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 
-import type { ModalPropsMap, ModalType } from './modalRegistry'
+import type { ModalPropsMap, ModalType } from './ModalRegistry'
 
 type ModalContextValue = {
 	openModal: <T extends ModalType>(type: T, props: ModalPropsMap[T]) => void

@@ -1,5 +1,5 @@
 import Spinner from '@/components/ui/Spinner'
-import { SuspiciousLandlord } from '@/util/interfaces/interfaces'
+import { SuspiciousLandlord } from '@/util/interfaces/Interfaces'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import ModalShell from './ModalShell'

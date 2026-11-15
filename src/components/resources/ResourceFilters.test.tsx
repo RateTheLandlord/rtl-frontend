@@ -6,8 +6,8 @@ import { render, screen, fireEvent } from '@/test-utils'
 import '@testing-library/jest-dom'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
-import ResourceFilters from './resource-filters'
-import { Options, SortOptions } from '@/util/interfaces/interfaces'
+import ResourceFilters from './ResourceFilters'
+import { Options, SortOptions } from '@/util/interfaces/Interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { render, screen } from '@/test-utils'
-import Faq from '@/components/about/faq'
+import Faq from '@/components/about/Faq'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

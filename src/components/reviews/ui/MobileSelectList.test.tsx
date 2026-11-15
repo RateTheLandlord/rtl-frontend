@@ -4,8 +4,8 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@/test-utils'
 import '@testing-library/jest-dom'
-import MobileSelectList from './mobile-select-list'
-import { Options } from '@/util/interfaces/interfaces'
+import MobileSelectList from './MobileSelectList'
+import { Options } from '@/util/interfaces/Interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

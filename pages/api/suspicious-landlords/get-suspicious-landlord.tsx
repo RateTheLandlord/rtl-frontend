@@ -1,4 +1,4 @@
-import { getOneSuspiciousLandlord } from '@/lib/suspicious-landlords/suspicious-landlords'
+import { getOneSuspiciousLandlord } from '@/lib/suspiciousLandlords/suspiciousLandlords'
 import rateLimitMiddleware from '@/util/rateLimit'
 import { NextApiRequest, NextApiResponse } from 'next'
 

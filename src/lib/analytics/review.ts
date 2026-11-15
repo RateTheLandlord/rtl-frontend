@@ -1,5 +1,5 @@
 import sql from '../db'
-import { AnalyticsResponseInterface } from '@/util/interfaces/interfaces'
+import { AnalyticsResponseInterface } from '@/util/interfaces/Interfaces'
 import { ReviewQuery, AnalyticsChartResponse, AnalyticsResponse } from './types'
 
 export async function getTrailingReviews(

@@ -1,5 +1,5 @@
 import countries from '@/util/countries/countries.json'
-import { Options } from '../interfaces/interfaces'
+import { Options } from '../interfaces/Interfaces'
 
 export const country_codes: string[] = Object.keys(countries).filter(
 	(c) =>

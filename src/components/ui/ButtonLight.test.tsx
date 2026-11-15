@@ -4,7 +4,7 @@
 
 import React from 'react'
 import { render, fireEvent } from '@/test-utils'
-import ButtonLight from './button-light'
+import ButtonLight from './ButtonLight'
 import { axe } from 'jest-axe'
 
 describe('ButtonLight', () => {

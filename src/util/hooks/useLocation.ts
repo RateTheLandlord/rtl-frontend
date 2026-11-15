@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import {
 	ILocationHookResponse,
 	ILocationResponse,
-} from '@/util/interfaces/interfaces'
+} from '@/util/interfaces/Interfaces'
 import { useDebounce } from './useDebounce'
 
 export const useLocation = (input: string, country: string) => {

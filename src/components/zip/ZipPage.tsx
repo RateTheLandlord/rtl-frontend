@@ -1,12 +1,12 @@
 import { useMemo } from 'react'
-import { UserReview } from '@/util/interfaces/interfaces'
+import { UserReview } from '@/util/interfaces/Interfaces'
 import AdsComponent, { AD_UNITS } from '../adsense/Adsense'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import ZipInfo from './ZipInfo'
-import { IZipReviews } from '@/lib/review/types/review'
+import { IZipReviews } from '@/lib/review/types/Review'
 import useInfiniteScroll from '@/util/hooks/useInfiniteScroll'
-import ReviewTable from '../reviews/review-table'
-import { ISortOptions } from '../reviews/review'
+import ReviewTable from '../reviews/ReviewTable'
+import { ISortOptions } from '../reviews/Review'
 
 interface IProps {
 	city: string

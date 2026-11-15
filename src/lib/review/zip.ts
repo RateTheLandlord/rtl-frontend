@@ -1,6 +1,6 @@
-import { Review } from '@/util/interfaces/interfaces'
+import { Review } from '@/util/interfaces/Interfaces'
 import sql from '../db'
-import { IZipReviews, IZipStats } from './types/review'
+import { IZipReviews, IZipStats } from './types/Review'
 
 export async function getZipInfo(params: {
 	zip: string

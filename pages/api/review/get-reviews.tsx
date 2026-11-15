@@ -1,4 +1,4 @@
-import { getReviews } from '@/lib/review/models/user-get-reviews'
+import { getReviews } from '@/lib/review/models/userGetReviews'
 import { ReviewQuery } from '@/lib/review/types/Queries'
 import rateLimitMiddleware from '@/util/rateLimit'
 import { NextApiRequest, NextApiResponse } from 'next'

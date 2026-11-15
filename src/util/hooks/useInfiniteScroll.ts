@@ -1,4 +1,4 @@
-import { ISortOptions, QueryParams } from '@/components/reviews/review'
+import { ISortOptions, QueryParams } from '@/components/reviews/Review'
 import { useState, useRef, useEffect, useCallback } from 'react'
 
 interface QueryParamsInfinite {

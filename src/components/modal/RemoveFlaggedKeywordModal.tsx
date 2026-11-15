@@ -1,5 +1,5 @@
 import Spinner from '@/components/ui/Spinner'
-import { Keywords } from '@/util/interfaces/interfaces'
+import { Keywords } from '@/util/interfaces/Interfaces'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import ModalShell from './ModalShell'

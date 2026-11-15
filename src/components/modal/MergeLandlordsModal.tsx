@@ -1,4 +1,4 @@
-import { Candidate } from '@/lib/landlord-tools/types/types'
+import { Candidate } from '@/lib/landlordTools/types/Types'
 import { useAppDispatch } from '@/redux/hooks'
 import {
 	resetLandlords,
@@ -7,8 +7,8 @@ import {
 import { DialogTitle } from '@headlessui/react'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '../ui/button'
-import ButtonLight from '../ui/button-light'
+import Button from '../ui/Button'
+import ButtonLight from '../ui/ButtonLight'
 import Spinner from '../ui/Spinner'
 import TextInput from '../ui/TextInput'
 import ModalShell from './ModalShell'

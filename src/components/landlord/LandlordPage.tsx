@@ -8,16 +8,16 @@ import {
 	SortOptions,
 	SuspiciousLandlord,
 	UserReview,
-} from '@/util/interfaces/interfaces'
+} from '@/util/interfaces/Interfaces'
 import Spinner from '../ui/Spinner'
-import { sortOptions } from '@/util/helpers/filter-options'
-import SortList from '../reviews/ui/sort-list'
-import ReviewTable from '../reviews/review-table'
+import { sortOptions } from '@/util/helpers/filterOptions'
+import SortList from '../reviews/ui/SortList'
+import ReviewTable from '../reviews/ReviewTable'
 import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
 import AdsComponent, { AD_UNITS } from '../adsense/Adsense'
 import { ILandlordReviews } from '@/lib/review/types/Queries'
-import Button from '../ui/button'
+import Button from '../ui/Button'
 
 const filteredSortOptions = sortOptions.slice(2)
 

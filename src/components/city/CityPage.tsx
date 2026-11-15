@@ -2,9 +2,9 @@ import { useMemo, useState } from 'react'
 import {
 	UserReview as IReview,
 	SortOptions,
-} from '@/util/interfaces/interfaces'
-import ButtonLight from '../ui/button-light'
-import { sortOptions } from '@/util/helpers/filter-options'
+} from '@/util/interfaces/Interfaces'
+import ButtonLight from '../ui/ButtonLight'
+import { sortOptions } from '@/util/helpers/filterOptions'
 import AdsComponent, { AD_UNITS } from '../adsense/Adsense'
 import CityFilters from './CityFilters'
 import CityMobileFilters from './CityMobileFilters'
@@ -13,11 +13,11 @@ import { useAppSelector } from '@/redux/hooks'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
 import CityInfo from './CityInfo'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
-import AnalyticsComponent from '../analytics/analytics'
-import { ICityReviews } from '@/lib/review/types/review'
+import AnalyticsComponent from '../analytics/Analytics'
+import { ICityReviews } from '@/lib/review/types/Review'
 import { useTranslations } from 'next-intl'
 import useInfiniteScroll from '@/util/hooks/useInfiniteScroll'
-import ReviewTable from '../reviews/review-table'
+import ReviewTable from '../reviews/ReviewTable'
 
 interface IProps {
 	city: string

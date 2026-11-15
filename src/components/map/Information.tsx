@@ -2,10 +2,10 @@ import useSWR from 'swr'
 import RatingStars from '../ui/RatingStars'
 import { fetchWithBody } from '@/util/helpers/fetcher'
 import Spinner from '../ui/Spinner'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/Interfaces'
 import Link from 'next/link'
 import { IZipLocations } from '@/lib/location/types'
-import { IZipStats } from '@/lib/review/types/review'
+import { IZipStats } from '@/lib/review/types/Review'
 
 interface IProps {
 	country: Options | null

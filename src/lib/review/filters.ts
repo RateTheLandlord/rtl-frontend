@@ -1,7 +1,7 @@
-import { Options } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/Interfaces'
 import sql from '../db'
-import { FilterOptions } from './types/review'
-import { capitalize } from '@/util/helpers/helper-functions'
+import { FilterOptions } from './types/Review'
+import { capitalize } from '@/util/helpers/helperFunctions'
 
 export async function filterOptions(
 	country?: string,

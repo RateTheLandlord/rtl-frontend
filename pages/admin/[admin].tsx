@@ -1,10 +1,10 @@
 import React, { useState, type JSX } from 'react'
-import { ITabs } from '@/components/admin/types/types'
+import { ITabs } from '@/components/admin/types/Types'
 import FlaggedReviews from '@/components/admin/sections/FlaggedReviews'
 import DeletedReviews from '@/components/admin/sections/DeletedReviews'
 import Link from 'next/link'
 import Stats from '@/components/admin/sections/Stats'
-import { classNames } from '@/util/helpers/helper-functions'
+import { classNames } from '@/util/helpers/helperFunctions'
 import {
 	Dialog,
 	DialogBackdrop,

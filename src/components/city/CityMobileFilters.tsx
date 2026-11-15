@@ -7,12 +7,12 @@ import {
 	TransitionChild,
 } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/Interfaces'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { clearFilters, updateSearch, updateZip } from '@/redux/query/querySlice'
-import ButtonLight from '../ui/button-light'
-import ComboBox from '../reviews/ui/combobox'
-import SearchBar from '../reviews/ui/searchbar'
+import ButtonLight from '../ui/ButtonLight'
+import ComboBox from '../reviews/ui/Combobox'
+import SearchBar from '../reviews/ui/Searchbar'
 import { useTranslations } from 'next-intl'
 
 interface FiltersProps {

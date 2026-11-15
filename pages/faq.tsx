@@ -1,4 +1,4 @@
-import Faq from '@/components/about/faq'
+import Faq from '@/components/about/Faq'
 import SEO from '@/components/seo/SEO'
 import { useRouter } from 'next/router'
 import { type JSX } from 'react'

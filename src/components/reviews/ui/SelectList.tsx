@@ -6,7 +6,7 @@ import {
 	ListboxOptions,
 	Transition,
 } from '@headlessui/react'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/Interfaces'
 
 interface ComponentProps {
 	name: string

@@ -1,6 +1,6 @@
-import { Review } from '@/util/interfaces/interfaces'
+import { Review } from '@/util/interfaces/Interfaces'
 import sql from '../db'
-import { ICityReviews } from './types/review'
+import { ICityReviews } from './types/Review'
 import { ICityQuery } from './types/Queries'
 
 export async function getCityReviews(

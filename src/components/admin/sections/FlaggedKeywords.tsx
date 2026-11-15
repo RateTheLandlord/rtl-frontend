@@ -6,13 +6,13 @@ import {
 	MenuItems,
 	Transition,
 } from '@headlessui/react'
-import { classNames } from '@/util/helpers/helper-functions'
+import { classNames } from '@/util/helpers/helperFunctions'
 import { Bars3Icon } from '@heroicons/react/24/solid'
-import Button from '@/components/ui/button'
+import Button from '@/components/ui/Button'
 import useSWR from 'swr'
 import { fetchWithBody } from '@/util/helpers/fetcher'
 import Spinner from '@/components/ui/Spinner'
-import { FlaggedKeywordsResponse } from '@/util/interfaces/interfaces'
+import { FlaggedKeywordsResponse } from '@/util/interfaces/Interfaces'
 import { useModal } from '@/components/modal/ModalContext'
 
 const FlaggedKeywords = () => {

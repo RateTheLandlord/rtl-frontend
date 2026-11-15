@@ -2,7 +2,7 @@ import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
 import Spinner from '@/components/ui/Spinner'
 import TotalStats from '../components/TotalStats'
-import { IStats } from '../types/types'
+import { IStats } from '../types/Types'
 
 const Stats = () => {
 	const { data, error } = useSWR<IStats, unknown>(

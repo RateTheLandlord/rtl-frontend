@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import Layout from '@/components/layout/layout'
+import Layout from '@/components/layout/Layout'
 import ModalProvider from '@/components/modal/ModalProvider'
-import { PHProvider } from '@/components/PostHog/PHProvider'
+import { PHProvider } from '@/components/postHog/PHProvider'
 import { store } from '@/redux/store'
 import { UserProfile, UserProvider } from '@auth0/nextjs-auth0/client'
 import 'mapbox-gl/dist/mapbox-gl.css'

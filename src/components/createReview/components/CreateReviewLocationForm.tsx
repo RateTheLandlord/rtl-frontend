@@ -2,10 +2,10 @@ import StateSelector from '@/components/ui/StateSelector'
 import TextInput from '@/components/ui/TextInput'
 import CityComboBox from './CityComboBox'
 import CountrySelector from '@/components/ui/CountrySelector'
-import { ILocationHookResponse } from '@/util/interfaces/interfaces'
+import { ILocationHookResponse } from '@/util/interfaces/Interfaces'
 import { useTranslations } from 'next-intl'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { Country } from '@/types/review.types'
+import { Country } from '@/types/ReviewTypes'
 import { updatePostal } from '@/redux/review/reviewSlice'
 
 interface IProps {

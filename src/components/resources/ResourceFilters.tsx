@@ -1,10 +1,10 @@
 import React, { type JSX } from 'react'
-import { Options, SortOptions } from '@/util/interfaces/interfaces'
-import SelectList from '@/components/reviews/ui/select-list'
-import SearchBar from '@/components/reviews/ui/searchbar'
+import { Options, SortOptions } from '@/util/interfaces/Interfaces'
+import SelectList from '@/components/reviews/ui/SelectList'
+import SearchBar from '@/components/reviews/ui/Searchbar'
 import { useTranslations } from 'next-intl'
-import ButtonLight from '../ui/button-light'
-import ComboBox from '@/components/reviews/ui/combobox'
+import ButtonLight from '../ui/ButtonLight'
+import ComboBox from '@/components/reviews/ui/Combobox'
 import { countryOptions } from '@/util/helpers/getCountryCodes'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import {
@@ -14,7 +14,7 @@ import {
 	updateResourceSearch,
 	updateResourceState,
 } from '@/redux/resourceQuery/resourceQuerySlice'
-import SortList from '../reviews/ui/sort-list'
+import SortList from '../reviews/ui/SortList'
 import Spinner from '../ui/Spinner'
 
 //Review filters and Logic

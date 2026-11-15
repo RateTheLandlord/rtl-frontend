@@ -1,10 +1,10 @@
 import { UserUpdateReviewResponse } from '@/lib/review/types/Responses'
-import { Review } from '@/util/interfaces/interfaces'
+import { Review } from '@/util/interfaces/Interfaces'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '../ui/button'
-import ButtonLight from '../ui/button-light'
+import Button from '../ui/Button'
+import ButtonLight from '../ui/ButtonLight'
 import ModalShell from './ModalShell'
 import { useUser } from '@auth0/nextjs-auth0/client'
 

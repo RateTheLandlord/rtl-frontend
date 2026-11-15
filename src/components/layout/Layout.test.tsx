@@ -4,7 +4,7 @@
 
 import React from 'react'
 import { render } from '@/test-utils'
-import Layout from './layout'
+import Layout from './Layout'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
 import { Provider } from 'react-redux'

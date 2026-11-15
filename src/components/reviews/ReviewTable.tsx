@@ -1,4 +1,4 @@
-import { UserReview } from '@/util/interfaces/interfaces'
+import { UserReview } from '@/util/interfaces/Interfaces'
 import { type JSX } from 'react'
 import ReviewComponent from './ReviewComponent'
 import Spinner from '../ui/Spinner'

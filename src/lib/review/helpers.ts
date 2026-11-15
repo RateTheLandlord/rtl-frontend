@@ -1,6 +1,6 @@
 import OpenAI from 'openai'
-import { getFlaggedKeywords } from '../flagged-keywords/flagged-keywords'
-import { Review, UserUpdatedReview } from '@/util/interfaces/interfaces'
+import { getFlaggedKeywords } from '../flaggedKeywords/flaggedKeywords'
+import { Review, UserUpdatedReview } from '@/util/interfaces/Interfaces'
 
 export interface IResult {
 	flagged: boolean

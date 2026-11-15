@@ -5,9 +5,9 @@ import React from 'react'
 import { render, screen, fireEvent } from '@/test-utils'
 import '@testing-library/jest-dom'
 import InfiniteScroll from './InfiniteScrollResources'
-import { Resource } from '@/util/interfaces/interfaces'
+import { Resource } from '@/util/interfaces/Interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
-import { Country } from '@/types/review.types'
+import { Country } from '@/types/ReviewTypes'
 expect.extend(toHaveNoViolations)
 
 const mockData: Resource[] = [

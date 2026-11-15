@@ -4,7 +4,7 @@
 import React from 'react'
 import { render } from '@/test-utils'
 import '@testing-library/jest-dom'
-import ResourceMobileFilters from './resource-mobile-filters'
+import ResourceMobileFilters from './ResourceMobileFilters'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

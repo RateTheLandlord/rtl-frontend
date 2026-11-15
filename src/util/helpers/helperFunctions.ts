@@ -1,4 +1,4 @@
-import { Options } from '../interfaces/interfaces'
+import { Options } from '../interfaces/Interfaces'
 
 export function classNames(...classes: string[]) {
 	return classes.filter(Boolean).join(' ')

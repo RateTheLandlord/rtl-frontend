@@ -1,7 +1,7 @@
 import React, { type JSX } from 'react'
-import Footer from './footer'
-import Navbar from './navbar'
-import Banner from '../PostHog/CookieBanner'
+import Footer from './Footer'
+import Navbar from './Navbar'
+import Banner from '../postHog/CookieBanner'
 
 function Layout({ children }: { children: JSX.Element }): JSX.Element {
 	return (

@@ -4,7 +4,7 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@/test-utils'
 import '@testing-library/jest-dom'
-import MobileReviewFilters from './mobile-review-filters'
+import MobileReviewFilters from './MobileReviewFilters'
 import { axe, toHaveNoViolations } from 'jest-axe'
 
 expect.extend(toHaveNoViolations)

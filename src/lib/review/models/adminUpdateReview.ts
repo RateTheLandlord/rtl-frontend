@@ -1,5 +1,5 @@
 import sql from '@/lib/db'
-import { Review } from '@/util/interfaces/interfaces'
+import { Review } from '@/util/interfaces/Interfaces'
 
 export async function updateReview(
 	id: number,

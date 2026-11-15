@@ -1,7 +1,7 @@
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
-import { create } from '@/lib/flagged-keywords/flagged-keywords'
+import { create } from '@/lib/flaggedKeywords/flaggedKeywords'
 
 interface IBody {
 	keyword: string

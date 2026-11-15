@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify'
 import caProvinceLocations from '@/util/countries/ca-province-location.json'
 import usStateLocations from '@/util/countries/us-state-location.json'
-import { Options } from '../interfaces/interfaces'
+import { Options } from '../interfaces/Interfaces'
 
 type ViewState = {
 	latitude: number

@@ -1,6 +1,6 @@
 import CatAverages from '@/components/city/CatAverages'
 import CitiesTable from '@/components/city/CitiesTable'
-import Button from '@/components/ui/button'
+import Button from '@/components/ui/Button'
 import Spinner from '@/components/ui/Spinner'
 import { useAppDispatch } from '@/redux/hooks'
 import { clearFilters } from '@/redux/query/querySlice'
@@ -9,7 +9,7 @@ import { toTitleCase } from '@/util/helpers/toTitleCase'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import { useTranslations } from 'next-intl'
-import { IStateStats } from '@/lib/review/state-stats'
+import { IStateStats } from '@/lib/review/stateStats'
 
 interface IProps {
 	state: string

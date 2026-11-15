@@ -1,4 +1,4 @@
-import { FilterOptions } from '../interfaces/interfaces'
+import { FilterOptions } from '../interfaces/Interfaces'
 
 export async function fetchFilterOptions(
 	country?: string,

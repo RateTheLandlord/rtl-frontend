@@ -7,14 +7,14 @@ import { axe, toHaveNoViolations } from 'jest-axe'
 import { render } from '@/test-utils'
 expect.extend(toHaveNoViolations)
 
-jest.mock('@/components/ui/button', () =>
+jest.mock('@/components/ui/Button', () =>
 	jest.fn(({ children, ...props }) => <button {...props}>{children}</button>),
 )
 
 jest.mock('@/components/ui/RatingStars', () =>
 	jest.fn(() => <div>RatingStars</div>),
 )
-jest.mock('../ratings-radio', () => jest.fn(() => <div>RatingsRadio</div>))
+jest.mock('../RatingsRadio', () => jest.fn(() => <div>RatingsRadio</div>))
 
 describe('RatingForm Component', () => {
 	it('renders the rating controls and rent input', () => {

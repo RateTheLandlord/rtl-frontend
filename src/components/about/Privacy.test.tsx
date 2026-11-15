@@ -3,7 +3,7 @@
  */
 
 import { render, screen } from '@/test-utils'
-import Privacy from './privacy'
+import Privacy from './Privacy'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

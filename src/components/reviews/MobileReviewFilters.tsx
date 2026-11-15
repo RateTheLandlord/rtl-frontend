@@ -7,12 +7,12 @@ import {
 	TransitionChild,
 } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import SearchBar from './ui/searchbar'
-import { Options } from '@/util/interfaces/interfaces'
+import SearchBar from './ui/Searchbar'
+import { Options } from '@/util/interfaces/Interfaces'
 import { useTranslations } from 'next-intl'
-import ComboBox from './ui/combobox'
-import ButtonLight from '../ui/button-light'
-import Button from '../ui/button'
+import ComboBox from './ui/Combobox'
+import ButtonLight from '../ui/ButtonLight'
+import Button from '../ui/Button'
 
 interface FiltersProps {
 	mobileFiltersOpen: boolean

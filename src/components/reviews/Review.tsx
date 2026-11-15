@@ -1,4 +1,4 @@
-import ReviewFilters from '@/components/reviews/review-filters'
+import ReviewFilters from '@/components/reviews/ReviewFilters'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import {
 	clearReviewFilters,
@@ -8,25 +8,25 @@ import {
 } from '@/redux/query/querySlice'
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { fetchReviews } from '@/util/helpers/fetchReviews'
-import { sortOptions } from '@/util/helpers/filter-options'
+import { sortOptions } from '@/util/helpers/filterOptions'
 import useInfiniteScroll from '@/util/hooks/useInfiniteScroll'
 import useScreenWidth from '@/util/hooks/useScreenWidth'
 import {
 	UserReview as IReview,
 	Options,
 	SortOptions,
-} from '@/util/interfaces/interfaces'
+} from '@/util/interfaces/Interfaces'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/router'
 import posthog from 'posthog-js'
 import { useEffect, useRef, useState } from 'react'
-import MapComponent from '../Map/Map'
-import AnalyticsComponent from '../analytics/analytics'
-import ButtonLight from '../ui/button-light'
+import MapComponent from '../map/Map'
+import AnalyticsComponent from '../analytics/Analytics'
+import ButtonLight from '../ui/ButtonLight'
 import StateInfo from './components/StateInfo'
-import MobileReviewFilters from './mobile-review-filters'
-import ReviewTable from './review-table'
+import MobileReviewFilters from './MobileReviewFilters'
+import ReviewTable from './ReviewTable'
 
 export interface ReviewsResponse {
 	reviews: IReview[]

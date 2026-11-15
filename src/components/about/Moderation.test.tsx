@@ -4,7 +4,7 @@
 
 import React from 'react'
 import { render, screen } from '@/test-utils'
-import Moderation from './moderation'
+import Moderation from './Moderation'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

@@ -1,4 +1,4 @@
-import { SortOptions } from '../interfaces/interfaces'
+import { SortOptions } from '../interfaces/Interfaces'
 
 export const sortOptions: SortOptions[] = [
 	{ id: 1, name: 'name_az', value: 'az' },

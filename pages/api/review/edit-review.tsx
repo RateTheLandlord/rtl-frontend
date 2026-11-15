@@ -1,8 +1,8 @@
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
-import { updateReview } from '@/lib/review/models/admin-update-review'
+import { updateReview } from '@/lib/review/models/adminUpdateReview'
 import { runMiddleware } from '@/util/cors'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { Review } from '@/util/interfaces/interfaces'
+import type { Review } from '@/util/interfaces/Interfaces'
 
 const EditReview = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {

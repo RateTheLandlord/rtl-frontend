@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { render, fireEvent } from '@/test-utils'
-import RatingsRadio from './ratings-radio'
+import RatingsRadio from './RatingsRadio'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

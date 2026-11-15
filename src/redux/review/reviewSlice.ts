@@ -1,4 +1,4 @@
-import { Country } from '@/types/review.types'
+import { Country } from '@/types/ReviewTypes'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type InitialState = {

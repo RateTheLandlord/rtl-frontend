@@ -6,7 +6,7 @@ import '@testing-library/jest-dom'
 import ZipPage from './ZipPage'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
-import { IZipReviews } from '@/lib/review/types/review'
+import { IZipReviews } from '@/lib/review/types/Review'
 import ModalProvider from '../modal/ModalProvider'
 expect.extend(toHaveNoViolations)
 

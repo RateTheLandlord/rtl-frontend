@@ -1,6 +1,6 @@
 import React from 'react'
 import { Candidate } from '../sections/MergeDuplicateLandlords'
-import { classNames } from '@/util/helpers/helper-functions'
+import { classNames } from '@/util/helpers/helperFunctions'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { updateLandlord } from '@/redux/landlord/landlordSlice'
 

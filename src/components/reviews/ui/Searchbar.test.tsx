@@ -4,7 +4,7 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@/test-utils'
 import '@testing-library/jest-dom'
-import SearchBar from './searchbar'
+import SearchBar from './Searchbar'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

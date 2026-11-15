@@ -4,7 +4,7 @@ import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
 import {
 	executeMergeTransaction,
 	MergePayload,
-} from '@/lib/admin/merge-landlords'
+} from '@/lib/admin/mergeLandlords'
 
 const MergeDuplicateLandlords = async (
 	req: NextApiRequest,

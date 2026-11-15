@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { Country } from '@/types/review.types'
+import { Country } from '@/types/ReviewTypes'
 import { updateCountry } from '@/redux/review/reviewSlice'
 import { updateCountry as updateResourceCountry } from '@/redux/resource/resourceSlice'
 

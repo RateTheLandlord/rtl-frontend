@@ -5,7 +5,7 @@ import { render, screen } from '@/test-utils'
 import '@testing-library/jest-dom'
 import OtherLandlordInfo from './OtherLandlord'
 import useSWR from 'swr'
-import { OtherLandlord } from '@/util/interfaces/interfaces'
+import { OtherLandlord } from '@/util/interfaces/Interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

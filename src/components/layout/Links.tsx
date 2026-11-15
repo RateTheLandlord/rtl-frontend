@@ -1,5 +1,5 @@
-import { ILinks, INav } from '@/util/interfaces/interfaces'
-import Instagram from '@/components/svg/social/instagram'
+import { ILinks, INav } from '@/util/interfaces/Interfaces'
+import Instagram from '@/components/svg/social/Instagram'
 
 export const navigation: INav[] = [
 	{

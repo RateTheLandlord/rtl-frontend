@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import Revenue from './revenue'
+import Revenue from './Revenue'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { render, RenderResult } from '@/test-utils'
 expect.extend(toHaveNoViolations)

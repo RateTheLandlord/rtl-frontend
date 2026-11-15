@@ -7,8 +7,8 @@ import '@testing-library/jest-dom'
 import ResourceList from './ResourceList'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
-import { ResourceResponse } from '@/util/interfaces/interfaces'
-import { sortOptions } from '@/util/helpers/filter-options'
+import { ResourceResponse } from '@/util/interfaces/Interfaces'
+import { sortOptions } from '@/util/helpers/filterOptions'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

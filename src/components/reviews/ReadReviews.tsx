@@ -1,5 +1,5 @@
 import React, { useState, useEffect, type JSX } from 'react'
-import Review from './review'
+import Review from './Review'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { useRouter } from 'next/router'
 import Hero from './components/Hero'

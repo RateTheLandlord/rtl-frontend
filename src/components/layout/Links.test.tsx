@@ -3,8 +3,8 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { axe, toHaveNoViolations } from 'jest-axe'
-import { navigation, socialLinks } from './links'
-import Instagram from '@/components/svg/social/instagram'
+import { navigation, socialLinks } from './Links'
+import Instagram from '@/components/svg/social/Instagram'
 
 expect.extend(toHaveNoViolations)
 

@@ -6,7 +6,7 @@ import CityPage from './CityPage'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { axe } from 'jest-axe'
-import { ICityReviews } from '@/lib/review/types/review'
+import { ICityReviews } from '@/lib/review/types/Review'
 import ModalProvider from '../modal/ModalProvider'
 
 const mockData: ICityReviews = {

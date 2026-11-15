@@ -1,7 +1,7 @@
 import LargeTextInput from '@/components/ui/LargeTextInput'
 import Spinner from '@/components/ui/Spinner'
 import TextInput from '@/components/ui/TextInput'
-import { SuspiciousLandlord } from '@/util/interfaces/interfaces'
+import { SuspiciousLandlord } from '@/util/interfaces/Interfaces'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import ModalShell from './ModalShell'

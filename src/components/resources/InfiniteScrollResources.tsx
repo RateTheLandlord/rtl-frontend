@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
-import { Resource } from '@/util/interfaces/interfaces'
+import { Resource } from '@/util/interfaces/Interfaces'
 import { countryName } from '@/util/helpers/getCountryCodes'
 import Spinner from '../ui/Spinner'
 import { useTranslations } from 'next-intl'

@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { render, screen } from '@/test-utils'
-import Footer from './footer'
+import Footer from './Footer'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

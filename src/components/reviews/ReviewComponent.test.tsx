@@ -5,7 +5,7 @@
 import { render } from '@/test-utils'
 import '@testing-library/jest-dom'
 import ReviewComponent from './ReviewComponent'
-import { Review } from '@/util/interfaces/interfaces'
+import { Review } from '@/util/interfaces/Interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

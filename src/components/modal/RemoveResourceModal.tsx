@@ -1,9 +1,9 @@
-import { Resource } from '@/util/interfaces/interfaces'
+import { Resource } from '@/util/interfaces/Interfaces'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import Spinner from '../ui/Spinner'
-import Button from '../ui/button'
-import ButtonLight from '../ui/button-light'
+import Button from '../ui/Button'
+import ButtonLight from '../ui/ButtonLight'
 import ModalShell from './ModalShell'
 
 const RemoveResourceModal = ({

@@ -1,4 +1,4 @@
-import { Review } from '@/util/interfaces/interfaces'
+import { Review } from '@/util/interfaces/Interfaces'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'

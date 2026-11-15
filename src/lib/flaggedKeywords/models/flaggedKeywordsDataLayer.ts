@@ -1,5 +1,5 @@
 import sql from '@/lib/db'
-import { Keywords } from '@/util/interfaces/interfaces'
+import { Keywords } from '@/util/interfaces/Interfaces'
 
 export async function createKeyword(
 	keyword: Keywords,

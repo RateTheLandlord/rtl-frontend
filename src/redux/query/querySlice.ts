@@ -1,5 +1,5 @@
-import { sortOptions } from '@/util/helpers/filter-options'
-import { Options, SortOptions } from '@/util/interfaces/interfaces'
+import { sortOptions } from '@/util/helpers/filterOptions'
+import { Options, SortOptions } from '@/util/interfaces/Interfaces'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface IQuery {

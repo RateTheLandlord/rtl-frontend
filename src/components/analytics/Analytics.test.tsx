@@ -4,8 +4,8 @@
 import React from 'react'
 import { render } from '@/test-utils'
 import { axe, toHaveNoViolations } from 'jest-axe'
-import AnalyticsComponent from './analytics'
-import { ISortOptions } from '../reviews/review'
+import AnalyticsComponent from './Analytics'
+import { ISortOptions } from '../reviews/Review'
 expect.extend(toHaveNoViolations)
 
 const mockData = {

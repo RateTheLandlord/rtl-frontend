@@ -1,8 +1,8 @@
 import { filterReviewWithAI, IResult } from '../helpers'
 import sql from '@/lib/db'
-import { Review } from '@/util/interfaces/interfaces'
+import { Review } from '@/util/interfaces/Interfaces'
 import { ReviewResponseStatus } from '../types/Responses'
-import { createUserCode } from '../user-codes'
+import { createUserCode } from '../userCodes'
 import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
 import { getExistingReviewsForLandlord } from '../landlords'
@@ -10,7 +10,7 @@ import {
 	checkForLandlordSpam,
 	checkReviewsForSimilarity,
 	updateRecentReviews,
-} from '../review-text-match'
+} from '../reviewTextMatch'
 import posthog from 'posthog-js'
 
 dayjs.extend(isBetween)

@@ -8,7 +8,7 @@ import {
 	updatePhone,
 	updateResource,
 } from '@/redux/resource/resourceSlice'
-import { Resource } from '@/util/interfaces/interfaces'
+import { Resource } from '@/util/interfaces/Interfaces'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CountrySelector from '../ui/CountrySelector'

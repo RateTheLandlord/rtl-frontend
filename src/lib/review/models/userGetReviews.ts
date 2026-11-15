@@ -1,5 +1,5 @@
 import sql from '../../db'
-import { UserReview } from '@/util/interfaces/interfaces'
+import { UserReview } from '@/util/interfaces/Interfaces'
 import { ReviewQuery } from '../types/Queries'
 import { UserReviewsResponse } from '../types/Responses'
 

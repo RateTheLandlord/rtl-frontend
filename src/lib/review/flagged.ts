@@ -1,4 +1,4 @@
-import { Review } from '@/util/interfaces/interfaces'
+import { Review } from '@/util/interfaces/Interfaces'
 import sql from '../db'
 
 export async function getFlagged(): Promise<Review[]> {

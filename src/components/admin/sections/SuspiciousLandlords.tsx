@@ -1,10 +1,10 @@
 import { useModal } from '@/components/modal/ModalContext'
-import Button from '@/components/ui/button'
+import Button from '@/components/ui/Button'
 import Spinner from '@/components/ui/Spinner'
 
 import { fetchWithBody } from '@/util/helpers/fetcher'
-import { classNames } from '@/util/helpers/helper-functions'
-import { SuspiciousLandlordResponse } from '@/util/interfaces/interfaces'
+import { classNames } from '@/util/helpers/helperFunctions'
+import { SuspiciousLandlordResponse } from '@/util/interfaces/Interfaces'
 import {
 	Menu,
 	MenuButton,

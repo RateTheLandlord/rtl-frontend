@@ -1,4 +1,4 @@
-import { classNames } from '@/util/helpers/helper-functions'
+import { classNames } from '@/util/helpers/helperFunctions'
 import { type JSX } from 'react'
 
 interface IProps {

@@ -8,7 +8,7 @@ import {
 	ComboboxOptions,
 	Transition,
 } from '@headlessui/react'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/Interfaces'
 import { useVirtualizer } from '@tanstack/react-virtual'
 
 interface ComponentProps {

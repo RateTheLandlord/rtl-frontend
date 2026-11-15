@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Disclosure, DisclosureButton } from '@headlessui/react'
-import { INav } from '@/util/interfaces/interfaces'
+import { INav } from '@/util/interfaces/Interfaces'
 import { useTranslations } from 'next-intl'
 
 interface IProps {

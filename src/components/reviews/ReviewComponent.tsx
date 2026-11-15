@@ -1,5 +1,5 @@
-import { classNames } from '@/util/helpers/helper-functions'
-import { UserReview } from '@/util/interfaces/interfaces'
+import { classNames } from '@/util/helpers/helperFunctions'
+import { UserReview } from '@/util/interfaces/Interfaces'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
 import { FlagIcon, PencilIcon } from '@heroicons/react/24/solid'
@@ -9,7 +9,7 @@ import { useState } from 'react'
 import AdsComponent, { AD_UNITS } from '../adsense/Adsense'
 import RatingStars from '../ui/RatingStars'
 import Tooltip from '../ui/Tooltip'
-import ButtonLight from '../ui/button-light'
+import ButtonLight from '../ui/ButtonLight'
 
 interface IProps {
 	review: UserReview

@@ -1,4 +1,4 @@
-import { UserReview } from '@/util/interfaces/interfaces'
+import { UserReview } from '@/util/interfaces/Interfaces'
 
 export enum Message {
 	RATE_LIMIT = 'rate_limit',

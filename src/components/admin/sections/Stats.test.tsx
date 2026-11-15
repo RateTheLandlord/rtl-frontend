@@ -6,7 +6,7 @@ import { render, screen } from '@/test-utils'
 import '@testing-library/jest-dom'
 import useSWR from 'swr'
 import Stats from './Stats'
-import { IStats } from '../types/types'
+import { IStats } from '../types/Types'
 import { axe } from 'jest-axe'
 
 // Mock the useSWR hook

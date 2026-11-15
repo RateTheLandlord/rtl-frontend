@@ -1,7 +1,7 @@
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
-import { getRecentReviews } from '@/lib/review/review-text-match'
+import { getRecentReviews } from '@/lib/review/reviewTextMatch'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const session = await getSession(req, res)

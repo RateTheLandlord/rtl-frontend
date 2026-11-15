@@ -1,7 +1,7 @@
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
-import { create } from '@/lib/suspicious-landlords/suspicious-landlords'
+import { create } from '@/lib/suspiciousLandlords/suspiciousLandlords'
 
 interface IBody {
 	landlord: string

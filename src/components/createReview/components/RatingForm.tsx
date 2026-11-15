@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import RatingsRadio from '../ratings-radio'
+import RatingsRadio from '../RatingsRadio'
 import { useTranslations } from 'next-intl'
 import TextInput from '@/components/ui/TextInput'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'

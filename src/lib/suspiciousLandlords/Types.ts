@@ -1,4 +1,4 @@
-import { SuspiciousLandlord } from '@/util/interfaces/interfaces'
+import { SuspiciousLandlord } from '@/util/interfaces/Interfaces'
 
 export interface IResponse {
 	status: number

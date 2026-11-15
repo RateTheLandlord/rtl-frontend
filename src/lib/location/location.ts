@@ -1,4 +1,4 @@
-import { Options } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/Interfaces'
 import sql from '../db'
 import { IZipLocations } from './types'
 

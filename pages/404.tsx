@@ -1,4 +1,4 @@
-import LinkButtonLG from '@/components/ui/link-button-lg'
+import LinkButtonLG from '@/components/ui/LinkButtonLg'
 
 export default function Custom404() {
 	return (

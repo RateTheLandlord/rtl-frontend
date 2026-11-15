@@ -3,7 +3,7 @@
  */
 import { render } from '@/test-utils'
 import '@testing-library/jest-dom'
-import Review from './review'
+import Review from './Review'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'

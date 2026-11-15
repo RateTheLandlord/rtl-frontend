@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { render, screen } from '@/test-utils'
-import ReviewTable from './review-table'
+import ReviewTable from './ReviewTable'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { UserProvider } from '@auth0/nextjs-auth0/client'

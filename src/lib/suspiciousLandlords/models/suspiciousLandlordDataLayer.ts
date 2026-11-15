@@ -1,5 +1,5 @@
 import sql from '@/lib/db'
-import { SuspiciousLandlord } from '@/util/interfaces/interfaces'
+import { SuspiciousLandlord } from '@/util/interfaces/Interfaces'
 
 export async function createLandlord(
 	suspiciousLandlord: SuspiciousLandlord,

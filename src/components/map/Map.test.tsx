@@ -4,7 +4,7 @@
 
 import { render, screen } from '@/test-utils'
 import MapComponent from './Map'
-import { Options } from '@/util/interfaces/interfaces'
+import { Options } from '@/util/interfaces/Interfaces'
 import { useRouter } from 'next/router'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)

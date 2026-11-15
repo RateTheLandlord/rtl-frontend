@@ -1,4 +1,4 @@
-import { DatabaseRow, NameCountMap, NameRecord } from '../types/types'
+import { DatabaseRow, NameCountMap, NameRecord } from '../types/Types'
 import sql from '@/lib/db'
 
 export function normalizeCountry(value: string | null | undefined): string {

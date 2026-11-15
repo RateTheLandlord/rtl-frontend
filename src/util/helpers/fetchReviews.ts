@@ -1,6 +1,6 @@
-import { QueryParams, ReviewsResponse } from '@/components/reviews/review'
-import { ResourceResponse } from '../interfaces/interfaces'
-import { ResourceQuery } from '@/lib/tenant-resource/types'
+import { QueryParams, ReviewsResponse } from '@/components/reviews/Review'
+import { ResourceResponse } from '../interfaces/Interfaces'
+import { ResourceQuery } from '@/lib/tenantResource/Types'
 
 export async function fetchReviews(queryParams?: QueryParams) {
 	const url = `/api/review/get-reviews`

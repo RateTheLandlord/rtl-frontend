@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { fireEvent, render } from '@/test-utils'
-import LinkButtonLG from './link-button-lg'
+import LinkButtonLG from './LinkButtonLg'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 

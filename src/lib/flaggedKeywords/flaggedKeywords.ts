@@ -1,7 +1,7 @@
 import sql from '../db'
-import { Keywords } from '@/util/interfaces/interfaces'
-import { createKeyword } from './models/flagged-keywords-data-layer'
-import { getFlaggedKeywordsResponse, IResponse } from './types'
+import { Keywords } from '@/util/interfaces/Interfaces'
+import { createKeyword } from './models/flaggedKeywordsDataLayer'
+import { getFlaggedKeywordsResponse, IResponse } from './Types'
 
 export async function getFlaggedKeywords(): Promise<getFlaggedKeywordsResponse> {
 	// Fetch Keywords

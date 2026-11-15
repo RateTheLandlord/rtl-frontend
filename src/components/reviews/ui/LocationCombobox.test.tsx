@@ -4,8 +4,8 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@/test-utils'
 import '@testing-library/jest-dom'
-import ComboBox from './locationCombobox'
-import { Options } from '@/util/interfaces/interfaces'
+import ComboBox from './LocationCombobox'
+import { Options } from '@/util/interfaces/Interfaces'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
