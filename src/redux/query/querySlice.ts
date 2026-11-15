@@ -31,12 +31,6 @@ const querySlice = createSlice({
 	name: 'query',
 	initialState,
 	reducers: {
-		updateCountry(state, action: PayloadAction<Options | null>) {
-			state.countryFilter = action.payload
-		},
-		updateState(state, action: PayloadAction<Options | null>) {
-			state.stateFilter = action.payload
-		},
 		updateCity(state, action: PayloadAction<Options | null>) {
 			state.cityFilter = action.payload
 		},
@@ -68,9 +62,7 @@ const querySlice = createSlice({
 
 export const {
 	updateCity,
-	updateCountry,
 	updateSearch,
-	updateState,
 	updateZip,
 	clearFilters,
 	updateStateAndCountry,

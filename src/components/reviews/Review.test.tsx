@@ -49,7 +49,7 @@ jest.mock('@/util/helpers/fetchFilterOptions', () => ({
 	}),
 }))
 
-jest.mock('../Map/Map', () => {
+jest.mock('../map/Map', () => {
 	return {
 		__esModule: true,
 		default: () => <div>Map</div>,
