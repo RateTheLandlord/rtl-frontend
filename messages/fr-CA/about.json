@@ -39,7 +39,7 @@
 			"user-code": "Qu'est-ce qu'un code d'utilisateur et comment l'utiliser?",
 			"user-code-description": "Un code d'utilisateur est généré lorsque vous soumettez un avis à Rate The Landlord. Comme nous n'avons pas de comptes utilisateurs ni ne suivons d'informations vous concernant lors de la soumission d'un avis, ce code vous permettra de modifier ou de supprimer l'avis que vous avez rédigé ultérieurement si vous le choisissez. Si vous perdez votre code d'utilisateur, il ne pourra pas être récupéré, alors conservez-le en lieu sûr!",
 			"suspicious-reason": "Que signifie le fait qu'un avis soit marqué comme suspect?",
-			"suspicious-reason-description": "Lorsqu'un avis est marqué comme suspect, cela signifie que notre équipe de modération estime que cet avis n'a pas été fait par le locataire, ou n'a pas été fait de bonne foi."
+			"suspicious-reason-description": "Lorsqu'un avis est signalé comme suspect, cela indique que notre équipe de modération a déterminé que l'avis n'a peut-être pas été soumis par le locataire ou ne l'a pas été de bonne foi."
 		},
 		"contact": {
 			"title": "Nous contacter",

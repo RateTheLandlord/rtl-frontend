@@ -39,7 +39,7 @@
 			"user-code": "What is a User Code and how do I use it?",
 			"user-code-description": "A User Code is generated when you submit a review to Rate The Landlord. Since we don't have User accounts or track any information about you when you submit a review, this Code will allow you to edit or remove the review you made at a later date if you choose to. If you lose your User Code there is no way for it to be recovered so save it somewhere safe!",
 			"suspicious-reason": "What does it mean when a review is marked as Suspicious?",
-			"suspicious-reason-description": "When a review is marked as suspicious, it means that our moderation team feels that this review may not have been made by the Tenant, or was not made in good faith."
+			"suspicious-reason-description": "When a review is flagged as suspicious, it indicates that our moderation team has determined the review may not have been submitted by the Tenant or was not submitted in good faith."
 		},
 		"contact": {
 			"title": "Contact Us",
