@@ -12,7 +12,11 @@ export function cookieConsentGiven() {
 	return localStorage.getItem('cookie_consent')
 }
 
-export default function Banner() {
+export default function Banner({
+	privacyHref = '/privacy-policy',
+}: {
+	privacyHref?: string
+} = {}) {
 	const t = useTranslations('cookie')
 	const [consentGiven, setConsentGiven] = useState<string | null>('')
 	const posthog = usePostHog()
@@ -51,7 +55,7 @@ export default function Banner() {
 						<p className='text-sm leading-6 text-gray-900'>
 							{t('body-1')}
 							<Link
-								href='/privacy-policy'
+								href={privacyHref}
 								className='font-semibold text-indigo-600'
 							>
 								{t('privacy')}
