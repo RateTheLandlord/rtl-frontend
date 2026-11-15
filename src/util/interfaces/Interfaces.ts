@@ -175,16 +175,6 @@ export interface FlaggedKeywordsResponse {
 	limit: number
 }
 
-export interface IQuery {
-	selectedSort: SortOptions
-	countryFilter: Options | null
-	stateFilter: Options | null
-	cityFilter: Options | null
-	zipFilter: Options | null
-	activeFilters: (Options | null)[] | null
-	searchFilter: string | undefined
-}
-
 export interface AnalyticsResponseInterface {
 	review_date: string
 	metric: number
