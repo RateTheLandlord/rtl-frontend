@@ -1,6 +1,6 @@
 import { verifyToken } from '@/lib/captcha/verifyToken'
-import { create } from '@/lib/review/models/review-data-layer'
-import type { Review } from '@/util/interfaces/interfaces'
+import { create } from '@/lib/review/models/reviewDataLayer'
+import type { Review } from '@/util/interfaces/Interfaces'
 import ReviewRateLimitMiddleware from '@/util/reviewRateLimit'
 import type { NextApiRequest, NextApiResponse } from 'next'
 

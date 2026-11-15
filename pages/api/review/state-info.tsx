@@ -1,4 +1,4 @@
-import { getStateStats } from '@/lib/review/state-stats'
+import { getStateStats } from '@/lib/review/stateStats'
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 

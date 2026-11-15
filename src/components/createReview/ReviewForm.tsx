@@ -1,0 +1,337 @@
+import { ReviewResponseStatus } from '@/lib/review/types/Responses'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { updatePostal, updateProvince } from '@/redux/review/reviewSlice'
+import { Country } from '@/types/ReviewTypes'
+import { classNames } from '@/util/helpers/helperFunctions'
+import { useLocation } from '@/util/hooks/useLocation'
+import { ILocationHookResponse } from '@/util/interfaces/Interfaces'
+import { useTranslations } from 'next-intl'
+import { useReCaptcha } from 'next-recaptcha-v3'
+import { postcodeValidator } from 'postcode-validator'
+import posthog from 'posthog-js'
+import { useEffect, useRef, useState, type JSX } from 'react'
+import { toast } from 'react-toastify'
+import { useModal } from '../modal/ModalContext'
+import Button from '../ui/Button'
+import Spinner from '../ui/Spinner'
+import LocationForm from './components/CreateReviewLocationForm'
+import LandlordForm from './components/LandlordForm'
+import RatingForm from './components/RatingForm'
+import WrittenReviewForm from './components/WrittenReviewForm'
+
+function ReviewForm(): JSX.Element {
+	const t = useTranslations()
+
+	const {
+		landlord,
+		country,
+		city,
+		province,
+		postal,
+		rent,
+		repair,
+		health,
+		stability,
+		privacy,
+		respect,
+		review,
+	} = useAppSelector((state) => state.review)
+	const { openModal } = useModal()
+	const dispatch = useAppDispatch()
+
+	const isIreland = country === Country.IE
+
+	const {
+		searching,
+		locations,
+	}: { searching: boolean; locations: ILocationHookResponse[] } = useLocation(
+		city,
+		country,
+	)
+
+	const [loading, setLoading] = useState<boolean>(false)
+
+	const [postalError, setPostalError] = useState(false)
+
+	const [landlordValidationError, setLandlordValidationError] = useState(false)
+	const [landlordValidationText, setLandlordValidationText] = useState('')
+
+	const [cityValidationError, setCityValidationError] = useState(false)
+	const [cityValidationErrorText, setCityValidationErrorText] = useState('')
+
+	const { executeRecaptcha } = useReCaptcha()
+
+	const handleSpamDetected = (detectionMethod: string) => {
+		posthog.capture('spam_review_detected', {
+			method: detectionMethod,
+			landlord,
+			state: province,
+			country,
+			city,
+		})
+
+		openModal('spamReview', {
+			landlord,
+			detectionMethod,
+		})
+	}
+	const hasTrackedStart = useRef(false)
+
+	const handleFormChange = () => {
+		if (!hasTrackedStart.current) {
+			hasTrackedStart.current = true
+			posthog.capture('create_review_started')
+		}
+	}
+
+	// Check for already reviewed landlord from browser
+	const [localReviewedLandlords, setLocalReviewedLandlords] = useState<
+		string[] | null
+	>(null)
+
+	useEffect(() => {
+		const prevLandlords = localStorage.getItem('rtl')
+		if (prevLandlords) {
+			const landlordArr = prevLandlords.split(',')
+			setLocalReviewedLandlords(landlordArr)
+		}
+	}, [])
+
+	const setUserKeyStorage = (userKey: string, id: number) => {
+		if (id && userKey) {
+			localStorage.setItem(`rtl:${id}`, userKey)
+		}
+	}
+
+	const checkLandlord = (str: string) => {
+		if (localReviewedLandlords) {
+			return localReviewedLandlords.indexOf(str.trim()) > -1
+		}
+		return false
+	}
+
+	useEffect(() => {
+		if (postal) {
+			if (postcodeValidator(postal, country)) {
+				setPostalError(false)
+				setLoading(false)
+			} else {
+				setPostalError(true)
+			}
+		}
+	}, [postal, country])
+
+	const handleSubmit = () => {
+		if (landlord.trim().length < 1) {
+			setLandlordValidationError(true)
+			setLandlordValidationText(t('alerts.landlord-validation'))
+			return
+		}
+
+		if (checkLandlord(landlord.toLocaleUpperCase().trim())) {
+			handleSpamDetected('localStorageDetection')
+			return
+		}
+
+		if (city.trim().length < 1) {
+			setCityValidationError(true)
+			setCityValidationErrorText(t('alerts.city-validation'))
+			return
+		}
+
+		if (
+			!postcodeValidator(postal, country) &&
+			!(postal.length === 0 && isIreland)
+		) {
+			setPostalError(true)
+			return
+		}
+
+		posthog.capture('create_review_submission_attempted', {
+			landlord,
+			country,
+			state: province,
+			city,
+		})
+
+		setLoading(true)
+
+		void submitReview()
+	}
+
+	const submitReview = async () => {
+		try {
+			const token = await executeRecaptcha('review_form')
+
+			if (!token) {
+				posthog.capture('create_review_submission_failed', {
+					stage: 'recaptcha',
+					landlord,
+					country,
+					state: province,
+					city,
+				})
+				toast.error('ERROR: Please try again')
+				return
+			}
+
+			const result = await fetch('/api/review/submit-review', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					captchaToken: token,
+					review: {
+						landlord: landlord.trim(),
+						country_code: country,
+						city: city.trim(),
+						state: province,
+						zip: postal.trim(),
+						review: review.trim(),
+						repair,
+						health,
+						stability,
+						privacy,
+						respect,
+						flagged: false,
+						flagged_reason: '',
+						admin_approved: false,
+						admin_edited: false,
+						rent,
+					},
+				}),
+			})
+
+			if (!result.ok) {
+				throw new Error('Review submission request failed')
+			}
+
+			const data: ReviewResponseStatus =
+				(await result.json()) as ReviewResponseStatus
+
+			if (!data.success) {
+				handleSpamDetected('DBDetection')
+				return
+			}
+
+			posthog.capture('create_review_submission_succeeded', {
+				landlord,
+				country,
+				state: province,
+				city,
+			})
+
+			openModal('copyUserCode', { code: data.user_code })
+			setUserKeyStorage(data.user_code, data.review_id)
+
+			const storageItem = localStorage.getItem('rtl')
+			const reviewedLandlord = landlord.toLocaleUpperCase().trim()
+
+			if (storageItem) {
+				localStorage.setItem('rtl', `${storageItem},${reviewedLandlord}`)
+			} else {
+				localStorage.setItem('rtl', reviewedLandlord)
+			}
+		} catch (error) {
+			posthog.capture('create_review_submission_failed', {
+				stage: 'submission',
+				error,
+				landlord,
+				country,
+				state: province,
+				city,
+			})
+
+			toast.error('ERROR: Please try again')
+		} finally {
+			setLoading(false)
+		}
+	}
+	useEffect(() => {
+		switch (country) {
+			case Country.GB:
+				dispatch(updateProvince('England'))
+				break
+			case Country.AU:
+				dispatch(updateProvince('Australian Capital Territory'))
+				break
+			case Country.US:
+				dispatch(updateProvince('Alabama'))
+				break
+			case Country.NZ:
+				dispatch(updateProvince('Auckland'))
+				break
+			case Country.DE:
+				dispatch(updateProvince('Baden-Württemberg'))
+				break
+			case Country.IE:
+				dispatch(updateProvince('Carlow'))
+				dispatch(updatePostal(''))
+				break
+			case Country.NO:
+				dispatch(updateProvince('Oslo'))
+				break
+			default:
+				dispatch(updateProvince('Alberta'))
+		}
+	}, [country])
+
+	return (
+		<div
+			className={classNames(
+				'container flex w-full flex-col items-center justify-center rounded-3xl px-2 sm:px-0 lg:h-full',
+			)}
+			data-testid='create-review-form-1'
+			onChangeCapture={handleFormChange}
+		>
+			<div className='bg-background w-full rounded-3xl px-2 pb-8 shadow-lg sm:px-0 sm:pb-12'>
+				<div className='w-full px-3 py-1 pt-4 sm:px-6 sm:pt-6'>
+					<LandlordForm
+						landlordValidationError={landlordValidationError}
+						landlordValidationText={landlordValidationText}
+					/>
+				</div>
+
+				<div className='w-full px-3 py-1 sm:px-6'>
+					<LocationForm
+						locations={locations}
+						searching={searching}
+						cityValidationError={cityValidationError}
+						cityValidationErrorText={cityValidationErrorText}
+						postalError={postalError}
+					/>
+				</div>
+
+				<div className='w-full overflow-hidden px-3 py-1 sm:px-6'>
+					<RatingForm />
+				</div>
+
+				<div className='w-full overflow-hidden px-3 py-1 sm:px-6'>
+					<WrittenReviewForm />
+				</div>
+			</div>
+
+			<div className='border-b-primary w-full overflow-hidden border-b-2 p-4 py-2'>
+				<div className='w-full py-5'>
+					<div
+						className='flex justify-center gap-5 pt-3 sm:gap-3'
+						data-testid='create-review-form-submit-button-1'
+					>
+						{loading ? (
+							<Spinner />
+						) : (
+							<Button
+								disabled={loading || review.length > 2000}
+								onClick={handleSubmit}
+							>
+								{t('createreview.review-form.submit')}
+							</Button>
+						)}
+					</div>
+				</div>
+			</div>
+		</div>
+	)
+}
+export default ReviewForm

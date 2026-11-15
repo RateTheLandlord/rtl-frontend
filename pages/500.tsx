@@ -1,5 +1,5 @@
-import LinkButtonLG from '@/components/ui/link-button-lg'
-import LinkButtonLightLG from '@/components/ui/link-button-light-lg'
+import LinkButtonLG from '@/components/ui/LinkButtonLg'
+import LinkButtonLightLG from '@/components/ui/LinkButtonLightLg'
 
 export default function Custom500() {
 	return (

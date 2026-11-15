@@ -1,0 +1,82 @@
+import { useMemo } from 'react'
+import { UserReview } from '@/util/interfaces/Interfaces'
+import AdsComponent, { AD_UNITS } from '../adsense/Adsense'
+import { fetchReviews } from '@/util/helpers/fetchReviews'
+import ZipInfo from './ZipInfo'
+import { IZipReviews } from '@/lib/review/types/Review'
+import useInfiniteScroll from '@/util/hooks/useInfiniteScroll'
+import ReviewTable from '../reviews/ReviewTable'
+import { ISortOptions } from '../reviews/Review'
+
+interface IProps {
+	city: string
+	state: string
+	country: string
+	data: IZipReviews
+	zip: string
+}
+
+const ZipPage = ({ city, state, country, zip, data }: IProps) => {
+	const queryParams = useMemo<{
+		sort: ISortOptions
+		state: string
+		country: string
+		city: string
+		zip: string
+		search: string
+		limit: string
+	}>(() => {
+		return {
+			sort: 'new',
+			state,
+			country,
+			city,
+			zip,
+			search: '',
+			limit: '25',
+		}
+	}, [city, state, country, zip])
+
+	const { reviews, isLoading: isLoadingHook } = useInfiniteScroll<UserReview>({
+		fetchData: fetchReviews,
+		queryParams,
+		offset: 150,
+	})
+	return (
+		<>
+			<div className='w-full px-2 md:px-0'>
+				<AdsComponent slot={AD_UNITS.ZIP} />
+				<div className='mx-auto mt-5 flex max-w-2xl flex-col gap-3 lg:max-w-7xl'>
+					<ZipInfo
+						city={city}
+						state={state}
+						country={country}
+						average={data.average}
+						total={data.total}
+						averages={data.catAverages}
+						zip={zip}
+					/>
+				</div>
+
+				<div className='mx-auto max-w-2xl lg:max-w-7xl'>
+					<div className='flex lg:flex-row lg:gap-2 lg:divide-x lg:divide-gray-200'>
+						{!reviews.length && !isLoadingHook ? (
+							<div className='mx-auto flex w-full max-w-7xl flex-auto flex-col justify-center p-6'>
+								<h1 className='mt-4 text-3xl text-gray-900 sm:text-5xl'>
+									No results found
+								</h1>
+								<p className='mt-6 text-base leading-7 text-gray-600'>
+									Sorry, we couldn&apos;t find any results for those filters.
+								</p>
+							</div>
+						) : (
+							<ReviewTable data={reviews} isLoading={isLoadingHook} />
+						)}
+					</div>
+				</div>
+			</div>
+		</>
+	)
+}
+
+export default ZipPage

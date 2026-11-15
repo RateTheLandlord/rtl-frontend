@@ -1,10 +1,7 @@
 import cron from 'node-cron'
 import dayjs from 'dayjs'
 import { NextApiRequest, NextApiResponse } from 'next'
-import {
-	deleteReview,
-	getDeleted,
-} from '@/lib/review/models/admin-delete-review'
+import { deleteReview, getDeleted } from '@/lib/review/models/adminDeleteReview'
 
 const readyToDelete = (delete_date: string | null): boolean => {
 	if (delete_date && delete_date.length > 0) {

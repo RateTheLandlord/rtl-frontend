@@ -1,4 +1,4 @@
-import { deleteResource } from '@/lib/tenant-resource/resource'
+import { deleteResource } from '@/lib/tenantResource/resource'
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'

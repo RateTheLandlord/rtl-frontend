@@ -1,5 +1,5 @@
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
-import { deleteReview } from '@/lib/review/models/admin-delete-review'
+import { deleteReview } from '@/lib/review/models/adminDeleteReview'
 import { runMiddleware } from '@/util/cors'
 import type { NextApiRequest, NextApiResponse } from 'next'
 

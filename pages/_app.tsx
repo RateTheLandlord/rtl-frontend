@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import Layout from '@/components/layout/layout'
+import Layout from '@/components/layout/Layout'
 import ModalProvider from '@/components/modal/ModalProvider'
-import { PHProvider } from '@/components/PostHog/PHProvider'
+import { PHProvider } from '@/components/postHog/PHProvider'
 import { store } from '@/redux/store'
 import { UserProfile, UserProvider } from '@auth0/nextjs-auth0/client'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -17,7 +17,7 @@ import { useEffect, type JSX } from 'react'
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import '../styles/global.css'
+import '@/styles/global.css'
 import { seoConfig } from '@/lib/seo/confit'
 
 const CAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string

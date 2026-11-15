@@ -2,7 +2,7 @@ import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { verifyToken } from '@/lib/captcha/verifyToken'
 import rateLimitMiddleware from '@/util/rateLimit'
-import { report } from '@/lib/review/models/user-report-review'
+import { report } from '@/lib/review/models/userReportReview'
 
 interface IBody {
 	id: number

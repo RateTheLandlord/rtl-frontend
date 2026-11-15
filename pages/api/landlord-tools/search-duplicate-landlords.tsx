@@ -1,7 +1,7 @@
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
-import { findDuplicateCandidates } from '@/lib/landlord-tools/search-duplicate-landlords'
+import { findDuplicateCandidates } from '@/lib/landlordTools/searchDuplicateLandlords'
 
 type Body = {
 	name: string

@@ -1,0 +1,154 @@
+import React, { type JSX } from 'react'
+import { Options, SortOptions } from '@/util/interfaces/Interfaces'
+import SelectList from '@/components/reviews/ui/SelectList'
+import SearchBar from '@/components/reviews/ui/Searchbar'
+import { useTranslations } from 'next-intl'
+import ButtonLight from '../ui/ButtonLight'
+import ComboBox from '@/components/reviews/ui/Combobox'
+import { countryOptions } from '@/util/helpers/getCountryCodes'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	clearResourceFilters,
+	updateResourceCity,
+	updateResourceCountry,
+	updateResourceSearch,
+	updateResourceState,
+} from '@/redux/resourceQuery/resourceQuerySlice'
+import SortList from '../reviews/ui/SortList'
+import Spinner from '../ui/Spinner'
+
+//Review filters and Logic
+
+interface FiltersProps {
+	searchTitle?: string
+	selectedSort: SortOptions | null
+	setSelectedSort: (selectedSort: SortOptions | null) => void
+	sortOptions: SortOptions[]
+	countryFilter: Options | null
+	stateFilter: Options | null
+	cityFilter: Options | null
+	cityOptions: Options[]
+	stateOptions: Options[]
+	zipOptions?: Options[]
+	resource?: boolean
+	loading: boolean
+	updateParams: () => void
+}
+
+function ResourceFilters({
+	searchTitle,
+	selectedSort,
+	setSelectedSort,
+	sortOptions,
+	countryFilter,
+	stateFilter,
+	cityFilter,
+	cityOptions,
+	stateOptions,
+	resource,
+	loading,
+	updateParams,
+}: FiltersProps): JSX.Element {
+	const t = useTranslations('filters')
+
+	const dispatch = useAppDispatch()
+	const resourceQuery = useAppSelector((state) => state.resourceQuery)
+	const queryState = useAppSelector((state) => state.query)
+	const query = resource ? resourceQuery : queryState
+
+	return (
+		<div data-testid='review-filters-1' className='mt-6 hidden lg:block'>
+			{/* Filters */}
+			<section aria-labelledby='filter-heading'>
+				<h2 id='filter-heading' className='sr-only'>
+					{t('title')}
+				</h2>
+
+				<div className='relative z-10 bg-white pb-4'>
+					<div className='mx-auto flex max-w-7xl items-center justify-between gap-2 lg:px-4'>
+						<div className='hidden lg:block'>
+							<div className='flow-root'>
+								<div className='-mx-4 flex flex-col divide-y divide-gray-200'>
+									<div className='py-2'>
+										<SearchBar
+											setSearchState={(str: string) =>
+												dispatch(updateResourceSearch(str))
+											}
+											value={query.searchFilter}
+											searchTitle={searchTitle}
+										/>
+									</div>
+									<div className='py-2'>
+										<SortList
+											state={selectedSort}
+											setState={setSelectedSort}
+											options={sortOptions}
+											name={t('sort')}
+										/>
+									</div>
+
+									<div className='py-2'>
+										<SelectList
+											state={countryFilter}
+											setState={(opt: Options | null) =>
+												dispatch(updateResourceCountry(opt))
+											}
+											options={countryOptions}
+											name={t('country')}
+										/>
+									</div>
+									<div className='py-2'>
+										<ComboBox
+											state={stateFilter}
+											setState={(opt: Options | null) =>
+												dispatch(updateResourceState(opt))
+											}
+											options={stateOptions}
+											name={t('state')}
+										/>
+									</div>
+									<div className='py-2'>
+										<ComboBox
+											state={cityFilter}
+											setState={(opt: Options | null) =>
+												dispatch(updateResourceCity(opt))
+											}
+											options={cityOptions}
+											name={t('city')}
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className='flex w-full flex-col gap-2 border-t border-t-gray-200 py-2 lg:px-2'>
+						<button
+							aria-label='Apply Filters'
+							onClick={() => updateParams()}
+							type='submit'
+							title='submit'
+							className={`inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm text-white shadow-sm focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:outline-none ${'bg-primary hover:bg-primary-hover'}`}
+							data-testid='submit-button-1'
+						>
+							{loading ? (
+								<Spinner height='h-4' width='w-4' colour='text-white' />
+							) : (
+								t('apply')
+							)}
+						</button>
+						<ButtonLight
+							onClick={() => {
+								dispatch(clearResourceFilters())
+								updateParams()
+							}}
+						>
+							{t('clear')}
+						</ButtonLight>
+					</div>
+				</div>
+			</section>
+		</div>
+	)
+}
+
+export default ResourceFilters

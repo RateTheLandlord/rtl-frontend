@@ -1,0 +1,153 @@
+import React, { Fragment } from 'react'
+import {
+	Dialog,
+	DialogPanel,
+	PopoverGroup,
+	Transition,
+	TransitionChild,
+} from '@headlessui/react'
+import MobileSelectList from '@/components/reviews/ui/MobileSelectList'
+import SearchBar from '@/components/reviews/ui/Searchbar'
+import { Options } from '@/util/interfaces/Interfaces'
+import { useTranslations } from 'next-intl'
+import ComboBox from '@/components/reviews/ui/Combobox'
+import { countryOptions } from '@/util/helpers/getCountryCodes'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import {
+	clearResourceFilters,
+	updateResourceCity,
+	updateResourceCountry,
+	updateResourceSearch,
+	updateResourceState,
+} from '@/redux/resourceQuery/resourceQuerySlice'
+import ButtonLight from '../ui/ButtonLight'
+import CloseButton from '../ui/CloseButton'
+
+interface FiltersProps {
+	mobileFiltersOpen: boolean
+	setMobileFiltersOpen: (bool: boolean) => void
+	countryFilter: Options | null
+	stateFilter: Options | null
+	cityFilter: Options | null
+	cityOptions: Options[]
+	stateOptions: Options[]
+	updateParams: () => void
+}
+
+export default function ResourceMobileFilters({
+	mobileFiltersOpen,
+	setMobileFiltersOpen,
+	countryFilter,
+	stateFilter,
+	cityFilter,
+	cityOptions,
+	stateOptions,
+	updateParams,
+}: FiltersProps) {
+	const dispatch = useAppDispatch()
+	const query = useAppSelector((state) => state.resourceQuery)
+	const t = useTranslations('filters')
+	return (
+		<Transition show={mobileFiltersOpen} as={Fragment}>
+			<Dialog
+				as='div'
+				className='relative z-40 lg:hidden'
+				onClose={setMobileFiltersOpen}
+			>
+				<TransitionChild
+					as={Fragment}
+					enter='transition-opacity ease-linear duration-300'
+					enterFrom='opacity-0'
+					enterTo='opacity-100'
+					leave='transition-opacity ease-linear duration-300'
+					leaveFrom='opacity-100'
+					leaveTo='opacity-0'
+				>
+					<div className='bg-opacity-25 fixed inset-0 bg-black' />
+				</TransitionChild>
+
+				<div
+					className='fixed inset-0 z-40 flex'
+					data-testid='mobile-review-filters-1'
+				>
+					<TransitionChild
+						as={Fragment}
+						enter='transition ease-in-out duration-300 transform'
+						enterFrom='translate-x-full'
+						enterTo='translate-x-0'
+						leave='transition ease-in-out duration-300 transform'
+						leaveFrom='translate-x-0'
+						leaveTo='translate-x-full'
+					>
+						<DialogPanel className='relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl'>
+							<div className='flex items-center justify-between px-4'>
+								<h2 className='text-lg text-gray-900'>{t('title')}</h2>
+								<CloseButton onClick={() => setMobileFiltersOpen(false)} />
+							</div>
+
+							{/* Filters */}
+							<div className='mt-4'>
+								<PopoverGroup className='mx-2 flex flex-col items-center gap-2 divide-y'>
+									<SearchBar
+										setSearchState={(str: string) =>
+											dispatch(updateResourceSearch(str))
+										}
+										value={query.searchFilter}
+									/>
+
+									<MobileSelectList
+										state={countryFilter}
+										setState={(opt: Options | null) =>
+											dispatch(updateResourceCountry(opt))
+										}
+										options={countryOptions}
+										name={t('country')}
+									/>
+									<ComboBox
+										state={stateFilter}
+										setState={(opt: Options | null) =>
+											dispatch(updateResourceState(opt))
+										}
+										options={stateOptions}
+										name={t('state')}
+									/>
+									<ComboBox
+										state={cityFilter}
+										setState={(opt: Options | null) =>
+											dispatch(updateResourceCity(opt))
+										}
+										options={cityOptions}
+										name={t('city')}
+									/>
+
+									<div className='w-full pt-2'>
+										<button
+											onClick={() => {
+												updateParams()
+												setMobileFiltersOpen(false)
+											}}
+											className='bg-primary w-full rounded-lg py-2 text-white'
+										>
+											{t('apply')}
+										</button>
+									</div>
+									<div className='flex w-full justify-end pt-2'>
+										<ButtonLight
+											onClick={() => {
+												dispatch(clearResourceFilters())
+												setMobileFiltersOpen(false)
+												updateParams()
+											}}
+										>
+											{t('clear')}
+										</ButtonLight>
+									</div>
+								</PopoverGroup>
+							</div>
+						</DialogPanel>
+					</TransitionChild>
+				</div>
+			</Dialog>
+		</Transition>
+	)
+}
