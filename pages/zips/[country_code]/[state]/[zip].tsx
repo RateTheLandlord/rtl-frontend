@@ -68,10 +68,10 @@ export function getStaticPaths() {
 }
 
 export async function getStaticProps({
-	locale,
+	locale = 'en-CA',
 	params,
 }: {
-	locale: string
+	locale?: string
 	params: { city: string; state: string; country_code: string; zip: string }
 }) {
 	const alertsMessages = readLocaleFile('alerts', locale)

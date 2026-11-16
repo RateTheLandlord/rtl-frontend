@@ -51,10 +51,10 @@ export function getStaticPaths() {
 }
 
 export async function getStaticProps({
-	locale,
+	locale = 'en-CA',
 	params,
 }: {
-	locale: string
+	locale?: string
 	params: { landlord: string }
 }) {
 	const landlordMessages = readLocaleFile('landlord', locale)

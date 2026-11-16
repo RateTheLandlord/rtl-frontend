@@ -37,7 +37,11 @@ export default function Home(): JSX.Element {
 	)
 }
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export async function getStaticProps({
+	locale = 'en-CA',
+}: {
+	locale?: string
+}) {
 	const homeMessages = (await import(
 		`@/messages/${locale}/home.json`
 	)) as Record<string, string>

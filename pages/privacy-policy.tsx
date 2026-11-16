@@ -33,7 +33,11 @@ function TermsAndConditions(): JSX.Element {
 
 export default TermsAndConditions
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export async function getStaticProps({
+	locale = 'en-CA',
+}: {
+	locale?: string
+}) {
 	const alertsMessages = (await import(
 		`@/messages/${locale}/alerts.json`
 	)) as Record<string, string>

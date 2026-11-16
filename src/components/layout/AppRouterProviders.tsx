@@ -18,7 +18,7 @@ type Props = {
 	messages: AbstractIntlMessages
 }
 
-export default function AppRouterResourcesProviders({
+export default function AppRouterProviders({
 	children,
 	locale,
 	messages,

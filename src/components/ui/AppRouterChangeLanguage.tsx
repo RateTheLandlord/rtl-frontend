@@ -10,6 +10,7 @@ import {
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import { Fragment } from 'react'
 import posthog from 'posthog-js'
+import { usePathname } from '@/i18n/navigation'
 
 const locales = ['en-CA', 'fr-CA'] as const
 
@@ -18,11 +19,16 @@ export default function AppRouterChangeLanguage({
 }: {
 	locale: string
 }) {
+	const pathname = usePathname()
 	const changeLanguage = (newLocale: string) => {
 		posthog.capture('language_changed', { locale: newLocale })
 		document.cookie = `NEXT_LOCALE=${newLocale}; Path=/; SameSite=Lax`
+		const canonicalPath =
+			pathname.replace(/^\/(?:en-CA|fr-CA)(?=\/|$)/, '') || '/'
 		const destination =
-			newLocale === 'fr-CA' ? '/fr-CA/resources' : '/resources'
+			newLocale === 'fr-CA'
+				? `/fr-CA${canonicalPath === '/' ? '' : canonicalPath}`
+				: canonicalPath
 		window.location.assign(destination)
 	}
 
