@@ -1,6 +1,6 @@
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { auth0 } from '@/lib/auth0'
 import { findDuplicateCandidates } from '@/lib/landlordTools/searchDuplicateLandlords'
 
 type Body = {
@@ -13,7 +13,7 @@ const SearchDuplicateLandlords = async (
 	res: NextApiResponse,
 ) => {
 	await runMiddleware(req, res)
-	const session = await getSession(req, res)
+	const session = await auth0.getSession(req)
 	const user = session?.user
 
 	const { body } = req as { body: Body }
@@ -28,4 +28,4 @@ const SearchDuplicateLandlords = async (
 	}
 }
 
-export default withApiAuthRequired(SearchDuplicateLandlords)
+export default auth0.withApiAuthRequired(SearchDuplicateLandlords)

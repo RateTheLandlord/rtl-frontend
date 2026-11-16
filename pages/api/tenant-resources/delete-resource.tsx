@@ -1,7 +1,7 @@
 import { deleteResource } from '@/lib/tenantResource/resource'
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { auth0 } from '@/lib/auth0'
 
 interface IBody {
 	id: number
@@ -9,7 +9,7 @@ interface IBody {
 
 const deleteResourceAPI = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res)
-	const session = await getSession(req, res)
+	const session = await auth0.getSession(req)
 	const user = session?.user
 
 	const { body } = req as { body: IBody }
@@ -25,4 +25,4 @@ const deleteResourceAPI = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 }
 
-export default withApiAuthRequired(deleteResourceAPI)
+export default auth0.withApiAuthRequired(deleteResourceAPI)
