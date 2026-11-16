@@ -1,7 +1,7 @@
 import { update } from '@/lib/tenantResource/resource'
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { auth0 } from '@/lib/auth0'
 
 interface IBody {
 	id: number
@@ -17,7 +17,7 @@ interface IBody {
 }
 
 const EditResourceAPI = async (req: NextApiRequest, res: NextApiResponse) => {
-	const session = await getSession(req, res)
+	const session = await auth0.getSession(req)
 	const user = session?.user
 	await runMiddleware(req, res)
 
@@ -31,4 +31,4 @@ const EditResourceAPI = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 }
 
-export default withApiAuthRequired(EditResourceAPI)
+export default auth0.withApiAuthRequired(EditResourceAPI)

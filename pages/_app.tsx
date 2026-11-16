@@ -3,7 +3,10 @@ import Layout from '@/components/layout/Layout'
 import ModalProvider from '@/components/modal/ModalProvider'
 import { PHProvider } from '@/components/postHog/PHProvider'
 import { store } from '@/redux/store'
-import { UserProfile, UserProvider } from '@auth0/nextjs-auth0/client'
+import {
+	Auth0Provider,
+	type Auth0ProviderProps,
+} from '@auth0/nextjs-auth0/client'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { NextIntlClientProvider } from 'next-intl'
 import { ReCaptchaProvider } from 'next-recaptcha-v3'
@@ -27,15 +30,16 @@ Router.events.on('routeChangeStart', nProgress.start)
 Router.events.on('routeChangeError', nProgress.done)
 Router.events.on('routeChangeComplete', nProgress.done)
 
-interface CustomAppProps extends AppProps {
+type CustomAppProps = Omit<AppProps, 'pageProps'> & {
 	pageProps: {
-		user: UserProfile
+		user?: Auth0ProviderProps['user']
 		messages: Record<string, string>
+		[key: string]: unknown
 	}
 }
 
 function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
-	const { user } = pageProps as { user: UserProfile }
+	const user = pageProps.user
 	const router = useRouter()
 
 	const timeZone = 'America/Montreal'
@@ -65,7 +69,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 		>
 			<Head>{generateDefaultSeo(seoConfig)}</Head>
 			<PHProvider>
-				<UserProvider user={user}>
+				<Auth0Provider user={user}>
 					<Provider store={store}>
 						<ReCaptchaProvider reCaptchaKey={CAPTCHA_SITE_KEY} useEnterprise>
 							<ModalProvider>
@@ -90,7 +94,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 							</ModalProvider>
 						</ReCaptchaProvider>
 					</Provider>
-				</UserProvider>
+				</Auth0Provider>
 			</PHProvider>
 		</NextIntlClientProvider>
 	)

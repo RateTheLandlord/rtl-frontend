@@ -1,4 +1,4 @@
-import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { auth0 } from '@/lib/auth0'
 import { deleteReview } from '@/lib/review/models/adminDeleteReview'
 import { runMiddleware } from '@/util/cors'
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -12,7 +12,7 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
 			return res.status(405).json({ error: 'METHOD_NOT_ALLOWED' })
 		}
 
-		const session = await getSession(req, res)
+		const session = await auth0.getSession(req)
 
 		if (session?.user?.role !== 'ADMIN') {
 			return res.status(403).json({ error: 'FORBIDDEN' })
@@ -44,4 +44,4 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 }
 
-export default withApiAuthRequired(handle)
+export default auth0.withApiAuthRequired(handle)

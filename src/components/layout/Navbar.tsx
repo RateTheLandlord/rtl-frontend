@@ -103,7 +103,7 @@ export default function Navbar(): JSX.Element {
 									{user && user.role === 'ADMIN' && (
 										<Link
 											className='inline-flex cursor-pointer items-center rounded-md border border-transparent bg-blue-600 text-sm text-white shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none'
-											href='/api/auth/logout'
+							href='/auth/logout'
 										>
 											<p className='px-4 py-2'>Logout</p>
 										</Link>

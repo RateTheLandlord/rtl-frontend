@@ -1,6 +1,6 @@
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { auth0 } from '@/lib/auth0'
 import { create } from '@/lib/flaggedKeywords/flaggedKeywords'
 
 interface IBody {
@@ -10,7 +10,7 @@ interface IBody {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res)
-	const session = await getSession(req, res)
+	const session = await auth0.getSession(req)
 	const user = session?.user
 
 	const { body } = req as { body: IBody }
@@ -23,4 +23,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 }
 
-export default withApiAuthRequired(handler)
+export default auth0.withApiAuthRequired(handler)

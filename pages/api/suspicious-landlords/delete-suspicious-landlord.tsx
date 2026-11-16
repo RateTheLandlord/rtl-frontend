@@ -1,6 +1,6 @@
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { auth0 } from '@/lib/auth0'
 import { deleteLandlord } from '@/lib/suspiciousLandlords/suspiciousLandlords'
 
 interface IBody {
@@ -9,7 +9,7 @@ interface IBody {
 
 const deleteLandlordAPI = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res)
-	const session = await getSession(req, res)
+	const session = await auth0.getSession(req)
 	const user = session?.user
 
 	const { body } = req as { body: IBody }
@@ -25,4 +25,4 @@ const deleteLandlordAPI = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 }
 
-export default withApiAuthRequired(deleteLandlordAPI)
+export default auth0.withApiAuthRequired(deleteLandlordAPI)

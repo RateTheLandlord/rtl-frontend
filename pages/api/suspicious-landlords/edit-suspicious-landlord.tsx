@@ -1,6 +1,6 @@
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { auth0 } from '@/lib/auth0'
 import { update } from '@/lib/suspiciousLandlords/suspiciousLandlords'
 
 interface IBody {
@@ -14,7 +14,7 @@ const EditSuspiciousLandlordAPI = async (
 	req: NextApiRequest,
 	res: NextApiResponse,
 ) => {
-	const session = await getSession(req, res)
+	const session = await auth0.getSession(req)
 	const user = session?.user
 	await runMiddleware(req, res)
 
@@ -28,4 +28,4 @@ const EditSuspiciousLandlordAPI = async (
 	}
 }
 
-export default withApiAuthRequired(EditSuspiciousLandlordAPI)
+export default auth0.withApiAuthRequired(EditSuspiciousLandlordAPI)

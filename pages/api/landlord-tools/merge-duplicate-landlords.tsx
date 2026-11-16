@@ -1,6 +1,6 @@
 import { runMiddleware } from '@/util/cors'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { auth0 } from '@/lib/auth0'
 import {
 	executeMergeTransaction,
 	MergePayload,
@@ -11,7 +11,7 @@ const MergeDuplicateLandlords = async (
 	res: NextApiResponse,
 ) => {
 	await runMiddleware(req, res)
-	const session = await getSession(req, res)
+	const session = await auth0.getSession(req)
 	const user = session?.user
 
 	const { body } = req as { body: MergePayload }
@@ -24,4 +24,4 @@ const MergeDuplicateLandlords = async (
 	}
 }
 
-export default withApiAuthRequired(MergeDuplicateLandlords)
+export default auth0.withApiAuthRequired(MergeDuplicateLandlords)
