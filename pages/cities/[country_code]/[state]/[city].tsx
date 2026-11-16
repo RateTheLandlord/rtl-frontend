@@ -61,10 +61,10 @@ export function getStaticPaths() {
 }
 
 export async function getStaticProps({
-	locale,
+	locale = 'en-CA',
 	params,
 }: {
-	locale: string
+	locale?: string
 	params: ICityQuery
 }) {
 	const resourcesMessages = readLocaleFile('resources', locale)

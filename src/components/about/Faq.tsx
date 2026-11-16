@@ -1,3 +1,5 @@
+'use client'
+
 import { Disclosure, DisclosurePanel } from '@headlessui/react'
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { useTranslations } from 'next-intl'

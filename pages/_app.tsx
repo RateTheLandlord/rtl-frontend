@@ -59,7 +59,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 
 	return (
 		<NextIntlClientProvider
-			locale={router.locale}
+			locale={router.locale ?? 'en-CA'}
 			messages={pageProps.messages}
 			timeZone={timeZone}
 		>

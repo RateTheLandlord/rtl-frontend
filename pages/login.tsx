@@ -52,7 +52,11 @@ function Login(): JSX.Element {
 
 export default withPageAuthRequired(Login)
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export async function getStaticProps({
+	locale = 'en-CA',
+}: {
+	locale?: string
+}) {
 	const alertsMessages = (await import(
 		`@/messages/${locale}/alerts.json`
 	)) as Record<string, string>

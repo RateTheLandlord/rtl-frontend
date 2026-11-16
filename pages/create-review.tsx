@@ -35,7 +35,11 @@ function CreateReview(): JSX.Element {
 
 export default CreateReview
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export async function getStaticProps({
+	locale = 'en-CA',
+}: {
+	locale?: string
+}) {
 	const createreviewMessages = (await import(
 		`@/messages/${locale}/createreview.json`
 	)) as Record<string, string>

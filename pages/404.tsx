@@ -19,7 +19,11 @@ export default function Custom404() {
 	)
 }
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export async function getStaticProps({
+	locale = 'en-CA',
+}: {
+	locale?: string
+}) {
 	const layoutMessages = (await import(
 		`@/messages/${locale}/layout.json`
 	)) as Record<string, string>
