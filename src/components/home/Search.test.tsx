@@ -4,7 +4,7 @@
 
 import React from 'react'
 import '@testing-library/jest-dom'
-import { useRouter } from 'next/router'
+import { useRouter } from '@/i18n/navigation'
 import { useAppDispatch } from '@/redux/hooks'
 import { updateSearch } from '@/redux/query/querySlice'
 import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
@@ -13,7 +13,7 @@ import { axe, toHaveNoViolations } from 'jest-axe'
 import { render, screen, fireEvent, waitFor } from '@/test-utils'
 expect.extend(toHaveNoViolations)
 
-jest.mock('next/router', () => ({
+jest.mock('@/i18n/navigation', () => ({
 	useRouter: jest.fn(),
 }))
 

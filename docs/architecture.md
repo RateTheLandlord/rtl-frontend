@@ -1,10 +1,11 @@
 # Application architecture
 
-RateTheLandlord is a single full-stack Next.js application. The Pages Router remains the routing system; this layout is an organization change, not an App Router migration or a backend split.
+RateTheLandlord is a single full-stack Next.js application. The application is migrating incrementally from the Pages Router to the App Router; both route trees currently coexist. This is a routing migration, not a backend split.
 
 ## Top-level boundaries
 
-- `pages/`: Next.js Pages Router entry points, including API routes. Keep route modules focused on HTTP concerns, request validation, authentication/authorization checks, and delegating to application code.
+- `app/`: Next.js App Router layouts and page entry points. Localized pages live under `app/[locale]/` and share its locale-aware layout and providers.
+- `pages/`: Remaining Next.js Pages Router entry points, including API routes and pages not yet migrated. Keep route modules focused on HTTP concerns, request validation, authentication/authorization checks, and delegating to application code.
 - `src/`: Application source code. Runtime application modules belong here rather than in new root-level source directories.
 - `migrations/`: Ordered database schema/data migrations. Keep these at the root so database tooling and operational workflows can find them consistently.
 - `messages/`: Translation resources consumed by the existing internationalization setup.
@@ -51,13 +52,13 @@ Global styles and shared styling entry points. Component-specific styling should
 - Do not add new application source directories at the repository root.
 - Keep framework and tooling configuration files at the root where their tools expect them.
 
-## Pages Router conventions
+## Router conventions
 
-The root-level `pages/` directory is intentional and must not be moved under `src/` while the application uses the Pages Router. Page and API route modules should compose UI or delegate work; reusable logic should live under `src/`.
+The `app/` and root-level `pages/` directories coexist during the migration. API routes remain in `pages/api/`; do not migrate them as part of public page work. New or migrated public pages should use the App Router and the existing `app/[locale]/` route structure. Keep route modules focused on composing UI; reusable logic belongs under `src/`.
 
-## Scope of this migration
+## Scope of the source layout
 
-This change establishes a clear source-code boundary while preserving existing module names and internal folder relationships. It deliberately does not rename domains, rewrite business logic, change API behavior, migrate routing systems, or redesign the database layer. Those changes should be made incrementally with tests and dependency boundaries reviewed independently.
+Application source remains under `src/`, while framework route entry points remain at the repository root. Keep the routing migration incremental: preserve public URLs and locale behavior, move one page or cohesive group at a time, and avoid mixing in domain renames, API behavior changes, or database redesign.
 
 
 ## Naming conventions
@@ -79,7 +80,7 @@ Use descriptive names; avoid abbreviations unless they are established project o
 
 Do not blindly rename files or directories whose names are part of an external contract:
 
-- Pages Router files and folders define public page and API URLs. Preserve their current paths unless a route migration includes redirects and compatibility coverage.
+- App Router and Pages Router files and folders define public page and API URLs. Preserve their current paths and locale behavior during migration.
 - Files under `public/` are served by URL. Preserve paths referenced by HTML, CSS, metadata, sitemap/robots conventions, external integrations, or existing links.
 - Localization message filenames are namespaces consumed by the i18n setup. Rename them only alongside every namespace reference and test.
 - Database migration filenames and their numeric ordering are part of migration discovery and execution.
