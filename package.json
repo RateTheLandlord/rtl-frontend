@@ -95,7 +95,7 @@
 		"globals": "^17.14.0",
 		"globby": "^16.2.4",
 		"husky": "^9.1.7",
-		"i18next-resources-for-ts": "1.5.0",
+		"i18next-resources-for-ts": "2.1.2",
 		"jest": "^30.5.2",
 		"jest-axe": "^11.0.0",
 		"jest-environment-jsdom": "^30.5.2",
