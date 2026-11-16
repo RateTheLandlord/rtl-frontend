@@ -41,6 +41,7 @@ export default async function LocaleLayout({
 		...readLocaleFile('alerts', locale),
 		...readLocaleFile('createreview', locale),
 		...readLocaleFile('filters', locale),
+		...readLocaleFile('home', locale),
 		...readLocaleFile('layout', locale),
 		...readLocaleFile('resources', locale),
 	} as AbstractIntlMessages

@@ -49,7 +49,7 @@ The application is a full-stack [Next.js](https://nextjs.org/) application. It p
 | Full-stack framework | Next.js 16 |
 | UI library | React |
 | Language | TypeScript |
-| Routing | Next.js Pages Router |
+| Routing | Next.js App Router and Pages Router (incremental migration) |
 | Styling | Tailwind CSS 4 |
 | State management | Redux Toolkit and React Redux |
 | Data fetching | SWR |
@@ -76,13 +76,14 @@ Rate The Landlord is maintained in a **single full-stack repository**. The forme
 
 Next.js handles both the frontend and server-side application functionality, including API routes and database operations.
 
-The application uses the Pages Router. New development should follow the existing routing and architectural conventions rather than introducing the App Router without an explicit migration decision.
+The application is migrating public pages to the App Router incrementally. Localized App Router pages live under `app/[locale]/`; remaining pages and all API routes are still under `pages/` until migrated.
 
 ### Repository structure
 
 ```text
 .
 ├── .github/           # GitHub workflows and repository automation
+├── app/               # Next.js App Router layouts and migrated pages
 ├── docs/              # Architecture and project documentation
 ├── migrations/        # Ordered database migrations
 ├── messages/          # Localization messages
@@ -406,7 +407,7 @@ The standard development workflow is:
 - Pull requests for ordinary development should target `develop`.
 - Follow the repository's release process for production changes.
 
-Keep changes consistent with the existing Pages Router architecture, localization conventions, TypeScript practices, and application patterns.
+Keep changes consistent with the router used by the affected route, the shared localization conventions, TypeScript practices, and application patterns.
 
 ## License
 

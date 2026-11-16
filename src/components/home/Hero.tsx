@@ -1,7 +1,8 @@
-import LinkButtonLG from '../ui/LinkButtonLg'
-import LinkButtonLightLG from '../ui/LinkButtonLightLg'
+'use client'
+
 import { HouseIcon } from '../icons/HouseIcon'
 import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/navigation'
 
 import type { JSX } from 'react'
 
@@ -20,12 +21,26 @@ function Hero(): JSX.Element {
 					{t('home.hero.body')}
 				</p>
 				<div className='mt-5 flex flex-col gap-3 text-center sm:w-full sm:flex-row sm:items-center sm:justify-center md:mt-8 lg:max-w-md lg:justify-start'>
-					<LinkButtonLG href='/create-review'>
-						{t('home.hero.submit')}
-					</LinkButtonLG>
-					<LinkButtonLightLG href='/reviews'>
-						{t('home.hero.read')}
-					</LinkButtonLightLG>
+					<div
+						className='border-primary bg-primary hover:bg-primary-hover cursor-pointer rounded-md border'
+						data-testid='home-hero-submit-btn-1'
+					>
+						<Link href='/create-review'>
+							<p className='px-8 py-3 text-base text-white md:px-10 md:py-4 md:text-lg'>
+								{t('home.hero.submit')}
+							</p>
+						</Link>
+					</div>
+					<div
+						className='border-primary hover:bg-background cursor-pointer rounded-md border bg-white'
+						data-testid='home-hero-read-btn-1'
+					>
+						<Link href='/reviews'>
+							<div className='text-primary w-full px-8 py-3 text-center text-base md:px-10 md:py-4 md:text-lg'>
+								{t('home.hero.read')}
+							</div>
+						</Link>
+					</div>
 				</div>
 			</div>
 			<div className='mx-auto flex max-w-2xl lg:mt-0 lg:mr-0 lg:ml-10 lg:max-w-none lg:flex-none xl:ml-32'>

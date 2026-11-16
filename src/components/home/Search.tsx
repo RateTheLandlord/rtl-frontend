@@ -1,3 +1,5 @@
+'use client'
+
 import { useAppDispatch } from '@/redux/hooks'
 import { updateSearch } from '@/redux/query/querySlice'
 import { useLandlordSuggestions } from '@/util/hooks/useLandlordSuggestions'
@@ -9,7 +11,7 @@ import {
 	Transition,
 } from '@headlessui/react'
 import { useTranslations } from 'next-intl'
-import { useRouter } from 'next/router'
+import { useRouter } from '@/i18n/navigation'
 import { Fragment, useState } from 'react'
 
 const Search = () => {
@@ -24,9 +26,7 @@ const Search = () => {
 	const submitCombo = (e: string | null) => {
 		if (e) {
 			dispatch(updateSearch(e))
-			router
-				.push(`/landlord/${encodeURIComponent(e)}`)
-				.catch(() => console.error('Failed to route to landlord'))
+			router.push(`/landlord/${encodeURIComponent(e)}`)
 		}
 	}
 	return (
@@ -61,13 +61,7 @@ const Search = () => {
 										</div>
 									) : (
 										<button
-											onClick={() => {
-												router
-													.push(`/create-review`)
-													.catch(() =>
-														console.error('Failed to route to create-review'),
-													)
-											}}
+							onClick={() => router.push('/create-review')}
 											className='hover:bg-primary relative cursor-pointer px-4 py-2 text-left text-gray-700 select-none'
 										>
 											{t('not-found')}
