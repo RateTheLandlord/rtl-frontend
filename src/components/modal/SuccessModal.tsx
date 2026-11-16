@@ -1,11 +1,14 @@
 import { useRouter } from 'next/router'
 import {
+	BlueskyIcon,
+	BlueskyShareButton,
 	EmailShareButton,
 	FacebookShareButton,
 	PinterestShareButton,
 	RedditShareButton,
 	TumblrShareButton,
-	TwitterShareButton,
+	XIcon,
+	XShareButton,
 } from 'react-share'
 import Button from '../ui/Button'
 
@@ -17,7 +20,6 @@ import {
 	PinterestIcon,
 	RedditIcon,
 	TumblrIcon,
-	TwitterIcon,
 } from 'react-share'
 import ModalShell from './ModalShell'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
@@ -44,7 +46,7 @@ function SuccessModal({ onClose }: { onClose: () => void }) {
 								}
 								url='https://ratethelandlord.org'
 							>
-								<EmailIcon round size='40' />
+								<EmailIcon size='40' />
 							</EmailShareButton>
 							<FacebookShareButton
 								onMouseDown={() =>
@@ -54,7 +56,7 @@ function SuccessModal({ onClose }: { onClose: () => void }) {
 								}
 								url='https://ratethelandlord.org'
 							>
-								<FacebookIcon round size='40' />
+								<FacebookIcon size='40' />
 							</FacebookShareButton>
 							<PinterestShareButton
 								onMouseDown={() =>
@@ -65,7 +67,7 @@ function SuccessModal({ onClose }: { onClose: () => void }) {
 								media='https://ratethelandlord.org/friends.webp'
 								url='https://ratethelandlord.org'
 							>
-								<PinterestIcon round size='40' />
+								<PinterestIcon size='40' />
 							</PinterestShareButton>
 							<RedditShareButton
 								onMouseDown={() =>
@@ -75,7 +77,7 @@ function SuccessModal({ onClose }: { onClose: () => void }) {
 								}
 								url='https://ratethelandlord.org'
 							>
-								<RedditIcon round size='40' />
+								<RedditIcon size='40' />
 							</RedditShareButton>
 							<TumblrShareButton
 								onMouseDown={() =>
@@ -85,9 +87,9 @@ function SuccessModal({ onClose }: { onClose: () => void }) {
 								}
 								url='https://ratethelandlord.org'
 							>
-								<TumblrIcon round size='40' />
+								<TumblrIcon size='40' />
 							</TumblrShareButton>
-							<TwitterShareButton
+							<XShareButton
 								onMouseDown={() =>
 									posthog.capture('user_clicked_share', {
 										share: 'twitter',
@@ -95,8 +97,18 @@ function SuccessModal({ onClose }: { onClose: () => void }) {
 								}
 								url='https://ratethelandlord.org'
 							>
-								<TwitterIcon round size='40' />
-							</TwitterShareButton>
+								<XIcon size='40' />
+							</XShareButton>
+							<BlueskyShareButton
+								onMouseDown={() =>
+									posthog.capture('user_clicked_share', {
+										share: 'bluesky',
+									})
+								}
+								url='https://ratethelandlord.org'
+							>
+								<BlueskyIcon size='40' />
+							</BlueskyShareButton>
 						</div>
 					</div>
 				</div>
