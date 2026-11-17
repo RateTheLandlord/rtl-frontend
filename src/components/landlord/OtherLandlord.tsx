@@ -1,6 +1,6 @@
 import { OtherLandlord } from '@/util/interfaces/Interfaces'
 import Spinner from '../ui/Spinner'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import RatingStars from '@/components/ui/RatingStars'
 import useSWR from 'swr'
 import { fetcher } from '@/util/helpers/fetcher'
