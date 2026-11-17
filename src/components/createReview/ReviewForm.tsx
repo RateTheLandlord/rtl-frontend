@@ -1,3 +1,5 @@
+'use client'
+
 import { ReviewResponseStatus } from '@/lib/review/types/Responses'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { updatePostal, updateProvince } from '@/redux/review/reviewSlice'
