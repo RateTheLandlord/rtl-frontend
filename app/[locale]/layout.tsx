@@ -42,6 +42,7 @@ export default async function LocaleLayout({
 		...readLocaleFile('createreview', locale),
 		...readLocaleFile('filters', locale),
 		...readLocaleFile('home', locale),
+		...readLocaleFile('landlord', locale),
 		...readLocaleFile('layout', locale),
 		...readLocaleFile('resources', locale),
 		...readLocaleFile('reviews', locale),

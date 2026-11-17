@@ -18,7 +18,6 @@ import {
 } from '@/util/interfaces/Interfaces'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import { useTranslations } from 'next-intl'
-import { useRouter } from 'next/router'
 import posthog from 'posthog-js'
 import { useEffect, useRef, useState } from 'react'
 import MapComponent from '../map/Map'
@@ -56,6 +55,7 @@ type FilterSource = 'desktop' | 'mobile'
 
 interface ReviewProps {
 	view: string | string[] | undefined
+	affiliate?: string | string[]
 	setLocationOpen: (bool: boolean) => void
 }
 
@@ -78,11 +78,9 @@ const buildQueryParams = (
 	limit: '25',
 })
 
-const Review = ({ view, setLocationOpen }: ReviewProps) => {
+const Review = ({ view, affiliate, setLocationOpen }: ReviewProps) => {
 	const t = useTranslations('reviews')
 	const screenWidth = useScreenWidth()
-	const router = useRouter()
-	const { affiliate } = router.query
 
 	const dispatch = useAppDispatch()
 	const query = useAppSelector((state) => state.query)
@@ -363,6 +361,7 @@ const Review = ({ view, setLocationOpen }: ReviewProps) => {
 								<MapComponent
 									countryFilter={countryFilter}
 									stateFilter={stateFilter}
+									affiliate={affiliate}
 								/>
 								<p className='mt-6 text-xs leading-7 text-gray-600'>
 									This map component is currently in Beta. It is provided “as
