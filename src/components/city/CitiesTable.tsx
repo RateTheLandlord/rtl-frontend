@@ -2,7 +2,7 @@ import RatingStars from '@/components/ui/RatingStars'
 import Spinner from '@/components/ui/Spinner'
 import { fetchWithBody } from '@/util/helpers/fetcher'
 import { useTranslations } from 'next-intl'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import useSWR from 'swr'
 
 interface ICities {
