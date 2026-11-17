@@ -3,6 +3,11 @@
 		"footer": {
 			"copy": "Rate The Landlord Inc. All Rights Reserved."
 		},
+		"not-found": {
+			"title": "Page not found",
+			"description": "Sorry, we couldn't find the page you're looking for.",
+			"home": "Go back home"
+		},
 		"nav": {
 			"title": "Rate The Landlord",
 			"reviews": "Reviews",
