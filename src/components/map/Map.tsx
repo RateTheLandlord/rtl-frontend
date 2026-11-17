@@ -2,7 +2,6 @@ import { IZipLocations } from '@/lib/location/types'
 import { fetchFilterOptions } from '@/util/helpers/fetchFilterOptions'
 import { getStartingLocation } from '@/util/helpers/getStartingLocation'
 import { Options } from '@/util/interfaces/Interfaces'
-import { useRouter } from 'next/router'
 import posthog from 'posthog-js'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Map as MapView, Marker } from 'react-map-gl/mapbox'
@@ -12,6 +11,7 @@ import Information from './Information'
 interface MapProps {
 	countryFilter: Options | null
 	stateFilter: Options | null
+	affiliate?: string | string[]
 }
 
 const CANADA: Options = {
@@ -26,10 +26,7 @@ const NOVA_SCOTIA: Options = {
 	value: 'NOVA SCOTIA',
 }
 
-const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
-	const router = useRouter()
-	const { affiliate } = router.query
-
+const MapComponent = ({ countryFilter, stateFilter, affiliate }: MapProps) => {
 	const isStfxAffiliate = affiliate === 'stfx'
 
 	const [country, setCountry] = useState<Options | null>(countryFilter)
@@ -51,8 +48,6 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 
 	// Synchronize filters with parent props unless an affiliate overrides them.
 	useEffect(() => {
-		if (!router.isReady) return
-
 		if (isStfxAffiliate) {
 			setCountry(CANADA)
 			setState(NOVA_SCOTIA)
@@ -64,7 +59,7 @@ const MapComponent = ({ countryFilter, stateFilter }: MapProps) => {
 		}
 
 		setSelectedPoint(null)
-	}, [router.isReady, isStfxAffiliate, countryFilter, stateFilter])
+	}, [isStfxAffiliate, countryFilter, stateFilter])
 
 	// Update the map's starting location when the filters or affiliate change.
 	useEffect(() => {

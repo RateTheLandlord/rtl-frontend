@@ -17,14 +17,9 @@ jest.mock('./Review', () => {
 	}
 })
 
-jest.mock('next/router', () => ({
+jest.mock('@/i18n/navigation', () => ({
 	useRouter() {
-		return {
-			route: '/',
-			pathname: '',
-			query: '',
-			asPath: '',
-		}
+		return { push: jest.fn() }
 	},
 }))
 
@@ -32,7 +27,7 @@ describe('ReviewForm', () => {
 	it('Should not have a11y violation', async () => {
 		const { container } = render(
 			<Provider store={store}>
-				<ReviewForm />
+				<ReviewForm routeParams={{}} />
 			</Provider>,
 		)
 		const result = await axe(container)

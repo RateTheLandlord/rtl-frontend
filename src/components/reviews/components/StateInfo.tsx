@@ -6,7 +6,7 @@ import { useAppDispatch } from '@/redux/hooks'
 import { clearFilters } from '@/redux/query/querySlice'
 import { fetchWithBody } from '@/util/helpers/fetcher'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
-import { useRouter } from 'next/router'
+import { useRouter } from '@/i18n/navigation'
 import useSWR from 'swr'
 import { useTranslations } from 'next-intl'
 import { IStateStats } from '@/lib/review/stateStats'
@@ -58,9 +58,7 @@ const StateInfo = ({ state, country, setLocationOpen }: IProps) => {
 				<div className='flex w-full justify-center'>
 					<Button
 						onClick={() => {
-							router
-								.push(`/reviews`, undefined, { shallow: true })
-								.catch(() => console.log('Error Setting URL'))
+							router.push('/reviews')
 							dispatch(clearFilters())
 							setLocationOpen(true)
 						}}

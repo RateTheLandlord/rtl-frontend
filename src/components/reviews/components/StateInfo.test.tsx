@@ -5,7 +5,7 @@ import { render, screen } from '@/test-utils'
 import '@testing-library/jest-dom'
 import StateInfo from './StateInfo'
 import { useAppDispatch } from '@/redux/hooks'
-import { useRouter } from 'next/router'
+import { useRouter } from '@/i18n/navigation'
 import useSWR from 'swr'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
@@ -14,7 +14,7 @@ jest.mock('@/redux/hooks', () => ({
 	useAppDispatch: jest.fn(),
 }))
 
-jest.mock('next/router', () => ({
+jest.mock('@/i18n/navigation', () => ({
 	useRouter: jest.fn(),
 }))
 
