@@ -3,28 +3,11 @@
  */
 import { render, screen } from '@/test-utils'
 import LandlordInfo from './LandlordInfo'
-import { useRouter } from 'next/router'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { ILandlordReviews } from '@/lib/review/types/Queries'
 expect.extend(toHaveNoViolations)
 
-jest.mock('next/router', () => ({
-	useRouter: jest.fn(),
-}))
-
 describe('LandlordInfo', () => {
-	const pushMock = jest.fn()
-
-	beforeEach(() => {
-		return (useRouter as jest.Mock).mockImplementation(() => ({
-			push: pushMock,
-		}))
-	})
-
-	afterEach(() => {
-		jest.clearAllMocks()
-	})
-
 	const name = 'John Doe'
 	const data: ILandlordReviews = {
 		reviews: [],

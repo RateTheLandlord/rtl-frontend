@@ -23,6 +23,10 @@
 		"stability": "Stabilité résidentielle",
 		"overall": "Dans l'ensemble",
 		"view-other-landlords": "Voir d'autres propriétaires à",
-		"read-other-landlords": "Lire {reviewcount} avis"
+		"read-other-landlords": "Lire {reviewcount} avis",
+		"not-found": {
+			"title": "Nous ne trouvons pas ce propriétaire",
+			"back-home": "Retour à l’accueil"
+		}
 	}
 }

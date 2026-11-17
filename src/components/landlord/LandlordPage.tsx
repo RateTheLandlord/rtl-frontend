@@ -1,4 +1,6 @@
 /* eslint-disable no-case-declarations */
+'use client'
+
 import { useEffect, useState } from 'react'
 import LandlordInfo from './LandlordInfo'
 import OtherLandlordInfo from './OtherLandlord'

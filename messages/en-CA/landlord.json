@@ -23,6 +23,10 @@
 		"stability": "Rental Stability",
 		"overall": "Overall",
 		"view-other-landlords": "View other Landlords in",
-		"read-other-landlords": "Read {reviewcount} review(s)"
+		"read-other-landlords": "Read {reviewcount} review(s)",
+		"not-found": {
+			"title": "We can't seem to find this landlord",
+			"back-home": "Take me home"
+		}
 	}
 }
