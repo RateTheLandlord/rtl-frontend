@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router'
+import { useRouter } from '@/i18n/navigation'
 import {
 	BlueskyIcon,
 	BlueskyShareButton,
@@ -118,9 +118,9 @@ function SuccessModal({ onClose }: { onClose: () => void }) {
 					onClick={() => {
 						dispatch(resetReview())
 						onClose()
-						router
-							.push(`/reviews?country=${country}&state=${province}`)
-							.catch((err) => console.log(err))
+						router.push(
+							`/reviews?country=${encodeURIComponent(country)}&state=${encodeURIComponent(province)}`,
+						)
 					}}
 				>
 					{t('modal.go-to')}
