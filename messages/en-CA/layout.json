@@ -8,6 +8,13 @@
 			"description": "Sorry, we couldn't find the page you're looking for.",
 			"home": "Go back home"
 		},
+		"error": {
+			"title": "Oops, something went wrong.",
+			"description": "An error occurred on our end. If you continue to see this page, please contact us.",
+			"retry": "Try again",
+			"home": "Go back home",
+			"contact": "Contact Us"
+		},
 		"nav": {
 			"title": "Rate The Landlord",
 			"reviews": "Reviews",
