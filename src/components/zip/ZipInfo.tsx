@@ -1,5 +1,5 @@
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { Disclosure, DisclosureButton } from '@headlessui/react'
 import { useTranslations } from 'next-intl'
 import { toTitleCase } from '@/util/helpers/toTitleCase'

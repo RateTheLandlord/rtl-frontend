@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemo } from 'react'
 import { UserReview } from '@/util/interfaces/Interfaces'
 import AdsComponent, { AD_UNITS } from '../adsense/Adsense'
