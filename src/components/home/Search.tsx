@@ -61,7 +61,7 @@ const Search = () => {
 										</div>
 									) : (
 										<button
-							onClick={() => router.push('/create-review')}
+											onClick={() => router.push('/create-review')}
 											className='hover:bg-primary relative cursor-pointer px-4 py-2 text-left text-gray-700 select-none'
 										>
 											{t('not-found')}
