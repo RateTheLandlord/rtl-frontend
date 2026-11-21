@@ -1,8 +1,10 @@
+'use client'
+
 import React, { useState, type JSX } from 'react'
 import { ITabs } from '@/components/admin/types/Types'
 import FlaggedReviews from '@/components/admin/sections/FlaggedReviews'
 import DeletedReviews from '@/components/admin/sections/DeletedReviews'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import Stats from '@/components/admin/sections/Stats'
 import { classNames } from '@/util/helpers/helperFunctions'
 import {
@@ -13,8 +15,7 @@ import {
 } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import TenantResources from '@/components/admin/sections/TenantResources'
-import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
-import { useUser } from '@auth0/nextjs-auth0/client'
+import { useUser, type UserProfile } from '@auth0/nextjs-auth0/client'
 import SuspiciousLandlords from '@/components/admin/sections/SuspiciousLandlords'
 import FlaggedKeywords from '@/components/admin/sections/FlaggedKeywords'
 import RecentReviews from '@/components/admin/sections/RecentReviews'
@@ -31,10 +32,15 @@ const tabs = [
 	{ name: 'Merge Landlords', component: <MergeDuplicateLandlords /> },
 ]
 
-function Admin(): JSX.Element {
+function AdminDashboard({
+	initialUser,
+}: {
+	initialUser?: UserProfile
+}): JSX.Element {
 	const [currentTab, setCurrentTab] = useState<ITabs>(tabs[0])
 
-	const { user } = useUser()
+	const { user: contextUser } = useUser()
+	const user = initialUser ?? contextUser
 
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -172,37 +178,4 @@ function Admin(): JSX.Element {
 	)
 }
 
-export default withPageAuthRequired(Admin)
-
-export const getStaticPaths = () => {
-	return {
-		paths: [],
-		fallback: true,
-	}
-}
-
-export async function getStaticProps({
-	locale = 'en-CA',
-}: {
-	locale?: string
-}) {
-	const alertsMessages = (await import(
-		`@/messages/${locale}/alerts.json`
-	)) as Record<string, string>
-	const layoutMessages = (await import(
-		`@/messages/${locale}/layout.json`
-	)) as Record<string, string>
-	const reviewsMessages = (await import(
-		`@/messages/${locale}/createreview.json`
-	)) as Record<string, string>
-
-	return {
-		props: {
-			messages: {
-				...alertsMessages,
-				...layoutMessages,
-				...reviewsMessages,
-			},
-		},
-	}
-}
+export default AdminDashboard
