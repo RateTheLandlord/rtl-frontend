@@ -26,8 +26,8 @@ export default function LoginScreen(): JSX.Element {
 						</h2>
 					</div>
 					<p className='mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600'>
-						This is the Admin Login for Rate The Landlord. If you are not an admin,
-						please navigate back to the homepage.
+						This is the Admin Login for Rate The Landlord. If you are not an
+						admin, please navigate back to the homepage.
 					</p>
 					<div className='mt-10 flex items-center justify-center gap-x-6'>
 						<a
