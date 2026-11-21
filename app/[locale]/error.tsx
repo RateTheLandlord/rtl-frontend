@@ -1,0 +1,54 @@
+'use client'
+
+import { useEffect } from 'react'
+import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/navigation'
+
+export default function Error({
+	error,
+	retry,
+}: {
+	error: Error & { digest?: string }
+	retry: () => void
+}) {
+	const t = useTranslations('layout.error')
+
+	useEffect(() => {
+		console.error(error)
+	}, [error])
+
+	return (
+		<main className='mt-2 grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8'>
+			<div className='text-center'>
+				<p className='text-base text-indigo-600'>500</p>
+				<h1 className='mt-4 text-3xl text-gray-900 sm:text-5xl'>
+					{t('title')}
+				</h1>
+				<p className='mt-6 text-base leading-7 text-gray-600'>
+					{t('description')}
+				</p>
+				<div className='mt-10 flex flex-wrap items-center justify-center gap-4'>
+					<button
+						type='button'
+						onClick={retry}
+						className='border-primary bg-primary hover:bg-primary-hover cursor-pointer rounded-md border px-8 py-3 text-base text-white md:px-10 md:py-4 md:text-lg'
+					>
+						{t('retry')}
+					</button>
+					<Link
+						href='/'
+						className='border-primary hover:bg-background cursor-pointer rounded-md border bg-white px-8 py-3 text-base md:px-10 md:py-4 md:text-lg'
+					>
+						{t('home')}
+					</Link>
+					<a
+						href='mailto:r8thelandlord@gmail.com'
+						className='text-sm leading-6 text-gray-900 underline'
+					>
+						{t('contact')}
+					</a>
+				</div>
+			</div>
+		</main>
+	)
+}

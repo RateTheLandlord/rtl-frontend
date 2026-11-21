@@ -8,6 +8,13 @@
 			"description": "Désolé, nous ne trouvons pas la page que vous cherchez.",
 			"home": "Retour à l’accueil"
 		},
+		"error": {
+			"title": "Oups, une erreur s’est produite.",
+			"description": "Une erreur s’est produite de notre côté. Si cette page s’affiche encore, veuillez communiquer avec nous.",
+			"retry": "Réessayer",
+			"home": "Retour à l’accueil",
+			"contact": "Nous contacter"
+		},
 		"nav": {
 			"title": "Rate The Landlord",
 			"reviews": "Évaluations",
