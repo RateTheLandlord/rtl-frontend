@@ -1,7 +1,6 @@
-import { runMiddleware } from '@/util/cors'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import rateLimitMiddleware from '@/util/rateLimit'
 import { userUpdateReview } from '@/lib/review/models/userUpdateReviewLayer'
+import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
+import { checkRouteRateLimit } from '@/util/routeHandlerRateLimit'
 import type { UserUpdatedReview } from '@/util/interfaces/Interfaces'
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -49,21 +48,26 @@ const isValidReview = (value: unknown): value is UserUpdatedReview => {
 	)
 }
 
-const UserEditReview = async (req: NextApiRequest, res: NextApiResponse) => {
+export async function OPTIONS(request: Request) {
+	const limited = checkRouteRateLimit(request)
+	if (limited) return limited
+	return handleCorsPreflight(request)!
+}
+
+export async function POST(request: Request) {
+	const limited = checkRouteRateLimit(request)
+	if (limited) return limited
+
 	try {
-		await runMiddleware(req, res)
-
-		if (req.method !== 'POST') {
-			res.setHeader('Allow', 'POST')
-			return res.status(405).json({ error: 'METHOD_NOT_ALLOWED' })
+		const body: unknown = await request.json()
+		if (!isRecord(body)) {
+			return withCors(
+				request,
+				Response.json({ error: 'INVALID_REQUEST_BODY' }, { status: 400 }),
+			)
 		}
 
-		if (!isRecord(req.body)) {
-			return res.status(400).json({ error: 'INVALID_REQUEST_BODY' })
-		}
-
-		const { id, review, user_code } = req.body
-
+		const { id, review, user_code } = body
 		if (
 			typeof id !== 'number' ||
 			!Number.isSafeInteger(id) ||
@@ -73,15 +77,19 @@ const UserEditReview = async (req: NextApiRequest, res: NextApiResponse) => {
 			user_code.length > 256 ||
 			!isValidReview(review)
 		) {
-			return res.status(400).json({ error: 'INVALID_REQUEST_BODY' })
+			return withCors(
+				request,
+				Response.json({ error: 'INVALID_REQUEST_BODY' }, { status: 400 }),
+			)
 		}
 
 		const result = await userUpdateReview(id, review, user_code)
-		return res.status(200).json(result)
+		return withCors(request, Response.json(result))
 	} catch (error) {
 		console.error('Failed to update user review:', error)
-		return res.status(500).json({ error: 'INTERNAL_SERVER_ERROR' })
+		return withCors(
+			request,
+			Response.json({ error: 'INTERNAL_SERVER_ERROR' }, { status: 500 }),
+		)
 	}
 }
-
-export default rateLimitMiddleware(UserEditReview)
