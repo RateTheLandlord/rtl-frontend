@@ -1,6 +1,5 @@
 import cron from 'node-cron'
 import dayjs from 'dayjs'
-import { NextApiRequest, NextApiResponse } from 'next'
 import { deleteReview, getDeleted } from '@/lib/review/models/adminDeleteReview'
 
 const readyToDelete = (delete_date: string | null): boolean => {
@@ -15,8 +14,6 @@ const readyToDelete = (delete_date: string | null): boolean => {
 	return false
 }
 
-// Schedule a cron job to run every day
-
 cron.schedule('0 0 * * *', async () => {
 	const reviews = await getDeleted()
 
@@ -30,6 +27,6 @@ cron.schedule('0 0 * * *', async () => {
 	}
 })
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-	res.status(200).json({ message: 'Cron job API is running!' })
+export async function GET() {
+	return Response.json({ message: 'Cron job API is running!' })
 }
