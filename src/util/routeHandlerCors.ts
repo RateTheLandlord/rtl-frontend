@@ -6,9 +6,7 @@ export function handleCorsPreflight(request: Request): Response | null {
 	const headers = new Headers({
 		'Access-Control-Allow-Methods': allowedMethods,
 	})
-	const requestedHeaders = request.headers.get(
-		'Access-Control-Request-Headers',
-	)
+	const requestedHeaders = request.headers.get('Access-Control-Request-Headers')
 	if (requestedHeaders) {
 		headers.set('Access-Control-Allow-Headers', requestedHeaders)
 	}
