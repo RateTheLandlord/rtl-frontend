@@ -1,0 +1,33 @@
+import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { update } from '@/lib/tenantResource/resource'
+import type { Resource } from '@/lib/tenantResource/models/resource'
+import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
+import { NextResponse, type NextRequest } from 'next/server'
+
+export const OPTIONS = withApiAuthRequired(async (request: NextRequest) =>
+	handleCorsPreflight(request)!,
+)
+
+export const POST = withApiAuthRequired(async (request: NextRequest) => {
+	const authResponse = new NextResponse()
+	const session = await getSession(request, authResponse)
+	if (session?.user?.role !== 'ADMIN') {
+		return withCors(
+			request,
+			NextResponse.json(
+				{ error: 'UNAUTHORIZED' },
+				{ status: 401, headers: authResponse.headers },
+			),
+		)
+	}
+
+	const body = (await request.json()) as Resource & { id: number }
+	const resource = await update(body.id, body)
+	return withCors(
+		request,
+		NextResponse.json(resource.message, {
+			status: resource.status,
+			headers: authResponse.headers,
+		}),
+	)
+})
