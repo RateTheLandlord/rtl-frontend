@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import type { AbstractIntlMessages } from 'next-intl'
 import { notFound } from 'next/navigation'
+import Script from 'next/script'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import '@/styles/global.css'
 import AppRouterProviders from '@/components/layout/AppRouterProviders'
@@ -54,6 +55,13 @@ export default async function LocaleLayout({
 				<AppRouterProviders locale={locale} messages={messages}>
 					{children}
 				</AppRouterProviders>
+				{process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' && (
+					<Script
+						src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1233437669445756'
+						strategy='afterInteractive'
+						crossOrigin='anonymous'
+					/>
+				)}
 			</body>
 		</html>
 	)
