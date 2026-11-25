@@ -6,7 +6,7 @@ import { render, screen } from '@/test-utils'
 import Navbar from './Navbar'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
-import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { Auth0Provider } from '@auth0/nextjs-auth0/client'
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
 
@@ -34,9 +34,9 @@ describe('Navbar', () => {
 	it('Should not have a11y violation', async () => {
 		const { container } = render(
 			<Provider store={store}>
-				<UserProvider>
+				<Auth0Provider>
 					<Navbar />
-				</UserProvider>
+				</Auth0Provider>
 			</Provider>,
 		)
 		const result = await axe(container)

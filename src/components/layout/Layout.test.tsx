@@ -6,7 +6,7 @@ import React from 'react'
 import { render } from '@/test-utils'
 import Layout from './Layout'
 import { axe, toHaveNoViolations } from 'jest-axe'
-import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { Auth0Provider } from '@auth0/nextjs-auth0/client'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 expect.extend(toHaveNoViolations)
@@ -29,11 +29,11 @@ describe('Layout component', () => {
 	it('should render the Navbar, children, Banner, and Footer', () => {
 		const { getByTestId } = render(
 			<Provider store={store}>
-				<UserProvider>
+				<Auth0Provider>
 					<Layout>
 						<div data-testid='child'>Child Component</div>
 					</Layout>
-				</UserProvider>
+				</Auth0Provider>
 			</Provider>,
 		)
 
@@ -42,11 +42,11 @@ describe('Layout component', () => {
 	})
 	it('Should not have a11y violation', async () => {
 		const { container } = render(
-			<UserProvider>
+			<Auth0Provider>
 				<Layout>
 					<div data-testid='child'>Child Component</div>
 				</Layout>
-			</UserProvider>,
+			</Auth0Provider>,
 		)
 		const result = await axe(container)
 		expect(result).toHaveNoViolations()

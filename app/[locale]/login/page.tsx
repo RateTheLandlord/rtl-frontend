@@ -1,5 +1,6 @@
-import { withPageAuthRequired } from '@auth0/nextjs-auth0'
+import { redirect } from 'next/navigation'
 import LoginScreen from '@/components/auth/LoginScreen'
+import { auth0 } from '@/lib/auth0'
 
 export default async function LoginPage({
 	params,
@@ -8,9 +9,11 @@ export default async function LoginPage({
 }) {
 	const { locale } = await params
 	const localePrefix = locale === 'en-CA' ? '' : `/${locale}`
-	const protectedPage = withPageAuthRequired(async () => <LoginScreen />, {
-		returnTo: `${localePrefix}/login`,
-	})
+	const session = await auth0.getSession()
+	if (!session) {
+		const returnTo = `${localePrefix}/login`
+		redirect(`/auth/login?returnTo=${encodeURIComponent(returnTo)}`)
+	}
 
-	return protectedPage({})
+	return <LoginScreen />
 }

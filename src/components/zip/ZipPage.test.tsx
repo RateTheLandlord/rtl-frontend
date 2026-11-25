@@ -5,7 +5,7 @@ import { render } from '@/test-utils'
 import '@testing-library/jest-dom'
 import ZipPage from './ZipPage'
 import { axe, toHaveNoViolations } from 'jest-axe'
-import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { Auth0Provider } from '@auth0/nextjs-auth0/client'
 import { IZipReviews } from '@/lib/review/types/Review'
 import ModalProvider from '../modal/ModalProvider'
 expect.extend(toHaveNoViolations)
@@ -87,7 +87,7 @@ const mockData: IZipReviews = {
 describe('ZipPage', () => {
 	it('Should not have a11y violation', async () => {
 		const { container } = render(
-			<UserProvider>
+			<Auth0Provider>
 				<ModalProvider>
 					<ZipPage
 						city='Test City'
@@ -97,7 +97,7 @@ describe('ZipPage', () => {
 						data={mockData}
 					/>
 				</ModalProvider>
-			</UserProvider>,
+			</Auth0Provider>,
 		)
 		const result = await axe(container)
 		expect(result).toHaveNoViolations()

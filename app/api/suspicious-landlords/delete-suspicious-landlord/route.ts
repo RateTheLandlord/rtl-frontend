@@ -1,14 +1,14 @@
-import { withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { auth0 } from '@/lib/auth0'
 import { deleteLandlord } from '@/lib/suspiciousLandlords/suspiciousLandlords'
 import { getAdminRouteAuth } from '@/util/routeHandlerAdmin'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export const OPTIONS = withApiAuthRequired(async (request: NextRequest) =>
+export const OPTIONS = auth0.withApiAuthRequired(async (request: NextRequest) =>
 	handleCorsPreflight(request)!,
 )
 
-export const POST = withApiAuthRequired(async (request: NextRequest) => {
+export const POST = auth0.withApiAuthRequired(async (request: NextRequest) => {
 	const { response, authorized } = await getAdminRouteAuth(request, 'rtl-001')
 	if (!authorized) {
 		return withCors(

@@ -3,7 +3,7 @@
  */
 import { render, screen } from '@/test-utils'
 import LandlordPage from './LandlordPage'
-import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { Auth0Provider } from '@auth0/nextjs-auth0/client'
 import { axe } from 'jest-axe'
 import { ILandlordReviews } from '@/lib/review/types/Queries'
 import ModalProvider from '../modal/ModalProvider'
@@ -49,11 +49,11 @@ describe('LandlordPage', () => {
 
 	beforeEach(() => {
 		render(
-			<UserProvider>
+			<Auth0Provider>
 				<ModalProvider>
 					<LandlordPage landlord={landlord} data={data} />
 				</ModalProvider>
-			</UserProvider>,
+			</Auth0Provider>,
 		)
 	})
 
@@ -63,11 +63,11 @@ describe('LandlordPage', () => {
 	})
 	it('Should not have a11y violation', async () => {
 		const { container } = render(
-			<UserProvider>
+			<Auth0Provider>
 				<ModalProvider>
 					<LandlordPage landlord={landlord} data={data} />
 				</ModalProvider>
-			</UserProvider>,
+			</Auth0Provider>,
 		)
 		const result = await axe(container)
 		expect(result).toHaveNoViolations()

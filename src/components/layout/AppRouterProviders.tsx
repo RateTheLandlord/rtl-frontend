@@ -1,6 +1,6 @@
 'use client'
 
-import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { Auth0Provider } from '@auth0/nextjs-auth0/client'
 import { NextIntlClientProvider, type AbstractIntlMessages } from 'next-intl'
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
@@ -34,7 +34,7 @@ export default function AppRouterProviders({
 			timeZone='America/Montreal'
 		>
 			<PHProvider>
-				<UserProvider>
+				<Auth0Provider>
 					<Provider store={store}>
 						<ReCaptchaProvider reCaptchaKey={CAPTCHA_SITE_KEY} useEnterprise>
 							<ModalProvider>
@@ -64,7 +64,7 @@ export default function AppRouterProviders({
 							</ModalProvider>
 						</ReCaptchaProvider>
 					</Provider>
-				</UserProvider>
+				</Auth0Provider>
 			</PHProvider>
 		</NextIntlClientProvider>
 	)

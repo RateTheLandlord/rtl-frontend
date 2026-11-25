@@ -45,14 +45,14 @@ describe('ReviewComponent', () => {
 	// TODO Fix This
 	// it('renders review component', () => {
 	// 	render(
-	// 		<UserProvider>
+	// 		<Auth0Provider>
 	// 			<ReviewComponent
 	// 				review={review}
 	// 				handleReport={jest.fn()}
 	// 				handleDelete={jest.fn()}
 	// 				handleEdit={jest.fn()}
 	// 			/>
-	// 		</UserProvider>,
+	// 		</Auth0Provider>,
 	// 	)
 
 	// 	expect(screen.getByText('John Doe')).toBeInTheDocument()
