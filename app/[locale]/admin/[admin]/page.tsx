@@ -1,6 +1,7 @@
-import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0'
-import type { UserProfile } from '@auth0/nextjs-auth0/client'
+import type { Auth0ProviderProps } from '@auth0/nextjs-auth0/client'
+import { redirect } from 'next/navigation'
 import AdminDashboard from '@/components/admin/AdminDashboard'
+import { auth0 } from '@/lib/auth0'
 
 export default async function AdminPage({
 	params,
@@ -10,13 +11,14 @@ export default async function AdminPage({
 	const { locale, admin } = await params
 	const localePrefix = locale === 'en-CA' ? '' : `/${locale}`
 	const returnTo = `${localePrefix}/admin/${encodeURIComponent(admin)}`
-	const session = await getSession()
-	const protectedPage = withPageAuthRequired(
-		async () => (
-			<AdminDashboard initialUser={session?.user as UserProfile | undefined} />
-		),
-		{ returnTo },
-	)
+	const session = await auth0.getSession()
+	if (!session) {
+		redirect(`/auth/login?returnTo=${encodeURIComponent(returnTo)}`)
+	}
 
-	return protectedPage({})
+	return (
+		<AdminDashboard
+			initialUser={session.user as Auth0ProviderProps['user']}
+		/>
+	)
 }

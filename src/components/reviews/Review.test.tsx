@@ -7,7 +7,7 @@ import Review from './Review'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
-import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { Auth0Provider } from '@auth0/nextjs-auth0/client'
 import ModalProvider from '../modal/ModalProvider'
 expect.extend(toHaveNoViolations)
 
@@ -60,11 +60,11 @@ describe('Review Component', () => {
 	it('Should not have a11y violation', async () => {
 		const { container } = render(
 			<Provider store={store}>
-				<UserProvider>
+				<Auth0Provider>
 					<ModalProvider>
 						<Review view={undefined} setLocationOpen={jest.fn()} />
 					</ModalProvider>
-				</UserProvider>
+				</Auth0Provider>
 			</Provider>,
 		)
 		const result = await axe(container)

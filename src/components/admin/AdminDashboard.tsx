@@ -15,7 +15,10 @@ import {
 } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import TenantResources from '@/components/admin/sections/TenantResources'
-import { useUser, type UserProfile } from '@auth0/nextjs-auth0/client'
+import {
+	useUser,
+	type Auth0ProviderProps,
+} from '@auth0/nextjs-auth0/client'
 import SuspiciousLandlords from '@/components/admin/sections/SuspiciousLandlords'
 import FlaggedKeywords from '@/components/admin/sections/FlaggedKeywords'
 import RecentReviews from '@/components/admin/sections/RecentReviews'
@@ -35,7 +38,7 @@ const tabs = [
 function AdminDashboard({
 	initialUser,
 }: {
-	initialUser?: UserProfile
+	initialUser?: Auth0ProviderProps['user']
 }): JSX.Element {
 	const [currentTab, setCurrentTab] = useState<ITabs>(tabs[0])
 

@@ -1,4 +1,4 @@
-import { withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { auth0 } from '@/lib/auth0'
 import { findDuplicateCandidates } from '@/lib/landlordTools/searchDuplicateLandlords'
 import { getAdminRouteAuth } from '@/util/routeHandlerAdmin'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
@@ -9,11 +9,11 @@ type Body = {
 	country_code: string
 }
 
-export const OPTIONS = withApiAuthRequired(async (request: NextRequest) =>
+export const OPTIONS = auth0.withApiAuthRequired(async (request: NextRequest) =>
 	handleCorsPreflight(request)!,
 )
 
-export const POST = withApiAuthRequired(async (request: NextRequest) => {
+export const POST = auth0.withApiAuthRequired(async (request: NextRequest) => {
 	const { response, authorized } = await getAdminRouteAuth(request)
 	if (!authorized) {
 		return withCors(
