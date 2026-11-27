@@ -15,6 +15,9 @@ export default async function AdminPage({
 	if (!session) {
 		redirect(`/auth/login?returnTo=${encodeURIComponent(returnTo)}`)
 	}
+	if (session.user.role !== 'ADMIN') {
+		redirect(localePrefix || '/')
+	}
 
 	return (
 		<AdminDashboard
