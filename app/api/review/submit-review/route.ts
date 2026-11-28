@@ -1,5 +1,6 @@
 import { verifyToken } from '@/lib/captcha/verifyToken'
 import { create } from '@/lib/review/models/reviewDataLayer'
+import { parseJsonObject } from '@/util/parseJsonObject'
 import { checkRouteRateLimit } from '@/util/routeHandlerRateLimit'
 import type { Review } from '@/util/interfaces/Interfaces'
 
@@ -43,11 +44,9 @@ export async function POST(request: Request) {
 	)
 	if (limited) return limited
 
-	const body: unknown = await request.json()
+	const body = await parseJsonObject(request)
 	if (
-		typeof body !== 'object' ||
-		body === null ||
-		Array.isArray(body) ||
+		!body ||
 		!('captchaToken' in body) ||
 		typeof body.captchaToken !== 'string' ||
 		!body.captchaToken.trim() ||

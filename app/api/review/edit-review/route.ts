@@ -1,6 +1,8 @@
 import { auth0 } from '@/lib/auth0'
 import { updateReview } from '@/lib/review/models/adminUpdateReview'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
+import { parseJsonObject } from '@/util/parseJsonObject'
+import { getAdminRouteAuth } from '@/util/routeHandlerAdmin'
 import type { Review } from '@/util/interfaces/Interfaces'
 import { NextResponse } from 'next/server'
 
@@ -26,19 +28,19 @@ export const OPTIONS = auth0.withApiAuthRequired((request: Request) =>
 export const POST = auth0.withApiAuthRequired(async (request: Request) => {
 	const authResponse = new NextResponse()
 	try {
-		const session = await auth0.getSession()
-		if (session?.user?.role !== 'ADMIN') {
+		const { response: adminResponse, authorized } = await getAdminRouteAuth()
+		if (!authorized) {
 			return withCors(
 				request,
 				NextResponse.json(
 					{ error: 'FORBIDDEN' },
-					{ status: 403, headers: authResponse.headers },
+					{ status: 403, headers: adminResponse.headers },
 				),
 			)
 		}
 
-		const body: unknown = await request.json()
-		if (!body || typeof body !== 'object' || Array.isArray(body)) {
+		const body = await parseJsonObject(request)
+		if (!body) {
 			return withCors(
 				request,
 				NextResponse.json(
@@ -48,8 +50,7 @@ export const POST = auth0.withApiAuthRequired(async (request: Request) => {
 			)
 		}
 
-		const reviewData = body as Record<string, unknown>
-		const reviewId = reviewData.id
+		const reviewId = body.id
 		if (
 			typeof reviewId !== 'number' ||
 			!Number.isSafeInteger(reviewId) ||
@@ -64,7 +65,10 @@ export const POST = auth0.withApiAuthRequired(async (request: Request) => {
 			)
 		}
 
-		const updatedReview = await updateReview(reviewId, body as Review)
+		const updatedReview = await updateReview(
+			reviewId,
+			body as unknown as Review,
+		)
 		return withCors(
 			request,
 			NextResponse.json(updatedReview, { headers: authResponse.headers }),

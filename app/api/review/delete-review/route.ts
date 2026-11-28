@@ -1,5 +1,7 @@
 import { auth0 } from '@/lib/auth0'
 import { deleteReview } from '@/lib/review/models/adminDeleteReview'
+import { parseJsonObject } from '@/util/parseJsonObject'
+import { getAdminRouteAuth } from '@/util/routeHandlerAdmin'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import { NextResponse } from 'next/server'
 
@@ -25,21 +27,20 @@ export const OPTIONS = auth0.withApiAuthRequired((request: Request) =>
 export const POST = auth0.withApiAuthRequired(async (request: Request) => {
 	const authResponse = new NextResponse()
 	try {
-		const session = await auth0.getSession()
-		if (session?.user?.role !== 'ADMIN') {
+		const { response: adminResponse, authorized } = await getAdminRouteAuth()
+		if (!authorized) {
 			return withCors(
 				request,
 				NextResponse.json(
 					{ error: 'FORBIDDEN' },
-					{ status: 403, headers: authResponse.headers },
+					{ status: 403, headers: adminResponse.headers },
 				),
 			)
 		}
 
-		const body: unknown = await request.json()
+		const body = await parseJsonObject(request)
 		if (
 			!body ||
-			typeof body !== 'object' ||
 			!('id' in body) ||
 			typeof body.id !== 'number' ||
 			!Number.isSafeInteger(body.id) ||
