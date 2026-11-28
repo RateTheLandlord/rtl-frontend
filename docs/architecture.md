@@ -1,11 +1,11 @@
 # Application architecture
 
-RateTheLandlord is a single full-stack Next.js application. The application is migrating incrementally from the Pages Router to the App Router; both route trees currently coexist. This is a routing migration, not a backend split.
+RateTheLandlord is a single full-stack Next.js application using the App Router. Pages and API route entry points live under `app/`; application and domain code lives under `src/`.
 
 ## Top-level boundaries
 
 - `app/`: Next.js App Router layouts and page entry points. Localized pages live under `app/[locale]/` and share its locale-aware layout and providers.
-- `pages/`: Remaining Next.js Pages Router entry points, including API routes and pages not yet migrated. Keep route modules focused on HTTP concerns, request validation, authentication/authorization checks, and delegating to application code.
+- `proxy.ts`: Request entry point that combines Auth0 middleware with next-intl locale routing.
 - `src/`: Application source code. Runtime application modules belong here rather than in new root-level source directories.
 - `migrations/`: Ordered database schema/data migrations. Keep these at the root so database tooling and operational workflows can find them consistently.
 - `messages/`: Translation resources consumed by the existing internationalization setup.
@@ -26,7 +26,7 @@ Keep component tests beside the component they exercise.
 
 Application and domain logic that is not itself a React component. Existing domain groupings (for example `review/`, `tenant-resource/`, `landlord-tools/`, and `suspicious-landlords/`) should remain cohesive.
 
-Database access and other server-only code must only be imported from server-side entry points. Do not import database modules, secrets, or Node-only dependencies into browser components. A later domain refactor can make server-only modules more explicit without mixing that work into this filesystem migration.
+Database access and other server-only code must only be imported from server-side entry points. Do not import database modules, secrets, or Node-only dependencies into browser components.
 
 ### `src/redux/`
 
@@ -54,11 +54,11 @@ Global styles and shared styling entry points. Component-specific styling should
 
 ## Router conventions
 
-The `app/` and root-level `pages/` directories coexist during the migration. API routes remain in `pages/api/`; do not migrate them as part of public page work. New or migrated public pages should use the App Router and the existing `app/[locale]/` route structure. Keep route modules focused on composing UI; reusable logic belongs under `src/`.
+All current pages and API routes use the App Router. Localized public pages belong under `app/[locale]/`, and API endpoints belong under `app/api/`. Keep route modules focused on composing UI or handling HTTP concerns; reusable logic belongs under `src/`.
 
 ## Scope of the source layout
 
-Application source remains under `src/`, while framework route entry points remain at the repository root. Keep the routing migration incremental: preserve public URLs and locale behavior, move one page or cohesive group at a time, and avoid mixing in domain renames, API behavior changes, or database redesign.
+Application source remains under `src/`, while framework route entry points remain under `app/`. Preserve public URLs and locale behavior when adding or changing routes.
 
 
 ## Naming conventions
@@ -80,7 +80,7 @@ Use descriptive names; avoid abbreviations unless they are established project o
 
 Do not blindly rename files or directories whose names are part of an external contract:
 
-- App Router and Pages Router files and folders define public page and API URLs. Preserve their current paths and locale behavior during migration.
+- App Router files and folders define public page and API URLs. Preserve their current paths and locale behavior when changing routes.
 - Files under `public/` are served by URL. Preserve paths referenced by HTML, CSS, metadata, sitemap/robots conventions, external integrations, or existing links.
 - Localization message filenames are namespaces consumed by the i18n setup. Rename them only alongside every namespace reference and test.
 - Database migration filenames and their numeric ordering are part of migration discovery and execution.
