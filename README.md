@@ -63,13 +63,13 @@ See [docs/posthog-events.md](docs/posthog-events.md) for the current PostHog eve
 | Maps | Mapbox GL and react-map-gl |
 | Analytics | PostHog |
 | CAPTCHA | Google reCAPTCHA |
-| Package manager | Bun |
+| Package manager | Bun 1.4.5 |
 | Unit and component testing | Jest and React Testing Library |
 | Accessibility testing | jest-axe |
 | Linting | ESLint |
 | Formatting | Prettier |
 | Git hooks | Husky |
-| Production runtime | Node.js |
+| Production runtime | Node.js 24 |
 | Containerization | Docker |
 
 ## Architecture
@@ -113,8 +113,8 @@ Route modules should stay focused and delegate reusable work to `src/`. See [doc
 For local development, you will need:
 
 - [Git](https://git-scm.com/)
-- [Bun](https://bun.sh/)
-- [Node.js](https://nodejs.org/) compatible with the installed Next.js version
+- [Bun 1.4.5](https://bun.sh/)
+- [Node.js 24](https://nodejs.org/) (see `.node-version`)
 - PostgreSQL
 - Access to the credentials for any external services required by the features you are developing
 
@@ -154,10 +154,10 @@ Never commit credentials, production secrets, or populated local environment fil
 ### 4. Install dependencies
 
 ```bash
-bun install
+bun install --frozen-lockfile
 ```
 
-Use Bun and the committed lockfile to keep dependency resolution consistent across development environments.
+Use Bun 1.4.5 and the committed lockfile to keep dependency resolution consistent across development environments. The production build and runtime use Node.js 24, matching CI and the Docker image.
 
 ### 5. Configure PostgreSQL
 
