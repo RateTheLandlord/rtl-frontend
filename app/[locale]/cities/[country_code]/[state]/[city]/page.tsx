@@ -6,6 +6,7 @@ import { getCityReviews } from '@/lib/review/city'
 import type { ICityQuery } from '@/lib/review/types/Queries'
 import type { ICityReviews } from '@/lib/review/types/Review'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
+import { createPageMetadata, type SiteLocale } from '@/lib/seo/metadata'
 
 export const revalidate = 100
 
@@ -21,27 +22,37 @@ const getValidCityData = async (params: ICityQuery) => {
 }
 
 type PageProps = {
-	params: Promise<{ country_code: string; state: string; city: string }>
+	params: Promise<{
+		locale: SiteLocale
+		country_code: string
+		state: string
+		city: string
+	}>
 }
 
 export async function generateMetadata({
 	params,
 }: PageProps): Promise<Metadata> {
-	const { country_code, state, city } = await params
+	const { country_code, state, city, locale } = await params
 	const data = await getValidCityData({ country_code, state, city })
 	const cityName = toTitleCase(city)
 	const stateName = toTitleCase(state)
 	const countryName = toTitleCase(country_code)
-	const title = `${cityName}, ${stateName}, ${countryName} Reviews | Rate The Landlord`
-	const description = `Looking to rent in ${cityName}? Read ${data.total} landlord reviews and rental experiences for ${cityName}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
-	const url = `https://ratethelandlord.org/cities/${encodeURIComponent(country_code)}/${encodeURIComponent(state)}/${encodeURIComponent(city)}`
+	const title =
+		locale === 'fr-CA'
+			? `Avis de propriétaires à ${cityName} | Rate The Landlord`
+			: `${cityName}, ${stateName}, ${countryName} Landlord Reviews | Rate The Landlord`
+	const description =
+		locale === 'fr-CA'
+			? `Consultez ${data.total} avis de locataires sur les propriétaires à ${cityName}, ${stateName}.`
+			: `Read ${data.total} tenant reviews of landlords in ${cityName}, ${stateName}, ${countryName}.`
 
-	return {
-		title: { absolute: title },
+	return createPageMetadata({
+		locale,
+		path: `/cities/${encodeURIComponent(country_code)}/${encodeURIComponent(state)}/${encodeURIComponent(city)}`,
+		title,
 		description,
-		alternates: { canonical: url },
-		openGraph: { type: 'website', url, title, description },
-	}
+	})
 }
 
 export default async function CityReviewsPage({ params }: PageProps) {
