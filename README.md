@@ -200,16 +200,10 @@ The repository includes an `.env.example` file. Use it as the starting point and
 | `NEXT_PUBLIC_MAPBOX_TOKEN` | Mapbox integration |
 | `NEXT_PUBLIC_POSTHOG_HOST` | PostHog host |
 | `NEXT_PUBLIC_POSTHOG_KEY` | PostHog project key |
-| `NEXT_PUBLIC_API_URL` | API base URL used by sitemap generation |
-| `NEXT_PUBLIC_DOMAIN_URL` | Public site URL prefix used by sitemap generation (include trailing slash) |
 | `NEXT_PUBLIC_TWITTER_HANDLE` | Twitter handle used in SEO metadata |
 | `REVIEW_PERIOD` | Review-related application configuration |
 
-Not every variable is required for every development task. `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_DOMAIN_URL` are used by the server sitemap route; `NEXT_PUBLIC_TWITTER_HANDLE` is used in SEO metadata. The other integrations can be left unset when you are not working on the features that use them. The Dockerfile accepts public build-time settings for client-side integrations.
-
-The server checks its environment when it starts. `DATABASE_URL` must be a PostgreSQL URL. In production, Auth0 settings and `CAPTCHA_SECRET_KEY` are required; in development, Auth0 settings may all be left blank, but partial Auth0 configuration is rejected. Public `NEXT_PUBLIC_` values are build-time settings and are not checked by the server startup validator.
-
-The server checks its environment when it starts. `DATABASE_URL` must be a PostgreSQL URL. In production, Auth0 settings and `CAPTCHA_SECRET_KEY` are required; in development, Auth0 settings may all be left blank, but partial Auth0 configuration is rejected. Public `NEXT_PUBLIC_` values are build-time settings and are not checked by the server startup validator.
+Not every variable is required for every development task. `NEXT_PUBLIC_TWITTER_HANDLE` is used in legacy SEO configuration. The other integrations can be left unset when you are not working on the features that use them. The sitemap reads public review records from the database at request time and uses the canonical production hostname configured in the SEO metadata helper. The Dockerfile accepts public build-time settings for client-side integrations.
 
 Variables prefixed with `NEXT_PUBLIC_` may be exposed to the browser. Do not put secrets in them.
 
