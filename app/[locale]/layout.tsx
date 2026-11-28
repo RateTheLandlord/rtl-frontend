@@ -8,8 +8,10 @@ import AppRouterProviders from '@/components/layout/AppRouterProviders'
 import { routing } from '@/i18n/routing'
 import { readLocaleFile } from '@/util/readLocalFile'
 import { auth0 } from '@/lib/auth0'
+import { SITE_URL } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = {
+	metadataBase: new URL(SITE_URL),
 	title: {
 		default: 'Rate The Landlord',
 		template: '%s | Rate The Landlord',
