@@ -7,6 +7,6 @@ exports.up = async function (DB) {
     ADD COLUMN number_user_edits numeric DEFAULT 0,
     ADD COLUMN has_user_code boolean GENERATED ALWAYS AS (
     user_code IS NOT NULL
-    ) STORED,
+    ) STORED;
     `
 }
