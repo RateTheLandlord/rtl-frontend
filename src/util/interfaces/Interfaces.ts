@@ -52,9 +52,6 @@ export interface UserReview {
 	admin_edited: boolean
 	rent?: number | null
 	moderation_reason: string | null
-	moderator: Array<string> | null
-	delete_reason: string | null
-	deleted_by: Array<string> | null
 	has_user_code?: boolean
 	suspicious_reason: string | null
 }
