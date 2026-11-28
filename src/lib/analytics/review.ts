@@ -32,76 +32,34 @@ export async function getTrailingReviews(
     ${zip.toUpperCase()}`
 		: sql``
 
-	const today = new Date()
-	const ninetyDays = today.setDate(today.getDate() - 90)
-	const oneHundredEightyDays = today.setDate(today.getDate() - 180)
-	const threeHunderedSixtyFiveDays = today.setDate(today.getDate() - 365)
+	type WindowStats = {
+		avg_rating: string | number | null
+		median_rent: string | number | null
+	}
 
-	const avgRatingT90 = await sql`
-	SELECT 
-		(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS combined_avg
-	FROM review
-	WHERE ${publicReviewCondition} ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-	AND date_added >= ${ninetyDays}`
+	const [last90, last180, last365] = await sql<WindowStats[]>`
+		SELECT stats.avg_rating, stats.median_rent
+		FROM (VALUES (90), (180), (365)) AS windows(days)
+		CROSS JOIN LATERAL (
+			SELECT
+				(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS avg_rating,
+				percentile_cont(0.5) WITHIN GROUP (ORDER BY rent) FILTER (WHERE rent > 0) AS median_rent
+			FROM review
+			WHERE ${publicReviewCondition}
+				${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
+				AND date_added BETWEEN LOCALTIMESTAMP - windows.days * INTERVAL '1 day'
+					AND LOCALTIMESTAMP
+		) AS stats
+		ORDER BY windows.days
+	`
 
-	const avgT90 = Math.round(avgRatingT90[0].combined_avg as number)
-
-	const avgRatingT180 = await sql`
-	SELECT 
-		(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS combined_avg
-	FROM review
-	WHERE ${publicReviewCondition} ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-	AND date_added >= ${oneHundredEightyDays}`
-
-	const avgT180 = Math.round(avgRatingT180[0].combined_avg as number)
-
-	const avgRatingT365 = await sql`
-	SELECT 
-		(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS combined_avg
-	FROM review
-	WHERE ${publicReviewCondition} ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-	AND date_added >= ${threeHunderedSixtyFiveDays}`
-
-	const avgT365 = Math.round(avgRatingT365[0].combined_avg as number)
-
-	const medianRentT90 = await sql`
-	SELECT 
-		percentile_cont(0.5) WITHIN GROUP (ORDER BY rent) AS median_rent
-	FROM review
-	WHERE ${publicReviewCondition} ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-	AND date_added >= ${ninetyDays}
-	AND rent > 0`
-
-	const medianT90 = Math.round(medianRentT90[0].median_rent as number)
-
-	const medianRentT180 = await sql`
-	SELECT 
-		percentile_cont(0.5) WITHIN GROUP (ORDER BY rent) AS median_rent
-	FROM review
-	WHERE ${publicReviewCondition} ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-	AND date_added >= ${oneHundredEightyDays}
-	AND rent > 0`
-
-	const medianT180 = Math.round(medianRentT180[0].median_rent as number)
-
-	const medianRentT365 = await sql`
-	SELECT 
-		percentile_cont(0.5) WITHIN GROUP (ORDER BY rent) AS median_rent
-	FROM review
-	WHERE ${publicReviewCondition} ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
-	AND date_added >= ${threeHunderedSixtyFiveDays}
-	AND rent > 0`
-
-	const medianT365 = Math.round(medianRentT365[0].median_rent as number)
-
-	// Return AnalyticsResponse object
 	return {
-		avgRatingT90: avgT90,
-		avgRatingT180: avgT180,
-		avgRatingT365: avgT365,
-		medianRentT90: medianT90,
-		medianRentT180: medianT180,
-		medianRentT365: medianT365,
+		avgRatingT90: Math.round(Number(last90.avg_rating)),
+		avgRatingT180: Math.round(Number(last180.avg_rating)),
+		avgRatingT365: Math.round(Number(last365.avg_rating)),
+		medianRentT90: Math.round(Number(last90.median_rent)),
+		medianRentT180: Math.round(Number(last180.median_rent)),
+		medianRentT365: Math.round(Number(last365.median_rent)),
 	}
 }
 
