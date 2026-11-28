@@ -2,9 +2,9 @@ import { auth0 } from '@/lib/auth0'
 import { updateReview } from '@/lib/review/models/adminUpdateReview'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import type { Review } from '@/util/interfaces/Interfaces'
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 
-const methodNotAllowed = auth0.withApiAuthRequired((request: NextRequest) =>
+const methodNotAllowed = auth0.withApiAuthRequired((request: Request) =>
 	withCors(
 		request,
 		Response.json(
@@ -19,14 +19,14 @@ export const PUT = methodNotAllowed
 export const PATCH = methodNotAllowed
 export const DELETE = methodNotAllowed
 
-export const OPTIONS = auth0.withApiAuthRequired((request: NextRequest) =>
+export const OPTIONS = auth0.withApiAuthRequired((request: Request) =>
 	handleCorsPreflight(request)!,
 )
 
-export const POST = auth0.withApiAuthRequired(async (request: NextRequest) => {
+export const POST = auth0.withApiAuthRequired(async (request: Request) => {
 	const authResponse = new NextResponse()
 	try {
-		const session = await auth0.getSession(request)
+		const session = await auth0.getSession()
 		if (session?.user?.role !== 'ADMIN') {
 			return withCors(
 				request,

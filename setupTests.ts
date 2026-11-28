@@ -16,7 +16,7 @@ global.ResizeObserver = MockResizeObserver
 
 jest.mock('@auth0/nextjs-auth0/client', () => ({
 	__esModule: true,
-	UserProvider: ({ children }: { children: React.ReactNode }) =>
+	Auth0Provider: ({ children }: { children: React.ReactNode }) =>
 		React.createElement(React.Fragment, null, children),
 	useUser: () => ({
 		user: null,

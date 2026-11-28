@@ -7,7 +7,7 @@ import { render } from '@testing-library/react'
 import { ReactNode } from 'react'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
-import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { Auth0Provider } from '@auth0/nextjs-auth0/client'
 import { NextIntlClientProvider } from 'next-intl'
 
 const locale = 'en-CA'
@@ -61,9 +61,9 @@ const AllProviders = ({ children, messages }: AllProvidersProps) => {
 			locale={locale}
 			messages={{ ...defaultMessages, ...messages }}
 		>
-			<UserProvider>
+			<Auth0Provider>
 				<Provider store={store}>{children}</Provider>
-			</UserProvider>
+			</Auth0Provider>
 		</NextIntlClientProvider>
 	)
 }

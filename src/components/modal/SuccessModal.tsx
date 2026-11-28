@@ -7,7 +7,7 @@ import {
 	PinterestShareButton,
 	RedditShareButton,
 	TumblrShareButton,
-	TwitterShareButton,
+	XShareButton,
 	XIcon,
 } from 'react-share'
 import Button from '../ui/Button'
@@ -89,7 +89,7 @@ function SuccessModal({ onClose }: { onClose: () => void }) {
 							>
 								<TumblrIcon size='40' />
 							</TumblrShareButton>
-							<TwitterShareButton
+							<XShareButton
 								onMouseDown={() =>
 									posthog.capture('user_clicked_share', {
 										share: 'twitter',
@@ -98,7 +98,7 @@ function SuccessModal({ onClose }: { onClose: () => void }) {
 								url='https://ratethelandlord.org'
 							>
 								<XIcon size='40' />
-							</TwitterShareButton>
+							</XShareButton>
 							<BlueskyShareButton
 								onMouseDown={() =>
 									posthog.capture('user_clicked_share', {

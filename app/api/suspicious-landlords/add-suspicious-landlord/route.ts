@@ -3,14 +3,14 @@ import { create } from '@/lib/suspiciousLandlords/suspiciousLandlords'
 import type { SuspiciousLandlord } from '@/util/interfaces/Interfaces'
 import { getAdminRouteAuth } from '@/util/routeHandlerAdmin'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 
-export const OPTIONS = auth0.withApiAuthRequired((request: NextRequest) =>
+export const OPTIONS = auth0.withApiAuthRequired((request: Request) =>
 	handleCorsPreflight(request)!,
 )
 
-export const POST = auth0.withApiAuthRequired(async (request: NextRequest) => {
-	const { response, authorized } = await getAdminRouteAuth(request, 'rtl-001')
+export const POST = auth0.withApiAuthRequired(async (request: Request) => {
+	const { response, authorized } = await getAdminRouteAuth('rtl-001')
 	if (!authorized) {
 		return withCors(
 			request,

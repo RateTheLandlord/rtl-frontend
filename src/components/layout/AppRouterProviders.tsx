@@ -1,6 +1,9 @@
 'use client'
 
-import { Auth0Provider } from '@auth0/nextjs-auth0/client'
+import {
+	Auth0Provider,
+	type Auth0ProviderProps,
+} from '@auth0/nextjs-auth0/client'
 import { NextIntlClientProvider, type AbstractIntlMessages } from 'next-intl'
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
@@ -18,6 +21,7 @@ type Props = {
 	children: ReactNode
 	locale: string
 	messages: AbstractIntlMessages
+	initialUser?: Auth0ProviderProps['user']
 }
 
 const CAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string
@@ -26,6 +30,7 @@ export default function AppRouterProviders({
 	children,
 	locale,
 	messages,
+	initialUser,
 }: Props) {
 	return (
 		<NextIntlClientProvider
@@ -34,7 +39,7 @@ export default function AppRouterProviders({
 			timeZone='America/Montreal'
 		>
 			<PHProvider>
-				<Auth0Provider>
+				<Auth0Provider user={initialUser}>
 					<Provider store={store}>
 						<ReCaptchaProvider reCaptchaKey={CAPTCHA_SITE_KEY} useEnterprise>
 							<ModalProvider>

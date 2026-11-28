@@ -186,10 +186,10 @@ The repository includes an `.env.example` file. Use it as the starting point and
 | `ORIGIN_URL` | Server-side application origin |
 | `NEXT_PUBLIC_ORIGIN_URL` | Public application origin |
 | `DATABASE_URL` | PostgreSQL connection string |
-| `AUTH0_ISSUER_BASE_URL` | Auth0 tenant URL |
+| `AUTH0_DOMAIN` | Auth0 tenant domain |
 | `AUTH0_CLIENT_ID` | Auth0 application client ID |
 | `AUTH0_CLIENT_SECRET` | Auth0 application client secret |
-| `AUTH0_BASE_URL` | Base URL used by Auth0 |
+| `APP_BASE_URL` | Application base URL used by Auth0 |
 | `AUTH0_SECRET` | Secret used for Auth0 session handling |
 | `NEXT_PUBLIC_CAPTCHA_SITE_KEY` | Public reCAPTCHA site key |
 | `CAPTCHA_SECRET_KEY` | Server-side reCAPTCHA secret |
@@ -203,6 +203,8 @@ The repository includes an `.env.example` file. Use it as the starting point and
 Not every variable is required for every development task. Check the relevant implementation and `.env.example` before adding new configuration.
 
 Variables prefixed with `NEXT_PUBLIC_` may be exposed to the browser. Do not put secrets in them.
+
+Admin access is based on role claims stored in the Auth0 application session at login. Changing a user's Auth0 role does not update an existing session; the user must sign in again, or the session must expire. The Auth0 SDK's default absolute session lifetime is three days. Immediate role revocation would require checking an independently updated server-side authorization source.
 
 ## Database
 

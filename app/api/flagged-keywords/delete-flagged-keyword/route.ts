@@ -1,15 +1,15 @@
 import { auth0 } from '@/lib/auth0'
 import { deleteKeyword } from '@/lib/flaggedKeywords/flaggedKeywords'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 
-export const OPTIONS = auth0.withApiAuthRequired((request: NextRequest) =>
+export const OPTIONS = auth0.withApiAuthRequired((request: Request) =>
 	handleCorsPreflight(request)!,
 )
 
-export const POST = auth0.withApiAuthRequired(async (request: NextRequest) => {
+export const POST = auth0.withApiAuthRequired(async (request: Request) => {
 	const authResponse = new NextResponse()
-	const session = await auth0.getSession(request)
+	const session = await auth0.getSession()
 	const user = session?.user
 	if (user?.role !== 'ADMIN' || user.admin_id !== 'rtl-001') {
 		return withCors(

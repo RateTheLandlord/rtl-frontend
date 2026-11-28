@@ -1,12 +1,9 @@
 import { auth0 } from '@/lib/auth0'
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 
-export async function getAdminRouteAuth(
-	request: NextRequest,
-	requiredAdminId?: string,
-) {
+export async function getAdminRouteAuth(requiredAdminId?: string) {
 	const response = new NextResponse()
-	const session = await auth0.getSession(request)
+	const session = await auth0.getSession()
 	const user = session?.user
 	const authorized =
 		user?.role === 'ADMIN' &&

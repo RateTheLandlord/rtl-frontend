@@ -29,7 +29,7 @@ const EditReviewModal = ({
 	const [postal, setPostal] = useState<string>(selectedReview?.zip || '')
 	const [review, setReview] = useState<string>(selectedReview?.review || '')
 	const [rent, setRent] = useState<number | null>(selectedReview?.rent || null)
-	const [suspiciousReason, setSuspiciousReason] = useState<string | null>(
+	const [suspiciousReason] = useState<string | null>(
 		selectedReview?.suspicious_reason,
 	)
 	const [moderationReason, setModerationReason] = useState<string | null>(

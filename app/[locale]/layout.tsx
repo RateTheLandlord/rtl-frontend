@@ -7,6 +7,7 @@ import '@/styles/global.css'
 import AppRouterProviders from '@/components/layout/AppRouterProviders'
 import { routing } from '@/i18n/routing'
 import { readLocaleFile } from '@/util/readLocalFile'
+import { auth0 } from '@/lib/auth0'
 
 export const metadata: Metadata = {
 	title: {
@@ -48,11 +49,16 @@ export default async function LocaleLayout({
 		...readLocaleFile('resources', locale),
 		...readLocaleFile('reviews', locale),
 	} as AbstractIntlMessages
+	const session = await auth0.getSession()
 
 	return (
 		<html lang={locale}>
 			<body>
-				<AppRouterProviders locale={locale} messages={messages}>
+				<AppRouterProviders
+					locale={locale}
+					messages={messages}
+					initialUser={session?.user}
+				>
 					{children}
 				</AppRouterProviders>
 				{process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' && (
