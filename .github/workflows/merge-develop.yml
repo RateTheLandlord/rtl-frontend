@@ -1,8 +1,7 @@
-name: Develop Pull Request
+name: Pull Request
 
 on:
   pull_request:
-    branches: ['develop']
 
 permissions:
   contents: read
@@ -30,10 +29,14 @@ jobs:
         run: bun run lint:merge
 
       - name: Test
-        run: bun run test:merge
+        run: bun run test:ci
 
       - name: Type-check
         run: bun run tsc
 
       - name: Build
         run: bun run build
+        env:
+          # API routes instantiate the OpenAI client during Next.js build analysis.
+          # The build does not make API requests, so a placeholder is sufficient.
+          OPENAI_API_KEY: ci-build-placeholder

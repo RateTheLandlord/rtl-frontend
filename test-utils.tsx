@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { Auth0Provider } from '@auth0/nextjs-auth0/client'
 import { NextIntlClientProvider } from 'next-intl'
+import ModalProvider from '@/components/modal/ModalProvider'
 
 const locale = 'en-CA'
 
@@ -62,7 +63,9 @@ const AllProviders = ({ children, messages }: AllProvidersProps) => {
 			messages={{ ...defaultMessages, ...messages }}
 		>
 			<Auth0Provider>
-				<Provider store={store}>{children}</Provider>
+				<Provider store={store}>
+					<ModalProvider>{children}</ModalProvider>
+				</Provider>
 			</Auth0Provider>
 		</NextIntlClientProvider>
 	)

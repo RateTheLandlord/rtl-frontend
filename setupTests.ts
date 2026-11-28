@@ -46,3 +46,9 @@ jest.mock('next/router', () => ({
 		back: jest.fn(),
 	})),
 }))
+
+jest.mock('next/navigation', () =>
+	jest.requireActual<typeof import('next-router-mock/navigation')>(
+		'next-router-mock/navigation',
+	),
+)

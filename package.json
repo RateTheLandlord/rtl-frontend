@@ -14,6 +14,7 @@
 		"tsc": "tsc",
 		"test": "jest --watch -o",
 		"test:merge": "jest -o",
+		"test:ci": "jest --runInBand",
 		"prepare": "husky",
 		"knip": "knip --production"
 	},
