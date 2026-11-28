@@ -243,7 +243,7 @@ Run project commands through Bun.
 | `bun run start` | Start the production server |
 | `bun run lint` | Run ESLint and automatically fix supported issues |
 | `bun run lint:merge` | Run ESLint without automatically fixing files |
-| `bun run format` | Format the configured TypeScript and TSX files |
+| `bun run format` | Format TypeScript and TSX files under `app/` and `src/`, plus `proxy.ts` |
 | `bun run tsc` | Run TypeScript type checking |
 | `bun run test` | Run Jest in watch mode |
 | `bun run test:merge` | Run Jest tests related to changed files without watch mode |
