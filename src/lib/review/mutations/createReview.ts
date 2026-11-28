@@ -54,7 +54,7 @@ async function insertReview(
 	inputReview: Review,
 	filterResult: IResult,
 ): Promise<ReviewResponseStatus> {
-	const { code, hashedCode } = createUserCode()
+	const { code, hashedCode } = await createUserCode()
 	try {
 		inputReview.landlord = inputReview.landlord
 			.substring(0, 150)
