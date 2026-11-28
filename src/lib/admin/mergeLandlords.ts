@@ -1,6 +1,6 @@
 import sql from '@/lib/db'
 
-export type MergePayload = {
+type MergePayload = {
 	country: string
 	masterName: string
 	namesToMerge: string[]
