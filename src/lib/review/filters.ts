@@ -1,3 +1,4 @@
+import { publicReviewCondition } from '@/lib/review/publicReviewSql'
 import { Options } from '@/util/interfaces/Interfaces'
 import sql from '../db'
 import { FilterOptions } from './types/Review'
@@ -20,19 +21,22 @@ export async function filterOptions(
 		sql`
 			SELECT DISTINCT country_code
 			FROM review
-			WHERE country_code IS NOT NULL;
+			WHERE ${publicReviewCondition}
+				AND country_code IS NOT NULL;
 		`,
 		sql`
 			SELECT DISTINCT city
 			FROM review
-			WHERE city IS NOT NULL
+			WHERE ${publicReviewCondition}
+				AND city IS NOT NULL
 			${countryClause}
 			${stateClause};
 		`,
 		sql`
 			SELECT DISTINCT zip
 			FROM review
-			WHERE zip IS NOT NULL
+			WHERE ${publicReviewCondition}
+				AND zip IS NOT NULL
 			${countryClause}
 			${stateClause}
 			${cityClause};

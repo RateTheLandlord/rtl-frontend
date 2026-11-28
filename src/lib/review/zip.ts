@@ -1,4 +1,8 @@
-import { Review } from '@/util/interfaces/Interfaces'
+import {
+	publicReviewColumns,
+	publicReviewCondition,
+} from '@/lib/review/publicReviewSql'
+import type { UserReview } from '@/util/interfaces/Interfaces'
 import sql from '../db'
 import { IZipReviews, IZipStats } from './types/Review'
 
@@ -29,12 +33,13 @@ export async function getZipInfo(params: {
 				AVG(respect)
 			) / 5 AS combined_avg
 		FROM review
-		WHERE zip = ${zip}
+		WHERE ${publicReviewCondition}
+			AND zip = ${zip}
 			AND state = ${state}
 			AND country_code = ${countryCode}
 	`
 
-	const total = stats[0].count as number
+	const total = Number(stats[0].count)
 	const average = Math.round(stats[0].combined_avg as number)
 
 	const catAverages = {
@@ -79,10 +84,11 @@ export async function getZipReviews(params: {
 	const sortOrder =
 		sort === 'az' || sort === 'old' || sort === 'low' ? sql`ASC` : sql`DESC`
 
-	const reviews = await sql<Review[]>`
-		SELECT *
+	const reviews = await sql<UserReview[]>`
+		SELECT ${publicReviewColumns}
 		FROM review
-		WHERE state = ${state}
+		WHERE ${publicReviewCondition}
+			AND state = ${state}
 			AND country_code = ${countryCode}
 			AND zip = ${zip}
 		ORDER BY ${orderBy} ${sortOrder}
@@ -106,12 +112,13 @@ export async function getZipReviews(params: {
 				AVG(respect)
 			) / 5 AS combined_avg
 		FROM review
-		WHERE state = ${state}
+		WHERE ${publicReviewCondition}
+			AND state = ${state}
 			AND country_code = ${countryCode}
 			AND zip = ${zip}
 	`
 
-	const total = stats[0].count as number
+	const total = Number(stats[0].count)
 	const average = Math.round(stats[0].combined_avg as number)
 
 	const catAverages = {

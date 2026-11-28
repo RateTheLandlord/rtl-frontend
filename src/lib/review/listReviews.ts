@@ -1,7 +1,8 @@
-import sql from '../../db'
+import { publicReviewColumns, publicReviewCondition } from './publicReviewSql'
+import sql from '@/lib/db'
 import { UserReview } from '@/util/interfaces/Interfaces'
-import { ReviewQuery } from '../types/Queries'
-import { UserReviewsResponse } from '../types/Responses'
+import { ReviewQuery } from './types/Queries'
+import { UserReviewsResponse } from './types/Responses'
 
 export async function getReviews(
 	params: ReviewQuery,
@@ -59,12 +60,7 @@ export async function getReviews(
 			: sql``
 
 	const filters = sql`
-		WHERE
-			(
-				flagged = false
-				OR (flagged = true AND admin_approved = true)
-			)
-			AND delete_date IS NULL
+		WHERE ${publicReviewCondition}
 			${searchClause}
 			${stateClause}
 			${countryClause}
@@ -72,29 +68,8 @@ export async function getReviews(
 			${zipClause}
 	`
 
-	const reviews = (await sql`
-		SELECT
-			id,
-			landlord,
-			country_code,
-			city,
-			state,
-			zip,
-			review,
-			repair,
-			health,
-			stability,
-			privacy,
-			respect,
-			date_added,
-			admin_edited,
-			rent,
-			moderation_reason,
-			moderator,
-			delete_reason,
-			deleted_by,
-			has_user_code,
-      suspicious_reason
+	const reviews = await sql<UserReview[]>`
+		SELECT ${publicReviewColumns}
 		FROM review
 		${filters}
 		ORDER BY
@@ -102,7 +77,7 @@ export async function getReviews(
 			id DESC
 		LIMIT ${limit}
 		OFFSET ${offset}
-	`) as UserReview[]
+	`
 
 	const totalResult = await sql`
 		SELECT COUNT(*) AS count

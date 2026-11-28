@@ -1,3 +1,4 @@
+import { publicReviewCondition } from '@/lib/review/publicReviewSql'
 import sql from '../db'
 import { AnalyticsResponseInterface } from '@/util/interfaces/Interfaces'
 import { ReviewQuery, AnalyticsChartResponse, AnalyticsResponse } from './types'
@@ -40,7 +41,7 @@ export async function getTrailingReviews(
 	SELECT 
 		(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS combined_avg
 	FROM review
-	WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
+	WHERE ${publicReviewCondition} ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 	AND date_added >= ${ninetyDays}`
 
 	const avgT90 = Math.round(avgRatingT90[0].combined_avg as number)
@@ -49,7 +50,7 @@ export async function getTrailingReviews(
 	SELECT 
 		(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS combined_avg
 	FROM review
-	WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
+	WHERE ${publicReviewCondition} ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 	AND date_added >= ${oneHundredEightyDays}`
 
 	const avgT180 = Math.round(avgRatingT180[0].combined_avg as number)
@@ -58,7 +59,7 @@ export async function getTrailingReviews(
 	SELECT 
 		(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS combined_avg
 	FROM review
-	WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
+	WHERE ${publicReviewCondition} ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 	AND date_added >= ${threeHunderedSixtyFiveDays}`
 
 	const avgT365 = Math.round(avgRatingT365[0].combined_avg as number)
@@ -67,7 +68,7 @@ export async function getTrailingReviews(
 	SELECT 
 		percentile_cont(0.5) WITHIN GROUP (ORDER BY rent) AS median_rent
 	FROM review
-	WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
+	WHERE ${publicReviewCondition} ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 	AND date_added >= ${ninetyDays}
 	AND rent > 0`
 
@@ -77,7 +78,7 @@ export async function getTrailingReviews(
 	SELECT 
 		percentile_cont(0.5) WITHIN GROUP (ORDER BY rent) AS median_rent
 	FROM review
-	WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
+	WHERE ${publicReviewCondition} ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 	AND date_added >= ${oneHundredEightyDays}
 	AND rent > 0`
 
@@ -87,7 +88,7 @@ export async function getTrailingReviews(
 	SELECT 
 		percentile_cont(0.5) WITHIN GROUP (ORDER BY rent) AS median_rent
 	FROM review
-	WHERE 1=1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
+	WHERE ${publicReviewCondition} ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 	AND date_added >= ${threeHunderedSixtyFiveDays}
 	AND rent > 0`
 
@@ -150,7 +151,7 @@ export async function getChartData(
 			LEFT JOIN
 				review r ON r.date_added >= ds.review_date - INTERVAL '365 days'
 						AND r.date_added < ds.review_date + INTERVAL '1 day'
-						AND 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
+						AND ${publicReviewCondition} ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 			GROUP BY
 				ds.review_date
 			ORDER BY
@@ -178,7 +179,7 @@ export async function getChartData(
 			LEFT JOIN
 				review r ON r.date_added >= ds.review_date - INTERVAL '365 days'
 						AND r.date_added < ds.review_date + INTERVAL '1 day'
-						AND 1 = 1 ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
+						AND ${publicReviewCondition} ${searchClause} ${stateClause} ${countryClause} ${cityClause} ${zipClause}
 			GROUP BY
 				ds.review_date
 			ORDER BY

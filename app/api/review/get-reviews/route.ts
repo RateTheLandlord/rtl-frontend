@@ -1,4 +1,4 @@
-import { getReviews } from '@/lib/review/models/userGetReviews'
+import { getReviews } from '@/lib/review/listReviews'
 import type { ReviewQuery } from '@/lib/review/types/Queries'
 import { checkRouteRateLimit } from '@/util/routeHandlerRateLimit'
 

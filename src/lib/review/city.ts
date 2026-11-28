@@ -1,4 +1,8 @@
-import { Review } from '@/util/interfaces/Interfaces'
+import {
+	publicReviewColumns,
+	publicReviewCondition,
+} from '@/lib/review/publicReviewSql'
+import type { UserReview } from '@/util/interfaces/Interfaces'
 import sql from '../db'
 import { ICityReviews } from './types/Review'
 import { ICityQuery } from './types/Queries'
@@ -27,10 +31,11 @@ export async function getCityReviews(
 	const sortOrder =
 		sort === 'az' || sort === 'old' || sort === 'low' ? sql`ASC` : sql`DESC`
 
-	const reviews = await sql<Review[]>`
-		SELECT *
+	const reviews = await sql<UserReview[]>`
+		SELECT ${publicReviewColumns}
 		FROM review
-		WHERE city = ${city}
+		WHERE ${publicReviewCondition}
+			AND city = ${city}
 			AND state = ${state}
 			AND country_code = ${countryCode}
 		ORDER BY ${orderBy} ${sortOrder}
@@ -54,7 +59,8 @@ export async function getCityReviews(
 				AVG(respect)
 			) / 5 AS combined_avg
 		FROM review
-		WHERE city = ${city}
+		WHERE ${publicReviewCondition}
+			AND city = ${city}
 			AND state = ${state}
 			AND country_code = ${countryCode}
 	`
@@ -62,14 +68,15 @@ export async function getCityReviews(
 	const zips = await sql`
 		SELECT DISTINCT zip
 		FROM review
-		WHERE city = ${city}
+		WHERE ${publicReviewCondition}
+			AND city = ${city}
 			AND state = ${state}
 			AND country_code = ${countryCode}
 	`
 
 	const zipList = zips.map(({ zip }) => zip as string)
 
-	const total = stats[0].count as number
+	const total = Number(stats[0].count)
 	const average = Math.round(stats[0].combined_avg as number)
 
 	const catAverages = {

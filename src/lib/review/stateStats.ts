@@ -1,3 +1,4 @@
+import { publicReviewCondition } from '@/lib/review/publicReviewSql'
 import sql from '../db'
 
 export interface IStateStats {
@@ -35,11 +36,12 @@ export const getStateStats = async (params: {
 				AVG(respect)
 			) / 5 AS combined_avg
 		FROM review
-		WHERE state = ${state}
+		WHERE ${publicReviewCondition}
+			AND state = ${state}
 			AND country_code = ${country}
 	`
 
-	const total = stats[0].count as number
+	const total = Number(stats[0].count)
 	const average = Math.round(stats[0].combined_avg as number)
 
 	const catAverages = {
@@ -81,7 +83,8 @@ export const getTopCitiesStats = async (params: {
 				AVG(respect)
 			) / 5 AS combined_avg
 		FROM review
-		WHERE state = ${state}
+		WHERE ${publicReviewCondition}
+			AND state = ${state}
 			AND country_code = ${country}
 		GROUP BY city
 		ORDER BY COUNT(*) DESC
@@ -90,7 +93,7 @@ export const getTopCitiesStats = async (params: {
 
 	return cities.map((row) => ({
 		city: row.city as string,
-		total: row.count as number,
+		total: Number(row.count),
 		average: Math.round(row.combined_avg as number),
 	}))
 }

@@ -1,4 +1,8 @@
-import { Review } from '@/util/interfaces/Interfaces'
+import {
+	publicReviewColumns,
+	publicReviewCondition,
+} from '@/lib/review/publicReviewSql'
+import type { Review, UserReview } from '@/util/interfaces/Interfaces'
 import sql from '../db'
 import { ILandlordReviews } from './types/Queries'
 import { OtherLandlord } from './types/Review'
@@ -11,15 +15,11 @@ export async function getLandlordReviews(
 
 	const normalizedLandlord = landlord.toLocaleUpperCase()
 
-	const reviews = await sql<Review[]>`
-		SELECT *
+	const reviews = await sql<UserReview[]>`
+		SELECT ${publicReviewColumns}
 		FROM review
 		WHERE landlord = ${normalizedLandlord}
-			AND (
-				flagged = false
-				OR (flagged = true AND admin_approved = true)
-			)
-			AND delete_date IS NULL
+			AND ${publicReviewCondition}
 		ORDER BY date_added DESC
 	`
 
@@ -40,11 +40,7 @@ export async function getLandlordReviews(
 			) / 5 AS combined_avg
 		FROM review
 		WHERE landlord = ${normalizedLandlord}
-			AND (
-				flagged = false
-				OR (flagged = true AND admin_approved = true)
-			)
-			AND delete_date IS NULL
+			AND ${publicReviewCondition}
 	`
 
 	const total = Number(stats[0].count)
@@ -72,17 +68,25 @@ export async function getLandlordReviews(
 export async function getOtherLandlords(
 	landlord: string,
 ): Promise<OtherLandlord[]> {
-	const topCity = await sql`
+	const [topLocation] = await sql<
+		{ city: string; state: string; country_code: string }[]
+	>`
 		SELECT
 		city,
 		COUNT(*) as count,
 		MAX(date_added)
 		FROM review 
 		WHERE landlord = ${landlord.toLocaleUpperCase()}
-		GROUP BY city
+			AND ${publicReviewCondition}
+			AND city IS NOT NULL
+			AND state IS NOT NULL
+			AND country_code IS NOT NULL
+		GROUP BY city, state, country_code
 		ORDER BY COUNT(*) DESC, MAX(date_added) DESC
 		LIMIT 1;
 		`
+
+	if (!topLocation) return []
 
 	const otherLandlords = await sql<OtherLandlord[]>`
 		SELECT
@@ -90,14 +94,17 @@ export async function getOtherLandlords(
 			(AVG(repair) + AVG(health) + AVG(stability) + AVG(privacy) + AVG(respect)) / 5 AS avgrating,
 			COUNT(*) as ReviewCount
 		FROM review
-		WHERE city = ${topCity[0].city as string}
+		WHERE city = ${topLocation.city}
+			AND state = ${topLocation.state}
+			AND country_code = ${topLocation.country_code}
+			AND ${publicReviewCondition}
 		AND landlord != ${landlord.toLocaleUpperCase()}
 		GROUP BY landlord
 		ORDER BY RANDOM()
 		LIMIT 10;
 		`
 	const result = otherLandlords.map((landlord) => {
-		return { ...landlord, topCity: topCity[0].city as string }
+		return { ...landlord, topCity: topLocation.city }
 	})
 	return result
 }
@@ -115,11 +122,7 @@ export async function getLandlordSuggestions(
 	const suggestions = await sql<LandlordSuggestion[]>`
     SELECT DISTINCT landlord, state, country_code FROM review WHERE landlord LIKE ${
 			'%' + landlord.toLocaleUpperCase().trim() + '%'
-		} AND (
-			flagged = false
-			OR (flagged = true AND admin_approved = true)
-		)
-		AND delete_date IS NULL
+		} AND ${publicReviewCondition}
      ORDER BY landlord ASC
       LIMIT 10
     `
@@ -134,7 +137,8 @@ export async function getLandlordSuggestions(
 }
 
 export async function getLandlords(): Promise<string[]> {
-	const landlords = await sql`SELECT DISTINCT landlord FROM review;`
+	const landlords =
+		await sql`SELECT DISTINCT landlord FROM review WHERE ${publicReviewCondition};`
 	return landlords.map(({ landlord }) => landlord as string)
 }
 
