@@ -1,4 +1,4 @@
-import { userDeleteReview } from '@/lib/review/models/userDeleteReviewLayer'
+import { userDeleteReview } from '@/lib/review/mutations/userDeleteReview'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import { checkRouteRateLimit } from '@/util/routeHandlerRateLimit'
 

@@ -1,4 +1,4 @@
-import { userUpdateReview } from '@/lib/review/models/userUpdateReviewLayer'
+import { userUpdateReview } from '@/lib/review/mutations/userUpdateReview'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import { checkRouteRateLimit } from '@/util/routeHandlerRateLimit'
 import type { UserUpdatedReview } from '@/util/interfaces/Interfaces'

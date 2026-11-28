@@ -1,5 +1,5 @@
 import { auth0 } from '@/lib/auth0'
-import { updateReview } from '@/lib/review/models/adminUpdateReview'
+import { updateReview } from '@/lib/review/mutations/adminUpdateReview'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import { parseJsonObject } from '@/util/parseJsonObject'
 import { getAdminRouteAuth } from '@/util/routeHandlerAdmin'

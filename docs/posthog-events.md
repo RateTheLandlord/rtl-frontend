@@ -20,8 +20,8 @@ This inventory reflects explicit `posthog.capture(...)` calls in application sou
 | `create_review_submission_succeeded` | `landlord`, `country`, `state`, `city` | [`ReviewForm.tsx`](../src/components/createReview/ReviewForm.tsx:220) |
 | `spam_review_detected` | `method`, `landlord`, `state`, `country`, `city` | [`ReviewForm.tsx`](../src/components/createReview/ReviewForm.tsx:67) |
 | `spam_modal_viewed` | `landlord` | [`SpamReviewModal.tsx`](../src/components/modal/SpamReviewModal.tsx:19) |
-| `review_spam_detectect_BE` | None | [`reviewDataLayer.ts`](../src/lib/review/models/reviewDataLayer.ts:35). Event name is spelled this way in the source. |
-| `review_created_BE` | `ai_flagged` (boolean) | [`reviewDataLayer.ts`](../src/lib/review/models/reviewDataLayer.ts:111) |
+| `review_spam_detectect_BE` | None | [`createReview.ts`](../src/lib/review/mutations/createReview.ts:30). Event name is spelled this way in the source. |
+| `review_created_BE` | `ai_flagged` (boolean) | [`createReview.ts`](../src/lib/review/mutations/createReview.ts:101) |
 
 ### Review browsing, filters, and map
 

@@ -1,5 +1,5 @@
 import { auth0 } from '@/lib/auth0'
-import { getRecentReviews } from '@/lib/review/reviewTextMatch'
+import { getRecentReviews } from '@/lib/review/moderation/recentReviews'
 import { getAdminRouteAuth } from '@/util/routeHandlerAdmin'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import { NextResponse } from 'next/server'
