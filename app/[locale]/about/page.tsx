@@ -6,21 +6,26 @@ import Moderation from '@/components/about/Moderation'
 import Privacy from '@/components/about/Privacy'
 import Revenue from '@/components/about/Revenue'
 import Poster from '@/components/poster/Poster'
+import { createPageMetadata, type SiteLocale } from '@/lib/seo/metadata'
 
-const title = 'About | Rate The Landlord'
-const description =
-	'Share information with tenants like you. We are a community platform that elevates tenant voices to promote landlord accountability.'
-
-export const metadata: Metadata = {
-	title,
-	description,
-	alternates: { canonical: 'https://ratethelandlord.org/about' },
-	openGraph: {
-		type: 'website',
-		url: 'https://ratethelandlord.org/about',
-		title,
-		description,
-	},
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ locale: SiteLocale }>
+}): Promise<Metadata> {
+	const { locale } = await params
+	return createPageMetadata({
+		locale,
+		path: '/about',
+		title:
+			locale === 'fr-CA'
+				? 'À propos | Rate The Landlord'
+				: 'About | Rate The Landlord',
+		description:
+			locale === 'fr-CA'
+				? 'Découvrez la mission, les pratiques de modération, la confidentialité et le financement de Rate The Landlord.'
+				: 'Learn about Rate The Landlord’s mission, moderation practices, privacy commitments, and funding.',
+	})
 }
 
 export default function AboutPage() {
