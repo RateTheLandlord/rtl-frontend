@@ -1,77 +1,119 @@
 import OpenAI from 'openai'
 import { getFlaggedKeywords } from '@/lib/flaggedKeywords/flaggedKeywords'
-import { Review, UserUpdatedReview } from '@/util/interfaces/Interfaces'
+import type { Review } from '@/util/interfaces/Interfaces'
+import { MODERATION_PROMPT } from './moderationPrompt'
 
 export interface IResult {
 	flagged: boolean
 	flagged_reason: string
 }
 
-const getSystemMessage = async () => {
-	const { keywords } = await getFlaggedKeywords()
-	const SYSTEM_MESSAGE = `
-	You are a review moderator for a website that allows tenants to rate their landlord. This is the moderation policy:
-	
-	Tenants visit Rate The Landlord to find information about prospective landlords based on reviews from their previous tenants. We will carefully moderate the submitted reviews to ensure they are relevant, appropriate, and respect the privacy of both parties.
+const categoryReasons = {
+	allowed: '',
+	private_information: 'Potentially identifying personal information',
+	abusive_content: 'Potentially abusive or inappropriate content',
+	prohibited_allegation: 'Potentially prohibited allegation or diagnosis',
+	off_topic: 'Content may be unrelated to the rental experience',
+	prohibited_link: 'External link',
+	misleading_landlord_name: 'Landlord name may impersonate Rate The Landlord',
+	flagged_keyword: 'Match against the moderation keyword list',
+	manual_review: 'Submission needs a human moderation decision',
+} as const
 
-	We reserve the right to remove or redact reviews that contain inappropriate language, personal threats, hate speech, discriminatory or lewd content.
+type Category = keyof typeof categoryReasons
 
-	We have a zero-tolerance policy for allegations of criminal behavior, abusive conduct, or medical or psychological diagnoses, especially when unrelated to property management. This includes but is not limited to accusations of theft, assault, harassment, or mental illness.
+const manualReview: IResult = {
+	flagged: true,
+	flagged_reason: 'AI moderation did not complete. Needs human review.',
+}
 
-	Reviews must focus solely on issues relevant to the provided categories (e.g., Health & Safety, Repairs, etc.). Content that falls outside these boundaries may be removed or edited at our discretion
+function parseCategory(content: string): Category | undefined {
+	const result: unknown = JSON.parse(content)
+	if (
+		typeof result !== 'object' ||
+		result === null ||
+		!('category' in result)
+	) {
+		return undefined
+	}
 
-	At Rate The Landlord, privacy is important. A landlord's name is used in reviews because they operate a business under that name. However, we do not permit the posting of addresses, phone numbers, or any personal information related to the landlord or other parties involved.
+	const { category } = result
+	if (
+		typeof category !== 'string' ||
+		!Object.hasOwn(categoryReasons, category)
+	) {
+		return undefined
+	}
 
-	Any reviews found in violation of this policy will be amended or removed at our discretion. We remain neutral and will not engage in factual disputes regarding the content of the reviews
-
-	We also do not allow the posting of ANY links to outside websites. We also do not allow the the Landlord name to be anything similar to our sites name, ratethelandlord.org.
-	
-	Additionally, if the review contains any of the following keywords, it is also against the moderation policy: ${keywords
-		.map((keyword) => keyword.keyword)
-		.join(', ')}
-	
-	Here's how this will work:
-	- I will provide you with a single review, which may have multiple paragraphs, and may or may not contain content that is not allowed.
-	- You will reply ONLY with TRUE and a short 10 word reason without punctuation if the review violates the policies or FALSE if the review does not violate the policies
-	
-	
-	Here is the review you need to check (reminder, you can only reply with TRUE with a short 10 word reason without punctuation or FALSE, no additional prose or commentary): 
-	
-	`
-	return SYSTEM_MESSAGE
+	return category as Category
 }
 
 let openai: OpenAI | undefined
 
-export const filterReviewWithAI = async (
-	review: Review | UserUpdatedReview,
-): Promise<IResult> => {
+export async function filterReviewWithAI(
+	review: Pick<Review, 'landlord' | 'review'>,
+): Promise<IResult> {
 	try {
 		const client = (openai ??= new OpenAI({
 			apiKey: process.env.OPENAI_API_KEY,
 		}))
-		const systemMessage = await getSystemMessage()
+		const { keywords } = await getFlaggedKeywords()
+		const flaggedKeywords = keywords
+			.map(({ keyword }) => keyword.trim())
+			.filter(Boolean)
+
 		const completion = await client.chat.completions.create({
 			model: 'gpt-4o',
 			messages: [
-				{ role: 'system', content: systemMessage },
-				{ role: 'user', content: `${review.landlord} ${review.review}` },
+				{ role: 'system', content: MODERATION_PROMPT },
+				{
+					role: 'system',
+					content: JSON.stringify({ flaggedKeywords }),
+				},
+				{
+					role: 'user',
+					content: JSON.stringify({
+						landlordName: review.landlord,
+						review: review.review,
+					}),
+				},
 			],
+			response_format: {
+				type: 'json_schema',
+				json_schema: {
+					name: 'review_moderation',
+					strict: true,
+					schema: {
+						type: 'object',
+						properties: {
+							category: { type: 'string', enum: Object.keys(categoryReasons) },
+						},
+						required: ['category'],
+						additionalProperties: false,
+					},
+				},
+			},
 		})
 
-		const result = completion.choices[0].message.content ?? ''
-
-		if (result.includes('TRUE')) {
-			return {
-				flagged: true,
-				flagged_reason: `AI FLAGGED REVIEW: ${result.split('TRUE')[1].trim()}`,
-			}
-		} else {
-			return { flagged: false, flagged_reason: '' }
+		const decision = completion.choices[0]
+		if (
+			decision?.finish_reason !== 'stop' ||
+			decision.message.refusal ||
+			!decision.message.content
+		) {
+			return manualReview
 		}
-	} catch (error) {
-		// Logging
-		console.error('Error during AI checking:', error)
-		return { flagged: true, flagged_reason: 'ERROR IN AI CHECKING' }
+
+		const category = parseCategory(decision.message.content)
+		if (!category) return manualReview
+		if (category === 'allowed') return { flagged: false, flagged_reason: '' }
+
+		return {
+			flagged: true,
+			flagged_reason: `AI FLAGGED REVIEW: ${categoryReasons[category]}`,
+		}
+	} catch {
+		console.error('AI review moderation failed')
+		return manualReview
 	}
 }
