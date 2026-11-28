@@ -2,7 +2,7 @@ name: Develop Pull Request
 
 on:
   pull_request:
-    branches: ['develop']
+    branches: ['develop', 'version-3']
 
 permissions:
   contents: read
@@ -30,7 +30,7 @@ jobs:
         run: bun run lint:merge
 
       - name: Test
-        run: bun run test:merge
+        run: bun run test:ci
 
       - name: Type-check
         run: bun run tsc
