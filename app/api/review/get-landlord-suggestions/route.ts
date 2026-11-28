@@ -6,7 +6,7 @@ export const removeSpecialChars = (input: string) => {
 	return input.replace(specialCharsRegex, '')
 }
 
-export async function OPTIONS(request: Request) {
+export function OPTIONS(request: Request) {
 	return handleCorsPreflight(request)!
 }
 

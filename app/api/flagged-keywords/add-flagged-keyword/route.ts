@@ -4,7 +4,7 @@ import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import type { Keywords } from '@/util/interfaces/Interfaces'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export const OPTIONS = auth0.withApiAuthRequired(async (request: NextRequest) =>
+export const OPTIONS = auth0.withApiAuthRequired((request: NextRequest) =>
 	handleCorsPreflight(request)!,
 )
 

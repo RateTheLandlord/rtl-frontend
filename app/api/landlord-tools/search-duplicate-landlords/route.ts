@@ -9,7 +9,7 @@ type Body = {
 	country_code: string
 }
 
-export const OPTIONS = auth0.withApiAuthRequired(async (request: NextRequest) =>
+export const OPTIONS = auth0.withApiAuthRequired((request: NextRequest) =>
 	handleCorsPreflight(request)!,
 )
 
@@ -27,5 +27,8 @@ export const POST = auth0.withApiAuthRequired(async (request: NextRequest) => {
 
 	const { name, country_code } = (await request.json()) as Body
 	const result = await findDuplicateCandidates(name, country_code)
-	return withCors(request, NextResponse.json(result, { headers: response.headers }))
+	return withCors(
+		request,
+		NextResponse.json(result, { headers: response.headers }),
+	)
 })

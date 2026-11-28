@@ -48,7 +48,7 @@ const isValidReview = (value: unknown): value is UserUpdatedReview => {
 	)
 }
 
-export async function OPTIONS(request: Request) {
+export function OPTIONS(request: Request) {
 	const limited = checkRouteRateLimit(request)
 	if (limited) return limited
 	return handleCorsPreflight(request)!

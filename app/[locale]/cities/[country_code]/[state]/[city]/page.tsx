@@ -15,11 +15,7 @@ const getCityData = cache(
 )
 
 const getValidCityData = async (params: ICityQuery) => {
-	const data = await getCityData(
-		params.country_code,
-		params.state,
-		params.city,
-	)
+	const data = await getCityData(params.country_code, params.state, params.city)
 	if (!data?.reviews?.length) notFound()
 	return data
 }

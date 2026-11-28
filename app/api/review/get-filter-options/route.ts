@@ -5,7 +5,11 @@ export async function POST(request: Request) {
 	const limited = checkRouteRateLimit(request)
 	if (limited) return limited
 
-	const { country = '', state = '', city = '' } = (await request.json()) as {
+	const {
+		country = '',
+		state = '',
+		city = '',
+	} = (await request.json()) as {
 		country?: string
 		state?: string
 		city?: string
@@ -14,7 +18,7 @@ export async function POST(request: Request) {
 	return Response.json(options)
 }
 
-export async function GET() {
+export function GET() {
 	return Response.json(
 		{ message: 'Method not allowed' },
 		{ status: 405, headers: { Allow: 'POST' } },

@@ -1,4 +1,3 @@
-import type { Auth0ProviderProps } from '@auth0/nextjs-auth0/client'
 import { redirect } from 'next/navigation'
 import AdminDashboard from '@/components/admin/AdminDashboard'
 import { auth0 } from '@/lib/auth0'
@@ -19,9 +18,5 @@ export default async function AdminPage({
 		redirect(localePrefix || '/')
 	}
 
-	return (
-		<AdminDashboard
-			initialUser={session.user as Auth0ProviderProps['user']}
-		/>
-	)
+	return <AdminDashboard initialUser={session.user} />
 }

@@ -4,7 +4,7 @@ import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import type { Review } from '@/util/interfaces/Interfaces'
 import { NextResponse, type NextRequest } from 'next/server'
 
-const methodNotAllowed = auth0.withApiAuthRequired(async (request: NextRequest) =>
+const methodNotAllowed = auth0.withApiAuthRequired((request: NextRequest) =>
 	withCors(
 		request,
 		Response.json(
@@ -19,7 +19,7 @@ export const PUT = methodNotAllowed
 export const PATCH = methodNotAllowed
 export const DELETE = methodNotAllowed
 
-export const OPTIONS = auth0.withApiAuthRequired(async (request: NextRequest) =>
+export const OPTIONS = auth0.withApiAuthRequired((request: NextRequest) =>
 	handleCorsPreflight(request)!,
 )
 
@@ -37,13 +37,23 @@ export const POST = auth0.withApiAuthRequired(async (request: NextRequest) => {
 			)
 		}
 
-		const body: Partial<Review> | null = await request.json()
+		const body: unknown = await request.json()
+		if (!body || typeof body !== 'object' || Array.isArray(body)) {
+			return withCors(
+				request,
+				NextResponse.json(
+					{ error: 'INVALID_REQUEST_BODY' },
+					{ status: 400, headers: authResponse.headers },
+				),
+			)
+		}
+
+		const reviewData = body as Record<string, unknown>
+		const reviewId = reviewData.id
 		if (
-			!body ||
-			typeof body !== 'object' ||
-			typeof body.id !== 'number' ||
-			!Number.isSafeInteger(body.id) ||
-			body.id <= 0
+			typeof reviewId !== 'number' ||
+			!Number.isSafeInteger(reviewId) ||
+			reviewId <= 0
 		) {
 			return withCors(
 				request,
@@ -54,7 +64,7 @@ export const POST = auth0.withApiAuthRequired(async (request: NextRequest) => {
 			)
 		}
 
-		const updatedReview = await updateReview(body.id, body as Review)
+		const updatedReview = await updateReview(reviewId, body as Review)
 		return withCors(
 			request,
 			NextResponse.json(updatedReview, { headers: authResponse.headers }),

@@ -27,6 +27,6 @@ cron.schedule('0 0 * * *', async () => {
 	}
 })
 
-export async function GET() {
+export function GET() {
 	return Response.json({ message: 'Cron job API is running!' })
 }

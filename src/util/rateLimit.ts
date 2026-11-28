@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import { NextApiRequest, NextApiResponse } from 'next'
 import { isRateLimited } from '@/util/rateLimitStore'
 

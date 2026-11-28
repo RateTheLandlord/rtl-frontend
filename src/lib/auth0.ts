@@ -10,12 +10,12 @@ export const auth0 = new Auth0Client({
 	appBaseUrl: process.env.APP_BASE_URL ?? process.env.AUTH0_BASE_URL,
 	domain: process.env.AUTH0_DOMAIN ?? issuerDomain,
 	beforeSessionSaved(session) {
-		const role = roleClaimKeys
-			.map((claim) => session.user[claim])
-			.find((value) => value !== undefined)
+		const isAdmin = roleClaimKeys.some(
+			(claim) => session.user[claim] === 'ADMIN',
+		)
 
-		return role === undefined
-			? session
-			: { ...session, user: { ...session.user, role } }
+		return isAdmin
+			? { ...session, user: { ...session.user, role: 'ADMIN' } }
+			: session
 	},
 })

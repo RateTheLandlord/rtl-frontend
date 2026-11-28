@@ -3,7 +3,7 @@ import { deleteReview } from '@/lib/review/models/adminDeleteReview'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import { NextResponse, type NextRequest } from 'next/server'
 
-const methodNotAllowed = auth0.withApiAuthRequired(async (request: NextRequest) =>
+const methodNotAllowed = auth0.withApiAuthRequired((request: NextRequest) =>
 	withCors(
 		request,
 		Response.json(
@@ -18,7 +18,7 @@ export const PUT = methodNotAllowed
 export const PATCH = methodNotAllowed
 export const DELETE = methodNotAllowed
 
-export const OPTIONS = auth0.withApiAuthRequired(async (request: NextRequest) =>
+export const OPTIONS = auth0.withApiAuthRequired((request: NextRequest) =>
 	handleCorsPreflight(request)!,
 )
 

@@ -4,7 +4,7 @@ import { getAdminRouteAuth } from '@/util/routeHandlerAdmin'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export const OPTIONS = auth0.withApiAuthRequired(async (request: NextRequest) =>
+export const OPTIONS = auth0.withApiAuthRequired((request: NextRequest) =>
 	handleCorsPreflight(request)!,
 )
 

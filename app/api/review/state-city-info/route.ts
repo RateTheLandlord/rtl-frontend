@@ -1,7 +1,7 @@
 import { getTopCitiesStats } from '@/lib/review/stateStats'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 
-export async function OPTIONS(request: Request) {
+export function OPTIONS(request: Request) {
 	return handleCorsPreflight(request)!
 }
 

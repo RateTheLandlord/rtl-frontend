@@ -6,8 +6,6 @@ export async function GET(request: Request) {
 	if (limited) return limited
 
 	const url = new URL(request.url)
-	const landlord = decodeURIComponent(
-		url.searchParams.get('landlord') || '',
-	)
+	const landlord = decodeURIComponent(url.searchParams.get('landlord') || '')
 	return Response.json(await getOneSuspiciousLandlord(landlord))
 }

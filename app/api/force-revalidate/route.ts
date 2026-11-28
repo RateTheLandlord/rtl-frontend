@@ -3,13 +3,13 @@ import { routing } from '@/i18n/routing'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import { checkRouteRateLimit } from '@/util/routeHandlerRateLimit'
 
-export async function OPTIONS(request: Request) {
+export function OPTIONS(request: Request) {
 	const limited = checkRouteRateLimit(request)
 	if (limited) return limited
 	return handleCorsPreflight(request)!
 }
 
-export async function GET(request: Request) {
+export function GET(request: Request) {
 	const limited = checkRouteRateLimit(request)
 	if (limited) return limited
 
@@ -29,6 +29,9 @@ export async function GET(request: Request) {
 		}
 		return withCors(request, Response.json({ revalidated: true }))
 	} catch {
-		return withCors(request, new Response('Error revalidating', { status: 500 }))
+		return withCors(
+			request,
+			new Response('Error revalidating', { status: 500 }),
+		)
 	}
 }

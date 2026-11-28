@@ -2,6 +2,7 @@
 
 import Logo from '@/components/svg/logo/Logo'
 import { Link, useRouter } from '@/i18n/navigation'
+import NextLink from 'next/link'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import { useEffect, type JSX } from 'react'
 
@@ -30,12 +31,13 @@ export default function LoginScreen(): JSX.Element {
 						admin, please navigate back to the homepage.
 					</p>
 					<div className='mt-10 flex items-center justify-center gap-x-6'>
-						<a
+						<NextLink
 							href='/auth/login'
+							prefetch={false}
 							className='rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
 						>
 							Login
-						</a>
+						</NextLink>
 						<Link href='/' className='text-sm leading-6 text-gray-900'>
 							Home <span aria-hidden='true'>→</span>
 						</Link>

@@ -5,7 +5,7 @@ import { checkRouteRateLimit } from '@/util/routeHandlerRateLimit'
 const isRecord = (value: unknown): value is Record<string, unknown> =>
 	typeof value === 'object' && value !== null && !Array.isArray(value)
 
-export async function OPTIONS(request: Request) {
+export function OPTIONS(request: Request) {
 	const limited = checkRouteRateLimit(request)
 	if (limited) return limited
 	return handleCorsPreflight(request)!

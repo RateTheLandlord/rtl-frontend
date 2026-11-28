@@ -14,23 +14,23 @@ function methodNotAllowed() {
 	)
 }
 
-export async function GET() {
+export function GET() {
 	return methodNotAllowed()
 }
 
-export async function PUT() {
+export function PUT() {
 	return methodNotAllowed()
 }
 
-export async function PATCH() {
+export function PATCH() {
 	return methodNotAllowed()
 }
 
-export async function DELETE() {
+export function DELETE() {
 	return methodNotAllowed()
 }
 
-export async function OPTIONS() {
+export function OPTIONS() {
 	return methodNotAllowed()
 }
 

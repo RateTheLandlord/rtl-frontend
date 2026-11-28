@@ -16,7 +16,9 @@ export default async function LoginCompletePage({
 	}
 
 	if (session.user.role === 'ADMIN') {
-		redirect(`${localePrefix}/admin/${encodeURIComponent(session.user.name ?? '')}`)
+		redirect(
+			`${localePrefix}/admin/${encodeURIComponent(session.user.name ?? '')}`,
+		)
 	}
 
 	redirect(localePrefix || '/')
