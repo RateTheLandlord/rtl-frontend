@@ -259,27 +259,6 @@ const EditReviewModal = ({
 						</div>
 					</div>
 					<div className='sm:col-span-2'>
-						<label
-							htmlFor='suspicious-reason'
-							className='block text-sm text-gray-700'
-						>
-							Suspicious Reason
-						</label>
-						<div className='mt-1'>
-							<input
-								type='text'
-								name='suspicious-reason'
-								id='suspicious-reason'
-								placeholder='Suspicious Reason'
-								required
-								value={suspiciousReason ? suspiciousReason : ''}
-								onChange={(e) => setSuspiciousReason(e.target.value)}
-								className='block w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-								data-testid='create-review-form-suspcicious-reason-1'
-							/>
-						</div>
-					</div>
-					<div className='sm:col-span-2'>
 						<label htmlFor='moderators' className='block text-sm text-gray-700'>
 							Previous Moderators
 						</label>
