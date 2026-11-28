@@ -207,6 +207,10 @@ The repository includes an `.env.example` file. Use it as the starting point and
 
 Not every variable is required for every development task. `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_DOMAIN_URL` are used by the server sitemap route; `NEXT_PUBLIC_TWITTER_HANDLE` is used in SEO metadata. The other integrations can be left unset when you are not working on the features that use them. The Dockerfile accepts public build-time settings for client-side integrations.
 
+The server checks its environment when it starts. `DATABASE_URL` must be a PostgreSQL URL. In production, Auth0 settings and `CAPTCHA_SECRET_KEY` are required; in development, Auth0 settings may all be left blank, but partial Auth0 configuration is rejected. Public `NEXT_PUBLIC_` values are build-time settings and are not checked by the server startup validator.
+
+The server checks its environment when it starts. `DATABASE_URL` must be a PostgreSQL URL. In production, Auth0 settings and `CAPTCHA_SECRET_KEY` are required; in development, Auth0 settings may all be left blank, but partial Auth0 configuration is rejected. Public `NEXT_PUBLIC_` values are build-time settings and are not checked by the server startup validator.
+
 Variables prefixed with `NEXT_PUBLIC_` may be exposed to the browser. Do not put secrets in them.
 
 Admin access uses the Auth0 Action claim `https://ratethelandlord.org/roles`. The app copies that claim to `session.user.role` when creating the session and checks for the value `ADMIN`. The login route is `/auth/login` (the localized `/login` page redirects there); after Auth0 returns through `/auth/callback`, users go to the localized login completion page, which sends admins to their admin page and other users to the homepage. Role changes apply after the user starts a new session.
