@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const SITE_URL = 'https://ratethelandlord.org'
-export const SITE_NAME = 'Rate The Landlord'
+const SITE_NAME = 'Rate The Landlord'
 
 export type SiteLocale = 'en-CA' | 'fr-CA'
 

@@ -8,7 +8,7 @@ This inventory reflects explicit `posthog.capture(...)` calls in application sou
 |---|---|---|
 | `cookies_accepted` | None | [`CookieBanner.tsx`](../src/components/postHog/CookieBanner.tsx:39) |
 | `cookies_declined` | None | [`CookieBanner.tsx`](../src/components/postHog/CookieBanner.tsx:45) |
-| `language_changed` | `locale` | [`ChangeLanguage.tsx`](../src/components/ui/ChangeLanguage.tsx:18), [`AppRouterChangeLanguage.tsx`](../src/components/ui/AppRouterChangeLanguage.tsx:24) |
+| `language_changed` | `locale` | [`AppRouterChangeLanguage.tsx`](../src/components/ui/AppRouterChangeLanguage.tsx:24) |
 
 ### Review submission and spam detection
 

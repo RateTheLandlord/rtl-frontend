@@ -248,7 +248,7 @@ Run project commands through Bun.
 | `bun run test:ci` | Run the full Jest suite once, serially |
 | `bun run knip` | Check for unused production files, exports, and dependencies |
 
-The production build also runs `next-sitemap` to generate sitemap output.
+Next.js serves the sitemap at `/sitemap.xml` using `app/sitemap.ts`.
 
 ## Testing and Code Quality
 
