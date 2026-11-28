@@ -1,4 +1,4 @@
-const siteUrl = 'https://www.ratethelandlord.org'
+const siteUrl = 'https://ratethelandlord.org'
 const siteName = 'RateTheLandlord'
 
 const twitterHandle = process.env.NEXT_PUBLIC_TWITTER_HANDLE

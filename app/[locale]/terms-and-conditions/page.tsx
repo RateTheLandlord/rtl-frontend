@@ -1,20 +1,25 @@
 import type { Metadata } from 'next'
 import Terms from '@/components/terms/Terms'
+import { createPageMetadata, type SiteLocale } from '@/lib/seo/metadata'
 
-const title = 'Terms and Conditions | Rate The Landlord'
-const description =
-	'Share information with tenants like you. We are a community platform that elevates tenant voices to promote landlord accountability.'
-
-export const metadata: Metadata = {
-	title,
-	description,
-	alternates: { canonical: 'https://ratethelandlord.org/terms-and-conditions' },
-	openGraph: {
-		type: 'website',
-		url: 'https://ratethelandlord.org/terms-and-conditions',
-		title,
-		description,
-	},
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ locale: SiteLocale }>
+}): Promise<Metadata> {
+	const { locale } = await params
+	return createPageMetadata({
+		locale,
+		path: '/terms-and-conditions',
+		title:
+			locale === 'fr-CA'
+				? 'Conditions d’utilisation | Rate The Landlord'
+				: 'Terms and Conditions | Rate The Landlord',
+		description:
+			locale === 'fr-CA'
+				? 'Consultez les conditions qui encadrent l’utilisation de Rate The Landlord, la publication d’avis et les contributions des utilisateurs.'
+				: 'Review the terms for using Rate The Landlord, submitting reviews, and contributing to the platform.',
+	})
 }
 
 export default function TermsAndConditionsPage() {

@@ -5,6 +5,7 @@ import ZipPage from '@/components/zip/ZipPage'
 import { getZipReviews } from '@/lib/review/zip'
 import type { IZipReviews } from '@/lib/review/types/Review'
 import { toTitleCase } from '@/util/helpers/toTitleCase'
+import { createPageMetadata, type SiteLocale } from '@/lib/seo/metadata'
 
 export const revalidate = 100
 
@@ -24,27 +25,37 @@ const getValidZipData = async (
 }
 
 type PageProps = {
-	params: Promise<{ country_code: string; state: string; zip: string }>
+	params: Promise<{
+		locale: SiteLocale
+		country_code: string
+		state: string
+		zip: string
+	}>
 }
 
 export async function generateMetadata({
 	params,
 }: PageProps): Promise<Metadata> {
-	const { country_code, state, zip } = await params
+	const { country_code, state, zip, locale } = await params
 	const data = await getValidZipData(country_code, state, zip)
 	const zipName = zip.toLocaleUpperCase()
 	const stateName = toTitleCase(state)
 	const countryName = toTitleCase(country_code)
-	const title = `${zipName}, ${stateName}, ${countryName} Reviews | Rate The Landlord`
-	const description = `Looking to rent in ${zipName}? Read ${data.total} landlord reviews and rental experiences for ${zipName}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
-	const url = `https://ratethelandlord.org/zips/${encodeURIComponent(country_code)}/${encodeURIComponent(state)}/${encodeURIComponent(zip)}`
+	const title =
+		locale === 'fr-CA'
+			? `Avis de propriétaires à ${zipName} | Rate The Landlord`
+			: `${zipName}, ${stateName}, ${countryName} Landlord Reviews | Rate The Landlord`
+	const description =
+		locale === 'fr-CA'
+			? `Consultez ${data.total} avis de locataires sur les propriétaires dans la région ${zipName}, ${stateName}.`
+			: `Read ${data.total} tenant reviews of landlords in ${zipName}, ${stateName}, ${countryName}.`
 
-	return {
-		title: { absolute: title },
+	return createPageMetadata({
+		locale,
+		path: `/zips/${encodeURIComponent(country_code)}/${encodeURIComponent(state)}/${encodeURIComponent(zip)}`,
+		title,
 		description,
-		alternates: { canonical: url },
-		openGraph: { type: 'website', url, title, description },
-	}
+	})
 }
 
 export default async function ZipReviewsPage({ params }: PageProps) {

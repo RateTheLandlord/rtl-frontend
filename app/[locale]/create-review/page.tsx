@@ -1,20 +1,26 @@
 import type { Metadata } from 'next'
 import ReviewForm from '@/components/createReview/ReviewForm'
+import { createPageMetadata, type SiteLocale } from '@/lib/seo/metadata'
 
-const title = 'Create Review | Rate The Landlord'
-const description =
-	'Create a Review for your Landlord. Share information with tenants like you and rate your landlord. We are a community platform that elevates tenant voices to promote landlord accountability.'
-
-export const metadata: Metadata = {
-	title: { absolute: title },
-	description,
-	alternates: { canonical: 'https://ratethelandlord.org/create-review' },
-	openGraph: {
-		type: 'website',
-		url: 'https://ratethelandlord.org/create-review',
-		title,
-		description,
-	},
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ locale: SiteLocale }>
+}): Promise<Metadata> {
+	const { locale } = await params
+	return createPageMetadata({
+		locale,
+		path: '/create-review',
+		title:
+			locale === 'fr-CA'
+				? 'Soumettre un avis | Rate The Landlord'
+				: 'Submit a Landlord Review | Rate The Landlord',
+		description:
+			locale === 'fr-CA'
+				? 'Partagez anonymement votre expérience de location pour aider les autres locataires.'
+				: 'Share your rental experience anonymously to help other tenants make informed decisions.',
+		noindex: true,
+	})
 }
 
 export default function CreateReviewPage() {

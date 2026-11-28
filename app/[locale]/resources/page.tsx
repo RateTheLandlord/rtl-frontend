@@ -5,23 +5,28 @@ import ResourcesContribution from '@/components/resources/ResourcesContribution'
 import AdsComponent, { AD_UNITS } from '@/components/adsense/Adsense'
 import { getResources } from '@/lib/tenantResource/resource'
 import type { ResourceResponse } from '@/util/interfaces/Interfaces'
+import { createPageMetadata, type SiteLocale } from '@/lib/seo/metadata'
 
 export const dynamic = 'force-dynamic'
 
-export const metadata: Metadata = {
-	title: 'Resources',
-	description:
-		'Find resources for tenants. We are a community platform that elevates tenant voices to promote landlord accountability.',
-	alternates: {
-		canonical: 'https://ratethelandlord.org/resources',
-	},
-	openGraph: {
-		type: 'website',
-		url: 'https://ratethelandlord.org/resources',
-		title: 'Resources | Rate The Landlord',
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ locale: SiteLocale }>
+}): Promise<Metadata> {
+	const { locale } = await params
+	return createPageMetadata({
+		locale,
+		path: '/resources',
+		title:
+			locale === 'fr-CA'
+				? 'Ressources pour locataires | Rate The Landlord'
+				: 'Tenant Resources | Rate The Landlord',
 		description:
-			'Find resources for tenants. We are a community platform that elevates tenant voices to promote landlord accountability.',
-	},
+			locale === 'fr-CA'
+				? 'Trouvez des ressources et des services utiles aux locataires selon leur région.'
+				: 'Find tenant services and helpful resources by location.',
+	})
 }
 
 export default async function ResourcesPage() {

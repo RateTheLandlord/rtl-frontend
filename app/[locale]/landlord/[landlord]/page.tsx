@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import LandlordPage from '@/components/landlord/LandlordPage'
 import { getLandlordReviews } from '@/lib/review/landlords'
 import type { ILandlordReviews } from '@/lib/review/types/Queries'
+import { createPageMetadata, type SiteLocale } from '@/lib/seo/metadata'
 
 export const revalidate = 100
 
@@ -18,24 +19,29 @@ const getValidLandlordData = async (landlord: string) => {
 }
 
 type PageProps = {
-	params: Promise<{ landlord: string }>
+	params: Promise<{ locale: SiteLocale; landlord: string }>
 }
 
 export async function generateMetadata({
 	params,
 }: PageProps): Promise<Metadata> {
-	const { landlord } = await params
+	const { landlord, locale } = await params
 	const data = await getValidLandlordData(landlord)
-	const title = `${landlord} Reviews | Rate The Landlord`
-	const description = `Reviews for ${landlord}. Read ${data.total} reviews and rental experiences for ${landlord}. Rate the Landlord is a community platform that elevates tenant voices to promote landlord accountability.`
-	const url = `https://ratethelandlord.org/landlord/${encodeURIComponent(landlord)}`
+	const title =
+		locale === 'fr-CA'
+			? `Avis sur ${landlord} | Rate The Landlord`
+			: `${landlord} Reviews | Rate The Landlord`
+	const description =
+		locale === 'fr-CA'
+			? `Consultez ${data.total} avis de locataires sur ${landlord} et leurs expériences de location.`
+			: `Read ${data.total} tenant reviews and rental experiences for ${landlord}.`
 
-	return {
-		title: { absolute: title },
+	return createPageMetadata({
+		locale,
+		path: `/landlord/${encodeURIComponent(landlord)}`,
+		title,
 		description,
-		alternates: { canonical: url },
-		openGraph: { type: 'website', url, title, description },
-	}
+	})
 }
 
 export default async function LandlordReviewsPage({ params }: PageProps) {

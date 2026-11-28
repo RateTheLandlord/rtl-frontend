@@ -6,7 +6,6 @@
 		"dev": "bun next dev --webpack",
 		"prebuild": "next telemetry disable",
 		"build": "next build --webpack",
-		"postbuild": "next-sitemap",
 		"start": "next start",
 		"format": "prettier --write \"./app/**/*.{ts,tsx}\" \"./src/**/*.{ts,tsx}\" \"./proxy.ts\"",
 		"lint": "eslint . --fix --cache --ignore-pattern .next",

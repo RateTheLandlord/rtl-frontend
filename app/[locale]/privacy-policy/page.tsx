@@ -1,20 +1,25 @@
 import type { Metadata } from 'next'
 import Privacy from '@/components/privacy/Privacy'
+import { createPageMetadata, type SiteLocale } from '@/lib/seo/metadata'
 
-const title = 'Privacy Policy | Rate The Landlord'
-const description =
-	'Share information with tenants like you. We are a community platform that elevates tenant voices to promote landlord accountability.'
-
-export const metadata: Metadata = {
-	title,
-	description,
-	alternates: { canonical: 'https://ratethelandlord.org/privacy-policy' },
-	openGraph: {
-		type: 'website',
-		url: 'https://ratethelandlord.org/privacy-policy',
-		title,
-		description,
-	},
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ locale: SiteLocale }>
+}): Promise<Metadata> {
+	const { locale } = await params
+	return createPageMetadata({
+		locale,
+		path: '/privacy-policy',
+		title:
+			locale === 'fr-CA'
+				? 'Confidentialité | Rate The Landlord'
+				: 'Privacy Policy | Rate The Landlord',
+		description:
+			locale === 'fr-CA'
+				? 'Consultez la politique de confidentialité de Rate The Landlord et apprenez comment les renseignements soumis et les avis sont traités.'
+				: 'Read how Rate The Landlord handles submitted information, reviews, and privacy requests.',
+	})
 }
 
 export default function PrivacyPolicyPage() {
