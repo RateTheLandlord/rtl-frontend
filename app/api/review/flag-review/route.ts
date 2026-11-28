@@ -2,12 +2,7 @@ import { verifyToken } from '@/lib/captcha/verifyToken'
 import { report } from '@/lib/review/models/userReportReview'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import { checkRouteRateLimit } from '@/util/routeHandlerRateLimit'
-
-interface FlagReviewBody {
-	id: number
-	flagged_reason: string
-	captchaToken: string
-}
+import { parseJsonObject } from '@/util/parseJsonObject'
 
 export function OPTIONS(request: Request) {
 	const limited = checkRouteRateLimit(request)
@@ -19,7 +14,23 @@ export async function POST(request: Request) {
 	const limited = checkRouteRateLimit(request)
 	if (limited) return limited
 
-	const body = (await request.json()) as FlagReviewBody
+	const body = await parseJsonObject(request)
+	if (
+		!body ||
+		typeof body.id !== 'number' ||
+		!Number.isSafeInteger(body.id) ||
+		body.id <= 0 ||
+		typeof body.flagged_reason !== 'string' ||
+		!body.flagged_reason.trim() ||
+		typeof body.captchaToken !== 'string' ||
+		!body.captchaToken.trim()
+	) {
+		return withCors(
+			request,
+			Response.json({ error: 'INVALID_REQUEST_BODY' }, { status: 400 }),
+		)
+	}
+
 	const captcha = await verifyToken(body.captchaToken)
 
 	if (!captcha) {
