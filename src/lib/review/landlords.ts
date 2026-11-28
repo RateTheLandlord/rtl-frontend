@@ -40,18 +40,26 @@ export async function getLandlordReviews(
 			) / 5 AS combined_avg
 		FROM review
 		WHERE landlord = ${normalizedLandlord}
+			AND (
+				flagged = false
+				OR (flagged = true AND admin_approved = true)
+			)
+			AND delete_date IS NULL
 	`
 
-	const total = stats[0].count as number
+	const total = Number(stats[0].count)
 
-	const combinedAvg = Math.round(stats[0].combined_avg as number)
+	const roundToOneDecimal = (value: unknown) =>
+		Math.round(Number(value) * 10) / 10
+
+	const combinedAvg = roundToOneDecimal(stats[0].combined_avg)
 
 	const catAverages = {
-		avg_repair: Math.round(stats[0].avg_repair as number),
-		avg_health: Math.round(stats[0].avg_health as number),
-		avg_stability: Math.round(stats[0].avg_stability as number),
-		avg_respect: Math.round(stats[0].avg_respect as number),
-		avg_privacy: Math.round(stats[0].avg_privacy as number),
+		avg_repair: roundToOneDecimal(stats[0].avg_repair),
+		avg_health: roundToOneDecimal(stats[0].avg_health),
+		avg_stability: roundToOneDecimal(stats[0].avg_stability),
+		avg_respect: roundToOneDecimal(stats[0].avg_respect),
+		avg_privacy: roundToOneDecimal(stats[0].avg_privacy),
 	}
 
 	return {

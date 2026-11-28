@@ -1,16 +1,11 @@
-/* eslint-disable no-case-declarations */
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import LandlordInfo from './LandlordInfo'
 import OtherLandlordInfo from './OtherLandlord'
 import LandlordBanner from './LandlordBanner'
 import { useTranslations } from 'next-intl'
-import {
-	SortOptions,
-	SuspiciousLandlord,
-	UserReview,
-} from '@/util/interfaces/Interfaces'
+import { SortOptions, SuspiciousLandlord } from '@/util/interfaces/Interfaces'
 import Spinner from '../ui/Spinner'
 import { sortOptions } from '@/util/helpers/filterOptions'
 import SortList from '../reviews/ui/SortList'
@@ -31,7 +26,6 @@ interface IProps {
 const LandlordPage = ({ landlord, data }: IProps) => {
 	const t = useTranslations('reviews')
 	const [bannerOpen, setBannerOpen] = useState<boolean>(false)
-	const [sortedReviews, setSortedReviews] = useState<UserReview[]>([])
 	const [showSuspiciousReviews, setShowSuspiciousReviews] = useState(false)
 
 	const [sortState, setSortState] = useState<SortOptions | null>(
@@ -54,44 +48,42 @@ const LandlordPage = ({ landlord, data }: IProps) => {
 		}
 	}, [suspiciousLandlord])
 
-	useEffect(() => {
-		switch (sortState?.value) {
-			case 'new':
-				const sortedOld = data.reviews.sort(
-					(a, b) => Number(b.id) - Number(a.id),
-				)
-				setSortedReviews([...sortedOld])
-				break
-			case 'old':
-				const sortedNew = data.reviews.sort(
-					(a, b) => Number(a.id) - Number(b.id),
-				)
-				setSortedReviews([...sortedNew])
-				break
-			case 'high':
-				const sortedHigh = data.reviews.sort((a, b) => {
-					const aTotal =
-						a.health + a.privacy + a.repair + a.respect + a.stability
-					const bTotal =
-						b.health + b.privacy + b.repair + b.respect + b.stability
-
-					return Number(bTotal) - Number(aTotal)
-				})
-				setSortedReviews([...sortedHigh])
-				break
-			case 'low':
-				const sortedLow = data.reviews.sort((a, b) => {
-					const aTotal =
-						a.health + a.privacy + a.repair + a.respect + a.stability
-					const bTotal =
-						b.health + b.privacy + b.repair + b.respect + b.stability
-
-					return Number(aTotal) - Number(bTotal)
-				})
-				setSortedReviews([...sortedLow])
-				break
+	const sortedReviews = useMemo(() => {
+		const reviews = [...data.reviews]
+		const sortByDate = (
+			left: (typeof reviews)[number],
+			right: (typeof reviews)[number],
+		) => {
+			const dateDifference =
+				new Date(left.date_added).getTime() -
+				new Date(right.date_added).getTime()
+			return dateDifference || Number(left.id ?? 0) - Number(right.id ?? 0)
 		}
-	}, [sortState, data.reviews])
+		const rating = (review: (typeof reviews)[number]) =>
+			review.health +
+			review.privacy +
+			review.repair +
+			review.respect +
+			review.stability
+
+		switch (sortState?.value) {
+			case 'old':
+				return reviews.sort(sortByDate)
+			case 'high':
+				return reviews.sort(
+					(left, right) =>
+						rating(right) - rating(left) || -sortByDate(left, right),
+				)
+			case 'low':
+				return reviews.sort(
+					(left, right) =>
+						rating(left) - rating(right) || -sortByDate(left, right),
+				)
+			case 'new':
+			default:
+				return reviews.sort((left, right) => -sortByDate(left, right))
+		}
+	}, [data.reviews, sortState?.value])
 
 	if (!data.reviews.length) return <Spinner />
 
