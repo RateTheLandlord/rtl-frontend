@@ -15,6 +15,7 @@ jest.mock('next/router', () => ({
 const mockOpenModal = jest.fn()
 
 jest.mock('@/components/modal/ModalContext', () => ({
+	...jest.requireActual('@/components/modal/ModalContext'),
 	useModal: () => ({
 		openModal: mockOpenModal,
 	}),
