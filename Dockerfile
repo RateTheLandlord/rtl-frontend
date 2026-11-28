@@ -1,16 +1,16 @@
 # Dependencies
-FROM node:20-slim AS deps
+FROM node:24-slim AS deps
 
 WORKDIR /app
 
 COPY package.json bun.lock ./
 
-RUN npm install -g bun
+RUN npm install -g bun@1.4.5
 RUN bun install --frozen-lockfile
 
 
 # Build
-FROM node:20-slim AS builder
+FROM node:24-slim AS builder
 
 WORKDIR /app
 
@@ -45,7 +45,7 @@ RUN mkdir -p .next/standalone/node_modules/bcrypt/prebuilds/linux-x64 \
 
 
 # Production
-FROM node:20-slim AS runner
+FROM node:24-slim AS runner
 
 WORKDIR /app
 

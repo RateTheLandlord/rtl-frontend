@@ -17,10 +17,16 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
       - name: Set up Bun
         uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
-          bun-version: latest
+          bun-version: 1.4.5
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
@@ -35,7 +41,7 @@ jobs:
         run: bun run tsc
 
       - name: Build
-        run: bun run build
+        run: npm run build
         env:
           # API routes instantiate the OpenAI client during Next.js build analysis.
           # The build does not make API requests, so a placeholder is sufficient.
