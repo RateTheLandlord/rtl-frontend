@@ -3,7 +3,7 @@ import { Message, UserUpdateReviewResponse } from '../types/Responses'
 import sql from '@/lib/db'
 import isWithinLastDay from '@/util/helpers/isWithinLastDay'
 import { checkUserCode } from '../userCodes'
-import { filterReviewWithAI, IResult } from '../helpers'
+import { filterReviewWithAI, IResult } from '../moderation/checkReviewWithAI'
 
 export async function userUpdateReview(
 	id: number,

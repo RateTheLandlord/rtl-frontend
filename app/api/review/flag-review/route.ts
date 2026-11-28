@@ -1,5 +1,5 @@
 import { verifyToken } from '@/lib/captcha/verifyToken'
-import { report } from '@/lib/review/models/userReportReview'
+import { reportReview } from '@/lib/review/mutations/reportReview'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import { checkRouteRateLimit } from '@/util/routeHandlerRateLimit'
 import { parseJsonObject } from '@/util/parseJsonObject'
@@ -40,6 +40,6 @@ export async function POST(request: Request) {
 		)
 	}
 
-	const reviews = await report(body.id, body.flagged_reason)
+	const reviews = await reportReview(body.id, body.flagged_reason)
 	return withCors(request, Response.json(reviews))
 }

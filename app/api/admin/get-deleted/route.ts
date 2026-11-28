@@ -1,5 +1,5 @@
 import { auth0 } from '@/lib/auth0'
-import { getDeleted } from '@/lib/review/models/adminDeleteReview'
+import { getDeleted } from '@/lib/review/mutations/adminDeleteReview'
 import { getAdminRouteAuth } from '@/util/routeHandlerAdmin'
 import { handleCorsPreflight, withCors } from '@/util/routeHandlerCors'
 import { NextResponse } from 'next/server'

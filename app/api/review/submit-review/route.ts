@@ -1,5 +1,5 @@
 import { verifyToken } from '@/lib/captcha/verifyToken'
-import { create } from '@/lib/review/models/reviewDataLayer'
+import { submitReview } from '@/lib/review/mutations/createReview'
 import { parseJsonObject } from '@/util/parseJsonObject'
 import { checkRouteRateLimit } from '@/util/routeHandlerRateLimit'
 import type { Review } from '@/util/interfaces/Interfaces'
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
 		const captchaValid = await verifyToken(body.captchaToken)
 		if (!captchaValid) return Response.json('UNAUTHORIZED', { status: 401 })
 
-		const result = await create(body.review as Review)
+		const result = await submitReview(body.review as Review)
 		return Response.json(result)
 	} catch (error) {
 		console.error('Error submitting review:', error)

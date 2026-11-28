@@ -1,5 +1,5 @@
 import OpenAI from 'openai'
-import { getFlaggedKeywords } from '../flaggedKeywords/flaggedKeywords'
+import { getFlaggedKeywords } from '@/lib/flaggedKeywords/flaggedKeywords'
 import { Review, UserUpdatedReview } from '@/util/interfaces/Interfaces'
 
 export interface IResult {
@@ -41,17 +41,20 @@ const getSystemMessage = async () => {
 	return SYSTEM_MESSAGE
 }
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+let openai: OpenAI | undefined
 
 export const filterReviewWithAI = async (
 	review: Review | UserUpdatedReview,
 ): Promise<IResult> => {
 	try {
-		const SYSTEM_MESSAGE = await getSystemMessage()
-		const completion = await openai.chat.completions.create({
+		const client = (openai ??= new OpenAI({
+			apiKey: process.env.OPENAI_API_KEY,
+		}))
+		const systemMessage = await getSystemMessage()
+		const completion = await client.chat.completions.create({
 			model: 'gpt-4o',
 			messages: [
-				{ role: 'system', content: SYSTEM_MESSAGE },
+				{ role: 'system', content: systemMessage },
 				{ role: 'user', content: `${review.landlord} ${review.review}` },
 			],
 		})

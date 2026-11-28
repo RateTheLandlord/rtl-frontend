@@ -1,6 +1,9 @@
 import cron from 'node-cron'
 import dayjs from 'dayjs'
-import { deleteReview, getDeleted } from '@/lib/review/models/adminDeleteReview'
+import {
+	deleteReview,
+	getDeleted,
+} from '@/lib/review/mutations/adminDeleteReview'
 
 const readyToDelete = (delete_date: string | null): boolean => {
 	if (delete_date && delete_date.length > 0) {

@@ -1,66 +1,56 @@
-import { filterReviewWithAI, IResult } from '../helpers'
+import { filterReviewWithAI, IResult } from '../moderation/checkReviewWithAI'
 import sql from '@/lib/db'
 import { Review } from '@/util/interfaces/Interfaces'
 import { ReviewResponseStatus } from '../types/Responses'
 import { createUserCode } from '../userCodes'
-import dayjs from 'dayjs'
-import isBetween from 'dayjs/plugin/isBetween'
 import { getExistingReviewsForLandlord } from '../landlords'
 import {
 	checkForLandlordSpam,
-	checkReviewsForSimilarity,
 	updateRecentReviews,
-} from '../reviewTextMatch'
+} from '../moderation/recentReviews'
+import { checkReviewsForSimilarity } from '../moderation/reviewSimilarity'
 import posthog from 'posthog-js'
 
-dayjs.extend(isBetween)
-
-export async function create(
+export async function submitReview(
 	inputReview: Review,
 ): Promise<ReviewResponseStatus> {
-	try {
-		const existingReviewsForLandlord: Review[] =
-			await getExistingReviewsForLandlord(inputReview)
-		const reviewSpamDetected: boolean = checkReviewsForSimilarity(
-			existingReviewsForLandlord,
-			inputReview.review,
-		)
+	const existingReviewsForLandlord: Review[] =
+		await getExistingReviewsForLandlord(inputReview)
+	const reviewSpamDetected: boolean = checkReviewsForSimilarity(
+		existingReviewsForLandlord,
+		inputReview.review,
+	)
 
-		const landlordSpamDetected: boolean = await checkForLandlordSpam(
-			inputReview.landlord,
-		)
+	const landlordSpamDetected: boolean = await checkForLandlordSpam(
+		inputReview.landlord,
+	)
 
-		// Don't post the review to the DB if we detect spam
-		if (reviewSpamDetected || landlordSpamDetected) {
-			posthog.capture('review_spam_detectect_BE')
-			return {
-				message:
-					'This landlord is currently under spam protection please try again later',
-				success: false,
-				user_code: '',
-				review_id: 0,
-			}
+	// Don't post the review to the DB if we detect spam
+	if (reviewSpamDetected || landlordSpamDetected) {
+		posthog.capture('review_spam_detectect_BE')
+		return {
+			message:
+				'This landlord is currently under spam protection please try again later',
+			success: false,
+			user_code: '',
+			review_id: 0,
 		}
-
-		updateRecentReviews(inputReview.landlord).catch(() =>
-			console.error(
-				`Error Updating Recent Reviews for ${inputReview.landlord}`,
-			),
-		)
-		if (process.env.NEXT_PUBLIC_ENVIRONMENT == 'development')
-			return createReview(inputReview, {
-				flagged: false,
-				flagged_reason: 'DEV REVIEW',
-			}) // Hit data layer to create review
-
-		const filterResult: IResult = await filterReviewWithAI(inputReview)
-		return createReview(inputReview, filterResult) // Hit data layer to create review
-	} catch {
-		throw new Error()
 	}
+
+	updateRecentReviews(inputReview.landlord).catch(() =>
+		console.error(`Error Updating Recent Reviews for ${inputReview.landlord}`),
+	)
+	if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'development')
+		return insertReview(inputReview, {
+			flagged: false,
+			flagged_reason: 'DEV REVIEW',
+		})
+
+	const filterResult: IResult = await filterReviewWithAI(inputReview)
+	return insertReview(inputReview, filterResult)
 }
 
-async function createReview(
+async function insertReview(
 	inputReview: Review,
 	filterResult: IResult,
 ): Promise<ReviewResponseStatus> {
