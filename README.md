@@ -247,6 +247,7 @@ Run project commands through Bun.
 | `bun run tsc` | Run TypeScript type checking |
 | `bun run test` | Run Jest in watch mode |
 | `bun run test:merge` | Run Jest tests related to changed files without watch mode |
+| `bun run test:ci` | Run the full Jest suite once, serially |
 | `bun run knip` | Check for unused production files, exports, and dependencies |
 
 The production build also runs `next-sitemap` to generate sitemap output.
@@ -255,16 +256,16 @@ The production build also runs `next-sitemap` to generate sitemap output.
 
 The project uses Jest and React Testing Library for unit and component tests.
 
-Run tests related to changed files:
+Run tests related to changed files during local development:
 
 ```bash
 bun run test:merge
 ```
 
-Run all tests once with Jest directly:
+Run the full test suite once:
 
 ```bash
-bunx jest --runInBand
+bun run test:ci
 ```
 
 For interactive test development:
