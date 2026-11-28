@@ -8,7 +8,7 @@
 		"build": "next build --webpack",
 		"postbuild": "next-sitemap",
 		"start": "next start",
-		"format": "prettier --write \"./pages/**/*.{ts,tsx}\" \"./src/**/*.{ts,tsx}\"",
+		"format": "prettier --write \"./app/**/*.{ts,tsx}\" \"./src/**/*.{ts,tsx}\" \"./proxy.ts\"",
 		"lint": "eslint . --fix --cache --ignore-pattern .next",
 		"lint:merge": "eslint . --cache --ignore-pattern .next",
 		"tsc": "tsc",
